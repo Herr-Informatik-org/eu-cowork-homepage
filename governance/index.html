@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Governance: Rechte, Budgets, Audit | EU-Cowork</title>
+<meta name="description" content="Wer darf welches Werkzeug nutzen, wer sieht welche Daten, was kostet es? Rechte bis auf Werkzeugebene, Audit pro Aufruf, Monatsbudget mit weicher Sperre.">
+<link rel="canonical" href="https://eucowork.ai/governance">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/governance">
+<meta property="og:title" content="Governance: Rechte, Budgets, Audit | EU-Cowork">
+<meta property="og:description" content="Rechte bis auf einzelne Werkzeuge, Audit-Log über jeden Aufruf, gemeinsames Monatsbudget mit weicher Sperre. Rollen und Gruppen lokal oder aus Entra ID.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU-Cowork: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Governance: Rechte, Budgets, Audit | EU-Cowork">
+<meta name="twitter:description" content="Rechte bis auf Werkzeugebene, Audit pro Aufruf, Monatsbudget mit weicher Sperre.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU-Cowork</span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/#funktionen">Funktionen</a>
+    <a href="/#souveraenitaet">Souveränität</a>
+    <a href="/self-hosting">Self-Host</a>
+    <a href="/faq">FAQ</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/#funktionen">Funktionen</a>
+      <a href="/#souveraenitaet">Souveränität</a>
+      <a href="/self-hosting">Self-Host</a>
+      <a href="/faq">FAQ</a>
+      <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/">Start</a></li>
+        <li><span aria-current="page">Governance</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow">Governance</p>
+
+    <h1>Governance: wer darf was, und was kostet es</h1>
+
+    <p class="euc-lead">In EU-Cowork entscheidet nicht das Modell, ob ein Zugriff erlaubt ist, sondern eine Regelkette, die vor jedem Tool-Aufruf geprüft wird. Rechte reichen bis auf einzelne Werkzeuge, jeder Aufruf wird protokolliert, und der Verbrauch ist sichtbar, bevor er zur Rechnung wird.</p>
+  </section>
+
+  <div class="euc-wrap">
+
+    <!-- ==================== KURZ GESAGT ==================== -->
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel">Kurz gesagt</p>
+      <ul>
+        <li>Den Zugriff auf angebundene Systeme entscheidet das MCP-Gateway vor dem Modell, nicht das Modell selbst.</li>
+        <li>Rechte gehen bis auf einzelne Werkzeuge: Rechnungen lesen erlauben, Löhne lesen verweigern, im selben angebundenen System.</li>
+        <li>Die Rechteprüfung folgt der Reihenfolge einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers. Die erste passende Regel gewinnt.</li>
+        <li>Jeder Tool-Aufruf über das Gateway, jede Admin-Aktion und jede Anmeldung wird protokolliert und lässt sich als CSV exportieren.</li>
+        <li>Der Verbrauch wird pro Person, Gruppe und Modell in Token und Euro ausgewiesen und gegen ein gemeinsames Monatsbudget verrechnet.</li>
+      </ul>
+    </div>
+
+    <!-- ==================== INHALTSVERZEICHNIS ==================== -->
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel">Auf dieser Seite</p>
+      <ol>
+        <li><a href="#warum">Warum eine KI-Plattform eine eigene Rechteverwaltung braucht</a></li>
+        <li><a href="#benutzer">Woher Nutzer, Rollen und Gruppen kommen</a></li>
+        <li><a href="#werkzeugebene">Rechte bis auf Werkzeugebene</a></li>
+        <li><a href="#audit">Audit: jeder Zugriff nachvollziehbar</a></li>
+        <li><a href="#kosten">Kosten sichtbar machen und begrenzen</a></li>
+        <li><a href="#agenten">Agenten freigeben statt verbieten</a></li>
+        <li><a href="#fragen">Häufige Fragen</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== ABSCHNITT 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="warum">Warum eine KI-Plattform eine eigene Rechteverwaltung braucht</h2>
+      <p>Eine KI-Plattform braucht eine eigene Rechteverwaltung, weil ein Chatfenster ohne Regeln jede Frage an jedes angebundene System weiterreicht. Sobald die KI an ein Firmensystem angeschlossen ist, lautet die Frage nicht mehr, ob jemand chatten darf, sondern welche Datensätze die KI im Auftrag dieser Person lesen darf.</p>
+
+      <h3>Ein Verbot verlagert die Nutzung nur, es beendet sie nicht</h3>
+      <p>Wer keinen freigegebenen Weg hat, nimmt den nächstbesten. Ein Verbot verlagert die Nutzung in private Konten bei öffentlichen Anbietern, wo weder Vertrag noch Protokoll noch Löschanspruch greift. Firmendaten landen dann in einem Dienst, den niemand in eurer Organisation administriert und dessen Verarbeitung ihr nicht belegen könnt.</p>
+
+      <p>Die Gegenmassnahme, die funktioniert, ist ein freigegebener Weg, der besser ist als der private. Er muss aber vier Dinge kontrollierbar machen, sonst verlagert ihr das Risiko nur nach innen:</p>
+
+      <ul>
+        <li>Welche Personen die Plattform überhaupt nutzen dürfen, und über welche Anmeldung.</li>
+        <li>Welche angebundenen Systeme und welche einzelnen Werkzeuge einer Person offenstehen.</li>
+        <li>Was tatsächlich passiert ist, nachweisbar und exportierbar.</li>
+        <li>Was der Betrieb kostet, aufgeschlüsselt und begrenzbar, bevor die Rechnung kommt.</li>
+      </ul>
+
+      <p>Genau diese vier Kontrollpunkte bilden die Bereiche des Admin-Panels von EU-Cowork: Benutzerverwaltung, Zugriffsregeln, Audit und Verbrauch.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="benutzer">Woher Nutzer, Rollen und Gruppen kommen</h2>
+      <p>Nutzer, Rollen und Gruppen pflegt ihr im Admin-Panel oder übernehmt sie aus Entra ID. Eine Rolle bündelt Funktionsrechte, also was jemand in der Oberfläche darf. Eine Gruppe bündelt Personen für Zugriffs- und Budgetregeln. Beides ist unabhängig voneinander kombinierbar.</p>
+
+      <div class="chips">
+        <span class="chip">Lokale Konten</span>
+        <span class="chip">Entra ID über OIDC, pro Instanz einrichtbar</span>
+        <span class="chip chip-neutral">SCIM geplant</span>
+      </div>
+
+      <h3>Lokale Benutzer und Anbindung an Entra ID</h3>
+      <p>Ohne Identitätsanbieter arbeitet EU-Cowork mit lokalen Konten: Einladung per Link, Passwort setzt die eingeladene Person selbst. Die Anmeldung über Entra ID oder einen anderen OIDC-Anbieter wird von der Plattform unterstützt und für eure Instanz eingerichtet. Ist sie eingerichtet, meldet sich jede Person über OIDC an, das Konto entsteht bei der ersten Anmeldung, und die Gruppen- und Rollenangaben aus dem Anmelde-Token werden auf eure Gruppen in EU-Cowork abgebildet.</p>
+
+      <p>Der Entzug läuft damit an der Haustür: Wer in Entra ID deaktiviert ist, kommt nicht mehr hinein und verliert damit jeden Zugriff, auch auf die angebundenen Systeme. Automatisches Vorbereitstellen und Abschalten von Konten über SCIM ist geplant, heute noch nicht verfügbar.</p>
+
+      <h3>Was eine Rolle festlegt, was eine Gruppe</h3>
+      <p>Eine Rolle steuert Funktionsrechte in der Plattform, etwa ob jemand Agenten bauen, die Websuche nutzen oder das Admin-Panel öffnen darf. Eine Gruppe steuert, an welche Daten und Werkzeuge jemand kommt und auf welches Budget der Verbrauch läuft.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Die drei Ebenen der Benutzerverwaltung und wofür ihr sie einsetzt.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Ebene</th>
+              <th scope="col">Steuert</th>
+              <th scope="col">Typisches Beispiel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Nutzer</th>
+              <td>Einzelne Ausnahme, stärker als jede allgemeine Regel</td>
+              <td>Eine Person bekommt zusätzlich Zugriff auf ein Werkzeug</td>
+            </tr>
+            <tr>
+              <th scope="row">Rolle</th>
+              <td>Funktionsrechte in der Oberfläche</td>
+              <td>Nur eine privilegierte Rolle darf Agenten erstellen</td>
+            </tr>
+            <tr>
+              <th scope="row">Gruppe</th>
+              <td>Zugriff auf Systeme, Werkzeuge und Budget</td>
+              <td>Gruppe Buchhaltung sieht die Rechnungs-Werkzeuge</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Einladung, Zuweisung, Deaktivierung</h3>
+      <p>Eine Einladung geht per Mail oder Link hinaus und kann die Zielgruppe bereits mitgeben. Die Mitgliedschaft wird gesetzt, sobald die eingeladene Person die Registrierung abgeschlossen hat. Damit startet niemand in einem rechtelosen Zwischenzustand, und ihr müsst nach jeder Registrierung nichts nachtragen.</p>
+
+      <p>Zum Beenden gibt es zwei Wege. Sperren lässt das Konto bestehen, verweigert aber die Anmeldung. Löschen entfernt Konto, Unterhaltungen und Suchindex-Einträge; ein Datenexport für die betroffene Person ist vorher möglich, damit Auskunfts- und Löschbegehren beide bedient sind.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="werkzeugebene">Rechte bis auf Werkzeugebene</h2>
+      <p>Tool-Aufrufe laufen über das MCP-Gateway, ein Bauteil zwischen Chat und angebundenem System. Das Gateway prüft für die anfragende Person, ob der Server und das konkrete Werkzeug erlaubt sind, hält die Entscheidung fest und reicht den Aufruf nur bei einer Freigabe weiter. Gesperrte Werkzeuge erscheinen nicht in der Werkzeugliste des Nutzers; nach einer Rechteänderung wirkt das mit kurzer Verzögerung. Der eigentliche Riegel ist die Prüfung bei jedem Aufruf.</p>
+
+      <p>Angebunden werden Systeme über MCP, den offenen Standard für Werkzeugzugriffe von KI-Modellen. Das Gateway sitzt davor, damit die Freigabe zentral pro Person, Rolle und Gruppe entschieden wird und nicht im angebundenen System verstreut liegt. Welche Systeme sich anbinden lassen und welche vorbereitet sind, steht auf der Seite <a class="euc-textlink" href="/integrationen">Integrationen</a>; Rechte ohne Werkzeuge sind gegenstandslos.</p>
+
+      <h3>Das Beispiel: Rechnungen lesen ja, Löhne lesen nein</h3>
+      <p>Ein angebundenes ERP bietet der KI nicht einen einzigen Zugang, sondern viele einzelne Werkzeuge: Rechnungen suchen, Kundendaten lesen, Lohndaten lesen, Datensätze schreiben. <span class="euc-marker">Die Gruppe Buchhaltung bekommt die Rechnungs-Werkzeuge freigegeben, die Lohn-Werkzeuge bleiben der Personalabteilung vorbehalten.</span> Gleicher Server, unterschiedliche Werkzeuge, getrennt entschieden.</p>
+
+      <p>Darunter liegt eine zweite Grenze. Meldet sich EU-Cowork mit der Identität der jeweiligen Person an eurem ERP an, bleiben dessen eigene Zugriffsregeln massgeblich: Wer dort nur bestimmte Datensätze sehen darf, sieht auch über die KI nicht mehr. Läuft die Anbindung über ein gemeinsames Dienstkonto, ist das Gateway die einzige Durchsetzungsstelle, und dann gehört die Werkzeugauswahl entsprechend eng geschnitten.</p>
+
+      <p>Rechte innerhalb eines Werkzeugs, also auf einzelne Felder oder Zeilen, setzt EU-Cowork nicht selbst durch. Dafür ist die Rechteverwaltung des angebundenen Systems zuständig. Ein Werkzeug mit weit gefasstem Funktionsumfang gebt ihr deshalb entweder gar nicht frei oder nur an eine Gruppe, die die Daten ohnehin sehen darf.</p>
+
+      <h3>Die Regelkette: Nutzer vor Rolle vor Gruppe vor Standard</h3>
+      <p>Rechte werden in einer festen Reihenfolge ausgewertet: einzelner Nutzer, dann Rolle, dann Gruppe, dann Voreinstellung des Servers. Die erste passende Regel entscheidet, danach wird nicht weitergesucht. Damit ist jede Entscheidung erklärbar, und eine Einzelfreigabe braucht keine Sonderrolle. Dass Rechte pro einzelnem Werkzeug gelten, ist im <a class="euc-textlink" href="/vergleich">Vergleich mit anderen Plattformen</a> das Unterscheidungsmerkmal.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Reihenfolge der Rechteprüfung im Gateway. Die erste Übereinstimmung gewinnt.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Reihenfolge</th>
+              <th scope="col">Regel</th>
+              <th scope="col">Wofür sie gedacht ist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1. Nutzer</th>
+              <td>Ausnahme für eine einzelne Person</td>
+              <td>Befristete Freigabe, ohne die Gruppenregel aufzuweichen</td>
+            </tr>
+            <tr>
+              <th scope="row">2. Rolle</th>
+              <td>Gilt für alle Konten mit dieser Rolle</td>
+              <td>Grundausstattung nach Funktion im Unternehmen</td>
+            </tr>
+            <tr>
+              <th scope="row">3. Gruppe</th>
+              <td>Gilt für alle Mitglieder der Gruppe</td>
+              <td>Abteilungs- oder Projektzuschnitt, auch aus Entra ID</td>
+            </tr>
+            <tr>
+              <th scope="row">4. Server-Standard</th>
+              <td>Voreinstellung für alle übrigen Anfragen</td>
+              <td>Grundhaltung pro angebundenem System, am besten verweigern</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Was passiert, wenn keine Regel greift</h3>
+      <p>Greift keine Nutzer-, Rollen- oder Gruppenregel, entscheidet die Voreinstellung des jeweiligen Servers. Setzt diese Voreinstellung direkt nach dem Anbinden eines Systems auf verweigern und gebt danach gezielt einzelne Gruppen frei. So kann ein frisch angebundenes System niemanden versehentlich mehr sehen lassen, als vorgesehen war.</p>
+
+      <p>Fällt die Rechteprüfung selbst aus, etwa weil die Regeldatenbank nicht erreichbar ist, verweigert das Gateway den Aufruf, statt ihn durchzulassen. Eine Störung führt also zu einer Fehlermeldung im Chat, nicht zu einem offenen Zugriff. Ein Nur-Lesen-Schalter pro Server, der schreibende Werkzeuge pauschal sperrt, ist geplant.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 4 ==================== -->
+    <section class="euc-section">
+      <h2 id="audit">Audit: jeder Zugriff nachvollziehbar</h2>
+      <p>Jeder Tool-Aufruf über das Gateway wird mit Zeitpunkt, Person, Zielsystem, Werkzeug und Entscheidung festgehalten, auch der verweigerte. Zusätzlich führt die Plattform ein fortlaufend verkettetes Protokoll über Admin-Aktionen, Anmeldungen und Rechteänderungen. Beide Protokolle liegen in eurer eigenen Instanz und lassen sich als CSV exportieren.</p>
+
+      <h3>Was protokolliert wird</h3>
+      <ul>
+        <li>Tool-Aufrufe an angebundene Systeme, mit der getroffenen Entscheidung, erlaubt oder verweigert.</li>
+        <li>Anmeldungen an der Plattform und am Admin-Panel.</li>
+        <li>Änderungen an Rollen, Gruppen, Rechten und Zugriffsregeln.</li>
+        <li>Änderungen an der Konfiguration der Instanz.</li>
+        <li>Anlegen, Einladen, Sperren und Löschen von Konten.</li>
+      </ul>
+
+      <p>Das Audit-Log ist ein Zugriffsnachweis, kein Gesprächsmitschnitt. Es beantwortet, wer wann welches Werkzeug an welchem System aufgerufen hat. Die Unterhaltungen selbst liegen getrennt davon in der Datenbank eurer Instanz und unterliegen der eingestellten Aufbewahrungsdauer.</p>
+
+      <h3>Wie lange und wohin exportierbar</h3>
+      <p>Die Protokolle bleiben in eurer Instanz, in eurer Datenbank. Beim Selbstbetrieb verlassen sie eure Infrastruktur nicht. Der Export läuft als CSV, gefiltert nach Zeitraum und Person, und ist damit direkt an eine Revision, an die Rechtsabteilung oder an ein Auditwerkzeug übergebbar.</p>
+
+      <p>Das Protokoll über Admin-Aktionen ist verkettet: Jeder Eintrag trägt eine Prüfsumme über den vorhergehenden, und eine eingebaute Prüfung meldet, wenn die Kette nicht mehr aufgeht. Nachträgliches Herausschneiden einzelner Einträge fällt damit auf. Für Unterhaltungen ist die Aufbewahrungsdauer einstellbar; abgelaufene Inhalte werden samt Suchindex entfernt.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 5 ==================== -->
+    <section class="euc-section">
+      <h2 id="kosten">Kosten sichtbar machen und begrenzen</h2>
+      <p>Der Verbrauch wird pro Person, Gruppe, Modell und Tag erfasst und sowohl in Token als auch in Euro ausgewiesen. Ein gemeinsames Monatsbudget begrenzt die Summe für die ganze Organisation, ein optionales Monatslimit pro Person begrenzt einzelne Konten. Ist ein Budget erschöpft, greift eine weiche Sperre (Soft-Block).</p>
+
+      <h3>Verbrauch pro Person, Gruppe und Modell</h3>
+      <p>Das Admin-Panel zeigt den Verbrauch in Euro, aufgeschlüsselt nach Person, nach Modell und nach Tag, dazu die einzelnen Anfragen mit Modell und Zeitpunkt. Beträge und Aufschlüsselung sieht die Administration; Endnutzer bekommen im Chat nur einen Hinweis, wenn das Budget erschöpft ist. Das nimmt den Kostendruck aus dem Arbeitsalltag und lässt die Zahlen trotzdem dort sichtbar sein, wo sie hingehören.</p>
+
+      <p>Die Preise werden pro Modell hinterlegt, damit die Auswertung nicht auf einem Näherungswert beruht. Das ist wichtiger, als es klingt: Zwischen einem sparsamen und einem sehr grossen Modell liegt beim gleichen Gesprächsverlauf ein Vielfaches an Kosten. Eine kuratierte Modellauswahl ist deshalb Teil der Kostenkontrolle, nicht nur eine Frage der Bedienbarkeit.</p>
+
+      <h3>Gemeinsames Monatsbudget statt Einzellimits</h3>
+      <p>Das Monatsbudget gilt für die Organisation als Ganzes, nicht pro Kopf. Der Grund ist praktisch: Verbrauch verteilt sich nie gleichmässig. Wer die Plattform intensiv nutzt, würde an einem starren Einzellimit hängen bleiben, während bei anderen Kontingent verfällt. Ein gemeinsamer Topf gleicht das aus, ohne dass jemand Limits nachjustieren muss.</p>
+
+      <p>Für Ausreisser gibt es zusätzlich ein optionales Monatslimit pro Person. Es ist ausgeschaltet, solange ihr es nicht setzt, und wird im selben Abgleich hart durchgesetzt wie das Gesamtbudget. Typischer Einsatz: ein einzelnes Konto, das automatisiert Anfragen stellt, soll den gemeinsamen Topf nicht allein leeren.</p>
+
+      <h3>Weiche Sperre statt stiller Überschreitung</h3>
+      <p>Ist das Budget aufgebraucht, greift die weiche Sperre: Die nächste Anfrage wird abgelehnt, mit einem Hinweis im Chat statt einer stillen Weiterbuchung. Eine laufende Antwort wird noch zu Ende geführt. Der Admin kann das Budget jederzeit anheben, danach läuft der Betrieb sofort weiter. Ohne diese Anhebung entsteht keine Nachzahlung.</p>
+
+      <p>Der Abgleich zwischen erfasstem Verbrauch und Budget läuft im Minutentakt, und die Vorabschätzung einer Anfrage kennt deren Länge nicht exakt. Eine einzelne Antwort kann deshalb noch knapp über die Grenze laufen. Es handelt sich um eine weiche Sperre, die eine Kostenexplosion verhindert, nicht um eine sekundengenaue Vorabreservierung.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 6 ==================== -->
+    <section class="euc-section">
+      <h2 id="agenten">Agenten freigeben statt verbieten</h2>
+      <p>Agenten und Skills werden kuratiert freigegeben, nicht pauschal erlaubt und nicht pauschal verboten. Normale Konten nutzen die ihnen zugewiesenen Agenten und sehen den Agenten-Baukasten gar nicht. Eine privilegierte Rolle erstellt und teilt Agenten, und Skills gibt der Admin pro Person frei.</p>
+
+      <p>Der Grund liegt in den Rechten: Ein Agent bringt eine feste Anleitung und einen Satz Werkzeuge mit. Dürfte jeder eigene Agenten bauen und teilen, entstünde neben eurer Rechtekette eine zweite, unkontrollierte Verteilungsschiene. Die Rechteprüfung am Gateway greift zwar weiterhin bei jedem Aufruf, aber die Übersicht, wer womit arbeitet, ginge verloren.</p>
+
+      <p>In der Praxis ergibt das wenige, gepflegte Agenten pro Gruppe statt vieler halbfertiger: einen für die Angebotserstellung, einen für Auswertungen aus dem ERP, einen für die interne Wissenssuche.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen">Häufige Fragen</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>Wie verhindern wir, dass Mitarbeiter Firmendaten in öffentliche KI-Tools eingeben?</h3>
+          <p>Indem ihr einen freigegebenen Weg anbietet, der bequemer ist als der private Umweg. EU-Cowork gibt euch dafür eine eigene Instanz mit euren Konten, euren Systemen und eurem Protokoll. Ein reines Verbot verlagert die Nutzung nur in private Konten, die ihr weder einsehen noch abschalten könnt.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Kann die KI Lohndaten sehen, wenn wir unser ERP anbinden?</h3>
+          <p>Nur wenn ihr das entsprechende Werkzeug freigebt. Die Anbindung besteht aus einzelnen Werkzeugen, und jedes davon wird getrennt freigegeben oder verweigert. Rechnungen lesen kann erlaubt sein, während Löhne lesen für dieselbe Person gesperrt bleibt. Zusätzlich gelten die Zugriffsregeln eures ERP weiter.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie steuern wir, welcher Mitarbeiter welche Daten sehen darf?</h3>
+          <p>Über Gruppen und Regeln pro Werkzeug. Ihr legt Gruppen an oder übernehmt sie aus Entra ID und gebt jeder Gruppe die Werkzeuge frei, die sie braucht. Die Prüfung erfolgt in der Reihenfolge einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers, wobei die erste passende Regel entscheidet.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie begrenzen wir die KI-Kosten pro Mitarbeiter?</h3>
+          <p>Über ein gemeinsames Monatsbudget für die Organisation und ein optionales Monatslimit pro Person. Der Verbrauch wird pro Person, Gruppe und Modell in Token und Euro ausgewiesen. Ist ein Budget erschöpft, wird die nächste Anfrage abgelehnt, statt still weiterzulaufen. Der Admin kann jederzeit anheben.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Welche Nachweise bekommen wir für ein Audit?</h3>
+          <p>Ein Protokoll aller Tool-Aufrufe mit Zeitpunkt, Person, Zielsystem, Werkzeug und Entscheidung, dazu ein verkettetes Protokoll über Admin-Aktionen, Anmeldungen und Rechteänderungen. Beides ist als CSV exportierbar und bleibt in eurer Instanz. Ob das für eure konkrete Nachweispflicht genügt, klärt ihr mit eurer Rechtsberatung.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Brauchen wir Entra ID, damit Governance funktioniert?</h3>
+          <p>Nein. Rollen, Gruppen und Regeln funktionieren vollständig mit lokalen Konten, die ihr per Einladung anlegt. Die Anmeldung über Entra ID wird unterstützt und pro Instanz eingerichtet; sie spart euch die doppelte Pflege, weil Konten bei der ersten Anmeldung entstehen und Gruppenangaben aus dem Anmelde-Token übernommen werden. Automatisches Provisionieren über SCIM ist geplant.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2>Governance vor dem Rollout klären</h2>
+      <p>Setzt euch auf die Warteliste. Ihr bekommt den Zugang zur betreuten Schweizer Instanz zuerst, und wir richten Rechte, Protokoll und Budget mit euch ein, bevor die erste Abteilung startet.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+        <a class="euc-btn-secondary" href="/self-hosting">Selbst hosten</a>
+      </div>
+    </section>
+
+    <!-- ==================== WEITERFÜHREND ==================== -->
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel">Weiter</p>
+      <ul>
+        <li><a href="/integrationen">Welche Systeme sich anbinden lassen und wie MCP funktioniert</a></li>
+        <li><a href="/sicherheit">Wo eure Daten liegen und was mit ihnen nicht passiert</a></li>
+        <li><a href="/faq">Häufige Fragen zu Daten, Betrieb und Lizenz</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft">Zuletzt geprüft: <time datetime="2026-08">August 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU-Cowork</span>
+        </div>
+        <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t">Überall betreibbar</div>
+              <div class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t">DSGVO-konform</div>
+              <div class="euc-badge-s">EU-Verarbeitung</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+        </div>
+
+        <div class="euc-status">
+          <span>Schweizer Instanz</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Produkt</p>
+          <nav aria-label="Produkt">
+            <a href="/#funktionen">Funktionen</a>
+            <a href="/#souveraenitaet">Souveränität</a>
+            <a href="/self-hosting">Self-Host</a>
+            <a href="/integrationen">Integrationen</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Wissen</p>
+          <nav aria-label="Wissen">
+            <a href="/faq">FAQ</a>
+            <a href="/vergleich">Vergleich</a>
+            <a href="/governance">Governance</a>
+            <a href="/vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/sicherheit">Security &amp; Trust</a>
+            <a href="/avv">AVV</a>
+            <a href="/sicherheit#toms">TOM-Übersicht</a>
+            <a href="/subprozessoren">Subprozessoren</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Rechtliches</p>
+          <nav aria-label="Rechtliches">
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+            <a href="/agb">AGB</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights">© 2026 EU-Cowork. Name ist Arbeitstitel.</span>
+      <span class="euc-built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== JSON-LD: WebPage + BreadcrumbList ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/governance#webpage",
+  "url": "https://eucowork.ai/governance",
+  "name": "Governance: wer darf was, und was kostet es",
+  "inLanguage": "de-CH",
+  "isPartOf": {
+    "@id": "https://eucowork.ai/#website"
+  },
+  "about": {
+    "@id": "https://eucowork.ai/#software"
+  },
+  "description": "Wer darf welches Werkzeug nutzen, wer sieht welche Daten, was kostet es? Rechte bis auf Werkzeugebene, Audit pro Aufruf, Monatsbudget mit weicher Sperre.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Start",
+        "item": "https://eucowork.ai/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Governance",
+        "item": "https://eucowork.ai/governance"
+      }
+    ]
+  },
+  "abstract": "In EU-Cowork entscheidet eine Regelkette vor dem Modell, ob ein Zugriff auf ein angebundenes System erlaubt ist. Rechte reichen bis auf einzelne Werkzeuge: Rechnungen lesen kann erlaubt sein, während Löhne lesen für dieselbe Person gesperrt bleibt. Die Auswertung folgt der Reihenfolge einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers, wobei die erste passende Regel entscheidet. Jeder Tool-Aufruf über das Gateway, jede Admin-Aktion und jede Anmeldung wird protokolliert und ist als CSV exportierbar. Der Verbrauch wird pro Person, Gruppe und Modell in Token und Euro ausgewiesen und gegen ein gemeinsames Monatsbudget verrechnet, mit weicher Sperre statt stiller Überschreitung. Nutzer, Rollen und Gruppen werden lokal gepflegt oder über OIDC aus Entra ID übernommen; die OIDC-Anmeldung wird pro Instanz eingerichtet.",
+  "publisher": {
+    "@id": "https://eucowork.ai/#organization"
+  },
+  "dateModified": "2026-08-05"
+}
+</script>
+
+<!-- ==================== JSON-LD: FAQPage ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://eucowork.ai/governance#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie verhindern wir, dass Mitarbeiter Firmendaten in öffentliche KI-Tools eingeben?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Indem ihr einen freigegebenen Weg anbietet, der bequemer ist als der private Umweg. EU-Cowork gibt euch dafür eine eigene Instanz mit euren Konten, euren Systemen und eurem Protokoll. Ein reines Verbot verlagert die Nutzung nur in private Konten, die ihr weder einsehen noch abschalten könnt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann die KI Lohndaten sehen, wenn wir unser ERP anbinden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nur wenn ihr das entsprechende Werkzeug freigebt. Die Anbindung besteht aus einzelnen Werkzeugen, und jedes davon wird getrennt freigegeben oder verweigert. Rechnungen lesen kann erlaubt sein, während Löhne lesen für dieselbe Person gesperrt bleibt. Zusätzlich gelten die Zugriffsregeln eures ERP weiter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie steuern wir, welcher Mitarbeiter welche Daten sehen darf?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Über Gruppen und Regeln pro Werkzeug. Ihr legt Gruppen an oder übernehmt sie aus Entra ID und gebt jeder Gruppe die Werkzeuge frei, die sie braucht. Die Prüfung erfolgt in der Reihenfolge einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers, wobei die erste passende Regel entscheidet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie begrenzen wir die KI-Kosten pro Mitarbeiter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Über ein gemeinsames Monatsbudget für die Organisation und ein optionales Monatslimit pro Person. Der Verbrauch wird pro Person, Gruppe und Modell in Token und Euro ausgewiesen. Ist ein Budget erschöpft, wird die nächste Anfrage abgelehnt, statt still weiterzulaufen. Der Admin kann jederzeit anheben."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche Nachweise bekommen wir für ein Audit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein Protokoll aller Tool-Aufrufe mit Zeitpunkt, Person, Zielsystem, Werkzeug und Entscheidung, dazu ein verkettetes Protokoll über Admin-Aktionen, Anmeldungen und Rechteänderungen. Beides ist als CSV exportierbar und bleibt in eurer Instanz. Ob das für eure konkrete Nachweispflicht genügt, klärt ihr mit eurer Rechtsberatung."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauchen wir Entra ID, damit Governance funktioniert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Rollen, Gruppen und Regeln funktionieren vollständig mit lokalen Konten, die ihr per Einladung anlegt. Die Anmeldung über Entra ID wird unterstützt und pro Instanz eingerichtet; sie spart euch die doppelte Pflege, weil Konten bei der ersten Anmeldung entstehen und Gruppenangaben aus dem Anmelde-Token übernommen werden. Automatisches Provisionieren über SCIM ist geplant."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/governance",
+  "inLanguage": "de-CH",
+  "mainEntityOfPage": {
+    "@id": "https://eucowork.ai/governance#webpage"
+  }
+}
+</script>
+
+</body>
+</html>

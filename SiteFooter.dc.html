@@ -51,10 +51,6 @@
           <a href="/sicherheit" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:500; text-decoration:none; color:#A5D8E6; margin-top:2px; transition:color .15s ease;" style-hover="color:#C9E9F2;">{{ moreSecurity }}</a>
         </div>
         <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:7px 12px; border:1px solid rgba(165,216,230,0.25); border-radius:99px;">
-          <span style="position:relative; display:inline-flex; width:8px; height:8px;">
-            <span style="position:absolute; inset:0; border-radius:50%; background:#7DE0B0; opacity:0.55; animation:euc-pulse 2.4s ease-out infinite;"></span>
-            <span style="position:relative; width:8px; height:8px; border-radius:50%; background:#7DE0B0;"></span>
-          </span>
           <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#C4D0DD;">{{ statusLabel }}</span>
           <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8AA0B6;">·</span>
           <span ref="{{ clockRef }}" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8AA0B6;">Lupfig --:--:--</span>
@@ -131,11 +127,13 @@ class Component extends DCLogic {
     const S = {
       de: {
         tagline:'Ihr KI-Kollege. Bleibt in Europa.',
-        status:'Betriebsbereit',
+        status:'Schweizer Instanz',
         rights:'© 2026 EU-Cowork. Name ist Arbeitstitel.',
         product:'Produkt', trust:'Trust', legal:'Rechtliches',
-        funktionen:'Funktionen', souver:'Souveränität', selfhost:'Self-Host', docs:'Docs',
-        security:'Security & Trust', avv:'AVV', toms:'TOMs', subs:'Subprozessoren',
+        funktionen:'Funktionen', souver:'Souveränität', selfhost:'Self-Host',
+        integrationen:'Integrationen', vergleich:'Vergleich', faq:'FAQ', vision:'Vision',
+        governance:'Governance',
+        security:'Security & Trust', avv:'AVV', toms:'TOM-Übersicht', subs:'Subprozessoren',
         impressum:'Impressum', datenschutz:'Datenschutz', agb:'AGB',
         badgeDeployTitle:'Überall betreibbar', badgeDeploySub:'Managed, eigene Cloud oder On-Prem',
         badgeGdprTitle:'DSGVO-konform', badgeGdprSub:'EU-Verarbeitung',
@@ -143,11 +141,13 @@ class Component extends DCLogic {
       },
       en: {
         tagline:'Your AI coworker. Stays in Europe.',
-        status:'Operational',
+        status:'Swiss instance',
         rights:'© 2026 EU-Cowork. Name is a working title.',
         product:'Product', trust:'Trust', legal:'Legal',
-        funktionen:'Features', souver:'Sovereignty', selfhost:'Self-Host', docs:'Docs',
-        security:'Security & Trust', avv:'DPA', toms:'TOMs', subs:'Subprocessors',
+        funktionen:'Features', souver:'Sovereignty', selfhost:'Self-Host',
+        integrationen:'Integrations', vergleich:'Comparison', faq:'FAQ', vision:'Our vision',
+        governance:'Governance',
+        security:'Security & Trust', avv:'DPA', toms:'TOM overview', subs:'Subprocessors',
         impressum:'Imprint', datenschutz:'Privacy', agb:'Terms (GTC)',
         badgeDeployTitle:'Deployable anywhere', badgeDeploySub:'Managed, own cloud or on-prem',
         badgeGdprTitle:'GDPR-compliant', badgeGdprSub:'EU deployment',
@@ -158,11 +158,15 @@ class Component extends DCLogic {
       { title:S.product, links:[
         { label:S.funktionen, href: base + '#funktionen' },
         { label:S.souver, href: base + '#souveraenitaet' },
+        { label:S.integrationen, href:'/integrationen' },
+        { label:S.vergleich, href:'/vergleich' },
         { label:S.selfhost, href:'/self-hosting' },
-        { label:S.docs, href:'/self-hosting' }
+        { label:S.faq, href:'/faq' },
+        { label:S.vision, href:'/vision' }
       ]},
       { title:S.trust, links:[
         { label:S.security, href:'/sicherheit' },
+        { label:S.governance, href:'/governance' },
         { label:S.avv, href:'/avv' },
         { label:S.toms, href:'/sicherheit#toms' },
         { label:S.subs, href:'/subprozessoren' }

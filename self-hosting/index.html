@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Open-Source-KI-Plattform selbst hosten | EU-Cowork</title>
+<meta name="description" content="EU-Cowork selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.">
+<link rel="canonical" href="https://eucowork.ai/self-hosting">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/self-hosting">
+<meta property="og:title" content="Open-Source-KI-Plattform selbst hosten | EU-Cowork">
+<meta property="og:description" content="Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast. MIT-Lizenz: kein Seat-Limit, kein Branding-Zwang, kein Feature-Gating.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU-Cowork: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Open-Source-KI-Plattform selbst hosten | EU-Cowork">
+<meta name="twitter:description" content="Ein Compose-Stack, zwei Skripte, MIT-Lizenz. Ohne Kubernetes, ohne GPU im App-Tier, ohne Konto bei uns.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ==================== HEADER (unverändert übernommen) ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU-Cowork</span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/#funktionen">Funktionen</a>
+    <a href="/#souveraenitaet">Souveränität</a>
+    <a href="/self-hosting" aria-current="page">Self-Host</a>
+    <a href="/faq">FAQ</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/#funktionen">Funktionen</a>
+      <a href="/#souveraenitaet">Souveränität</a>
+      <a href="/self-hosting">Self-Host</a>
+      <a href="/faq">FAQ</a>
+      <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/">Start</a></li>
+        <li><span aria-current="page">Self-Hosting</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow">Self-Hosting</p>
+
+    <h1>EU-Cowork selbst hosten</h1>
+
+    <p class="euc-lead">EU-Cowork läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine. Zwei Skripte bringen den Stack hoch, die Software steht unter MIT-Lizenz, und ihr braucht dafür weder Kubernetes noch eine GPU noch ein Konto bei uns.</p>
+  </section>
+
+  <div class="euc-wrap">
+
+    <!-- ==================== KURZ GESAGT ==================== -->
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel">Kurz gesagt</p>
+      <ul>
+        <li>EU-Cowork wird als Docker-Compose-Stack auf einer Ubuntu-Maschine betrieben, ohne Kubernetes und ohne GPU im App-Tier.</li>
+        <li>Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Budgetiert 1,5 bis 2 GB pro Instanz inklusive eigener Code-Sandbox.</li>
+        <li>Zwei Skripte genügen: <code>setup-server.sh</code> bereitet den Ubuntu-Server vor, <code>install.sh</code> erzeugt die Secrets und startet den Stack.</li>
+        <li>Für 1 bis 15 Nutzer teilen sich drei bis fünf Instanzen eine VM mit 4 vCPU, 16 GB RAM und 80 GB Platte.</li>
+        <li>Die MIT-Lizenz heisst konkret: kein Seat-Limit, kein Branding-Zwang, kein Feature-Gating, offener Quellcode. Self-Hosting ist gratis.</li>
+      </ul>
+    </div>
+
+    <!-- ==================== INHALTSVERZEICHNIS ==================== -->
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel">Auf dieser Seite</p>
+      <ol>
+        <li><a href="#voraussetzungen">Was ihr braucht</a></li>
+        <li><a href="#installation">Installation in drei Schritten</a></li>
+        <li><a href="#stack">Aus welchen Diensten der Stack besteht</a></li>
+        <li><a href="#betriebsmodelle">Drei Betriebsmodelle, eine Bauform</a></li>
+        <li><a href="#updates">Wie Updates laufen und was im Betrieb zählt</a></li>
+        <li><a href="#sicherung">Ein Skript für Sicherung, Wiederherstellung und Umzug</a></li>
+        <li><a href="#lizenz">Lizenz: was MIT konkret bedeutet</a></li>
+        <li><a href="#fragen">Häufige Fragen zum Selbstbetrieb</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== 1 · VORAUSSETZUNGEN ==================== -->
+    <section class="euc-section">
+      <h2 id="voraussetzungen">Was ihr braucht</h2>
+      <p>Für EU-Cowork braucht ihr eine Ubuntu-Maschine mit Docker Engine und Compose v2, einen DNS-Eintrag darauf und einen API-Schlüssel eures Modell-Gateways. Der Stack läuft vollständig auf diesem einen Host, denn die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter.</p>
+
+      <h3>Server und Systemanforderungen</h3>
+      <p>Das Minimum sind 2 vCPU, 4 GB RAM, 40 GB Platte und Ubuntu 22.04 LTS. Für den Produktivbetrieb empfohlen sind 4 vCPU, 16 GB RAM und 200 GB Platte auf Ubuntu 24.04 LTS; die Aufteilung nach Team-Grösse steht in der Tabelle unten. Die gehärtete Code-Sandbox setzt zusätzlich nested Virtualisierung voraus.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Speicherbedarf im Leerlauf, gemessen am laufenden Stack, Stand August 2026.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Dienst</th>
+              <th scope="col">RAM im Leerlauf</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Chat-Anwendung (LibreChat)</th><td>374 MB</td></tr>
+            <tr><th scope="row">Datenbank (MongoDB)</th><td>102 MB</td></tr>
+            <tr><th scope="row">Websuche (SearXNG)</th><td>65 MB</td></tr>
+            <tr><th scope="row">MCP-Gateway</th><td>33 MB</td></tr>
+            <tr><th scope="row">Suchindex (Meilisearch)</th><td>29 MB</td></tr>
+            <tr><th scope="row">Basis-Stack gesamt</th><td>rund 0,7 GB</td></tr>
+            <tr><th scope="row">Code-Sandbox zusätzlich</th><td>rund 0,5 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Unter Last wächst praktisch nur der Speicher der Chat-Anwendung, die CPU-Auslastung bleibt nahe null. Die Images belegen einmalig rund 5 bis 6 GB und werden zwischen Instanzen auf derselben Maschine geteilt. Danach wachsen vor allem die Uploads: Die erste Grenze im Betrieb ist der Plattenplatz.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Faustregel für die Dimensionierung, abgeleitet aus den Messwerten oben.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Team-Grösse</th>
+              <th scope="col">Empfehlung</th>
+              <th scope="col">VM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1 bis 15 Nutzer</th>
+              <td>drei bis fünf Instanzen auf einer VM</td>
+              <td>4 vCPU, 16 GB RAM, 80 GB</td>
+            </tr>
+            <tr>
+              <th scope="row">15 bis 50 Nutzer</th>
+              <td>eigene VM</td>
+              <td>4 vCPU, 8 bis 16 GB RAM, 100 GB</td>
+            </tr>
+            <tr>
+              <th scope="row">über 50 Nutzer oder regulierte Branche</th>
+              <td>eigene VM, bei Bedarf eigener Host</td>
+              <td>8 vCPU, 32 GB RAM, ab 200 GB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Was ihr nicht braucht</h3>
+      <ul>
+        <li><strong>Kein Kubernetes.</strong> Docker Compose ist die unterstützte Bauform, ein Helm-Chart wird nicht mitgeliefert.</li>
+        <li><strong>Keine GPU für den App-Tier.</strong> GPU-Hardware braucht nur, wer Sprachmodelle zusätzlich lokal ausführen will.</li>
+        <li><strong>Kein Konto bei uns.</strong> Die Installation läuft ohne Registrierung, ohne Lizenzschlüssel und ohne Lizenzserver.</li>
+        <li><strong>Keinen Hyperscaler und keine verwaltete Datenbank.</strong> Jede Ubuntu-VM genügt, Datenbank und Suchindex laufen im selben Stack.</li>
+      </ul>
+    </section>
+
+    <!-- ==================== 2 · INSTALLATION ==================== -->
+    <section class="euc-section">
+      <h2 id="installation">Installation in drei Schritten</h2>
+      <p>Die Installation von EU-Cowork besteht aus zwei Skripten und einem Eintrag in der <code>.env</code>. Auf einer Maschine, auf der Docker bereits läuft, entfällt der erste Schritt.</p>
+
+      <h3>Schritt 1: Server vorbereiten</h3>
+      <p>Das Release-Repository wird mit dem Launch veröffentlicht. Wer heute schon testen will, fordert den Zugang über die <a class="euc-textlink" href="/warteliste">Warteliste</a> an. Die Befehle zeigen, wie die Installation danach aussieht: Repository klonen, in das Verzeichnis <code>distribution</code> wechseln, Vorbereitungsskript starten.</p>
+      <pre><code>cd distribution
+./setup-server.sh</code></pre>
+      <p>Das Skript ist idempotent und installiert Docker Engine samt Compose v2 aus der offiziellen Docker-Quelle, weil das Ubuntu-Paket <code>docker.io</code> kein Compose v2 mitbringt. Dazu kommen Log-Rotation, Firewall-Regeln für die Ports 22, 80 und 443, Swap, Zeitzone und automatische Security-Updates. Danach einmal neu einloggen.</p>
+
+      <h3>Schritt 2: Stack installieren</h3>
+      <pre><code>./install.sh --profiles production</code></pre>
+      <p>Der Installer prüft Docker und Compose v2, erzeugt die <code>.env</code> aus der Vorlage, generiert alle Secrets, legt Datenverzeichnisse und Sandbox-Netz an, zieht die Images und startet den Stack. Das Profil <code>production</code> bringt den Reverse-Proxy mit, der das TLS-Zertifikat automatisch holt.</p>
+
+      <h3>Schritt 3: Modell-Zugang eintragen</h3>
+      <pre><code># .env
+EUROUTER_API_KEY=&lt;euer-api-key&gt;
+
+docker compose up -d</code></pre>
+      <p>Ohne Schlüssel startet der Stack, aber der Chat meldet einen fehlenden API-Schlüssel. Der Zugang ist frei wählbar, denn EU-Cowork spricht jedes OpenAI-kompatible Gateway an. Über EuRouter stehen über 100 Modelle mit EU-Verarbeitung unter einem Zugang, alternativ tragt ihr euren eigenen Endpunkt ein.</p>
+    </section>
+
+    <!-- ==================== 3 · STACK ==================== -->
+    <section class="euc-section">
+      <h2 id="stack">Aus welchen Diensten der Stack besteht</h2>
+      <p>Der Stack besteht aus einer <code>docker-compose.yml</code>; mehrere Dienste liegen hinter optionalen Profilen und starten nur, wenn ihr sie einschaltet. Jeder Dienst ist ein bekanntes Open-Source-Projekt und lässt sich einzeln inspizieren, ersetzen oder abschalten.</p>
+
+      <p><strong>Die Chat-Anwendung</strong> basiert auf LibreChat unter MIT-Lizenz und liefert Oberfläche, Konten, Konversationen, Datei-Uploads und die Modell-Anbindung. EU-Cowork hält diesen Teil nah am Upstream, damit Sicherheits-Updates des Projekts übernehmbar bleiben.</p>
+
+      <p><strong>MongoDB</strong> speichert Konversationen, Konten, Rollen und Einstellungen, als Container im selben Stack und auf eurer Platte. Einen externen Datenbankdienst, an den Inhalte abfliessen könnten, gibt es nicht.</p>
+
+      <p><strong>Meilisearch</strong> liefert die Volltextsuche über die eigenen Konversationen. Der Index liegt lokal und lässt sich neu aufbauen; die Telemetrie von Meilisearch ist ab Werk abgeschaltet.</p>
+
+      <p><strong>Die RAG-API mit pgvector</strong> ist optional und kommt über das Profil <code>filesearch</code> dazu. Die RAG-API bettet Dateien ein, die Nutzer in den Chat hochladen, und liefert dem Modell beim Antworten die passenden Stellen zurück.</p>
+
+      <p><strong>Das MCP-Gateway</strong> sitzt zwischen der Chat-Anwendung und jedem angebundenen System und entscheidet pro Tool-Aufruf, ob er erlaubt ist. Ausgewertet wird in dieser Reihenfolge: einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers. Jeder Aufruf wird protokolliert, und fällt die Prüfung aus, wird der Zugriff verweigert.</p>
+
+      <p><strong>Das Admin-Panel</strong> ist die Oberfläche für Nutzer, Rollen, Gruppen, Zugriffsregeln, Audit-Log und Budget. Es gehört zum Stack, lauscht nur lokal und ist von aussen ausschliesslich über den Reverse-Proxy erreichbar.</p>
+
+      <p><strong>Die Code-Sandbox</strong> führt den vom Modell erzeugten Code aus, damit aus einer Anfrage eine echte Datei zum Herunterladen wird. Sie wird als eigener Compose-Stack danebengestellt und über ein eigenes Docker-Netz angebunden. Zwei Backends stehen zur Wahl: ein leichtgewichtiges als Voreinstellung und ein gehärtetes auf Basis einer microVM, das nested Virtualisierung auf dem Host voraussetzt. Ein Egress-Proxy mit Freigabeliste ist in Arbeit.</p>
+
+      <p><strong>SearXNG</strong> liefert die Websuche aus eurem eigenen Stack, ohne Konto bei einem Suchdienst. Ehrlich dazugesagt: SearXNG reicht die Suchbegriffe an externe Suchmaschinen weiter, ohne die Identität des Nutzers mitzugeben. Konversationen und Dateien verlassen die Maschine nicht.</p>
+
+      <p><strong>Caddy</strong> terminiert TLS, holt die Zertifikate automatisch, sobald der DNS-Eintrag auf die Maschine zeigt, und ist der einzige Dienst auf den Ports 80 und 443. Für den Betrieb hinter einer WAF oder mit interner Zertifizierungsstelle liegen Varianten bei.</p>
+    </section>
+
+    <!-- ==================== 4 · BETRIEBSMODELLE ==================== -->
+    <section class="euc-section">
+      <h2 id="betriebsmodelle">Drei Betriebsmodelle, eine Bauform</h2>
+      <p>Es gibt drei Betriebsmodelle und nur eine Bauform: selbst betrieben, in eurer Cloud, wahlweise durch euren IT-Dienstleister, oder von uns betreut. Der Stack ist in allen drei Fällen derselbe. Unterschiedlich ist nur, wer Root hat, wer die Schlüssel verwaltet und wer Updates und Backups fährt.</p>
+
+      <h3>Selbst betrieben</h3>
+      <p>Ihr betreibt die Maschine, haltet Root, verwaltet eure Schlüssel und fahrt Updates und Backups selbst. Die Software kostet nichts, ein Support-Abo ist optional. Dieses Modell ist der Massstab: Was ein fremder Administrator in zwei Kommandos hochbekommt, trägt auch die anderen Modelle.</p>
+
+      <h3>In eurer Cloud</h3>
+      <p>EU-Cowork läuft auf jeder Ubuntu-VM, im eigenen Rechenzentrum ebenso wie bei einem Schweizer oder europäischen Cloud-Anbieter. Eine Bindung an einen Hyperscaler gibt es nicht. Wer als IT-Dienstleister für seine Kunden hostet, nutzt dieselbe Bauform: pro Kunde ein Stack.</p>
+
+      <h3>Von uns betreut</h3>
+      <p>Wir übernehmen Installation, Updates, Backups und Monitoring und betreiben die Instanz in ISO-27001-zertifizierten Rechenzentren von Green in Lupfig, Schweiz. Die Zertifikate liegen bei Green, nicht bei EU-Cowork; die eigene ISO-27001-Zertifizierung von EU-Cowork ist in Arbeit.</p>
+
+      <h3>Mehrere Instanzen auf einer Maschine</h3>
+      <p>Die Mandanten-Grenze ist der Compose-Stack, nicht die VM: Jede Instanz hat eigene Datenbank, eigenen Suchindex, eigene Uploads, eigene Secrets, eigenes Docker-Netz und eigene Code-Sandbox. Für kleine Teams dürfen deshalb drei bis fünf Instanzen dieselbe VM teilen.</p>
+      <p>Geteilt werden dürfen die Docker-Images und ein gemeinsamer Reverse-Proxy. Nie geteilt werden Datenbank, Uploads, Secrets, Sandbox-Netz und der Schlüssel des Modell-Anbieters: Ein geteilter Schlüssel macht den Verbrauch pro Mandant unauflösbar, ein geteiltes Sandbox-Netz hebt die Trennung dort auf, wo fremder Code läuft.</p>
+    </section>
+
+    <!-- ==================== 5 · UPDATES ==================== -->
+    <section class="euc-section">
+      <h2 id="updates">Wie Updates laufen und was im Betrieb zählt</h2>
+      <p>Updates sind reproduzierbar, weil das Anwendungs-Image auf einen Digest gepinnt ist statt auf einen beweglichen Tag und die übrigen Dienste auf festen Versionsständen laufen. Ein EU-Cowork-Release ist damit eine getestete Kombination aus Anwendungs-Image und Diensten, und zwei Instanzen auf derselben Maschine dürfen unterschiedliche Stände fahren.</p>
+
+      <pre><code>git pull
+./backup.sh backup
+./install.sh --migrate</code></pre>
+
+      <p>Die Option <code>--migrate</code> lässt die <code>.env</code> unangetastet und baut die eigenen Dienste neu. Vor jedem Update gehört ein Backup, danach ein kurzer Funktionstest. Zurück geht es über den vorherigen Stand der Compose-Datei.</p>
+
+      <p>Im laufenden Betrieb sind zwei Dinge wichtig: die Log-Rotation, die <code>setup-server.sh</code> einrichtet, und der Plattenplatz mit einem Alarm ab 70 Prozent Belegung. Wiederkehrende Fragen zu Betrieb, Updates und Datensicherung beantworten die <a class="euc-textlink" href="/faq">häufigen Fragen</a>.</p>
+    </section>
+
+    <!-- ==================== 6 · SICHERUNG ==================== -->
+    <section class="euc-section">
+      <h2 id="sicherung">Ein Skript für Sicherung, Wiederherstellung und Umzug</h2>
+      <p>Ein einziges Skript deckt Sicherung, Wiederherstellung und Serverumzug ab: <code>backup.sh</code> erzeugt ein Archiv aus Datenbank-Dump, <code>.env</code> und hochgeladenen Dateien und spielt es auch wieder zurück. Ein Umzug ist damit Backup auf dem alten Server, Archiv kopieren, Wiederherstellung auf dem neuen.</p>
+
+      <pre><code>./backup.sh backup            # Archiv erzeugen
+./backup.sh list              # vorhandene Archive
+./backup.sh restore &lt;archiv&gt;  # ersetzt die Datenbank, fragt vorher nach</code></pre>
+
+      <p>Das Archiv enthält Secrets und Konversationen und wird mit engen Dateirechten abgelegt. Es gehört nie in ein Repository und nie unverschlüsselt in eine fremde Cloud. Der Suchindex wird nicht mitgesichert, weil er sich aus der Datenbank neu aufbauen lässt.</p>
+
+      <p>Der teuerste Fehler beim Umzug ist, die Verschlüsselungs-Schlüssel neu generieren zu lassen statt sie aus der alten <code>.env</code> zu übernehmen. Danach sind alle in der Datenbank abgelegten Zugangsdaten unlesbar. Mit übernommenen Werten bleibt der Umzug ein Wartungsfenster von 15 bis 30 Minuten.</p>
+
+      <p>Zwei Regeln aus dem Betrieb: das Backup-Ziel ausserhalb der Maschine spiegeln und den Restore einmal testen.</p>
+    </section>
+
+    <!-- ==================== 7 · LIZENZ ==================== -->
+    <section class="euc-section">
+      <h2 id="lizenz">Lizenz: was MIT konkret bedeutet</h2>
+      <p>EU-Cowork steht unter der MIT-Lizenz, ebenso die zugrunde liegende Chat-Anwendung LibreChat. Self-Hosting ist gratis, ab einem Nutzer und ohne Registrierung bei uns. Was das im Einzelnen bedeutet, und warum es im <a class="euc-textlink" href="/vergleich">Vergleich mit anderen Plattformen</a> der entscheidende Unterschied ist:</p>
+
+      <ul>
+        <li><strong>Kein Seat-Limit.</strong> Ob 3 oder 300 Personen auf der Instanz arbeiten, ändert an der Lizenz nichts.</li>
+        <li><strong>Kein Branding-Zwang.</strong> Name, Logo und Farben sind Konfiguration, auch für den kommerziellen Einsatz.</li>
+        <li><strong>Kein Feature-Gating.</strong> Rechteverwaltung, Audit-Log, Budgets und Systemanbindungen stammen aus derselben offenen Quelle.</li>
+        <li><strong>Offener Quellcode.</strong> Die Basis LibreChat ist heute öffentlich einsehbar; Stack, Skripte und Dienste erscheinen mit dem Launch unter MIT und sind dann einsehbar, forkbar und prüfbar, statt auf Zusage zu beruhen.</li>
+      </ul>
+
+      <p>Kommerziell tragen wir das Modell über Betrieb und Betreuung, nicht über Lizenzen. Deshalb ist auch der Weg vom betreuten Betrieb zurück in den Selbstbetrieb offen: dieselbe Bauform, dasselbe Archiv.</p>
+    </section>
+
+    <!-- ==================== 8 · FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen">Häufige Fragen zum Selbstbetrieb</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>Was kostet es, EU-Cowork selbst zu hosten?</h3>
+          <p>Die Software kostet nichts. EU-Cowork steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Brauche ich eine GPU für EU-Cowork?</h3>
+          <p>Nein. Für den App-Tier ist keine GPU nötig. Die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter, die CPU-Auslastung des Stacks ist im Normalbetrieb nahe null. GPU-Hardware braucht nur, wer Sprachmodelle zusätzlich lokal auf der eigenen Maschine ausführen will.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie viele Nutzer trägt eine Instanz?</h3>
+          <p>Für 1 bis 15 Nutzer teilen sich drei bis fünf Instanzen eine VM mit 4 vCPU, 16 GB RAM und 80 GB Platte. Von 15 bis 50 Nutzern bekommt eine Instanz eine eigene VM mit 4 vCPU und 8 bis 16 GB RAM. Darüber wird die VM entsprechend grösser.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Läuft EU-Cowork auf Kubernetes?</h3>
+          <p>Die unterstützte Bauform ist Docker Compose auf einer Ubuntu-Maschine, ein Helm-Chart wird nicht mitgeliefert. Für diese Grössenordnung wäre Kubernetes zusätzlicher Betriebsaufwand, denn der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Als Vorlage taugt die Compose-Datei trotzdem.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Darf ich EU-Cowork forken und unter eigenem Namen ausrollen?</h3>
+          <p>Ja. Die MIT-Lizenz erlaubt Nutzung, Änderung, Weitergabe und den kommerziellen Einsatz, auch unter eigenem Namen und eigenem Logo. Es gibt keine Branding-Klausel und keine Nutzerzahl, ab der zusätzliche Bedingungen greifen. Mitzuführen sind lediglich Lizenztext und Urheberrechtsvermerk.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Kann ich später zwischen Selbstbetrieb und betreutem Betrieb wechseln?</h3>
+          <p>Ja, in beide Richtungen. Beide Modelle nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug: Archiv erzeugen, auf die neue Maschine kopieren, dort zurückspielen. Konversationen, Konten, Einstellungen und Uploads bleiben erhalten, sofern die Verschlüsselungs-Schlüssel übernommen werden.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2>Lieber betreut starten?</h2>
+      <p>Wenn ihr den Stack nicht selbst betreiben wollt: Wir übernehmen Installation, Updates, Sicherung und Monitoring auf Schweizer Infrastruktur. Das betreute Angebot ist im Aufbau, der Zugang läuft über die Warteliste.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+        <a class="euc-btn-secondary" href="/sicherheit">Sicherheit und Datenschutz</a>
+      </div>
+    </section>
+
+    <!-- ==================== WEITERFÜHREND ==================== -->
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel">Weiter</p>
+      <ul>
+        <li><a href="/governance">Wie Rechte, Budgets und Audit-Logs im Betrieb gesteuert werden</a></li>
+        <li><a href="/integrationen">Welche Systeme sich über MCP anbinden lassen</a></li>
+        <li><a href="/faq">Häufige Fragen zu Betrieb, Updates, Rechten und Lizenz</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft">Zuletzt geprüft: <time datetime="2026-08">August 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER (unverändert übernommen) ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU-Cowork</span>
+        </div>
+        <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t">Überall betreibbar</div>
+              <div class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t">DSGVO-konform</div>
+              <div class="euc-badge-s">EU-Verarbeitung</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+        </div>
+
+        <div class="euc-status">
+          <span>Schweizer Instanz</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Produkt</p>
+          <nav aria-label="Produkt">
+            <a href="/#funktionen">Funktionen</a>
+            <a href="/#souveraenitaet">Souveränität</a>
+            <a href="/self-hosting">Self-Host</a>
+            <a href="/integrationen">Integrationen</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Wissen</p>
+          <nav aria-label="Wissen">
+            <a href="/faq">FAQ</a>
+            <a href="/vergleich">Vergleich</a>
+            <a href="/governance">Governance</a>
+            <a href="/vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/sicherheit">Security &amp; Trust</a>
+            <a href="/avv">AVV</a>
+            <a href="/sicherheit#toms">TOM-Übersicht</a>
+            <a href="/subprozessoren">Subprozessoren</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Rechtliches</p>
+          <nav aria-label="Rechtliches">
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+            <a href="/agb">AGB</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights">© 2026 EU-Cowork. Name ist Arbeitstitel.</span>
+      <span class="euc-built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== JSON-LD: WebPage + BreadcrumbList ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/self-hosting#webpage",
+  "url": "https://eucowork.ai/self-hosting",
+  "name": "EU-Cowork selbst hosten",
+  "inLanguage": "de-CH",
+  "isPartOf": {
+    "@id": "https://eucowork.ai/#website"
+  },
+  "about": {
+    "@id": "https://eucowork.ai/#software"
+  },
+  "description": "EU-Cowork selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Start",
+        "item": "https://eucowork.ai/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Self-Hosting",
+        "item": "https://eucowork.ai/self-hosting"
+      }
+    ]
+  },
+  "abstract": "EU-Cowork läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine, ohne Kubernetes und ohne GPU im App-Tier. Die Installation besteht aus zwei Skripten: setup-server.sh bereitet den Ubuntu-Server vor, install.sh erzeugt die Secrets und startet den Stack; danach wird der API-Schlüssel des Modell-Gateways eingetragen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM, pro Instanz sind 1,5 bis 2 GB RAM inklusive Code-Sandbox zu budgetieren. Zum Stack gehören die Chat-Anwendung auf LibreChat-Basis, MongoDB, Meilisearch, die optionale RAG-API mit pgvector, das MCP-Gateway, das Admin-Panel, die daneben laufende Code-Sandbox, die SearXNG-Websuche und Caddy mit automatischem TLS. Es gibt drei Betriebsmodelle bei einer einzigen Bauform: selbst betrieben, in der eigenen Cloud oder von uns betreut. Das Anwendungs-Image ist auf einen Digest gepinnt, Backup, Restore und Serverumzug laufen über ein Skript, und die MIT-Lizenz bedeutet kein Seat-Limit, kein Branding-Zwang und kein Feature-Gating.",
+  "publisher": {
+    "@id": "https://eucowork.ai/#organization"
+  },
+  "dateModified": "2026-08-05"
+}
+</script>
+
+<!-- ==================== JSON-LD: FAQPage ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://eucowork.ai/self-hosting#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was kostet es, EU-Cowork selbst zu hosten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Software kostet nichts. EU-Cowork steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich eine GPU für EU-Cowork?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Für den App-Tier ist keine GPU nötig. Die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter, die CPU-Auslastung des Stacks ist im Normalbetrieb nahe null. GPU-Hardware braucht nur, wer Sprachmodelle zusätzlich lokal auf der eigenen Maschine ausführen will."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie viele Nutzer trägt eine Instanz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Für 1 bis 15 Nutzer teilen sich drei bis fünf Instanzen eine VM mit 4 vCPU, 16 GB RAM und 80 GB Platte. Von 15 bis 50 Nutzern bekommt eine Instanz eine eigene VM mit 4 vCPU und 8 bis 16 GB RAM. Darüber wird die VM entsprechend grösser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Läuft EU-Cowork auf Kubernetes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die unterstützte Bauform ist Docker Compose auf einer Ubuntu-Maschine, ein Helm-Chart wird nicht mitgeliefert. Für diese Grössenordnung wäre Kubernetes zusätzlicher Betriebsaufwand, denn der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Als Vorlage taugt die Compose-Datei trotzdem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Darf ich EU-Cowork forken und unter eigenem Namen ausrollen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die MIT-Lizenz erlaubt Nutzung, Änderung, Weitergabe und den kommerziellen Einsatz, auch unter eigenem Namen und eigenem Logo. Es gibt keine Branding-Klausel und keine Nutzerzahl, ab der zusätzliche Bedingungen greifen. Mitzuführen sind lediglich Lizenztext und Urheberrechtsvermerk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich später zwischen Selbstbetrieb und betreutem Betrieb wechseln?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, in beide Richtungen. Beide Modelle nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug: Archiv erzeugen, auf die neue Maschine kopieren, dort zurückspielen. Konversationen, Konten, Einstellungen und Uploads bleiben erhalten, sofern die Verschlüsselungs-Schlüssel übernommen werden."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/self-hosting",
+  "inLanguage": "de-CH",
+  "mainEntityOfPage": {
+    "@id": "https://eucowork.ai/self-hosting#webpage"
+  }
+}
+</script>
+
+</body>
+</html>

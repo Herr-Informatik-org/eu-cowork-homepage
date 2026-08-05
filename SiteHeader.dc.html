@@ -33,7 +33,7 @@
     </nav>
 
     <div style="display:flex; align-items:center; gap:14px; flex:0 0 auto;">
-<a href="{{ secondaryHref }}" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; text-decoration:none; color:#0B1E33; padding:9px 14px; border:1px solid #D9DEE4; border-radius:9px; transition:border-color .15s ease, background .15s ease;" style-hover="border-color:#0B1E33; background:rgba(11,30,51,0.03);">{{ secondaryLabel }}</a>
+<a href="{{ secondaryHref }}" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; text-decoration:none; color:#0B1E33; padding:9px 14px; border:1px solid #D9DEE4; border-radius:9px; transition:border-color .15s ease, background .15s ease;" style-hover="border-color:#0B1E33; background:rgba(11,30,51,0.03);">{{ secondaryLabel }}</a>
       <a href="{{ primaryHref }}" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:10px 16px; border-radius:9px; white-space:nowrap; transition:transform .15s ease, background .15s ease; box-shadow:0 1px 2px rgba(11,30,51,0.12);" style-hover="background:#123456; transform:translateY(-1px);">{{ primaryLabel }}</a>
     </div>
   </sc-if>
@@ -59,18 +59,18 @@
       </nav>
       <div style="display:flex; flex-direction:column; gap:12px; margin-top:32px;">
         <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-align:center; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:14px; border-radius:10px;">{{ primaryLabel }}</a>
-        <a href="{{ secondaryHref }}" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-align:center; text-decoration:none; color:#0B1E33; border:1px solid #D9DEE4; padding:14px; border-radius:10px;">{{ secondaryLabel }}</a>
+        <a href="{{ secondaryHref }}" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-align:center; text-decoration:none; color:#0B1E33; border:1px solid #D9DEE4; padding:14px; border-radius:10px;">{{ secondaryLabel }}</a>
       </div>
     </div>
   </sc-if>
 </header>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:88},&quot;activeNav&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;features&quot;,&quot;sovereignty&quot;,&quot;selfhost&quot;,&quot;security&quot;,&quot;docs&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onLanding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:88},&quot;activeNav&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;features&quot;,&quot;sovereignty&quot;,&quot;selfhost&quot;,&quot;security&quot;,&quot;faq&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onLanding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   constructor(props){
     super(props);
     this.BRAND = 'EU-Cowork';
-    this.GITHUB = 'https://github.com';
+    this.SELFHOST = '/self-hosting'; // Release-Repository wird zum Launch veroeffentlicht
     this.headerRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     const initMobile = (typeof window !== 'undefined' && window.innerWidth < 940) || false;
@@ -112,16 +112,16 @@ class Component extends DCLogic {
     const base = onLanding ? '' : '/';
     const active = this.props.activeNav || 'home';
     const T = {
-      de: { funktionen:'Funktionen', souveraenitaet:'Souveränität', selfhost:'Self-Host', docs:'Docs',
+      de: { funktionen:'Funktionen', souveraenitaet:'Souveränität', selfhost:'Self-Host', faq:'FAQ',
             primary:'Auf die Warteliste', secondary:'Self-host for free' },
-      en: { funktionen:'Features', souveraenitaet:'Sovereignty', selfhost:'Self-Host', docs:'Docs',
+      en: { funktionen:'Features', souveraenitaet:'Sovereignty', selfhost:'Self-Host', faq:'FAQ',
             primary:'Join the waitlist', secondary:'Self-host for free' }
     }[lang];
     const nav = [
       { key:'features',    label:T.funktionen,     href: base + '#funktionen' },
       { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
       { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
-      { key:'docs',        label:T.docs,           href: '/self-hosting' }
+      { key:'faq',         label:T.faq,            href: '/faq' }
     ].map(n => ({ ...n, color: n.key === active ? '#0B1E33' : '#5A6472' }));
     const isDe = lang === 'de';
     return {
@@ -135,7 +135,7 @@ class Component extends DCLogic {
       primaryLabel: T.primary,
       primaryHref: '/warteliste',
       secondaryLabel: T.secondary,
-      secondaryHref: this.GITHUB,
+      secondaryHref: this.SELFHOST,
       toggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }),
       closeMenu: () => this.setState({ menuOpen: false }),
       toDe: () => this.setLang('de'),

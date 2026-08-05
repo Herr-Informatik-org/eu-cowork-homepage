@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Integrationen: ERP und Systeme per MCP | EU-Cowork</title>
+<meta name="description" content="EU-Cowork bindet euer ERP, SharePoint und jedes System mit API über MCP an. Fünf Anbindungen vorbereitet, Rechte bis auf Werkzeugebene, Audit-Log pro Aufruf.">
+<link rel="canonical" href="https://eucowork.ai/integrationen">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/integrationen">
+<meta property="og:title" content="Integrationen: ERP und Systeme per MCP | EU-Cowork">
+<meta property="og:description" content="Euer ERP, SharePoint und jedes System mit einer Programmierschnittstelle über den offenen MCP-Standard anbinden. Rechte pro Werkzeug, Audit-Log pro Aufruf.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU-Cowork: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Integrationen: ERP und Systeme per MCP | EU-Cowork">
+<meta name="twitter:description" content="Euer ERP, SharePoint und jedes System mit API über den offenen MCP-Standard anbinden.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU-Cowork</span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/#funktionen">Funktionen</a>
+    <a href="/#souveraenitaet">Souveränität</a>
+    <a href="/self-hosting">Self-Host</a>
+    <a href="/faq">FAQ</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/#funktionen">Funktionen</a>
+      <a href="/#souveraenitaet">Souveränität</a>
+      <a href="/self-hosting">Self-Host</a>
+      <a href="/faq">FAQ</a>
+      <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/">Start</a></li>
+        <li><span aria-current="page">Integrationen</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow">Konnektoren und MCP</p>
+
+    <h1>Integrationen: EU-Cowork mit euren Systemen verbinden</h1>
+
+    <p class="euc-lead">Fünf Anbindungen sind vorbereitet und ohne Entwicklungsarbeit einsatzbereit: euer ERP, SharePoint aus Microsoft 365, Websuche mit Quellenangabe, das Erzeugen von Excel-, Word- und PDF-Dateien und eure eigenen Dokumente als Wissensbasis. Aktiviert und freigegeben werden sie bei der Einrichtung im Admin-Panel. Jedes weitere System mit einer Programmierschnittstelle bindet ihr über das Model Context Protocol an.</p>
+  </section>
+
+  <div class="euc-wrap">
+
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel">Kurz gesagt</p>
+      <ul>
+        <li>Fünf Anbindungen sind vorbereitet und werden pro Kunde aktiviert und konfiguriert: euer ERP, SharePoint und Microsoft 365, Websuche mit Quellenangabe, Datei-Erzeugung für Excel, Word und PDF sowie eure Firmendokumente als Wissensbasis.</li>
+        <li>Das Model Context Protocol (MCP) ist ein offener Standard. Jedes System mit einer Programmierschnittstelle lässt sich anbinden, ohne dass ihr euch an einen Anbieter bindet.</li>
+        <li>Für verbreitete Werkzeuge wie HubSpot, Slack, Jira, Confluence, Notion, Linear, GitHub, Sentry, PostgreSQL, Stripe und Google Drive gibt es fertige MCP-Server aus dem offenen Ökosystem.</li>
+        <li>Anbindungen mit gemeinsamem Dienstkonto laufen über das MCP-Gateway. Rechte gelten dort pro Server und pro einzelnem Werkzeug, ausgewertet in der Reihenfolge Nutzer, Rolle, Gruppe, Voreinstellung des Servers.</li>
+        <li>Wird die Identität der Person bis ins Zielsystem durchgereicht, etwa bei SharePoint über das Microsoft-Konto, setzt das Zielsystem die Rechte selbst durch und es gilt dessen Protokollierung.</li>
+        <li>Jeder Tool-Aufruf über das Gateway landet im Audit-Log und ist exportierbar. Add-ins für Outlook und Excel sind in Arbeit.</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel">Auf dieser Seite</p>
+      <ol>
+        <li><a href="#ab-werk">Welche Anbindungen vorbereitet sind</a></li>
+        <li><a href="#mcp">Was ist MCP und warum ist es wichtig?</a></li>
+        <li><a href="#systeme">Jedes System mit Programmierschnittstelle anbinden</a></li>
+        <li><a href="#schritte">In drei Schritten angebunden</a></li>
+        <li><a href="#zugriff">Zugriff bleibt kontrolliert</a></li>
+        <li><a href="#add-ins">Add-ins für Outlook und Excel</a></li>
+        <li><a href="#fragen">Häufige Fragen</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="ab-werk">Welche Anbindungen vorbereitet sind</h2>
+      <p>Diese fünf Anbindungen brauchen keine Entwicklungsarbeit. Aktiviert und konfiguriert werden sie bei der Einrichtung im Admin-Panel, freigegeben pro Person, Rolle oder Gruppe. Was jede einzelne kann, steht in den folgenden Abschnitten.</p>
+
+      <h3>ERP-Anbindung</h3>
+      <p>Die ERP-Anbindung holt Kunden, Rechnungen, Projekte und Stunden aus eurem ERP in den Chat. Typische Fragen im Alltag: „Wie viele Stunden sind auf Projekt X gebucht?“ oder „Welche Rechnungen sind seit über 30 Tagen offen?“ Die Antwort kommt aus euren echten Daten, nicht aus dem Trainingswissen des Modells.</p>
+      <p>Der Nutzen liegt weniger im Nachschlagen als im Verketten: Eine Auswertung, die sonst Export, Sortieren und Formeln bedeutet, entsteht in einem Satz und kommt als fertige Excel-Datei zurück. Welche Daten dabei sichtbar sind, entscheidet nicht das Modell, sondern die Rechtevergabe davor.</p>
+
+      <h3>SharePoint und Microsoft 365</h3>
+      <p>Die SharePoint-Anbindung durchsucht eure Dokumentbibliotheken aus Microsoft 365 und beantwortet Fragen daraus. Verträge, Protokolle, Angebote und Richtlinien bleiben dort liegen, wo sie heute liegen. Es wird nichts in eine zweite Ablage kopiert.</p>
+      <p>Die Anmeldung läuft mit der Microsoft-Identität der einzelnen Person. Jede Person sieht über den Chat also genau die Bibliotheken und Ordner, die sie auch direkt in SharePoint öffnen darf. Bestehende Berechtigungen bleiben die Grenze, ohne dass ihr sie ein zweites Mal pflegen müsst.</p>
+
+      <h3>Websuche mit Quellenangabe</h3>
+      <p>Die Websuche liefert aktuelle Informationen mit Link auf die Fundstelle, damit jede Aussage nachprüfbar bleibt. Gesucht wird über eine selbst betriebene Suchinstanz (SearXNG), die zum Stack gehört und keine Nutzerprofile aufbaut. Damit aus einem Treffer auch ein gelesener Text wird, gehört ein Seiten-Abruf-Dienst dazu, den wir bei der Einrichtung mit ausrollen.</p>
+      <p>Ehrlich dazu gesagt: Die Suchanfragen werden an externe Suchmaschinen weitergereicht, ohne eure Nutzeridentität. Die Aussage „alles bleibt in Europa“ gilt für Speicherung und Modellverarbeitung, nicht für die Suchanfrage selbst. Wer keine externen Anfragen will, schaltet die Websuche im Admin-Panel ab.</p>
+
+      <h3>Dateien erzeugen: Excel, Word und PDF</h3>
+      <p>Aus einer Anweisung wie „Erstelle die Monatsauswertung als Excel“ entsteht eine echte Datei zum Herunterladen, keine Tabelle im Chatfenster. Das gilt für Auswertungen in Excel, für Berichte und Briefe in Word und für PDF-Dokumente.</p>
+      <p>Der Code läuft in einer abgeschotteten Umgebung pro Sitzung, nicht auf eurem Rechner; die Umgebung wird nach der Sitzung verworfen. Ein Egress-Proxy mit Freigabeliste für die Netzzugriffe aus dieser Umgebung ist in Arbeit, ebenso eine zusätzlich gehärtete Isolationsschicht.</p>
+
+      <h3>Firmenwissen als Wissensbasis</h3>
+      <p>Eigene Dokumente werden zur durchsuchbaren Wissensbasis: Handbücher, Prozessbeschreibungen, Angebotsvorlagen, Protokolle. Hochgeladen wird im Chat oder zentral vom Admin, die Antwort nennt die Fundstelle, damit ihr sie prüfen könnt.</p>
+      <p>Die Wissensbasis liegt auf eurer Instanz und verlässt sie nicht. Neue Mitarbeitende fragen den Chat, statt jemanden zu unterbrechen, und wiederkehrende Fragen zu internen Abläufen kosten niemanden mehr eine Suchrunde durch das Laufwerk.</p>
+    </section>
+
+    <!-- ==================== 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="mcp">Was ist MCP und warum ist es wichtig</h2>
+      <p>MCP steht für Model Context Protocol und ist ein offener Standard dafür, wie eine KI mit einer Fachanwendung spricht. Statt für jede Kombination aus KI-Werkzeug und Anwendung eine eigene Schnittstelle zu programmieren, gibt es ein Protokoll: Die Anwendung stellt einen MCP-Server bereit, und der meldet der KI, welche Werkzeuge sie aufrufen darf.</p>
+      <p>Ein Werkzeug ist dabei eine einzelne, benannte Fähigkeit: „Datensätze suchen“, „Rechnung lesen“, „Datei ablegen“. Genau diese Zerlegung ist der Grund, warum Rechtevergabe überhaupt bis auf die feine Ebene funktioniert. Ohne benannte Werkzeuge gäbe es nur die Wahl zwischen ganzem Systemzugriff und gar keinem.</p>
+      <p>Wichtig ist der offene Charakter des Standards. MCP wurde veröffentlicht und wird inzwischen von vielen KI-Anwendungen und Herstellern unterstützt. Ein MCP-Server, den ihr für euer eigenes System baut, ist deshalb keine Investition in EU-Cowork, sondern in eure eigene Infrastruktur: Er funktioniert auch dann weiter, wenn ihr die Plattform darüber wechselt.</p>
+      <p>Für euch heisst das: kein Lock-in bei der Anbindung, keine Punkt-zu-Punkt-Schnittstellen zu warten und fertige Server aus dem Ökosystem statt Eigenbau. Die häufigsten Rückfragen zu MCP, Rechten und Kosten beantworten die <a class="euc-textlink" href="/faq">häufigen Fragen</a>.</p>
+    </section>
+
+    <!-- ==================== 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="systeme">Jedes System mit Programmierschnittstelle anbinden</h2>
+      <p>Jedes System, das eine Programmierschnittstelle hat, lässt sich über MCP anbinden. Für viele verbreitete Werkzeuge existieren bereits fertige MCP-Server, für alles andere genügt eine REST-API und ein dünner Server davor. Eingetragen und freigegeben wird beides im Admin-Panel.</p>
+
+      <h3>Fertige MCP-Server für verbreitete Werkzeuge</h3>
+      <p>Die folgenden MCP-Server stammen aus dem offenen Ökosystem rund um den Standard, teils von den Herstellern selbst, teils aus der Community. Diese Server sind kein Bestandteil von EU-Cowork und werden auch nicht von uns gewartet. Ihr tragt sie als Server ein, hinterlegt die Zugangsdaten und gebt die einzelnen Werkzeuge frei.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Verbreitete Werkzeuge, für die es fertige MCP-Server aus dem offenen Ökosystem gibt, und wofür sie typischerweise genutzt werden. Stand: August 2026. Funktionsumfang und Pflege liegen beim jeweiligen Server.</caption>
+          <thead>
+            <tr>
+              <th scope="col">System</th>
+              <th scope="col">Was damit im Chat möglich ist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">HubSpot</th><td>Kontakte, Deals und Notizen im CRM nachschlagen und ergänzen.</td></tr>
+            <tr><th scope="row">Slack</th><td>Kanäle und Nachrichten durchsuchen und Diskussionen zusammenfassen.</td></tr>
+            <tr><th scope="row">Jira</th><td>Vorgänge suchen, anlegen und den Stand eines Sprints abfragen.</td></tr>
+            <tr><th scope="row">Confluence</th><td>Seiten durchsuchen und den Inhalt eines Bereichs zusammenfassen.</td></tr>
+            <tr><th scope="row">Notion</th><td>Seiten und Datenbanken lesen und Einträge aktualisieren.</td></tr>
+            <tr><th scope="row">Linear</th><td>Issues suchen, anlegen und Zuständigkeiten prüfen.</td></tr>
+            <tr><th scope="row">GitHub</th><td>Repositories, Issues und Pull Requests durchsuchen und einordnen.</td></tr>
+            <tr><th scope="row">Sentry</th><td>Fehlermeldungen abfragen und Häufungen nach Version einordnen.</td></tr>
+            <tr><th scope="row">PostgreSQL</th><td>Datenbanken lesend abfragen und daraus Auswertungen erzeugen.</td></tr>
+            <tr><th scope="row">Stripe</th><td>Zahlungen, Abonnements und den Status von Rechnungen nachschlagen.</td></tr>
+            <tr><th scope="row">Google Drive</th><td>Dateien suchen und deren Inhalt für eine Antwort heranziehen.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Eigene Systeme über REST-API</h3>
+      <p>Für eure eigene Branchenlösung, das Zeiterfassungssystem oder das Lagerprogramm genügt eine REST-API. Davor kommt ein MCP-Server, der zwischen Protokoll und eurer Schnittstelle übersetzt und dabei festlegt, welche Werkzeuge es überhaupt gibt. Der Server bleibt schlank, weil die Fachlogik in eurem System bleibt.</p>
+      <p>Ein Hinweis aus der Praxis, der über die spätere Rechtevergabe entscheidet: Schneidet die Werkzeuge fein und eindeutig zu. Ein Server mit den getrennten Werkzeugen „Rechnungen lesen“ und „Löhne lesen“ lässt sich sauber freigeben. Ein einziges Freiform-Werkzeug, das beliebige Datenbankabfragen entgegennimmt, lässt sich nicht sinnvoll begrenzen und gehört deshalb nur in stark eingeschränkte Anbindungen.</p>
+    </section>
+
+    <!-- ==================== 4 ==================== -->
+    <section class="euc-section">
+      <h2 id="schritte">In drei Schritten angebunden</h2>
+      <p>Eine neue Anbindung kostet drei Schritte im Admin-Panel. Ein neu eingetragener Server ist sofort erreichbar, ohne dass die Installation neu ausgerollt werden muss.</p>
+
+      <ol>
+        <li><strong>Server eintragen.</strong> Adresse des MCP-Servers und die Zugangsdaten im Admin-Panel hinterlegen. Die Werkzeuge, die der Server anbietet, werden dabei automatisch erkannt.</li>
+        <li><strong>Zugriff festlegen.</strong> Pro Rolle, Gruppe und einzelner Person entscheiden, welche Werkzeuge dieses Servers nutzbar sind. Voreinstellung des Servers auf „verweigert“ setzen, dann gilt ausschliesslich, was ihr bewusst freigebt.</li>
+        <li><strong>Nutzen und prüfen.</strong> Im Audit-Log des Gateways seht ihr, wer wann welches Werkzeug auf welchem Server aufgerufen hat und wie entschieden wurde.</li>
+      </ol>
+
+      <p>Für die vorbereiteten Anbindungen liegt die Konfiguration bereits vor. Dort geht es direkt um die Frage, wer welche Werkzeuge nutzen darf.</p>
+    </section>
+
+    <!-- ==================== 5 ==================== -->
+    <section class="euc-section">
+      <h2 id="zugriff">Zugriff bleibt kontrolliert</h2>
+      <p>Anbindungen über das MCP-Gateway werden bei jedem einzelnen Aufruf geprüft. Das Gateway sitzt zwischen der KI und dem angebundenen Server und entscheidet, ob die anfragende Person diesen Server und dieses Werkzeug nutzen darf; die Entscheidung schreibt es ins Audit-Log. Wo stattdessen die Identität der Person bis ins Zielsystem durchgereicht wird, etwa bei SharePoint über das Microsoft-Konto, setzt das Zielsystem die Rechte selbst durch und es gilt dessen Protokollierung.</p>
+      <p>Die Rechte werden in dieser Reihenfolge ausgewertet: einzelner Nutzer, danach Rolle, danach Gruppe, zuletzt die Voreinstellung des Servers. Die speziellere Regel gewinnt. Fällt die Prüfung technisch aus, wird der Zugriff verweigert statt durchgelassen.</p>
+      <p>Rollen und Gruppen pflegt ihr entweder lokal im Admin-Panel oder ihr übernehmt sie aus Entra ID. Wer dort aus einer Gruppe entfernt wird, verliert damit auch die daran hängenden Werkzeug-Freigaben.</p>
+
+      <h3>Zwei Wege, ein System anzubinden</h3>
+      <p>Es gibt zwei Anbindungs-Modi, und die Wahl entscheidet darüber, wo die Rechte durchgesetzt werden. Beim ersten Modus wird die Identität der Person bis ins Zielsystem durchgereicht, beim zweiten arbeitet ein gemeinsames Service-Konto hinter dem Gateway.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Die zwei Anbindungs-Modi und wo die Rechte jeweils durchgesetzt werden.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Modus</th>
+              <th scope="col">Anmeldung am Zielsystem</th>
+              <th scope="col">Wer die Rechte durchsetzt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Identität durchgereicht</th>
+              <td>Jede Person meldet sich einmal selbst am Zielsystem an.</td>
+              <td>Das Zielsystem mit seinen eigenen Benutzerrechten. Läuft die Anbindung zusätzlich über das Gateway, kommen dessen Werkzeug-Rechte dazu.</td>
+            </tr>
+            <tr>
+              <th scope="row">Service-Konto</th>
+              <td>Ein technisches Konto für alle Nutzer, hinterlegt im Gateway.</td>
+              <td>Allein das Gateway. Werkzeug-Rechte sind hier Pflicht, weil das Zielsystem alle Anfragen gleich sieht.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Wo das Zielsystem eigene Benutzerkonten kennt, ist der erste Modus die bessere Wahl: die Rechte des Zielsystems greifen unverändert weiter. Der zweite Modus passt für Systeme ohne eigene Benutzerverwaltung; dort ist das Gateway die einzige Prüfstelle, und saubere Werkzeug-Rechte sind Pflicht.</p>
+      <p>Wie Rollen, Gruppen, Audit-Log und Kostenbudgets im Detail zusammenspielen, steht auf der Seite <a class="euc-textlink" href="/governance">Governance</a>.</p>
+    </section>
+
+    <!-- ==================== 6 ==================== -->
+    <section class="euc-section">
+      <h2 id="add-ins">Add-ins für Outlook und Excel</h2>
+      <p>Add-ins für Outlook und Excel sind in Arbeit und heute noch nicht allgemein verfügbar. Ziel ist, EU-Cowork direkt im Mailfenster und in der Tabelle nutzbar zu machen, statt zwischen Anwendung und Browser zu wechseln.</p>
+
+      <div class="chips">
+        <span class="chip chip-neutral">Outlook-Add-in: in Arbeit</span>
+        <span class="chip chip-neutral">Excel-Add-in: in Arbeit</span>
+      </div>
+
+      <p>Bis dahin läuft beides über den Browser: Mails und Tabellenausschnitte hineinkopieren, erzeugte Excel- und Word-Dateien herunterladen. Der Funktionsumfang ist derselbe, nur der Weg ist länger.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen">Häufige Fragen</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>Was ist ein MCP-Server?</h3>
+          <p>Ein MCP-Server ist ein kleines Programm, das eine Anwendung für KI-Systeme zugänglich macht. Er spricht das Model Context Protocol, einen offenen Standard, und meldet der KI eine Liste benannter Werkzeuge wie „Datensätze suchen“ oder „Datei ablegen“. Die KI ruft diese Werkzeuge auf, statt direkt auf die Anwendung zuzugreifen.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Können wir unser ERP anbinden, ohne dass jeder alles sieht?</h3>
+          <p>Ja. Rechte gelten pro Server und pro einzelnem Werkzeug, nicht nur pro System. Ein Werkzeug zum Lesen von Rechnungen kann für die Buchhaltung freigegeben sein, während das Werkzeug für Lohndaten für alle ausser der Geschäftsleitung gesperrt bleibt. Wird zusätzlich die Nutzer-Identität ins ERP durchgereicht, greifen dort auch die bestehenden Benutzerrechte.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Was, wenn es für unser System keinen fertigen MCP-Server gibt?</h3>
+          <p>Dann baut ihr einen davor, sofern euer System eine REST-API hat. Der Server übersetzt zwischen Protokoll und Schnittstelle und legt fest, welche Werkzeuge es gibt. Die Fachlogik bleibt in eurem System. Weil MCP ein offener Standard ist, funktioniert dieser Server auch mit anderen KI-Anwendungen weiter.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Bleiben bei der Websuche alle Daten in Europa?</h3>
+          <p>Nein, und das sagen wir bewusst so. Speicherung und Modellverarbeitung bleiben im europäischen Raum, die Suchanfragen selbst werden jedoch an externe Suchmaschinen weitergereicht. Eure Nutzeridentität wird dabei nicht mitgegeben. Wer das nicht will, schaltet die Websuche im Admin-Panel ab.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wird jeder Zugriff auf unsere Systeme protokolliert?</h3>
+          <p>Ja, für jede Anbindung, die über das MCP-Gateway läuft. Jeder Tool-Aufruf wird dort im Audit-Log festgehalten, mit Zeitpunkt, Person, Server, Werkzeug und der Entscheidung des Gateways, auch verweigerte Aufrufe. Das Protokoll ist exportierbar und damit für Revision und Nachweispflichten verwendbar. Wo die Identität der Person direkt ins Zielsystem durchgereicht wird, gilt zusätzlich dessen eigene Protokollierung.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA ==================== -->
+    <section class="cta-box">
+      <h2>Euer System auf der Liste?</h2>
+      <p>Tragt euch auf die Warteliste ein. Schreibt uns dazu, welche Systeme ihr anbinden wollt, das fliesst in die Reihenfolge ein, in der wir Anbindungen fertigstellen.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+        <a class="euc-btn-secondary" href="/self-hosting">Selbst hosten</a>
+      </div>
+    </section>
+
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel">Weiter</p>
+      <ul>
+        <li><a href="/governance">Wie Rechte, Rollen, Kosten und Audit im Detail funktionieren</a></li>
+        <li><a href="/sicherheit">Wo eure Daten verarbeitet werden und was mit ihnen nicht passiert</a></li>
+        <li><a href="/faq">40 Fragen und Antworten zu Datenschutz, Betrieb, Funktionen und Lizenz</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft">Zuletzt geprüft: <time datetime="2026-08">August 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU-Cowork</span>
+        </div>
+        <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t">Überall betreibbar</div>
+              <div class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t">DSGVO-konform</div>
+              <div class="euc-badge-s">EU-Verarbeitung</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+        </div>
+
+        <div class="euc-status">
+          <span>Schweizer Instanz</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Produkt</p>
+          <nav aria-label="Produkt">
+            <a href="/#funktionen">Funktionen</a>
+            <a href="/#souveraenitaet">Souveränität</a>
+            <a href="/self-hosting">Self-Host</a>
+            <a href="/integrationen">Integrationen</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Wissen</p>
+          <nav aria-label="Wissen">
+            <a href="/faq">FAQ</a>
+            <a href="/vergleich">Vergleich</a>
+            <a href="/governance">Governance</a>
+            <a href="/vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/sicherheit">Security &amp; Trust</a>
+            <a href="/avv">AVV</a>
+            <a href="/sicherheit#toms">TOM-Übersicht</a>
+            <a href="/subprozessoren">Subprozessoren</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Rechtliches</p>
+          <nav aria-label="Rechtliches">
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+            <a href="/agb">AGB</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights">© 2026 EU-Cowork. Name ist Arbeitstitel.</span>
+      <span class="euc-built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/integrationen#webpage",
+  "url": "https://eucowork.ai/integrationen",
+  "name": "Integrationen: EU-Cowork mit euren Systemen verbinden",
+  "inLanguage": "de-CH",
+  "isPartOf": {
+    "@id": "https://eucowork.ai/#website"
+  },
+  "about": {
+    "@id": "https://eucowork.ai/#software"
+  },
+  "description": "EU-Cowork bindet euer ERP, SharePoint und jedes System mit API über MCP an. Fünf Anbindungen vorbereitet, Rechte bis auf Werkzeugebene, Audit-Log pro Aufruf.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Start",
+        "item": "https://eucowork.ai/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Integrationen",
+        "item": "https://eucowork.ai/integrationen"
+      }
+    ]
+  },
+  "abstract": "EU-Cowork bringt fünf vorbereitete Anbindungen mit, die pro Kunde aktiviert und konfiguriert werden: das ERP, SharePoint aus Microsoft 365, Websuche mit Quellenangabe, das Erzeugen von Excel-, Word- und PDF-Dateien und eigene Dokumente als Wissensbasis. Jedes weitere System mit Programmierschnittstelle wird über das Model Context Protocol (MCP) angebunden, einen offenen Standard ohne Anbieterbindung. Für verbreitete Werkzeuge wie HubSpot, Slack, Jira, Confluence, Notion, Linear, GitHub, Sentry, PostgreSQL, Stripe und Google Drive gibt es fertige MCP-Server aus dem offenen Ökosystem, eigene Systeme werden über ihre REST-API angebunden. Anbindungen mit gemeinsamem Dienstkonto laufen über das MCP-Gateway, das Rechte pro Server und pro einzelnem Werkzeug prüft, in der Reihenfolge Nutzer, Rolle, Gruppe, Voreinstellung des Servers, und jeden Tool-Aufruf im exportierbaren Audit-Log festhält. Wird die Identität der Person bis ins Zielsystem durchgereicht, setzt dieses die Rechte selbst durch. Add-ins für Outlook und Excel sind in Arbeit.",
+  "publisher": {
+    "@id": "https://eucowork.ai/#organization"
+  },
+  "dateModified": "2026-08-05"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://eucowork.ai/integrationen#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist ein MCP-Server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein MCP-Server ist ein kleines Programm, das eine Anwendung für KI-Systeme zugänglich macht. Er spricht das Model Context Protocol, einen offenen Standard, und meldet der KI eine Liste benannter Werkzeuge wie „Datensätze suchen“ oder „Datei ablegen“. Die KI ruft diese Werkzeuge auf, statt direkt auf die Anwendung zuzugreifen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Können wir unser ERP anbinden, ohne dass jeder alles sieht?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Rechte gelten pro Server und pro einzelnem Werkzeug, nicht nur pro System. Ein Werkzeug zum Lesen von Rechnungen kann für die Buchhaltung freigegeben sein, während das Werkzeug für Lohndaten für alle ausser der Geschäftsleitung gesperrt bleibt. Wird zusätzlich die Nutzer-Identität ins ERP durchgereicht, greifen dort auch die bestehenden Benutzerrechte."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was, wenn es für unser System keinen fertigen MCP-Server gibt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dann baut ihr einen davor, sofern euer System eine REST-API hat. Der Server übersetzt zwischen Protokoll und Schnittstelle und legt fest, welche Werkzeuge es gibt. Die Fachlogik bleibt in eurem System. Weil MCP ein offener Standard ist, funktioniert dieser Server auch mit anderen KI-Anwendungen weiter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Bleiben bei der Websuche alle Daten in Europa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein, und das sagen wir bewusst so. Speicherung und Modellverarbeitung bleiben im europäischen Raum, die Suchanfragen selbst werden jedoch an externe Suchmaschinen weitergereicht. Eure Nutzeridentität wird dabei nicht mitgegeben. Wer das nicht will, schaltet die Websuche im Admin-Panel ab."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wird jeder Zugriff auf unsere Systeme protokolliert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, für jede Anbindung, die über das MCP-Gateway läuft. Jeder Tool-Aufruf wird dort im Audit-Log festgehalten, mit Zeitpunkt, Person, Server, Werkzeug und der Entscheidung des Gateways, auch verweigerte Aufrufe. Das Protokoll ist exportierbar und damit für Revision und Nachweispflichten verwendbar. Wo die Identität der Person direkt ins Zielsystem durchgereicht wird, gilt zusätzlich dessen eigene Protokollierung."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/integrationen",
+  "inLanguage": "de-CH",
+  "mainEntityOfPage": {
+    "@id": "https://eucowork.ai/integrationen#webpage"
+  }
+}
+</script>
+
+</body>
+</html>
