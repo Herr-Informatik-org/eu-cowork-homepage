@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @keyframes euc-pulse { 0%{ transform:scale(1); opacity:1; } 70%{ transform:scale(2.6); opacity:0; } 100%{ transform:scale(2.6); opacity:0; } }
+</style>
+</helmet>
+<footer style="background:#0B1E33; color:#F7FAFC; padding:clamp(56px,7vw,96px) clamp(20px,5vw,80px) 34px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:flex; flex-wrap:wrap; gap:48px 56px; justify-content:space-between;">
+
+      <div style="flex:1 1 300px; max-width:360px;">
+        <div style="display:flex; align-items:center; gap:11px;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#F7FAFC;">{{ brand }}</span>
+        </div>
+        <p style="font-family:'Space Grotesk',sans-serif; font-weight:300; font-size:17px; line-height:1.4; color:#C4D0DD; margin:18px 0 0; max-width:280px;">{{ tagline }}</p>
+        <div style="display:flex; flex-direction:column; gap:15px; margin-top:26px;">
+          <div style="display:flex; align-items:center; gap:13px;">
+            <span style="flex:0 0 auto; width:40px; height:40px; border-radius:50%; background:rgba(165,216,230,0.10); border:1px solid rgba(165,216,230,0.22); display:inline-flex; align-items:center; justify-content:center;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#F7FAFC; line-height:1.2;">{{ badgeDeployTitle }}</div>
+              <div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#8AA0B6; margin-top:3px;">{{ badgeDeploySub }}</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:13px;">
+            <img src="eu-badge.png" width="40" height="40" alt="EU" style="flex:0 0 auto; width:40px; height:40px; border-radius:50%; display:block;">
+            <div>
+              <div style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#F7FAFC; line-height:1.2;">{{ badgeGdprTitle }}</div>
+              <div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#8AA0B6; margin-top:3px;">{{ badgeGdprSub }}</div>
+            </div>
+          </div>
+          <a href="Security.dc.html" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:500; text-decoration:none; color:#A5D8E6; margin-top:2px; transition:color .15s ease;" style-hover="color:#C9E9F2;">{{ moreSecurity }}</a>
+        </div>
+        <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:7px 12px; border:1px solid rgba(165,216,230,0.25); border-radius:99px;">
+          <span style="position:relative; display:inline-flex; width:8px; height:8px;">
+            <span style="position:absolute; inset:0; border-radius:50%; background:#7DE0B0; opacity:0.55; animation:euc-pulse 2.4s ease-out infinite;"></span>
+            <span style="position:relative; width:8px; height:8px; border-radius:50%; background:#7DE0B0;"></span>
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#C4D0DD;">{{ statusLabel }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8AA0B6;">·</span>
+          <span ref="{{ clockRef }}" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8AA0B6;">Lupfig --:--:--</span>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:40px 56px;">
+        <sc-for list="{{ columns }}" as="col" hint-placeholder-count="3">
+          <div style="min-width:150px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:#7D93AB;">{{ col.title }}</div>
+            <nav style="display:flex; flex-direction:column; gap:12px; margin-top:18px;">
+              <sc-for list="{{ col.links }}" as="link" hint-placeholder-count="4">
+                <a href="{{ link.href }}" target="{{ link.target }}" style="font-family:'Inter',sans-serif; font-size:14.5px; text-decoration:none; color:#C4D0DD; transition:color .15s ease;" style-hover="color:#A5D8E6;">{{ link.label }}</a>
+              </sc-for>
+            </nav>
+          </div>
+        </sc-for>
+        <div style="min-width:120px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:#7D93AB;">{{ langTitle }}</div>
+          <nav style="display:flex; flex-direction:column; gap:12px; margin-top:18px; align-items:flex-start;">
+            <button onClick="{{ toDe }}" type="button" style="background:none; border:0; padding:0; cursor:pointer; text-align:left; font-family:'Inter',sans-serif; font-size:14.5px; color:{{ deLinkColor }}; transition:color .15s ease;" style-hover="color:#A5D8E6;">Deutsch</button>
+            <button onClick="{{ toEn }}" type="button" style="background:none; border:0; padding:0; cursor:pointer; text-align:left; font-family:'Inter',sans-serif; font-size:14.5px; color:{{ enLinkColor }}; transition:color .15s ease;" style-hover="color:#A5D8E6;">English</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:1px; background:rgba(165,216,230,0.16); margin:44px 0 22px;"></div>
+
+    <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
+        <span style="font-family:'Inter',sans-serif; font-size:13px; color:#8AA0B6;">{{ rights }}</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7D93AB;">{{ builtOn }}</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:420},&quot;onLanding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.BRAND = 'EU-Cowork';
+    this.clockRef = React.createRef();
+    const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
+    this.state = { lang: initLang };
+    this._onLang = (e) => this.setState({ lang: e.detail });
+    this._tick = () => {
+      const el = this.clockRef.current; if (!el) return;
+      try {
+        const t = new Date().toLocaleTimeString('de-CH', { timeZone:'Europe/Zurich', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        el.textContent = 'Lupfig ' + t;
+      } catch(e){}
+    };
+  }
+  componentDidMount(){
+    window.addEventListener('eucowork:langchange', this._onLang);
+    this._tick();
+    this._timer = setInterval(this._tick, 1000);
+  }
+  componentWillUnmount(){
+    window.removeEventListener('eucowork:langchange', this._onLang);
+    clearInterval(this._timer);
+  }
+  setLang(l){
+    try { localStorage.setItem('eucowork_lang', l); } catch(e){}
+    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
+  }
+  renderVals(){
+    const lang = this.state.lang || 'de';
+    const onLanding = this.props.onLanding === true;
+    const base = onLanding ? '' : 'Landing.dc.html';
+    const isDe = lang === 'de';
+    const S = {
+      de: {
+        tagline:'Ihr KI-Kollege. Bleibt in Europa.',
+        status:'Betriebsbereit',
+        rights:'© 2026 EU-Cowork. Name ist Arbeitstitel.',
+        product:'Produkt', trust:'Trust', legal:'Rechtliches',
+        funktionen:'Funktionen', souver:'Souveränität', selfhost:'Self-Host', docs:'Docs',
+        security:'Security & Trust', avv:'AVV', toms:'TOMs', subs:'Subprozessoren',
+        impressum:'Impressum', datenschutz:'Datenschutz', agb:'AGB',
+        badgeDeployTitle:'Überall betreibbar', badgeDeploySub:'Managed, eigene Cloud oder On-Prem',
+        badgeGdprTitle:'DSGVO-konform', badgeGdprSub:'EU-Verarbeitung',
+        moreSecurity:'Mehr zur Sicherheit →', langTitle:'Sprache'
+      },
+      en: {
+        tagline:'Your AI coworker. Stays in Europe.',
+        status:'Operational',
+        rights:'© 2026 EU-Cowork. Name is a working title.',
+        product:'Product', trust:'Trust', legal:'Legal',
+        funktionen:'Features', souver:'Sovereignty', selfhost:'Self-Host', docs:'Docs',
+        security:'Security & Trust', avv:'DPA', toms:'TOMs', subs:'Subprocessors',
+        impressum:'Imprint', datenschutz:'Privacy', agb:'Terms (GTC)',
+        badgeDeployTitle:'Deployable anywhere', badgeDeploySub:'Managed, own cloud or on-prem',
+        badgeGdprTitle:'GDPR-compliant', badgeGdprSub:'EU deployment',
+        moreSecurity:'More about security →', langTitle:'Languages'
+      }
+    }[lang];
+    const columns = [
+      { title:S.product, links:[
+        { label:S.funktionen, href: base + '#funktionen' },
+        { label:S.souver, href: base + '#souveraenitaet' },
+        { label:S.selfhost, href:'SelfHost.dc.html' },
+        { label:S.docs, href:'SelfHost.dc.html' }
+      ]},
+      { title:S.trust, links:[
+        { label:S.security, href:'Security.dc.html' },
+        { label:S.avv, href:'AVV.dc.html' },
+        { label:S.toms, href:'Security.dc.html#toms' },
+        { label:S.subs, href:'Subprozessoren.dc.html' }
+      ]},
+      { title:S.legal, links:[
+        { label:S.impressum, href:'Impressum.dc.html' },
+        { label:S.datenschutz, href:'Datenschutz.dc.html' },
+        { label:S.agb, href:'AGB.dc.html' }
+      ]}
+    ].map(c => ({ ...c, links: c.links.map(l => ({ ...l, target: l.href.startsWith('http') ? '_blank' : '_self' })) }));
+    return {
+      brand: this.BRAND,
+      tagline: S.tagline,
+      statusLabel: S.status,
+      rights: S.rights,
+      builtOn: 'Built on LibreChat · MIT',
+      columns,
+      badgeDeployTitle: S.badgeDeployTitle, badgeDeploySub: S.badgeDeploySub,
+      badgeGdprTitle: S.badgeGdprTitle, badgeGdprSub: S.badgeGdprSub,
+      moreSecurity: S.moreSecurity, langTitle: S.langTitle,
+      deLinkColor: isDe ? '#F7FAFC' : '#C4D0DD', enLinkColor: !isDe ? '#F7FAFC' : '#C4D0DD',
+      clockRef: this.clockRef,
+      toDe: () => this.setLang('de'),
+      toEn: () => this.setLang('en'),
+      deBg: isDe ? '#A5D8E6' : 'transparent', deFg: isDe ? '#0B1E33' : '#8AA0B6',
+      enBg: !isDe ? '#A5D8E6' : 'transparent', enFg: !isDe ? '#0B1E33' : '#8AA0B6'
+    };
+  }
+}
+</script>
+</body>
+</html>

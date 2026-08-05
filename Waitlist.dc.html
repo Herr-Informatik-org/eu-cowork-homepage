@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+  a{ color:#0E3A63; } a:hover{ color:#0B1E33; }
+  ::selection{ background:#A5D8E6; color:#0B1E33; }
+  input::placeholder, textarea::placeholder{ color:#9AA5B1; }
+  @keyframes euc-aurora1{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-6%,4%) scale(1.14); } }
+  @keyframes euc-aurora2{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(7%,-5%) scale(1.1); } }
+  @keyframes euc-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+</style>
+</helmet>
+<div id="top">
+  <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
+  <main>
+    <section style="position:relative; overflow:hidden; padding:clamp(120px,14vw,164px) clamp(20px,5vw,80px) clamp(72px,9vw,112px);">
+      <div aria-hidden="true" style="position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; opacity:.5;">
+        <div style="position:absolute; top:-16%; right:-6%; width:60%; height:80%; background:radial-gradient(closest-side, rgba(165,216,230,.95), rgba(165,216,230,0)); filter:blur(74px); animation:euc-aurora1 24s ease-in-out infinite;"></div>
+        <div style="position:absolute; bottom:-24%; left:-10%; width:56%; height:78%; background:radial-gradient(closest-side, rgba(214,237,245,.98), rgba(214,237,245,0)); filter:blur(86px); animation:euc-aurora2 30s ease-in-out infinite;"></div>
+      </div>
+
+      <div style="position:relative; z-index:1; max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px); align-items:flex-start;">
+        <div style="flex:1 1 380px; min-width:0; max-width:480px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:#3E6E86;">{{ t.eyebrow }}</div>
+          <div style="display:inline-flex; align-items:center; gap:9px; margin-top:18px; padding:6px 13px; border:1px solid #CBE4EE; background:#EAF4F8; border-radius:99px;">
+            <span style="position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-pulse 2.4s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2E6C86;">{{ t.pill }}</span>
+          </div>
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(34px,5.2vw,58px); line-height:1.04; letter-spacing:-0.03em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
+          <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18px); line-height:1.6; color:#47535F; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.sub }}</p>
+
+          <div style="margin-top:30px; display:flex; flex-direction:column; gap:13px;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7D93AB;">{{ t.benefitsTitle }}</div>
+            <sc-for list="{{ t.benefits }}" as="b" hint-placeholder-count="3">
+              <div style="display:flex; align-items:flex-start; gap:11px;">
+                <span style="flex:0 0 auto; margin-top:1px; width:22px; height:22px; border-radius:7px; background:#EAF3F7; border:1px solid #D6EDF5; display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E6C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <span style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.45; color:#33404D;">{{ b }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:14px; margin-top:30px;">
+            <div style="display:flex;">
+              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; background:linear-gradient(135deg,#A5D8E6,#0B1E33);"></span>
+              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#D6EDF5,#3E6E86);"></span>
+              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#F4C542,#0B1E33);"></span>
+              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#7DBBA0,#123456);"></span>
+            </div>
+            <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.4; color:#5A6472;">{{ t.trust }}</span>
+          </div>
+        </div>
+
+        <div style="flex:1 1 440px; min-width:0;">
+          <div style="border:1px solid #E2E7EC; border-radius:18px; background:#fff; box-shadow:0 26px 64px -30px rgba(11,30,51,.28), 0 2px 6px rgba(11,30,51,.05); overflow:hidden;">
+
+            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:clamp(24px,3vw,34px);">
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:600; color:#0B1E33; letter-spacing:-.01em;">{{ t.formTitle }}</div>
+
+                <div style="margin-top:20px;">
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.email }}</span><span style="color:#B4472F;">*</span></div>
+                  <input type="email" inputmode="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                  <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:6px;">{{ eEmail }}</div></sc-if>
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
+                  <div style="flex:1 1 170px; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.name }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                    <input type="text" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ t.labels.namePh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                  </div>
+                  <div style="flex:1 1 170px; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.company }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                    <input type="text" value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                  </div>
+                </div>
+
+                <div style="margin-top:16px;">
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:9px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.users }}</span><span style="color:#B4472F;">*</span></div>
+                  <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <sc-for list="{{ userChips }}" as="c" hint-placeholder-count="5">
+                      <button onClick="{{ c.onClick }}" type="button" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; cursor:pointer; padding:9px 15px; border-radius:9px; border:1px solid {{ c.border }}; background:{{ c.bg }}; color:{{ c.fg }}; transition:border-color .15s ease, background .15s ease;">{{ c.label }}</button>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ eUsers }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eUsers }}</div></sc-if>
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
+                  <div style="flex:1 1 170px; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.region }}</span><span style="color:#B4472F;">*</span></div>
+                    <select value="{{ region }}" onChange="{{ onRegion }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; cursor:pointer; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                      <option value="">{{ t.labels.regionPh }}</option>
+                      <sc-for list="{{ t.regionOptions }}" as="r" hint-placeholder-count="6">
+                        <option value="{{ r }}">{{ r }}</option>
+                      </sc-for>
+                    </select>
+                    <sc-if value="{{ eRegion }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:6px;">{{ eRegion }}</div></sc-if>
+                  </div>
+                  <div style="flex:1 1 170px; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.interest }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                      <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
+                        <button onClick="{{ c.onClick }}" type="button" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:500; cursor:pointer; padding:9px 13px; border-radius:9px; border:1px solid {{ c.border }}; background:{{ c.bg }}; color:{{ c.fg }}; transition:border-color .15s ease, background .15s ease;">{{ c.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top:16px;">
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.usecase }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                  <textarea rows="2" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; line-height:1.5; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; resize:vertical; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);"></textarea>
+                </div>
+
+                <button onClick="{{ onVerify }}" type="button" style="width:100%; display:flex; align-items:center; gap:12px; margin-top:18px; background:#0B1E33; border:1px solid #0B1E33; border-radius:11px; padding:14px 16px; cursor:pointer; text-align:left;">
+                  <span style="flex:0 0 auto; width:22px; height:22px; border-radius:6px; border:1.5px solid {{ verifyBoxBorder }}; background:{{ verifyBoxBg }}; display:inline-flex; align-items:center; justify-content:center; transition:background .2s ease, border-color .2s ease;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" style="opacity:{{ verifyIconOpacity }}; transition:opacity .2s ease;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#0B1E33" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                  <span style="flex:1; font-family:'Inter',sans-serif; font-size:14px; color:#E6EEF4;">{{ verifyLabel }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.1em; color:#7D93AB;">ANTI-BOT</span>
+                </button>
+                <sc-if value="{{ eVerify }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eVerify }}</div></sc-if>
+
+                <label style="display:flex; align-items:flex-start; gap:11px; margin-top:18px; cursor:pointer;">
+                  <button onClick="{{ onToggleConsent }}" type="button" role="checkbox" aria-checked="{{ consent }}" style="flex:0 0 auto; margin-top:1px; width:20px; height:20px; border-radius:6px; border:1.5px solid {{ consentBorder }}; background:{{ consentBg }}; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s ease, border-color .15s ease;"><svg width="11" height="11" viewBox="0 0 14 14" fill="none" style="opacity:{{ consentIconOpacity }};"><path d="M3 7.4 L5.8 10 L11 4" stroke="#F7FAFC" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                  <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.5; color:#556170;">{{ t.labels.consent }} <a href="Datenschutz.dc.html" style="color:#0E3A63; text-decoration:underline;">{{ t.labels.consentLink }}</a>{{ t.labels.consentEnd }}</span>
+                </label>
+                <sc-if value="{{ eConsent }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eConsent }}</div></sc-if>
+
+                <button onClick="{{ onSubmit }}" type="button" style="width:100%; margin-top:22px; font-family:'Inter',sans-serif; font-size:15.5px; font-weight:600; color:#F7FAFC; background:#0B1E33; border:0; border-radius:11px; padding:15px; cursor:pointer; box-shadow:0 1px 2px rgba(11,30,51,.14); transition:background .15s ease, transform .15s ease;" style-hover="background:#123456; transform:translateY(-1px);">{{ t.labels.submit }}</button>
+                <div style="font-family:'Inter',sans-serif; font-size:12px; line-height:1.5; color:#8A96A2; margin-top:14px; text-align:center;">{{ t.labels.footnote }}</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:clamp(30px,4vw,44px); text-align:center;">
+                <div style="width:60px; height:60px; margin:0 auto; border-radius:50%; background:#EAF3F7; border:1px solid #D6EDF5; display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em; margin-top:20px;">{{ t.success.title }}</div>
+                <p style="font-family:'Inter',sans-serif; font-size:15.5px; line-height:1.6; color:#556170; margin:12px auto 0; max-width:360px;">{{ t.success.body }}</p>
+
+                <div style="margin-top:26px; text-align:left; border:1px solid #E4E8EC; border-radius:12px; background:#F7FAFC; overflow:hidden;">
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#7D93AB; padding:13px 16px 0;">{{ t.success.recapTitle }}</div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:11px 16px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.emailLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36; word-break:break-all;">{{ savedEmail }}</span></div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.usersLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedUsers }}</span></div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.regionLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedRegion }}</span></div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 13px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.interestLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedInterest }}</span></div>
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:24px;">
+                  <a href="Landing.dc.html" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:12px 18px; border-radius:10px;">{{ t.success.homeBtn }}</a>
+                  <button onClick="{{ onReset }}" type="button" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500; cursor:pointer; color:#0B1E33; background:transparent; border:1px solid #D3DAE1; padding:12px 18px; border-radius:10px;">{{ t.success.editBtn }}</button>
+                </div>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.emailRef = React.createRef();
+    this.nameRef = React.createRef();
+    this.companyRef = React.createRef();
+    this.usecaseRef = React.createRef();
+    this.regionRef = React.createRef();
+    const initLang = (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de';
+    this.state = { lang: initLang, email:'', name:'', company:'', usecase:'', region:'', users:'', interest:'', consent:false, verified:false, submitted:false,
+      eEmail:'', eUsers:'', eRegion:'', eConsent:'', eVerify:'',
+      savedEmail:'', savedUsers:'', savedRegion:'', savedInterest:'' };
+    this._onLang = (e)=>this.setState({ lang:e.detail });
+    this.C = {
+      de: {
+        eyebrow:'// Early Access',
+        pill:'Early Access offen',
+        h1:'Sichern Sie sich frühen Zugang.',
+        sub:'EU-Cowork ist im Aufbau. Tragen Sie sich ein — wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.',
+        benefitsTitle:'Was Sie erhalten',
+        benefits:['Bevorzugter Zugang zur geschlossenen Beta','Mitreden bei Funktionen & Roadmap','Kein Spam — jederzeit abbestellbar'],
+        trust:'Plätze werden nach Reihenfolge und Fit vergeben.',
+        formTitle:'Auf die Warteliste',
+        labels:{ email:'E-Mail-Adresse', emailPh:'name@firma.ch', name:'Name', namePh:'Vor- und Nachname', company:'Firma / Organisation', companyPh:'Firmenname', optional:'optional',
+          users:'Potenzielle Nutzer', region:'Region', regionPh:'Bitte wählen …', interest:'Interesse an',
+          usecase:'Wofür möchten Sie EU-Cowork einsetzen?', usecasePh:'Kurz in ein, zwei Sätzen (optional)',
+          verify:'Zum Bestätigen klicken', verified:'Bestätigt — danke!',
+          consent:'Ich akzeptiere die', consentLink:'Datenschutzerklärung', consentEnd:'.',
+          submit:'Auf die Warteliste', footnote:'Kein Spam. Wir nutzen Ihre Angaben nur, um Sie über den Zugang zu informieren.' },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        regionOptions:['Schweiz','Deutschland','Österreich','Liechtenstein','Übriges EU/EWR','Andere'],
+        interestOptions:[{label:'Schweiz-Hosting',value:'hosted'},{label:'Self-Host',value:'selfhost'},{label:'Beides',value:'both'}],
+        errors:{ email:'Bitte eine gültige E-Mail-Adresse angeben.', users:'Bitte Nutzerzahl wählen.', region:'Bitte Region wählen.', consent:'Bitte Datenschutzerklärung akzeptieren.', verify:'Bitte bestätigen, dass Sie kein Bot sind.' },
+        none:'—',
+        success:{ title:'Sie sind auf der Liste.', body:'Danke für Ihr Interesse. Wir melden uns per E-Mail, sobald Ihr früher Zugang bereit ist.', recapTitle:'Ihre Angaben', emailLabel:'E-Mail', usersLabel:'Nutzer', regionLabel:'Region', interestLabel:'Interesse', homeBtn:'Zurück zur Startseite', editBtn:'Angaben ändern' }
+      },
+      en: {
+        eyebrow:'// Early Access',
+        pill:'Early access open',
+        h1:'Get early access.',
+        sub:'EU-Cowork is in the making. Add yourself — we want to understand who’s interested, and we give early sign-ups priority.',
+        benefitsTitle:'What you get',
+        benefits:['Priority access to the closed beta','A say in features & roadmap','No spam — unsubscribe anytime'],
+        trust:'Places are allocated by order and fit.',
+        formTitle:'Join the waitlist',
+        labels:{ email:'Email address', emailPh:'name@company.com', name:'Name', namePh:'First and last name', company:'Company / organisation', companyPh:'Company name', optional:'optional',
+          users:'Potential users', region:'Region', regionPh:'Please choose …', interest:'Interested in',
+          usecase:'What would you use EU-Cowork for?', usecasePh:'Briefly, a sentence or two (optional)',
+          verify:'Click to verify', verified:'Verified — thanks!',
+          consent:'I accept the', consentLink:'privacy policy', consentEnd:'.',
+          submit:'Join the waitlist', footnote:'No spam. We only use your details to tell you about access.' },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        regionOptions:['Switzerland','Germany','Austria','Liechtenstein','Rest of EU/EEA','Other'],
+        interestOptions:[{label:'Swiss hosting',value:'hosted'},{label:'Self-host',value:'selfhost'},{label:'Both',value:'both'}],
+        errors:{ email:'Please enter a valid email address.', users:'Please choose a user count.', region:'Please choose a region.', consent:'Please accept the privacy policy.', verify:'Please confirm you’re not a bot.' },
+        none:'—',
+        success:{ title:'You’re on the list.', body:'Thanks for your interest. We’ll email you as soon as your early access is ready.', recapTitle:'Your details', emailLabel:'Email', usersLabel:'Users', regionLabel:'Region', interestLabel:'Interest', homeBtn:'Back to home', editBtn:'Edit details' }
+      }
+    };
+  }
+  componentDidMount(){
+    window.addEventListener('eucowork:langchange', this._onLang);
+    try {
+      const raw = localStorage.getItem('eucowork_waitlist');
+      if (raw){ const r = JSON.parse(raw);
+        this.setState({ submitted:true, email:r.email||'', name:r.name||'', company:r.company||'', region:r.region||'', usecase:r.usecase||'', users:r.users||'', interest:r.interest||'', consent:true, verified:true,
+          savedEmail:r.email||'', savedUsers:r.users||'', savedRegion:r.region||'', savedInterest:r.interestLabel||(this.C[this.state.lang]||this.C.de).none });
+      }
+    } catch(e){}
+  }
+  componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
+  _copy(){ return this.C[this.state.lang] || this.C.de; }
+  setUsers(v){ this.setState({ users:v, eUsers:'' }); }
+  setInterest(v){ this.setState({ interest: this.state.interest===v ? '' : v }); }
+  toggleConsent(){ this.setState({ consent: !this.state.consent, eConsent:'' }); }
+  verify(){ this.setState({ verified:true, eVerify:'' }); }
+  setField(key, e){ var v = (e && e.target) ? e.target.value : ''; var p = {}; p[key] = v; if(key==='email') p.eEmail=''; if(key==='region') p.eRegion=''; this.setState(p); }
+  validEmail(x){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x); }
+  submit(){
+    const c = this._copy();
+    const email = (this.state.email || '').trim();
+    const region = this.state.region || '';
+    const name = (this.state.name || '').trim();
+    const company = (this.state.company || '').trim();
+    const usecase = (this.state.usecase || '').trim();
+    const next = { eEmail:'', eUsers:'', eRegion:'', eConsent:'', eVerify:'' };
+    let ok = true;
+    if (!this.validEmail(email)){ next.eEmail = c.errors.email; ok = false; }
+    if (!this.state.users){ next.eUsers = c.errors.users; ok = false; }
+    if (!region){ next.eRegion = c.errors.region; ok = false; }
+    if (!this.state.verified){ next.eVerify = c.errors.verify; ok = false; }
+    if (!this.state.consent){ next.eConsent = c.errors.consent; ok = false; }
+    if (!ok){ this.setState(next); return; }
+    const io = c.interestOptions.find(o => o.value === this.state.interest);
+    const interestLabel = io ? io.label : c.none;
+    const record = { email, name, company, users:this.state.users, region, interest:this.state.interest, interestLabel, usecase, ts:new Date().toISOString() };
+    try { localStorage.setItem('eucowork_waitlist', JSON.stringify(record)); } catch(e){}
+    this.setState({ submitted:true, eEmail:'', eUsers:'', eRegion:'', eConsent:'', eVerify:'',
+      savedEmail:email, savedUsers:this.state.users, savedRegion:region, savedInterest:interestLabel });
+    try { window.scrollTo({ top:0, behavior:'smooth' }); } catch(e){ window.scrollTo(0,0); }
+  }
+  reset(){
+    try { localStorage.removeItem('eucowork_waitlist'); } catch(e){}
+    this.setState({ submitted:false });
+  }
+  renderVals(){
+    const c = this._copy();
+    const selBg='#0B1E33', selFg='#F7FAFC', selBorder='#0B1E33', offBg='#fff', offFg='#33404D', offBorder='#D8DEE4';
+    const userChips = c.userOptions.map(v => { const on = this.state.users===v; return { label:v, value:v, bg:on?selBg:offBg, fg:on?selFg:offFg, border:on?selBorder:offBorder, onClick:()=>this.setUsers(v) }; });
+    const interestChips = c.interestOptions.map(o => { const on = this.state.interest===o.value; return { label:o.label, value:o.value, bg:on?selBg:offBg, fg:on?selFg:offFg, border:on?selBorder:offBorder, onClick:()=>this.setInterest(o.value) }; });
+    return {
+      t: c,
+      notSubmitted: !this.state.submitted,
+      submitted: this.state.submitted,
+      userChips, interestChips,
+      email:this.state.email, name:this.state.name, company:this.state.company, usecase:this.state.usecase, region:this.state.region,
+      onEmail:(e)=>this.setField('email',e), onName:(e)=>this.setField('name',e), onCompany:(e)=>this.setField('company',e), onUsecase:(e)=>this.setField('usecase',e), onRegion:(e)=>this.setField('region',e),
+      eEmail:this.state.eEmail, eUsers:this.state.eUsers, eRegion:this.state.eRegion, eConsent:this.state.eConsent, eVerify:this.state.eVerify,
+      consent:this.state.consent,
+      consentBg: this.state.consent ? '#0B1E33' : '#fff',
+      consentBorder: this.state.consent ? '#0B1E33' : '#C4CBD3',
+      consentIconOpacity: this.state.consent ? '1' : '0',
+      verifyLabel: this.state.verified ? c.labels.verified : c.labels.verify,
+      verifyBoxBg: this.state.verified ? '#A5D8E6' : 'transparent',
+      verifyBoxBorder: this.state.verified ? '#A5D8E6' : '#5A7086',
+      verifyIconOpacity: this.state.verified ? '1' : '0',
+      savedEmail:this.state.savedEmail, savedUsers:this.state.savedUsers, savedRegion:this.state.savedRegion, savedInterest:this.state.savedInterest,
+      onSubmit:()=>this.submit(), onVerify:()=>this.verify(), onToggleConsent:()=>this.toggleConsent(), onReset:()=>this.reset()
+    };
+  }
+}
+</script>
+</body>
+</html>

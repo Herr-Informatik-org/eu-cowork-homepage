@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+  a{ color:#0E3A63; } a:hover{ color:#0B1E33; }
+  ::selection{ background:#A5D8E6; color:#0B1E33; }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } html{ scroll-behavior:auto; } }
+</style>
+</helmet>
+<div id="top">
+  <dc-import name="SiteHeader" active-nav="selfhost" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
+  <main>
+    <section style="padding:clamp(128px,15vw,170px) clamp(20px,5vw,80px) clamp(48px,6vw,72px);">
+      <div style="max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(36px,6vw,64px); align-items:center;">
+        <div style="flex:1 1 380px; min-width:0;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#3E6E86;">{{ t.eyebrow }}</div>
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(36px,5.4vw,62px); line-height:1.03; letter-spacing:-0.03em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#3E6E86; margin-top:14px;">{{ t.tagline }}</div>
+          <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18px); line-height:1.6; color:#47535F; margin:18px 0 0; max-width:460px; text-wrap:pretty;">{{ t.sub }}</p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:28px;">
+            <a href="{{ github }}" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:14px 20px; border-radius:10px;">{{ t.ctaGithub }}</a>
+            <a href="#stack" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-decoration:none; color:#0B1E33; border:1px solid #D3DAE1; padding:14px 20px; border-radius:10px;">{{ t.ctaDocs }}</a>
+          </div>
+        </div>
+        <div style="flex:1 1 400px; min-width:0;">
+          <div style="border:1px solid rgba(11,30,51,.12); border-radius:12px; background:#07131F; box-shadow:0 30px 70px -34px rgba(11,30,51,.5); overflow:hidden;">
+            <div style="display:flex; align-items:center; gap:8px; padding:11px 14px; border-bottom:1px solid rgba(165,216,230,.12);">
+              <span style="width:11px; height:11px; border-radius:50%; background:#E5695B;"></span><span style="width:11px; height:11px; border-radius:50%; background:#F4C542;"></span><span style="width:11px; height:11px; border-radius:50%; background:#5FA98A;"></span>
+              <span style="margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6E8398;">zsh — eu-cowork</span>
+            </div>
+            <div style="padding:18px 18px 22px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.9; color:#D6EDF5;">
+              <div><span style="color:#5FA98A;">$ </span>git clone https://github.com/eu-cowork/core.git</div>
+              <div><span style="color:#5FA98A;">$ </span>cd core &amp;&amp; ./install.sh</div>
+              <div style="color:#8FD3B4;">✓ Auto-TLS · SearXNG ready</div>
+              <div style="color:#8FD3B4;">✓ Telemetry off by default</div>
+              <div style="color:#F4C542;">→ https://localhost · ~60s</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack" style="scroll-margin-top:90px; background:#F7FAFC; border-top:1px solid #EBEEF1; padding:clamp(56px,7vw,92px) clamp(20px,5vw,80px);">
+      <div style="max-width:1120px; margin:0 auto;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em;">{{ t.stepsTitle }}</div>
+        <div style="margin-top:26px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+          <sc-for list="{{ t.steps }}" as="s" hint-placeholder-count="3">
+            <div style="border:1px solid #E7ECF0; background:#fff; border-radius:14px; padding:22px;">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#A5D8E6; font-weight:600;">{{ s.n }}</div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:500; color:#0B1E33; margin-top:10px;">{{ s.t }}</div>
+              <div style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.55; color:#5A6472; margin-top:7px;">{{ s.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:44px; display:flex; flex-wrap:wrap; gap:28px 48px; align-items:flex-start;">
+          <div style="flex:1 1 320px; min-width:0;">
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:500; color:#0B1E33;">{{ t.stackTitle }}</div>
+            <p style="font-family:'Inter',sans-serif; font-size:14.5px; color:#5A6472; margin:8px 0 0;">{{ t.stackNote }}</p>
+          </div>
+          <div style="flex:1.4 1 420px; min-width:0; border:1px solid rgba(11,30,51,.12); border-radius:12px; background:#07131F; overflow:hidden;">
+            <div style="padding:16px 18px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.85; color:#D6EDF5;">
+              <div style="color:#6E8398;"># docker-compose.yml</div>
+              <div>services:</div>
+              <div>  eu-cowork:</div>
+              <div>    image: ghcr.io/eu-cowork/core:latest</div>
+              <div>    ports: [<span style="color:#8FD3B4;">"443:443"</span>]</div>
+              <div>  caddy:      <span style="color:#6E8398;"># Auto-TLS</span></div>
+              <div>  searxng:    <span style="color:#6E8398;"># private web search</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:clamp(56px,7vw,92px) clamp(20px,5vw,80px);">
+      <div style="max-width:1120px; margin:0 auto;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em;">{{ t.featsTitle }}</div>
+        <div style="margin-top:24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+          <sc-for list="{{ t.feats }}" as="f" hint-placeholder-count="4">
+            <div style="border:1px solid #E7ECF0; background:#fff; border-radius:14px; padding:20px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="flex:0 0 auto; width:26px; height:26px; border-radius:7px; background:#EAF3F7; border:1px solid #D6EDF5; display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E6C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:500; color:#0B1E33;">{{ f.t }}</div>
+              </div>
+              <div style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.55; color:#5A6472; margin-top:10px;">{{ f.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.github = 'https://github.com';
+    this.state = { lang: (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de' };
+    this._onLang = (e)=>this.setState({ lang:e.detail });
+    this.C = {
+      de: {
+        eyebrow:'// Self-Host',
+        h1:'Selbst hosten. In 60 Sekunden.',
+        tagline:'Raw power. No surprises.',
+        sub:'Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang — ab 1 User.',
+        ctaGithub:'View on GitHub →', ctaDocs:'Zum Stack →',
+        stepsTitle:'So läuft es',
+        steps:[
+          { n:'01', t:'Klonen', d:'Repository holen — ein Befehl.' },
+          { n:'02', t:'install.sh', d:'Ein Skript. Images, TLS und Suche richten sich selbst ein.' },
+          { n:'03', t:'Öffnen', d:'https://localhost — fertig in rund 60 Sekunden.' }
+        ],
+        stackTitle:'Der Stack',
+        stackNote:'Docker Compose. Nichts Exotisches, alles nachvollziehbar.',
+        featsTitle:'Inklusive',
+        feats:[
+          { t:'Auto-TLS via Caddy', d:'Zertifikate automatisch, kein manuelles Setup.' },
+          { t:'SearXNG', d:'Private Websuche, selbst gehostet.' },
+          { t:'Telemetrie aus by default', d:'Kein Tracking, ausser ihr aktiviert es bewusst.' },
+          { t:'MIT-Lizenz', d:'Kein Seat-Limit, kein Branding-Zwang.' }
+        ]
+      },
+      en: {
+        eyebrow:'// Self-host',
+        h1:'Self-host. In 60 seconds.',
+        tagline:'Raw power. No surprises.',
+        sub:'One compose stack, auto-TLS, private web search. MIT license, no seat limit, no forced branding — from 1 user.',
+        ctaGithub:'View on GitHub →', ctaDocs:'To the stack →',
+        stepsTitle:'How it runs',
+        steps:[
+          { n:'01', t:'Clone', d:'Pull the repository — one command.' },
+          { n:'02', t:'install.sh', d:'One script. Images, TLS and search set themselves up.' },
+          { n:'03', t:'Open', d:'https://localhost — ready in about 60 seconds.' }
+        ],
+        stackTitle:'The stack',
+        stackNote:'Docker Compose. Nothing exotic, all inspectable.',
+        featsTitle:'Included',
+        feats:[
+          { t:'Auto-TLS via Caddy', d:'Certificates automatically, no manual setup.' },
+          { t:'SearXNG', d:'Private web search, self-hosted.' },
+          { t:'Telemetry off by default', d:'No tracking unless you deliberately enable it.' },
+          { t:'MIT license', d:'No seat limit, no forced branding.' }
+        ]
+      }
+    };
+  }
+  componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
+  componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
+  renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de, github: this.github }; }
+}
+</script>
+</body>
+</html>

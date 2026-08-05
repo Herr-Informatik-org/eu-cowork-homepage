@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+  a{ color:#0E3A63; } a:hover{ color:#0B1E33; }
+  ::selection{ background:#A5D8E6; color:#0B1E33; }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+</style>
+</helmet>
+<div id="top">
+  <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
+  <main style="max-width:780px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.03em; color:#0B1E33; margin:0;">{{ t.h1 }}</h1>
+    <p style="font-family:'Inter',sans-serif; font-size:17px; line-height:1.6; color:#47535F; margin:16px 0 0;">{{ t.intro }}</p>
+    <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:7px 13px; border:1px solid #CDE6D8; background:#EDF7F1; border-radius:99px;">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2E7D5B;">{{ t.badge }}</span>
+    </div>
+    <div style="margin-top:38px; display:flex; flex-direction:column; gap:30px;">
+      <sc-for list="{{ t.sections }}" as="s" hint-placeholder-count="7">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#A5B7C6; font-weight:500;">{{ s.n }}</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:20px; letter-spacing:-.01em; color:#0B1E33; margin:0;">{{ s.t }}</h2>
+          </div>
+          <p style="font-family:'Inter',sans-serif; font-size:15.5px; line-height:1.68; color:#4A5560; margin:10px 0 0; padding-left:26px;">{{ s.b }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:44px; padding:22px 24px; border:1px solid #E4E8EC; border-radius:14px; background:#F7FAFC; font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:#66727F;">{{ t.disclaimer }}</div>
+  </main>
+  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = { lang: (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de' };
+    this._onLang = (e)=>this.setState({ lang:e.detail });
+    this.C = {
+      de: {
+        h1:'Datenschutz',
+        intro:'Wie wir mit personenbezogenen Daten umgehen — nach revDSG (Schweiz) und DSGVO. Kurz, weil wir wenig erheben.',
+        badge:'Telemetrie standardmässig aus',
+        sections:[
+          { n:'1', t:'Verantwortliche Stelle', b:'Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz (Anbieterin von EU-Cowork). Kontakt: info@herr-informatik.ch.' },
+          { n:'2', t:'Welche Daten wir verarbeiten', b:'Konto- und Abrechnungsdaten sowie die Inhalte, die ihr aktiv in den Dienst eingebt. Keine Werbe-Tracker, keine Weitergabe an Werbenetzwerke.' },
+          { n:'3', t:'Kein Training mit euren Daten', b:'Eure Inhalte werden nicht zum Training von Modellen verwendet. No-Training ist vertraglich zugesichert.' },
+          { n:'4', t:'Telemetrie', b:'Standardmässig deaktiviert. Optionale, aggregierte Nutzungsmetriken nur nach ausdrücklicher Aktivierung.' },
+          { n:'5', t:'Ort der Verarbeitung', b:'Betrieb in der Schweiz (Green, Lupfig); Modell-Inferenz EU-verarbeitet über EuRouter. Beim Self-Hosting bleiben Daten vollständig bei euch.' },
+          { n:'6', t:'Speicherdauer', b:'Daten werden nur so lange gespeichert, wie es für den Dienst nötig ist oder gesetzliche Pflichten es verlangen. Löschung auf Anfrage.' },
+          { n:'7', t:'Eure Rechte', b:'Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit. Anfragen an privacy@eu-cowork.example.' }
+        ],
+        disclaimer:'Hinweis: Diese Datenschutzerklärung ist eine Vorschau. Die verbindliche Fassung mit vollständigen Firmenangaben wird vor Launch veröffentlicht und ersetzt Platzhalter.'
+      },
+      en: {
+        h1:'Privacy',
+        intro:'How we handle personal data — under revDSG (Switzerland) and GDPR. Short, because we collect little.',
+        badge:'Telemetry off by default',
+        sections:[
+          { n:'1', t:'Controller', b:'Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Switzerland (provider of EU-Cowork). Contact: info@herr-informatik.ch.' },
+          { n:'2', t:'What data we process', b:'Account and billing data plus the content you actively enter into the service. No advertising trackers, no sharing with ad networks.' },
+          { n:'3', t:'No training on your data', b:'Your content is never used to train models. No-training is contractually assured.' },
+          { n:'4', t:'Telemetry', b:'Disabled by default. Optional, aggregated usage metrics only after explicit opt-in.' },
+          { n:'5', t:'Place of processing', b:'Operated in Switzerland (Green, Lupfig); model inference EU-processed via EuRouter. When self-hosting, data stays entirely with you.' },
+          { n:'6', t:'Retention', b:'Data is stored only as long as needed for the service or required by law. Deletion on request.' },
+          { n:'7', t:'Your rights', b:'Access, rectification, erasure, restriction and data portability. Requests to privacy@eu-cowork.example.' }
+        ],
+        disclaimer:'Note: this privacy statement is a preview. The binding version with full company details will be published before launch and replaces placeholders.'
+      }
+    };
+  }
+  componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
+  componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
+  renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de }; }
+}
+</script>
+</body>
+</html>

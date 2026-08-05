@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+</style>
+</helmet>
+<header ref="{{ headerRef }}" style="position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px clamp(20px,5vw,80px); background:rgba(250,250,247,0.72); backdrop-filter:saturate(140%) blur(14px); -webkit-backdrop-filter:saturate(140%) blur(14px); border-bottom:1px solid rgba(229,229,229,0); transition:padding .25s cubic-bezier(.4,0,.2,1), background .25s cubic-bezier(.4,0,.2,1), border-color .25s cubic-bezier(.4,0,.2,1);">
+
+  <a href="{{ homeHref }}" style="display:flex; align-items:center; gap:11px; text-decoration:none; flex:0 0 auto;">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#0B1E33;">{{ brand }}</span>
+  </a>
+
+  <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+    <nav style="display:flex; align-items:center; gap:30px; margin-left:auto; margin-right:8px;">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+        <a href="{{ item.href }}" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500; text-decoration:none; color:{{ item.color }}; transition:color .15s ease;" style-hover="color:#0B1E33;">{{ item.label }}</a>
+      </sc-for>
+    </nav>
+
+    <div style="display:flex; align-items:center; gap:14px; flex:0 0 auto;">
+<a href="{{ secondaryHref }}" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; text-decoration:none; color:#0B1E33; padding:9px 14px; border:1px solid #D9DEE4; border-radius:9px; transition:border-color .15s ease, background .15s ease;" style-hover="border-color:#0B1E33; background:rgba(11,30,51,0.03);">{{ secondaryLabel }}</a>
+      <a href="{{ primaryHref }}" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:10px 16px; border-radius:9px; white-space:nowrap; transition:transform .15s ease, background .15s ease; box-shadow:0 1px 2px rgba(11,30,51,0.12);" style-hover="background:#123456; transform:translateY(-1px);">{{ primaryLabel }}</a>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="margin-left:auto; display:flex; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:8px;">
+      <span style="display:block; width:22px; height:1.5px; background:#0B1E33;"></span>
+      <span style="display:block; width:22px; height:1.5px; background:#0B1E33;"></span>
+      <span style="display:block; width:22px; height:1.5px; background:#0B1E33;"></span>
+    </button>
+  </sc-if>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; top:0; left:0; right:0; bottom:0; z-index:200; background:#FAFAF7; display:flex; flex-direction:column; padding:22px clamp(20px,5vw,80px);">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#0B1E33;">{{ brand }}</span>
+        <button onClick="{{ toggleMenu }}" aria-label="Close" style="background:none; border:0; cursor:pointer; font-size:26px; line-height:1; color:#0B1E33;">&times;</button>
+      </div>
+      <nav style="display:flex; flex-direction:column; gap:6px; margin-top:34px;">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+          <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:400; text-decoration:none; color:#0B1E33; padding:12px 0; border-bottom:1px solid #E5E5E5;">{{ item.label }}</a>
+        </sc-for>
+      </nav>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-top:32px;">
+        <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-align:center; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:14px; border-radius:10px;">{{ primaryLabel }}</a>
+        <a href="{{ secondaryHref }}" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-align:center; text-decoration:none; color:#0B1E33; border:1px solid #D9DEE4; padding:14px; border-radius:10px;">{{ secondaryLabel }}</a>
+      </div>
+    </div>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:88},&quot;activeNav&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;features&quot;,&quot;sovereignty&quot;,&quot;selfhost&quot;,&quot;security&quot;,&quot;docs&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onLanding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.BRAND = 'EU-Cowork';
+    this.GITHUB = 'https://github.com';
+    this.headerRef = React.createRef();
+    const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
+    const initMobile = (typeof window !== 'undefined' && window.innerWidth < 940) || false;
+    this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile };
+    this._onScroll = () => {
+      const el = this.headerRef.current; if (!el) return;
+      const s = window.scrollY > 8;
+      if (s !== this._scrolled){
+        this._scrolled = s;
+        el.style.padding = s ? '11px clamp(20px,5vw,80px)' : '18px clamp(20px,5vw,80px)';
+        el.style.background = s ? 'rgba(250,250,247,0.9)' : 'rgba(250,250,247,0.72)';
+        el.style.borderBottomColor = s ? 'rgba(229,229,229,1)' : 'rgba(229,229,229,0)';
+      }
+    };
+    this._onResize = () => {
+      const m = window.innerWidth < 940;
+      if (m !== this.state.isMobile) this.setState({ isMobile: m, menuOpen: m ? this.state.menuOpen : false });
+    };
+    this._onLang = (e) => this.setState({ lang: e.detail });
+  }
+  componentDidMount(){
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('eucowork:langchange', this._onLang);
+    this._onScroll();
+  }
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('eucowork:langchange', this._onLang);
+  }
+  setLang(l){
+    try { localStorage.setItem('eucowork_lang', l); } catch(e){}
+    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
+  }
+  renderVals(){
+    const lang = this.state.lang || 'de';
+    const onLanding = this.props.onLanding === true;
+    const base = onLanding ? '' : 'Landing.dc.html';
+    const active = this.props.activeNav || 'home';
+    const T = {
+      de: { funktionen:'Funktionen', souveraenitaet:'Souveränität', selfhost:'Self-Host', docs:'Docs',
+            primary:'Auf die Warteliste', secondary:'Self-host for free' },
+      en: { funktionen:'Features', souveraenitaet:'Sovereignty', selfhost:'Self-Host', docs:'Docs',
+            primary:'Join the waitlist', secondary:'Self-host for free' }
+    }[lang];
+    const nav = [
+      { key:'features',    label:T.funktionen,     href: base + '#funktionen' },
+      { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
+      { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
+      { key:'docs',        label:T.docs,           href: 'SelfHost.dc.html' }
+    ].map(n => ({ ...n, color: n.key === active ? '#0B1E33' : '#5A6472' }));
+    const isDe = lang === 'de';
+    return {
+      brand: this.BRAND,
+      homeHref: onLanding ? '#top' : 'Landing.dc.html',
+      nav,
+      isDesktop: !this.state.isMobile,
+      isMobile: this.state.isMobile,
+      menuOpen: this.state.menuOpen,
+      headerRef: this.headerRef,
+      primaryLabel: T.primary,
+      primaryHref: 'Waitlist.dc.html',
+      secondaryLabel: T.secondary,
+      secondaryHref: this.GITHUB,
+      toggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      toDe: () => this.setLang('de'),
+      toEn: () => this.setLang('en'),
+      deBg: isDe ? '#0B1E33' : 'transparent', deFg: isDe ? '#F7FAFC' : '#5A6472',
+      enBg: !isDe ? '#0B1E33' : 'transparent', enFg: !isDe ? '#F7FAFC' : '#5A6472'
+    };
+  }
+}
+</script>
+</body>
+</html>
