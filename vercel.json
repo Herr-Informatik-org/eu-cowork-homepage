@@ -1,5 +1,31 @@
 {
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/Landing.dc.html",        "destination": "/",               "permanent": true },
+    { "source": "/Waitlist.dc.html",       "destination": "/warteliste",     "permanent": true },
+    { "source": "/Security.dc.html",       "destination": "/sicherheit",     "permanent": true },
+    { "source": "/SelfHost.dc.html",       "destination": "/self-hosting",   "permanent": true },
+    { "source": "/Impressum.dc.html",      "destination": "/impressum",      "permanent": true },
+    { "source": "/Datenschutz.dc.html",    "destination": "/datenschutz",    "permanent": true },
+    { "source": "/AGB.dc.html",            "destination": "/agb",            "permanent": true },
+    { "source": "/AVV.dc.html",            "destination": "/avv",            "permanent": true },
+    { "source": "/Subprozessoren.dc.html", "destination": "/subprozessoren", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/Landing.dc.html" }
+    { "source": "/",               "destination": "/Landing.dc.html" },
+    { "source": "/warteliste",     "destination": "/Waitlist.dc.html" },
+    { "source": "/sicherheit",     "destination": "/Security.dc.html" },
+    { "source": "/self-hosting",   "destination": "/SelfHost.dc.html" },
+    { "source": "/impressum",      "destination": "/Impressum.dc.html" },
+    { "source": "/datenschutz",    "destination": "/Datenschutz.dc.html" },
+    { "source": "/agb",            "destination": "/AGB.dc.html" },
+    { "source": "/avv",            "destination": "/AVV.dc.html" },
+    { "source": "/subprozessoren", "destination": "/Subprozessoren.dc.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(SiteHeader|SiteFooter).dc.html",
+      "headers": [ { "key": "X-Robots-Tag", "value": "noindex" } ]
+    }
   ]
 }

@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressum | EU-Cowork</title>
+<meta name="description" content="EU-Cowork ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz. UID CHE-112.168.836.">
+<link rel="canonical" href="https://eucowork.ai/impressum">
+<meta name="robots" content="index, follow, max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/impressum">
+<meta property="og:title" content="Impressum | EU-Cowork">
+<meta property="og:description" content="EU-Cowork ist ein Angebot der Herr Informatik GmbH, Windisch, Schweiz.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript>
+  <h1>Impressum</h1>
+  <p>EU-Cowork ist ein Angebot der Herr Informatik GmbH. Angaben gemäss den anwendbaren schweizerischen Vorschriften.</p>
+  <ul>
+    <li><strong>Anbieter:</strong> Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz</li>
+    <li><strong>Geschäftsführung:</strong> Naveein Theivendran, Josip Corković</li>
+    <li><strong>Kontakt:</strong> info@herr-informatik.ch, herr-informatik.ch</li>
+    <li><strong>Handelsregister:</strong> Handelsregister des Kantons Aargau, UID: CHE-112.168.836</li>
+  </ul>
+  <p>Hinweis: „EU-Cowork“ ist der Arbeitstitel eines Produkts der Herr Informatik GmbH. Produktbezogene Angaben können sich bis zum Launch noch ändern.</p>
+  <h2>Weiter</h2>
+  <ul>
+    <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
+    <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
+    <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
+  </ul>
+</noscript>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,6 +104,26 @@ class Component extends DCLogic {
   componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
   renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de }; }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["WebPage", "AboutPage"],
+  "@id": "https://eucowork.ai/impressum#webpage",
+  "url": "https://eucowork.ai/impressum",
+  "name": "Impressum",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#organization" },
+  "description": "EU-Cowork ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz. Geschäftsführung: Naveein Theivendran und Josip Corković. Eingetragen im Handelsregister des Kantons Aargau, UID CHE-112.168.836. Kontakt: info@herr-informatik.ch. Angaben gemäss den anwendbaren schweizerischen Vorschriften.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Impressum", "item": "https://eucowork.ai/impressum" }
+    ]
+  }
 }
 </script>
 </body>

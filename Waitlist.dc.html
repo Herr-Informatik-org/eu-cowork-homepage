@@ -1,11 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warteliste: frühen Zugang sichern | EU-Cowork</title>
+<meta name="description" content="EU-Cowork ist im Aufbau. Tragen Sie sich in die Warteliste ein; frühe Interessenten erhalten Vortritt beim Zugang zur gehosteten Schweizer Instanz.">
+<link rel="canonical" href="https://eucowork.ai/warteliste">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/warteliste">
+<meta property="og:title" content="Warteliste: frühen Zugang sichern | EU-Cowork">
+<meta property="og:description" content="EU-Cowork ist im Aufbau. Tragen Sie sich ein; frühe Interessenten erhalten Vortritt.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Warteliste: frühen Zugang sichern | EU-Cowork">
+<meta name="twitter:description" content="EU-Cowork ist im Aufbau. Frühe Interessenten erhalten Vortritt.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript>
+  <h1>Sichern Sie sich frühen Zugang.</h1>
+  <p>EU-Cowork ist im Aufbau. Tragen Sie sich ein: wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.</p>
+  <h2>Was Sie erhalten</h2>
+  <ul>
+    <li>Bevorzugter Zugang zur geschlossenen Beta</li>
+    <li>Mitreden bei Funktionen und Roadmap</li>
+    <li>Kein Spam, jederzeit abbestellbar</li>
+  </ul>
+  <p>Plätze werden nach Reihenfolge und Fit vergeben. Die Anmeldung braucht JavaScript; bitte aktivieren Sie es oder schreiben Sie an info@herr-informatik.ch.</p>
+  <h2>Weiter</h2>
+  <ul>
+    <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
+    <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
+    <li><a href="/">Startseite: EU-Cowork im Überblick</a></li>
+  </ul>
+</noscript>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -133,7 +169,7 @@
 
                 <label style="display:flex; align-items:flex-start; gap:11px; margin-top:18px; cursor:pointer;">
                   <button onClick="{{ onToggleConsent }}" type="button" role="checkbox" aria-checked="{{ consent }}" style="flex:0 0 auto; margin-top:1px; width:20px; height:20px; border-radius:6px; border:1.5px solid {{ consentBorder }}; background:{{ consentBg }}; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s ease, border-color .15s ease;"><svg width="11" height="11" viewBox="0 0 14 14" fill="none" style="opacity:{{ consentIconOpacity }};"><path d="M3 7.4 L5.8 10 L11 4" stroke="#F7FAFC" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-                  <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.5; color:#556170;">{{ t.labels.consent }} <a href="Datenschutz.dc.html" style="color:#0E3A63; text-decoration:underline;">{{ t.labels.consentLink }}</a>{{ t.labels.consentEnd }}</span>
+                  <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.5; color:#556170;">{{ t.labels.consent }} <a href="/datenschutz" style="color:#0E3A63; text-decoration:underline;">{{ t.labels.consentLink }}</a>{{ t.labels.consentEnd }}</span>
                 </label>
                 <sc-if value="{{ eConsent }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eConsent }}</div></sc-if>
 
@@ -157,7 +193,7 @@
                 </div>
 
                 <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:24px;">
-                  <a href="Landing.dc.html" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:12px 18px; border-radius:10px;">{{ t.success.homeBtn }}</a>
+                  <a href="/" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:12px 18px; border-radius:10px;">{{ t.success.homeBtn }}</a>
                   <button onClick="{{ onReset }}" type="button" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500; cursor:pointer; color:#0B1E33; background:transparent; border:1px solid #D3DAE1; padding:12px 18px; border-radius:10px;">{{ t.success.editBtn }}</button>
                 </div>
               </div>
@@ -301,6 +337,26 @@ class Component extends DCLogic {
       savedEmail:this.state.savedEmail, savedUsers:this.state.savedUsers, savedRegion:this.state.savedRegion, savedInterest:this.state.savedInterest,
       onSubmit:()=>this.submit(), onVerify:()=>this.verify(), onToggleConsent:()=>this.toggleConsent(), onReset:()=>this.reset()
     };
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/warteliste#webpage",
+  "url": "https://eucowork.ai/warteliste",
+  "name": "Warteliste: frühen Zugang sichern",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "EU-Cowork ist im Aufbau. Wer sich einträgt, erhält bevorzugten Zugang zur geschlossenen Beta, kann bei Funktionen und Roadmap mitreden und wird ausschliesslich über den Zugang informiert; kein Spam, jederzeit abbestellbar. Plätze werden nach Reihenfolge und Fit vergeben. Abgefragt werden E-Mail-Adresse, potenzielle Nutzerzahl, Region und das Interesse an Schweizer Hosting, Self-Hosting oder beidem.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Warteliste", "item": "https://eucowork.ai/warteliste" }
+    ]
   }
 }
 </script>

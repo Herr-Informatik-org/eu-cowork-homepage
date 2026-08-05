@@ -1,11 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Hosting in 60 Sekunden mit Docker Compose | EU-Cowork</title>
+<meta name="description" content="Ein Compose-Stack, Auto-TLS via Caddy, private Websuche mit SearXNG. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, self-hostbar ab 1 User.">
+<link rel="canonical" href="https://eucowork.ai/self-hosting">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/self-hosting">
+<meta property="og:title" content="Self-Hosting in 60 Sekunden mit Docker Compose | EU-Cowork">
+<meta property="og:description" content="Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, ab 1 User.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Self-Hosting in 60 Sekunden | EU-Cowork">
+<meta name="twitter:description" content="Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, ab 1 User.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript>
+  <h1>Selbst hosten. In 60 Sekunden.</h1>
+  <p>Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, ab 1 User.</p>
+  <h2>So läuft es</h2>
+  <ol>
+    <li><strong>Klonen:</strong> Repository holen, ein Befehl.</li>
+    <li><strong>install.sh:</strong> Ein Skript. Images, TLS und Suche richten sich selbst ein.</li>
+    <li><strong>Öffnen:</strong> https://localhost, fertig in rund 60 Sekunden.</li>
+  </ol>
+  <h2>Der Stack</h2>
+  <p>Docker Compose. Nichts Exotisches, alles nachvollziehbar.</p>
+  <h2>Inklusive</h2>
+  <ul>
+    <li><strong>Auto-TLS via Caddy:</strong> Zertifikate automatisch, kein manuelles Setup.</li>
+    <li><strong>SearXNG:</strong> Private Websuche, selbst gehostet.</li>
+    <li><strong>Telemetrie aus by default:</strong> Kein Tracking, ausser ihr aktiviert es bewusst.</li>
+    <li><strong>MIT-Lizenz:</strong> Kein Seat-Limit, kein Branding-Zwang.</li>
+  </ul>
+  <h2>Weiter</h2>
+  <ul>
+    <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
+    <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
+    <li><a href="/">Startseite: EU-Cowork im Überblick</a></li>
+  </ul>
+</noscript>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,6 +207,26 @@ class Component extends DCLogic {
   componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
   renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de, github: this.github }; }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/self-hosting#webpage",
+  "url": "https://eucowork.ai/self-hosting",
+  "name": "Self-Hosting in 60 Sekunden mit Docker Compose",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "EU-Cowork lässt sich vollständig selbst hosten: Repository klonen, install.sh ausführen, https://localhost öffnen. Fertig in rund 60 Sekunden. Der Stack ist Docker Compose, nichts Exotisches und alles nachvollziehbar. Enthalten sind Auto-TLS via Caddy ohne manuelles Zertifikats-Setup, private Websuche über selbst gehostetes SearXNG und standardmässig deaktivierte Telemetrie. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, ab 1 Nutzer.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Self-Hosting", "item": "https://eucowork.ai/self-hosting" }
+    ]
+  }
 }
 </script>
 </body>

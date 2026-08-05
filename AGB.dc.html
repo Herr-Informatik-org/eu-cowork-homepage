@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Allgemeine Geschäftsbedingungen | EU-Cowork</title>
+<meta name="description" content="AGB für die Nutzung des Dienstes EU-Cowork der Herr Informatik GmbH, Windisch.">
+<link rel="canonical" href="https://eucowork.ai/agb">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/agb">
+<meta property="og:title" content="Allgemeine Geschäftsbedingungen | EU-Cowork">
+<meta property="og:description" content="AGB für die Nutzung des Dienstes EU-Cowork der Herr Informatik GmbH.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript>
+  <h1>Allgemeine Geschäftsbedingungen</h1>
+  <p>Diese AGB regeln die vertraglichen Beziehungen zwischen der Herr Informatik GmbH (Windisch) und dem Kunden über die Nutzung des Dienstes EU-Cowork.</p>
+  <ul>
+    <li><strong>Vertragsgegenstand:</strong> EU-Cowork als in der Schweiz gehosteter Dienst oder Self-Hosting unter der MIT-Lizenz. Modellzugang EU-verarbeitet über EuRouter.</li>
+    <li><strong>Datenschutz &amp; Datensicherheit:</strong> Bearbeitung nach revDSG und DSGVO. Kundendaten werden nicht für das Training von Modellen verwendet, Telemetrie ist standardmässig deaktiviert.</li>
+    <li><strong>Open Source &amp; geistiges Eigentum:</strong> Die self-hostbare Software steht unter der MIT-Lizenz. Marken und Design bleiben geschützt.</li>
+    <li><strong>Haftung:</strong> Nach den Bestimmungen des schweizerischen Obligationenrechts (OR).</li>
+    <li><strong>Anwendbares Recht:</strong> Ausschliesslich schweizerisches Recht, Gerichtsstand Windisch (Kanton Aargau).</li>
+  </ul>
+  <p>Hinweis: Diese AGB sind eine Vorschau und stellen keine Rechtsberatung dar. Massgebend ist die final freigegebene Fassung.</p>
+  <h2>Weiter</h2>
+  <ul>
+    <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
+    <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
+    <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
+  </ul>
+</noscript>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +54,7 @@
 <div id="top">
   <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
   <main style="max-width:820px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
-    <a href="Landing.dc.html" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#3E6E86; text-decoration:none;">← {{ t.back }}</a>
+    <a href="/" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#3E6E86; text-decoration:none;">← {{ t.back }}</a>
     <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:6px 12px; border:1px solid #E4D9B8; background:#FBF6E6; border-radius:99px;">
       <span style="width:7px; height:7px; border-radius:50%; background:#C7A83A;"></span>
       <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7A6A2E;">{{ t.status }}</span>
@@ -100,6 +131,26 @@ class Component extends DCLogic {
   componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
   renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de }; }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/agb#webpage",
+  "url": "https://eucowork.ai/agb",
+  "name": "Allgemeine Geschäftsbedingungen",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "Die AGB regeln die vertraglichen Beziehungen zwischen der Herr Informatik GmbH (Windisch) und dem Kunden über die Nutzung des Dienstes EU-Cowork. Bereitgestellt wird EU-Cowork als in der Schweiz gehosteter Dienst oder zum Self-Hosting unter der MIT-Lizenz, mit EU-verarbeitetem Modellzugang über EuRouter. Personenbezogene Daten werden nach revDSG und DSGVO bearbeitet, Kundendaten trainieren keine Modelle, Telemetrie ist standardmässig deaktiviert. Es gilt schweizerisches Recht, Gerichtsstand ist Windisch (Kanton Aargau).",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "AGB", "item": "https://eucowork.ai/agb" }
+    ]
+  }
 }
 </script>
 </body>

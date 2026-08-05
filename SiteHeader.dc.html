@@ -109,7 +109,7 @@ class Component extends DCLogic {
   renderVals(){
     const lang = this.state.lang || 'de';
     const onLanding = this.props.onLanding === true;
-    const base = onLanding ? '' : 'Landing.dc.html';
+    const base = onLanding ? '' : '/';
     const active = this.props.activeNav || 'home';
     const T = {
       de: { funktionen:'Funktionen', souveraenitaet:'Souveränität', selfhost:'Self-Host', docs:'Docs',
@@ -121,19 +121,19 @@ class Component extends DCLogic {
       { key:'features',    label:T.funktionen,     href: base + '#funktionen' },
       { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
       { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
-      { key:'docs',        label:T.docs,           href: 'SelfHost.dc.html' }
+      { key:'docs',        label:T.docs,           href: '/self-hosting' }
     ].map(n => ({ ...n, color: n.key === active ? '#0B1E33' : '#5A6472' }));
     const isDe = lang === 'de';
     return {
       brand: this.BRAND,
-      homeHref: onLanding ? '#top' : 'Landing.dc.html',
+      homeHref: onLanding ? '#top' : '/',
       nav,
       isDesktop: !this.state.isMobile,
       isMobile: this.state.isMobile,
       menuOpen: this.state.menuOpen,
       headerRef: this.headerRef,
       primaryLabel: T.primary,
-      primaryHref: 'Waitlist.dc.html',
+      primaryHref: '/warteliste',
       secondaryLabel: T.secondary,
       secondaryHref: this.GITHUB,
       toggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }),

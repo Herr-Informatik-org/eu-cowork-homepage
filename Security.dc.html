@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trust Center: Sicherheit &amp; Datenschutz | EU-Cowork</title>
+<meta name="description" content="Betrieb in ISO-27001-zertifizierten Rechenzentren von Green (Lupfig AG, Schweiz). revDSG &amp; DSGVO, No-Training, Telemetrie aus by default, Audit-Logs. Mit Dokumenten belegt.">
+<link rel="canonical" href="https://eucowork.ai/sicherheit">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/sicherheit">
+<meta property="og:title" content="Trust Center: Sicherheit &amp; Datenschutz | EU-Cowork">
+<meta property="og:description" content="ISO-27001-Rechenzentren in der Schweiz, revDSG &amp; DSGVO, No-Training, Audit-Logs. Jede Aussage belegt oder als in Arbeit gekennzeichnet.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Trust Center: Sicherheit &amp; Datenschutz | EU-Cowork">
+<meta name="twitter:description" content="ISO-27001-Rechenzentren in der Schweiz, revDSG &amp; DSGVO, No-Training, Audit-Logs.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript>
+  <h1>Sicherheit &amp; Vertrauen</h1>
+  <p>Selbstdeklaration, mit echten Dokumenten dahinter. Jede Aussage hier ist belegt oder klar als in Arbeit gekennzeichnet.</p>
+  <h2>Was wir zusichern</h2>
+  <ul>
+    <li><strong>Betrieb in der Schweiz:</strong> ISO-27001-zertifizierte Rechenzentren von Green (Lupfig AG, Schweiz). Zertifikate von Green, nicht von uns.</li>
+    <li><strong>revDSG &amp; DSGVO:</strong> Schweizer und europäischer Datenschutz, vertraglich zugesichert.</li>
+    <li><strong>No-Training:</strong> Ihre Daten trainieren keine Modelle.</li>
+    <li><strong>Telemetrie aus by default:</strong> Kein Tracking ohne aktive Zustimmung.</li>
+    <li><strong>Audit-Logs:</strong> Jeder Tool- und Datenzugriff ist nachvollziehbar.</li>
+    <li><strong>MIT-Lizenz:</strong> Kein Seat-Limit, kein Branding-Zwang. Self-Hosting gratis ab 1 User.</li>
+  </ul>
+  <h2>Hosting</h2>
+  <p>Betrieben in ISO-27001-zertifizierten Rechenzentren von Green (Lupfig AG, Schweiz). Die Zertifizierungen liegen bei Green. Eine eigene ISO-27001-Zertifizierung von EU-Cowork ist in Arbeit.</p>
+  <h2>Weiter</h2>
+  <ul>
+    <li><a href="/avv">Auftragsverarbeitungsvertrag (AVV)</a></li>
+    <li><a href="/subprozessoren">Subprozessoren-Liste</a></li>
+    <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
+    <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
+  </ul>
+</noscript>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,9 +144,9 @@ class Component extends DCLogic {
         docsTitle:'Dokumente',
         docsSub:'Verträge und Nachweise zum Öffnen.',
         docs:[
-          { name:'Auftragsverarbeitungsvertrag (AVV)', meta:'Vertrag · PDF', href:'AVV.dc.html', pending:false },
+          { name:'Auftragsverarbeitungsvertrag (AVV)', meta:'Vertrag · PDF', href:'/avv', pending:false },
           { name:'Technische & organisatorische Massnahmen (TOMs)', meta:'Dokument', href:'#toms', pending:true },
-          { name:'Subprozessoren-Liste', meta:'Liste', href:'Subprozessoren.dc.html', pending:false },
+          { name:'Subprozessoren-Liste', meta:'Liste', href:'/subprozessoren', pending:false },
           { name:'Hosting-Fakten — Green, Lupfig AG', meta:'Faktenblatt', href:'#', pending:true },
           { name:'No-Training-Statement', meta:'Erklärung', href:'#', pending:true },
           { name:'Audit- & Zugriffskonzept', meta:'Dokument', href:'#', pending:true }
@@ -131,9 +172,9 @@ class Component extends DCLogic {
         docsTitle:'Documents',
         docsSub:'Contracts and evidence to open.',
         docs:[
-          { name:'Data Processing Agreement (DPA)', meta:'Contract · PDF', href:'AVV.dc.html', pending:false },
+          { name:'Data Processing Agreement (DPA)', meta:'Contract · PDF', href:'/avv', pending:false },
           { name:'Technical & organisational measures (TOMs)', meta:'Document', href:'#toms', pending:true },
-          { name:'Subprocessor list', meta:'List', href:'Subprozessoren.dc.html', pending:false },
+          { name:'Subprocessor list', meta:'List', href:'/subprozessoren', pending:false },
           { name:'Hosting facts — Green, Lupfig AG', meta:'Fact sheet', href:'#', pending:true },
           { name:'No-training statement', meta:'Statement', href:'#', pending:true },
           { name:'Audit & access concept', meta:'Document', href:'#', pending:true }
@@ -158,6 +199,26 @@ class Component extends DCLogic {
       ctaBorder: d.pending ? '#E4E8EC' : '#D6EDF5'
     })) });
     return { t };
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/sicherheit#webpage",
+  "url": "https://eucowork.ai/sicherheit",
+  "name": "Trust Center: Sicherheit und Datenschutz",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "Betrieb in ISO-27001-zertifizierten Rechenzentren von Green (Lupfig AG, Schweiz); die Zertifikate liegen bei Green, nicht bei EU-Cowork. revDSG und DSGVO sind vertraglich zugesichert. No-Training: Kundendaten trainieren keine Modelle. Telemetrie ist standardmässig aus, kein Tracking ohne aktive Zustimmung. Jeder Tool- und Datenzugriff ist über Audit-Logs nachvollziehbar. MIT-Lizenz ohne Seat-Limit und ohne Branding-Zwang, Self-Hosting gratis ab 1 User. Eine eigene ISO-27001-Zertifizierung ist in Arbeit; bis dahin gilt die Zertifizierung des Rechenzentrumsbetreibers Green.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Trust Center", "item": "https://eucowork.ai/sicherheit" }
+    ]
   }
 }
 </script>

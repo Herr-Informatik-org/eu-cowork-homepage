@@ -1,11 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datenschutzerklärung | EU-Cowork</title>
+<meta name="description" content="Wie EU-Cowork mit personenbezogenen Daten umgeht, nach revDSG (Schweiz) und DSGVO. Kurz, weil wir wenig erheben. Telemetrie standardmässig aus.">
+<link rel="canonical" href="https://eucowork.ai/datenschutz">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/datenschutz">
+<meta property="og:title" content="Datenschutzerklärung | EU-Cowork">
+<meta property="og:description" content="Nach revDSG und DSGVO. Telemetrie standardmässig aus.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="./support.js"></script>
 </head>
 <body>
+<noscript>
+  <h1>Datenschutz</h1>
+  <p>Wie wir mit personenbezogenen Daten umgehen, nach revDSG (Schweiz) und DSGVO. Kurz, weil wir wenig erheben. Telemetrie standardmässig aus.</p>
+  <ul>
+    <li><strong>Verantwortliche Stelle:</strong> Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz. Kontakt: info@herr-informatik.ch.</li>
+    <li><strong>Welche Daten wir verarbeiten:</strong> Konto- und Abrechnungsdaten sowie die Inhalte, die ihr aktiv in den Dienst eingebt. Keine Werbe-Tracker.</li>
+    <li><strong>Kein Training mit euren Daten:</strong> Eure Inhalte werden nicht zum Training von Modellen verwendet.</li>
+    <li><strong>Telemetrie:</strong> Standardmässig deaktiviert, aggregierte Nutzungsmetriken nur nach ausdrücklicher Aktivierung.</li>
+    <li><strong>Ort der Verarbeitung:</strong> Betrieb in der Schweiz (Green, Lupfig), Modell-Inferenz EU-verarbeitet über EuRouter.</li>
+    <li><strong>Speicherdauer:</strong> Nur so lange wie für den Dienst nötig oder gesetzlich verlangt. Löschung auf Anfrage.</li>
+    <li><strong>Eure Rechte:</strong> Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit.</li>
+  </ul>
+  <h2>Weiter</h2>
+  <ul>
+    <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
+    <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
+    <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
+  </ul>
+</noscript>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,6 +118,26 @@ class Component extends DCLogic {
   componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
   renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de }; }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/datenschutz#webpage",
+  "url": "https://eucowork.ai/datenschutz",
+  "name": "Datenschutzerklärung",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "Wie EU-Cowork mit personenbezogenen Daten umgeht, nach revDSG (Schweiz) und DSGVO. Verantwortliche Stelle ist die Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch. Verarbeitet werden Konto- und Abrechnungsdaten sowie die aktiv eingegebenen Inhalte; keine Werbe-Tracker, keine Weitergabe an Werbenetzwerke. Kundeninhalte trainieren keine Modelle, Telemetrie ist standardmässig deaktiviert. Betrieb in der Schweiz (Green, Lupfig), Modell-Inferenz EU-verarbeitet über EuRouter. Beim Self-Hosting bleiben die Daten vollständig beim Kunden.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Datenschutz", "item": "https://eucowork.ai/datenschutz" }
+    ]
+  }
 }
 </script>
 </body>

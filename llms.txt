@@ -1,0 +1,78 @@
+# EU-Cowork
+
+> Quelloffene KI-Arbeitsplattform für Unternehmen. Zugang zu über 150 Sprachmodellen, EU-verarbeitet. Self-hostbar ab einem Nutzer unter MIT-Lizenz oder betrieben in ISO-27001-zertifizierten Rechenzentren in der Schweiz. Ein Angebot der Herr Informatik GmbH, Windisch (CH).
+
+EU-Cowork ist ein „KI-Kollege" für Unternehmen: eine browserbasierte Chat-Plattform,
+die Sprachmodelle mit den Systemen der Firma verbindet, statt ein weiteres
+isoliertes Chat-Fenster zu sein. Das Produkt ist ein dünner Fork von LibreChat (MIT,
+über 40'000 GitHub-Stars), ergänzt um eigene Enterprise-Dienste.
+
+Zentrale Positionierung: europäische Datensouveränität ohne Funktionsverzicht.
+Der Betrieb erfolgt in der Schweiz, die Inferenz EU-verarbeitet über EuRouter,
+Telemetrie ist standardmässig deaktiviert, Kundendaten trainieren keine Modelle.
+Wer die Software selbst hostet, behält seine Daten vollständig auf eigener
+Infrastruktur: ab einem Nutzer, ohne Seat-Limit, ohne Branding-Zwang.
+
+## Was EU-Cowork kann
+
+- Alle Modelle: über 150 Top-Modelle über einen Zugang, EU-verarbeitet, inklusive Frontier-Modellen wie Claude und GPT. Kein Vendor-Lock-in, BYOK möglich.
+- Websuche: aktuelle Antworten mit Quellenangabe direkt im Chat; self-hosted über SearXNG.
+- Dateien erzeugen: „Generier mir ein Excel" sagen und die fertige Datei herunterladen (Excel, Word, PDF).
+- Rollen-Agenten und Skills: kuratierte KI-Kollegen für wiederkehrende Aufgaben, pro Gruppe freigegeben.
+- ERP-Anbindung mit Rechte-Kontrolle: Anbindung des ERP über ein MCP-Gateway. Berechtigungen bis auf einzelne Tools: „Rechnungen lesen ja, Löhne nein." Jeder Tool-Aufruf wird auditiert.
+- Proaktives Memory: merkt sich selbstständig, was wichtig ist. Auditierbar, löschbar, auf dem eigenen Server.
+
+## Governance und Administration
+
+- Rollen und Gruppen: Nutzer einladen, Rollen vergeben, Gruppen zuweisen, aus Entra ID (OIDC) oder lokal gepflegt.
+- MCP-Rechte bis auf Tool-Ebene: pro Server und pro einzelnes Tool erlauben oder verweigern. Policy-Kette: Nutzer, Rolle, Gruppe, Server-Default; die erste Übereinstimmung gewinnt.
+- Kosten und gepoolte Budgets: Verbrauch pro Nutzer, Gruppe und Modell in Token und EUR. Monatsbudget org-gepoolt, mit Soft-Block statt stiller Überschreitung.
+- Audit-Log: jeder Tool-Aufruf, jede Admin-Aktion und jeder Login wird protokolliert und ist exportierbar.
+
+## Datenschutz und Compliance
+
+- Betrieb in ISO-27001-zertifizierten Rechenzentren von Green (Lupfig AG, Schweiz). Die Zertifizierung liegt bei Green; eine eigene ISO-27001-Zertifizierung von EU-Cowork ist in Arbeit.
+- revDSG (Schweiz) und DSGVO, vertraglich zugesichert.
+- No-Training: Kundendaten trainieren keine Modelle.
+- Telemetrie standardmässig aus, kein Tracking ohne aktive Zustimmung.
+- Einschränkung, die wir offen benennen: Die Websuche leitet Suchanfragen an externe Suchmaschinen weiter (ohne Nutzeridentität). „Alles bleibt in Europa" gilt für Speicherung und Inferenz, nicht für die Suchanfrage selbst.
+
+## Anbindungen
+
+Nativ dabei: ERP (Kunden, Rechnungen, Projekte), SharePoint (Dokumente aus Microsoft 365),
+Websuche mit Quellenangabe, Datei-Generierung, Firmenwissen als Wissensbasis.
+In Vorbereitung: Outlook-Add-in, Excel-Add-in.
+Alles Weitere über das Model Context Protocol (MCP): für viele verbreitete Werkzeuge
+(HubSpot, Slack, Jira, Confluence, Notion, Linear, GitHub, Sentry, PostgreSQL, Stripe,
+Google Drive) gibt es fertige MCP-Server; für eigene Systeme genügt eine REST-API.
+Jede Anbindung läuft über das Gateway, jeder Aufruf landet im Audit-Log.
+
+## Abgrenzung zum Markt
+
+Gegenüber Claude, Microsoft 365 Copilot, Langdock, Swisscom AI und Open WebUI ist
+EU-Cowork die einzige Option, die gleichzeitig quelloffen unter MIT steht, ab einem
+Nutzer self-hostbar ist (Open WebUI erzwingt ab 50 Nutzern eigenes Branding),
+in der Schweiz gehostet wird und ERP-Anbindung mit rollenbasierter Zugriffskontrolle
+plus Audit bietet.
+
+## Seiten
+
+- [Startseite](https://eucowork.ai/): Produktübersicht, Funktionen, Governance, Anbindungen, Vergleich, FAQ.
+- [Self-Hosting](https://eucowork.ai/self-hosting): Docker-Compose-Stack, Auto-TLS via Caddy, private Websuche via SearXNG. MIT-Lizenz, kein Seat-Limit, ab 1 Nutzer.
+- [Trust Center](https://eucowork.ai/sicherheit): Sicherheits- und Datenschutz-Zusicherungen mit Belegen: Hosting, revDSG/DSGVO, No-Training, Telemetrie, Audit-Logs.
+- [Warteliste](https://eucowork.ai/warteliste): Anmeldung für frühen Zugang zur gehosteten Schweizer Instanz.
+
+## Rechtliches
+
+- [Auftragsverarbeitungsvertrag (AVV)](https://eucowork.ai/avv): Verarbeitung personenbezogener Daten nach Art. 28 DSGVO und revDSG.
+- [Subprozessoren](https://eucowork.ai/subprozessoren): Liste der Unterauftragsverarbeiter, Teil des AVV.
+- [Datenschutzerklärung](https://eucowork.ai/datenschutz): Umgang mit personenbezogenen Daten nach revDSG und DSGVO.
+- [AGB](https://eucowork.ai/agb): Vertragliche Bedingungen für die Nutzung des Dienstes.
+- [Impressum](https://eucowork.ai/impressum): Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz. UID CHE-112.168.836.
+
+## Status
+
+EU-Cowork befindet sich im Aufbau. „EU-Cowork" ist der Arbeitstitel eines Produkts der
+Herr Informatik GmbH; produktbezogene Angaben können sich bis zum Launch ändern.
+In Planung: native Mobile-App für iOS und Android (heute bereits als installierbare
+PWA nutzbar). In Arbeit: eigene ISO-27001-Zertifizierung. Bald: Outlook- und Excel-Add-ins.
