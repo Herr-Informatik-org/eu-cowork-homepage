@@ -638,8 +638,11 @@
   .euc-cap-shell{ position:relative; overflow:hidden; max-width:var(--w-max); margin:0 auto;
     border-radius:clamp(20px,2.8vw,38px); background:var(--c-surface); box-shadow:var(--sh-3), var(--edge);
     padding:clamp(24px,3.4vw,50px); }
-  .euc-cap-in{ position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(28px,4vw,54px); }
-  .euc-cap-copy{ flex:1 1 380px; min-width:0; max-width:486px; }
+  .euc-cap-in{ position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(26px,3.2vw,44px); }
+  /* Die Textspalte hat ihr Mass (486px = rund 46 Zeichen), sie wächst nicht
+     weiter. Jeder zusätzliche Pixel gehört der Bühne, dort wird er zu
+     lesbarer Attrappe statt zu langen Zeilen. */
+  .euc-cap-copy{ flex:0 1 466px; min-width:0; }
   .euc-cap-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(29px,3.5vw,44px); line-height:1.07;
     letter-spacing:-0.030em; color:var(--c-ink); margin:0; text-wrap:balance; }
   .euc-cap-sub{ font-family:var(--f-body); font-size:clamp(16px,1.3vw,18.5px); line-height:1.56; letter-spacing:-.006em;
@@ -652,7 +655,7 @@
      Richtung, aus der auch der Text aufklappt. */
   .euc-cap-item::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; border-radius:0 2px 2px 0;
     background:var(--c-eu-400); transform:scaleY(0); transform-origin:top; opacity:0;
-    transition:transform .34s var(--ease-out), opacity .2s ease; }
+    transition:transform .3s var(--ease-out), opacity .18s ease; }
   .euc-cap-item.is-on::before{ transform:scaleY(1); opacity:1; }
   /* Die Fläche tönt sich, statt sich zu umranden: ein Rahmen um eine Zeile in
      einer Liste aus Zeilen liest sich als Formularfeld. */
@@ -672,7 +675,7 @@
     line-height:1.3; letter-spacing:-.014em; color:var(--c-body); transition:color .26s ease; }
   .euc-cap-item.is-on .euc-cap-t{ color:var(--c-ink); }
   .euc-cap-chev{ flex:0 0 auto; display:inline-flex; color:#B3BCC6; transform:rotate(0deg);
-    transition:transform .34s var(--ease-out), color .26s ease; }
+    transition:transform .3s var(--ease-out), color .24s ease; }
   .euc-cap-item.is-on .euc-cap-chev{ transform:rotate(180deg); color:var(--c-eu-500); }
   @media (hover:hover) and (pointer:fine){
     .euc-cap-item:not(.is-on) .euc-cap-head:hover .euc-cap-t{ color:var(--c-ink); }
@@ -683,25 +686,26 @@
   /* Höhe kommt gemessen aus dem View-Model, nicht als Deckel: bei einem Deckel
      liefe die halbe Dauer über leere Fläche und das Zuklappen wirkte zäh. */
   .euc-cap-panel{ position:relative; z-index:1; overflow:hidden; height:0;
-    transition:height .38s var(--ease-out), opacity .26s ease; opacity:0; }
+    transition:height .32s var(--ease-out), opacity .24s ease; opacity:0; }
   .euc-cap-item.is-on .euc-cap-panel{ opacity:1; }
   .euc-cap-d{ font-family:var(--f-body); font-size:14.5px; line-height:1.62; color:var(--c-body-soft);
     margin:0; padding:0 26px 18px 50px; max-width:52ch; text-wrap:pretty; }
 
-  .euc-cap-links{ display:flex; flex-wrap:wrap; gap:var(--s-5); margin-top:26px; }
+  .euc-cap-links{ display:flex; flex-wrap:wrap; gap:12px var(--s-5); margin-top:26px; }
 
   /* ---------- Die Bühne: Shader-Fläche mit EINEM Fenster in fünf Zuständen ---------- */
   /* Die Fläche folgt der Höhe der Textspalte, das Fenster sitzt mittig darin.
      Der Verlauf ringsum ist nicht Rest, sondern Zweck: er trägt die Aufnahme,
      wie ein Passepartout ein Bild. */
-  .euc-cap-stage{ flex:1 1 460px; min-width:0; max-width:640px; align-self:stretch; display:flex; }
+  .euc-cap-stage{ flex:1 1 440px; min-width:0; max-width:640px; align-self:stretch;
+    display:flex; flex-direction:column; justify-content:center; }
   .euc-cap-glass{ position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-xl);
-    flex:1 1 auto; min-width:0; display:flex; flex-direction:column; justify-content:center;
-    padding:clamp(12px,1.6vw,22px); }
+    flex:0 0 auto; min-width:0; display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(26px,3.6vw,54px) clamp(12px,1.6vw,22px); }
   .euc-cap-glass::after{ content:''; position:absolute; inset:0; z-index:4; pointer-events:none;
     border-radius:inherit; box-shadow:var(--edge); }
   .euc-cap-win{ position:relative; z-index:2; border-radius:14px; background:var(--c-surface); overflow:hidden;
-    box-shadow:0 2px 6px rgba(11,30,51,.10), 0 18px 40px -20px rgba(11,30,51,.34); }
+    box-shadow:0 1px 2px rgba(11,30,51,.08), 0 4px 10px -4px rgba(11,30,51,.14), 0 26px 52px -22px rgba(11,30,51,.40); }
   .euc-cap-chrome{ display:flex; align-items:center; gap:9px; padding:10px 13px;
     border-bottom:1px solid var(--c-line-soft); background:#FBFCFD; }
   .euc-cap-mark{ flex:0 0 auto; display:inline-flex; color:var(--c-eu-500); }
@@ -740,7 +744,7 @@
     transform:translateY(7px); transition:opacity .2s ease, transform 0s linear .2s, visibility 0s linear .2s; }
   .euc-cap-pane > *{ flex:0 0 auto; }
   .euc-cap-pane.is-on{ opacity:1; visibility:visible; transform:none;
-    transition:opacity .3s var(--ease-out), transform .42s var(--ease-out), visibility 0s; }
+    transition:opacity .28s var(--ease-out), transform .36s var(--ease-out), visibility 0s; }
 
   /* ---------- Bausteine, die sich alle fünf Zustände teilen ---------- */
   .euc-cap-sec{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
@@ -879,8 +883,10 @@
   .euc-cap-bar.is-gold{ background:rgba(244,197,66,.42); }
 
   /* Gestapelt: die Bühne wandert unter den Text, bleibt aber gleich gross. */
-  @media (max-width:900px){
-    .euc-cap-stage{ flex:1 1 100%; max-width:none; margin:0 auto; }
+  @media (max-width:1140px){
+    /* Gestapelt bleibt die Bühne gedeckelt: über 620px wächst nur die leere
+       Verlaufsfläche, die Attrappe steht bei Massstab 1 ohnehin still. */
+    .euc-cap-stage{ flex:1 1 100%; max-width:620px; margin-inline:auto; align-self:auto; }
     .euc-cap-copy{ max-width:none; }
   }
   @media (max-width:560px){
