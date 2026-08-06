@@ -25,11 +25,21 @@
      Tokens identisch zu assets/content.css. Die Darstellung liegt bewusst
      in Klassen und nicht in inline-styles: nur so greifen :hover, :active
      und :focus-visible (Inline-Stile schlagen jede Regel). ---------------- */
+  /* Die Leiste selbst bleibt randlos (das Milchglas muss bis an den Bildschirm
+     reichen), ihr INHALT ist auf dieselben 1200px gekappt wie jede Sektion.
+     Das leistet das zweite Glied im max(): ab 1360px Fensterbreite wächst der
+     Innenabstand über die 80px des clamp() hinaus, sodass Wortmarke und CTA
+     exakt auf der Content-Kante der Sektionen sitzen. Ohne das driftete die
+     Navigation bei 1920px 360px nach aussen und die Leiste zerfiel optisch in
+     drei weit auseinander liegende Inseln. Ein Wrapper-Element wäre der andere
+     Weg, hätte aber :focus-visible und das Blatt-Overlay mitverschoben. */
   .euc-hd{
     --hd-ease:cubic-bezier(.23,1,.32,1);
+    --hd-max:1200px;
     position:fixed; top:0; left:0; right:0; z-index:100;
     display:flex; align-items:center; gap:24px;
-    min-height:68px; padding:12px clamp(20px,5vw,80px);
+    min-height:68px;
+    padding:12px max(clamp(20px,5vw,80px), calc((100% - var(--hd-max)) / 2));
     background:rgba(250,250,247,.72);
     border-bottom:0;
     transition:background 200ms var(--hd-ease);

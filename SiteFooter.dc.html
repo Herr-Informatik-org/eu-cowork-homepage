@@ -152,7 +152,10 @@
             </div>
           </div>
           <div class="euc-ft-badge">
-            <img src="eu-badge.png" width="40" height="40" alt="EU">
+            <!-- Absolut, nicht relativ: die Fusszeile steht auch auf Seiten unter
+                 einem Pfad (/warteliste, /sicherheit), wo "eu-badge.png" ins
+                 Leere zeigen würde. Die Inhaltsseiten schreiben es schon so. -->
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
             <div>
               <div class="euc-ft-badge-t">{{ badgeGdprTitle }}</div>
               <div class="euc-ft-badge-s">{{ badgeGdprSub }}</div>
