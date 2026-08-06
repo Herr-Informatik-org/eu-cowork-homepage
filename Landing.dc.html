@@ -268,6 +268,14 @@
     box-shadow:0 -1px 0 rgba(255,255,255,.55) inset, var(--sh-float);
     transition:transform 320ms var(--ease-out); }
   .euc-shot-center{ margin-left:14px; margin-right:14px; }
+  /* Echte Panel-Aufnahme statt Attrappe. Absolut im Rahmen statt im Fluss:
+     die Kachelhöhe hängt damit nicht am Bild, es gibt beim Nachladen keinen
+     Versatz, und `cover` garantiert, dass der Anschnitt unten in jeder Breite
+     in Bildinhalt fällt statt in Weiss. Die Aufnahmen sind knapp hochformatiger
+     zugeschnitten (Verhältnis ~1.17) als der schmalste Rahmen (375px: 1.19),
+     deshalb skaliert `cover` immer über die Breite und schneidet nur unten. */
+  .euc-shot-img{ position:absolute; inset:0; display:block; width:100%; height:100%;
+    object-fit:cover; object-position:left top; }
   .euc-mock{ font-family:var(--f-body); background:var(--c-surface); }
   .euc-mock-bar{ display:flex; align-items:center; gap:6px; padding:9px 12px; border-bottom:1px solid var(--c-line-soft); background:#FBFCFD; }
   .euc-mock-bar i{ width:7px; height:7px; border-radius:50%; background:#E0E4E9; display:block; flex:0 0 auto; }
@@ -872,17 +880,10 @@
             <h3 class="euc-tile-t">{{ t.features.t1 }}</h3>
             <p class="euc-tile-d">{{ t.features.d1 }}</p>
           </div>
-          <div class="euc-shot" aria-hidden="true">
-            <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>modelle · katalog</b></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Claude Sonnet</span><em>EU</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Mistral Large</span><em>EU</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Llama 3 70B</span><em>EU</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Qwen 2.5</span><em>EU</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">GPT-4o</span><em>EU</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">DeepSeek V3</span><em>EU</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Gemma 3 27B</span><em>EU</em></div>
-            </div>
+          <div class="euc-shot">
+            <img class="euc-shot-img" src="/assets/shots/admin-verbrauch-modelle.webp"
+                 width="1200" height="1030" loading="lazy" decoding="async"
+                 alt="{{ t.features.shot1 }}">
           </div>
         </article>
 
@@ -960,17 +961,10 @@
             <h3 class="euc-tile-t">{{ t.features.t5 }}</h3>
             <p class="euc-tile-d">{{ t.features.d5 }}</p>
           </div>
-          <div class="euc-shot" aria-hidden="true">
-            <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>admin · mcp-zugriff · erp</b></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Rechnungen lesen</span><em>erlaubt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Löhne lesen</span><em class="no">gesperrt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Belege exportieren</span><em>erlaubt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Kunden anlegen</span><em>erlaubt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Verträge ändern</span><em class="no">gesperrt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Zeiten erfassen</span><em>erlaubt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Benutzer verwalten</span><em class="no">gesperrt</em></div>
-            </div>
+          <div class="euc-shot">
+            <img class="euc-shot-img" src="/assets/shots/admin-mcp-rechte.webp"
+                 width="932" height="798" loading="lazy" decoding="async"
+                 alt="{{ t.features.shot5 }}">
           </div>
         </article>
 
@@ -2579,6 +2573,8 @@ this.mobRef = React.createRef();
           t4:'Rollen-Agenten & Skills', d4:'KI-Kollegen für wiederkehrende Aufgaben, vom Admin freigegeben.',
           t5:'ERP-Anbindung mit Rechte-Kontrolle', d5:'ERP via MCP-Gateway: „Rechnungen lesen ja, Löhne nein." Alles auditiert.',
           t6:'Proaktives Memory', d6:'Merkt sich Wichtiges von selbst: auditierbar, löschbar, auf eurem Server.',
+          shot1:'Admin-Panel: Balkendiagramm „Verbrauch pro Tag — nach Modell" mit Kostentabelle je Modell.',
+          shot5:'Admin-Panel: MCP-Zugriff — ERP, Wissensdatenbank und Dokumentenablage hinter dem MCP-Gateway, mit Benutzer-Ausnahme „erlaubt".',
           fx:{ search:'Q3-Umsatz Schweiz 2026', src1:'bfs.admin.ch', src2:'seco.admin.ch', file:'Auswertung_Q3.xlsx', download:'Download', r1:'Buchhaltung', r2:'Recruiting', r3:'Support', active:'aktiv', perm1:'Rechnungen lesen', perm2:'Löhne lesen', allow:'erlaubt', deny:'gesperrt', audit:'auditiert', memTitle:'Gemerkt', mem:'Kunde bevorzugt Deutsch · Rechnungen quartalsweise' }
         },
         en: {
@@ -2592,6 +2588,8 @@ this.mobRef = React.createRef();
           t4:'Role agents & skills', d4:'AI coworkers for recurring tasks, released by the admin.',
           t5:'ERP integration with access control', d5:'ERP via MCP gateway: “Read invoices yes, salaries no.” Every call audited.',
           t6:'Proactive memory', d6:'Remembers what matters on its own: auditable, deletable, on your server.',
+          shot1:'Admin panel: bar chart “Spend per day — by model” with a cost table per model.',
+          shot5:'Admin panel: MCP access — ERP, knowledge base and document store behind the MCP gateway, with a per-user exception set to “allowed”.',
           fx:{ search:'Q3 revenue Switzerland 2026', src1:'bfs.admin.ch', src2:'seco.admin.ch', file:'Report_Q3.xlsx', download:'Download', r1:'Accounting', r2:'Recruiting', r3:'Support', active:'active', perm1:'Read invoices', perm2:'Read salaries', allow:'allowed', deny:'blocked', audit:'audited', memTitle:'Noted', mem:'Customer prefers English · invoices quarterly' }
         }
       }
