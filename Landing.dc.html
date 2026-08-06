@@ -883,11 +883,19 @@
   .euc-cap-bar.is-gold{ background:rgba(244,197,66,.42); }
 
   /* Gestapelt: die Bühne wandert unter den Text, bleibt aber gleich gross. */
-  @media (max-width:1140px){
-    /* Gestapelt bleibt die Bühne gedeckelt: über 620px wächst nur die leere
-       Verlaufsfläche, die Attrappe steht bei Massstab 1 ohnehin still. */
+  /* Gestapelt wird aus zwei Spalten EINE: beide auf dasselbe Mass, beide
+     mittig. Vorher behielt die Textspalte ihre 466px und stand links, während
+     die Bühne mittig sass — zwei verschiedene Achsen in derselben Kachel.
+     Der Deckel gilt auch für die Bühne: über 620px wächst nur die leere
+     Verlaufsfläche, die Attrappe steht bei Massstab 1 ohnehin still.
+     Der Umbruch liegt bei 1200px, nicht tiefer: darunter bliebe der Bühne
+     neben dem Text unter 540px, die Attrappe fiele auf Massstab 0.75 und
+     ihre Zeilen unter acht Pixel. Gestapelt bekommt sie 620px und steht
+     nahezu unskaliert — schmaler ist hier also grösser. */
+  @media (max-width:1199px){
+    .euc-cap-in{ justify-content:center; }
+    .euc-cap-copy{ flex:1 1 100%; max-width:620px; margin-inline:auto; }
     .euc-cap-stage{ flex:1 1 100%; max-width:620px; margin-inline:auto; align-self:auto; }
-    .euc-cap-copy{ max-width:none; }
   }
   @media (max-width:560px){
     .euc-cap-shell{ border-radius:18px; padding:22px 16px 24px; }
