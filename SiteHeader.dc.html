@@ -35,6 +35,37 @@
     transition:background 200ms var(--hd-ease);
   }
   .euc-hd.is-scrolled{ background:rgba(250,250,247,.86); }
+
+  /* ---- Leiste über tiefen Sektionen -------------------------------------
+     Über den Navy-Blöcken (Mobile App, Self-Host, Roadmap, Schluss-CTA,
+     Fussleiste) liest sich das helle Milchglas als graues Band quer über die
+     Fläche. Nicht die Anordnung kippt, nur das Material: dieselbe Leiste,
+     dunkel getönt. Der Zustand kommt aus demselben Mechanismus wie
+     .is-scrolled (ein Zustandsbit, eine Klasse), gespeist von einem
+     IntersectionObserver auf einem 68px hohen Band am oberen Rand. */
+  .euc-hd.is-on-dark{ background:rgba(11,30,51,.60); }
+  .euc-hd.is-on-dark.is-scrolled{ background:rgba(11,30,51,.74); }
+  .euc-hd.is-on-dark::after{ background:linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,0)); }
+  .euc-hd.is-on-dark .euc-hd-word{ color:#F7FAFC; }
+  .euc-hd.is-on-dark .euc-hd-ai{ color:#A5D8E6; }
+  .euc-hd.is-on-dark .euc-hd-brand svg path{ stroke:#F7FAFC; }
+  .euc-hd.is-on-dark .euc-hd-nav a{ color:#C4D0DD; }
+  .euc-hd.is-on-dark .euc-hd-nav a.is-active{ color:#A5D8E6; }
+  /* Der Primärknopf ist auf hellem Grund Navy; auf Navy wäre er unsichtbar.
+     Er tauscht mit dem Sekundären die Rolle: hell auf dunkel. */
+  .euc-hd.is-on-dark .euc-hd-btn{
+    color:#0B1E33; background:#F7FAFC;
+    box-shadow:0 1px 2px rgba(0,0,0,.18), 0 8px 20px -12px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  /* Deckend statt transluzent: über der bereits transluzenten Leiste darf
+     keine zweite Milchglasfläche liegen. */
+  .euc-hd.is-on-dark .euc-hd-btn2{
+    color:#F7FAFC; background:#12326B;
+    box-shadow:0 1px 2px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.10), inset 0 0 0 1px rgba(165,216,230,.22);
+  }
+  .euc-hd.is-on-dark .euc-hd-burger span{ background:#F7FAFC; }
+  .euc-hd.is-on-dark .euc-hd-burger:active{ background-color:rgba(255,255,255,.10); }
+  .euc-hd.is-on-dark :focus-visible{ outline-color:#A5D8E6; }
   /* Milchglas liegt auf einer Pseudo-Element-Schicht, NICHT auf .euc-hd selbst:
      backdrop-filter macht das Element sonst zum Containing Block fuer das
      position:fixed-Mobilmenue darin, das dann auf Leistenhoehe geclippt wird. */
@@ -62,9 +93,11 @@
   .euc-hd-word{
     font-family:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
     font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#0B1E33;
+    transition:color 200ms var(--hd-ease);
   }
   /* Wortmarke: „EU Cowork" in Tinte, „AI" in Europa-Blau. DE wie EN. */
-  .euc-hd-ai{ color:#12326B; font-style:normal; }
+  .euc-hd-ai{ color:#12326B; font-style:normal; transition:color 200ms var(--hd-ease); }
+  .euc-hd-brand svg path{ transition:stroke 200ms var(--hd-ease); }
 
   .euc-hd-nav{ display:flex; align-items:center; gap:30px; margin-left:auto; margin-right:8px; }
   .euc-hd-nav a{
@@ -85,6 +118,7 @@
     font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     transition:transform 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
                background 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
+               color 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
                box-shadow 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1));
   }
   .euc-hd-btn{
@@ -174,15 +208,22 @@
     }
     .euc-hd-burger:hover{ background:rgba(11,30,51,.05); }
     .euc-hd-sheet nav a:hover{ color:#12326B; }
+    /* Auf dunklem Grund kehren sich beide Knöpfe um, also auch ihr Hover. */
+    .euc-hd.is-on-dark .euc-hd-nav a:hover{ color:#F7FAFC; }
+    .euc-hd.is-on-dark .euc-hd-btn:hover{ background:#FFFFFF; color:#0B1E33; }
+    .euc-hd.is-on-dark .euc-hd-btn2:hover{ background:#1B437F; color:#F7FAFC; }
+    .euc-hd.is-on-dark .euc-hd-burger:hover{ background:rgba(255,255,255,.10); }
   }
 
   /* Milchglas ist Zierde, nicht Voraussetzung: ohne backdrop-filter und bei
      reduzierter Transparenz wird die Leiste deckend. */
   @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
     .euc-hd, .euc-hd.is-scrolled{ background:#FAFAF7; }
+    .euc-hd.is-on-dark, .euc-hd.is-on-dark.is-scrolled{ background:#0B1E33; }
   }
   @media (prefers-reduced-transparency: reduce){
     .euc-hd, .euc-hd.is-scrolled{ background:#FAFAF7; }
+    .euc-hd.is-on-dark, .euc-hd.is-on-dark.is-scrolled{ background:#0B1E33; }
     .euc-hd::before{ backdrop-filter:none; -webkit-backdrop-filter:none; }
   }
 
@@ -259,15 +300,20 @@ class Component extends DCLogic {
     this.headerRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     const initMobile = (typeof window !== 'undefined' && window.innerWidth < 940) || false;
-    this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile };
+    this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile, onDark: false };
     // Feuert nur beim Überschreiten der Schwelle, nicht bei jedem Scroll-Tick.
     this._onScroll = () => {
       const s = window.scrollY > 8;
       if (s !== this.state.scrolled) this.setState({ scrolled: s });
     };
+    this._darkOn = new Set();
     this._onResize = () => {
       const m = window.innerWidth < 940;
       if (m !== this.state.isMobile) this.setState({ isMobile: m, menuOpen: m ? this.state.menuOpen : false });
+      // Das Beobachtungsband hängt an der Fensterhöhe und muss danach neu
+      // aufgespannt werden; gebündelt, weil resize in Serie feuert.
+      clearTimeout(this._darkResizeT);
+      this._darkResizeT = setTimeout(() => this._buildDarkIo(), 160);
     };
     this._onLang = (e) => this.setState({ lang: e.detail });
   }
@@ -276,11 +322,48 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('eucowork:langchange', this._onLang);
     this._onScroll();
+    this._findDarkSections(0);
   }
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('eucowork:langchange', this._onLang);
+    clearTimeout(this._darkFindT);
+    clearTimeout(this._darkResizeT);
+    if (this._darkIo) this._darkIo.disconnect();
+  }
+  /* -----------------------------------------------------------------------
+     Sektionsbewusster Zustand. Dieselbe Mechanik wie .is-scrolled: ein
+     Zustandsbit, eine Klasse. Statt der Scrollposition beobachtet ein
+     IntersectionObserver ein Band von der Höhe der Leiste am oberen
+     Fensterrand; liegt eine als [data-hd-dark] markierte Sektion darin, kippt
+     das Material. Seiten ohne solche Sektionen (Rechtstexte, Warteliste)
+     bekommen davon nichts mit: kein Treffer, kein Beobachter.
+     ----------------------------------------------------------------------- */
+  _findDarkSections(tries){
+    if (typeof IntersectionObserver === 'undefined') return;
+    const els = document.querySelectorAll('[data-hd-dark]');
+    if (!els.length){
+      // Die Sektionen können nach der Leiste montiert werden (dc-import).
+      if (tries < 8) this._darkFindT = setTimeout(() => this._findDarkSections(tries + 1), 250);
+      return;
+    }
+    this._darkEls = els;
+    this._buildDarkIo();
+  }
+  _buildDarkIo(){
+    if (!this._darkEls || !this._darkEls.length) return;
+    if (this._darkIo) this._darkIo.disconnect();
+    this._darkOn.clear();
+    const hd = this.headerRef.current;
+    const bandH = (hd && hd.offsetHeight) || 68;
+    const bottom = Math.max(0, Math.round(window.innerHeight - bandH));
+    this._darkIo = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) this._darkOn.add(e.target); else this._darkOn.delete(e.target); });
+      const on = this._darkOn.size > 0;
+      if (on !== this.state.onDark) this.setState({ onDark: on });
+    }, { rootMargin: '0px 0px -' + bottom + 'px 0px', threshold: 0 });
+    this._darkEls.forEach(el => this._darkIo.observe(el));
   }
   setLang(l){
     try { localStorage.setItem('eucowork_lang', l); } catch(e){}
@@ -314,7 +397,7 @@ class Component extends DCLogic {
       isMobile: this.state.isMobile,
       menuOpen: this.state.menuOpen,
       headerRef: this.headerRef,
-      headerClass: this.state.scrolled ? 'is-scrolled' : '',
+      headerClass: (this.state.scrolled ? 'is-scrolled' : '') + (this.state.onDark ? ' is-on-dark' : ''),
       primaryLabel: T.primary,
       primaryHref: '/warteliste',
       secondaryLabel: T.secondary,

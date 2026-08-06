@@ -472,6 +472,18 @@ img { height: auto; }
   color: var(--c-on-deep);
   background: var(--c-deep);
 }
+/* Zweiter Knopf im Blatt, gleiche Reihenfolge wie im SiteHeader: erst die
+   Warteliste, darunter der Selbstbetrieb. Deckend, nicht transluzent: das
+   Panel liegt bereits über der Milchglasleiste. */
+.euc-mob-panel a.euc-btn-secondary {
+  justify-content: center;
+  margin-top: 8px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--c-ink);
+  background: var(--c-surface);
+}
 
 /* Das Panel wächst aus seinem Auslöser statt aus dem Nichts. Auf diesen
    JS-freien Seiten ist ::details-content der einzige Weg, beide Richtungen zu
@@ -1287,6 +1299,9 @@ pre code {
   }
   .euc-mob-panel a:hover { background: var(--c-ice-100); }
   .euc-mob-panel a.euc-btn-primary:hover { background: var(--c-deep-hover); color: var(--c-on-deep); }
+  /* Im Blatt hebt der Sekundärknopf nicht ab (er sitzt in einer Liste), er
+     tönt nur nach. Doppelt qualifiziert, sonst schlägt die Ruhezustandsregel. */
+  .euc-mob-panel a.euc-btn-secondary:hover { background: var(--c-ice-100); transform: none; }
   .toc a:hover { color: var(--c-eu-700); }
   .table-wrap tbody tr:hover { background: #FBFCFD; }
   .euc-textlink:hover { color: var(--c-eu-500); border-color: var(--c-ice-300); }

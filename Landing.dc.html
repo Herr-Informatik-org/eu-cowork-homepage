@@ -239,7 +239,12 @@
   }
   .euc-tile-in{ position:relative; z-index:2; }
   .euc-tile-k{ font-family:var(--f-mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; margin:0 0 12px; }
-  .euc-tile-t{ font-family:var(--f-display); font-weight:500; font-size:22px; line-height:1.20; letter-spacing:-.020em; margin:0; text-wrap:balance; }
+  /* Zwei Zeilen sind reserviert, auch wenn der Titel nur eine braucht: sonst
+     beginnt die Attrappe in jeder Kachel auf einer anderen Höhe, und in einer
+     Reihe, in der immer zwei bis drei Kacheln nebeneinander stehen, liest sich
+     das als Schlamperei. Der Titel „ERP-Anbindung mit Rechte-Kontrolle" bricht
+     in jeder Breite zweizeilig und setzt damit das Mass. */
+  .euc-tile-t{ font-family:var(--f-display); font-weight:500; font-size:22px; line-height:1.20; letter-spacing:-.020em; margin:0; min-height:2.4em; text-wrap:balance; }
   .euc-tile-d{ font-family:var(--f-body); font-size:14.5px; line-height:1.52; letter-spacing:.002em; margin:10px 0 0; max-width:33ch; text-wrap:pretty; }
   /* Auf der Kachel trägt das tiefe Europa-Blau: eu-500 bleibt bei 10.5px auch
      mit Lese-Schirm unter 4.5:1, eu-700 liegt bei 9:1. */
@@ -250,17 +255,15 @@
   .euc-t-deep .euc-tile-t{ color:var(--c-on-deep); }
   .euc-t-deep .euc-tile-d{ color:var(--c-on-deep-body); }
   /* Der Anschnitt: die Attrappe ist breiter als die Kachel und läuft unten heraus. */
-  /* flex:1 1 auto ist der Grund, warum die Attrappe die Kachel wirklich unten
-     verlässt: sie füllt die Restfläche und wird vom overflow:hidden beschnitten.
-     Der Anschnitt suggeriert, dass die Anwendung grösser ist als der Ausschnitt. */
-  /* Der Anschnitt soll „die Liste geht weiter" erzählen, nicht „hier ist die
-     Karte zu Ende". Die Attrappe ist je nach Kachel 48–70px kürzer als der
-     Platz; unter ihr läuft deshalb der Zeilenrhythmus (Kopf 32px, Zeile 45px,
-     gemessen) als Geisterzeile weiter und wird vom overflow beschnitten.
-     .euc-mock ist deckend und verdeckt das Muster über dem echten Inhalt. */
-  .euc-shot{ position:relative; z-index:2; flex:1 1 auto; margin:24px -34px -1px 8px; border-radius:var(--r-m) var(--r-m) 0 0; overflow:hidden;
-    background:repeating-linear-gradient(180deg, transparent 0 44px, #F2F5F7 44px 45px) 0 32px / 100% 100% no-repeat,
-               var(--c-surface);
+  /* flex-basis 0 statt auto ist der Kern: mit `auto` trug die Attrappe ihre
+     volle Inhaltshöhe zur Kachelhöhe bei, die höchste Kachel (Rechte, zwei
+     Titel- plus drei Textzeilen) diktierte die Reihe, und in allen anderen
+     endete der Mock 48 bis 70px vor dem Rand. Mit `0` bestimmt nur noch der
+     Textblock die Kachelhöhe (praktisch immer min-height), die Attrappe füllt
+     die Restfläche, und ihr Inhalt ist länger als diese Fläche: der Schnitt
+     fällt dadurch in echten Inhalt statt in Weiss. */
+  .euc-shot{ position:relative; z-index:2; flex:1 1 0; min-height:0; margin:24px -34px -1px 8px; border-radius:var(--r-m) var(--r-m) 0 0; overflow:hidden;
+    background:var(--c-surface);
     border:1px solid rgba(11,30,51,.10); border-bottom:0;
     box-shadow:0 -1px 0 rgba(255,255,255,.55) inset, var(--sh-float);
     transition:transform 320ms var(--ease-out); }
@@ -302,6 +305,14 @@
     .euc-rail-nav{ display:none; }
     .euc-rail-prog{ flex:1 1 auto; }
   }
+
+  /* ---------- Roadmap: vier Karten, nie eine Waisenzeile ----------
+     `auto-fit` mit `minmax(280px,1fr)` ergab genau im meistgenutzten Band
+     (1024 bis 1280px) drei Spalten und eine allein stehende vierte Karte. Vier
+     Karten gehen nur als 2x2 in jeder Breite auf; vier nebeneinander wären bei
+     1280px 274px schmal und der Titel bräche vierzeilig. */
+  .euc-road-grid{ margin-top:38px; display:grid; grid-template-columns:1fr; gap:18px; }
+  @media (min-width:640px){ .euc-road-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 
   /* ---------- „Nochmal abspielen": erscheint erst, wenn der Ablauf steht ---------- */
   /* visibility statt nur opacity: ein unsichtbarer Knopf bliebe sonst in der
@@ -424,7 +435,7 @@
   .euc-olk-badge-dot{ position:relative; display:inline-flex; width:7px; height:7px; }
   .euc-olk-badge-dot i{ position:absolute; inset:0; border-radius:50%; background:#F4C542; opacity:.55; animation:euc-olk-pulse 2.4s ease-out infinite; }
   .euc-olk-badge-dot b{ position:relative; width:7px; height:7px; border-radius:50%; background:#F4C542; }
-  .euc-olk-badge span{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#7A5B06; }
+  .euc-olk-badge span{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#6B4E02; }
   .euc-olk-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(30px,4.2vw,50px); line-height:1.06; letter-spacing:-0.030em; color:var(--c-ink); margin:18px 0 0; text-wrap:balance; }
   .euc-olk-sub{ font-family:var(--f-body); font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-.005em; color:var(--c-body); margin:16px 0 0; max-width:48ch; text-wrap:pretty; }
   .euc-olk-points{ margin:26px 0 0; display:flex; flex-direction:column; gap:15px; }
@@ -433,7 +444,7 @@
   .euc-olk-point-t{ font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:500; letter-spacing:-.01em; color:#0B1E33; }
   .euc-olk-point-d{ font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.55; color:#5A6472; margin-top:3px; }
   .euc-olk-note{ display:flex; align-items:flex-start; gap:10px; margin:24px 0 0; padding:11px 13px; border:1px solid #E9DEBB; background:rgba(244,197,66,.08); border-radius:11px; }
-  .euc-olk-note svg{ flex:0 0 auto; margin-top:1px; color:#A98718; }
+  .euc-olk-note svg{ flex:0 0 auto; margin-top:1px; color:#8C6A2E; }
   .euc-olk-note p{ font-family:'Inter',sans-serif; font-size:13px; line-height:1.55; color:#5A5233; margin:0; }
   .euc-olk-link{ display:inline-flex; align-items:center; min-height:44px; gap:8px; margin-top:14px; font-family:var(--f-body); font-size:14.5px; font-weight:500; color:var(--c-eu-700);
     text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px; text-decoration-color:rgba(18,50,107,.30); transition:color .18s ease, text-decoration-color .18s ease; }
@@ -473,7 +484,7 @@
   .euc-olk-pane{ position:relative; z-index:2; flex:0 0 auto; width:336px; display:flex; flex-direction:column; min-width:0; background:#FBFCFD; border-left:1px solid #E7ECF0; box-shadow:-18px 0 36px -26px rgba(11,30,51,.34); }
   .euc-olk-pane-head{ flex:0 0 auto; display:flex; align-items:center; gap:8px; padding:9px 11px; border-bottom:1px solid var(--c-line-soft); background:#FFFFFF; }
   .euc-olk-brand{ font-family:'Space Grotesk',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:-.02em; color:#0B1E33; }
-  .euc-olk-beta{ font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.12em; color:#7A5B06; background:rgba(244,197,66,.18); border:1px solid rgba(244,197,66,.5); border-radius:99px; padding:2px 7px; }
+  .euc-olk-beta{ font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.12em; color:#6B4E02; background:rgba(244,197,66,.18); border:1px solid rgba(244,197,66,.5); border-radius:99px; padding:2px 7px; }
   .euc-olk-pane-btns{ margin-left:auto; display:inline-flex; gap:8px; color:#B3BCC6; }
   /* overflow:hidden ist das Sicherheitsnetz gegen Überlauf aus dem Pane.
      flex:0 0 auto auf allen Kindern ausser dem Spacer ist Pflicht: sonst
@@ -782,7 +793,12 @@
           <div style="flex:1 1 320px; min-width:0; padding:clamp(24px,4vw,40px); border-right:1px solid var(--c-line-soft); display:flex; flex-direction:column;">
             <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#9AA5B1;">{{ t.demo.inputLabel }}</div>
             <div style="margin-top:14px; background:#0B1E33; color:#F2F7FA; font-size:15px; line-height:1.5; padding:15px 17px; border-radius:13px 13px 13px 4px; font-family:'Inter',sans-serif;">{{ t.demo.prompt }}</div>
-            <div style="margin-top:auto; padding-top:28px; display:flex; flex-wrap:wrap; align-items:flex-end; gap:22px;">
+            <!-- Die Höhe der Bühne kommt von der rechten Spalte und bleibt
+                 reserviert (keine Höhenatmung). Mit nur `margin-top:auto` fiel
+                 der ganze Überschuss in EINE Lücke: bei 1280px standen rund
+                 100px Weiss zwischen Prompt und Kennzahlen und 40px darunter.
+                 Zwei auto-Ränder verteilen denselben Überschuss symmetrisch. -->
+            <div style="margin-top:auto; margin-bottom:auto; padding-top:28px; display:flex; flex-wrap:wrap; align-items:flex-end; gap:22px;">
               <div>
                 <div style="font-family:'JetBrains Mono',monospace; font-size:clamp(24px,3vw,30px); font-weight:500; color:#0B1E33; line-height:1;" data-countup="128" data-countup-id="tasks" data-countup-dur="1200"></div>
                 <div style="font-size:12px; color:#66727F; margin-top:6px;">{{ t.demo.statTasks }}</div>
@@ -864,6 +880,8 @@
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Llama 3 70B</span><em>EU</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Qwen 2.5</span><em>EU</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">GPT-4o</span><em>EU</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">DeepSeek V3</span><em>EU</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Gemma 3 27B</span><em>EU</em></div>
             </div>
           </div>
         </article>
@@ -884,6 +902,8 @@
           </div>
           <div class="euc-mock-row" style="margin-top:12px;"><span class="euc-mock-chip"></span><span class="l">bfs.admin.ch</span><em>Quelle</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">seco.admin.ch</span><em>Quelle</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">kof.ethz.ch</span><em>Quelle</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">snb.ch</span><em>Quelle</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Stand: 12. August</span><em class="neutral">aktuell</em></div>
             </div>
           </div>
@@ -905,6 +925,9 @@
           </div>
           <div class="euc-mock-row" style="margin-top:12px;"><span class="euc-mock-chip"></span><span class="l">Monatsauswertung_Juli.xlsx</span><em>bereit</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Quelle: erp · 3 Blätter</span><em class="neutral">24 KB</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Blatt 1: Umsatz je Bereich</span><em class="neutral">12 Zeilen</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Blatt 2: Marge je Bereich</span><em class="neutral">12 Zeilen</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Blatt 3: Vergleich Vormonat</span><em class="neutral">12 Zeilen</em></div>
             </div>
           </div>
         </article>
@@ -924,6 +947,8 @@
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Onboarding-Lotse</span><em>aktiv</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Recherche-Kollege</span><em class="neutral">Entwurf</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Skill: Angebot prüfen</span><em>freigegeben</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Skill: Protokoll formatieren</span><em>freigegeben</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Rechnungs-Prüfer</span><em class="neutral">Entwurf</em></div>
             </div>
           </div>
         </article>
@@ -943,6 +968,8 @@
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Belege exportieren</span><em>erlaubt</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Kunden anlegen</span><em>erlaubt</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Verträge ändern</span><em class="no">gesperrt</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Zeiten erfassen</span><em>erlaubt</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Benutzer verwalten</span><em class="no">gesperrt</em></div>
             </div>
           </div>
         </article>
@@ -962,6 +989,8 @@
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Ansprechpartner: A. Keller</span><em>gemerkt</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Notiz vom Juni</span><em class="no">gelöscht</em></div>
           <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Ablage: eigener Server</span><em class="neutral">lokal</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Termine lieber vormittags</span><em>gemerkt</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-chip"></span><span class="l">Auswertungen als Excel</span><em>gemerkt</em></div>
             </div>
           </div>
         </article>
@@ -1613,7 +1642,7 @@
           </div>
         </section>
 
-    <section id="mobile-app" data-screen-label="Mobile App" style="scroll-margin-top:90px; position:relative; overflow:hidden; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
+    <section id="mobile-app" data-hd-dark data-screen-label="Mobile App" style="scroll-margin-top:90px; position:relative; overflow:hidden; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
           <div class="euc-sg" data-shader="europaSoft" aria-hidden="true"></div>
           <div class="euc-veil euc-veil-deep" aria-hidden="true"></div>
 
@@ -1720,7 +1749,14 @@
                       <div style="flex:0 0 auto; height:1px; background:#EEF1F4;"></div>
     
                       <div style="flex:1 1 auto; min-height:0; overflow:hidden; padding:14px 14px 6px; display:flex; flex-direction:column; justify-content:flex-end; gap:9px;">
-    
+
+                        <!-- Vorheriger Zug, kein Teil des Ablaufs: der Verlauf steht schon da,
+                             wenn die Sequenz startet, und der Endzustand füllt die Fläche
+                             statt 190px Weiss über der ersten Blase zu lassen. Deshalb ohne
+                             .euc-mob-in: Verlauf blendet nicht ein, er ist einfach da. -->
+                        <div style="align-self:flex-end; max-width:84%; background:#0B1E33; color:#F2F7FA; font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.5; padding:9px 12px; border-radius:13px 13px 4px 13px;">{{ t.mob.mock.prevUser }}</div>
+                        <div style="align-self:flex-start; max-width:94%; font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.65; color:#2C3742;">{{ t.mob.mock.prevAns }}</div>
+
                         <sc-if value="{{ mobShowUser }}" hint-placeholder-val="{{ true }}">
                           <div class="euc-mob-in" style="align-self:flex-end; max-width:84%; background:#0B1E33; color:#F2F7FA; font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.5; padding:9px 12px; border-radius:13px 13px 4px 13px;">{{ t.mob.mock.user }}</div>
                         </sc-if>
@@ -1977,7 +2013,13 @@
               <sc-for list="{{ compRows }}" as="r" hint-placeholder-count="6">
                 <tr>
                   <td style="padding:15px 20px; border-top:1px solid var(--c-line-soft); font-size:14px; font-weight:500; color:#1E2A36; vertical-align:top;">{{ r.k }}</td>
-                  <td style="padding:15px 18px; border-top:1px solid #E1EDF3; background:#F1F9FC; vertical-align:top;">
+                  <!-- Transluzent statt deckend: die Scroll-Schatten von
+                       .euc-tablewrap liegen auf dem Container, eine deckende
+                       Zellfläche würde sie an genau der Kante verdecken, an der
+                       sie sagen sollen „hier geht es weiter". Über Weiss ist
+                       rgba(165,216,230,.17) = rgb(240,248,251), also derselbe
+                       Ton wie das bisherige #F1F9FC. -->
+                  <td style="padding:15px 18px; border-top:1px solid #E1EDF3; background:rgba(165,216,230,.17); vertical-align:top;">
                     <span style="display:inline-flex; align-items:flex-start; gap:7px; font-size:14px; font-weight:600; color:#0B1E33;">
                       <sc-if value="{{ r.primaryCheck }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex:0 0 auto; margin-top:3px;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
                       {{ r.primary }}
@@ -2094,7 +2136,7 @@
       </div>
     </section>
 
-    <section id="self-host" data-screen-label="Self-host (dark)" style="scroll-margin-top:90px; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter) calc(var(--sec-y-tight) / 2);">
+    <section id="self-host" data-hd-dark data-screen-label="Self-host (dark)" style="scroll-margin-top:90px; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter) calc(var(--sec-y-tight) / 2);">
       <div style="max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
         <div style="flex:1 1 400px; min-width:0;" data-reveal>
           <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.02; letter-spacing:-0.03em; color:#F7FAFC; margin:0 0 0;">{{ t.selfhost.h2 }}</h2>
@@ -2146,13 +2188,13 @@
       </div>
     </section>
 
-    <section data-screen-label="Roadmap" style="background:var(--c-deep); color:var(--c-on-deep); padding:calc(var(--sec-y-tight) / 2) var(--gutter) var(--sec-y);">
+    <section data-hd-dark data-screen-label="Roadmap" style="background:var(--c-deep); color:var(--c-on-deep); padding:calc(var(--sec-y-tight) / 2) var(--gutter) var(--sec-y);">
       <div style="max-width:var(--w-max); margin:0 auto;">
         <div data-reveal style="max-width:640px;">
           <h2 class="euc-h2 euc-h2-deep">{{ t.roadmap.h2 }}</h2>
           <p class="euc-lead euc-lead-deep" style="margin-top:14px;">{{ t.roadmap.sub }}</p>
         </div>
-        <div style="margin-top:38px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px;">
+        <div class="euc-road-grid">
           <sc-for list="{{ roadItems }}" as="r" hint-placeholder-count="3">
             <div data-reveal class="euc-card-deep" style="padding:26px;">
               <span style="display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:{{ r.pillColor }}; background:{{ r.pillBg }}; border:1px solid {{ r.pillBorder }}; border-radius:99px; padding:4px 11px;">{{ r.status }}</span>
@@ -2194,7 +2236,7 @@
       </div>
     </section>
 
-    <section data-screen-label="Final CTA" style="position:relative; overflow:hidden; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
+    <section data-hd-dark data-screen-label="Final CTA" style="position:relative; overflow:hidden; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
       <!-- Der zweite und letzte Shader der Seite: derselbe Bogen wie im Hero,
            nur tief. Das Maus-Spotlight entfällt, es war auf Touch unsichtbar. -->
       <div class="euc-sg" data-shader="heroDeep" aria-hidden="true"></div>
@@ -2534,9 +2576,9 @@ this.mobRef = React.createRef();
           t1:'Alle Modelle', d1:'100+ Top-Modelle über einen Zugang, EU-verarbeitet.',
           t2:'Websuche', d2:'Aktuelle Antworten mit Quellen, direkt im Chat.',
           t3:'Dateien erzeugen', d3:'„Generier mir ein Excel" sagen und die fertige Datei herunterladen.',
-          t4:'Rollen-Agenten & Skills', d4:'KI-Kollegen für wiederkehrende Aufgaben.',
-          t5:'ERP-Anbindung mit Rechte-Kontrolle', d5:'Euer ERP via MCP-Gateway. „Rechnungen lesen ja, Löhne nein." Jeder Tool-Aufruf auditiert.',
-          t6:'Proaktives Memory', d6:'Merkt sich selbstständig, was wichtig ist: auditierbar, löschbar, auf eurem Server.',
+          t4:'Rollen-Agenten & Skills', d4:'KI-Kollegen für wiederkehrende Aufgaben, vom Admin freigegeben.',
+          t5:'ERP-Anbindung mit Rechte-Kontrolle', d5:'ERP via MCP-Gateway: „Rechnungen lesen ja, Löhne nein." Alles auditiert.',
+          t6:'Proaktives Memory', d6:'Merkt sich Wichtiges von selbst: auditierbar, löschbar, auf eurem Server.',
           fx:{ search:'Q3-Umsatz Schweiz 2026', src1:'bfs.admin.ch', src2:'seco.admin.ch', file:'Auswertung_Q3.xlsx', download:'Download', r1:'Buchhaltung', r2:'Recruiting', r3:'Support', active:'aktiv', perm1:'Rechnungen lesen', perm2:'Löhne lesen', allow:'erlaubt', deny:'gesperrt', audit:'auditiert', memTitle:'Gemerkt', mem:'Kunde bevorzugt Deutsch · Rechnungen quartalsweise' }
         },
         en: {
@@ -2547,8 +2589,8 @@ this.mobRef = React.createRef();
           t1:'All models', d1:'100+ top models through one access point, EU-processed.',
           t2:'Web search', d2:'Current answers with sources, right in the chat.',
           t3:'Generate files', d3:'Say “generate me an Excel” and download the finished file.',
-          t4:'Role agents & skills', d4:'AI coworkers for recurring tasks.',
-          t5:'ERP integration with access control', d5:'Your ERP via MCP gateway. “Read invoices yes, salaries no.” Every tool call audited.',
+          t4:'Role agents & skills', d4:'AI coworkers for recurring tasks, released by the admin.',
+          t5:'ERP integration with access control', d5:'ERP via MCP gateway: “Read invoices yes, salaries no.” Every call audited.',
           t6:'Proactive memory', d6:'Remembers what matters on its own: auditable, deletable, on your server.',
           fx:{ search:'Q3 revenue Switzerland 2026', src1:'bfs.admin.ch', src2:'seco.admin.ch', file:'Report_Q3.xlsx', download:'Download', r1:'Accounting', r2:'Recruiting', r3:'Support', active:'active', perm1:'Read invoices', perm2:'Read salaries', allow:'allowed', deny:'blocked', audit:'audited', memTitle:'Noted', mem:'Customer prefers English · invoices quarterly' }
         }
@@ -2879,6 +2921,8 @@ mob: {
           notify:'Benachrichtigung zum Start erhalten →',
           replay:'Nochmal abspielen',
           mock:{ time:'9:41', app:'EU Cowork AI', model:'EU Cowork AI Auto',
+            prevUser:'Fasse mir das Protokoll vom Termin bei der Muster AG kurz zusammen.',
+            prevAns:'Drei Punkte: Firewall wird ersetzt, VLAN-Plan kommt bis Freitag, Backup-Test steht noch aus.',
             user:'Ich war gerade 3 Stunden bei der Muster AG wegen dem Projekt Netzwerk-Migration. Erfasse meine Zeit.',
             think1:'Denkt nach …', chip:'Mit dem ERP verbunden', think2:'Zeiteintrag wird erstellt …',
             ansPre:'Erledigt:', ansMark:'3 h', ansPost:'auf Netzwerk-Migration (Muster AG) verbucht.',
@@ -2897,6 +2941,8 @@ mob: {
           notify:'Get notified at launch →',
           replay:'Play again',
           mock:{ time:'9:41', app:'EU Cowork AI', model:'EU Cowork AI Auto',
+            prevUser:'Fasse mir das Protokoll vom Termin bei der Muster AG kurz zusammen.',
+            prevAns:'Drei Punkte: Firewall wird ersetzt, VLAN-Plan kommt bis Freitag, Backup-Test steht noch aus.',
             user:'Ich war gerade 3 Stunden bei der Muster AG wegen dem Projekt Netzwerk-Migration. Erfasse meine Zeit.',
             think1:'Denkt nach …', chip:'Mit dem ERP verbunden', think2:'Zeiteintrag wird erstellt …',
             ansPre:'Erledigt:', ansMark:'3 h', ansPost:'auf Netzwerk-Migration (Muster AG) verbucht.',
