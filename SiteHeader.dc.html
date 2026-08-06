@@ -121,6 +121,16 @@
 
   .euc-hd-cta{ display:flex; align-items:center; gap:14px; flex:0 0 auto; }
 
+  /* Zwischen 940px (ab da greift das Burger-Menü) und 1160px reicht die Breite
+     nicht mehr für Wortmarke + fünf Punkte + zwei Schaltflächen. Statt die
+     Leiste überlaufen zu lassen, fällt zuerst die zweite Schaltfläche weg
+     (der Weg dorthin bleibt über „Self-Host" und die Fusszeile offen) und die
+     Abstände in der Navigation rücken enger zusammen. */
+  @media (max-width:1160px){
+    .euc-hd-nav{ gap:22px; }
+    .euc-hd-cta .euc-hd-btn2{ display:none; }
+  }
+
   .euc-hd-btn, .euc-hd-btn2{
     display:inline-flex; align-items:center; justify-content:center;
     min-height:44px; border-radius:10px; border:0; cursor:pointer;
@@ -385,13 +395,17 @@ class Component extends DCLogic {
     const base = onLanding ? '' : '/';
     const active = this.props.activeNav || 'home';
     const T = {
-      de: { funktionen:'Funktionen', souveraenitaet:'Souveränität', selfhost:'Self-Host', faq:'FAQ',
+      de: { funktionen:'Funktionen', governance:'Governance', souveraenitaet:'Souveränität', selfhost:'Self-Host', faq:'FAQ',
             primary:'Auf die Warteliste', secondary:'Self-host for free' },
-      en: { funktionen:'Features', souveraenitaet:'Sovereignty', selfhost:'Self-Host', faq:'FAQ',
+      en: { funktionen:'Features', governance:'Governance', souveraenitaet:'Sovereignty', selfhost:'Self-Host', faq:'FAQ',
             primary:'Join the waitlist', secondary:'Self-host for free' }
     }[lang];
+    /* „Governance" zeigt auf die eigene Seite, nicht auf einen Anker: der
+       Abschnitt auf der Startseite ist entfallen, der Inhalt lebt vollständig
+       unter /governance. */
     const nav = [
       { key:'features',    label:T.funktionen,     href: base + '#funktionen' },
+      { key:'governance',  label:T.governance,     href: '/governance' },
       { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
       { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
       { key:'faq',         label:T.faq,            href: '/faq' }

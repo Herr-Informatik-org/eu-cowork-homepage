@@ -67,12 +67,6 @@
     <li><strong>Audit-Logs:</strong> Jeder Tool- und Datenzugriff ist nachvollziehbar und exportierbar.</li>
   </ul>
 
-  <h2>Volle Kontrolle für Admins.</h2>
-  <p>Governance über Agents, Zuweisungen, Rollen, Kosten und MCP-Rechte, zentral im Admin-Panel:
-     Rollen und Gruppen aus Entra ID oder lokal gepflegt, MCP-Rechte bis auf Tool-Ebene
-     (Kette: Nutzer, Rolle, Gruppe, Server-Default), Kosten und org-gepoolte Budgets mit
-     Soft-Block, Audit-Log jedes Zugriffs.</p>
-
   <h2>Häufige Fragen.</h2>
   <h3>Wo werden meine Daten verarbeitet?</h3>
   <p>Betrieb in der Schweiz (Green Lupfig), Inferenz EU-verarbeitet über EuRouter. Selbst gehostet bleiben Daten vollständig auf Ihrer Infrastruktur.</p>
@@ -472,18 +466,6 @@
 
   /* ---------- Tabelle ---------- */
   @media (max-width:860px){ .euc-mock-row{ gap:9px; padding:11px 10px; } .euc-mock-bar{ padding:9px 10px; } }
-  /* Scroll-Edge statt harter Kante: die Tabelle ist unter ~1000px breiter als
-     ihr Container und hat keine sichtbare Scrollleiste. Die beiden radialen
-     Schatten hängen an `scroll`, die beiden weissen Deckel an `local` — dadurch
-     erscheint der Schatten nur auf der Seite, auf der es wirklich weitergeht,
-     und verschwindet am Ende der Strecke. Ohne Überlauf ist nichts sichtbar. */
-  .euc-tablewrap{ margin-top:var(--s-7); overflow-x:auto; border-radius:var(--r-l); box-shadow:var(--sh-2), var(--edge);
-    background:
-      linear-gradient(90deg, var(--c-surface) 40%, rgba(255,255,255,0)) 0 0 / 26px 100% no-repeat local,
-      linear-gradient(270deg, var(--c-surface) 40%, rgba(255,255,255,0)) 100% 0 / 26px 100% no-repeat local,
-      radial-gradient(farthest-side at 0 50%, rgba(11,30,51,.13), rgba(11,30,51,0)) 0 0 / 16px 100% no-repeat scroll,
-      radial-gradient(farthest-side at 100% 50%, rgba(11,30,51,.13), rgba(11,30,51,0)) 100% 0 / 16px 100% no-repeat scroll,
-      var(--c-surface); }
   @keyframes euc-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
   @keyframes euc-caret{ 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
   @keyframes euc-hero2-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
@@ -494,11 +476,6 @@
      Rechnen übernimmt _fitStages, weil der Massstab stufenlos sein muss. */
   .euc-fit{ position:relative; width:100%; }
   .euc-fit-in{ width:100%; transform-origin:top left; }
-  @keyframes euc-gov-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
-  .euc-gov-stage{ height:392px; }
-  @media (max-width:900px){ .euc-gov-stage{ height:436px; } }
-  @media (max-width:600px){ .euc-gov-stage{ height:504px; } }
-  @media (max-width:600px){ .euc-gov-sm-hide{ display:none !important; } }
   @keyframes euc-mob-shimmer { from { background-position:150% center; } to { background-position:-50% center; } }
   .euc-mob-shimmer{ background:linear-gradient(90deg,#8A96A2 40%,#0B1E33 50%,#8A96A2 60%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:euc-mob-shimmer 1.6s linear infinite; }
   @keyframes euc-mob-marker { from { background-size:0% 88%; } to { background-size:100% 88%; } }
@@ -1242,282 +1219,7 @@
       </div>
     </section>
 
-    <section id="governance" data-screen-label="Governance" style="scroll-margin-top:90px; background:var(--c-bg); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter);">
-      <div style="max-width:var(--w-max); margin:0 auto;">
-    
-        <div data-reveal style="max-width:640px;">
-          <h2 class="euc-h2">{{ t.gov.h2 }}</h2>
-          <p class="euc-lead">{{ t.gov.sub }}</p>
-        </div>
-    
-        <div ref="{{ govRef }}" data-reveal data-reveal-delay="100" class="euc-stage" style="margin-top:clamp(32px,4vw,44px);">
-    
-          <div style="display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--c-line-soft); background:#FBFCFD;">
-            <span style="width:9px; height:9px; border-radius:50%; background:#E0E4E9; flex:0 0 auto;"></span>
-            <span style="width:9px; height:9px; border-radius:50%; background:#E0E4E9; flex:0 0 auto;"></span>
-            <span style="width:9px; height:9px; border-radius:50%; background:#E0E4E9; flex:0 0 auto;"></span>
-            <div style="display:flex; align-items:center; gap:7px; margin:0 auto; padding:5px 12px; border:1px solid #E8ECF0; border-radius:99px; background:#fff;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3E6E86" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
-              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5A6472;">{{ t.gov.win }}</span>
-            </div>
-            <span class="euc-gov-sm-hide" style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.08em; color:#9AA5B1;">{{ t.gov.mockLabel }}</span>
-          </div>
-    
-          <div style="display:flex; flex-wrap:wrap; gap:6px; padding:10px 12px; border-bottom:1px solid var(--c-line-soft); background:#FBFCFD;">
-            <button onClick="{{ govT0.pick }}" class="euc-btn-press" style="display:inline-flex; align-items:center; gap:7px; cursor:pointer; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:{{ govT0.fg }}; background:{{ govT0.bg }}; border:1px solid {{ govT0.bd }}; box-shadow:{{ govT0.sh }}; border-radius:var(--r-s); min-height:44px; padding:8px 15px; transition:background .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, transform var(--d-press) var(--ease-out);" style-hover="border-color:#C9D3DC;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              {{ govT0.label }}
-            </button>
-            <button onClick="{{ govT1.pick }}" class="euc-btn-press" style="display:inline-flex; align-items:center; gap:7px; cursor:pointer; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:{{ govT1.fg }}; background:{{ govT1.bg }}; border:1px solid {{ govT1.bd }}; box-shadow:{{ govT1.sh }}; border-radius:var(--r-s); min-height:44px; padding:8px 15px; transition:background .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, transform var(--d-press) var(--ease-out);" style-hover="border-color:#C9D3DC;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6"></path><path d="M15 2v6"></path><path d="M12 17v5"></path><path d="M5 8h14"></path><path d="M6 11V8h12v3a6 6 0 1 1-12 0Z"></path></svg>
-              {{ govT1.label }}
-            </button>
-            <button onClick="{{ govT2.pick }}" class="euc-btn-press" style="display:inline-flex; align-items:center; gap:7px; cursor:pointer; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:{{ govT2.fg }}; background:{{ govT2.bg }}; border:1px solid {{ govT2.bd }}; box-shadow:{{ govT2.sh }}; border-radius:var(--r-s); min-height:44px; padding:8px 15px; transition:background .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, transform var(--d-press) var(--ease-out);" style-hover="border-color:#C9D3DC;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>
-              {{ govT2.label }}
-            </button>
-            <button onClick="{{ govT3.pick }}" class="euc-btn-press" style="display:inline-flex; align-items:center; gap:7px; cursor:pointer; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:{{ govT3.fg }}; background:{{ govT3.bg }}; border:1px solid {{ govT3.bd }}; box-shadow:{{ govT3.sh }}; border-radius:var(--r-s); min-height:44px; padding:8px 15px; transition:background .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, transform var(--d-press) var(--ease-out);" style-hover="border-color:#C9D3DC;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
-              {{ govT3.label }}
-            </button>
-          </div>
-    
-          <div class="euc-gov-stage" style="position:relative; background:#FFFFFF;">
-    
-            <div style="position:absolute; inset:0; display:flex; flex-direction:column; overflow:hidden; padding:clamp(16px,2.2vw,22px); opacity:{{ govP0.op }}; transform:{{ govP0.tr }}; pointer-events:{{ govP0.pe }}; z-index:{{ govP0.z }}; transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);">
-              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <span style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.users.title }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#66727F; border:1px solid #E4E8EC; background:#FBFCFD; border-radius:6px; padding:3px 8px;">{{ t.gov.users.meta }}</span>
-                <span style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; font-family:'Inter',sans-serif; font-size:12px; font-weight:600; color:#F7FAFC; background:#0B1E33; border-radius:8px; padding:6px 11px;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                  {{ t.gov.users.cta }}
-                </span>
-              </div>
-              <div style="margin-top:14px; border:1px solid #EEF1F4; border-radius:12px; overflow:hidden;">
-                <div style="display:flex; align-items:center; gap:12px; padding:9px 13px; background:#FBFCFD; border-bottom:1px solid var(--c-line-soft); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:#9AA5B1;">
-                  <span style="flex:1 1 42%; min-width:0;">{{ t.gov.users.colUser }}</span>
-                  <span style="flex:0 0 78px;">{{ t.gov.users.colRole }}</span>
-                  <span style="flex:1 1 26%; min-width:0;">{{ t.gov.users.colGroups }}</span>
-                  <span class="euc-gov-sm-hide" style="flex:0 0 84px; text-align:right;">{{ t.gov.users.colSeen }}</span>
-                </div>
-                <sc-for list="{{ govUsers }}" as="u" hint-placeholder-count="4">
-                  <div style="display:flex; align-items:center; gap:12px; padding:9px 13px; border-bottom:{{ u.bd }};">
-                    <div style="flex:1 1 42%; min-width:0; display:flex; align-items:center; gap:10px;">
-                      <span style="flex:0 0 auto; width:27px; height:27px; border-radius:50%; background:{{ u.avBg }}; border:{{ u.avBd }}; color:{{ u.avFg }}; display:inline-flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; font-size:10.5px; font-weight:600;">{{ u.ini }}</span>
-                      <div style="min-width:0;">
-                        <div style="font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:#1E2A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.name }}</div>
-                        <span style="display:inline-block; margin-top:2px; font-family:'JetBrains Mono',monospace; font-size:10px; color:{{ u.subFg }}; background:{{ u.subBg }}; border:{{ u.subBd }}; border-radius:6px; padding:{{ u.subPad }}; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.sub }}</span>
-                      </div>
-                    </div>
-                    <div style="flex:0 0 78px;">
-                      <span style="display:inline-block; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; color:{{ u.roleFg }}; background:{{ u.roleBg }}; border:1px solid {{ u.roleBd }}; border-radius:99px; padding:3px 10px;">{{ u.role }}</span>
-                    </div>
-                    <div style="flex:1 1 26%; min-width:0; display:flex; flex-wrap:wrap; gap:5px;">
-                      <sc-for list="{{ u.groups }}" as="g" hint-placeholder-count="1">
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#3E6E86; background:#F1F9FC; border:1px solid #D6EDF5; border-radius:6px; padding:3px 7px; white-space:nowrap;">{{ g }}</span>
-                      </sc-for>
-                    </div>
-                    <span class="euc-gov-sm-hide" style="flex:0 0 84px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:{{ u.seenFg }};">{{ u.seen }}</span>
-                  </div>
-                </sc-for>
-              </div>
-            </div>
-    
-            <div style="position:absolute; inset:0; display:flex; flex-direction:column; overflow:hidden; padding:clamp(16px,2.2vw,22px); opacity:{{ govP1.op }}; transform:{{ govP1.tr }}; pointer-events:{{ govP1.pe }}; z-index:{{ govP1.z }}; transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);">
-              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <span style="flex:0 0 auto; width:19px; height:19px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6"></path><path d="M15 2v6"></path><path d="M12 17v5"></path><path d="M5 8h14"></path><path d="M6 11V8h12v3a6 6 0 1 1-12 0Z"></path></svg>
-                </span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:600; color:#0B1E33;">{{ t.gov.mcp.server }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#3E6E86; background:#F1F9FC; border:1px solid #D6EDF5; border-radius:6px; padding:3px 8px;">{{ t.gov.mcp.badge }}</span>
-                <span style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#66727F; border:1px solid #E4E8EC; background:#FBFCFD; border-radius:6px; padding:3px 8px;">{{ t.gov.mcp.tools }}</span>
-              </div>
-    
-              <div style="margin-top:14px; border:1px solid #EEF1F4; background:#FBFCFD; border-radius:12px; padding:12px 13px 11px;">
-                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:#9AA5B1;">{{ t.gov.mcp.chainLabel }}</div>
-                <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:7px; margin-top:9px;">
-                  <sc-for list="{{ govChain }}" as="c" hint-placeholder-count="4">
-                    <div style="display:flex; flex-direction:column; align-items:center;">
-                      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:{{ c.fg }}; background:{{ c.bg }}; border:1px solid {{ c.bd }}; border-radius:7px; padding:5px 10px; white-space:nowrap; transition:background .25s ease, color .25s ease;">{{ c.label }}</span>
-                      <span style="font-family:'Inter',sans-serif; font-size:9.5px; font-weight:600; color:#2E7D5B; margin-top:4px; opacity:{{ c.tagOp }};">{{ t.gov.mcp.effective }}</span>
-                    </div>
-                    <sc-if value="{{ c.arrow }}" hint-placeholder-val="{{ true }}">
-                      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#B7C2CC; margin-top:6px;">›</span>
-                    </sc-if>
-                  </sc-for>
-                </div>
-                <div style="font-family:'Inter',sans-serif; font-size:11.5px; color:#8A96A2; margin-top:8px;">{{ t.gov.mcp.chainHint }}</div>
-              </div>
-    
-              <div style="margin-top:13px; border:1px solid #EEF1F4; border-radius:12px; overflow:hidden;">
-                <sc-for list="{{ govTools }}" as="r" hint-placeholder-count="3">
-                  <div style="display:flex; align-items:center; gap:10px; padding:10px 13px; border-top:{{ r.rowBd }};">
-                    <span style="font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:#1E2A36; white-space:nowrap;">{{ r.label }}</span>
-                    <span class="euc-gov-sm-hide" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1; border:1px solid #EEF1F4; border-radius:5px; padding:2px 7px;">{{ r.id }}</span>
-                    <span style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-family:var(--f-body); font-size:11.5px; font-weight:600; color:{{ r.fg }}; background:{{ r.bg }}; box-shadow:var(--sh-1), var(--edge); border-radius:99px; padding:4px 11px; white-space:nowrap;">
-                      <sc-if value="{{ r.allow }}" hint-placeholder-val="{{ true }}">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-                      </sc-if>
-                      <sc-if value="{{ !r.allow }}" hint-placeholder-val="{{ false }}">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                      </sc-if>
-                      {{ r.badge }}
-                    </span>
-                  </div>
-                </sc-for>
-              </div>
-    
-              <div style="margin-top:auto; padding-top:12px; border-top:1px solid var(--c-line-soft); display:flex; align-items:center; gap:9px; flex-wrap:wrap;">
-                <span style="position:relative; display:inline-flex; width:7px; height:7px; flex:0 0 auto;"><span style="position:absolute; inset:0; border-radius:50%; background:#C7A83A; opacity:.55; animation:euc-gov-pulse 2.2s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#F4C542;"></span></span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#66727F;">{{ t.gov.mcp.audit }}</span>
-                <span class="euc-gov-sm-hide" style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#9AA5B1;">{{ t.gov.mcp.auditMeta }}</span>
-              </div>
-            </div>
-    
-            <div style="position:absolute; inset:0; display:flex; flex-direction:column; overflow:hidden; padding:clamp(16px,2.2vw,22px); opacity:{{ govP2.op }}; transform:{{ govP2.tr }}; pointer-events:{{ govP2.pe }}; z-index:{{ govP2.z }}; transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);">
-              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <span style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.cost.title }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#66727F; border:1px solid #E4E8EC; background:#FBFCFD; border-radius:6px; padding:3px 8px;">{{ t.gov.cost.period }}</span>
-                <span style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#3E6E86; background:#F1F9FC; border:1px solid #D6EDF5; border-radius:6px; padding:3px 8px;">{{ t.gov.cost.unit }}</span>
-              </div>
-    
-              <div style="display:flex; flex-wrap:wrap; gap:18px; margin-top:16px;">
-                <div style="flex:1 1 210px; min-width:0;">
-                  <div style="display:flex; align-items:flex-end; gap:10px; height:104px; border-bottom:1px solid var(--c-line-soft);">
-                    <sc-for list="{{ govBars }}" as="b" hint-placeholder-count="4">
-                      <div style="flex:1 1 0; min-width:0; height:100%; display:flex; flex-direction:column; justify-content:flex-end;">
-                        <div style="height:{{ b.h }}; background:{{ b.bg }}; border-radius:6px 6px 0 0; transition:height .75s cubic-bezier(.4,0,.2,1); transition-delay:{{ b.delay }};"></div>
-                      </div>
-                    </sc-for>
-                  </div>
-                  <div style="display:flex; gap:10px; margin-top:7px;">
-                    <sc-for list="{{ govBars }}" as="b" hint-placeholder-count="4">
-                      <div style="flex:1 1 0; min-width:0; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ b.short }}</div>
-                    </sc-for>
-                  </div>
-                </div>
-                <div style="flex:1 1 230px; min-width:0;">
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:#9AA5B1;">{{ t.gov.cost.listLabel }}</div>
-                  <div style="margin-top:8px; border:1px solid #EEF1F4; border-radius:11px; overflow:hidden;">
-                    <sc-for list="{{ govBars }}" as="b" hint-placeholder-count="4">
-                      <div style="display:flex; align-items:center; gap:10px; padding:7px 12px; border-top:{{ b.rowBd }};">
-                        <span style="width:8px; height:8px; border-radius:3px; background:{{ b.bg }}; flex:0 0 auto;"></span>
-                        <span style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:#47535F; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ b.label }}</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:#0B1E33;">{{ b.val }}</span>
-                      </div>
-                    </sc-for>
-                  </div>
-                </div>
-              </div>
-    
-              <div style="margin-top:auto; padding-top:14px; border-top:1px solid var(--c-line-soft);">
-                <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap;">
-                  <span style="font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:#1E2A36;">{{ t.gov.cost.budgetLabel }}</span>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#3E6E86; background:#F1F9FC; border:1px solid #D6EDF5; border-radius:6px; padding:3px 8px;">{{ t.gov.cost.pooled }}</span>
-                  <span style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#47535F;">{{ t.gov.cost.budgetVal }}</span>
-                </div>
-                <div style="position:relative; margin-top:10px; height:9px; border-radius:99px; background:#EEF2F5;">
-                  <div style="height:100%; width:{{ govBudget }}; background:#0B1E33; border-radius:99px; transition:width .9s cubic-bezier(.4,0,.2,1); transition-delay:340ms;"></div>
-                  <span style="position:absolute; top:-5px; bottom:-5px; left:90%; width:2px; border-radius:2px; background:#F4C542;"></span>
-                </div>
-                <div style="display:flex; align-items:center; gap:9px; margin-top:8px; flex-wrap:wrap;">
-                  <span style="font-family:'Inter',sans-serif; font-size:11.5px; color:#8A96A2;">{{ t.gov.cost.hint }}</span>
-                  <span style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#8A6D12; background:#FDF7E6; border:1px solid #F0DFA8; border-radius:6px; padding:3px 8px;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#F4C542;"></span>{{ t.gov.cost.softBlock }}
-                  </span>
-                </div>
-              </div>
-            </div>
-    
-            <div style="position:absolute; inset:0; display:flex; flex-direction:column; overflow:hidden; padding:clamp(16px,2.2vw,22px); opacity:{{ govP3.op }}; transform:{{ govP3.tr }}; pointer-events:{{ govP3.pe }}; z-index:{{ govP3.z }}; transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);">
-              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                <span style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.agents.title }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#3E6E86; background:#F1F9FC; border:1px solid #D6EDF5; border-radius:6px; padding:3px 8px;">{{ t.gov.agents.badge }}</span>
-                <span style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#66727F;">{{ t.gov.agents.meta }}</span>
-              </div>
-              <div style="margin-top:14px; display:flex; flex-direction:column; gap:9px;">
-                <sc-for list="{{ govAgents }}" as="a" hint-placeholder-count="3">
-                  <div style="display:flex; align-items:center; gap:11px; flex-wrap:wrap; border:1px solid #EEF1F4; border-radius:11px; background:#FBFCFD; padding:10px 12px;">
-                    <span style="flex:0 0 auto; width:19px; height:19px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center;">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
-                    </span>
-                    <div style="flex:1 1 150px; min-width:0;">
-                      <div style="font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#1E2A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div>
-                      <div style="font-family:'Inter',sans-serif; font-size:11.5px; line-height:1.45; color:#8A96A2; margin-top:2px;">{{ a.desc }}</div>
-                    </div>
-                    <div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:flex-end;">
-                      <sc-for list="{{ a.chips }}" as="c" hint-placeholder-count="1">
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#3E6E86; background:#F1F9FC; border:1px solid #D6EDF5; border-radius:6px; padding:3px 7px; white-space:nowrap;">{{ c }}</span>
-                      </sc-for>
-                    </div>
-                  </div>
-                </sc-for>
-              </div>
-              <div style="margin-top:auto; padding-top:13px; border-top:1px solid var(--c-line-soft); display:flex; align-items:center; gap:11px;">
-                <div style="min-width:0;">
-                  <div style="font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:#1E2A36;">{{ t.gov.agents.builder }}</div>
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#9AA5B1; margin-top:2px;">{{ t.gov.agents.builderHint }}</div>
-                </div>
-                <span style="margin-left:auto; display:inline-flex; align-items:center; gap:9px;">
-                  <span style="font-family:'Inter',sans-serif; font-size:11.5px; font-weight:600; color:#2E7D5B;">{{ t.gov.agents.builderState }}</span>
-                  <span style="position:relative; width:38px; height:21px; border-radius:99px; background:#0B1E33; display:inline-flex; align-items:center; flex:0 0 auto;">
-                    <span style="position:absolute; right:3px; width:15px; height:15px; border-radius:50%; background:#FFFFFF;"></span>
-                  </span>
-                </span>
-              </div>
-            </div>
-    
-          </div>
-        </div>
-    
-        <div style="margin-top:clamp(24px,3vw,34px); display:grid; grid-template-columns:repeat(auto-fit,minmax(232px,1fr)); gap:16px;">
-          <div class="euc-card" data-reveal data-reveal-delay="0" style="display:flex; align-items:flex-start; gap:11px; padding:18px 19px;">
-            <span style="flex:0 0 auto; width:20px; height:20px; margin-top:2px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center;">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </span>
-            <div style="min-width:0;">
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.feats.f1.t }}</div>
-              <div style="font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; color:#5A6472; margin-top:6px;">{{ t.gov.feats.f1.d }}</div>
-            </div>
-          </div>
-          <div class="euc-card" data-reveal data-reveal-delay="80" style="display:flex; align-items:flex-start; gap:11px; padding:18px 19px;">
-            <span style="flex:0 0 auto; width:20px; height:20px; margin-top:2px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center;">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
-            </span>
-            <div style="min-width:0;">
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.feats.f2.t }}</div>
-              <div style="font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; color:#5A6472; margin-top:6px;">{{ t.gov.feats.f2.d }}</div>
-            </div>
-          </div>
-          <div class="euc-card" data-reveal data-reveal-delay="160" style="display:flex; align-items:flex-start; gap:11px; padding:18px 19px;">
-            <span style="flex:0 0 auto; width:20px; height:20px; margin-top:2px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center;">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>
-            </span>
-            <div style="min-width:0;">
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.feats.f3.t }}</div>
-              <div style="font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; color:#5A6472; margin-top:6px;">{{ t.gov.feats.f3.d }}</div>
-            </div>
-          </div>
-          <div class="euc-card" data-reveal data-reveal-delay="240" style="display:flex; align-items:flex-start; gap:11px; padding:18px 19px;">
-            <span style="flex:0 0 auto; width:20px; height:20px; margin-top:2px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center;">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 12h-5"></path><path d="M15 8h-5"></path><path d="M19 17V5a2 2 0 0 0-2-2H4"></path><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"></path></svg>
-            </span>
-            <div style="min-width:0;">
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:15.5px; font-weight:500; color:#0B1E33; letter-spacing:-.01em;">{{ t.gov.feats.f4.t }}</div>
-              <div style="font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; color:#5A6472; margin-top:6px;">{{ t.gov.feats.f4.d }}</div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/governance" class="euc-sov-cta" data-reveal data-reveal-delay="300" style="display:inline-flex; align-items:center; gap:8px; margin-top:26px; font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none;">
-          <span>{{ t.gov.moreLink }}</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-        </a>
-
-      </div>
-    </section>
-
-    <section id="konnektoren" data-screen-label="Konnektoren" style="background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
+    <section id="konnektoren" data-screen-label="Konnektoren" style="background:var(--c-bg); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
           <div style="max-width:var(--w-max); margin:0 auto;">
     
             <div style="display:flex; flex-wrap:wrap; align-items:center; gap:clamp(26px,4.5vw,60px);">
@@ -1672,7 +1374,7 @@
           </div>
         </section>
 
-    <section id="outlook-addin" data-screen-label="Outlook-Add-in" style="position:relative; overflow:hidden; background:var(--c-bg); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
+    <section id="outlook-addin" data-screen-label="Outlook-Add-in" style="position:relative; overflow:hidden; background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
           <div class="euc-olk-aura" aria-hidden="true"></div>
 
           <div style="position:relative; z-index:1; max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(30px,4.4vw,52px);">
@@ -2213,153 +1915,6 @@
           </div>
         </section>
 
-    <section data-screen-label="Comparison" style="background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter);">
-      <div style="max-width:var(--w-max); margin:0 auto;">
-        <div data-reveal style="max-width:640px;">
-          <h2 class="euc-h2">{{ t.comparison.h2 }}</h2>
-          <p class="euc-lead">{{ t.comparison.sub }}</p>
-        </div>
-
-        <div data-reveal data-reveal-delay="100" class="euc-tablewrap">
-          <table style="min-width:1000px; width:100%; border-collapse:separate; border-spacing:0; font-family:'Inter',sans-serif;">
-            <thead>
-              <tr>
-                <th style="text-align:left; padding:18px 20px; vertical-align:bottom; width:26%;"></th>
-                <th style="text-align:left; padding:14px 18px; vertical-align:bottom; background:#0B1E33; border-top-left-radius:10px; border-top-right-radius:10px;">
-                  <span style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:#F7FAFC;">{{ compHead.primary }}</span>
-                </th>
-                <sc-for list="{{ compHead.rest }}" as="c" hint-placeholder-count="5">
-                  <th style="text-align:left; padding:18px 16px; vertical-align:bottom; font-family:var(--f-mono); font-size:11.5px; font-weight:400; letter-spacing:.1em; text-transform:uppercase; color:var(--c-body-soft); white-space:nowrap;">{{ c }}</th>
-                </sc-for>
-              </tr>
-            </thead>
-            <tbody>
-              <sc-for list="{{ compRows }}" as="r" hint-placeholder-count="6">
-                <tr>
-                  <td style="padding:15px 20px; border-top:1px solid var(--c-line-soft); font-size:14px; font-weight:500; color:#1E2A36; vertical-align:top;">{{ r.k }}</td>
-                  <!-- Transluzent statt deckend: die Scroll-Schatten von
-                       .euc-tablewrap liegen auf dem Container, eine deckende
-                       Zellfläche würde sie an genau der Kante verdecken, an der
-                       sie sagen sollen „hier geht es weiter". Über Weiss ist
-                       rgba(165,216,230,.17) = rgb(240,248,251), also derselbe
-                       Ton wie das bisherige #F1F9FC. -->
-                  <td style="padding:15px 18px; border-top:1px solid #E1EDF3; background:rgba(165,216,230,.17); vertical-align:top;">
-                    <span style="display:inline-flex; align-items:flex-start; gap:7px; font-size:14px; font-weight:600; color:#0B1E33;">
-                      <sc-if value="{{ r.primaryCheck }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex:0 0 auto; margin-top:3px;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
-                      {{ r.primary }}
-                    </span>
-                  </td>
-                  <sc-for list="{{ r.rest }}" as="cell" hint-placeholder-count="5">
-                    <td style="padding:15px 16px; border-top:1px solid var(--c-line-soft); font-size:13.5px; color:#66727F; vertical-align:top;">{{ cell }}</td>
-                  </sc-for>
-                </tr>
-              </sc-for>
-            </tbody>
-          </table>
-        </div>
-
-        <p data-reveal style="font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; color:var(--c-body-soft); margin:14px 0 0;">{{ t.comparison.stand }}</p>
-
-        <a href="/vergleich" class="euc-sov-cta" data-reveal data-reveal-delay="60" style="display:inline-flex; align-items:center; gap:8px; margin-top:18px; font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none;">
-          <span>{{ t.comparison.moreLink }}</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-        </a>
-      </div>
-    </section>
-
-    <section id="platform" data-screen-label="Platform &amp; trust" style="scroll-margin-top:90px; background:var(--c-bg); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter);">
-      <div style="max-width:var(--w-max); margin:0 auto;">
-        <div data-reveal style="max-width:660px;">
-          <h2 class="euc-h2">{{ t.platform.h2 }}</h2>
-          <p class="euc-lead">{{ t.platform.sub }}</p>
-        </div>
-
-        <div style="margin-top:40px; display:flex; flex-direction:column; gap:18px;">
-          <div style="display:flex; flex-wrap:wrap; gap:18px;">
-            <div data-reveal style="flex:1.6 1 440px; min-width:0; position:relative; overflow:hidden; border-radius:var(--r-l); background:var(--c-deep); color:var(--c-on-deep); box-shadow:var(--sh-3), var(--edge-deep); padding:30px 28px;">
-              <div aria-hidden="true" style="position:absolute; top:-30%; right:-8%; width:52%; height:80%; background:radial-gradient(closest-side, rgba(165,216,230,.18), transparent); pointer-events:none;"></div>
-              <div style="position:relative;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7FC2D8;">{{ t.platform.swiss.tag }}</span>
-                <div style="display:flex; align-items:center; gap:13px; margin-top:14px;">
-                  <span style="flex:0 0 auto; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L19 6 V11 C19 15.5 16 18.7 12 20 C8 18.7 5 15.5 5 11 V6 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path><path d="M9 11.5 L11.2 13.7 L15 9.5" stroke="#A5D8E6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                  <div style="font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:500; color:#F7FAFC; letter-spacing:-.01em;">{{ t.platform.swiss.title }}</div>
-                </div>
-                <p style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.6; color:#C4D0DD; margin:14px 0 0; max-width:430px;">{{ t.platform.swiss.desc }}</p>
-                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;">
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#C4D0DD; border:1px solid rgba(165,216,230,0.3); border-radius:99px; padding:5px 11px;">{{ t.platform.swiss.tag1 }}</span>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#C4D0DD; border:1px solid rgba(165,216,230,0.3); border-radius:99px; padding:5px 11px;">{{ t.platform.swiss.tag2 }}</span>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#C4D0DD; border:1px solid rgba(165,216,230,0.3); border-radius:99px; padding:5px 11px;">{{ t.platform.swiss.tag3 }}</span>
-                </div>
-                <div style="display:inline-flex; align-items:center; gap:8px; margin-top:18px;">
-                  <span style="width:7px; height:7px; border-radius:50%; background:#F4C542;"></span>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8AA0B6;">{{ t.platform.swiss.loc }}</span>
-                </div>
-              </div>
-            </div>
-
-            <div style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column; gap:18px;">
-              <div data-reveal data-reveal-delay="80" class="euc-card" style="flex:1; padding:26px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#3E6E86;">{{ t.platform.enterprise.tag }}</span>
-                <div style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:500; color:#0B1E33; margin-top:12px;">{{ t.platform.enterprise.title }}</div>
-                <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.5; color:#5A6472; margin:7px 0 0;">{{ t.platform.enterprise.desc }}</p>
-                <div style="display:flex; flex-direction:column; gap:7px; margin-top:14px;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;"><span style="font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:#1E2A36;">{{ t.platform.enterprise.r1 }}</span><span style="display:flex; gap:4px;"><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span></span></div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;"><span style="font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:#1E2A36;">{{ t.platform.enterprise.r2 }}</span><span style="display:flex; gap:4px;"><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span><span style="width:7px; height:7px; border-radius:50%; background:#D6E0E8;"></span><span style="width:7px; height:7px; border-radius:50%; background:#D6E0E8;"></span></span></div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;"><span style="font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:#1E2A36;">{{ t.platform.enterprise.r3 }}</span><span style="display:flex; gap:4px;"><span style="width:7px; height:7px; border-radius:50%; background:#0B1E33;"></span><span style="width:7px; height:7px; border-radius:50%; background:#D6E0E8;"></span><span style="width:7px; height:7px; border-radius:50%; background:#D6E0E8;"></span><span style="width:7px; height:7px; border-radius:50%; background:#D6E0E8;"></span></span></div>
-                </div>
-                <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--c-body-soft); margin-top:12px; padding-top:12px; border-top:1px solid var(--c-line-soft);">{{ t.platform.enterprise.foot }}</div>
-              </div>
-
-              <div data-reveal data-reveal-delay="140" class="euc-card" style="flex:1; padding:26px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#3E6E86;">{{ t.platform.oss.tag }}</span>
-                <div style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:500; color:#0B1E33; margin-top:12px;">{{ t.platform.oss.title }}</div>
-                <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.5; color:#5A6472; margin:7px 0 0;">{{ t.platform.oss.desc }}</p>
-                <div style="display:flex; align-items:center; gap:8px; margin-top:16px;">
-                  <span style="flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:#0B1E33; background:#EAF3F7; border:1px solid #D6EDF5; border-radius:9px; padding:9px 6px;">{{ t.platform.oss.o1 }}</span>
-                  <span style="flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:#0B1E33; background:#fff; border:1px solid #D6E0E8; border-radius:9px; padding:9px 6px;">{{ t.platform.oss.o2 }}</span>
-                  <span style="flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:#0B1E33; background:#fff; border:1px solid #D6E0E8; border-radius:9px; padding:9px 6px;">{{ t.platform.oss.o3 }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style="display:flex; flex-wrap:wrap; gap:18px;">
-            <div data-reveal class="euc-card" style="flex:1 1 280px; min-width:0; padding:26px;">
-              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#3E6E86;">{{ t.platform.model.tag }}</span>
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:500; color:#0B1E33; margin-top:12px;">{{ t.platform.model.title }}</div>
-              <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.5; color:#5A6472; margin:7px 0 0;">{{ t.platform.model.desc }}</p>
-              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:16px;">
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#3D4855; border:1px solid #E4E8EC; background:var(--c-bg-cool); border-radius:7px; padding:5px 10px;">{{ t.platform.model.m1 }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#3D4855; border:1px solid #E4E8EC; background:var(--c-bg-cool); border-radius:7px; padding:5px 10px;">{{ t.platform.model.m2 }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#3D4855; border:1px solid #E4E8EC; background:var(--c-bg-cool); border-radius:7px; padding:5px 10px;">{{ t.platform.model.m3 }}</span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#F7FAFC; background:#0B1E33; border-radius:7px; padding:5px 10px;">{{ t.platform.model.m4 }}</span>
-              </div>
-            </div>
-
-            <div data-reveal data-reveal-delay="80" class="euc-card" style="flex:1 1 280px; min-width:0; padding:26px;">
-              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#3E6E86;">{{ t.platform.compliance.tag }}</span>
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:500; color:#0B1E33; margin-top:12px;">{{ t.platform.compliance.title }}</div>
-              <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.5; color:#5A6472; margin:7px 0 0;">{{ t.platform.compliance.desc }}</p>
-              <div style="display:flex; flex-direction:column; gap:7px; margin-top:16px;">
-                <div style="display:flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#3D4855;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" style="flex:0 0 auto;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ t.platform.compliance.l1 }}</div>
-                <div style="display:flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#3D4855;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" style="flex:0 0 auto;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ t.platform.compliance.l2 }}</div>
-              </div>
-            </div>
-
-            <div data-reveal data-reveal-delay="140" class="euc-card" style="flex:1 1 280px; min-width:0; padding:26px;">
-              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#3E6E86;">{{ t.platform.api.tag }}</span>
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:500; color:#0B1E33; margin-top:12px;">{{ t.platform.api.title }}</div>
-              <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.5; color:#5A6472; margin:7px 0 0;">{{ t.platform.api.desc }}</p>
-              <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
-                <div style="display:flex; align-items:center; gap:8px; border:1px solid #EEF1F4; border-radius:9px; background:#FBFCFD; padding:9px 11px;"><span style="width:6px; height:6px; border-radius:50%; background:#5BA783;"></span><span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2C3742;">{{ t.platform.api.e1 }}</span></div>
-                <div style="display:flex; align-items:center; gap:8px; border:1px solid #EEF1F4; border-radius:9px; background:#FBFCFD; padding:9px 11px;"><span style="width:6px; height:6px; border-radius:50%; background:#F4C542;"></span><span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2C3742;">{{ t.platform.api.e2 }}</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="self-host" data-hd-dark data-screen-label="Self-host (dark)" style="scroll-margin-top:90px; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter) calc(var(--sec-y-tight) / 2);">
       <div style="max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
         <div style="flex:1 1 400px; min-width:0;" data-reveal>
@@ -2758,10 +2313,6 @@ this.hero2Ref = React.createRef();
       { location:[40.42, -3.70], size:0.032, color:ICE },      /* Madrid */
       { location:[41.90, 12.50], size:0.032, color:ICE }       /* Rom */
     ];
-this.govRef = React.createRef();
-    this._govTimer = null;
-    this._govIo = null;
-    this._govStarted = false;
 this.mobRef = React.createRef();
     this.olkStageRef = React.createRef();
     this.olkBodyRef = React.createRef();
@@ -2778,7 +2329,7 @@ this.mobRef = React.createRef();
     this._termCmd = 'cd distribution && ./install.sh --profiles production';
     this._termOut = ['✓ Pulling images …','✓ Auto-TLS · SearXNG ready','✓ Telemetry off by default','→ https://localhost  ·  ~60s'];
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
-    this.state = { lang: initLang, hero2Phase: 0, govTab: 1, govUser: false, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1 };
+    this.state = { lang: initLang, hero2Phase: 0, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1 };
     /* `lang` am <html> mitziehen. Ohne das steht auf der englischen Fassung
        weiterhin lang="de": Screenreader sprechen englischen Text mit deutscher
        Aussprache, Browser bieten eine Übersetzung an, die niemand braucht, und
@@ -2907,39 +2458,6 @@ this.mobRef = React.createRef();
         }
       }
       ,
-      comparison: {
-        de: {
-          h2:'Kein Cherry-Picking. Der ganze Markt.',
-          sub:'Auch dort, wo andere Open-Source-Tools gleichziehen, sagen wir es.',
-          cols:['EU Cowork AI','Claude','M365 Copilot','Langdock','Swisscom AI','Open WebUI'],
-          rows:[
-            { k:'Open Source (MIT)', v:['Ja','Nein','Nein','Nein','Nein','Ja (BSD-3)'] },
-            { k:'Self-host ab 1 User', v:['Ja','Nein','Nein','Nein','Nein','Ja (Branding-Klausel ab 50 Nutzern)'] },
-            { k:'CH-Hosting', v:['Ja (Green Lupfig)','Nein (US)','EU Data Boundary inkl. EFTA, mit Ausnahmen','EU','Ja','selbst'] },
-            { k:'Kein Seat-/Branding-Zwang', v:['Ja','Nein (Team 2 bis 150 Plätze, Enterprise ab 20)','Nein','Nein','Nein','Nein (Branding ab 50 Nutzern)'] },
-            { k:'Modelle', v:['100+ (EU-verarbeitet)','nur Claude','GPT (M365)','Multi-Modell','Swisscom-Auswahl','selbst gewählt'] },
-            { k:'ERP/MCP mit RBAC + Audit', v:['Ja','teils (MCP)','MCP über Copilot Studio','teils','nicht ausgewiesen','Rollen und Gruppen, additiv'] }
-          ],
-          stand:'Stand: August 2026. Angaben zu anderen Anbietern nach deren öffentlicher Dokumentation.',
-          moreLink:'Vollständiger Vergleich mit Quellen und Stand-Datum'
-        },
-        en: {
-          h2:'No cherry-picking. The whole market.',
-          sub:'Even where other open-source tools match us, we say so.',
-          cols:['EU Cowork AI','Claude','M365 Copilot','Langdock','Swisscom AI','Open WebUI'],
-          rows:[
-            { k:'Open source (MIT)', v:['Yes','No','No','No','No','Yes (BSD-3)'] },
-            { k:'Self-host from 1 user', v:['Yes','No','No','No','No','Yes (branding clause from 50 users)'] },
-            { k:'CH hosting', v:['Yes (Green Lupfig)','No (US)','EU Data Boundary incl. EFTA, with exceptions','EU','Yes','self'] },
-            { k:'No seat/branding lock-in', v:['Yes','No (Team 2 to 150 seats, Enterprise from 20)','No','No','No','No (branding from 50 users)'] },
-            { k:'Models', v:['100+ (EU-processed)','Claude only','GPT (M365)','multi-model','Swisscom selection','your choice'] },
-            { k:'ERP/MCP with RBAC + audit', v:['Yes','partly (MCP)','MCP via Copilot Studio','partly','not documented','roles and groups, additive'] }
-          ],
-          stand:'As of August 2026. Details on other vendors follow their own public documentation.',
-          moreLink:'Full comparison with sources'
-        }
-      }
-      ,
       selfhost: {
         de: {
           h2:'One command. 60 seconds.',
@@ -3012,29 +2530,6 @@ this.mobRef = React.createRef();
         en: { h2:'Your AI coworker is waiting.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Join the waitlist', secondary:'Self-host for free', enterprise:'Enterprise? Talk to us →' }
       }
 ,
-      platform: {
-        de: {
-          h2:'Gebaut für Vertrauen. Bereit fürs Unternehmen.',
-          sub:'Souveräne Infrastruktur, offene Grundlage, Enterprise-Kontrollen.',
-          swiss:{ tag:'Security First', title:'Swiss Hosting', desc:'Betrieb in ISO-27001-Rechenzentren in der Schweiz. Daten bleiben in Europa, EU-verarbeitet.', tag1:'ISO 27001', tag2:'revDSG', tag3:'DSGVO', loc:'Green · Lupfig, CH' },
-          enterprise:{ tag:'Governance', title:'Enterprise-ready', desc:'Rollen, Berechtigungen und zentrale Administration.', r1:'Admin', r2:'Editor', r3:'Viewer', foot:'RBAC · Audit-Logs' },
-          oss:{ tag:'Offen', title:'Open Source · Self-hostbar', desc:'MIT-Lizenz. Managed, in Ihrer Cloud oder on-prem.', o1:'Managed', o2:'Eigene Cloud', o3:'On-Prem' },
-          model:{ tag:'Flexibel', title:'Model-agnostisch', desc:'100+ Modelle, kein Vendor-Lock-in. Eigener Anbieter-Schlüssel pro Instanz.', m1:'Claude', m2:'GPT', m3:'Llama', m4:'+100' },
-          compliance:{ tag:'Nachweisbar', title:'Compliance & Audit', desc:'Jeder Tool- und Datenzugriff ist nachvollziehbar.', l1:'Zugriff geprüft', l2:'Export protokolliert' },
-          api:{ tag:'Verbunden', title:'API-first', desc:'Offene APIs und MCP-Gateway für Ihre Systeme.', e1:'POST /v1/chat', e2:'MCP-Gateway' }
-        },
-        en: {
-          h2:'Built for trust. Ready for the enterprise.',
-          sub:'Sovereign infrastructure, an open foundation, enterprise controls.',
-          swiss:{ tag:'Security First', title:'Swiss hosting', desc:'Operated in ISO 27001-certified data centres in Switzerland. Data stays in Europe, EU-processed.', tag1:'ISO 27001', tag2:'revDSG', tag3:'GDPR', loc:'Green · Lupfig, CH' },
-          enterprise:{ tag:'Governance', title:'Enterprise-ready', desc:'Roles, permissions and central administration.', r1:'Admin', r2:'Editor', r3:'Viewer', foot:'RBAC · audit logs' },
-          oss:{ tag:'Open', title:'Open source · self-hostable', desc:'MIT license. Managed, in your cloud or on-prem.', o1:'Managed', o2:'Own cloud', o3:'On-prem' },
-          model:{ tag:'Flexible', title:'Model-agnostic', desc:'100+ models, no vendor lock-in. Your own provider key per instance.', m1:'Claude', m2:'GPT', m3:'Llama', m4:'+100' },
-          compliance:{ tag:'Provable', title:'Compliance & audit', desc:'Every tool and data access is traceable.', l1:'Access checked', l2:'Export logged' },
-          api:{ tag:'Connected', title:'API-first', desc:'Open APIs and an MCP gateway for your systems.', e1:'POST /v1/chat', e2:'MCP gateway' }
-        }
-      }
-      ,
 hero2: {
         de: {
           /* Vier Teile statt einem Satz: nur so lässt sich „Europa" auszeichnen,
@@ -3103,122 +2598,6 @@ hero2: {
               { l:'Support', h:'21px', bg:'#D6EDF5', d:'180ms' }
             ]
           }
-        }
-      },
-gov: {
-        de: {
-          h2:'Volle Kontrolle für Admins.',
-          sub:'Governance über Agents, Zuweisungen, Rollen, Kosten und MCP-Rechte, zentral im Admin-Panel.',
-          win:'Admin-Panel · EU Cowork AI',
-          mockLabel:'UI-MOCKUP',
-          tabs:['Benutzer','MCP-Zugriff','Kosten','Agents'],
-          users:{
-            title:'Benutzer', meta:'4 von 24', cta:'Einladen',
-            colUser:'Benutzer', colRole:'Rolle', colGroups:'Gruppen', colSeen:'Zuletzt online',
-            rows:[
-              { ini:'MK', name:'Marc Keller', sub:'marc.keller@firma.ch', role:'Admin', kind:'admin', groups:['Technik'], seen:'vor 2 Min' },
-              { ini:'SB', name:'Sandra Bühler', sub:'sandra.buehler@firma.ch', role:'User', kind:'user', groups:['Buchhaltung'], seen:'gestern' },
-              { ini:'TF', name:'Tobias Frei', sub:'tobias.frei@firma.ch', role:'User', kind:'user', groups:['Technik','Vertrieb'], seen:'vor 3 Std' },
-              { ini:'?', name:'nina.weber@firma.ch', sub:'Einladung offen', role:'User', kind:'invite', groups:['Buchhaltung'], seen:'ausstehend' }
-            ]
-          },
-          mcp:{
-            server:'erp', badge:'über Gateway', tools:'3 Tools',
-            chainLabel:'Policy-Kette', chain:['User','Rolle','Gruppe','Server-Default'], effective:'wirksam',
-            chainHint:'Erste Übereinstimmung gewinnt. Ohne Regel greift der Server-Default.',
-            rows:[
-              { label:'Rechnungen lesen', id:'invoice.read', allow:true, badge:'Erlaubt' },
-              { label:'Löhne lesen', id:'payroll.read', allow:false, badge:'Verweigert' },
-              { label:'Belege exportieren', id:'receipt.export', allow:true, badge:'Erlaubt' }
-            ],
-            audit:'audit · tools/call · 14:32:07',
-            auditMeta:'invoice.read · Marc Keller'
-          },
-          cost:{
-            title:'Kosten', period:'Juli 2026', unit:'Token → EUR',
-            listLabel:'Token→EUR pro Gruppe',
-            bars:[
-              { label:'Technik', short:'Technik', val:'12.40', pct:96 },
-              { label:'Buchhaltung', short:'Buchh.', val:'8.15', pct:64 },
-              { label:'Vertrieb', short:'Vertrieb', val:'5.90', pct:46 },
-              { label:'Geschäftsleitung', short:'GL', val:'3.20', pct:25 }
-            ],
-            budgetLabel:'Monatsbudget', pooled:'org-gepoolt', budgetVal:'29.65 von 60.00',
-            softBlock:'Soft-Block 90 %', hint:'Danach gibt der Admin manuell frei.'
-          },
-          agents:{
-            title:'Agents', badge:'kuratiert', meta:'3 freigegeben',
-            rows:[
-              { name:'Offerten-Assistent', desc:'Erstellt Angebote aus ERP-Daten', chips:['Vertrieb','Rolle: User'] },
-              { name:'Support-Kollege', desc:'Beantwortet Tickets aus dem Firmenwissen', chips:['Technik'] },
-              { name:'Buchhaltungs-Helfer', desc:'Prüft Belege und Rechnungen', chips:['Buchhaltung'] }
-            ],
-            builder:'Agent-Builder', builderHint:'nur Superuser', builderState:'aktiv'
-          },
-          feats:{
-            f1:{ t:'Rollen & Gruppen', d:'Benutzer einladen, Rollen vergeben, Gruppen zuweisen. Aus Entra ID oder lokal gepflegt.' },
-            f2:{ t:'MCP-Rechte bis auf Tool-Ebene', d:'Pro Server und pro einzelnes Tool erlauben oder verweigern, in der Kette User, Rolle, Gruppe, Server-Default.' },
-            f3:{ t:'Kosten & gepoolte Budgets', d:'Verbrauch pro User, Gruppe und Modell. Monatsbudget org-gepoolt, mit Soft-Block statt stiller Überschreitung.' },
-            f4:{ t:'Audit-Log jedes Zugriffs', d:'Jeder Tool-Call, jede Admin-Aktion und jeder Login wird protokolliert und lässt sich exportieren.' }
-          },
-          moreLink:'Wie Rechte, Kosten und Audit im Detail funktionieren'
-        },
-        en: {
-          h2:'Full control for admins.',
-          sub:'Governance over agents, assignments, roles, costs and MCP permissions, centrally in the admin panel.',
-          win:'Admin-Panel · EU Cowork AI',
-          mockLabel:'UI-MOCKUP',
-          tabs:['Benutzer','MCP-Zugriff','Kosten','Agents'],
-          users:{
-            title:'Benutzer', meta:'4 von 24', cta:'Einladen',
-            colUser:'Benutzer', colRole:'Rolle', colGroups:'Gruppen', colSeen:'Zuletzt online',
-            rows:[
-              { ini:'MK', name:'Marc Keller', sub:'marc.keller@firma.ch', role:'Admin', kind:'admin', groups:['Technik'], seen:'vor 2 Min' },
-              { ini:'SB', name:'Sandra Bühler', sub:'sandra.buehler@firma.ch', role:'User', kind:'user', groups:['Buchhaltung'], seen:'gestern' },
-              { ini:'TF', name:'Tobias Frei', sub:'tobias.frei@firma.ch', role:'User', kind:'user', groups:['Technik','Vertrieb'], seen:'vor 3 Std' },
-              { ini:'?', name:'nina.weber@firma.ch', sub:'Einladung offen', role:'User', kind:'invite', groups:['Buchhaltung'], seen:'ausstehend' }
-            ]
-          },
-          mcp:{
-            server:'erp', badge:'über Gateway', tools:'3 Tools',
-            chainLabel:'Policy-Kette', chain:['User','Rolle','Gruppe','Server-Default'], effective:'wirksam',
-            chainHint:'Erste Übereinstimmung gewinnt. Ohne Regel greift der Server-Default.',
-            rows:[
-              { label:'Rechnungen lesen', id:'invoice.read', allow:true, badge:'Erlaubt' },
-              { label:'Löhne lesen', id:'payroll.read', allow:false, badge:'Verweigert' },
-              { label:'Belege exportieren', id:'receipt.export', allow:true, badge:'Erlaubt' }
-            ],
-            audit:'audit · tools/call · 14:32:07',
-            auditMeta:'invoice.read · Marc Keller'
-          },
-          cost:{
-            title:'Kosten', period:'Juli 2026', unit:'Token → EUR',
-            listLabel:'Token→EUR pro Gruppe',
-            bars:[
-              { label:'Technik', short:'Technik', val:'12.40', pct:96 },
-              { label:'Buchhaltung', short:'Buchh.', val:'8.15', pct:64 },
-              { label:'Vertrieb', short:'Vertrieb', val:'5.90', pct:46 },
-              { label:'Geschäftsleitung', short:'GL', val:'3.20', pct:25 }
-            ],
-            budgetLabel:'Monatsbudget', pooled:'org-gepoolt', budgetVal:'29.65 von 60.00',
-            softBlock:'Soft-Block 90 %', hint:'Danach gibt der Admin manuell frei.'
-          },
-          agents:{
-            title:'Agents', badge:'kuratiert', meta:'3 freigegeben',
-            rows:[
-              { name:'Offerten-Assistent', desc:'Erstellt Angebote aus ERP-Daten', chips:['Vertrieb','Rolle: User'] },
-              { name:'Support-Kollege', desc:'Beantwortet Tickets aus dem Firmenwissen', chips:['Technik'] },
-              { name:'Buchhaltungs-Helfer', desc:'Prüft Belege und Rechnungen', chips:['Buchhaltung'] }
-            ],
-            builder:'Agent-Builder', builderHint:'nur Superuser', builderState:'aktiv'
-          },
-          feats:{
-            f1:{ t:'Roles and groups', d:'Invite users, assign roles, manage group membership. Sourced from Entra ID or maintained locally.' },
-            f2:{ t:'MCP permissions down to tool level', d:'Allow or deny per server and per individual tool, along the chain user, role, group, server default.' },
-            f3:{ t:'Costs and pooled budgets', d:'Usage per user, group and model. Monthly budget pooled across the org, with a soft block instead of silent overage.' },
-            f4:{ t:'Audit log for every access', d:'Every tool call, every admin action and every login is logged and can be exported.' }
-          },
-          moreLink:'How roles, costs and audit work in detail'
         }
       },
 mob: {
@@ -3453,7 +2832,6 @@ sov: {
     this._startTerminal();
 this._conn2Init();
 this._hero2Init();
-this._initGov();
 this._mobInit();
     this._olkInit();
     this._wsInit();
@@ -3833,8 +3211,6 @@ this._conn2Stop();
     clearTimeout(this._conn2Relayout);
 clearTimeout(this._hero2Timer);
     if (this._hero2Io) this._hero2Io.disconnect();
-if (this._govTimer){ clearInterval(this._govTimer); this._govTimer = null; }
-    if (this._govIo){ this._govIo.disconnect(); this._govIo = null; }
 clearTimeout(this._mobTimer);
     if (this._mobIo) this._mobIo.disconnect();
     this._olkStop();
@@ -3934,34 +3310,6 @@ _hero2Init(){
       }, { threshold:0.15 });
       this._hero2Io.observe(el);
     } else { start(); }
-  }
-_initGov(){
-    if (this._reduced()) return;
-    const el = this.govRef.current; if (!el) return;
-    const start = () => {
-      if (this._govStarted) return;
-      this._govStarted = true;
-      if (this.state.govUser) return;
-      /* Ein Durchlauf durch alle vier Reiter, danach bleibt das Karussell stehen. */
-      let left = 4;
-      this._govTimer = setInterval(() => {
-        if (this.state.govUser || left <= 0){ clearInterval(this._govTimer); this._govTimer = null; return; }
-        left--;
-        const cur = (this.state.govTab == null) ? 1 : this.state.govTab;
-        this.setState({ govTab: (cur + 1) % 4 });
-      }, 5000);
-    };
-    if ('IntersectionObserver' in window){
-      this._govIo = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting){ start(); if (this._govIo){ this._govIo.disconnect(); this._govIo = null; } } });
-      }, { threshold:0.25, rootMargin:'0px 0px -8% 0px' });
-      this._govIo.observe(el);
-    } else { start(); }
-  }
-  _govPick(i){
-    if (this._govTimer){ clearInterval(this._govTimer); this._govTimer = null; }
-    this._govStarted = true;
-    this.setState({ govTab:i, govUser:true });
   }
 _mobInit(){
     const el = this.mobRef.current;
@@ -4289,8 +3637,6 @@ _conn2Init(){
     const t = {};
     for (const k in this.C){ t[k] = this.C[k][lang] || this.C[k].de; }
     const vm = { t, github: this.selfhostHref, rootRef: this.rootRef };
-    const comp = t.comparison;
-    if (comp){ vm.compHead = { primary: comp.cols[0], rest: comp.cols.slice(1) }; vm.compRows = comp.rows.map(r => ({ k:r.k, primary:r.v[0], primaryCheck:/^(Ja|Yes)/.test(r.v[0]), rest:r.v.slice(1) })); }
     /* „Nochmal abspielen" erscheint erst, wenn der Ablauf im Endzustand steht. */
     vm.replayOlk  = () => this.replayOlk();
     vm.replayMob  = () => this.replayMob();
@@ -4332,41 +3678,6 @@ vm.hero2Ref = this.hero2Ref;
       vm.hero2BadgeOp = hp >= 6 ? '0' : '1';
       vm.hero2Rows = (hm.rows || []).map((r, i) => ({ c:r.c, a:r.a, b:r.b, m:r.m, bg: i === 3 ? '#F1F9FC' : '#FFFFFF', fw: i === 3 ? '600' : '400', fc: i === 3 ? '#0B1E33' : '#47535F' }));
       vm.hero2Bars = (hm.bars || []).map(b => ({ l:b.l, bg:b.bg, d:b.d, h: hp >= 6 ? b.h : '0px' }));
-    }
-vm.govRef = this.govRef;
-    if (t.gov){
-      const gT = (this.state.govTab == null) ? 1 : this.state.govTab;
-      const mkTab = (i) => ({ label:t.gov.tabs[i], bg:i===gT?'#0B1E33':'#FFFFFF', fg:i===gT?'#F7FAFC':'#5A6472', bd:i===gT?'#0B1E33':'#E4E8EC', sh:i===gT?'0 2px 8px rgba(11,30,51,.20)':'none', pick:()=>this._govPick(i) });
-      vm.govT0 = mkTab(0); vm.govT1 = mkTab(1); vm.govT2 = mkTab(2); vm.govT3 = mkTab(3);
-      const mkPane = (i) => ({ op:i===gT?'1':'0', tr:i===gT?'translateY(0px)':'translateY(12px)', pe:i===gT?'auto':'none', z:i===gT?'2':'1' });
-      vm.govP0 = mkPane(0); vm.govP1 = mkPane(1); vm.govP2 = mkPane(2); vm.govP3 = mkPane(3);
-      const gu = t.gov.users.rows;
-      vm.govUsers = gu.map((u,i) => ({
-        ini:u.ini, name:u.name, sub:u.sub, role:u.role, groups:u.groups, seen:u.seen,
-        bd: i < gu.length-1 ? '1px solid #F2F5F7' : '0',
-        avBg: u.kind==='invite' ? '#FBF6E6' : 'linear-gradient(135deg,#A5D8E6,#0B1E33)',
-        avBd: u.kind==='invite' ? '1px dashed #E6D293' : '1px solid rgba(11,30,51,.06)',
-        avFg: u.kind==='invite' ? '#8A6D12' : '#F7FAFC',
-        roleBg: u.kind==='admin' ? '#0B1E33' : '#EEF2F5',
-        roleFg: u.kind==='admin' ? '#F7FAFC' : '#47535F',
-        roleBd: u.kind==='admin' ? '#0B1E33' : '#E4E8EC',
-        subBg: u.kind==='invite' ? '#FDF7E6' : 'transparent',
-        subBd: u.kind==='invite' ? '1px solid #F0DFA8' : '1px solid transparent',
-        subFg: u.kind==='invite' ? '#8A6D12' : '#9AA5B1',
-        subPad: u.kind==='invite' ? '2px 8px' : '2px 0',
-        seenFg: u.kind==='invite' ? '#B08A1E' : '#66727F'
-      }));
-      const gm = t.gov.mcp;
-      vm.govChain = gm.chain.map((label,i) => ({ label, bg:i===1?'#0B1E33':'#FFFFFF', fg:i===1?'#F7FAFC':'#66727F', bd:i===1?'#0B1E33':'#E4E8EC', tagOp:i===1?'1':'0', arrow:i < gm.chain.length-1 }));
-      vm.govTools = gm.rows.map((r,i) => ({ label:r.label, id:r.id, badge:r.badge, allow:r.allow,
-        bg:r.allow?'#EDF7F1':'#FBEEEA', fg:r.allow?'#2E7D5B':'#B4472F', bd:r.allow?'#CDE7DA':'#F0D2C8',
-        rowBd: i>0 ? '1px solid #F2F5F7' : '0' }));
-      const gbColors = ['#0B1E33','#2E6C86','#7FC2D8','#A5D8E6'];
-      vm.govBars = t.gov.cost.bars.map((b,i) => ({ label:b.label, short:b.short, val:b.val,
-        h: gT===2 ? (b.pct + '%') : '2%', delay: (140 + i*110) + 'ms', bg: gbColors[i] || gbColors[3],
-        rowBd: i>0 ? '1px solid #F2F5F7' : '0' }));
-      vm.govBudget = gT===2 ? '49%' : '0%';
-      vm.govAgents = t.gov.agents.rows.map(a => ({ name:a.name, desc:a.desc, chips:a.chips }));
     }
 const mobP = this.state.mobPhase || 0;
     vm.mobRef = this.mobRef;

@@ -801,9 +801,9 @@ small, .euc-small {
    10. Tabellen: scrollen im eigenen Container, nie die Seite
    -------------------------------------------------------------------------- */
 
-/* Scroll-Edge statt harter Kante, identisch zur Landing (.euc-tablewrap):
-   Schatten an `scroll`, weisse Deckel an `local`. Der Schatten steht nur auf
-   der Seite, auf der es weitergeht; ohne Überlauf ist nichts sichtbar. */
+/* Scroll-Edge statt harter Kante: Schatten an `scroll`, weisse Deckel an
+   `local`. Der Schatten steht nur auf der Seite, auf der es weitergeht; ohne
+   Überlauf ist nichts sichtbar. */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -1319,6 +1319,14 @@ pre code {
 /* --------------------------------------------------------------------------
    18. Responsive
    -------------------------------------------------------------------------- */
+
+/* Zwischen 940px und 1160px reicht die Breite nicht für Wortmarke + fünf
+   Navigationspunkte + zwei Schaltflächen. Gleiche Entlastung wie im
+   SiteHeader: zweite Schaltfläche weg, Abstände enger. */
+@media (max-width: 1160px) {
+  .euc-nav { gap: 22px; }
+  .euc-header-cta .euc-btn-secondary { display: none; }
+}
 
 /* Header-Umschaltpunkt exakt wie SiteHeader (window.innerWidth < 940) */
 @media (max-width: 939px) {
