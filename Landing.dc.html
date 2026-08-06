@@ -56,6 +56,16 @@
     <li><strong>Proaktives Memory:</strong> Merkt sich selbstständig, was wichtig ist: auditierbar, löschbar, auf Ihrem Server.</li>
   </ul>
 
+  <h2>Für den Einsatz im Unternehmen gebaut.</h2>
+  <p>EU Cowork AI verbindet Ihre Systeme, führt Aufgaben mit kontrollierten Zugriffen aus und bleibt für Ihre IT jederzeit nachvollziehbar.</p>
+  <ul>
+    <li><strong>Systeme anbinden:</strong> ERP, SharePoint, Firmenwissen und weitere Werkzeuge zentral verbunden. Native Konnektoren direkt verfügbar, eigene Systeme über MCP oder REST-API.</li>
+    <li><strong>Zugriffe zentral steuern:</strong> Nach Rolle, Gruppe oder Benutzer festlegen, wer auf welche Systeme und Funktionen zugreifen darf. Rechnungen erlaubt, Lohndaten gesperrt.</li>
+    <li><strong>Echte Arbeit ausführen:</strong> Dateien erstellen, ERP-Daten auswerten, wiederkehrende Aufgaben übernehmen. Excel, Word und PDF direkt im Chat.</li>
+    <li><strong>Alles nachvollziehen:</strong> Jeder Tool-Aufruf, jede Admin-Aktion, jeder Login fortlaufend protokolliert und exportierbar.</li>
+    <li><strong>In bestehende Arbeit integrieren:</strong> Im Chat, neben der geöffneten Outlook-E-Mail und künftig in weiteren Anwendungen.</li>
+  </ul>
+
   <h2>Verifizierbar in Europa. Nicht nur behauptet.</h2>
   <p>Fakten statt Adjektive. Jeder Punkt ist auf der Trust-Seite mit einem Nachweis hinterlegt.</p>
   <ul>
@@ -615,9 +625,279 @@
   }
   .euc-os-foot{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:var(--s-4) var(--s-7); margin-top:var(--s-6); }
   .euc-os-links{ flex:0 1 auto; display:flex; flex-wrap:wrap; gap:var(--s-5); }
-  @keyframes euc-conn2-ping{ 0%{ transform:scale(1); opacity:.5; } 70%{ transform:scale(2.7); opacity:0; } 100%{ transform:scale(2.7); opacity:0; } }
-  @keyframes euc-conn2-blink{ 0%,100%{ opacity:.4; } 50%{ opacity:1; } }
-  @media (max-width:560px){ .euc-conn2-hint{ display:none !important; } }
+
+  /* ===== Kapitel-Sektion „Für den Einsatz im Unternehmen gebaut" =====
+     Fünf Kapitel als Akkordeon links, dazu rechts EINE Produktaufnahme, die
+     mitwandert. Die Aufnahme ist bewusst dasselbe Fenster in fünf Zuständen
+     und nicht fünf Illustrationen: das Versprechen ist ein Produkt, kein
+     Baukasten aus Bildern.
+     Der Zeiger wählt mit — Überfahren öffnet das Kapitel. Das ist hier
+     zulässig, weil die Auswahl nichts kostet und nichts verdeckt; sie zeigt
+     nur, was rechts steht. Ein Klick tut dasselbe sofort, die Tastatur
+     ebenfalls über den Fokus. */
+  .euc-cap-shell{ position:relative; overflow:hidden; max-width:var(--w-max); margin:0 auto;
+    border-radius:clamp(20px,2.8vw,38px); background:var(--c-surface); box-shadow:var(--sh-3), var(--edge);
+    padding:clamp(24px,3.4vw,50px); }
+  .euc-cap-in{ position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(28px,4vw,54px); }
+  .euc-cap-copy{ flex:1 1 380px; min-width:0; max-width:486px; }
+  .euc-cap-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(29px,3.5vw,44px); line-height:1.07;
+    letter-spacing:-0.030em; color:var(--c-ink); margin:0; text-wrap:balance; }
+  .euc-cap-sub{ font-family:var(--f-body); font-size:clamp(16px,1.3vw,18.5px); line-height:1.56; letter-spacing:-.006em;
+    color:var(--c-body); margin:19px 0 0; max-width:46ch; text-wrap:pretty; }
+
+  /* ---------- Das Akkordeon ---------- */
+  .euc-cap-acc{ margin-top:var(--s-6); border-top:1px solid var(--c-line-soft); }
+  .euc-cap-item{ position:relative; border-bottom:1px solid var(--c-line-soft); }
+  /* Der Balken wächst aus der Oberkante, statt zu erscheinen: er kommt aus der
+     Richtung, aus der auch der Text aufklappt. */
+  .euc-cap-item::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; border-radius:0 2px 2px 0;
+    background:var(--c-eu-400); transform:scaleY(0); transform-origin:top; opacity:0;
+    transition:transform .34s var(--ease-out), opacity .2s ease; }
+  .euc-cap-item.is-on::before{ transform:scaleY(1); opacity:1; }
+  /* Die Fläche tönt sich, statt sich zu umranden: ein Rahmen um eine Zeile in
+     einer Liste aus Zeilen liest sich als Formularfeld. */
+  .euc-cap-item::after{ content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+    background:linear-gradient(90deg, rgba(46,108,134,.055), rgba(46,108,134,0) 72%);
+    opacity:0; transition:opacity .3s ease; }
+  .euc-cap-item.is-on::after{ opacity:1; }
+
+  .euc-cap-head{ position:relative; z-index:1; width:100%; display:flex; align-items:center; gap:13px;
+    padding:15px 12px 15px 17px; border:0; background:none; cursor:pointer; text-align:left;
+    -webkit-appearance:none; appearance:none; }
+  .euc-cap-ico{ flex:0 0 auto; width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center;
+    color:var(--c-muted); transition:color .26s ease; }
+  .euc-cap-ico svg{ display:block; }
+  .euc-cap-item.is-on .euc-cap-ico{ color:var(--c-eu-500); }
+  .euc-cap-t{ flex:1 1 auto; min-width:0; font-family:var(--f-display); font-weight:500; font-size:16.5px;
+    line-height:1.3; letter-spacing:-.014em; color:var(--c-body); transition:color .26s ease; }
+  .euc-cap-item.is-on .euc-cap-t{ color:var(--c-ink); }
+  .euc-cap-chev{ flex:0 0 auto; display:inline-flex; color:#B3BCC6; transform:rotate(0deg);
+    transition:transform .34s var(--ease-out), color .26s ease; }
+  .euc-cap-item.is-on .euc-cap-chev{ transform:rotate(180deg); color:var(--c-eu-500); }
+  @media (hover:hover) and (pointer:fine){
+    .euc-cap-item:not(.is-on) .euc-cap-head:hover .euc-cap-t{ color:var(--c-ink); }
+    .euc-cap-item:not(.is-on) .euc-cap-head:hover .euc-cap-ico{ color:var(--c-body-soft); }
+  }
+  .euc-cap-head:focus-visible{ outline-offset:-3px; border-radius:10px; }
+
+  /* Höhe kommt gemessen aus dem View-Model, nicht als Deckel: bei einem Deckel
+     liefe die halbe Dauer über leere Fläche und das Zuklappen wirkte zäh. */
+  .euc-cap-panel{ position:relative; z-index:1; overflow:hidden; height:0;
+    transition:height .38s var(--ease-out), opacity .26s ease; opacity:0; }
+  .euc-cap-item.is-on .euc-cap-panel{ opacity:1; }
+  .euc-cap-d{ font-family:var(--f-body); font-size:14.5px; line-height:1.62; color:var(--c-body-soft);
+    margin:0; padding:0 26px 18px 50px; max-width:52ch; text-wrap:pretty; }
+
+  .euc-cap-links{ display:flex; flex-wrap:wrap; gap:var(--s-5); margin-top:26px; }
+
+  /* ---------- Die Bühne: Shader-Fläche mit EINEM Fenster in fünf Zuständen ---------- */
+  /* Die Fläche folgt der Höhe der Textspalte, das Fenster sitzt mittig darin.
+     Der Verlauf ringsum ist nicht Rest, sondern Zweck: er trägt die Aufnahme,
+     wie ein Passepartout ein Bild. */
+  .euc-cap-stage{ flex:1 1 460px; min-width:0; max-width:640px; align-self:stretch; display:flex; }
+  .euc-cap-glass{ position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-xl);
+    flex:1 1 auto; min-width:0; display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(12px,1.6vw,22px); }
+  .euc-cap-glass::after{ content:''; position:absolute; inset:0; z-index:4; pointer-events:none;
+    border-radius:inherit; box-shadow:var(--edge); }
+  .euc-cap-win{ position:relative; z-index:2; border-radius:14px; background:var(--c-surface); overflow:hidden;
+    box-shadow:0 2px 6px rgba(11,30,51,.10), 0 18px 40px -20px rgba(11,30,51,.34); }
+  .euc-cap-chrome{ display:flex; align-items:center; gap:9px; padding:10px 13px;
+    border-bottom:1px solid var(--c-line-soft); background:#FBFCFD; }
+  .euc-cap-mark{ flex:0 0 auto; display:inline-flex; color:var(--c-eu-500); }
+  /* Der Brotkrumen wechselt mit dem Kapitel: die Aufnahme soll sich anfühlen
+     wie Navigation in EINER Anwendung, nicht wie ein Bildwechsel. */
+  .euc-cap-crumb{ flex:1 1 auto; min-width:0; display:flex; align-items:baseline; gap:6px;
+    font-family:'Inter',sans-serif; font-size:11.5px; white-space:nowrap; overflow:hidden; }
+  .euc-cap-crumb b{ font-weight:600; color:#0B1E33; }
+  .euc-cap-crumb span{ font-weight:400; color:#8A96A2; }
+  .euc-cap-crumb i{ font-style:normal; color:#C6CDD5; }
+  .euc-cap-who{ flex:0 0 auto; display:inline-flex; align-items:center; gap:7px;
+    font-family:'Inter',sans-serif; font-size:10.5px; color:#66727F; }
+  .euc-cap-av{ width:20px; height:20px; border-radius:50%; background:linear-gradient(135deg,#A5D8E6,#0B1E33);
+    color:#F7FAFC; display:inline-flex; align-items:center; justify-content:center; font-size:8.5px; font-weight:600; }
+  .euc-cap-main{ display:flex; align-items:stretch; height:432px; }
+
+  /* Die Symbolleiste ist die zweite Anzeige der Auswahl: das Kapitel links und
+     das Zeichen hier meinen dieselbe Stelle im Produkt. */
+  .euc-cap-rail{ flex:0 0 auto; width:44px; display:flex; flex-direction:column; align-items:center; gap:6px;
+    padding:11px 0; background:#F7F9FB; border-right:1px solid #EEF1F4; }
+  .euc-cap-railico{ position:relative; width:28px; height:28px; border-radius:8px; display:inline-flex;
+    align-items:center; justify-content:center; color:#C0C8D0;
+    transition:color .26s ease, background-color .26s ease; }
+  .euc-cap-railico.is-on{ color:var(--c-eu-500); background:#E7F1F6; }
+
+  .euc-cap-body{ position:relative; flex:1 1 auto; min-width:0; }
+  /* Alle fünf Zustände liegen übereinander im Baum: ein Wechsel ist eine
+     Blende, kein Neuaufbau — und der Verlauf darunter läuft ungestört weiter.
+     Der abgehende Zustand bewegt sich NICHT (nur Deckkraft), sonst schieben
+     sich zwei Aufnahmen aneinander vorbei. */
+  /* Der Inhalt sitzt mittig zwischen Oberkante und Fusszeile. Oben angeschlagen
+     bliebe unter dem kürzesten Zustand ein Loch; mittig gesetzt liest sich
+     derselbe Platz als Luft. */
+  .euc-cap-pane{ position:absolute; inset:0; padding:16px 16px 40px; opacity:0; visibility:hidden;
+    display:flex; flex-direction:column; justify-content:center;
+    transform:translateY(7px); transition:opacity .2s ease, transform 0s linear .2s, visibility 0s linear .2s; }
+  .euc-cap-pane > *{ flex:0 0 auto; }
+  .euc-cap-pane.is-on{ opacity:1; visibility:visible; transform:none;
+    transition:opacity .3s var(--ease-out), transform .42s var(--ease-out), visibility 0s; }
+
+  /* ---------- Bausteine, die sich alle fünf Zustände teilen ---------- */
+  .euc-cap-sec{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .euc-cap-sech{ font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.13em;
+    text-transform:uppercase; color:#8A96A2; }
+  .euc-cap-count{ margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:9px; color:#8A96A2; }
+  .euc-cap-row{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:9px;
+    border:1px solid #EEF1F4; background:#FFFFFF; }
+  .euc-cap-row + .euc-cap-row{ margin-top:6px; }
+  .euc-cap-rowico{ flex:0 0 auto; width:26px; height:26px; border-radius:7px; background:#F1F6F9;
+    color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center; }
+  .euc-cap-rowmain{ flex:1 1 auto; min-width:0; }
+  .euc-cap-n{ font-family:'Inter',sans-serif; font-size:12px; font-weight:600; color:#1E2A36;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-s{ font-family:'Inter',sans-serif; font-size:10.5px; line-height:1.4; color:#8A96A2; margin-top:1px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-pill{ flex:0 0 auto; display:inline-flex; align-items:center; gap:5px; border-radius:99px;
+    padding:3px 8px; font-family:'JetBrains Mono',monospace; font-size:8.5px; white-space:nowrap; }
+  .euc-cap-pill i{ width:5px; height:5px; border-radius:50%; flex:0 0 auto; }
+  .euc-cap-pill.is-ok{ background:#EFF7F2; color:#2E7D5B; border:1px solid #DCEAE3; }
+  .euc-cap-pill.is-ok i{ background:#5BA783; }
+  .euc-cap-pill.is-no{ background:#FBF1F1; color:#9B4A4A; border:1px solid #EEDCDC; }
+  .euc-cap-pill.is-no i{ background:#C87A7A; }
+  .euc-cap-pill.is-wait{ background:rgba(244,197,66,.14); color:#7A5C12; border:1px solid rgba(244,197,66,.42); }
+  .euc-cap-pill.is-wait i{ background:#F4C542; }
+  .euc-cap-pill.is-mute{ background:#F5F7F9; color:#66727F; border:1px solid #E8ECEF; }
+  .euc-cap-pill.is-mute i{ background:#B3BCC6; }
+  .euc-cap-foot{ position:absolute; left:16px; right:16px; bottom:12px; display:flex; align-items:center; gap:7px;
+    font-family:'Inter',sans-serif; font-size:10px; color:#8A96A2; }
+  .euc-cap-foot svg{ flex:0 0 auto; color:#B3BCC6; }
+
+  /* Pane 1 — Konnektoren: die Eingabezeile ist die Aussage „und alles andere
+     hängen Sie selbst an". */
+  .euc-cap-field{ display:flex; align-items:center; gap:8px; border:1px solid #E2E7EC; border-radius:9px;
+    background:#FBFCFD; padding:8px 8px 8px 11px; }
+  .euc-cap-fieldt{ flex:1 1 auto; min-width:0; font-family:'JetBrains Mono',monospace; font-size:10px; color:#5A6472;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-btn{ flex:0 0 auto; border-radius:7px; background:#0B1E33; color:#F7FAFC; padding:5px 11px;
+    font-family:'Inter',sans-serif; font-size:10.5px; font-weight:600; white-space:nowrap; }
+  .euc-cap-btn.is-ghost{ background:#FFFFFF; color:#1E2A36; border:1px solid #E2E7EC; }
+
+  /* Pane 2 — Zugriffskontrolle. Aufbau wie im Produkt: oben die beiden
+     Listen, aus denen eine Regel entsteht (Rolle, Gruppe), darunter die
+     Rechte der Auswahl. Die Nutzerliste fehlt bewusst — auf dieser Breite
+     wären es drei unlesbare Spalten, und die Aussage der Sektion steckt in
+     der Gruppe UND ihren Rechten, nicht in den Namen. */
+  .euc-cap-split{ display:flex; gap:9px; align-items:stretch; }
+  .euc-cap-col{ flex:1 1 0; min-width:0; border:1px solid #EEF1F4; border-radius:9px; background:#FFFFFF; overflow:hidden; }
+  .euc-cap-colh{ padding:7px 10px; border-bottom:1px solid #F2F5F7; background:#FBFCFD;
+    font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.12em; text-transform:uppercase; color:#8A96A2; }
+  .euc-cap-permh{ display:flex; align-items:center; gap:8px; }
+  .euc-cap-permh > span:first-child{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .euc-cap-permh .euc-cap-btn{ text-transform:none; letter-spacing:0; }
+  .euc-cap-li{ display:flex; align-items:center; gap:7px; padding:7px 10px; border-bottom:1px solid #F6F8FA; }
+  .euc-cap-li:last-child{ border-bottom:0; }
+  .euc-cap-li.is-sel{ background:#EEF5F9; box-shadow:inset 2px 0 0 var(--c-eu-500); }
+  .euc-cap-lit{ flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; color:#1E2A36;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-lis{ font-family:'Inter',sans-serif; font-size:9px; color:#8A96A2; white-space:nowrap; }
+  .euc-cap-perm{ margin-top:9px; border:1px solid #EEF1F4; border-radius:9px; background:#FFFFFF; overflow:hidden; }
+  .euc-cap-permgrid{ display:grid; grid-template-columns:1fr 1fr; }
+  .euc-cap-permrow{ display:flex; align-items:center; gap:9px; padding:9px 11px; border-bottom:1px solid #F6F8FA; }
+  .euc-cap-permrow:nth-child(odd){ border-right:1px solid #F6F8FA; }
+  .euc-cap-permrow:nth-last-child(-n+2){ border-bottom:0; }
+  .euc-cap-permv{ flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:8.5px; white-space:nowrap; }
+  .euc-cap-permv.is-ok{ color:#2E7D5B; }
+  .euc-cap-permv.is-no{ color:#9B4A4A; }
+  .euc-cap-tog{ flex:0 0 auto; width:26px; height:15px; border-radius:99px; position:relative; background:#5BA783; }
+  .euc-cap-tog i{ position:absolute; top:2px; left:13px; width:11px; height:11px; border-radius:50%; background:#FFF;
+    box-shadow:0 1px 2px rgba(11,30,51,.28); }
+  .euc-cap-tog.is-off{ background:#D7DDE3; }
+  .euc-cap-tog.is-off i{ left:2px; }
+
+  /* Pane 3 — echte Arbeit: Bläschen, Arbeitsspur, fertige Datei. */
+  .euc-cap-bub{ max-width:82%; margin-left:auto; border-radius:12px 12px 3px 12px; background:#EDF4F8;
+    padding:8px 11px; font-family:'Inter',sans-serif; font-size:11.5px; line-height:1.45; color:#1E2A36; }
+  .euc-cap-trace{ margin-top:10px; display:flex; flex-direction:column; gap:5px; }
+  .euc-cap-step{ display:flex; align-items:center; gap:7px; font-family:'Inter',sans-serif; font-size:10.5px; color:#5A6472; }
+  .euc-cap-step svg{ flex:0 0 auto; color:#5BA783; }
+  .euc-cap-say{ margin-top:10px; font-family:'Inter',sans-serif; font-size:11.5px; line-height:1.5; color:#2C3742; }
+  .euc-cap-file{ margin-top:9px; display:flex; align-items:center; gap:10px; border:1px solid #E2E7EC; border-radius:10px;
+    background:#FFFFFF; padding:10px 11px; box-shadow:var(--sh-1); }
+  .euc-cap-xls{ flex:0 0 auto; width:30px; height:30px; border-radius:7px; background:#1E7145; color:#FFFFFF;
+    display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace;
+    font-size:9px; font-weight:700; letter-spacing:.02em; }
+  .euc-cap-src{ display:flex; align-items:center; gap:6px; margin-top:9px; padding-top:8px; border-top:1px solid #F2F5F7;
+    font-family:'JetBrains Mono',monospace; font-size:8.5px; color:#8A96A2; }
+  .euc-cap-src svg{ flex:0 0 auto; }
+  .euc-cap-composer{ display:flex; align-items:center; gap:7px; margin-top:11px; border:1px solid #E5E9ED;
+    background:#FFFFFF; border-radius:99px; padding:6px 5px 6px 11px; box-shadow:var(--sh-1); }
+  .euc-cap-composerp{ flex:1 1 auto; min-width:0; font-family:var(--f-body); font-size:10px; color:#A8B2BC;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-send{ flex:0 0 auto; width:21px; height:21px; border-radius:50%; background:#0B1E33; color:#FFFFFF;
+    display:inline-flex; align-items:center; justify-content:center; }
+
+  /* Pane 4 — Audit-Log: eine Tabelle, monospace, damit die Spalten stehen. */
+  .euc-cap-tbar{ display:flex; align-items:center; gap:7px; margin-bottom:9px; }
+  .euc-cap-search{ flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:7px; border:1px solid #E2E7EC;
+    border-radius:8px; background:#FBFCFD; padding:6px 10px; font-family:'Inter',sans-serif; font-size:10px; color:#A8B2BC; }
+  .euc-cap-log{ border:1px solid #EEF1F4; border-radius:9px; overflow:hidden; background:#FFFFFF; }
+  .euc-cap-lrow{ display:flex; align-items:center; gap:9px; padding:7px 10px; border-bottom:1px solid #F6F8FA;
+    font-family:'JetBrains Mono',monospace; font-size:9.5px; white-space:nowrap; }
+  .euc-cap-lrow:last-child{ border-bottom:0; }
+  .euc-cap-lrow.is-head{ background:#FBFCFD; font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:#A8B2BC; }
+  .euc-cap-lrow.is-head span{ color:#A8B2BC; }
+  .euc-cap-lt{ flex:0 0 auto; width:52px; color:#A8B2BC; }
+  .euc-cap-lu{ flex:0 0 auto; width:66px; color:#5A6472; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-la{ flex:1 1 auto; min-width:0; color:#1E2A36; overflow:hidden; text-overflow:ellipsis; }
+  .euc-cap-lv{ flex:0 0 auto; font-size:8.5px; letter-spacing:.04em; }
+  .euc-cap-lv.is-ok{ color:#2E7D5B; }
+  .euc-cap-lv.is-no{ color:#9B4A4A; }
+
+  /* Pane 5 — Oberflächen: drei Kacheln, eine je Ort. */
+  .euc-cap-tiles{ display:flex; gap:9px; align-items:stretch; }
+  .euc-cap-tile{ flex:1 1 0; min-width:0; border:1px solid #EEF1F4; border-radius:10px; background:#FFFFFF;
+    padding:12px 11px 13px; display:flex; flex-direction:column; align-items:flex-start; gap:7px; }
+  .euc-cap-tile .euc-cap-tiled{ flex:1 1 auto; }
+  .euc-cap-tileico{ width:30px; height:30px; border-radius:8px; background:#F1F6F9; color:var(--c-eu-500);
+    display:inline-flex; align-items:center; justify-content:center; }
+  .euc-cap-tilet{ font-family:'Inter',sans-serif; font-size:11.5px; font-weight:600; color:#1E2A36; }
+  .euc-cap-tiled{ font-family:'Inter',sans-serif; font-size:10px; line-height:1.45; color:#8A96A2; }
+  .euc-cap-shot{ margin-top:11px; border:1px solid #EEF1F4; border-radius:10px; overflow:hidden; background:#FDFDFC; }
+  .euc-cap-shoth{ display:flex; align-items:center; gap:7px; padding:8px 10px; border-bottom:1px solid #F2F5F7; background:#FFFFFF;
+    font-family:'Inter',sans-serif; font-size:10px; font-weight:600; color:#1E2A36; }
+  .euc-cap-shoth > span:first-of-type{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .euc-cap-shotpill{ flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:8px; color:#3E6E86;
+    background:var(--c-ice-100); border:1px solid #DEEBF1; border-radius:99px; padding:2px 7px; }
+  .euc-cap-shotb{ display:flex; }
+  .euc-cap-shotl{ flex:0 0 38%; border-right:1px solid #F2F5F7; padding:10px 9px; }
+  .euc-cap-shotr{ flex:1 1 auto; min-width:0; padding:10px 9px; background:#FBFCFD; }
+  .euc-cap-shotk{ display:block; font-family:'JetBrains Mono',monospace; font-size:7.5px; letter-spacing:.11em;
+    color:#A8B2BC; margin-bottom:7px; }
+  .euc-cap-bar{ height:5px; border-radius:3px; background:#EDF1F4; }
+  .euc-cap-bar + .euc-cap-bar{ margin-top:6px; }
+  .euc-cap-bar.is-a{ background:#DCE9F0; }
+  .euc-cap-bar.is-gold{ background:rgba(244,197,66,.42); }
+
+  /* Gestapelt: die Bühne wandert unter den Text, bleibt aber gleich gross. */
+  @media (max-width:900px){
+    .euc-cap-stage{ flex:1 1 100%; max-width:none; margin:0 auto; }
+    .euc-cap-copy{ max-width:none; }
+  }
+  @media (max-width:560px){
+    .euc-cap-shell{ border-radius:18px; padding:22px 16px 24px; }
+    .euc-cap-glass{ padding:10px; border-radius:16px; }
+    .euc-cap-head{ padding:14px 8px 14px 15px; gap:11px; }
+    .euc-cap-t{ font-size:15.5px; }
+    .euc-cap-d{ font-size:14px; padding:0 6px 16px 46px; }
+  }
+  /* Unter 520px fällt die Aufnahme weg. Die Attrappe skaliert dort auf unter
+     die Hälfte, ihre Zeilen landen bei fünf Pixeln — ein Bild, das behauptet
+     etwas zu zeigen, und nichts zeigt. Die fünf Kapitel tragen die Sektion
+     auf dem Telefon allein; sie sind der Inhalt, die Aufnahme war der Beleg. */
+  @media (max-width:520px){
+    .euc-cap-stage{ display:none; }
+    .euc-cap-acc{ margin-top:var(--s-5); }
+  }
 
   /* ===== Outlook-Add-in ===== */
   /* Alles, was hier ein- oder ausfährt, tritt auf die Bühne oder verlässt sie:
@@ -1438,160 +1718,347 @@
       </div>
     </section>
 
-    <section id="konnektoren" data-screen-label="Konnektoren" style="background:var(--c-bg); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
-          <div style="max-width:var(--w-max); margin:0 auto;">
-    
-            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:clamp(26px,4.5vw,60px);">
-    
-              <div data-reveal style="flex:1 1 380px; min-width:0; max-width:540px;">
-                <h2 class="euc-h2">{{ t.conn2.h2 }}</h2>
-                <p class="euc-lead">{{ t.conn2.sub }}</p>
-              </div>
-    
-              <div data-reveal data-reveal-delay="120" style="flex:1 1 420px; min-width:0;">
-                <div ref="{{ conn2StageRef }}" style="position:relative; width:100%; height:clamp(248px,26vw,292px);">
-                  <canvas ref="{{ conn2CanvasRef }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none;"></canvas>
-    
-                  <div ref="{{ conn2HubRef }}" style="position:absolute; left:15%; top:50%; transform:translate(-50%,-50%); width:clamp(80px,8.4vw,94px); height:clamp(80px,8.4vw,94px); border-radius:50%; background:var(--c-deep); box-shadow:var(--sh-3); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; z-index:2;">
-                    <span style="font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:500; letter-spacing:-.02em; color:#F7FAFC; white-space:nowrap;">{{ t.conn2.hubName }}</span>
-                    <span style="font-family:'JetBrains Mono',monospace; font-size:7.5px; letter-spacing:.16em; color:#8AA0B6; white-space:nowrap;">{{ t.conn2.hubSub }}</span>
-                  </div>
-    
-                  <sc-for list="{{ conn2Nodes }}" as="nd" hint-placeholder-count="5">
-                    <span data-conn2-node style="position:absolute; right:{{ nd.right }}; top:{{ nd.top }}; transform:translateY(-50%); z-index:2; display:inline-flex; align-items:center; gap:7px; background:var(--c-surface); border-radius:var(--r-xs); padding:6px 11px; box-shadow:var(--sh-1), var(--edge); font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:#1E2A36; white-space:nowrap;">
-                      <span aria-hidden="true" style="width:5px; height:5px; border-radius:50%; background:{{ nd.dot }};"></span>{{ nd.label }}
-                    </span>
-                  </sc-for>
+    <!-- ==================== Fünf Kapitel, eine Aufnahme ====================
+         Die Sektion trägt denselben Grund wie ihre Nachbarn; getrennt wird
+         über die Kachel, nicht über die Fläche. Links fünf Kapitel als
+         Akkordeon, rechts EIN Produktfenster, das mit dem Kapitel wechselt —
+         Brotkrumen, Symbolleiste und Inhalt zusammen, wie eine Navigation
+         innerhalb einer Anwendung.
+         Kapitel und Aufnahmen stehen ausgeschrieben statt als Schleife über
+         eine Liste: jedes trägt ein eigenes Zeichen und einen eigenen Aufbau,
+         und eine Schleife müsste beides als Markup durchreichen. -->
+    <section id="konnektoren" data-screen-label="Enterprise-Kapitel" style="background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
+      <div class="euc-cap-shell">
+        <div class="euc-cap-in">
+
+          <!-- ---------- Textspalte mit dem Akkordeon ---------- -->
+          <div class="euc-cap-copy" data-reveal>
+            <h2 class="euc-cap-h2">{{ t.cap.h2 }}</h2>
+            <p class="euc-cap-sub">{{ t.cap.sub }}</p>
+
+            <!-- Ein Ref für alle fünf Kapitel: Auswahl, Überfahren und Fokus
+                 laufen über EINEN delegierten Hörer auf diesem Element. Fünf
+                 mal drei Hörer wären dasselbe Verhalten mit mehr Teilen, und
+                 die Absichtsverzögerung beim Überfahren liesse sich verteilt
+                 nicht sauber abbrechen. -->
+            <div ref="{{ capAccRef }}" class="euc-cap-acc">
+
+              <div class="euc-cap-item{{ cap0.cls }}" data-cap-i="0">
+                <button type="button" class="euc-cap-head" aria-expanded="{{ cap0.exp }}" aria-controls="euc-cap-p0">
+                  <span class="euc-cap-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
+                  <span class="euc-cap-t">{{ t.cap.i1.t }}</span>
+                  <span class="euc-cap-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+                </button>
+                <div id="euc-cap-p0" class="euc-cap-panel" data-cap-panel style="height:{{ cap0.h }};">
+                  <p class="euc-cap-d">{{ t.cap.i1.d }}</p>
                 </div>
-    
-                <div style="display:flex; align-items:center; gap:7px; margin-top:8px; padding-left:2px;">
-                  <span aria-hidden="true" style="flex:0 0 auto; color:#9AA5B1;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"></path><path d="M15 2v6"></path><path d="M12 17v5"></path><path d="M5 8h14"></path><path d="M6 11V8h12v3a6 6 0 1 1-12 0Z"></path></svg></span>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--c-body-soft);">{{ t.conn2.stageCaption }}</span>
+              </div>
+
+              <div class="euc-cap-item{{ cap1.cls }}" data-cap-i="1">
+                <button type="button" class="euc-cap-head" aria-expanded="{{ cap1.exp }}" aria-controls="euc-cap-p1">
+                  <span class="euc-cap-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                  <span class="euc-cap-t">{{ t.cap.i2.t }}</span>
+                  <span class="euc-cap-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+                </button>
+                <div id="euc-cap-p1" class="euc-cap-panel" data-cap-panel style="height:{{ cap1.h }};">
+                  <p class="euc-cap-d">{{ t.cap.i2.d }}</p>
                 </div>
               </div>
-    
+
+              <div class="euc-cap-item{{ cap2.cls }}" data-cap-i="2">
+                <button type="button" class="euc-cap-head" aria-expanded="{{ cap2.exp }}" aria-controls="euc-cap-p2">
+                  <span class="euc-cap-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><path d="M14 2v6h6"></path><path d="m9 15 2 2 4-4"></path></svg></span>
+                  <span class="euc-cap-t">{{ t.cap.i3.t }}</span>
+                  <span class="euc-cap-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+                </button>
+                <div id="euc-cap-p2" class="euc-cap-panel" data-cap-panel style="height:{{ cap2.h }};">
+                  <p class="euc-cap-d">{{ t.cap.i3.d }}</p>
+                </div>
+              </div>
+
+              <div class="euc-cap-item{{ cap3.cls }}" data-cap-i="3">
+                <button type="button" class="euc-cap-head" aria-expanded="{{ cap3.exp }}" aria-controls="euc-cap-p3">
+                  <span class="euc-cap-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg></span>
+                  <span class="euc-cap-t">{{ t.cap.i4.t }}</span>
+                  <span class="euc-cap-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+                </button>
+                <div id="euc-cap-p3" class="euc-cap-panel" data-cap-panel style="height:{{ cap3.h }};">
+                  <p class="euc-cap-d">{{ t.cap.i4.d }}</p>
+                </div>
+              </div>
+
+              <div class="euc-cap-item{{ cap4.cls }}" data-cap-i="4">
+                <button type="button" class="euc-cap-head" aria-expanded="{{ cap4.exp }}" aria-controls="euc-cap-p4">
+                  <span class="euc-cap-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1.6"></rect><rect width="7" height="7" x="14" y="3" rx="1.6"></rect><rect width="7" height="7" x="14" y="14" rx="1.6"></rect><path d="M6.5 14v3.5a3 3 0 0 0 3 3H10"></path></svg></span>
+                  <span class="euc-cap-t">{{ t.cap.i5.t }}</span>
+                  <span class="euc-cap-chev" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+                </button>
+                <div id="euc-cap-p4" class="euc-cap-panel" data-cap-panel style="height:{{ cap4.h }};">
+                  <p class="euc-cap-d">{{ t.cap.i5.d }}</p>
+                </div>
+              </div>
+
             </div>
-    
-            <div style="margin-top:clamp(38px,5vw,58px); display:flex; flex-wrap:wrap; align-items:flex-start; gap:clamp(28px,4vw,56px);">
-    
-              <div style="flex:1 1 380px; min-width:0;">
-    
-                <div data-reveal style="display:flex; align-items:baseline; flex-wrap:wrap; gap:10px;">
-                  <span style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:500; letter-spacing:-.015em; color:#0B1E33;">{{ t.conn2.nativeTitle }}</span>
-                  <span style="font-family:'Inter',sans-serif; font-size:13px; color:var(--c-body-soft);">{{ t.conn2.nativeHint }}</span>
-                </div>
-    
-                <div style="margin-top:12px; border-top:1px solid #E7ECF0;">
-    
-                  <div data-reveal data-reveal-delay="0" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-bottom:1px solid var(--c-line); border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; color:#1E2A36;">{{ t.conn2.n1.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.n1.d }}</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; margin-left:auto; position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-conn2-ping 2.8s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
+
+            <div class="euc-cap-links">
+              <a href="/governance" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
+                <span>{{ t.cap.link1 }}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+              <a href="/integrationen" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
+                <span>{{ t.cap.link2 }}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- ---------- Bühne ---------- -->
+          <div class="euc-cap-stage" data-reveal data-reveal-delay="120">
+            <div class="euc-cap-glass">
+              <!-- Der Verlauf wechselt mit dem Kapitel die Palette (setPreset),
+                   ohne neu zu starten: die Bewegung im Verlauf läuft durch. -->
+              <div ref="{{ capSgRef }}" class="euc-sg" data-shader="capConnect" aria-hidden="true"></div>
+              <div class="euc-fit" data-fit data-fit-w="600"><div class="euc-fit-in">
+                <div class="euc-cap-win" aria-hidden="true">
+
+                  <div class="euc-cap-chrome">
+                    <span class="euc-cap-mark"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></span>
+                    <span class="euc-cap-crumb"><b>{{ capCrumbA }}</b><i>·</i><span>{{ capCrumbB }}</span></span>
+                    <span class="euc-cap-who">{{ t.cap.who }}<span class="euc-cap-av">AK</span></span>
                   </div>
-    
-                  <div data-reveal data-reveal-delay="60" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-bottom:1px solid var(--c-line); border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; color:#1E2A36;">{{ t.conn2.n2.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.n2.d }}</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; margin-left:auto; position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-conn2-ping 2.8s ease-out infinite; animation-delay:-.55s;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
-                  </div>
-    
-                  <div data-reveal data-reveal-delay="120" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-bottom:1px solid var(--c-line); border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; color:#1E2A36;">{{ t.conn2.n3.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.n3.d }}</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; margin-left:auto; position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-conn2-ping 2.8s ease-out infinite; animation-delay:-1.1s;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
-                  </div>
-    
-                  <div data-reveal data-reveal-delay="180" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-bottom:1px solid var(--c-line); border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; color:#1E2A36;">{{ t.conn2.n4.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.n4.d }}</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; margin-left:auto; position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-conn2-ping 2.8s ease-out infinite; animation-delay:-1.65s;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
-                  </div>
-    
-                  <div data-reveal data-reveal-delay="240" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-bottom:1px solid var(--c-line); border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; color:#1E2A36;">{{ t.conn2.n5.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.n5.d }}</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; margin-left:auto; position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-conn2-ping 2.8s ease-out infinite; animation-delay:-2.2s;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
-                  </div>
-    
-                </div>
-    
-                <div style="margin-top:14px;">
-    
-                  <div data-reveal data-reveal-delay="300" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#9AA5B1;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#66727F;">{{ t.conn2.s1.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.s1.d }}</span>
-                    <span style="flex:0 0 auto; margin-left:auto; display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#0B1E33; background:rgba(244,197,66,.16); border:1px solid rgba(244,197,66,.5); border-radius:99px; padding:3px 9px; white-space:nowrap;"><span aria-hidden="true" style="width:5px; height:5px; border-radius:50%; background:#F4C542; animation:euc-conn2-blink 3.4s ease-in-out infinite;"></span>{{ t.conn2.beta }}</span>
-                  </div>
-    
-                  <div data-reveal data-reveal-delay="360" style="display:flex; align-items:center; gap:10px; min-height:44px; padding:0 6px; border-radius:var(--r-s); transition:background-color .18s ease;" style-hover="background:#FBFCFD;">
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#9AA5B1;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"></path></svg></span>
-                    <span style="flex:0 0 auto; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#66727F;">{{ t.conn2.s2.n }}</span>
-                    <span class="euc-conn2-hint" style="flex:1 1 auto; min-width:0; font-family:'Inter',sans-serif; font-size:12.5px; color:var(--c-body-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.conn2.s2.d }}</span>
-                    <span style="flex:0 0 auto; margin-left:auto; display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:#0B1E33; background:rgba(244,197,66,.16); border:1px solid rgba(244,197,66,.5); border-radius:99px; padding:3px 9px; white-space:nowrap;"><span aria-hidden="true" style="width:5px; height:5px; border-radius:50%; background:#F4C542; animation:euc-conn2-blink 3.4s ease-in-out infinite; animation-delay:-1.7s;"></span>{{ t.conn2.soon }}</span>
-                  </div>
-    
-                </div>
-    
-              </div>
-    
-              <div style="flex:1.3 1 480px; min-width:0;">
-    
-                <div data-reveal style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:500; letter-spacing:-.015em; color:#0B1E33;">{{ t.conn2.mcpTitle }}</div>
-                <p data-reveal data-reveal-delay="60" style="font-family:'Inter',sans-serif; font-size:14.5px; line-height:1.6; color:#5A6472; margin:9px 0 0; max-width:560px; text-wrap:pretty;">{{ t.conn2.mcpDesc }}</p>
-    
-                <div data-reveal data-reveal-delay="120" style="margin-top:18px;">
-                  <sc-for list="{{ conn2Groups }}" as="gp" hint-placeholder-count="4">
-                    <div style="margin-top:{{ gp.mt }};">
-                      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--c-body-soft);">{{ gp.label }}</div>
-                      <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:8px;">
-                        <sc-for list="{{ gp.items }}" as="it" hint-placeholder-count="3">
-                          <span style="font-family:'Inter',sans-serif; font-size:12.5px; color:#3D4855; background:#FFFFFF; border:1px solid #E4E8EC; border-radius:7px; padding:5px 10px; white-space:nowrap;">{{ it }}</span>
-                        </sc-for>
+
+                  <div class="euc-cap-main">
+
+                    <div class="euc-cap-rail">
+                      <span class="euc-cap-railico{{ cap0.rcls }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
+                      <span class="euc-cap-railico{{ cap1.rcls }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></span>
+                      <span class="euc-cap-railico{{ cap2.rcls }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><path d="M14 2v6h6"></path></svg></span>
+                      <span class="euc-cap-railico{{ cap3.rcls }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg></span>
+                      <span class="euc-cap-railico{{ cap4.rcls }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1.6"></rect><rect width="7" height="7" x="14" y="3" rx="1.6"></rect><rect width="7" height="7" x="14" y="14" rx="1.6"></rect><path d="M6.5 14v3.5a3 3 0 0 0 3 3H10"></path></svg></span>
+                    </div>
+
+                    <div class="euc-cap-body">
+
+                      <!-- ===== 1 · Systeme anbinden ===== -->
+                      <div class="euc-cap-pane{{ cap0.pcls }}">
+                        <div class="euc-cap-sec">
+                          <span class="euc-cap-sech">{{ t.cap.m1.h }}</span>
+                          <span class="euc-cap-count">{{ t.cap.m1.count }}</span>
+                        </div>
+
+                        <div class="euc-cap-row">
+                          <span class="euc-cap-rowico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg></span>
+                          <span class="euc-cap-rowmain"><span class="euc-cap-n" style="display:block;">{{ t.cap.m1.r1n }}</span><span class="euc-cap-s" style="display:block;">{{ t.cap.m1.r1d }}</span></span>
+                          <span class="euc-cap-pill is-ok"><i></i>{{ t.cap.m1.native }}</span>
+                        </div>
+
+                        <div class="euc-cap-row">
+                          <span class="euc-cap-rowico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg></span>
+                          <span class="euc-cap-rowmain"><span class="euc-cap-n" style="display:block;">{{ t.cap.m1.r2n }}</span><span class="euc-cap-s" style="display:block;">{{ t.cap.m1.r2d }}</span></span>
+                          <span class="euc-cap-pill is-ok"><i></i>{{ t.cap.m1.native }}</span>
+                        </div>
+
+                        <div class="euc-cap-row">
+                          <span class="euc-cap-rowico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"></path></svg></span>
+                          <span class="euc-cap-rowmain"><span class="euc-cap-n" style="display:block;">{{ t.cap.m1.r3n }}</span><span class="euc-cap-s" style="display:block;">{{ t.cap.m1.r3d }}</span></span>
+                          <span class="euc-cap-pill is-ok"><i></i>{{ t.cap.m1.native }}</span>
+                        </div>
+
+                        <div class="euc-cap-row">
+                          <span class="euc-cap-rowico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
+                          <span class="euc-cap-rowmain"><span class="euc-cap-n" style="display:block;">{{ t.cap.m1.r4n }}</span><span class="euc-cap-s" style="display:block;">{{ t.cap.m1.r4d }}</span></span>
+                          <span class="euc-cap-pill is-ok"><i></i>{{ t.cap.m1.native }}</span>
+                        </div>
+
+                        <div class="euc-cap-sec" style="margin-top:14px;">
+                          <span class="euc-cap-sech">{{ t.cap.m1.own }}</span>
+                          <span class="euc-cap-count">{{ t.cap.m1.proto }}</span>
+                        </div>
+                        <div class="euc-cap-field">
+                          <span class="euc-cap-fieldt">{{ t.cap.m1.url }}</span>
+                          <span class="euc-cap-btn">{{ t.cap.m1.cta }}</span>
+                        </div>
+
+                        <div class="euc-cap-foot">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                          <span>{{ t.cap.m1.foot }}</span>
+                        </div>
+                      </div>
+
+                      <!-- ===== 2 · Zugriffe zentral steuern ===== -->
+                      <div class="euc-cap-pane{{ cap1.pcls }}">
+                        <div class="euc-cap-split">
+                          <div class="euc-cap-col">
+                            <div class="euc-cap-colh">{{ t.cap.m2.roles }}</div>
+                            <sc-for list="{{ capRoles }}" as="r" hint-placeholder-count="5">
+                              <div class="euc-cap-li{{ r.cls }}">
+                                <span class="euc-cap-lit">{{ r.n }}</span>
+                                <span class="euc-cap-lis">{{ r.c }}</span>
+                              </div>
+                            </sc-for>
+                          </div>
+                          <div class="euc-cap-col">
+                            <div class="euc-cap-colh">{{ t.cap.m2.groups }}</div>
+                            <sc-for list="{{ capGroups }}" as="g" hint-placeholder-count="5">
+                              <div class="euc-cap-li{{ g.cls }}">
+                                <span class="euc-cap-lit">{{ g.n }}</span>
+                                <span class="euc-cap-lis">{{ g.c }}</span>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </div>
+
+                        <div class="euc-cap-perm">
+                          <div class="euc-cap-colh euc-cap-permh">
+                            <span>{{ t.cap.m2.permsFor }}</span>
+                            <span class="euc-cap-btn is-ghost">{{ t.cap.m2.edit }}</span>
+                          </div>
+                          <div class="euc-cap-permgrid">
+                            <sc-for list="{{ capPerms }}" as="p" hint-placeholder-count="4">
+                              <div class="euc-cap-permrow">
+                                <span class="euc-cap-rowmain"><span class="euc-cap-n" style="display:block;">{{ p.n }}</span><span class="euc-cap-s" style="display:block;">{{ p.d }}</span></span>
+                                <span class="euc-cap-permv {{ p.pcls }}">{{ p.v }}</span>
+                                <span class="euc-cap-tog{{ p.tcls }}"><i></i></span>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </div>
+
+                        <div class="euc-cap-foot">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                          <span>{{ t.cap.m2.foot }}</span>
+                        </div>
+                      </div>
+
+                      <!-- ===== 3 · Echte Arbeit ausführen ===== -->
+                      <div class="euc-cap-pane{{ cap2.pcls }}">
+                        <div class="euc-cap-bub">{{ t.cap.m3.ask }}</div>
+                        <div class="euc-cap-trace">
+                          <sc-for list="{{ capSteps }}" as="s" hint-placeholder-count="4">
+                            <span class="euc-cap-step">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                              {{ s }}
+                            </span>
+                          </sc-for>
+                        </div>
+                        <div class="euc-cap-say">{{ t.cap.m3.say }}</div>
+                        <div class="euc-cap-file">
+                          <span class="euc-cap-xls">XLS</span>
+                          <span class="euc-cap-rowmain"><span class="euc-cap-n" style="display:block;">{{ t.cap.m3.file }}</span><span class="euc-cap-s" style="display:block;">{{ t.cap.m3.meta }}</span></span>
+                          <span class="euc-cap-btn is-ghost">{{ t.cap.m3.dl }}</span>
+                        </div>
+                        <div class="euc-cap-src">
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path></svg>
+                          <span>{{ t.cap.m3.src }}</span>
+                        </div>
+                        <div class="euc-cap-composer">
+                          <span class="euc-cap-composerp">{{ t.cap.m3.composer }}</span>
+                          <span class="euc-cap-send"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg></span>
+                        </div>
+
+                        <div class="euc-cap-foot">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg>
+                          <span>{{ t.cap.m3.foot }}</span>
+                        </div>
+                      </div>
+
+                      <!-- ===== 4 · Alles nachvollziehen ===== -->
+                      <div class="euc-cap-pane{{ cap3.pcls }}">
+                        <div class="euc-cap-tbar">
+                          <span class="euc-cap-search">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                            {{ t.cap.m4.search }}
+                          </span>
+                          <span class="euc-cap-btn is-ghost">{{ t.cap.m4.range }}</span>
+                          <span class="euc-cap-btn">{{ t.cap.m4.export }}</span>
+                        </div>
+                        <div class="euc-cap-log">
+                          <div class="euc-cap-lrow is-head">
+                            <span class="euc-cap-lt">{{ t.cap.m4.cTime }}</span>
+                            <span class="euc-cap-lu">{{ t.cap.m4.cUser }}</span>
+                            <span class="euc-cap-la">{{ t.cap.m4.cAct }}</span>
+                            <span class="euc-cap-lv">{{ t.cap.m4.cRes }}</span>
+                          </div>
+                          <sc-for list="{{ capLog }}" as="l" hint-placeholder-count="8">
+                            <div class="euc-cap-lrow">
+                              <span class="euc-cap-lt">{{ l.t }}</span>
+                              <span class="euc-cap-lu">{{ l.u }}</span>
+                              <span class="euc-cap-la">{{ l.a }}</span>
+                              <span class="euc-cap-lv {{ l.cls }}">{{ l.v }}</span>
+                            </div>
+                          </sc-for>
+                        </div>
+                        <div class="euc-cap-foot">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg>
+                          <span>{{ t.cap.m4.foot }}</span>
+                        </div>
+                      </div>
+
+                      <!-- ===== 5 · In bestehende Arbeit integrieren ===== -->
+                      <div class="euc-cap-pane{{ cap4.pcls }}">
+                        <div class="euc-cap-tiles">
+                          <div class="euc-cap-tile">
+                            <span class="euc-cap-tileico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6V2H8"></path><path d="m8 18-4 4V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z"></path><path d="M9 11v2"></path><path d="M15 11v2"></path></svg></span>
+                            <span class="euc-cap-tilet">{{ t.cap.m5.t1n }}</span>
+                            <span class="euc-cap-tiled">{{ t.cap.m5.t1d }}</span>
+                            <span class="euc-cap-pill is-ok"><i></i>{{ t.cap.m5.live }}</span>
+                          </div>
+                          <div class="euc-cap-tile">
+                            <span class="euc-cap-tileico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></span>
+                            <span class="euc-cap-tilet">{{ t.cap.m5.t2n }}</span>
+                            <span class="euc-cap-tiled">{{ t.cap.m5.t2d }}</span>
+                            <span class="euc-cap-pill is-wait"><i></i>{{ t.cap.m5.beta }}</span>
+                          </div>
+                          <div class="euc-cap-tile">
+                            <span class="euc-cap-tileico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg></span>
+                            <span class="euc-cap-tilet">{{ t.cap.m5.t3n }}</span>
+                            <span class="euc-cap-tiled">{{ t.cap.m5.t3d }}</span>
+                            <span class="euc-cap-pill is-mute"><i></i>{{ t.cap.m5.soon }}</span>
+                          </div>
+                        </div>
+
+                        <!-- Der Ausschnitt zeigt, was „daneben" heisst: links die
+                             Mailspalte, rechts der Bereich mit dem Entwurf. -->
+                        <div class="euc-cap-shot">
+                          <div class="euc-cap-shoth">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                            <span>{{ t.cap.m5.shot }}</span>
+                            <span class="euc-cap-shotpill">{{ t.cap.m5.pane }}</span>
+                          </div>
+                          <div class="euc-cap-shotb">
+                            <div class="euc-cap-shotl">
+                              <span class="euc-cap-bar" style="display:block; width:74%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:92%;"></span>
+                              <span class="euc-cap-bar is-a" style="display:block; width:58%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:84%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:66%;"></span>
+                            </div>
+                            <div class="euc-cap-shotr">
+                              <span class="euc-cap-shotk">{{ t.cap.m5.draft }}</span>
+                              <span class="euc-cap-bar is-a" style="display:block; width:88%;"></span>
+                              <span class="euc-cap-bar is-gold" style="display:block; width:52%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:96%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:70%;"></span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="euc-cap-foot">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v4"></path><path d="M9 3H5a2 2 0 0 0-2 2v4"></path><path d="M15 21h4a2 2 0 0 0 2-2v-4"></path><path d="M9 21H5a2 2 0 0 1-2-2v-4"></path></svg>
+                          <span>{{ t.cap.m5.foot }}</span>
+                        </div>
                       </div>
                     </div>
-                  </sc-for>
-                </div>
-    
-                <div data-reveal data-reveal-delay="180" class="euc-card" style="margin-top:20px; overflow:hidden;">
-                  <div style="padding:9px 14px; border-bottom:1px solid var(--c-line-soft); background:#FBFCFD; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--c-body-soft);">{{ t.conn2.stepsLabel }}</div>
-    
-                  <div style="display:flex; align-items:center; gap:10px; padding:10px 14px;">
-                    <span style="flex:0 0 auto; width:19px; height:19px; border-radius:50%; background:#0B1E33; color:#A5D8E6; display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:10px;">1</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6"></path><path d="M15 2v6"></path><path d="M12 17v5"></path><path d="M5 8h14"></path><path d="M6 11V8h12v3a6 6 0 1 1-12 0Z"></path></svg></span>
-                    <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.45; color:#3D4855;">{{ t.conn2.st1 }}</span>
-                  </div>
-    
-                  <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-top:1px solid #F2F5F7;">
-                    <span style="flex:0 0 auto; width:19px; height:19px; border-radius:50%; background:#0B1E33; color:#A5D8E6; display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:10px;">2</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
-                    <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.45; color:#3D4855;">{{ t.conn2.st2 }}</span>
-                  </div>
-    
-                  <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-top:1px solid #F2F5F7;">
-                    <span style="flex:0 0 auto; width:19px; height:19px; border-radius:50%; background:#0B1E33; color:#A5D8E6; display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:10px;">3</span>
-                    <span aria-hidden="true" style="flex:0 0 auto; display:inline-flex; color:#2E6C86;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"></path><path d="M15 8h-5"></path><path d="M19 17V5a2 2 0 0 0-2-2H4"></path><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"></path></svg></span>
-                    <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.45; color:#3D4855;">{{ t.conn2.st3 }}</span>
                   </div>
 
                 </div>
-
-              </div>
-
+              </div></div>
             </div>
-
-            <a href="/integrationen" class="euc-sov-cta" data-reveal data-reveal-delay="220" style="display:inline-flex; align-items:center; gap:8px; margin-top:30px; font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none;">
-              <span>{{ t.conn2.moreLink }}</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
-
           </div>
-        </section>
+
+        </div>
+      </div>
+    </section>
 
     <section id="outlook-addin" data-screen-label="Outlook-Add-in" style="position:relative; background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
 
@@ -2341,7 +2808,17 @@ var EUC_SG = (function(){
     lilac:   { c:['#F5F3F9','#D9D3EB','#A79ED6','#7069B4','#4E4C8E'], int:0.94, acc:0.78, spd:0.080, sc:1.55 },
     sand:    { c:['#FDF9F0','#F6E7C6','#EDCB86','#C9954A','#8C6A2E'], int:0.92, acc:0.70, spd:0.078, sc:1.55 },
     europa:  { c:['#0B1E33','#12326B','#2E6C86','#3F7CC9','#A5D8E6'], int:1.00, acc:0.62, spd:0.075, sc:1.45 },
-    europaSoft:{ c:['#0B1E33','#12326B','#2E6C86','#3F7CC9','#A5D8E6'], int:0.85, acc:0.55, spd:0.068, sc:1.40 }
+    europaSoft:{ c:['#0B1E33','#12326B','#2E6C86','#3F7CC9','#A5D8E6'], int:0.85, acc:0.55, spd:0.068, sc:1.40 },
+    /* Fünf Paletten für die fünf Kapitel der Enterprise-Sektion. Eine Familie,
+       nicht fünf Launen: alle bleiben hell genug, dass das weisse Fenster
+       darauf schwebt, und alle bleiben im Blau der Marke. Unterschieden wird
+       über Temperatur — Eis, Indigo, Blau mit Gold-Insel, Stahl, Violett —,
+       damit ein Kapitelwechsel spürbar ist, ohne die Seite zu wechseln. */
+    capConnect:{ c:['#E9F5FB','#BCE2EF','#79BFD8','#3B85A8','#2A6480'], int:0.94, acc:0.76, spd:0.068, sc:1.50 },
+    capGovern: { c:['#ECF1FC','#C7D8F4','#8FABE3','#4F6DBD','#33509E'], int:0.94, acc:0.74, spd:0.060, sc:1.50 },
+    capWork:   { c:['#EFF7FA','#C9E5EE','#92C7DD','#5DA2C1','#F4C542'], int:0.94, acc:0.46, spd:0.072, sc:1.52 },
+    capAudit:  { c:['#EEF4F7','#CCDCE5','#95B3C2','#5C7D8D','#375462'], int:0.94, acc:0.72, spd:0.054, sc:1.46 },
+    capReach:  { c:['#F1F0FA','#D3D3EE','#A2A6DB','#6A73C0','#4B5497'], int:0.94, acc:0.72, spd:0.064, sc:1.50 }
   };
 
   var VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
@@ -2400,10 +2877,19 @@ var EUC_SG = (function(){
   function reduced(){
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }
+  /* Eine Fläche arbeitet auf einer EIGENEN Kopie ihrer Palette: sie kann sie
+     überblenden (setPreset), und die Vorlage im PRESETS-Objekt gehört allen.
+     `rgb` ist die vorgerechnete Form für die Uniforms, `c` bleibt Hex für den
+     CSS-Rückfall. */
+  function clonePreset(p){
+    return { c:p.c.slice(), rgb:p.c.map(hex), int:p.int, acc:p.acc, spd:p.spd, sc:p.sc };
+  }
 
   function Surface(host, preset){
     this.host = host;
-    this.p = preset;
+    this.p = clonePreset(preset);
+    this.pTo = preset;
+    this.bd = 0;                    /* Restdauer einer laufenden Palettenblende */
     this.t = Math.random()*40;      /* Phasenversatz, sonst pulsieren alle im Gleichschritt */
     this.raf = 0; this.last = 0; this.acc = 0;
     this.cv = null; this.gl = null; this.lostExt = null;
@@ -2457,15 +2943,11 @@ var EUC_SG = (function(){
     this.u = {
       res: gl.getUniformLocation(prog,'u_res'), t: gl.getUniformLocation(prog,'u_t'),
       int: gl.getUniformLocation(prog,'u_int'), sc: gl.getUniformLocation(prog,'u_sc'),
-      acc: gl.getUniformLocation(prog,'u_acc')
+      acc: gl.getUniformLocation(prog,'u_acc'),
+      /* Die Farborte werden gemerkt, nicht einmalig benutzt: eine Blende
+         schreibt sie in jedem Frame neu. */
+      c: ['c0','c1','c2','c3','c4'].map(function(n){ return gl.getUniformLocation(prog,n); })
     };
-    var p = this.p;
-    ['c0','c1','c2','c3','c4'].forEach(function(n,i){
-      gl.uniform3fv(gl.getUniformLocation(prog,n), hex(p.c[i]));
-    });
-    gl.uniform1f(this.u.int, p.int);
-    gl.uniform1f(this.u.sc, p.sc);
-    gl.uniform1f(this.u.acc, p.acc);
 
     /* Ohne diesen Handler bleibt nach einem Kontextverlust ein schwarzes
        Rechteck stehen — der auffälligste Fehler, den diese Technik kennt. */
@@ -2474,10 +2956,60 @@ var EUC_SG = (function(){
 
     this.cv = cv; this.gl = gl;
     this.lostExt = gl.getExtension('WEBGL_lose_context');
+    this.upload();
     this.host.appendChild(cv);
     live.push(this);
     this.resize();
     return true;
+  };
+
+  /* Palette → Uniforms. Getrennt von acquire(), weil sie sich jetzt ändern
+     kann, ohne dass der Kontext neu entsteht. */
+  Surface.prototype.upload = function(){
+    if (!this.gl) return;
+    var gl = this.gl, p = this.p, i;
+    for (i = 0; i < 5; i++) gl.uniform3fv(this.u.c[i], p.rgb[i]);
+    gl.uniform1f(this.u.int, p.int);
+    gl.uniform1f(this.u.sc, p.sc);
+    gl.uniform1f(this.u.acc, p.acc);
+  };
+
+  /* Palettenwechsel als Blende. Zwei Dinge sind hier Absicht:
+     1. Der Startwert ist der GERADE SICHTBARE Wert, nicht das letzte Ziel —
+        wer schnell durch die Kapitel fährt, sieht eine durchgehende Bewegung
+        statt eines Sprungs bei jedem Wechsel.
+     2. Läuft keine Schleife (unsichtbar, reduzierte Bewegung, kein WebGL),
+        wird sofort gesetzt: eine Blende, die niemand sieht, ist nur ein
+        halbfertiger Zustand, der beim nächsten Sichtbarwerden auffällt. */
+  Surface.prototype.setPreset = function(name, ms){
+    var to = PRESETS[name];
+    if (!to || to === this.pTo) return;
+    this.pTo = to;
+    this.p.c = to.c.slice();
+    this.paintFallback();          /* liegt unter dem Canvas, darf sofort umschalten */
+    if (!ms || !this.raf || !this.gl || reduced()){
+      this.p = clonePreset(to); this.bd = 0; this.upload(); this.draw();
+      return;
+    }
+    this.b0 = clonePreset(this.p); this.b1 = to; this.bt = 0; this.bd = ms / 1000;
+  };
+
+  Surface.prototype.blend = function(dt){
+    if (!this.bd) return;
+    this.bt += dt;
+    var k = Math.min(1, this.bt / this.bd);
+    var e = 1 - Math.pow(1 - k, 3);        /* ease-out: schnell weg, weich an */
+    var a = this.b0, b = this.b1, p = this.p, i, j, br;
+    for (i = 0; i < 5; i++){
+      br = hex(b.c[i]);
+      for (j = 0; j < 3; j++) p.rgb[i][j] = a.rgb[i][j] + (br[j] - a.rgb[i][j]) * e;
+    }
+    p.int = a.int + (b.int - a.int) * e;
+    p.acc = a.acc + (b.acc - a.acc) * e;
+    p.sc  = a.sc  + (b.sc  - a.sc ) * e;
+    p.spd = a.spd + (b.spd - a.spd) * e;
+    if (k >= 1){ this.bd = 0; this.p = clonePreset(b); }
+    this.dirty = true;
   };
 
   Surface.prototype.release = function(){
@@ -2505,6 +3037,7 @@ var EUC_SG = (function(){
 
   Surface.prototype.draw = function(){
     if (!this.gl) return;
+    if (this.dirty){ this.upload(); this.dirty = false; }
     this.gl.uniform1f(this.u.t, this.t);
     this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
     DRAWS++;
@@ -2520,6 +3053,7 @@ var EUC_SG = (function(){
       var now = (window.performance && performance.now) ? performance.now() : Date.now();
       var dt = Math.min(0.05, (now - self.last)/1000);   /* Sprung nach Tabwechsel abfangen */
       self.last = now;
+      self.blend(dt);                                    /* läuft mit der echten Zeit, nicht mit der gedeckelten Bildrate */
       self.acc += dt;
       if (self.acc < self.minDt) return;                 /* Bildrate deckeln */
       self.t += self.acc * self.p.spd;
@@ -2558,19 +3092,12 @@ class Component extends DCLogic {
     this.BRAND = 'EU Cowork AI';
     this.selfhostHref = '/self-hosting'; // Release-Repository wird zum Launch veroeffentlicht
     this.rootRef = React.createRef();
-this.conn2StageRef = React.createRef();
-    this.conn2CanvasRef = React.createRef();
-    this.conn2HubRef = React.createRef();
-    this._conn2Geo = null;
-    this._conn2Rings = [];
-    this._conn2Raf = 0;
-    this._conn2T = 0;
-    this._conn2Last = 0;
-    this._conn2Acc = 0;
-    this._conn2Io = null;
-    this._conn2Ro = null;
-    this._conn2Resize = null;
-    this._conn2Relayout = null;
+this.capAccRef = React.createRef();
+    this.capSgRef = React.createRef();
+    this._capH = 0;           /* gemessene Klapphöhe, für alle Kapitel dieselbe */
+    this._capT = 0;           /* Absichtsfrist beim Überfahren */
+    this._capTimer = 0;
+    this._capAcc = null;
 this.hero2Ref = React.createRef();
     this.globeRef = React.createRef();
     /* Kamera. An der Bibliothek kalibriert, nicht aus der Matrix geraten:
@@ -2615,7 +3142,7 @@ this.mobRef = React.createRef();
     this._termCmd = 'cd distribution && ./install.sh --profiles production';
     this._termOut = ['✓ Pulling images …','✓ Auto-TLS · SearXNG ready','✓ Telemetry off by default','→ https://localhost  ·  ~60s'];
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
-    this.state = { lang: initLang, hero2Phase: 0, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1, storeNote:false };
+    this.state = { lang: initLang, hero2Phase: 0, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
     /* `lang` am <html> mitziehen. Ohne das steht auf der englischen Fassung
        weiterhin lang="de": Screenreader sprechen englischen Text mit deutscher
        Aussprache, Browser bieten eine Übersetzung an, die niemand braucht, und
@@ -2935,70 +3462,157 @@ sov: {
           cta:'All evidence on the Trust page'
         }
       },
-      conn2: {
+      cap: {
         de: {
-          h2:'Verbunden mit Ihren Tools.',
-          sub:'Die wichtigsten Konnektoren sind nativ dabei. Alles Weitere binden Sie über MCP selbst an, die Zugriffe verwalten Sie zentral im Admin-Panel.',
-          hubName:'EU Cowork AI',
-          hubSub:'GATEWAY',
-          nodes:['ERP','SharePoint','GitHub','Notion','Eigene MCP'],
-          stageCaption:'Jede Anbindung läuft über das Gateway.',
-          nativeTitle:'Nativ dabei',
-          nativeHint:'Ab Werk einsatzbereit.',
-          n1:{ n:'ERP', d:'Kunden, Rechnungen, Projekte' },
-          n2:{ n:'SharePoint', d:'Dokumente aus Microsoft 365' },
-          n3:{ n:'Websuche', d:'Antworten mit Quellenangabe' },
-          n4:{ n:'Datei-Generierung', d:'Excel, Word, PDF' },
-          n5:{ n:'Firmenwissen', d:'Eigene Dokumente als Wissensbasis' },
-          s1:{ n:'Outlook-Add-in', d:'Mails und Termine direkt im Outlook-Fenster' },
-          s2:{ n:'Excel-Add-in', d:'Tabellen direkt in Excel' },
-          soon:'Bald',
-          beta:'Beta',
-          mcpTitle:'Jedes System anbindbar',
-          mcpDesc:'Über das Model Context Protocol binden Sie jedes System mit API an. Für viele verbreitete Werkzeuge gibt es fertige MCP-Server, für Ihre eigenen Systeme genügt eine REST-API.',
-          groups:[
-            { label:'CRM & Support', items:['HubSpot','Slack'] },
-            { label:'Projekte & Wissen', items:['Jira','Confluence','Notion','Linear'] },
-            { label:'Entwicklung & Daten', items:['GitHub','Sentry','PostgreSQL'] },
-            { label:'Weitere', items:['Stripe','Google Drive','Eigene REST-API'] }
+          h2:'Für den Einsatz im Unternehmen gebaut.',
+          sub:'EU Cowork AI verbindet Ihre Systeme, führt Aufgaben mit kontrollierten Zugriffen aus und bleibt für Ihre IT jederzeit nachvollziehbar.',
+          i1:{ t:'Systeme anbinden',
+               d:'Verbinden Sie ERP, SharePoint, Firmenwissen und weitere Werkzeuge zentral mit EU Cowork AI. Native Konnektoren sind direkt verfügbar, eigene Systeme binden Sie über MCP oder eine REST-API an.' },
+          i2:{ t:'Zugriffe zentral steuern',
+               d:'Bestimmen Sie nach Rolle, Gruppe oder Benutzer, wer auf welche Systeme und Funktionen zugreifen darf. So ist beispielsweise der Zugriff auf Rechnungen erlaubt, während sensible Lohndaten gesperrt bleiben.' },
+          i3:{ t:'Echte Arbeit ausführen',
+               d:'EU Cowork AI beantwortet nicht nur Fragen, sondern erstellt Dateien, wertet ERP-Daten aus und übernimmt wiederkehrende Aufgaben. Fertige Excel-, Word- oder PDF-Dokumente stehen direkt im Chat bereit.' },
+          i4:{ t:'Alles nachvollziehen',
+               d:'Jeder Tool-Aufruf, jede Admin-Aktion und jeder Login wird fortlaufend protokolliert. Ihre IT sieht jederzeit, wer auf welche Daten zugegriffen hat, und kann die Einträge exportieren.' },
+          i5:{ t:'In bestehende Arbeit integrieren',
+               d:'Nutzen Sie Ihren KI-Kollegen dort, wo Ihr Team bereits arbeitet. Im Chat, direkt neben einer geöffneten Outlook-E-Mail und künftig auch in weiteren Anwendungen entsteht Unterstützung ohne ständiges Wechseln und Kopieren.' },
+          link1:'Governance und Audit-Log',
+          link2:'Alle Integrationen',
+          who:'Admin',
+          /* Brotkrumen je Kapitel: Bereich fett, Unterseite mager. */
+          crumbs:[
+            ['Integrationen','Konnektoren'],
+            ['Governance','Zugriffskontrolle'],
+            ['Arbeitsbereich','Chat'],
+            ['Governance','Audit-Log'],
+            ['Einstellungen','Oberflächen']
           ],
-          stepsLabel:'In drei Schritten',
-          st1:'MCP-Server-URL im Admin-Panel eintragen',
-          st2:'Zugriff pro Rolle, Gruppe und User festlegen',
-          st3:'Läuft über das Gateway, jeder Aufruf im Audit-Log',
-          moreLink:'Alle Integrationen und wie MCP funktioniert'
+          m1:{
+            h:'Konnektoren', count:'4 von 4 aktiv', native:'Nativ',
+            r1n:'ERP', r1d:'Kunden, Rechnungen, Projekte',
+            r2n:'SharePoint', r2d:'Dokumente aus Microsoft 365',
+            r3n:'Firmenwissen', r3d:'Eigene Dokumente als Wissensbasis',
+            r4n:'Websuche', r4d:'Antworten mit Quellenangabe',
+            own:'Eigenes System', proto:'MCP · REST', url:'https://mcp.ihre-firma.ch/sse', cta:'Verbinden',
+            foot:'MCP oder REST-API. Jede Anbindung läuft über das Gateway.'
+          },
+          m2:{
+            roles:'Rollen', groups:'Gruppen', permsFor:'Berechtigungen für Lohnbuchhaltung', edit:'Bearbeiten',
+            r:[ ['Admin','5'], ['Finanzen','12'], ['HR','8'], ['Projektleitung','6'], ['Lesender Zugriff','15'] ],
+            g:[ ['Buchhaltung','6'], ['Lohnbuchhaltung','4'], ['Controlling','3'], ['Projekte','7'], ['Vertrieb','9'] ],
+            p:[
+              ['Rechnungen lesen','Stammdaten und Belege','erlaubt',true],
+              ['Löhne lesen','Gehalts- und Abrechnungsdaten','gesperrt',false],
+              ['SharePoint lesen','Dokumente und Ordner','erlaubt',true],
+              ['Datei-Generierung','Excel, Word, PDF','erlaubt',true]
+            ],
+            foot:'Jede Änderung wird im Audit-Log erfasst.'
+          },
+          m3:{
+            ask:'Erstell mir die Quartalsauswertung Q3 als Excel.',
+            steps:['ERP abgefragt · 1.284 Positionen','Nach Kostenstelle gruppiert','Vorjahresvergleich ergänzt','Datei erzeugt'],
+            say:'Fertig. Umsatz, Kosten und Marge je Bereich, plus eine Übersicht.',
+            file:'Quartalsauswertung-Q3.xlsx', meta:'24 KB · 4 Blätter · in der Sandbox erzeugt', dl:'Herunterladen',
+            src:'Quelle: ERP · Buchungen 07–09/2026', composer:'Nachricht an EU Cowork AI …',
+            foot:'Ausführung in der Sandbox, Ergebnis direkt im Chat.'
+          },
+          m4:{
+            search:'Nach Benutzer, Werkzeug oder Objekt suchen', range:'Letzte 24 h', export:'Exportieren',
+            cTime:'Zeit', cUser:'Benutzer', cAct:'Aufruf', cRes:'Ergebnis',
+            rows:[
+              ['09:14:02','a.keller','erp.read_invoice · RE-2481','erlaubt',true],
+              ['09:13:47','a.keller','erp.read_payroll','gesperrt',false],
+              ['09:11:20','m.bauer','sharepoint.search · Projekte/2026','erlaubt',true],
+              ['09:08:55','admin','policy.update · Gruppe Finanzen','gespeichert',true],
+              ['09:04:31','l.schulz','files.create · Q3.xlsx','erlaubt',true],
+              ['09:02:10','n.krause','auth.login · OIDC Entra ID','ok',true],
+              ['08:58:04','m.bauer','knowledge.search · Handbuch','erlaubt',true],
+              ['08:55:39','p.thomas','erp.write_order','gesperrt',false]
+            ],
+            foot:'Fortlaufend geschrieben, exportierbar als CSV oder JSON.'
+          },
+          m5:{
+            t1n:'Chat', t1d:'Im Browser, auf jedem Gerät', live:'Aktiv',
+            t2n:'Outlook', t2d:'Bereich neben der offenen E-Mail', beta:'Beta',
+            t3n:'Weitere', t3d:'Excel und weitere Anwendungen folgen', soon:'Geplant',
+            shot:'Terminanfrage Baubegehung Los 3', pane:'EU Cowork AI', draft:'ENTWURF · ANTWORT',
+            foot:'Eine Anmeldung. Überall dieselben Rechte und dasselbe Audit-Log.'
+          }
         },
         en: {
-          h2:'Connected to your tools.',
-          sub:'The connectors that matter most ship natively. Everything else you connect yourself via MCP, with access managed centrally in the admin panel.',
-          hubName:'EU Cowork AI',
-          hubSub:'GATEWAY',
-          nodes:['ERP','SharePoint','GitHub','Notion','Your MCP'],
-          stageCaption:'Every connection runs through the gateway.',
-          nativeTitle:'Native connectors',
-          nativeHint:'Ready out of the box.',
-          n1:{ n:'ERP', d:'Customers, invoices, projects' },
-          n2:{ n:'SharePoint', d:'Documents from Microsoft 365' },
-          n3:{ n:'Web search', d:'Answers with sources' },
-          n4:{ n:'File generation', d:'Excel, Word, PDF' },
-          n5:{ n:'Company knowledge', d:'Your documents as a knowledge base' },
-          s1:{ n:'Outlook add-in', d:'Mail and appointments right in the Outlook window' },
-          s2:{ n:'Excel add-in', d:'Spreadsheets right inside Excel' },
-          soon:'Soon',
-          beta:'Beta',
-          mcpTitle:'Connect any system',
-          mcpDesc:'Through the Model Context Protocol you can connect any system that has an API. Many widely used tools already ship a ready-made MCP server, for your own systems a REST API is enough.',
-          groups:[
-            { label:'CRM & support', items:['HubSpot','Slack'] },
-            { label:'Projects & knowledge', items:['Jira','Confluence','Notion','Linear'] },
-            { label:'Development & data', items:['GitHub','Sentry','PostgreSQL'] },
-            { label:'More', items:['Stripe','Google Drive','Your REST API'] }
+          h2:'Built for use across the company.',
+          sub:'EU Cowork AI connects your systems, carries out work under controlled access, and stays accountable to your IT at all times.',
+          i1:{ t:'Connect your systems',
+               d:'Connect ERP, SharePoint, company knowledge and further tools centrally to EU Cowork AI. Native connectors are available right away, your own systems you attach through MCP or a REST API.' },
+          i2:{ t:'Control access centrally',
+               d:'Decide by role, group or user who may reach which systems and functions. Access to invoices can be allowed, for example, while sensitive payroll data stays blocked.' },
+          i3:{ t:'Get real work done',
+               d:'EU Cowork AI does more than answer questions: it creates files, evaluates ERP data and takes over recurring tasks. Finished Excel, Word or PDF documents are ready right in the chat.' },
+          i4:{ t:'Account for everything',
+               d:'Every tool call, every admin action and every login is logged continuously. Your IT can see at any time who accessed which data, and export the entries.' },
+          i5:{ t:'Fit into existing work',
+               d:'Use your AI coworker where your team already works. In the chat, right next to an open Outlook email and, in future, in further applications — support without constant switching and copying.' },
+          link1:'Governance and audit log',
+          link2:'All integrations',
+          who:'Admin',
+          crumbs:[
+            ['Integrations','Connectors'],
+            ['Governance','Access control'],
+            ['Workspace','Chat'],
+            ['Governance','Audit log'],
+            ['Settings','Surfaces']
           ],
-          stepsLabel:'Three steps',
-          st1:'Add the MCP server URL in the admin panel',
-          st2:'Set access per role, group and user',
-          st3:'It runs through the gateway, every call in the audit log',
-          moreLink:'All integrations and how MCP works'
+          m1:{
+            h:'Connectors', count:'4 of 4 active', native:'Native',
+            r1n:'ERP', r1d:'Customers, invoices, projects',
+            r2n:'SharePoint', r2d:'Documents from Microsoft 365',
+            r3n:'Company knowledge', r3d:'Your documents as a knowledge base',
+            r4n:'Web search', r4d:'Answers with sources',
+            own:'Your own system', proto:'MCP · REST', url:'https://mcp.your-company.com/sse', cta:'Connect',
+            foot:'MCP or REST API. Every connection runs through the gateway.'
+          },
+          m2:{
+            roles:'Roles', groups:'Groups', permsFor:'Permissions for Payroll', edit:'Edit',
+            r:[ ['Admin','5'], ['Finance','12'], ['HR','8'], ['Project leads','6'], ['Read-only','15'] ],
+            g:[ ['Accounting','6'], ['Payroll','4'], ['Controlling','3'], ['Projects','7'], ['Sales','9'] ],
+            p:[
+              ['Read invoices','Master data and documents','allowed',true],
+              ['Read payroll','Salary and settlement data','blocked',false],
+              ['Read SharePoint','Documents and folders','allowed',true],
+              ['File generation','Excel, Word, PDF','allowed',true]
+            ],
+            foot:'Every change is captured in the audit log.'
+          },
+          m3:{
+            ask:'Build me the Q3 quarterly report as an Excel file.',
+            steps:['Queried the ERP · 1,284 line items','Grouped by cost centre','Added a year-on-year comparison','File created'],
+            say:'Done. Revenue, cost and margin per unit, plus a summary sheet.',
+            file:'quarterly-report-Q3.xlsx', meta:'24 KB · 4 sheets · created in the sandbox', dl:'Download',
+            src:'Source: ERP · postings 07–09/2026', composer:'Message EU Cowork AI …',
+            foot:'Executed in the sandbox, the result lands in the chat.'
+          },
+          m4:{
+            search:'Search by user, tool or object', range:'Last 24 h', export:'Export',
+            cTime:'Time', cUser:'User', cAct:'Call', cRes:'Result',
+            rows:[
+              ['09:14:02','a.keller','erp.read_invoice · RE-2481','allowed',true],
+              ['09:13:47','a.keller','erp.read_payroll','blocked',false],
+              ['09:11:20','m.bauer','sharepoint.search · Projects/2026','allowed',true],
+              ['09:08:55','admin','policy.update · Finance group','saved',true],
+              ['09:04:31','l.schulz','files.create · Q3.xlsx','allowed',true],
+              ['09:02:10','n.krause','auth.login · OIDC Entra ID','ok',true],
+              ['08:58:04','m.bauer','knowledge.search · Handbook','allowed',true],
+              ['08:55:39','p.thomas','erp.write_order','blocked',false]
+            ],
+            foot:'Written append-only, exportable as CSV or JSON.'
+          },
+          m5:{
+            t1n:'Chat', t1d:'In the browser, on any device', live:'Live',
+            t2n:'Outlook', t2d:'A pane next to the open email', beta:'Beta',
+            t3n:'More', t3d:'Excel and further applications follow', soon:'Planned',
+            shot:'Terminanfrage Baubegehung Los 3', pane:'EU Cowork AI', draft:'DRAFT · REPLY',
+            foot:'One sign-in. The same permissions and the same audit log everywhere.'
+          }
         }
       },
       olk: {
@@ -3103,7 +3717,7 @@ sov: {
     this._initFit();
     this._initReveal();
     this._startTerminal();
-this._conn2Init();
+this._capInit();
 this._hero2Init();
 this._mobInit();
     this._olkInit();
@@ -3475,7 +4089,7 @@ this._mobInit();
     this._fitTimer = setTimeout(run, 700);
     this._fitResize = () => {
       if (this._fitRaf) return;
-      this._fitRaf = requestAnimationFrame(() => { this._fitRaf = 0; run(); this._olkLayout(); });
+      this._fitRaf = requestAnimationFrame(() => { this._fitRaf = 0; run(); this._olkLayout(); this._capMeasure(); });
     };
     window.addEventListener('resize', this._fitResize);
   }
@@ -3495,11 +4109,7 @@ this._mobInit();
     if (this._rail && this._railScroll){ this._rail.removeEventListener('scroll', this._railScroll); window.removeEventListener('resize', this._railScroll); }
     if (this._railClick) this._deepQ('[data-rail-dir]').forEach(b=>b.removeEventListener('click', this._railClick));
     (this._revealTidy||[]).forEach(f=>{ try{ f(); }catch(e){} });
-this._conn2Stop();
-    if (this._conn2Io){ this._conn2Io.disconnect(); this._conn2Io = null; }
-    if (this._conn2Ro){ this._conn2Ro.disconnect(); this._conn2Ro = null; }
-    if (this._conn2Resize){ window.removeEventListener('resize', this._conn2Resize); this._conn2Resize = null; }
-    clearTimeout(this._conn2Relayout);
+this._capDestroy();
 clearTimeout(this._hero2Timer);
     if (this._hero2Io) this._hero2Io.disconnect();
 clearTimeout(this._mobTimer);
@@ -3791,187 +4401,105 @@ _mobInit(){
     path.parentNode.style.setProperty('--olk-len', String(len));
     if (dot){ dot.setAttribute('cx', x1.toFixed(1)); dot.setAttribute('cy', y1.toFixed(1)); }
   }
-_conn2Init(){
-    const stage = this.conn2StageRef.current;
-    if (!stage) return;
-    const repaint = () => { this._conn2Layout(); if (!this._conn2Raf) this._conn2Draw(this._conn2T); };
-    repaint();
-    if (typeof ResizeObserver !== 'undefined'){
-      this._conn2Ro = new ResizeObserver(repaint);
-      this._conn2Ro.observe(stage);
-    } else {
-      this._conn2Resize = repaint;
-      window.addEventListener('resize', this._conn2Resize);
-    }
-    this._conn2Relayout = setTimeout(repaint, 700);
-    try { if (document.fonts && document.fonts.ready && document.fonts.ready.then) document.fonts.ready.then(repaint); } catch(e){}
-    if (this._reduced()) return;
-    if ('IntersectionObserver' in window){
-      this._conn2Io = new IntersectionObserver((es)=>{
-        es.forEach(e=>{ if (e.isIntersecting) this._conn2Start(); else this._conn2Stop(); });
-      }, { threshold:0.08, rootMargin:'0px 0px -4% 0px' });
-      this._conn2Io.observe(stage);
-    } else {
-      this._conn2Start();
-    }
-  }
-  _conn2Now(){
-    return (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
-  }
-  _conn2Start(){
-    if (this._conn2Raf || this._reduced()) return;
-    this._conn2Layout();
-    this._conn2Last = this._conn2Now();
-    const loop = () => {
-      const now = this._conn2Now();
-      const dt = Math.min(0.05, Math.max(0, (now - this._conn2Last) / 1000));
-      this._conn2Last = now;
-      this._conn2T += dt;
-      this._conn2Acc += dt;
-      if (this._conn2Acc > 0.5){ this._conn2Acc = 0; this._conn2Layout(); }
-      this._conn2Draw(this._conn2T);
-      this._conn2Raf = requestAnimationFrame(loop);
+/* ---------------------------------------------------------------------
+     Kapitel-Sektion. Ein Zustand (capI) steuert drei Dinge gleichzeitig:
+     das offene Kapitel links, die Aufnahme rechts und die Palette des
+     Verlaufs darunter. Sie MÜSSEN aus derselben Quelle kommen — zwei
+     Zustände liefen bei schnellem Überfahren auseinander.
+     --------------------------------------------------------------------- */
+  _capInit(){
+    const acc = this.capAccRef.current;
+    if (!acc) return;
+
+    /* Ein delegierter Hörer statt fünfzehn. `pointerenter` bubbelt nicht,
+       deshalb wird `pointerover` benutzt und das Ziel selbst gesucht. */
+    const idx = (e) => {
+      const el = e.target && e.target.closest ? e.target.closest('[data-cap-i]') : null;
+      return el ? parseInt(el.getAttribute('data-cap-i'), 10) : -1;
     };
-    this._conn2Raf = requestAnimationFrame(loop);
-  }
-  _conn2Stop(){
-    if (this._conn2Raf){ cancelAnimationFrame(this._conn2Raf); this._conn2Raf = 0; }
-  }
-  _conn2Layout(){
-    const stage = this.conn2StageRef.current;
-    const cv = this.conn2CanvasRef.current;
-    const hub = this.conn2HubRef.current;
-    if (!stage || !cv || !hub) return;
-    const sr = stage.getBoundingClientRect();
-    const w = sr.width, h = sr.height;
-    if (!(w > 40) || !(h > 40)) return;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    const bw = Math.round(w * dpr), bh = Math.round(h * dpr);
-    if (cv.width !== bw || cv.height !== bh){ cv.width = bw; cv.height = bh; }
-    const ctx = cv.getContext('2d');
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const hr = hub.getBoundingClientRect();
-    const hx = hr.left - sr.left + hr.width / 2;
-    const hy = hr.top - sr.top + hr.height / 2;
-    const hrad = Math.max(18, hr.width / 2);
-    const els = Array.prototype.slice.call(stage.querySelectorAll('[data-conn2-node]'));
-    if (!els.length) return;
-    const old = (this._conn2Geo && this._conn2Geo.beams) || [];
-    const last = els.length - 1;
-    const beams = [];
-    for (let i = 0; i < els.length; i++){
-      const r = els[i].getBoundingClientRect();
-      const nx = r.left - sr.left - 7;
-      const ny = r.top - sr.top + r.height / 2;
-      const ang = Math.atan2(ny - hy, nx - hx);
-      const ex = hx + Math.cos(ang) * (hrad + 7);
-      const ey = hy + Math.sin(ang) * (hrad + 7);
-      const dist = Math.max(28, Math.sqrt((nx - ex) * (nx - ex) + (ny - ey) * (ny - ey)));
-      const p = old[i] || {};
-      beams.push({
-        x0:nx, y0:ny,
-        x1:nx - dist * 0.42, y1:ny,
-        x2:ex + Math.cos(ang) * dist * 0.36, y2:ey + Math.sin(ang) * dist * 0.36,
-        x3:ex, y3:ey,
-        gold: i === last,
-        travel: 3.2 + (i % 3) * 0.3,
-        offset: i * 1.24,
-        prevPh: p.prevPh || 0,
-        fired: !!p.fired
-      });
-    }
-    let seed = 20260728;
-    const rnd = () => { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
-    const dots = [];
-    for (let d = 0; d < 16; d++){ dots.push({ x: rnd() * w, y: rnd() * h, r: 0.7 + rnd() * 0.9 }); }
-    this._conn2Geo = { w:w, h:h, cycle:6.0, hub:{ x:hx, y:hy, r:hrad }, beams:beams, dots:dots };
-  }
-  _conn2Pt(b, t){
-    const mt = 1 - t;
-    const a = mt * mt * mt, c = 3 * mt * mt * t, d = 3 * mt * t * t, e = t * t * t;
-    return { x: a * b.x0 + c * b.x1 + d * b.x2 + e * b.x3, y: a * b.y0 + c * b.y1 + d * b.y2 + e * b.y3 };
-  }
-  _conn2Draw(time){
-    const g = this._conn2Geo;
-    const cv = this.conn2CanvasRef.current;
-    if (!g || !cv) return;
-    const ctx = cv.getContext('2d');
-    if (!ctx) return;
-    const TAU = Math.PI * 2;
-    const still = this._reduced();
-    ctx.clearRect(0, 0, g.w, g.h);
 
-    ctx.fillStyle = 'rgba(11,30,51,.11)';
-    for (let i = 0; i < g.dots.length; i++){
-      const d = g.dots[i];
-      ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, TAU); ctx.fill();
-    }
+    /* Überfahren wählt aus — mit einer kurzen Absichtsfrist. Ohne sie
+       feuert jede Zeile, über die der Zeiger auf dem Weg nach unten
+       streift, einen Wechsel: fünf Blenden für eine Bewegung, die nie
+       eine Auswahl war. 90 ms liegen unter der Schwelle, ab der eine
+       Reaktion als verzögert gelesen wird, und darüber, was ein
+       Vorbeiziehen dauert. Nur für die Maus: auf Zeigegeräten ohne
+       echten Hover erzeugt der Browser einen Phantom-Hover beim Tippen. */
+    this._capOver = (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      const i = idx(e);
+      if (i < 0 || i === this.state.capI) return;
+      clearTimeout(this._capT);
+      this._capT = setTimeout(() => this._capPick(i), 90);
+    };
+    /* Klick und Fokus wählen SOFORT: dort ist die Absicht schon erklärt. */
+    this._capClick = (e) => { const i = idx(e); if (i >= 0){ clearTimeout(this._capT); this._capPick(i); } };
+    this._capFocus = (e) => { const i = idx(e); if (i >= 0){ clearTimeout(this._capT); this._capPick(i); } };
+    this._capLeave = () => clearTimeout(this._capT);
 
-    const hs = still ? 1 : (1 + 0.05 * Math.sin(time * 0.62));
-    const hrR = g.hub.r * 2.15 * hs;
-    const hg = ctx.createRadialGradient(g.hub.x, g.hub.y, g.hub.r * 0.72, g.hub.x, g.hub.y, hrR);
-    hg.addColorStop(0, 'rgba(165,216,230,.30)');
-    hg.addColorStop(1, 'rgba(165,216,230,0)');
-    ctx.fillStyle = hg;
-    ctx.beginPath(); ctx.arc(g.hub.x, g.hub.y, hrR, 0, TAU); ctx.fill();
+    acc.addEventListener('pointerover', this._capOver);
+    acc.addEventListener('click', this._capClick);
+    acc.addEventListener('focusin', this._capFocus);
+    acc.addEventListener('pointerleave', this._capLeave);
+    this._capAcc = acc;
 
-    ctx.lineCap = 'round';
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#D6E0E8';
-    for (let i = 0; i < g.beams.length; i++){
-      const b = g.beams[i];
-      ctx.beginPath();
-      ctx.moveTo(b.x0, b.y0);
-      ctx.bezierCurveTo(b.x1, b.y1, b.x2, b.y2, b.x3, b.y3);
-      ctx.stroke();
-    }
-    if (still) return;
-
-    const rings = this._conn2Rings;
-    for (let i = rings.length - 1; i >= 0; i--){
-      const age = (time - rings[i].t0) / 1.15;
-      if (!(age >= 0) || age >= 1){ rings.splice(i, 1); continue; }
-      const ez = 1 - Math.pow(1 - age, 3);
-      ctx.beginPath();
-      ctx.arc(g.hub.x, g.hub.y, g.hub.r + 3 + 19 * ez, 0, TAU);
-      ctx.lineWidth = 1.4;
-      ctx.strokeStyle = (rings[i].gold ? 'rgba(244,197,66,' : 'rgba(165,216,230,') + (0.55 * (1 - age)).toFixed(3) + ')';
-      ctx.stroke();
-    }
-
-    for (let i = 0; i < g.beams.length; i++){
-      const b = g.beams[i];
-      const ph = (time + b.offset) % g.cycle;
-      if (ph < b.prevPh) b.fired = false;
-      b.prevPh = ph;
-      if (!b.fired && ph >= b.travel * 0.97){
-        b.fired = true;
-        this._conn2Rings.push({ t0: time, gold: b.gold });
-        if (this._conn2Rings.length > 8) this._conn2Rings.shift();
-      }
-      if (ph > b.travel) continue;
-      const lin = ph / b.travel;
-      const te = lin * lin * (3 - 2 * lin);
-      const edge = Math.min(1, Math.min(lin, 1 - lin) / 0.09);
-      const head = this._conn2Pt(b, te);
-      const rg = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 11);
-      rg.addColorStop(0, (b.gold ? 'rgba(244,197,66,' : 'rgba(165,216,230,') + (0.46 * edge).toFixed(3) + ')');
-      rg.addColorStop(1, b.gold ? 'rgba(244,197,66,0)' : 'rgba(165,216,230,0)');
-      ctx.fillStyle = rg;
-      ctx.beginPath(); ctx.arc(head.x, head.y, 11, 0, TAU); ctx.fill();
-      for (let k = 11; k >= 0; k--){
-        const tt = te - k * 0.017;
-        if (tt <= 0) continue;
-        const f = 1 - k / 12;
-        const p = this._conn2Pt(b, tt);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 0.6 + 1.7 * f, 0, TAU);
-        ctx.fillStyle = (b.gold ? 'rgba(203,158,43,' : 'rgba(62,110,134,') + (0.72 * Math.pow(f, 1.5) * edge).toFixed(3) + ')';
-        ctx.fill();
-      }
-    }
+    /* Erst nach dem ersten Anstrich messen. Synchron in componentDidMount
+       gemessen steht die Flex-Zeile noch nicht: die Textspalte ist dort für
+       einen Moment schmal, und die Höhe, die dabei herauskommt, wäre das
+       Sechsfache der echten. */
+    requestAnimationFrame(() => requestAnimationFrame(() => this._capMeasure()));
+    try { if (document.fonts && document.fonts.ready && document.fonts.ready.then) document.fonts.ready.then(() => this._capMeasure()); } catch(e){}
+    this._capTimer = setTimeout(() => this._capMeasure(), 700);
+    this._capSync(0);
   }
+
+  /* Die Klapphöhe wird gemessen, nicht geschätzt. Der Text steht in jeder
+     Breite anders um, und ein pauschaler Deckel wäre in der einen Breite zu
+     knapp (abgeschnitten) und in der anderen zu grosszügig (die halbe
+     Dauer liefe über leere Fläche). */
+  _capMeasure(){
+    const panels = this._deepQ('[data-cap-panel]');
+    if (!panels.length) return;
+    /* EINE Höhe für alle fünf, nämlich die grösste. Jede Klappfläche auf ihr
+       eigenes Mass zu setzen wäre genauer und trotzdem falsch: die Kachel
+       änderte dann bei jedem Kapitelwechsel ihre Höhe, und beim Überfahren
+       zuckte die halbe Sektion. Der Preis sind ein paar Pixel Luft unter dem
+       kürzeren Text — die sieht niemand, das Springen sähe jeder. */
+    const h = Math.max.apply(null, panels.map(p => { const c = p.firstElementChild; return c ? Math.ceil(c.getBoundingClientRect().height) : 0; }));
+    if (h === this._capH) return;
+    this._capH = h;
+    this.setState({ capTick: (this.state.capTick || 0) + 1 });
+  }
+
+  _capPick(i){
+    if (i === this.state.capI) return;
+    this.setState({ capI: i });
+    this._capSync(i);
+  }
+
+  /* Der Verlauf gehört zum Kapitel, nicht zur Sektion: er wechselt die
+     Palette, ohne neu zu starten. 620 ms, weil die Fläche gross ist —
+     eine Fläche dieser Grösse in 200 ms umzufärben liest sich als
+     Bildschnitt, nicht als Wechsel. */
+  _capSync(i){
+    const host = this.capSgRef.current;
+    if (!host || !this._sg) return;
+    const s = this._sg.filter(x => x.host === host)[0];
+    if (s) s.setPreset(['capConnect','capGovern','capWork','capAudit','capReach'][i] || 'capConnect', 620);
+  }
+
+  _capDestroy(){
+    clearTimeout(this._capT);
+    clearTimeout(this._capTimer);
+    const acc = this._capAcc;
+    if (!acc) return;
+    acc.removeEventListener('pointerover', this._capOver);
+    acc.removeEventListener('click', this._capClick);
+    acc.removeEventListener('focusin', this._capFocus);
+    acc.removeEventListener('pointerleave', this._capLeave);
+    this._capAcc = null;
+  }
+
   renderVals(){
     const lang = this.state.lang || 'de';
     const t = {};
@@ -4026,20 +4554,39 @@ const mobP = this.state.mobPhase || 0;
     vm.mobShowChip = mobP >= 3;
     vm.mobShowThink2 = mobP === 4;
     vm.mobShowAnswer = mobP >= 5;
-vm.conn2StageRef = this.conn2StageRef;
-    vm.conn2CanvasRef = this.conn2CanvasRef;
-    vm.conn2HubRef = this.conn2HubRef;
-    if (t.conn2){
-      const c2top = ['8%','29%','50%','71%','92%'];
-      const c2right = ['6%','1%','0%','1%','6%'];
-      const c2n = t.conn2.nodes || [];
-      vm.conn2Nodes = c2n.map((label, i) => ({
-        label: label,
-        top: c2top[i] || '50%',
-        right: c2right[i] || '0%',
-        dot: (i === c2n.length - 1) ? '#F4C542' : '#A5D8E6'
-      }));
-      vm.conn2Groups = (t.conn2.groups || []).map((gp, i) => ({ label: gp.label, items: gp.items, mt: i === 0 ? '0px' : '15px' }));
+vm.capAccRef = this.capAccRef;
+    vm.capSgRef = this.capSgRef;
+    {
+      /* EIN Index, vier Anzeigen: Kapitel, Symbolleiste, Aufnahme, Brotkrume.
+         Vor der ersten Messung steht die offene Höhe auf `auto` — das ist
+         der einzige Zustand, den niemand sieht (componentDidMount misst vor
+         dem ersten Anstrich), und er ist immer noch besser als eine 0, die
+         den Text verschluckt. */
+      const ci = this.state.capI || 0;
+      for (let i = 0; i < 5; i++){
+        const on = i === ci;
+        const h = this._capH;
+        vm['cap' + i] = {
+          cls:  on ? ' is-on' : '',
+          rcls: on ? ' is-on' : '',
+          pcls: on ? ' is-on' : '',
+          exp:  on ? 'true' : 'false',
+          h:    on ? (h ? h + 'px' : 'auto') : '0px'
+        };
+      }
+      if (t.cap){
+        const cr = (t.cap.crumbs || [])[ci] || ['',''];
+        vm.capCrumbA = cr[0]; vm.capCrumbB = cr[1];
+        vm.capRoles  = (t.cap.m2.r || []).map((r, i) => ({ n: r[0], c: r[1], cls: i === 1 ? ' is-sel' : '' }));
+        vm.capGroups = (t.cap.m2.g || []).map((g, i) => ({ n: g[0], c: g[1], cls: i === 1 ? ' is-sel' : '' }));
+        vm.capPerms  = (t.cap.m2.p || []).map(p => ({
+          n: p[0], d: p[1], v: p[2],
+          pcls: p[3] ? 'is-ok' : 'is-no',
+          tcls: p[3] ? '' : ' is-off'
+        }));
+        vm.capSteps = t.cap.m3.steps || [];
+        vm.capLog = (t.cap.m4.rows || []).map(r => ({ t: r[0], u: r[1], a: r[2], v: r[3], cls: r[4] ? 'is-ok' : 'is-no' }));
+      }
     }
 vm.BRAND = this.BRAND;
     vm.olkStageRef = this.olkStageRef; vm.olkBodyRef = this.olkBodyRef;
