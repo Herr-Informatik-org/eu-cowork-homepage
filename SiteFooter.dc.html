@@ -63,8 +63,12 @@
   .euc-ft-badge-t{ font-family:var(--ft-body); font-size:14px; font-weight:600; color:#F7FAFC; line-height:1.2; }
   .euc-ft-badge-s{ font-family:var(--ft-body); font-size:12.5px; line-height:1.4; letter-spacing:.006em; color:#8AA0B6; margin-top:3px; }
 
+  /* Pfeil als Inline-SVG, nicht als Zeichen: U+2192 liegt ausserhalb der
+     unicode-range aller selbst gehosteten Schnitte und kam aus einer
+     Systemschrift, also mit fremder Strichstärke und Höhe. Gleiche Form wie
+     jeder Weiterführungs-Link der Startseite. */
   .euc-ft-more{
-    display:inline-flex; align-items:center; min-height:44px;
+    display:inline-flex; align-items:center; gap:8px; min-height:44px;
     font-family:var(--ft-body); font-size:13.5px; font-weight:500;
     text-decoration:none; color:#A5D8E6; transition:color 150ms ease;
   }
@@ -161,7 +165,7 @@
               <div class="euc-ft-badge-s">{{ badgeGdprSub }}</div>
             </div>
           </div>
-          <a href="/sicherheit" class="euc-ft-more">{{ moreSecurity }}</a>
+          <a href="/sicherheit" class="euc-ft-more"><span>{{ moreSecurity }}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
         </div>
         <div class="euc-ft-status">
           <span class="euc-ft-dot" aria-hidden="true"><i></i><b></b></span>
@@ -253,7 +257,7 @@ class Component extends DCLogic {
         impressum:'Impressum', datenschutz:'Datenschutz', agb:'AGB',
         badgeDeployTitle:'Überall betreibbar', badgeDeploySub:'Managed, eigene Cloud oder On-Prem',
         badgeGdprTitle:'DSGVO-konform', badgeGdprSub:'EU-Verarbeitung',
-        moreSecurity:'Mehr zur Sicherheit →', langTitle:'Sprache'
+        moreSecurity:'Mehr zur Sicherheit', langTitle:'Sprache'
       },
       en: {
         tagline:'Your AI coworker. Stays in Europe.',
@@ -267,7 +271,7 @@ class Component extends DCLogic {
         impressum:'Imprint', datenschutz:'Privacy', agb:'Terms (GTC)',
         badgeDeployTitle:'Deployable anywhere', badgeDeploySub:'Managed, own cloud or on-prem',
         badgeGdprTitle:'GDPR-compliant', badgeGdprSub:'EU deployment',
-        moreSecurity:'More about security →', langTitle:'Languages'
+        moreSecurity:'More about security', langTitle:'Languages'
       }
     }[lang];
     const columns = [
