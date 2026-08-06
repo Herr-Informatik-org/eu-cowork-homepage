@@ -3,31 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Warteliste: frühen Zugang sichern | EU-Cowork</title>
-<meta name="description" content="EU-Cowork ist im Aufbau. Tragen Sie sich in die Warteliste ein; frühe Interessenten erhalten Vortritt beim Zugang zur gehosteten Schweizer Instanz.">
+<title>Warteliste: frühen Zugang sichern | EU Cowork AI</title>
+<meta name="description" content="EU Cowork AI ist im Aufbau. Tragen Sie sich in die Warteliste ein; frühe Interessenten erhalten Vortritt beim Zugang zur gehosteten Schweizer Instanz.">
 <link rel="canonical" href="https://eucowork.ai/warteliste">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://eucowork.ai/warteliste">
-<meta property="og:title" content="Warteliste: frühen Zugang sichern | EU-Cowork">
-<meta property="og:description" content="EU-Cowork ist im Aufbau. Tragen Sie sich ein; frühe Interessenten erhalten Vortritt.">
+<meta property="og:title" content="Warteliste: frühen Zugang sichern | EU Cowork AI">
+<meta property="og:description" content="EU Cowork AI ist im Aufbau. Tragen Sie sich ein; frühe Interessenten erhalten Vortritt.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Warteliste: frühen Zugang sichern | EU-Cowork">
-<meta name="twitter:description" content="EU-Cowork ist im Aufbau. Frühe Interessenten erhalten Vortritt.">
+<meta name="twitter:title" content="Warteliste: frühen Zugang sichern | EU Cowork AI">
+<meta name="twitter:description" content="EU Cowork AI ist im Aufbau. Frühe Interessenten erhalten Vortritt.">
 <meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="./support.js"></script>
 </head>
 <body>
 <noscript>
   <h1>Sichern Sie sich frühen Zugang.</h1>
-  <p>EU-Cowork ist im Aufbau. Tragen Sie sich ein: wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.</p>
+  <p>EU Cowork AI ist im Aufbau. Tragen Sie sich ein: wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.</p>
   <h2>Was Sie erhalten</h2>
   <ul>
     <li>Bevorzugter Zugang zur geschlossenen Beta</li>
@@ -39,25 +41,180 @@
   <ul>
     <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
     <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
-    <li><a href="/">Startseite: EU-Cowork im Überblick</a></li>
+    <li><a href="/">Startseite: EU Cowork AI im Überblick</a></li>
   </ul>
 </noscript>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
+<style>
+  /* ---- Design v2, Warteliste --------------------------------------------
+     Tokens identisch zu assets/content.css. Die Formularzustände liegen in
+     Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
+     und :active (Inline-Stile schlagen jede Regel). ---------------------- */
+  :root{
+    --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
+    --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
+    --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
+    --c-line:#E7ECF0; --c-line-soft:#EEF1F4; --c-line-field:#D8DEE4;
+    --wl-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    --wl-ease:cubic-bezier(.23,1,.32,1);
+    --sh-2:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18);
+    --sh-3:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18), 0 24px 48px -28px rgba(11,30,51,.22);
+    --sh-4:0 2px 4px rgba(11,30,51,.06), 0 14px 30px -14px rgba(11,30,51,.26), 0 40px 72px -34px rgba(11,30,51,.30);
+    --edge:inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
+  }
   *{ box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
-  body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
-  a{ color:#0E3A63; } a:hover{ color:#0B1E33; }
-  ::selection{ background:#A5D8E6; color:#0B1E33; }
-  input::placeholder, textarea::placeholder{ color:#9AA5B1; }
-  @keyframes euc-aurora1{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-6%,4%) scale(1.14); } }
-  @keyframes euc-aurora2{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(7%,-5%) scale(1.1); } }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--c-bg); color:var(--c-body);
+    font-family:var(--wl-body);
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+  a{ color:var(--c-eu-700); text-underline-offset:2px; transition:color .15s ease; }
+  ::selection{ background:var(--c-ice-300); color:var(--c-deep); }
+  input::placeholder, textarea::placeholder{ color:var(--c-muted); }
+  h1{ text-wrap:balance; overflow-wrap:break-word; }
+  p{ text-wrap:pretty; }
+  :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:6px; }
+
+  /* Die Bühne trägt Farbe, aber keine Dauerschleife: Sektionshintergründe
+     werden in v2 nicht animiert. */
   @keyframes euc-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
-  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+
+  .wl-card{
+    border:0; border-radius:24px; background:var(--c-surface);
+    box-shadow:var(--sh-4), var(--edge); overflow:hidden;
+  }
+
+  /* --- Eingaben: Fokus in Europa-Blau, 48px hoch --- */
+  .wl-field{
+    width:100%; box-sizing:border-box; min-height:48px;
+    font-family:var(--wl-body); font-size:15px; color:var(--c-ink);
+    background:var(--c-surface); border:1px solid var(--c-line-field);
+    border-radius:10px; padding:13px 14px; outline:none;
+    transition:border-color 150ms ease, box-shadow 150ms ease;
+  }
+  .wl-field:focus, .wl-field:focus-visible{
+    border-color:var(--c-eu-700);
+    box-shadow:0 0 0 3px rgba(18,50,107,.16);
+    outline:none;
+  }
+  .wl-select{ cursor:pointer; }
+  .wl-textarea{ line-height:1.5; resize:vertical; }
+
+  /* --- Auswahl-Chips --- */
+  .wl-chip{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; padding:10px 16px; border-radius:10px; cursor:pointer;
+    font-family:var(--wl-body); font-size:14px; font-weight:500;
+    color:#33404D; background:var(--c-surface); border:1px solid var(--c-line-field);
+    transition:transform 140ms var(--wl-ease), border-color 150ms ease,
+               background 150ms ease, color 150ms ease;
+  }
+  .wl-chip-s{ font-size:13.5px; padding:10px 12px; }
+  .wl-chip.is-on{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); }
+  .wl-chip:active{ transform:scale(.97); }
+
+  /* --- Anti-Bot-Schalter --- */
+  .wl-verify{
+    width:100%; display:flex; align-items:center; gap:12px; margin-top:18px;
+    min-height:56px; background:var(--c-deep); border:1px solid var(--c-deep);
+    border-radius:11px; padding:14px 16px; cursor:pointer; text-align:left;
+    transition:transform 140ms var(--wl-ease), background 150ms ease;
+  }
+  .wl-verify:active{ transform:scale(.985); }
+  .wl-verify:focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; }
+
+  /* --- Zustimmung: 20px sichtbar, 44px Trefferfläche --- */
+  .wl-consent-box{
+    position:relative; flex:0 0 auto; margin-top:1px;
+    width:20px; height:20px; border-radius:6px;
+    border:1.5px solid #C4CBD3; background:var(--c-surface);
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:background 150ms ease, border-color 150ms ease, transform 140ms var(--wl-ease);
+  }
+  .wl-consent-box::before{ content:''; position:absolute; inset:-12px; border-radius:12px; }
+  .wl-consent-box:active{ transform:scale(.92); }
+
+  /* --- Absenden --- */
+  .wl-submit{
+    width:100%; margin-top:22px; min-height:52px;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--wl-body); font-size:15.5px; font-weight:600;
+    color:#F7FAFC; background:var(--c-deep); border:0; border-radius:11px;
+    padding:15px; cursor:pointer;
+    box-shadow:var(--sh-2), inset 0 1px 0 rgba(255,255,255,.10);
+    transition:transform 200ms var(--wl-ease), background 200ms var(--wl-ease),
+               box-shadow 200ms var(--wl-ease);
+  }
+  .wl-submit:active{ transform:scale(.985); }
+
+  /* --- Erfolgsansicht --- */
+  .wl-btn, .wl-btn2{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; padding:12px 18px; border-radius:10px;
+    font-family:var(--wl-body); font-size:14.5px; text-decoration:none;
+    cursor:pointer;
+    transition:transform 140ms var(--wl-ease), background 150ms ease, box-shadow 150ms ease;
+  }
+  .wl-btn{ font-weight:600; color:#F7FAFC; background:var(--c-deep); border:0;
+           box-shadow:var(--sh-2), inset 0 1px 0 rgba(255,255,255,.10); }
+  .wl-btn2{ font-weight:500; color:var(--c-ink); background:var(--c-surface); border:0;
+            box-shadow:0 1px 2px rgba(11,30,51,.05), var(--edge); }
+  .wl-btn:active, .wl-btn2:active{ transform:scale(.97); }
+
+  @media (hover:hover) and (pointer:fine){
+    a:hover{ color:var(--c-ink); }
+    .wl-field:hover{ border-color:#BFC8D2; }
+    .wl-chip:hover{ border-color:var(--c-eu-700); }
+    .wl-chip.is-on:hover{ background:#123456; border-color:#123456; }
+    .wl-verify:hover{ background:#123456; }
+    .wl-submit:hover{ background:#123456; transform:translateY(-2px); box-shadow:var(--sh-3), inset 0 1px 0 rgba(255,255,255,.10); }
+    .wl-btn:hover{ background:#123456; }
+    .wl-btn2:hover{ box-shadow:var(--sh-2), var(--edge); }
+  }
+
+  /* Der Formular→Erfolg-Wechsel ist der seltenste und einzige emotional
+     aufgeladene Moment der Seite — hier liegt das Delight-Budget. sc-if hängt
+     den Knoten neu ein, damit greift @starting-style. */
+  .wl-done{
+    opacity:1; transform:none;
+    transition:opacity 300ms var(--wl-ease), transform 380ms var(--wl-ease);
+  }
+  @starting-style{ .wl-done{ opacity:0; transform:translateY(10px) scale(.985); } }
+
+  /* Der Haken ist der Moment: das einzige Überschwingen der ganzen Seite. */
+  .wl-done-check{
+    opacity:1; transform:none;
+    transition:transform 420ms cubic-bezier(.34,1.56,.64,1) 140ms,
+               opacity   220ms linear 140ms;
+  }
+  @starting-style{ .wl-done-check{ opacity:0; transform:scale(.82); } }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    html{ scroll-behavior:auto; }
+    .wl-submit:hover{ transform:none; }
+    .wl-done,
+    .wl-done-check{ transition:opacity 200ms linear !important; transform:none !important; }
+    @starting-style{
+      .wl-done{ opacity:0; transform:none; }
+      .wl-done-check{ opacity:0; transform:none; }
+    }
+  }
 </style>
 </helmet>
 <div id="top">
@@ -65,26 +222,26 @@
   <main>
     <section style="position:relative; overflow:hidden; padding:clamp(120px,14vw,164px) clamp(20px,5vw,80px) clamp(72px,9vw,112px);">
       <div aria-hidden="true" style="position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; opacity:.5;">
-        <div style="position:absolute; top:-16%; right:-6%; width:60%; height:80%; background:radial-gradient(closest-side, rgba(165,216,230,.95), rgba(165,216,230,0)); filter:blur(74px); animation:euc-aurora1 24s ease-in-out infinite;"></div>
-        <div style="position:absolute; bottom:-24%; left:-10%; width:56%; height:78%; background:radial-gradient(closest-side, rgba(214,237,245,.98), rgba(214,237,245,0)); filter:blur(86px); animation:euc-aurora2 30s ease-in-out infinite;"></div>
+        <div style="position:absolute; top:-16%; right:-6%; width:60%; height:80%; background:radial-gradient(closest-side, rgba(165,216,230,.95), rgba(165,216,230,0)); filter:blur(74px);"></div>
+        <div style="position:absolute; bottom:-24%; left:-10%; width:56%; height:78%; background:radial-gradient(closest-side, rgba(214,237,245,.98), rgba(214,237,245,0)); filter:blur(86px);"></div>
       </div>
 
       <div style="position:relative; z-index:1; max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px); align-items:flex-start;">
         <div style="flex:1 1 380px; min-width:0; max-width:480px;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:#3E6E86;">{{ t.eyebrow }}</div>
-          <div style="display:inline-flex; align-items:center; gap:9px; margin-top:18px; padding:6px 13px; border:1px solid #CBE4EE; background:#EAF4F8; border-radius:99px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:#2E6C86;">{{ t.eyebrow }}</div>
+          <div style="display:inline-flex; align-items:center; gap:9px; margin-top:18px; padding:7px 13px; border:0; background:#EAF4F8; border-radius:99px; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.18);">
             <span style="position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-pulse 2.4s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
             <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2E6C86;">{{ t.pill }}</span>
           </div>
-          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(34px,5.2vw,58px); line-height:1.04; letter-spacing:-0.03em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
-          <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18px); line-height:1.6; color:#47535F; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.sub }}</p>
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(40px,5.2vw,58px); line-height:1.02; letter-spacing:-0.035em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
+          <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.sub }}</p>
 
           <div style="margin-top:30px; display:flex; flex-direction:column; gap:13px;">
             <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7D93AB;">{{ t.benefitsTitle }}</div>
             <sc-for list="{{ t.benefits }}" as="b" hint-placeholder-count="3">
               <div style="display:flex; align-items:flex-start; gap:11px;">
-                <span style="flex:0 0 auto; margin-top:1px; width:22px; height:22px; border-radius:7px; background:#EAF3F7; border:1px solid #D6EDF5; display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E6C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                <span style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.45; color:#33404D;">{{ b }}</span>
+                <span style="flex:0 0 auto; margin-top:1px; width:22px; height:22px; border-radius:7px; background:#EAF3F7; border:0; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.16); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E6C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <span style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.5; color:#33404D;">{{ b }}</span>
               </div>
             </sc-for>
           </div>
@@ -96,39 +253,39 @@
               <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#F4C542,#0B1E33);"></span>
               <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#7DBBA0,#123456);"></span>
             </div>
-            <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.4; color:#5A6472;">{{ t.trust }}</span>
+            <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.45; letter-spacing:.006em; color:#5A6472;">{{ t.trust }}</span>
           </div>
         </div>
 
         <div style="flex:1 1 440px; min-width:0;">
-          <div style="border:1px solid #E2E7EC; border-radius:18px; background:#fff; box-shadow:0 26px 64px -30px rgba(11,30,51,.28), 0 2px 6px rgba(11,30,51,.05); overflow:hidden;">
+          <div class="wl-card">
 
             <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
               <div style="padding:clamp(24px,3vw,34px);">
-                <div style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:600; color:#0B1E33; letter-spacing:-.01em;">{{ t.formTitle }}</div>
+                <div style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:600; color:#0B1E33; letter-spacing:-.018em;">{{ t.formTitle }}</div>
 
                 <div style="margin-top:20px;">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.email }}</span><span style="color:#B4472F;">*</span></div>
-                  <input type="email" inputmode="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.email }}</span><span style="color:#B4472F;">*</span></div>
+                  <input type="email" inputmode="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}" class="wl-field">
                   <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:6px;">{{ eEmail }}</div></sc-if>
                 </div>
 
                 <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
                   <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.name }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                    <input type="text" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ t.labels.namePh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.name }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                    <input type="text" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ t.labels.namePh }}" class="wl-field">
                   </div>
                   <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.company }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                    <input type="text" value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.company }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                    <input type="text" value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" class="wl-field">
                   </div>
                 </div>
 
                 <div style="margin-top:16px;">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:9px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.users }}</span><span style="color:#B4472F;">*</span></div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:9px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.users }}</span><span style="color:#B4472F;">*</span></div>
                   <div style="display:flex; flex-wrap:wrap; gap:8px;">
                     <sc-for list="{{ userChips }}" as="c" hint-placeholder-count="5">
-                      <button onClick="{{ c.onClick }}" type="button" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; cursor:pointer; padding:9px 15px; border-radius:9px; border:1px solid {{ c.border }}; background:{{ c.bg }}; color:{{ c.fg }}; transition:border-color .15s ease, background .15s ease;">{{ c.label }}</button>
+                      <button onClick="{{ c.onClick }}" type="button" class="wl-chip {{ c.cls }}">{{ c.label }}</button>
                     </sc-for>
                   </div>
                   <sc-if value="{{ eUsers }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eUsers }}</div></sc-if>
@@ -136,8 +293,8 @@
 
                 <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
                   <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.region }}</span><span style="color:#B4472F;">*</span></div>
-                    <select value="{{ region }}" onChange="{{ onRegion }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; cursor:pointer; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.region }}</span><span style="color:#B4472F;">*</span></div>
+                    <select value="{{ region }}" onChange="{{ onRegion }}" class="wl-field wl-select">
                       <option value="">{{ t.labels.regionPh }}</option>
                       <sc-for list="{{ t.regionOptions }}" as="r" hint-placeholder-count="6">
                         <option value="{{ r }}">{{ r }}</option>
@@ -146,21 +303,21 @@
                     <sc-if value="{{ eRegion }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:6px;">{{ eRegion }}</div></sc-if>
                   </div>
                   <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.interest }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.interest }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
                     <div style="display:flex; flex-wrap:wrap; gap:8px;">
                       <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
-                        <button onClick="{{ c.onClick }}" type="button" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:500; cursor:pointer; padding:9px 13px; border-radius:9px; border:1px solid {{ c.border }}; background:{{ c.bg }}; color:{{ c.fg }}; transition:border-color .15s ease, background .15s ease;">{{ c.label }}</button>
+                        <button onClick="{{ c.onClick }}" type="button" class="wl-chip wl-chip-s {{ c.cls }}">{{ c.label }}</button>
                       </sc-for>
                     </div>
                   </div>
                 </div>
 
                 <div style="margin-top:16px;">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#66727F;">{{ t.labels.usecase }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                  <textarea rows="2" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" style="width:100%; box-sizing:border-box; font-family:'Inter',sans-serif; font-size:15px; line-height:1.5; color:#0B1E33; background:#fff; border:1px solid #D8DEE4; border-radius:10px; padding:12px 14px; outline:none; resize:vertical; transition:border-color .15s ease, box-shadow .15s ease;" style-focus="border-color:#0B1E33; box-shadow:0 0 0 3px rgba(11,30,51,.08);"></textarea>
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.usecase }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
+                  <textarea rows="2" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" class="wl-field wl-textarea"></textarea>
                 </div>
 
-                <button onClick="{{ onVerify }}" type="button" style="width:100%; display:flex; align-items:center; gap:12px; margin-top:18px; background:#0B1E33; border:1px solid #0B1E33; border-radius:11px; padding:14px 16px; cursor:pointer; text-align:left;">
+                <button onClick="{{ onVerify }}" type="button" class="wl-verify">
                   <span style="flex:0 0 auto; width:22px; height:22px; border-radius:6px; border:1.5px solid {{ verifyBoxBorder }}; background:{{ verifyBoxBg }}; display:inline-flex; align-items:center; justify-content:center; transition:background .2s ease, border-color .2s ease;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" style="opacity:{{ verifyIconOpacity }}; transition:opacity .2s ease;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#0B1E33" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
                   <span style="flex:1; font-family:'Inter',sans-serif; font-size:14px; color:#E6EEF4;">{{ verifyLabel }}</span>
                   <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.1em; color:#7D93AB;">ANTI-BOT</span>
@@ -168,33 +325,33 @@
                 <sc-if value="{{ eVerify }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eVerify }}</div></sc-if>
 
                 <label style="display:flex; align-items:flex-start; gap:11px; margin-top:18px; cursor:pointer;">
-                  <button onClick="{{ onToggleConsent }}" type="button" role="checkbox" aria-checked="{{ consent }}" style="flex:0 0 auto; margin-top:1px; width:20px; height:20px; border-radius:6px; border:1.5px solid {{ consentBorder }}; background:{{ consentBg }}; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s ease, border-color .15s ease;"><svg width="11" height="11" viewBox="0 0 14 14" fill="none" style="opacity:{{ consentIconOpacity }};"><path d="M3 7.4 L5.8 10 L11 4" stroke="#F7FAFC" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-                  <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.5; color:#556170;">{{ t.labels.consent }} <a href="/datenschutz" style="color:#0E3A63; text-decoration:underline;">{{ t.labels.consentLink }}</a>{{ t.labels.consentEnd }}</span>
+                  <button onClick="{{ onToggleConsent }}" type="button" role="checkbox" aria-checked="{{ consent }}" class="wl-consent-box" style="border-color:{{ consentBorder }}; background:{{ consentBg }};"><svg width="11" height="11" viewBox="0 0 14 14" fill="none" style="opacity:{{ consentIconOpacity }};"><path d="M3 7.4 L5.8 10 L11 4" stroke="#F7FAFC" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                  <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.5; color:#556170;">{{ t.labels.consent }} <a href="/datenschutz" style="color:#12326B; text-decoration:underline;">{{ t.labels.consentLink }}</a>{{ t.labels.consentEnd }}</span>
                 </label>
                 <sc-if value="{{ eConsent }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eConsent }}</div></sc-if>
 
-                <button onClick="{{ onSubmit }}" type="button" style="width:100%; margin-top:22px; font-family:'Inter',sans-serif; font-size:15.5px; font-weight:600; color:#F7FAFC; background:#0B1E33; border:0; border-radius:11px; padding:15px; cursor:pointer; box-shadow:0 1px 2px rgba(11,30,51,.14); transition:background .15s ease, transform .15s ease;" style-hover="background:#123456; transform:translateY(-1px);">{{ t.labels.submit }}</button>
-                <div style="font-family:'Inter',sans-serif; font-size:12px; line-height:1.5; color:#8A96A2; margin-top:14px; text-align:center;">{{ t.labels.footnote }}</div>
+                <button onClick="{{ onSubmit }}" type="button" class="wl-submit">{{ t.labels.submit }}</button>
+                <div style="font-family:'Inter',sans-serif; font-size:12px; line-height:1.5; letter-spacing:.006em; color:#5A6472; margin-top:14px; text-align:center;">{{ t.labels.footnote }}</div>
               </div>
             </sc-if>
 
             <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
-              <div style="padding:clamp(30px,4vw,44px); text-align:center;">
-                <div style="width:60px; height:60px; margin:0 auto; border-radius:50%; background:#EAF3F7; border:1px solid #D6EDF5; display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+              <div class="wl-done" style="padding:clamp(30px,4vw,44px); text-align:center;">
+                <div class="wl-done-check" style="width:60px; height:60px; margin:0 auto; border-radius:50%; background:#EAF3F7; border:0; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.16); display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
                 <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em; margin-top:20px;">{{ t.success.title }}</div>
                 <p style="font-family:'Inter',sans-serif; font-size:15.5px; line-height:1.6; color:#556170; margin:12px auto 0; max-width:360px;">{{ t.success.body }}</p>
 
-                <div style="margin-top:26px; text-align:left; border:1px solid #E4E8EC; border-radius:12px; background:#F7FAFC; overflow:hidden;">
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#7D93AB; padding:13px 16px 0;">{{ t.success.recapTitle }}</div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:11px 16px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.emailLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36; word-break:break-all;">{{ savedEmail }}</span></div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.usersLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedUsers }}</span></div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.regionLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedRegion }}</span></div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 13px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#8A96A2;">{{ t.success.interestLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedInterest }}</span></div>
+                <div style="margin-top:26px; text-align:left; border:0; border-radius:16px; background:#F5F8FA; box-shadow:0 1px 2px rgba(11,30,51,.05), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06); overflow:hidden;">
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#5A6472; padding:13px 16px 0;">{{ t.success.recapTitle }}</div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:11px 16px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.emailLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36; word-break:break-all;">{{ savedEmail }}</span></div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.usersLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedUsers }}</span></div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.regionLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedRegion }}</span></div>
+                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 13px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.interestLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedInterest }}</span></div>
                 </div>
 
                 <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:24px;">
-                  <a href="/" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:12px 18px; border-radius:10px;">{{ t.success.homeBtn }}</a>
-                  <button onClick="{{ onReset }}" type="button" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500; cursor:pointer; color:#0B1E33; background:transparent; border:1px solid #D3DAE1; padding:12px 18px; border-radius:10px;">{{ t.success.editBtn }}</button>
+                  <a href="/" class="wl-btn">{{ t.success.homeBtn }}</a>
+                  <button onClick="{{ onReset }}" type="button" class="wl-btn2">{{ t.success.editBtn }}</button>
                 </div>
               </div>
             </sc-if>
@@ -226,14 +383,14 @@ class Component extends DCLogic {
         eyebrow:'// Early Access',
         pill:'Early Access offen',
         h1:'Sichern Sie sich frühen Zugang.',
-        sub:'EU-Cowork ist im Aufbau. Tragen Sie sich ein — wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.',
+        sub:'EU Cowork AI ist im Aufbau. Tragen Sie sich ein — wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.',
         benefitsTitle:'Was Sie erhalten',
         benefits:['Bevorzugter Zugang zur geschlossenen Beta','Mitreden bei Funktionen & Roadmap','Kein Spam — jederzeit abbestellbar'],
         trust:'Plätze werden nach Reihenfolge und Fit vergeben.',
         formTitle:'Auf die Warteliste',
         labels:{ email:'E-Mail-Adresse', emailPh:'name@firma.ch', name:'Name', namePh:'Vor- und Nachname', company:'Firma / Organisation', companyPh:'Firmenname', optional:'optional',
           users:'Potenzielle Nutzer', region:'Region', regionPh:'Bitte wählen …', interest:'Interesse an',
-          usecase:'Wofür möchten Sie EU-Cowork einsetzen?', usecasePh:'Kurz in ein, zwei Sätzen (optional)',
+          usecase:'Wofür möchten Sie EU Cowork AI einsetzen?', usecasePh:'Kurz in ein, zwei Sätzen (optional)',
           verify:'Zum Bestätigen klicken', verified:'Bestätigt — danke!',
           consent:'Ich akzeptiere die', consentLink:'Datenschutzerklärung', consentEnd:'.',
           submit:'Auf die Warteliste', footnote:'Kein Spam. Wir nutzen Ihre Angaben nur, um Sie über den Zugang zu informieren.' },
@@ -248,14 +405,14 @@ class Component extends DCLogic {
         eyebrow:'// Early Access',
         pill:'Early access open',
         h1:'Get early access.',
-        sub:'EU-Cowork is in the making. Add yourself — we want to understand who’s interested, and we give early sign-ups priority.',
+        sub:'EU Cowork AI is in the making. Add yourself — we want to understand who’s interested, and we give early sign-ups priority.',
         benefitsTitle:'What you get',
         benefits:['Priority access to the closed beta','A say in features & roadmap','No spam — unsubscribe anytime'],
         trust:'Places are allocated by order and fit.',
         formTitle:'Join the waitlist',
         labels:{ email:'Email address', emailPh:'name@company.com', name:'Name', namePh:'First and last name', company:'Company / organisation', companyPh:'Company name', optional:'optional',
           users:'Potential users', region:'Region', regionPh:'Please choose …', interest:'Interested in',
-          usecase:'What would you use EU-Cowork for?', usecasePh:'Briefly, a sentence or two (optional)',
+          usecase:'What would you use EU Cowork AI for?', usecasePh:'Briefly, a sentence or two (optional)',
           verify:'Click to verify', verified:'Verified — thanks!',
           consent:'I accept the', consentLink:'privacy policy', consentEnd:'.',
           submit:'Join the waitlist', footnote:'No spam. We only use your details to tell you about access.' },
@@ -315,9 +472,8 @@ class Component extends DCLogic {
   }
   renderVals(){
     const c = this._copy();
-    const selBg='#0B1E33', selFg='#F7FAFC', selBorder='#0B1E33', offBg='#fff', offFg='#33404D', offBorder='#D8DEE4';
-    const userChips = c.userOptions.map(v => { const on = this.state.users===v; return { label:v, value:v, bg:on?selBg:offBg, fg:on?selFg:offFg, border:on?selBorder:offBorder, onClick:()=>this.setUsers(v) }; });
-    const interestChips = c.interestOptions.map(o => { const on = this.state.interest===o.value; return { label:o.label, value:o.value, bg:on?selBg:offBg, fg:on?selFg:offFg, border:on?selBorder:offBorder, onClick:()=>this.setInterest(o.value) }; });
+    const userChips = c.userOptions.map(v => { const on = this.state.users===v; return { label:v, value:v, cls:on?'is-on':'', onClick:()=>this.setUsers(v) }; });
+    const interestChips = c.interestOptions.map(o => { const on = this.state.interest===o.value; return { label:o.label, value:o.value, cls:on?'is-on':'', onClick:()=>this.setInterest(o.value) }; });
     return {
       t: c,
       notSubmitted: !this.state.submitted,
@@ -350,7 +506,7 @@ class Component extends DCLogic {
   "inLanguage": "de-CH",
   "isPartOf": { "@id": "https://eucowork.ai/#website" },
   "about": { "@id": "https://eucowork.ai/#software" },
-  "description": "EU-Cowork ist im Aufbau. Wer sich einträgt, erhält bevorzugten Zugang zur geschlossenen Beta, kann bei Funktionen und Roadmap mitreden und wird ausschliesslich über den Zugang informiert; kein Spam, jederzeit abbestellbar. Plätze werden nach Reihenfolge und Fit vergeben. Abgefragt werden E-Mail-Adresse, potenzielle Nutzerzahl, Region und das Interesse an Schweizer Hosting, Self-Hosting oder beidem.",
+  "description": "EU Cowork AI ist im Aufbau. Wer sich einträgt, erhält bevorzugten Zugang zur geschlossenen Beta, kann bei Funktionen und Roadmap mitreden und wird ausschliesslich über den Zugang informiert; kein Spam, jederzeit abbestellbar. Plätze werden nach Reihenfolge und Fit vergeben. Abgefragt werden E-Mail-Adresse, potenzielle Nutzerzahl, Region und das Interesse an Schweizer Hosting, Self-Hosting oder beidem.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [

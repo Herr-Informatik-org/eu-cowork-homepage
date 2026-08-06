@@ -8,27 +8,137 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
+<style>
+  /* ---- Design v2, Fussleiste -------------------------------------------
+     Gleiche Tokens und Materialkanten wie assets/content.css. Darstellung
+     in Klassen statt inline, damit :hover und :focus-visible greifen. ---- */
   @keyframes euc-pulse { 0%{ transform:scale(1); opacity:1; } 70%{ transform:scale(2.6); opacity:0; } 100%{ transform:scale(2.6); opacity:0; } }
+
+  .euc-ft{
+    --ft-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    --ft-disp:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --ft-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+    --ft-edge:inset 0 1px 0 rgba(165,216,230,.14), inset 0 0 0 1px rgba(165,216,230,.14);
+    background:#0B1E33; color:#F7FAFC;
+    padding:clamp(64px,8vw,104px) clamp(20px,5vw,80px) 32px;
+  }
+  .euc-ft-inner{ max-width:1200px; margin:0 auto; }
+  .euc-ft-top{ display:flex; flex-wrap:wrap; gap:64px 56px; justify-content:space-between; }
+
+  .euc-ft-brandcol{ flex:1 1 300px; max-width:360px; }
+  .euc-ft-brand{ display:flex; align-items:center; gap:11px; }
+  .euc-ft-word{
+    font-family:var(--ft-disp); font-weight:600; font-size:19px;
+    letter-spacing:-0.02em; color:#F7FAFC;
+  }
+  /* Auf Navy trägt Europa-Blau keinen Kontrast: dort steht „AI" in Eisblau. */
+  .euc-ft-ai{ color:#A5D8E6; font-style:normal; }
+
+  .euc-ft-tagline{
+    font-family:var(--ft-disp); font-weight:400; font-size:17px;
+    line-height:1.4; letter-spacing:-0.014em; color:#C4D0DD;
+    margin:18px 0 0; max-width:280px;
+  }
+
+  .euc-ft-badges{ display:flex; flex-direction:column; gap:15px; margin-top:32px; }
+  .euc-ft-badge{ display:flex; align-items:center; gap:13px; }
+  .euc-ft-badge-ico{
+    flex:0 0 auto; width:40px; height:40px; border-radius:50%;
+    background:rgba(165,216,230,.10); border:0; box-shadow:var(--ft-edge);
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .euc-ft-badge img{ flex:0 0 auto; width:40px; height:40px; border-radius:50%; display:block; }
+  .euc-ft-badge-t{ font-family:var(--ft-body); font-size:14px; font-weight:600; color:#F7FAFC; line-height:1.2; }
+  .euc-ft-badge-s{ font-family:var(--ft-body); font-size:12.5px; line-height:1.4; letter-spacing:.006em; color:#8AA0B6; margin-top:3px; }
+
+  .euc-ft-more{
+    display:inline-flex; align-items:center; min-height:44px;
+    font-family:var(--ft-body); font-size:13.5px; font-weight:500;
+    text-decoration:none; color:#A5D8E6; transition:color 150ms ease;
+  }
+
+  .euc-ft-status{
+    display:inline-flex; align-items:center; gap:9px; margin-top:20px;
+    padding:8px 13px; border:0; box-shadow:var(--ft-edge); border-radius:999px;
+  }
+  .euc-ft-dot{ position:relative; display:inline-flex; width:8px; height:8px; }
+  .euc-ft-dot i{ position:absolute; inset:0; border-radius:50%; background:#7DE0B0; opacity:.55; animation:euc-pulse 2.4s ease-out infinite; }
+  .euc-ft-dot b{ position:relative; width:8px; height:8px; border-radius:50%; background:#7DE0B0; }
+  .euc-ft-status span{ font-family:var(--ft-mono); font-size:12px; letter-spacing:.04em; color:#C4D0DD; }
+  .euc-ft-status .euc-ft-sep{ color:#7D93AB; }
+  .euc-ft-status .euc-ft-clock{ color:#8AA0B6; font-variant-numeric:tabular-nums; }
+
+  .euc-ft-cols{ display:flex; flex-wrap:wrap; gap:44px 56px; }
+  .euc-ft-col{ min-width:150px; }
+  .euc-ft-coltitle{
+    font-family:var(--ft-mono); font-size:11.5px; font-weight:400; line-height:1.2;
+    letter-spacing:.13em; text-transform:uppercase; color:#7D93AB; margin:0;
+  }
+  .euc-ft-col nav{ display:flex; flex-direction:column; gap:2px; margin-top:12px; align-items:flex-start; }
+  .euc-ft-col nav a, .euc-ft-col nav button{
+    display:flex; align-items:center; min-height:44px;
+    font-family:var(--ft-body); font-size:14.5px; text-align:left;
+    text-decoration:none; color:#C4D0DD;
+    background:none; border:0; padding:0; cursor:pointer;
+    transition:color 150ms ease;
+  }
+  .euc-ft-col nav button.is-current{ color:#F7FAFC; }
+
+  .euc-ft-rule{ height:1px; background:rgba(165,216,230,.16); margin:44px 0 24px; }
+  .euc-ft-bottom{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px; }
+  .euc-ft-bottom-l{ display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+  .euc-ft-rights{ font-family:var(--ft-body); font-size:13px; line-height:1.45; letter-spacing:.006em; color:#8AA0B6; }
+  .euc-ft-built{ font-family:var(--ft-mono); font-size:12px; letter-spacing:.06em; color:#7D93AB; }
+
+  .euc-ft :focus-visible{ outline:2px solid #A5D8E6; outline-offset:3px; border-radius:6px; }
+
+  @media (hover:hover) and (pointer:fine){
+    .euc-ft-col nav a:hover, .euc-ft-col nav button:hover{ color:#A5D8E6; }
+    .euc-ft-more:hover{ color:#C9E9F2; }
+  }
+
+  @media (max-width:600px){
+    .euc-ft-top{ gap:44px; }
+    .euc-ft-cols{ gap:32px 44px; }
+    .euc-ft-col{ min-width:132px; }
+  }
+  @media (max-width:380px){
+    .euc-ft-col{ min-width:100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .euc-ft-dot i{ animation:none; opacity:.35; }
+  }
 </style>
 </helmet>
-<footer style="background:#0B1E33; color:#F7FAFC; padding:clamp(56px,7vw,96px) clamp(20px,5vw,80px) 34px;">
-  <div style="max-width:1200px; margin:0 auto;">
-    <div style="display:flex; flex-wrap:wrap; gap:48px 56px; justify-content:space-between;">
+<footer class="euc-ft">
+  <div class="euc-ft-inner">
+    <div class="euc-ft-top">
 
-      <div style="flex:1 1 300px; max-width:360px;">
-        <div style="display:flex; align-items:center; gap:11px;">
+      <div class="euc-ft-brandcol">
+        <div class="euc-ft-brand">
           <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
             <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
             <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
           </svg>
-          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#F7FAFC;">{{ brand }}</span>
+          <span class="euc-ft-word">{{ brandMain }} <span class="euc-ft-ai">{{ brandAi }}</span></span>
         </div>
-        <p style="font-family:'Space Grotesk',sans-serif; font-weight:300; font-size:17px; line-height:1.4; color:#C4D0DD; margin:18px 0 0; max-width:280px;">{{ tagline }}</p>
-        <div style="display:flex; flex-direction:column; gap:15px; margin-top:26px;">
-          <div style="display:flex; align-items:center; gap:13px;">
-            <span style="flex:0 0 auto; width:40px; height:40px; border-radius:50%; background:rgba(165,216,230,0.10); border:1px solid rgba(165,216,230,0.22); display:inline-flex; align-items:center; justify-content:center;">
+        <p class="euc-ft-tagline">{{ tagline }}</p>
+        <div class="euc-ft-badges">
+          <div class="euc-ft-badge">
+            <span class="euc-ft-badge-ico">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
                 <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
@@ -37,53 +147,54 @@
               </svg>
             </span>
             <div>
-              <div style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#F7FAFC; line-height:1.2;">{{ badgeDeployTitle }}</div>
-              <div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#8AA0B6; margin-top:3px;">{{ badgeDeploySub }}</div>
+              <div class="euc-ft-badge-t">{{ badgeDeployTitle }}</div>
+              <div class="euc-ft-badge-s">{{ badgeDeploySub }}</div>
             </div>
           </div>
-          <div style="display:flex; align-items:center; gap:13px;">
-            <img src="eu-badge.png" width="40" height="40" alt="EU" style="flex:0 0 auto; width:40px; height:40px; border-radius:50%; display:block;">
+          <div class="euc-ft-badge">
+            <img src="eu-badge.png" width="40" height="40" alt="EU">
             <div>
-              <div style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#F7FAFC; line-height:1.2;">{{ badgeGdprTitle }}</div>
-              <div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#8AA0B6; margin-top:3px;">{{ badgeGdprSub }}</div>
+              <div class="euc-ft-badge-t">{{ badgeGdprTitle }}</div>
+              <div class="euc-ft-badge-s">{{ badgeGdprSub }}</div>
             </div>
           </div>
-          <a href="/sicherheit" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:500; text-decoration:none; color:#A5D8E6; margin-top:2px; transition:color .15s ease;" style-hover="color:#C9E9F2;">{{ moreSecurity }}</a>
+          <a href="/sicherheit" class="euc-ft-more">{{ moreSecurity }}</a>
         </div>
-        <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:7px 12px; border:1px solid rgba(165,216,230,0.25); border-radius:99px;">
-          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#C4D0DD;">{{ statusLabel }}</span>
-          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8AA0B6;">·</span>
-          <span ref="{{ clockRef }}" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8AA0B6;">Lupfig --:--:--</span>
+        <div class="euc-ft-status">
+          <span class="euc-ft-dot" aria-hidden="true"><i></i><b></b></span>
+          <span>{{ statusLabel }}</span>
+          <span class="euc-ft-sep">·</span>
+          <span ref="{{ clockRef }}" class="euc-ft-clock">Lupfig --:--:--</span>
         </div>
       </div>
 
-      <div style="display:flex; flex-wrap:wrap; gap:40px 56px;">
+      <div class="euc-ft-cols">
         <sc-for list="{{ columns }}" as="col" hint-placeholder-count="3">
-          <div style="min-width:150px;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:#7D93AB;">{{ col.title }}</div>
-            <nav style="display:flex; flex-direction:column; gap:12px; margin-top:18px;">
+          <div class="euc-ft-col">
+            <div class="euc-ft-coltitle">{{ col.title }}</div>
+            <nav>
               <sc-for list="{{ col.links }}" as="link" hint-placeholder-count="4">
-                <a href="{{ link.href }}" target="{{ link.target }}" style="font-family:'Inter',sans-serif; font-size:14.5px; text-decoration:none; color:#C4D0DD; transition:color .15s ease;" style-hover="color:#A5D8E6;">{{ link.label }}</a>
+                <a href="{{ link.href }}" target="{{ link.target }}">{{ link.label }}</a>
               </sc-for>
             </nav>
           </div>
         </sc-for>
-        <div style="min-width:120px;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:#7D93AB;">{{ langTitle }}</div>
-          <nav style="display:flex; flex-direction:column; gap:12px; margin-top:18px; align-items:flex-start;">
-            <button onClick="{{ toDe }}" type="button" style="background:none; border:0; padding:0; cursor:pointer; text-align:left; font-family:'Inter',sans-serif; font-size:14.5px; color:{{ deLinkColor }}; transition:color .15s ease;" style-hover="color:#A5D8E6;">Deutsch</button>
-            <button onClick="{{ toEn }}" type="button" style="background:none; border:0; padding:0; cursor:pointer; text-align:left; font-family:'Inter',sans-serif; font-size:14.5px; color:{{ enLinkColor }}; transition:color .15s ease;" style-hover="color:#A5D8E6;">English</button>
+        <div class="euc-ft-col">
+          <div class="euc-ft-coltitle">{{ langTitle }}</div>
+          <nav>
+            <button onClick="{{ toDe }}" type="button" class="{{ deCls }}">Deutsch</button>
+            <button onClick="{{ toEn }}" type="button" class="{{ enCls }}">English</button>
           </nav>
         </div>
       </div>
     </div>
 
-    <div style="height:1px; background:rgba(165,216,230,0.16); margin:44px 0 22px;"></div>
+    <div class="euc-ft-rule"></div>
 
-    <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;">
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
-        <span style="font-family:'Inter',sans-serif; font-size:13px; color:#8AA0B6;">{{ rights }}</span>
-        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7D93AB;">{{ builtOn }}</span>
+    <div class="euc-ft-bottom">
+      <div class="euc-ft-bottom-l">
+        <span class="euc-ft-rights">{{ rights }}</span>
+        <span class="euc-ft-built">{{ builtOn }}</span>
       </div>
     </div>
   </div>
@@ -93,7 +204,9 @@
 class Component extends DCLogic {
   constructor(props){
     super(props);
-    this.BRAND = 'EU-Cowork';
+    this.BRAND = 'EU Cowork AI';
+    this.BRAND_MAIN = 'EU Cowork';
+    this.BRAND_AI = 'AI';
     this.clockRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     this.state = { lang: initLang };
@@ -128,7 +241,7 @@ class Component extends DCLogic {
       de: {
         tagline:'Ihr KI-Kollege. Bleibt in Europa.',
         status:'Schweizer Instanz',
-        rights:'© 2026 EU-Cowork. Name ist Arbeitstitel.',
+        rights:'© 2026 EU Cowork AI. Name ist Arbeitstitel.',
         product:'Produkt', trust:'Trust', legal:'Rechtliches',
         funktionen:'Funktionen', souver:'Souveränität', selfhost:'Self-Host',
         integrationen:'Integrationen', vergleich:'Vergleich', faq:'FAQ', vision:'Vision',
@@ -142,7 +255,7 @@ class Component extends DCLogic {
       en: {
         tagline:'Your AI coworker. Stays in Europe.',
         status:'Swiss instance',
-        rights:'© 2026 EU-Cowork. Name is a working title.',
+        rights:'© 2026 EU Cowork AI. Name is a working title.',
         product:'Product', trust:'Trust', legal:'Legal',
         funktionen:'Features', souver:'Sovereignty', selfhost:'Self-Host',
         integrationen:'Integrations', vergleich:'Comparison', faq:'FAQ', vision:'Our vision',
@@ -179,6 +292,8 @@ class Component extends DCLogic {
     ].map(c => ({ ...c, links: c.links.map(l => ({ ...l, target: l.href.startsWith('http') ? '_blank' : '_self' })) }));
     return {
       brand: this.BRAND,
+      brandMain: this.BRAND_MAIN,
+      brandAi: this.BRAND_AI,
       tagline: S.tagline,
       statusLabel: S.status,
       rights: S.rights,
@@ -187,12 +302,10 @@ class Component extends DCLogic {
       badgeDeployTitle: S.badgeDeployTitle, badgeDeploySub: S.badgeDeploySub,
       badgeGdprTitle: S.badgeGdprTitle, badgeGdprSub: S.badgeGdprSub,
       moreSecurity: S.moreSecurity, langTitle: S.langTitle,
-      deLinkColor: isDe ? '#F7FAFC' : '#C4D0DD', enLinkColor: !isDe ? '#F7FAFC' : '#C4D0DD',
+      deCls: isDe ? 'is-current' : '', enCls: !isDe ? 'is-current' : '',
       clockRef: this.clockRef,
       toDe: () => this.setLang('de'),
-      toEn: () => this.setLang('en'),
-      deBg: isDe ? '#A5D8E6' : 'transparent', deFg: isDe ? '#0B1E33' : '#8AA0B6',
-      enBg: !isDe ? '#A5D8E6' : 'transparent', enFg: !isDe ? '#0B1E33' : '#8AA0B6'
+      toEn: () => this.setLang('en')
     };
   }
 }

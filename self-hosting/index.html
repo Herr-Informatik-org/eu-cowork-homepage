@@ -4,22 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Open-Source-KI-Plattform selbst hosten | EU-Cowork</title>
-<meta name="description" content="EU-Cowork selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.">
+<title>Open-Source-KI-Plattform selbst hosten | EU Cowork AI</title>
+<meta name="description" content="EU Cowork AI selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.">
 <link rel="canonical" href="https://eucowork.ai/self-hosting">
 
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://eucowork.ai/self-hosting">
-<meta property="og:title" content="Open-Source-KI-Plattform selbst hosten | EU-Cowork">
+<meta property="og:title" content="Open-Source-KI-Plattform selbst hosten | EU Cowork AI">
 <meta property="og:description" content="Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast. MIT-Lizenz: kein Seat-Limit, kein Branding-Zwang, kein Feature-Gating.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="EU-Cowork: Ihr KI-Kollege. Bleibt in Europa.">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Open-Source-KI-Plattform selbst hosten | EU-Cowork">
+<meta name="twitter:title" content="Open-Source-KI-Plattform selbst hosten | EU Cowork AI">
 <meta name="twitter:description" content="Ein Compose-Stack, zwei Skripte, MIT-Lizenz. Ohne Kubernetes, ohne GPU im App-Tier, ohne Konto bei uns.">
 <meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
 
@@ -42,7 +42,7 @@
       <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
       <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
     </svg>
-    <span>EU-Cowork</span>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
   </a>
 
   <nav class="euc-nav" aria-label="Hauptnavigation">
@@ -84,9 +84,9 @@
   <section class="euc-wrap euc-hero">
     <p class="euc-eyebrow">Self-Hosting</p>
 
-    <h1>EU-Cowork selbst hosten</h1>
+    <h1>EU Cowork AI selbst hosten</h1>
 
-    <p class="euc-lead">EU-Cowork läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine. Zwei Skripte bringen den Stack hoch, die Software steht unter MIT-Lizenz, und ihr braucht dafür weder Kubernetes noch eine GPU noch ein Konto bei uns.</p>
+    <p class="euc-lead">EU Cowork AI läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine. Zwei Skripte bringen den Stack hoch, die Software steht unter MIT-Lizenz, und ihr braucht dafür weder Kubernetes noch eine GPU noch ein Konto bei uns.</p>
   </section>
 
   <div class="euc-wrap">
@@ -95,7 +95,7 @@
     <div class="kurz-gesagt">
       <p class="kurz-gesagt-titel">Kurz gesagt</p>
       <ul>
-        <li>EU-Cowork wird als Docker-Compose-Stack auf einer Ubuntu-Maschine betrieben, ohne Kubernetes und ohne GPU im App-Tier.</li>
+        <li>EU Cowork AI wird als Docker-Compose-Stack auf einer Ubuntu-Maschine betrieben, ohne Kubernetes und ohne GPU im App-Tier.</li>
         <li>Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Budgetiert 1,5 bis 2 GB pro Instanz inklusive eigener Code-Sandbox.</li>
         <li>Zwei Skripte genügen: <code>setup-server.sh</code> bereitet den Ubuntu-Server vor, <code>install.sh</code> erzeugt die Secrets und startet den Stack.</li>
         <li>Für 1 bis 15 Nutzer teilen sich drei bis fünf Instanzen eine VM mit 4 vCPU, 16 GB RAM und 80 GB Platte.</li>
@@ -121,7 +121,7 @@
     <!-- ==================== 1 · VORAUSSETZUNGEN ==================== -->
     <section class="euc-section">
       <h2 id="voraussetzungen">Was ihr braucht</h2>
-      <p>Für EU-Cowork braucht ihr eine Ubuntu-Maschine mit Docker Engine und Compose v2, einen DNS-Eintrag darauf und einen API-Schlüssel eures Modell-Gateways. Der Stack läuft vollständig auf diesem einen Host, denn die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter.</p>
+      <p>Für EU Cowork AI braucht ihr eine Ubuntu-Maschine mit Docker Engine und Compose v2, einen DNS-Eintrag darauf und einen API-Schlüssel eures Modell-Gateways. Der Stack läuft vollständig auf diesem einen Host, denn die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter.</p>
 
       <h3>Server und Systemanforderungen</h3>
       <p>Das Minimum sind 2 vCPU, 4 GB RAM, 40 GB Platte und Ubuntu 22.04 LTS. Für den Produktivbetrieb empfohlen sind 4 vCPU, 16 GB RAM und 200 GB Platte auf Ubuntu 24.04 LTS; die Aufteilung nach Team-Grösse steht in der Tabelle unten. Die gehärtete Code-Sandbox setzt zusätzlich nested Virtualisierung voraus.</p>
@@ -191,7 +191,7 @@
     <!-- ==================== 2 · INSTALLATION ==================== -->
     <section class="euc-section">
       <h2 id="installation">Installation in drei Schritten</h2>
-      <p>Die Installation von EU-Cowork besteht aus zwei Skripten und einem Eintrag in der <code>.env</code>. Auf einer Maschine, auf der Docker bereits läuft, entfällt der erste Schritt.</p>
+      <p>Die Installation von EU Cowork AI besteht aus zwei Skripten und einem Eintrag in der <code>.env</code>. Auf einer Maschine, auf der Docker bereits läuft, entfällt der erste Schritt.</p>
 
       <h3>Schritt 1: Server vorbereiten</h3>
       <p>Das Release-Repository wird mit dem Launch veröffentlicht. Wer heute schon testen will, fordert den Zugang über die <a class="euc-textlink" href="/warteliste">Warteliste</a> an. Die Befehle zeigen, wie die Installation danach aussieht: Repository klonen, in das Verzeichnis <code>distribution</code> wechseln, Vorbereitungsskript starten.</p>
@@ -208,7 +208,7 @@
 EUROUTER_API_KEY=&lt;euer-api-key&gt;
 
 docker compose up -d</code></pre>
-      <p>Ohne Schlüssel startet der Stack, aber der Chat meldet einen fehlenden API-Schlüssel. Der Zugang ist frei wählbar, denn EU-Cowork spricht jedes OpenAI-kompatible Gateway an. Über EuRouter stehen über 100 Modelle mit EU-Verarbeitung unter einem Zugang, alternativ tragt ihr euren eigenen Endpunkt ein.</p>
+      <p>Ohne Schlüssel startet der Stack, aber der Chat meldet einen fehlenden API-Schlüssel. Der Zugang ist frei wählbar, denn EU Cowork AI spricht jedes OpenAI-kompatible Gateway an. Über EuRouter stehen über 100 Modelle mit EU-Verarbeitung unter einem Zugang, alternativ tragt ihr euren eigenen Endpunkt ein.</p>
     </section>
 
     <!-- ==================== 3 · STACK ==================== -->
@@ -216,7 +216,7 @@ docker compose up -d</code></pre>
       <h2 id="stack">Aus welchen Diensten der Stack besteht</h2>
       <p>Der Stack besteht aus einer <code>docker-compose.yml</code>; mehrere Dienste liegen hinter optionalen Profilen und starten nur, wenn ihr sie einschaltet. Jeder Dienst ist ein bekanntes Open-Source-Projekt und lässt sich einzeln inspizieren, ersetzen oder abschalten.</p>
 
-      <p><strong>Die Chat-Anwendung</strong> basiert auf LibreChat unter MIT-Lizenz und liefert Oberfläche, Konten, Konversationen, Datei-Uploads und die Modell-Anbindung. EU-Cowork hält diesen Teil nah am Upstream, damit Sicherheits-Updates des Projekts übernehmbar bleiben.</p>
+      <p><strong>Die Chat-Anwendung</strong> basiert auf LibreChat unter MIT-Lizenz und liefert Oberfläche, Konten, Konversationen, Datei-Uploads und die Modell-Anbindung. EU Cowork AI hält diesen Teil nah am Upstream, damit Sicherheits-Updates des Projekts übernehmbar bleiben.</p>
 
       <p><strong>MongoDB</strong> speichert Konversationen, Konten, Rollen und Einstellungen, als Container im selben Stack und auf eurer Platte. Einen externen Datenbankdienst, an den Inhalte abfliessen könnten, gibt es nicht.</p>
 
@@ -244,10 +244,10 @@ docker compose up -d</code></pre>
       <p>Ihr betreibt die Maschine, haltet Root, verwaltet eure Schlüssel und fahrt Updates und Backups selbst. Die Software kostet nichts, ein Support-Abo ist optional. Dieses Modell ist der Massstab: Was ein fremder Administrator in zwei Kommandos hochbekommt, trägt auch die anderen Modelle.</p>
 
       <h3>In eurer Cloud</h3>
-      <p>EU-Cowork läuft auf jeder Ubuntu-VM, im eigenen Rechenzentrum ebenso wie bei einem Schweizer oder europäischen Cloud-Anbieter. Eine Bindung an einen Hyperscaler gibt es nicht. Wer als IT-Dienstleister für seine Kunden hostet, nutzt dieselbe Bauform: pro Kunde ein Stack.</p>
+      <p>EU Cowork AI läuft auf jeder Ubuntu-VM, im eigenen Rechenzentrum ebenso wie bei einem Schweizer oder europäischen Cloud-Anbieter. Eine Bindung an einen Hyperscaler gibt es nicht. Wer als IT-Dienstleister für seine Kunden hostet, nutzt dieselbe Bauform: pro Kunde ein Stack.</p>
 
       <h3>Von uns betreut</h3>
-      <p>Wir übernehmen Installation, Updates, Backups und Monitoring und betreiben die Instanz in ISO-27001-zertifizierten Rechenzentren von Green in Lupfig, Schweiz. Die Zertifikate liegen bei Green, nicht bei EU-Cowork; die eigene ISO-27001-Zertifizierung von EU-Cowork ist in Arbeit.</p>
+      <p>Wir übernehmen Installation, Updates, Backups und Monitoring und betreiben die Instanz in ISO-27001-zertifizierten Rechenzentren von Green in Lupfig, Schweiz. Die Zertifikate liegen bei Green, nicht bei EU Cowork AI; die eigene ISO-27001-Zertifizierung von EU Cowork AI ist in Arbeit.</p>
 
       <h3>Mehrere Instanzen auf einer Maschine</h3>
       <p>Die Mandanten-Grenze ist der Compose-Stack, nicht die VM: Jede Instanz hat eigene Datenbank, eigenen Suchindex, eigene Uploads, eigene Secrets, eigenes Docker-Netz und eigene Code-Sandbox. Für kleine Teams dürfen deshalb drei bis fünf Instanzen dieselbe VM teilen.</p>
@@ -257,7 +257,7 @@ docker compose up -d</code></pre>
     <!-- ==================== 5 · UPDATES ==================== -->
     <section class="euc-section">
       <h2 id="updates">Wie Updates laufen und was im Betrieb zählt</h2>
-      <p>Updates sind reproduzierbar, weil das Anwendungs-Image auf einen Digest gepinnt ist statt auf einen beweglichen Tag und die übrigen Dienste auf festen Versionsständen laufen. Ein EU-Cowork-Release ist damit eine getestete Kombination aus Anwendungs-Image und Diensten, und zwei Instanzen auf derselben Maschine dürfen unterschiedliche Stände fahren.</p>
+      <p>Updates sind reproduzierbar, weil das Anwendungs-Image auf einen Digest gepinnt ist statt auf einen beweglichen Tag und die übrigen Dienste auf festen Versionsständen laufen. Ein Release von EU Cowork AI ist damit eine getestete Kombination aus Anwendungs-Image und Diensten, und zwei Instanzen auf derselben Maschine dürfen unterschiedliche Stände fahren.</p>
 
       <pre><code>git pull
 ./backup.sh backup
@@ -287,7 +287,7 @@ docker compose up -d</code></pre>
     <!-- ==================== 7 · LIZENZ ==================== -->
     <section class="euc-section">
       <h2 id="lizenz">Lizenz: was MIT konkret bedeutet</h2>
-      <p>EU-Cowork steht unter der MIT-Lizenz, ebenso die zugrunde liegende Chat-Anwendung LibreChat. Self-Hosting ist gratis, ab einem Nutzer und ohne Registrierung bei uns. Was das im Einzelnen bedeutet, und warum es im <a class="euc-textlink" href="/vergleich">Vergleich mit anderen Plattformen</a> der entscheidende Unterschied ist:</p>
+      <p>EU Cowork AI steht unter der MIT-Lizenz, ebenso die zugrunde liegende Chat-Anwendung LibreChat. Self-Hosting ist gratis, ab einem Nutzer und ohne Registrierung bei uns. Was das im Einzelnen bedeutet, und warum es im <a class="euc-textlink" href="/vergleich">Vergleich mit anderen Plattformen</a> der entscheidende Unterschied ist:</p>
 
       <ul>
         <li><strong>Kein Seat-Limit.</strong> Ob 3 oder 300 Personen auf der Instanz arbeiten, ändert an der Lizenz nichts.</li>
@@ -305,11 +305,11 @@ docker compose up -d</code></pre>
 
       <div class="faq">
         <div class="faq-item">
-          <h3>Was kostet es, EU-Cowork selbst zu hosten?</h3>
-          <p>Die Software kostet nichts. EU-Cowork steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb.</p>
+          <h3>Was kostet es, EU Cowork AI selbst zu hosten?</h3>
+          <p>Die Software kostet nichts. EU Cowork AI steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb.</p>
         </div>
         <div class="faq-item">
-          <h3>Brauche ich eine GPU für EU-Cowork?</h3>
+          <h3>Brauche ich eine GPU für EU Cowork AI?</h3>
           <p>Nein. Für den App-Tier ist keine GPU nötig. Die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter, die CPU-Auslastung des Stacks ist im Normalbetrieb nahe null. GPU-Hardware braucht nur, wer Sprachmodelle zusätzlich lokal auf der eigenen Maschine ausführen will.</p>
         </div>
         <div class="faq-item">
@@ -317,11 +317,11 @@ docker compose up -d</code></pre>
           <p>Für 1 bis 15 Nutzer teilen sich drei bis fünf Instanzen eine VM mit 4 vCPU, 16 GB RAM und 80 GB Platte. Von 15 bis 50 Nutzern bekommt eine Instanz eine eigene VM mit 4 vCPU und 8 bis 16 GB RAM. Darüber wird die VM entsprechend grösser.</p>
         </div>
         <div class="faq-item">
-          <h3>Läuft EU-Cowork auf Kubernetes?</h3>
+          <h3>Läuft EU Cowork AI auf Kubernetes?</h3>
           <p>Die unterstützte Bauform ist Docker Compose auf einer Ubuntu-Maschine, ein Helm-Chart wird nicht mitgeliefert. Für diese Grössenordnung wäre Kubernetes zusätzlicher Betriebsaufwand, denn der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Als Vorlage taugt die Compose-Datei trotzdem.</p>
         </div>
         <div class="faq-item">
-          <h3>Darf ich EU-Cowork forken und unter eigenem Namen ausrollen?</h3>
+          <h3>Darf ich EU Cowork AI forken und unter eigenem Namen ausrollen?</h3>
           <p>Ja. Die MIT-Lizenz erlaubt Nutzung, Änderung, Weitergabe und den kommerziellen Einsatz, auch unter eigenem Namen und eigenem Logo. Es gibt keine Branding-Klausel und keine Nutzerzahl, ab der zusätzliche Bedingungen greifen. Mitzuführen sind lediglich Lizenztext und Urheberrechtsvermerk.</p>
         </div>
         <div class="faq-item">
@@ -367,7 +367,7 @@ docker compose up -d</code></pre>
             <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
             <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
           </svg>
-          <span>EU-Cowork</span>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
         </div>
         <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
 
@@ -397,6 +397,7 @@ docker compose up -d</code></pre>
         </div>
 
         <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
           <span>Schweizer Instanz</span>
           <span class="euc-status-sep">·</span>
           <span class="euc-status-loc">Lupfig</span>
@@ -445,7 +446,7 @@ docker compose up -d</code></pre>
     <div class="euc-footer-rule"></div>
 
     <div class="euc-footer-bottom">
-      <span class="euc-rights">© 2026 EU-Cowork. Name ist Arbeitstitel.</span>
+      <span class="euc-rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
       <span class="euc-built">Built on LibreChat · MIT</span>
     </div>
   </div>
@@ -458,7 +459,7 @@ docker compose up -d</code></pre>
   "@type": "WebPage",
   "@id": "https://eucowork.ai/self-hosting#webpage",
   "url": "https://eucowork.ai/self-hosting",
-  "name": "EU-Cowork selbst hosten",
+  "name": "EU Cowork AI selbst hosten",
   "inLanguage": "de-CH",
   "isPartOf": {
     "@id": "https://eucowork.ai/#website"
@@ -466,7 +467,7 @@ docker compose up -d</code></pre>
   "about": {
     "@id": "https://eucowork.ai/#software"
   },
-  "description": "EU-Cowork selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.",
+  "description": "EU Cowork AI selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -484,7 +485,7 @@ docker compose up -d</code></pre>
       }
     ]
   },
-  "abstract": "EU-Cowork läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine, ohne Kubernetes und ohne GPU im App-Tier. Die Installation besteht aus zwei Skripten: setup-server.sh bereitet den Ubuntu-Server vor, install.sh erzeugt die Secrets und startet den Stack; danach wird der API-Schlüssel des Modell-Gateways eingetragen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM, pro Instanz sind 1,5 bis 2 GB RAM inklusive Code-Sandbox zu budgetieren. Zum Stack gehören die Chat-Anwendung auf LibreChat-Basis, MongoDB, Meilisearch, die optionale RAG-API mit pgvector, das MCP-Gateway, das Admin-Panel, die daneben laufende Code-Sandbox, die SearXNG-Websuche und Caddy mit automatischem TLS. Es gibt drei Betriebsmodelle bei einer einzigen Bauform: selbst betrieben, in der eigenen Cloud oder von uns betreut. Das Anwendungs-Image ist auf einen Digest gepinnt, Backup, Restore und Serverumzug laufen über ein Skript, und die MIT-Lizenz bedeutet kein Seat-Limit, kein Branding-Zwang und kein Feature-Gating.",
+  "abstract": "EU Cowork AI läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine, ohne Kubernetes und ohne GPU im App-Tier. Die Installation besteht aus zwei Skripten: setup-server.sh bereitet den Ubuntu-Server vor, install.sh erzeugt die Secrets und startet den Stack; danach wird der API-Schlüssel des Modell-Gateways eingetragen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM, pro Instanz sind 1,5 bis 2 GB RAM inklusive Code-Sandbox zu budgetieren. Zum Stack gehören die Chat-Anwendung auf LibreChat-Basis, MongoDB, Meilisearch, die optionale RAG-API mit pgvector, das MCP-Gateway, das Admin-Panel, die daneben laufende Code-Sandbox, die SearXNG-Websuche und Caddy mit automatischem TLS. Es gibt drei Betriebsmodelle bei einer einzigen Bauform: selbst betrieben, in der eigenen Cloud oder von uns betreut. Das Anwendungs-Image ist auf einen Digest gepinnt, Backup, Restore und Serverumzug laufen über ein Skript, und die MIT-Lizenz bedeutet kein Seat-Limit, kein Branding-Zwang und kein Feature-Gating.",
   "publisher": {
     "@id": "https://eucowork.ai/#organization"
   },
@@ -501,15 +502,15 @@ docker compose up -d</code></pre>
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Was kostet es, EU-Cowork selbst zu hosten?",
+      "name": "Was kostet es, EU Cowork AI selbst zu hosten?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Die Software kostet nichts. EU-Cowork steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb."
+        "text": "Die Software kostet nichts. EU Cowork AI steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb."
       }
     },
     {
       "@type": "Question",
-      "name": "Brauche ich eine GPU für EU-Cowork?",
+      "name": "Brauche ich eine GPU für EU Cowork AI?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Nein. Für den App-Tier ist keine GPU nötig. Die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter, die CPU-Auslastung des Stacks ist im Normalbetrieb nahe null. GPU-Hardware braucht nur, wer Sprachmodelle zusätzlich lokal auf der eigenen Maschine ausführen will."
@@ -525,7 +526,7 @@ docker compose up -d</code></pre>
     },
     {
       "@type": "Question",
-      "name": "Läuft EU-Cowork auf Kubernetes?",
+      "name": "Läuft EU Cowork AI auf Kubernetes?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Die unterstützte Bauform ist Docker Compose auf einer Ubuntu-Maschine, ein Helm-Chart wird nicht mitgeliefert. Für diese Grössenordnung wäre Kubernetes zusätzlicher Betriebsaufwand, denn der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Als Vorlage taugt die Compose-Datei trotzdem."
@@ -533,7 +534,7 @@ docker compose up -d</code></pre>
     },
     {
       "@type": "Question",
-      "name": "Darf ich EU-Cowork forken und unter eigenem Namen ausrollen?",
+      "name": "Darf ich EU Cowork AI forken und unter eigenem Namen ausrollen?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Ja. Die MIT-Lizenz erlaubt Nutzung, Änderung, Weitergabe und den kommerziellen Einsatz, auch unter eigenem Namen und eigenem Logo. Es gibt keine Branding-Klausel und keine Nutzerzahl, ab der zusätzliche Bedingungen greifen. Mitzuführen sind lediglich Lizenztext und Urheberrechtsvermerk."

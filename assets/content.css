@@ -1,18 +1,19 @@
 /* ==========================================================================
-   EU-Cowork · content.css
+   EU Cowork AI · content.css: Design v2
    Ein Stylesheet für alle statischen Content-Seiten (/faq, /vergleich,
    /governance, /integrationen, /self-hosting, /sicherheit, /vision ...).
 
    Kein Framework, keine Runtime, kein support.js. Der Text steht im
    Roh-HTML und bleibt ohne JavaScript lesbar (Anforderung AI-Crawler).
 
-   Design-Tokens 1:1 übernommen aus Landing.dc.html, SiteHeader.dc.html
-   und SiteFooter.dc.html, damit die Content-Seiten visuell nicht von den
-   bestehenden Runtime-Seiten zu unterscheiden sind.
+   Token-Namen identisch zu den DC-Laufzeitseiten (SiteHeader.dc.html,
+   SiteFooter.dc.html, Waitlist.dc.html, Rechtstexte), damit statische und
+   dynamische Seiten nicht auseinanderdriften. Die alten --euc-*-Namen
+   bleiben als Alias bestehen.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Fonts — selbst gehostet, latin, statische Instanzen
+   1. Fonts: selbst gehostet, latin, statische Instanzen
    Die Google-Fonts-Familien werden nur noch variabel ausgeliefert; die
    Dateien in /fonts/ sind daraus erzeugte statische Schnitte (wght gepinnt).
    -------------------------------------------------------------------------- */
@@ -85,60 +86,131 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Design-Tokens
+   2. Design-Tokens v2
    -------------------------------------------------------------------------- */
 
 :root {
-  /* Flächen */
-  --euc-bg:            #FAFAF7;   /* Grundfläche der ganzen Site */
-  --euc-bg-soft:       #F7FAFC;   /* abgesetzte Sektion */
-  --euc-surface:       #FFFFFF;   /* Karten */
-  --euc-dark:          #0B1E33;   /* dunkle Blöcke, Überschriften */
-  --euc-dark-hover:    #123456;
+  /* --- Flächen --- */
+  --c-bg:            #FAFAF7;   /* Grundfläche, Knochenweiss */
+  --c-bg-cool:       #F5F8FA;   /* abgesetzte Sektion */
+  --c-surface:       #FFFFFF;   /* Karte, Attrappe, Popover */
+  --c-deep:          #0B1E33;   /* Navy: dunkle Blöcke, Primärbutton */
+  --c-deep-hover:    #123456;
 
-  /* Text auf hell */
-  --euc-ink:           #0B1E33;   /* Überschriften */
-  --euc-body:          #47535F;   /* Fliesstext */
-  --euc-body-soft:     #5A6472;   /* sekundär */
-  --euc-muted:         #8A96A2;   /* Meta, Captions */
+  /* --- Text auf hell --- */
+  --c-ink:           #0B1E33;
+  --c-body:          #41505E;
+  --c-body-soft:     #5A6472;
+  --c-muted:         #8A96A2;   /* nur Dekor: Trenner, Zähler. Nie Fliesstext. */
 
-  /* Text auf dunkel */
-  --euc-on-dark:       #F7FAFC;
-  --euc-on-dark-body:  #C4D0DD;
-  --euc-on-dark-muted: #8AA0B6;
-  --euc-on-dark-label: #7D93AB;
+  /* --- Text auf dunkel --- */
+  --c-on-deep:       #F7FAFC;
+  --c-on-deep-body:  #C4D0DD;
+  --c-on-deep-muted: #8AA0B6;
+  --c-on-deep-label: #7D93AB;
 
-  /* Akzente */
-  --euc-gold:          #F4C542;   /* sparsam: Logo-Punkt, Marker */
-  --euc-ice:           #A5D8E6;
+  /* --- EU-Akzent: die einzige neue UI-Farbe --- */
+  --c-eu-700:        #12326B;   /* Europa-Blau: Links, aktiv, Fokus, Zahlen */
+  --c-eu-500:        #2E6C86;   /* Eyebrows, Icons */
+  --c-eu-400:        #3F7CC9;   /* nur Verlauf */
+  --c-ice-300:       #A5D8E6;
+  --c-ice-100:       #EFF6F9;
+  --c-ice-tint:      #EAF3F7;
+  --c-gold-500:      #F4C542;   /* Interpunktion, nie Fläche */
+
+  /* --- Linien: nur noch Trenner, Tabellen, Formularfelder --- */
+  --c-line:          #E7ECF0;
+  --c-line-soft:     #EEF1F4;
+
+  /* --- Typografie --- */
+  --f-display:  'Space Grotesk', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --f-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --f-mono:     'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* --- Raster und Abstände --- */
+  --s-1:4px;  --s-2:8px;   --s-3:12px; --s-4:16px; --s-5:24px;
+  --s-6:32px; --s-7:44px;  --s-8:64px; --s-9:88px; --s-10:120px;
+
+  --w-max:      1200px;
+  --w-measure:  720px;
+  --gutter:     clamp(20px, 5vw, 80px);
+  --sec-y:       clamp(80px, 10vw, 148px);
+  --sec-y-tight: clamp(56px, 7vw, 96px);
+  --header-h:   68px;
+
+  /* --- Radien: Radius wächst mit der Fläche --- */
+  --r-xs:8px; --r-s:10px; --r-m:14px; --r-l:20px;
+  --r-xl:24px; --r-2xl:32px; --r-full:999px;
+
+  /* --- Schatten, in Navy getönt, nie neutralschwarz --- */
+  --sh-1:0 1px 2px rgba(11,30,51,.05);
+  --sh-2:0 1px 2px rgba(11,30,51,.05),
+         0 8px 20px -12px rgba(11,30,51,.18);
+  --sh-3:0 1px 2px rgba(11,30,51,.05),
+         0 8px 20px -12px rgba(11,30,51,.18),
+         0 24px 48px -28px rgba(11,30,51,.22);
+  --sh-4:0 2px 4px rgba(11,30,51,.06),
+         0 14px 30px -14px rgba(11,30,51,.26),
+         0 40px 72px -34px rgba(11,30,51,.30);
+
+  /* Materialkante statt Rahmen */
+  --edge:inset 0 1px 0 rgba(255,255,255,.34),
+         inset 0 0 0 1px rgba(11,30,51,.06);
+  --edge-soft:inset 0 1px 0 rgba(255,255,255,.5),
+              inset 0 0 0 1px rgba(11,30,51,.05);
+  --edge-deep:inset 0 1px 0 rgba(165,216,230,.14),
+              inset 0 0 0 1px rgba(165,216,230,.14);
+
+  /* Transluzente Schichten */
+  --mat-bar:  rgba(250,250,247,.72);
+  --mat-bar-scrolled: rgba(250,250,247,.86);
+  --mat-chip: rgba(255,255,255,.72);
+
+  /* --- Motion --- */
+  --ease-out:    cubic-bezier(.23,1,.32,1);
+  --ease-in-out: cubic-bezier(.77,0,.175,1);
+  --d-press:140ms; --d-hover:200ms; --d-panel:320ms; --d-reveal:480ms;
+
+  /* ------------------------------------------------------------------
+     Alias auf die alten Namen. Bestehendes Markup und ältere Regeln
+     laufen damit weiter, ohne dass alles in einem Rutsch umgeschrieben
+     werden muss.
+     ------------------------------------------------------------------ */
+  --euc-bg:            var(--c-bg);
+  --euc-bg-soft:       var(--c-bg-cool);
+  --euc-surface:       var(--c-surface);
+  --euc-dark:          var(--c-deep);
+  --euc-dark-hover:    var(--c-deep-hover);
+  --euc-ink:           var(--c-ink);
+  --euc-body:          var(--c-body);
+  --euc-body-soft:     var(--c-body-soft);
+  --euc-muted:         var(--c-muted);
+  --euc-on-dark:       var(--c-on-deep);
+  --euc-on-dark-body:  var(--c-on-deep-body);
+  --euc-on-dark-muted: var(--c-on-deep-muted);
+  --euc-on-dark-label: var(--c-on-deep-label);
+  --euc-gold:          var(--c-gold-500);
+  --euc-ice:           var(--c-ice-300);
   --euc-ice-mid:       #D6EDF5;
-  --euc-ice-soft:      #EFF6F9;
-  --euc-ice-tint:      #EAF3F7;
-  --euc-chip-ink:      #3E6E86;
+  --euc-ice-soft:      var(--c-ice-100);
+  --euc-ice-tint:      var(--c-ice-tint);
+  --euc-chip-ink:      var(--c-eu-500);
   --euc-chip-border:   #DEEBF1;
-  --euc-accent-deep:   #2E6C86;
-
-  /* Linien */
-  --euc-line:          #E5E5E5;
-  --euc-line-cool:     #EBEEF1;
-  --euc-line-card:     #E7ECF0;
-  --euc-line-strong:   #E4E8EC;
+  --euc-accent-deep:   var(--c-eu-500);
+  --euc-line:          var(--c-line);
+  --euc-line-cool:     var(--c-line-soft);
+  --euc-line-card:     var(--c-line);
+  --euc-line-strong:   var(--c-line);
   --euc-line-btn:      #D9DEE4;
-
-  /* Links */
-  --euc-link:          #0E3A63;
-  --euc-link-hover:    #0B1E33;
-
-  /* Typografie */
-  --euc-font-display:  'Space Grotesk', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  --euc-font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --euc-font-mono:     'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-
-  /* Mass */
-  --euc-measure:       720px;    /* Textspalte, Leitplanke 4.4 */
-  --euc-wide:          1120px;   /* volle Sektionsbreite wie Landing */
-  --euc-gutter:        clamp(20px, 5vw, 80px);
-  --euc-header-h:      70px;
+  --euc-link:          var(--c-eu-700);
+  --euc-link-hover:    var(--c-ink);
+  --euc-font-display:  var(--f-display);
+  --euc-font-body:     var(--f-body);
+  --euc-font-mono:     var(--f-mono);
+  --euc-measure:       var(--w-measure);
+  --euc-wide:          1120px;
+  --euc-gutter:        var(--gutter);
+  --euc-header-h:      var(--header-h);
 }
 
 /* --------------------------------------------------------------------------
@@ -154,48 +226,50 @@ html {
 
 body {
   margin: 0;
-  background: var(--euc-bg);
-  color: var(--euc-body);
-  font-family: var(--euc-font-body);
+  background: var(--c-bg);
+  color: var(--c-body);
+  font-family: var(--f-body);
   font-size: 18px;
-  line-height: 1.7;
+  line-height: 1.62;
+  letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;           /* kein horizontaler Overflow, auch bei 375px */
+  overflow-x: hidden;           /* Netz: kein horizontaler Overflow */
 }
 
-::selection { background: var(--euc-ice); color: var(--euc-dark); }
+::selection { background: var(--c-ice-300); color: var(--c-deep); }
 
 img, svg, video, table { max-width: 100%; }
 img { height: auto; }
 
 :focus-visible {
-  outline: 2px solid var(--euc-accent-deep);
-  outline-offset: 2px;
+  outline: 2px solid var(--c-eu-700);
+  outline-offset: 3px;
   border-radius: 4px;
 }
 
 /* Sprungziel-Abstand unter dem klebenden Header */
-[id] { scroll-margin-top: calc(var(--euc-header-h) + 24px); }
+[id] { scroll-margin-top: calc(var(--header-h) + var(--s-5)); }
 
 .euc-skip {
   position: absolute;
   left: -9999px;
   top: 0;
   z-index: 400;
-  background: var(--euc-dark);
-  color: var(--euc-on-dark);
-  font-family: var(--euc-font-body);
+  background: var(--c-deep);
+  color: var(--c-on-deep);
+  font-family: var(--f-body);
   font-size: 14px;
   padding: 12px 18px;
-  border-radius: 0 0 10px 0;
+  border-radius: 0 0 var(--r-s) 0;
   text-decoration: none;
 }
 .euc-skip:focus { left: 0; }
 
 /* --------------------------------------------------------------------------
-   4. Header — statische Fassung von SiteHeader.dc.html
+   4. Header: statische Fassung von SiteHeader.dc.html
+   Transluzentes Chrome, Scroll-Edge statt harter Hairline.
    -------------------------------------------------------------------------- */
 
 .euc-header {
@@ -204,12 +278,44 @@ img { height: auto; }
   z-index: 100;
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 14px var(--euc-gutter);
-  background: rgba(250, 250, 247, 0.9);
-  backdrop-filter: saturate(140%) blur(14px);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
-  border-bottom: 1px solid var(--euc-line);
+  gap: var(--s-5);
+  min-height: var(--header-h);
+  padding: 10px var(--gutter);
+  background: var(--mat-bar);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 0;
+}
+
+/* Scroll-Edge: 24px weicher Verlauf unter der Leiste statt 1px-Linie.
+   Ohne JavaScript blendet ihn die Scroll-Timeline ein; wo die fehlt,
+   steht er dauerhaft, aber sehr leise. */
+.euc-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 24px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(11,30,51,.055), rgba(11,30,51,0));
+}
+@supports (animation-timeline: scroll()) {
+  @keyframes euc-scroll-edge { from { opacity: 0 } to { opacity: 1 } }
+  .euc-header::after {
+    opacity: 0;
+    animation: euc-scroll-edge linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 8px 56px;
+  }
+  /* Die Landing verdichtet das Leistenmaterial beim Scrollen von .72 auf .86
+     (SiteHeader `.is-scrolled`). Ohne dasselbe hier verhielte sich dieselbe
+     Leiste auf zwei Seitentypen unterschiedlich. Ohne Scroll-Timeline bleibt
+     es beim Ruhewert — genau wie bisher. */
+  @keyframes euc-bar-density { from { background-color: var(--mat-bar) } to { background-color: var(--mat-bar-scrolled) } }
+  .euc-header {
+    animation: euc-bar-density linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 8px 56px;
+  }
 }
 
 .euc-brand {
@@ -218,69 +324,89 @@ img { height: auto; }
   gap: 11px;
   text-decoration: none;
   flex: 0 0 auto;
+  min-height: 44px;
 }
 .euc-brand svg { display: block; }
 .euc-brand span {
-  font-family: var(--euc-font-display);
+  font-family: var(--f-display);
   font-weight: 600;
   font-size: 19px;
   letter-spacing: -0.02em;
-  color: var(--euc-ink);
+  color: var(--c-ink);
 }
+/* Wortmarke: „EU Cowork" in Tinte, „AI" in Europa-Blau.
+   Doppelt qualifiziert, sonst schlägt `.euc-brand span` (0-1-1) die Regel. */
+.euc-brand .euc-brand-ai { color: var(--c-eu-700); font-style: normal; }
 
 .euc-nav {
   display: flex;
   align-items: center;
   gap: 30px;
   margin-left: auto;
-  margin-right: 8px;
+  margin-right: var(--s-2);
 }
 .euc-nav a {
-  font-family: var(--euc-font-body);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--f-body);
   font-size: 14.5px;
   font-weight: 500;
+  letter-spacing: 0;
   text-decoration: none;
-  color: var(--euc-body-soft);
+  color: var(--c-body-soft);
   transition: color .15s ease;
   white-space: nowrap;
 }
-.euc-nav a:hover,
-.euc-nav a[aria-current="page"] { color: var(--euc-ink); }
+.euc-nav a[aria-current="page"] { color: var(--c-eu-700); }
 
 .euc-header-cta { display: flex; align-items: center; gap: 14px; flex: 0 0 auto; }
 
 .euc-btn-primary {
-  font-family: var(--euc-font-body);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  font-family: var(--f-body);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  color: var(--euc-on-dark);
-  background: var(--euc-dark);
-  padding: 10px 16px;
-  border-radius: 9px;
+  color: var(--c-on-deep);
+  background: var(--c-deep);
+  padding: 11px 18px;
+  border-radius: var(--r-s);
   white-space: nowrap;
-  box-shadow: 0 1px 2px rgba(11, 30, 51, 0.12);
-  transition: transform .15s ease, background .15s ease;
+  box-shadow: var(--sh-2), inset 0 1px 0 rgba(255,255,255,.10);
+  transition: transform var(--d-hover) var(--ease-out),
+              background var(--d-hover) var(--ease-out),
+              box-shadow var(--d-hover) var(--ease-out);
 }
-.euc-btn-primary:hover {
-  background: var(--euc-dark-hover);
-  color: var(--euc-on-dark);
-  transform: translateY(-1px);
-}
+.euc-btn-primary:active { transform: scale(.97); }
 
 .euc-btn-secondary {
-  font-family: var(--euc-font-body);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  font-family: var(--f-body);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  color: var(--euc-ink);
-  padding: 9px 14px;
-  border: 1px solid var(--euc-line-btn);
-  border-radius: 9px;
+  color: var(--c-ink);
+  background: var(--mat-chip);
+  padding: 11px 16px;
+  border: 0;
+  border-radius: var(--r-s);
   white-space: nowrap;
-  transition: border-color .15s ease, background .15s ease;
+  box-shadow: var(--sh-1), var(--edge);
+  transition: transform var(--d-hover) var(--ease-out),
+              box-shadow var(--d-hover) var(--ease-out);
 }
-.euc-btn-secondary:hover { border-color: var(--euc-ink); background: rgba(11, 30, 51, 0.03); }
+.euc-btn-secondary:active { transform: scale(.97); }
+/* In der bereits transluzenten Leiste deckend: nie zwei helle
+   Milchglasflächen stapeln. */
+.euc-header .euc-btn-secondary { background: var(--c-surface); }
 
 /* Mobiles Menü: reines CSS über <details>, kein JavaScript */
 .euc-mob { display: none; margin-left: auto; position: relative; }
@@ -289,51 +415,81 @@ img { height: auto; }
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  padding: 8px;
+  width: 44px;
+  height: 44px;
   border: 0;
+  border-radius: var(--r-s);
   background: none;
+  transition: background-color 120ms ease;
+}
+/* Dieselbe Geste und dieselbe Zahl wie der Burger im SiteHeader: auf Touch
+   sonst null Rückmeldung. Nur Tönung, keine Bewegung. */
+.euc-mob > summary:active { background-color: rgba(11,30,51,.06); }
+@media (hover: hover) and (pointer: fine) {
+  .euc-mob > summary:hover { background-color: rgba(11,30,51,.05); }
 }
 .euc-mob > summary::-webkit-details-marker { display: none; }
 .euc-mob > summary::marker { content: ''; }
-.euc-mob > summary span { display: block; width: 22px; height: 1.5px; background: var(--euc-ink); }
+.euc-mob > summary span { display: block; width: 22px; height: 1.5px; background: var(--c-ink); }
 
 .euc-mob-panel {
   position: absolute;
   right: 0;
   top: calc(100% + 10px);
-  min-width: 232px;
-  background: var(--euc-bg);
-  border: 1px solid var(--euc-line);
-  border-radius: 12px;
-  box-shadow: 0 18px 44px -22px rgba(11, 30, 51, .42);
-  padding: 8px;
+  min-width: 244px;
+  background: var(--c-bg);
+  border: 0;
+  border-radius: var(--r-m);
+  box-shadow: var(--sh-4), var(--edge);
+  padding: var(--s-2);
   display: flex;
   flex-direction: column;
 }
 .euc-mob-panel a {
-  font-family: var(--euc-font-body);
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--f-body);
   font-size: 15.5px;
   font-weight: 500;
   line-height: 1.3;
   text-decoration: none;
-  color: var(--euc-ink);
+  color: var(--c-ink);
   padding: 11px 12px;
-  border-radius: 8px;
+  border-radius: var(--r-xs);
 }
-.euc-mob-panel a:hover { background: var(--euc-ice-soft); }
 /* Muss .euc-mob-panel a schlagen (gleiche Spezifität, deshalb doppelt
-   qualifiziert) — sonst steht dunkler Text auf dunklem Button. */
+   qualifiziert): sonst steht dunkler Text auf dunklem Button. */
 .euc-mob-panel a.euc-btn-primary {
-  text-align: center;
+  justify-content: center;
   margin-top: 6px;
-  padding: 13px;
+  padding: 14px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--euc-on-dark);
-  background: var(--euc-dark);
+  color: var(--c-on-deep);
+  background: var(--c-deep);
 }
-.euc-mob-panel a.euc-btn-primary:hover { background: var(--euc-dark-hover); color: var(--euc-on-dark); }
+
+/* Das Panel wächst aus seinem Auslöser statt aus dem Nichts. Auf diesen
+   JS-freien Seiten ist ::details-content der einzige Weg, beide Richtungen zu
+   animieren — <details> nimmt den Teilbaum sonst schlagartig aus dem Rendering;
+   content-visibility mit allow-discrete hält ihn für die Dauer der Blende.
+   Ohne ::details-content (heute Firefox) greift der Block nicht: kein Bruch,
+   nur kein Gewinn. */
+@supports selector(::details-content) {
+  .euc-mob::details-content {
+    opacity: 0;
+    transform: translateY(-6px) scale(.97);
+    transform-origin: 100% 0;              /* der Burger sitzt oben rechts */
+    transition: opacity   180ms var(--ease-out),
+                transform 180ms var(--ease-out),
+                content-visibility 180ms allow-discrete;
+  }
+  .euc-mob[open]::details-content { opacity: 1; transform: none; }
+}
 
 /* --------------------------------------------------------------------------
    5. Seitengerüst
@@ -342,43 +498,44 @@ img { height: auto; }
 .euc-main { display: block; }
 
 /* Textspalte: der TEXT misst 720px, die Rinne liegt aussen davor.
-   Deshalb calc() statt max-width:720px — sonst frisst das Padding die
+   Deshalb calc() statt max-width:720px: sonst frisst das Padding die
    Spalte auf und es bleiben nur ~590px Lesebreite. */
 .euc-wrap {
   width: 100%;
-  max-width: calc(var(--euc-measure) + 2 * var(--euc-gutter));
+  max-width: calc(var(--w-measure) + 2 * var(--gutter));
   margin: 0 auto;
-  padding-left: var(--euc-gutter);
-  padding-right: var(--euc-gutter);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 
 /* Für breite Elemente (grosse Tabellen), falls nötig */
 .euc-wrap-wide {
   width: 100%;
-  max-width: calc(var(--euc-wide) + 2 * var(--euc-gutter));
+  max-width: calc(var(--euc-wide) + 2 * var(--gutter));
   margin: 0 auto;
-  padding-left: var(--euc-gutter);
-  padding-right: var(--euc-gutter);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 
 /* Nur vertikal setzen. Die Kurzform `padding:` würde die seitliche Rinne
    von .euc-wrap überschreiben, wenn beide Klassen am selben Element hängen
    (<section class="euc-wrap euc-hero">). */
 .euc-hero {
-  padding-top: clamp(40px, 6vw, 64px);
-  padding-bottom: clamp(24px, 3vw, 36px);
+  padding-top: clamp(36px, 4.5vw, 52px);
+  padding-bottom: clamp(28px, 3.5vw, 44px);
 }
-.euc-section { padding-top: clamp(28px, 4vw, 44px); }
+.euc-section { padding-top: clamp(40px, 5vw, 64px); }
 
 /* --------------------------------------------------------------------------
    6. Breadcrumb
    -------------------------------------------------------------------------- */
 
 .euc-breadcrumb {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 12px;
+  line-height: 1.4;
   letter-spacing: .06em;
-  color: var(--euc-muted);
+  color: var(--c-body-soft);
   padding-top: clamp(22px, 3vw, 32px);
 }
 .euc-breadcrumb ol {
@@ -388,128 +545,142 @@ img { height: auto; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--s-2);
 }
-.euc-breadcrumb li { display: flex; align-items: center; gap: 8px; }
-.euc-breadcrumb li + li::before { content: '/'; color: #C3CCD5; }
-.euc-breadcrumb a { color: var(--euc-chip-ink); text-decoration: none; }
-.euc-breadcrumb a:hover { color: var(--euc-ink); text-decoration: underline; }
-.euc-breadcrumb [aria-current="page"] { color: var(--euc-body-soft); }
+.euc-breadcrumb li { display: flex; align-items: center; gap: var(--s-2); }
+.euc-breadcrumb li + li::before { content: '/'; color: var(--c-muted); }
+.euc-breadcrumb a { color: var(--c-eu-700); text-decoration: none; }
+.euc-breadcrumb [aria-current="page"] { color: var(--c-body-soft); }
 
 /* --------------------------------------------------------------------------
    7. Typografie
+   Tracking ist grössenabhängig: gross negativ, Fliesstext null, klein positiv.
+   Leading läuft invers dazu.
    -------------------------------------------------------------------------- */
 
 .euc-eyebrow {
-  font-family: var(--euc-font-mono);
-  font-size: 12px;
+  font-family: var(--f-mono);
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: .12em;
+  line-height: 1.2;
+  letter-spacing: .13em;
   text-transform: uppercase;
-  color: var(--euc-chip-ink);
-  margin: 0 0 16px;
+  color: var(--c-eu-500);
+  margin: 0 0 var(--s-5);
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--euc-font-display);
-  color: var(--euc-ink);
+  font-family: var(--f-display);
+  color: var(--c-ink);
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
+/* display-xl */
 h1 {
   font-weight: 400;
-  font-size: clamp(34px, 5.4vw, 52px);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  margin: 0 0 20px;
+  font-size: clamp(40px, 5.4vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 0 0 var(--s-5);
 }
 
+/* display-l */
 h2 {
-  font-weight: 400;                       /* wie Landing: SG 400 */
-  font-size: clamp(26px, 3.4vw, 34px);
-  line-height: 1.18;
-  letter-spacing: -0.025em;
-  margin: clamp(44px, 5vw, 60px) 0 16px;
+  font-weight: 400;
+  font-size: clamp(30px, 3.8vw, 40px);
+  line-height: 1.10;
+  letter-spacing: -0.030em;
+  margin: clamp(52px, 6vw, 76px) 0 var(--s-4);
 }
 
+/* display-m: die bisher fehlende Zwischenstufe zwischen H2 und Kartentitel */
 h3 {
   font-weight: 500;
-  font-size: clamp(19px, 2.1vw, 22px);
-  line-height: 1.32;
-  letter-spacing: -0.015em;
-  margin: 34px 0 12px;
+  font-size: clamp(24px, 2.6vw, 28px);
+  line-height: 1.16;
+  letter-spacing: -0.024em;
+  margin: clamp(34px, 4vw, 44px) 0 var(--s-3);
 }
 
+/* title-s */
 h4 {
   font-weight: 500;
-  font-size: 17px;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  margin: 26px 0 10px;
+  font-size: 18px;
+  line-height: 1.32;
+  letter-spacing: -0.014em;
+  margin: var(--s-6) 0 10px;
 }
 
 /* Erste Überschrift nach einem Kasten nicht doppelt abstanden */
 h2:first-child, h3:first-child, h4:first-child { margin-top: 0; }
 
 p {
-  margin: 0 0 20px;
-  color: var(--euc-body);
+  margin: 0 0 var(--s-5);
+  color: var(--c-body);
   text-wrap: pretty;
 }
 
-/* Lead unter der H1 */
+/* lead: Vorspann unter der H1 */
 .euc-lead {
-  font-size: clamp(18px, 1.5vw, 20px);
-  line-height: 1.6;
-  color: var(--euc-body);
-  margin: 0 0 8px;
+  font-size: clamp(17px, 1.4vw, 19.5px);
+  line-height: 1.58;
+  letter-spacing: -0.005em;
+  color: var(--c-body);
+  max-width: 48ch;
+  margin: 0 0 var(--s-2);
 }
 
-strong, b { font-weight: 600; color: var(--euc-ink); }
+strong, b { font-weight: 600; color: var(--c-ink); }
 
 a {
-  color: var(--euc-link);
+  color: var(--c-eu-700);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   transition: color .15s ease;
 }
-a:hover { color: var(--euc-link-hover); }
 
-/* Dezenter Textlink im Stil der Site (kein Button, keine Akzentfarbe) */
+/* Dezenter Textlink im Stil der Site */
 .euc-textlink {
-  font-family: var(--euc-font-body);
+  font-family: var(--f-body);
   font-weight: 500;
-  color: var(--euc-ink);
+  color: var(--c-eu-700);
   text-decoration: none;
-  border-bottom: 1px solid var(--euc-line-btn);
+  border-bottom: 1px solid rgba(18,50,107,.28);
   padding-bottom: 1px;
   transition: color .18s ease, border-color .18s ease;
 }
-.euc-textlink:hover { color: var(--euc-accent-deep); border-color: var(--euc-ice); }
 
-ul, ol { margin: 0 0 20px; padding-left: 24px; }
-li { margin: 0 0 9px; color: var(--euc-body); }
-li::marker { color: var(--euc-chip-ink); }
+ul, ol { margin: 0 0 var(--s-5); padding-left: var(--s-5); }
+li { margin: 0 0 9px; color: var(--c-body); }
+li::marker { color: var(--c-eu-500); }
 li > ul, li > ol { margin-top: 9px; }
 
 hr {
   border: 0;
   height: 1px;
-  background: var(--euc-line-cool);
-  margin: clamp(40px, 5vw, 56px) 0;
+  background: var(--c-line-soft);
+  margin: clamp(44px, 5vw, 60px) 0;
 }
 
 blockquote {
-  margin: 26px 0;
+  margin: var(--s-6) 0;
   padding: 4px 0 4px 20px;
-  border-left: 2px solid var(--euc-ice);
-  color: var(--euc-body-soft);
+  border-left: 2px solid var(--c-ice-300);
+  color: var(--c-body-soft);
   font-size: 17px;
+  line-height: 1.6;
 }
 
-small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted); }
+/* body-s */
+small, .euc-small {
+  font-size: 14.5px;
+  line-height: 1.52;
+  letter-spacing: .002em;
+  color: var(--c-body-soft);
+}
 
-/* Gold-Marker, sparsam — Muster aus der Landing (.euc-mob-marker) */
+/* Gold ist Interpunktion, nie Fläche: Marker-Unterstreichung */
 .euc-marker {
   background-image: linear-gradient(rgba(244, 197, 66, .38), rgba(244, 197, 66, .38));
   background-repeat: no-repeat;
@@ -519,28 +690,35 @@ small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted)
   -webkit-box-decoration-break: clone;
 }
 
+/* Zahlen in Tabellen und Statistiken */
+.euc-num, .table-wrap td .euc-num {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+}
+
 /* --------------------------------------------------------------------------
-   8. "Kurz gesagt" — der Kasten, der am häufigsten als Antwort zitiert wird
+   8. "Kurz gesagt": der Kasten, der am häufigsten als Antwort zitiert wird
    -------------------------------------------------------------------------- */
 
 .kurz-gesagt {
-  background: var(--euc-ice-soft);
-  border: 1px solid var(--euc-chip-border);
-  border-radius: 14px;
-  padding: clamp(20px, 3vw, 28px);
+  background: var(--c-ice-100);
+  border: 0;
+  border-radius: var(--r-l);
+  box-shadow: var(--sh-2), var(--edge);
+  padding: clamp(22px, 3vw, 30px);
   margin: 0 0 clamp(32px, 4vw, 44px);
 }
 .kurz-gesagt > .kurz-gesagt-titel,
 .kurz-gesagt > h2,
 .kurz-gesagt > h3 {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: .14em;
+  letter-spacing: .13em;
   text-transform: uppercase;
-  color: var(--euc-chip-ink);
-  margin: 0 0 14px;
-  line-height: 1.4;
+  color: var(--c-eu-500);
+  margin: 0 0 var(--s-4);
+  line-height: 1.2;
 }
 .kurz-gesagt ul { margin: 0; padding-left: 20px; }
 .kurz-gesagt li {
@@ -550,7 +728,7 @@ small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted)
   margin-bottom: 11px;
 }
 .kurz-gesagt li:last-child { margin-bottom: 0; }
-.kurz-gesagt li::marker { color: var(--euc-accent-deep); }
+.kurz-gesagt li::marker { color: var(--c-eu-700); }
 .kurz-gesagt p:last-child { margin-bottom: 0; }
 
 /* --------------------------------------------------------------------------
@@ -558,20 +736,22 @@ small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted)
    -------------------------------------------------------------------------- */
 
 .toc {
-  border: 1px solid var(--euc-line-card);
-  background: var(--euc-surface);
-  border-radius: 14px;
-  padding: clamp(18px, 2.5vw, 24px);
+  border: 0;
+  background: var(--c-surface);
+  border-radius: var(--r-l);
+  box-shadow: var(--sh-2), var(--edge);
+  padding: clamp(18px, 2.5vw, 26px);
   margin: 0 0 clamp(32px, 4vw, 44px);
 }
 .toc > .toc-titel {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: .14em;
+  letter-spacing: .13em;
   text-transform: uppercase;
-  color: var(--euc-on-dark-label);
-  margin: 0 0 14px;
+  color: var(--c-body-soft);
+  margin: 0 0 var(--s-3);
+  line-height: 1.2;
 }
 .toc ol, .toc ul {
   list-style: none;
@@ -581,39 +761,50 @@ small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted)
 }
 .toc li {
   margin: 0;
-  border-top: 1px solid #F1F4F6;
+  border-top: 1px solid var(--c-line-soft);
 }
 .toc li:first-child { border-top: 0; }
 .toc a {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   padding: 9px 0;
   font-size: 16px;
   line-height: 1.45;
-  color: var(--euc-ink);
+  color: var(--c-ink);
   text-decoration: none;
   transition: color .15s ease;
 }
 .toc a::before {
   counter-increment: toc;
   content: counter(toc, decimal-leading-zero);
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
-  color: var(--euc-muted);
-  margin-right: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-muted);
+  margin-right: var(--s-3);
 }
-.toc a:hover { color: var(--euc-accent-deep); }
 
 /* --------------------------------------------------------------------------
-   10. Tabellen — scrollen im eigenen Container, nie die Seite
+   10. Tabellen: scrollen im eigenen Container, nie die Seite
    -------------------------------------------------------------------------- */
 
+/* Scroll-Edge statt harter Kante, identisch zur Landing (.euc-tablewrap):
+   Schatten an `scroll`, weisse Deckel an `local`. Der Schatten steht nur auf
+   der Seite, auf der es weitergeht; ohne Überlauf ist nichts sichtbar. */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid var(--euc-line-strong);
-  border-radius: 14px;
-  background: var(--euc-surface);
-  margin: 0 0 26px;
+  border: 0;
+  border-radius: var(--r-l);
+  background:
+    linear-gradient(90deg, var(--c-surface) 40%, rgba(255,255,255,0)) 0 0 / 26px 100% no-repeat local,
+    linear-gradient(270deg, var(--c-surface) 40%, rgba(255,255,255,0)) 100% 0 / 26px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(11,30,51,.13), rgba(11,30,51,0)) 0 0 / 16px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(11,30,51,.13), rgba(11,30,51,0)) 100% 0 / 16px 100% no-repeat scroll,
+    var(--c-surface);
+  box-shadow: var(--sh-2), var(--edge);
+  margin: 0 0 var(--s-6);
 }
 
 .table-wrap > table {
@@ -628,83 +819,103 @@ small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted)
   caption-side: bottom;
   text-align: left;
   padding: 12px 18px 14px;
-  font-size: 13.5px;
-  color: var(--euc-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--c-body-soft);
 }
 
 .table-wrap th, .table-wrap td {
   text-align: left;
   vertical-align: top;
-  padding: 13px 18px;
-  border-bottom: 1px solid #EEF1F4;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--c-line-soft);
 }
 
 .table-wrap thead th {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--euc-chip-ink);
-  background: var(--euc-bg-soft);
-  border-bottom: 1px solid var(--euc-line-strong);
+  color: var(--c-eu-500);
+  background: var(--c-bg-cool);
+  border-bottom: 1px solid var(--c-line);
   white-space: nowrap;
 }
 
 .table-wrap tbody th {
-  font-family: var(--euc-font-body);
+  font-family: var(--f-body);
   font-weight: 600;
-  color: var(--euc-ink);
+  color: var(--c-ink);
 }
-.table-wrap td { color: var(--euc-body); }
+.table-wrap td { color: var(--c-body); }
 .table-wrap tbody tr:last-child th,
 .table-wrap tbody tr:last-child td { border-bottom: 0; }
-.table-wrap tbody tr:hover { background: #FBFCFD; }
 
 /* --------------------------------------------------------------------------
-   11. FAQ — Frage als H3, Antwort immer offen sichtbar (kein Accordion)
+   11. FAQ: Frage als Titel, Antwort immer offen sichtbar (kein Accordion)
    -------------------------------------------------------------------------- */
 
-.faq { margin: 0 0 8px; }
+.faq { margin: 0 0 var(--s-2); }
 
 .faq-item {
-  border-top: 1px solid var(--euc-line-cool);
-  padding: clamp(22px, 3vw, 28px) 0;
+  border-top: 1px solid var(--c-line-soft);
+  padding: clamp(24px, 3vw, 30px) 0;
 }
-.faq-item:last-child { border-bottom: 1px solid var(--euc-line-cool); }
+.faq-item:last-child { border-bottom: 1px solid var(--c-line-soft); }
 
+/* title */
 .faq-item > h3,
 .faq-item > h2 {
-  font-family: var(--euc-font-display);
+  font-family: var(--f-display);
   font-weight: 500;
-  font-size: clamp(18px, 2vw, 21px);
-  line-height: 1.35;
-  letter-spacing: -0.015em;
-  color: var(--euc-ink);
-  margin: 0 0 12px;
+  font-size: 22px;
+  line-height: 1.20;
+  letter-spacing: -0.020em;
+  color: var(--c-ink);
+  margin: 0 0 var(--s-3);
 }
 .faq-item p:last-child,
 .faq-item ul:last-child,
 .faq-item ol:last-child { margin-bottom: 0; }
 
 /* --------------------------------------------------------------------------
-   12. Karten und Chips
+   12. Karten und Chips: Materialkante statt Umrisslinie
    -------------------------------------------------------------------------- */
 
 .euc-card {
-  border: 1px solid var(--euc-line-card);
-  background: var(--euc-surface);
-  border-radius: 14px;
+  position: relative;
+  border: 0;
+  background: var(--c-surface);
+  border-radius: var(--r-l);
+  box-shadow: var(--sh-2), var(--edge);
   padding: 22px;
-  margin: 0 0 16px;
+  margin: 0 0 var(--s-4);
+  transition: transform var(--d-hover) var(--ease-out),
+              box-shadow var(--d-hover) var(--ease-out);
 }
 .euc-card > :last-child { margin-bottom: 0; }
+.euc-card h3, .euc-card h4 { margin-top: 0; }
+
+/* title-s + body-s im Kartenkontext */
+.euc-card h3 {
+  font-size: 17px;
+  line-height: 1.32;
+  letter-spacing: -0.014em;
+  font-weight: 500;
+}
+.euc-card p, .euc-card li {
+  font-size: 14.5px;
+  line-height: 1.52;
+  letter-spacing: .002em;
+}
 
 .euc-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin: 0 0 26px;
+  gap: var(--s-5);
+  margin: 0 0 var(--s-6);
 }
 .euc-cards .euc-card { margin: 0; }
 
@@ -712,159 +923,184 @@ small, .euc-small { font-size: 14.5px; line-height: 1.6; color: var(--euc-muted)
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   line-height: 1;
-  color: var(--euc-chip-ink);
-  background: var(--euc-ice-soft);
-  border: 1px solid var(--euc-chip-border);
-  border-radius: 99px;
-  padding: 6px 11px;
-  white-space: nowrap;
+  letter-spacing: .02em;
+  color: var(--c-eu-500);
+  background: var(--c-ice-100);
+  border: 0;
+  border-radius: var(--r-full);
+  box-shadow: var(--sh-1), var(--edge-soft);
+  padding: 7px 12px;
+  /* Lange Chips brechen um, statt bei 320px aus der Seite zu laufen. */
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.3;
+  text-align: left;
 }
-.chip-neutral { color: var(--euc-muted); background: #F1F3F5; border-color: var(--euc-line-strong); }
-.chip-gold    { color: #7A5B06; background: rgba(244, 197, 66, .16); border-color: rgba(244, 197, 66, .45); }
+.chip-neutral { color: var(--c-body-soft); background: #F1F3F5; }
+.chip-gold    { color: #6B4E02; background: rgba(244, 197, 66, .18); }
 
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: 0 0 var(--s-5); }
 
 /* --------------------------------------------------------------------------
    13. Code
    -------------------------------------------------------------------------- */
 
 code, kbd, samp {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: .875em;
 }
 
 :not(pre) > code {
-  background: var(--euc-ice-soft);
-  border: 1px solid var(--euc-chip-border);
+  background: var(--c-ice-100);
+  border: 0;
+  box-shadow: var(--edge-soft);
   border-radius: 6px;
-  padding: 1px 6px;
+  padding: 2px 6px;
   color: #1F4257;
   white-space: nowrap;
 }
 
 pre {
-  margin: 0 0 26px;
-  padding: 18px 20px;
-  background: var(--euc-dark);
-  border-radius: 12px;
+  margin: 0 0 var(--s-6);
+  padding: 20px 22px;
+  background: var(--c-deep);
+  border-radius: var(--r-m);
+  box-shadow: var(--sh-3);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 pre code {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 13.5px;
   line-height: 1.65;
   color: #D7E3EE;
   background: none;
   border: 0;
+  box-shadow: none;
   padding: 0;
   white-space: pre;
 }
 
 /* --------------------------------------------------------------------------
-   14. CTA-Box — dunkler Block mit Warteliste-Button
+   14. CTA-Box: tiefer Block in der Farbwelt des `europa`-Presets
+   Content-Seiten laden kein JavaScript, also kein Canvas: derselbe
+   Farbverlauf als statisches Standbild aus gestapelten Radial-Verläufen.
    -------------------------------------------------------------------------- */
 
 .cta-box {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  background: var(--euc-dark);
-  color: var(--euc-on-dark);
-  border-radius: 18px;
-  padding: clamp(30px, 4.5vw, 46px);
-  margin: clamp(44px, 6vw, 64px) 0 0;
+  color: var(--c-on-deep);
+  border-radius: var(--r-2xl);
+  padding: clamp(32px, 4.5vw, 52px);
+  margin: clamp(48px, 6vw, 72px) 0 0;
+  background-color: var(--c-deep);
+  background-image:
+    radial-gradient(74% 108% at 82% 8%,  rgba(63,124,201,.48) 0%, rgba(63,124,201,0) 62%),
+    radial-gradient(62% 92%  at 14% 96%, rgba(46,108,134,.58) 0%, rgba(46,108,134,0) 66%),
+    radial-gradient(122% 128% at 96% 88%, rgba(18,50,107,.86) 0%, rgba(18,50,107,0) 58%),
+    radial-gradient(46% 64% at 58% 30%,  rgba(165,216,230,.16) 0%, rgba(165,216,230,0) 70%),
+    linear-gradient(148deg, #0B1E33 0%, #12326B 58%, #0B1E33 100%);
+  box-shadow: var(--sh-3);
 }
-.cta-box::after {
+/* Korn gegen Banding: dasselbe feTurbulence-Muster wie auf der Landing */
+.cta-box::before {
   content: '';
   position: absolute;
-  left: 50%;
-  top: 128%;
-  transform: translate(-50%, -50%);
-  width: 82%;
-  height: 130%;
-  background: radial-gradient(closest-side, rgba(165, 216, 230, .16), transparent);
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
+  opacity: .05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .cta-box > * { position: relative; z-index: 1; }
 
 .cta-box h2, .cta-box h3 {
-  font-family: var(--euc-font-display);
+  font-family: var(--f-display);
   font-weight: 400;
-  font-size: clamp(26px, 3.6vw, 36px);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--euc-on-dark);
-  margin: 0 0 14px;
+  font-size: clamp(28px, 3.6vw, 40px);
+  line-height: 1.06;
+  letter-spacing: -0.030em;
+  color: var(--c-on-deep);
+  margin: 0 0 var(--s-4);
 }
 .cta-box p {
-  color: var(--euc-on-dark-body);
+  color: var(--c-on-deep-body);
   font-size: 16.5px;
   line-height: 1.6;
-  margin: 0 0 24px;
+  margin: 0 0 var(--s-5);
   max-width: 46ch;
 }
 .cta-box p:last-child { margin-bottom: 0; }
 
-.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.cta-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
 
 .cta-box .euc-btn-primary {
-  color: var(--euc-dark);
-  background: var(--euc-on-dark);
+  color: var(--c-deep);
+  background: var(--c-on-deep);
   font-size: 15px;
   padding: 14px 22px;
-  border-radius: 10px;
-  box-shadow: none;
+  border-radius: var(--r-s);
+  box-shadow: var(--sh-2), inset 0 1px 0 rgba(255,255,255,.6);
 }
-.cta-box .euc-btn-primary:hover { background: #FFFFFF; color: var(--euc-dark); }
 
 .cta-box .euc-btn-secondary {
-  color: var(--euc-on-dark);
-  border-color: rgba(165, 216, 230, .4);
+  color: var(--c-on-deep);
+  background: rgba(165, 216, 230, .10);
   font-size: 15px;
   padding: 14px 22px;
-  border-radius: 10px;
+  border-radius: var(--r-s);
+  box-shadow: var(--edge-deep);
 }
-.cta-box .euc-btn-secondary:hover { border-color: var(--euc-ice); background: rgba(165, 216, 230, .08); }
 
 /* Weiterführende Links unter der CTA-Box */
 .euc-weiter {
-  margin: clamp(30px, 4vw, 40px) 0 0;
-  padding-top: 24px;
-  border-top: 1px solid var(--euc-line-cool);
+  margin: clamp(32px, 4vw, 44px) 0 0;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-line-soft);
 }
 .euc-weiter .euc-weiter-titel {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: .14em;
+  letter-spacing: .13em;
   text-transform: uppercase;
-  color: var(--euc-on-dark-label);
-  margin: 0 0 14px;
+  color: var(--c-body-soft);
+  margin: 0 0 var(--s-3);
+  line-height: 1.2;
 }
 .euc-weiter ul { list-style: none; margin: 0; padding: 0; }
 .euc-weiter li { margin: 0 0 10px; }
-.euc-weiter a { font-weight: 500; color: var(--euc-ink); text-decoration: none; border-bottom: 1px solid var(--euc-line-btn); }
-.euc-weiter a:hover { color: var(--euc-accent-deep); border-color: var(--euc-ice); }
-
-/* --------------------------------------------------------------------------
-   15. "Zuletzt geprüft" — Fusszeile der Seite (undatiert, aber aktuell)
-   -------------------------------------------------------------------------- */
-
-.geprueft {
-  margin: clamp(34px, 4vw, 46px) 0 clamp(56px, 7vw, 80px);
-  padding-top: 20px;
-  border-top: 1px solid var(--euc-line-cool);
-  font-family: var(--euc-font-mono);
-  font-size: 12px;
-  letter-spacing: .04em;
-  color: var(--euc-muted);
+.euc-weiter a {
+  font-weight: 500;
+  color: var(--c-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--c-line);
+  transition: color .18s ease, border-color .18s ease;
 }
 
 /* --------------------------------------------------------------------------
-   16. Footer — statische Fassung von SiteFooter.dc.html
+   15. "Zuletzt geprüft": Fusszeile der Seite
+   -------------------------------------------------------------------------- */
+
+.geprueft {
+  margin: clamp(36px, 4vw, 48px) 0 clamp(56px, 7vw, 80px);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-line-soft);
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: .06em;
+  color: var(--c-body-soft);
+}
+
+/* --------------------------------------------------------------------------
+   16. Footer: statische Fassung von SiteFooter.dc.html
    -------------------------------------------------------------------------- */
 
 @keyframes euc-pulse {
@@ -874,83 +1110,92 @@ pre code {
 }
 
 .euc-footer {
-  background: var(--euc-dark);
-  color: var(--euc-on-dark);
-  padding: clamp(56px, 7vw, 96px) var(--euc-gutter) 34px;
+  background: var(--c-deep);
+  color: var(--c-on-deep);
+  padding: clamp(64px, 8vw, 104px) var(--gutter) var(--s-6);
 }
-.euc-footer-inner { max-width: 1200px; margin: 0 auto; }
+.euc-footer-inner { max-width: var(--w-max); margin: 0 auto; }
 
 .euc-footer-top {
   display: flex;
   flex-wrap: wrap;
-  gap: 48px 56px;
+  gap: var(--s-8) 56px;
   justify-content: space-between;
 }
 
 .euc-footer-brandcol { flex: 1 1 300px; max-width: 360px; }
 .euc-footer-brand { display: flex; align-items: center; gap: 11px; }
 .euc-footer-brand span {
-  font-family: var(--euc-font-display);
+  font-family: var(--f-display);
   font-weight: 600;
   font-size: 19px;
   letter-spacing: -0.02em;
-  color: var(--euc-on-dark);
+  color: var(--c-on-deep);
 }
+/* Auf Navy trägt Europa-Blau keinen Kontrast: dort steht „AI" in Eisblau. */
+.euc-footer-brand .euc-brand-ai { color: var(--c-ice-300); }
+
 .euc-footer-tagline {
-  font-family: var(--euc-font-display);
+  font-family: var(--f-display);
   font-weight: 400;
   font-size: 17px;
   line-height: 1.4;
-  color: var(--euc-on-dark-body);
+  letter-spacing: -0.014em;
+  color: var(--c-on-deep-body);
   margin: 18px 0 0;
   max-width: 280px;
 }
 
-.euc-badges { display: flex; flex-direction: column; gap: 15px; margin-top: 26px; }
+.euc-badges { display: flex; flex-direction: column; gap: 15px; margin-top: var(--s-6); }
 .euc-badge { display: flex; align-items: center; gap: 13px; }
 .euc-badge-ico {
   flex: 0 0 auto;
   width: 40px; height: 40px;
   border-radius: 50%;
   background: rgba(165, 216, 230, .10);
-  border: 1px solid rgba(165, 216, 230, .22);
+  border: 0;
+  box-shadow: var(--edge-deep);
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 .euc-badge img { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; display: block; }
 .euc-badge-t {
-  font-family: var(--euc-font-body);
+  font-family: var(--f-body);
   font-size: 14px;
   font-weight: 600;
-  color: var(--euc-on-dark);
+  color: var(--c-on-deep);
   line-height: 1.2;
 }
 .euc-badge-s {
-  font-family: var(--euc-font-body);
+  font-family: var(--f-body);
   font-size: 12.5px;
-  color: var(--euc-on-dark-muted);
+  line-height: 1.4;
+  letter-spacing: .006em;
+  color: var(--c-on-deep-muted);
   margin-top: 3px;
 }
 .euc-footer-more {
-  font-family: var(--euc-font-body);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--f-body);
   font-size: 13.5px;
   font-weight: 500;
   text-decoration: none;
-  color: var(--euc-ice);
-  margin-top: 2px;
+  color: var(--c-ice-300);
   transition: color .15s ease;
 }
-.euc-footer-more:hover { color: #C9E9F2; }
 
 .euc-status {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-top: 22px;
-  padding: 7px 12px;
-  border: 1px solid rgba(165, 216, 230, .25);
-  border-radius: 99px;
+  margin-top: var(--s-5);
+  padding: 8px 13px;
+  border: 0;
+  box-shadow: var(--edge-deep);
+  border-radius: var(--r-full);
 }
 .euc-status-dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
 .euc-status-dot i {
@@ -967,55 +1212,97 @@ pre code {
   background: #7DE0B0;
 }
 .euc-status span {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 12px;
-  color: var(--euc-on-dark-body);
+  letter-spacing: .04em;
+  color: var(--c-on-deep-body);
 }
-.euc-status .euc-status-sep { color: var(--euc-on-dark-label); }
-.euc-status .euc-status-loc { color: var(--euc-on-dark-muted); }
+.euc-status .euc-status-sep { color: var(--c-on-deep-label); }
+.euc-status .euc-status-loc { color: var(--c-on-deep-muted); }
 
-.euc-footer-cols { display: flex; flex-wrap: wrap; gap: 40px 56px; }
+.euc-footer-cols { display: flex; flex-wrap: wrap; gap: var(--s-7) 56px; }
 .euc-footer-col { min-width: 150px; }
 .euc-footer-col h2, .euc-footer-col .euc-footer-coltitle {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 400;
-  letter-spacing: .14em;
+  line-height: 1.2;
+  letter-spacing: .13em;
   text-transform: uppercase;
-  color: var(--euc-on-dark-label);
+  color: var(--c-on-deep-label);
   margin: 0;
 }
-.euc-footer-col nav { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+.euc-footer-col nav { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
 .euc-footer-col nav a {
-  font-family: var(--euc-font-body);
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--f-body);
   font-size: 14.5px;
   text-decoration: none;
-  color: var(--euc-on-dark-body);
+  color: var(--c-on-deep-body);
   transition: color .15s ease;
 }
-.euc-footer-col nav a:hover { color: var(--euc-ice); }
 
-.euc-footer-rule { height: 1px; background: rgba(165, 216, 230, .16); margin: 44px 0 22px; }
+.euc-footer-rule { height: 1px; background: rgba(165, 216, 230, .16); margin: var(--s-7) 0 var(--s-5); }
 
 .euc-footer-bottom {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  gap: var(--s-4);
 }
 .euc-footer-bottom .euc-rights {
-  font-family: var(--euc-font-body);
+  font-family: var(--f-body);
   font-size: 13px;
-  color: var(--euc-on-dark-muted);
+  line-height: 1.45;
+  letter-spacing: .006em;
+  color: var(--c-on-deep-muted);
 }
 .euc-footer-bottom .euc-built {
-  font-family: var(--euc-font-mono);
+  font-family: var(--f-mono);
   font-size: 12px;
-  color: var(--euc-on-dark-label);
+  letter-spacing: .06em;
+  color: var(--c-on-deep-label);
 }
 
 /* --------------------------------------------------------------------------
-   17. Responsive
+   17. Hover: ausschliesslich für echte Zeigegeräte.
+   Keine Information hängt an Hover.
+   -------------------------------------------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover { color: var(--c-ink); }
+  .euc-nav a:hover { color: var(--c-ink); }
+  .euc-breadcrumb a:hover { color: var(--c-ink); text-decoration: underline; }
+  .euc-btn-primary:hover {
+    background: var(--c-deep-hover);
+    color: var(--c-on-deep);
+    transform: translateY(-2px);
+    box-shadow: var(--sh-3), inset 0 1px 0 rgba(255,255,255,.10);
+  }
+  .euc-btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sh-2), var(--edge);
+  }
+  .euc-mob-panel a:hover { background: var(--c-ice-100); }
+  .euc-mob-panel a.euc-btn-primary:hover { background: var(--c-deep-hover); color: var(--c-on-deep); }
+  .toc a:hover { color: var(--c-eu-700); }
+  .table-wrap tbody tr:hover { background: #FBFCFD; }
+  .euc-textlink:hover { color: var(--c-eu-500); border-color: var(--c-ice-300); }
+  .euc-card:hover { transform: translateY(-3px); box-shadow: var(--sh-3), var(--edge); }
+  .euc-weiter a:hover { color: var(--c-eu-700); border-color: var(--c-ice-300); }
+  .euc-footer-col nav a:hover { color: var(--c-ice-300); }
+  .euc-footer-more:hover { color: #C9E9F2; }
+  .cta-box .euc-btn-primary:hover { background: #FFFFFF; color: var(--c-deep); }
+  .cta-box .euc-btn-secondary:hover { background: rgba(165, 216, 230, .18); }
+}
+
+/* Druckfeedback gilt auch auf Touch */
+.euc-card:active { transform: scale(.985); }
+
+/* --------------------------------------------------------------------------
+   18. Responsive
    -------------------------------------------------------------------------- */
 
 /* Header-Umschaltpunkt exakt wie SiteHeader (window.innerWidth < 940) */
@@ -1026,17 +1313,45 @@ pre code {
 
 @media (max-width: 600px) {
   body { font-size: 17px; }
-  :root { --euc-header-h: 64px; }
-  .euc-footer-top { gap: 36px; }
-  .euc-footer-cols { gap: 32px 40px; }
+  :root { --header-h: 64px; }
+  h1 { font-size: 40px; line-height: 1.04; }
+  h2 { font-size: 30px; line-height: 1.12; }
+  h3 { font-size: 24px; }
+  .faq-item > h3, .faq-item > h2 { font-size: 21px; }
+  .euc-lead { font-size: 17px; }
+  .kurz-gesagt li { font-size: 16.5px; }
+  .euc-footer-top { gap: var(--s-7); }
+  .euc-footer-cols { gap: var(--s-6) var(--s-7); }
   .euc-footer-col { min-width: 132px; }
-  .cta-box { border-radius: 14px; }
+  .cta-box { border-radius: var(--r-xl); }
   .table-wrap > table { font-size: 14.5px; }
-  .table-wrap th, .table-wrap td { padding: 11px 14px; }
+  .table-wrap th, .table-wrap td { padding: 12px 14px; }
 }
 
 @media (max-width: 380px) {
   .euc-footer-col { min-width: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   19. Fallbacks: Transparenz, Bewegung, Druck
+   -------------------------------------------------------------------------- */
+
+/* Ohne backdrop-filter (oder wenn Transparenz reduziert werden soll) wird
+   die Leiste deckend. Nie zwei transluzente Flächen übereinander. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .euc-header { background: var(--c-bg); }
+  .euc-btn-secondary { background: var(--c-surface); }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .euc-header {
+    background: var(--c-bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    /* Sonst überschriebe die Scroll-Timeline-Animation die deckende Fläche. */
+    animation: none;
+  }
+  .euc-btn-secondary { background: var(--c-surface); }
 }
 
 @media print {
@@ -1053,4 +1368,16 @@ pre code {
     transition-duration: .001ms !important;
   }
   html { scroll-behavior: auto; }
+  /* Der Pauschalhammer oben friert die Scroll-Edge ein: sichtbar lassen. */
+  .euc-header::after { opacity: 1; animation: none; }
+  .euc-card:hover, .euc-btn-primary:hover, .euc-btn-secondary:hover { transform: none; }
+  /* Bewegung raus, Blende bleibt. !important ist nötig, weil der Pauschalfilter
+     oben selbst !important trägt; die höhere Spezifität gewinnt. */
+  @supports selector(::details-content) {
+    .euc-mob::details-content {
+      transform: none !important;
+      transition: opacity 140ms linear, content-visibility 140ms allow-discrete !important;
+    }
+    .euc-mob[open]::details-content { transform: none !important; }
+  }
 }

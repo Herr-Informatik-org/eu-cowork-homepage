@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-Hosting in 60 Sekunden mit Docker Compose | EU-Cowork</title>
+<title>Self-Hosting in 60 Sekunden mit Docker Compose | EU Cowork AI</title>
 <meta name="description" content="Ein Compose-Stack, Auto-TLS via Caddy, private Websuche mit SearXNG. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, self-hostbar ab 1 User.">
 <link rel="canonical" href="https://eucowork.ai/self-hosting">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://eucowork.ai/self-hosting">
-<meta property="og:title" content="Self-Hosting in 60 Sekunden mit Docker Compose | EU-Cowork">
+<meta property="og:title" content="Self-Hosting in 60 Sekunden mit Docker Compose | EU Cowork AI">
 <meta property="og:description" content="Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, ab 1 User.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Self-Hosting in 60 Sekunden | EU-Cowork">
+<meta name="twitter:title" content="Self-Hosting in 60 Sekunden | EU Cowork AI">
 <meta name="twitter:description" content="Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, ab 1 User.">
 <meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -47,14 +47,23 @@
   <ul>
     <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
     <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
-    <li><a href="/">Startseite: EU-Cowork im Überblick</a></li>
+    <li><a href="/">Startseite: EU Cowork AI im Überblick</a></li>
   </ul>
 </noscript>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
 <style>
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -219,7 +228,7 @@ class Component extends DCLogic {
   "inLanguage": "de-CH",
   "isPartOf": { "@id": "https://eucowork.ai/#website" },
   "about": { "@id": "https://eucowork.ai/#software" },
-  "description": "EU-Cowork lässt sich vollständig selbst hosten: Repository klonen, install.sh ausführen, https://localhost öffnen. Fertig in rund 60 Sekunden. Der Stack ist Docker Compose, nichts Exotisches und alles nachvollziehbar. Enthalten sind Auto-TLS via Caddy ohne manuelles Zertifikats-Setup, private Websuche über selbst gehostetes SearXNG und standardmässig deaktivierte Telemetrie. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, ab 1 Nutzer.",
+  "description": "EU Cowork AI lässt sich vollständig selbst hosten: Repository klonen, install.sh ausführen, https://localhost öffnen. Fertig in rund 60 Sekunden. Der Stack ist Docker Compose, nichts Exotisches und alles nachvollziehbar. Enthalten sind Auto-TLS via Caddy ohne manuelles Zertifikats-Setup, private Websuche über selbst gehostetes SearXNG und standardmässig deaktivierte Telemetrie. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang, ab 1 Nutzer.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [

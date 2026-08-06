@@ -3,19 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Datenschutzerklärung | EU-Cowork</title>
-<meta name="description" content="Wie EU-Cowork mit personenbezogenen Daten umgeht, nach revDSG (Schweiz) und DSGVO. Kurz, weil wir wenig erheben. Telemetrie standardmässig aus.">
+<title>Datenschutzerklärung | EU Cowork AI</title>
+<meta name="description" content="Wie EU Cowork AI mit personenbezogenen Daten umgeht, nach revDSG (Schweiz) und DSGVO. Kurz, weil wir wenig erheben. Telemetrie standardmässig aus.">
 <link rel="canonical" href="https://eucowork.ai/datenschutz">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://eucowork.ai/datenschutz">
-<meta property="og:title" content="Datenschutzerklärung | EU-Cowork">
+<meta property="og:title" content="Datenschutzerklärung | EU Cowork AI">
 <meta property="og:description" content="Nach revDSG und DSGVO. Telemetrie standardmässig aus.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -40,23 +42,56 @@
 </noscript>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
+<style>
+  /* ---- Design v2, Tokens der Rechtstexte -------------------------------
+     Werte identisch zu assets/content.css, damit statische und dynamische
+     Seiten nicht auseinanderdriften. ------------------------------------- */
+  :root{
+    --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
+    --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
+    --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
+    --c-line:#E7ECF0; --c-line-soft:#EEF1F4;
+    --sh-1:0 1px 2px rgba(11,30,51,.05);
+    --sh-2:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18);
+    --edge:inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
+  }
   *{ box-sizing:border-box; }
-  body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
-  a{ color:#0E3A63; } a:hover{ color:#0B1E33; }
-  ::selection{ background:#A5D8E6; color:#0B1E33; }
-  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--c-bg); color:var(--c-body);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+  a{ color:var(--c-eu-700); text-underline-offset:2px; transition:color .15s ease; }
+  :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:6px; }
+  ::selection{ background:var(--c-ice-300); color:var(--c-deep); }
+  /* Lange Komposita (z. B. „Auftragsverarbeitungsvertrag") dürfen die Seite
+     nicht sprengen. */
+  h1,h2,h3{ text-wrap:balance; overflow-wrap:break-word; hyphens:auto; }
+  p{ text-wrap:pretty; }
+  @media (hover:hover) and (pointer:fine){ a:hover{ color:var(--c-ink); } }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } html{ scroll-behavior:auto; } }
 </style>
 </helmet>
 <div id="top">
   <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
   <main style="max-width:780px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.03em; color:#0B1E33; margin:0;">{{ t.h1 }}</h1>
-    <p style="font-family:'Inter',sans-serif; font-size:17px; line-height:1.6; color:#47535F; margin:16px 0 0;">{{ t.intro }}</p>
-    <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:7px 13px; border:1px solid #CDE6D8; background:#EDF7F1; border-radius:99px;">
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:0;">{{ t.h1 }}</h1>
+    <p style="font-family:'Inter',sans-serif; font-size:17.5px; line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:16px 0 0;">{{ t.intro }}</p>
+    <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:7px 13px; border:0; background:#EDF7F1; box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 0 0 1px rgba(46,125,91,.24); border-radius:99px;">
       <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2E7D5B;">{{ t.badge }}</span>
     </div>
@@ -64,14 +99,14 @@
       <sc-for list="{{ t.sections }}" as="s" hint-placeholder-count="7">
         <div>
           <div style="display:flex; align-items:baseline; gap:12px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#A5B7C6; font-weight:500;">{{ s.n }}</span>
-            <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:20px; letter-spacing:-.01em; color:#0B1E33; margin:0;">{{ s.t }}</h2>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#2E6C86; font-weight:500; font-variant-numeric:tabular-nums;">{{ s.n }}</span>
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:22px; line-height:1.2; letter-spacing:-0.020em; color:#0B1E33; margin:0;">{{ s.t }}</h2>
           </div>
-          <p style="font-family:'Inter',sans-serif; font-size:15.5px; line-height:1.68; color:#4A5560; margin:10px 0 0; padding-left:26px;">{{ s.b }}</p>
+          <p style="font-family:'Inter',sans-serif; font-size:16px; line-height:1.62; color:#41505E; margin:10px 0 0; padding-left:26px;">{{ s.b }}</p>
         </div>
       </sc-for>
     </div>
-    <div style="margin-top:44px; padding:22px 24px; border:1px solid #E4E8EC; border-radius:14px; background:#F7FAFC; font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:#66727F;">{{ t.disclaimer }}</div>
+    <div style="margin-top:44px; padding:22px 24px; border:0; border-radius:20px; background:#F5F8FA; box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06); font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:#5A6472;">{{ t.disclaimer }}</div>
   </main>
   <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
 </div>
@@ -88,7 +123,7 @@ class Component extends DCLogic {
         intro:'Wie wir mit personenbezogenen Daten umgehen — nach revDSG (Schweiz) und DSGVO. Kurz, weil wir wenig erheben.',
         badge:'Telemetrie standardmässig aus',
         sections:[
-          { n:'1', t:'Verantwortliche Stelle', b:'Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz (Anbieterin von EU-Cowork). Kontakt: info@herr-informatik.ch.' },
+          { n:'1', t:'Verantwortliche Stelle', b:'Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Schweiz (Anbieterin von EU Cowork AI). Kontakt: info@herr-informatik.ch.' },
           { n:'2', t:'Welche Daten wir verarbeiten', b:'Konto- und Abrechnungsdaten sowie die Inhalte, die ihr aktiv in den Dienst eingebt. Keine Werbe-Tracker, keine Weitergabe an Werbenetzwerke.' },
           { n:'3', t:'Kein Training mit euren Daten', b:'Eure Inhalte werden nicht zum Training von Modellen verwendet. No-Training ist vertraglich zugesichert.' },
           { n:'4', t:'Telemetrie', b:'Standardmässig deaktiviert. Optionale, aggregierte Nutzungsmetriken nur nach ausdrücklicher Aktivierung.' },
@@ -103,7 +138,7 @@ class Component extends DCLogic {
         intro:'How we handle personal data — under revDSG (Switzerland) and GDPR. Short, because we collect little.',
         badge:'Telemetry off by default',
         sections:[
-          { n:'1', t:'Controller', b:'Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Switzerland (provider of EU-Cowork). Contact: info@herr-informatik.ch.' },
+          { n:'1', t:'Controller', b:'Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Switzerland (provider of EU Cowork AI). Contact: info@herr-informatik.ch.' },
           { n:'2', t:'What data we process', b:'Account and billing data plus the content you actively enter into the service. No advertising trackers, no sharing with ad networks.' },
           { n:'3', t:'No training on your data', b:'Your content is never used to train models. No-training is contractually assured.' },
           { n:'4', t:'Telemetry', b:'Disabled by default. Optional, aggregated usage metrics only after explicit opt-in.' },
@@ -130,7 +165,7 @@ class Component extends DCLogic {
   "inLanguage": "de-CH",
   "isPartOf": { "@id": "https://eucowork.ai/#website" },
   "about": { "@id": "https://eucowork.ai/#software" },
-  "description": "Wie EU-Cowork mit personenbezogenen Daten umgeht, nach revDSG (Schweiz) und DSGVO. Verantwortliche Stelle ist die Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch. Verarbeitet werden Konto- und Abrechnungsdaten sowie die aktiv eingegebenen Inhalte; keine Werbe-Tracker, keine Weitergabe an Werbenetzwerke. Kundeninhalte trainieren keine Modelle, Telemetrie ist standardmässig deaktiviert. Betrieb in der Schweiz (Green, Lupfig), Modell-Inferenz EU-verarbeitet über EuRouter. Beim Self-Hosting bleiben die Daten vollständig beim Kunden.",
+  "description": "Wie EU Cowork AI mit personenbezogenen Daten umgeht, nach revDSG (Schweiz) und DSGVO. Verantwortliche Stelle ist die Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch. Verarbeitet werden Konto- und Abrechnungsdaten sowie die aktiv eingegebenen Inhalte; keine Werbe-Tracker, keine Weitergabe an Werbenetzwerke. Kundeninhalte trainieren keine Modelle, Telemetrie ist standardmässig deaktiviert. Betrieb in der Schweiz (Green, Lupfig), Modell-Inferenz EU-verarbeitet über EuRouter. Beim Self-Hosting bleiben die Daten vollständig beim Kunden.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [

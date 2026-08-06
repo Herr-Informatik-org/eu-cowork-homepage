@@ -3,19 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Subprozessoren | EU-Cowork</title>
-<meta name="description" content="Aktuelle Liste der Unterauftragsverarbeiter von EU-Cowork. Änderungen werden vorab angekündigt. Diese Liste ist Teil des AVV.">
+<title>Subprozessoren | EU Cowork AI</title>
+<meta name="description" content="Aktuelle Liste der Unterauftragsverarbeiter von EU Cowork AI. Änderungen werden vorab angekündigt. Diese Liste ist Teil des AVV.">
 <link rel="canonical" href="https://eucowork.ai/subprozessoren">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="EU-Cowork">
+<meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://eucowork.ai/subprozessoren">
-<meta property="og:title" content="Subprozessoren | EU-Cowork">
+<meta property="og:title" content="Subprozessoren | EU Cowork AI">
 <meta property="og:description" content="Liste der Unterauftragsverarbeiter. Teil des AVV.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -25,7 +27,7 @@
   <ul>
     <li><strong>Green (Lupfig AG):</strong> Hosting und Rechenzentrum, ISO 27001. Lupfig, Schweiz. Region CH.</li>
     <li><strong>EuRouter:</strong> Modell-Inferenz, EU-verarbeitet. EU. Region EU.</li>
-    <li><strong>SearXNG (self-hosted):</strong> Websuche ohne Drittanbieter-Tracking. Auf EU-Cowork-Infrastruktur. Region CH/EU.</li>
+    <li><strong>SearXNG (self-hosted):</strong> Websuche ohne Drittanbieter-Tracking. Auf Infrastruktur von EU Cowork AI. Region CH/EU.</li>
   </ul>
   <p>Stand: laufend gepflegt. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den von euch selbst gewählten Modellanbietern.</p>
   <h2>Weiter</h2>
@@ -38,41 +40,73 @@
 </noscript>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
+<style>
+  /* ---- Design v2, Tokens der Rechtstexte -------------------------------
+     Werte identisch zu assets/content.css, damit statische und dynamische
+     Seiten nicht auseinanderdriften. ------------------------------------- */
+  :root{
+    --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
+    --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
+    --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
+    --c-line:#E7ECF0; --c-line-soft:#EEF1F4;
+    --sh-1:0 1px 2px rgba(11,30,51,.05);
+    --sh-2:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18);
+    --edge:inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
+  }
   *{ box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
-  body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
-  a{ color:#0E3A63; } a:hover{ color:#0B1E33; }
-  ::selection{ background:#A5D8E6; color:#0B1E33; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--c-bg); color:var(--c-body);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+  a{ color:var(--c-eu-700); text-underline-offset:2px; transition:color .15s ease; }
+  :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:6px; }
+  ::selection{ background:var(--c-ice-300); color:var(--c-deep); }
+  /* Lange Komposita (z. B. „Auftragsverarbeitungsvertrag") dürfen die Seite
+     nicht sprengen. */
+  h1,h2,h3{ text-wrap:balance; overflow-wrap:break-word; hyphens:auto; }
+  p{ text-wrap:pretty; }
+  @media (hover:hover) and (pointer:fine){ a:hover{ color:var(--c-ink); } }
   @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } html{ scroll-behavior:auto; } }
 </style>
 </helmet>
 <div id="top">
   <dc-import name="SiteHeader" active-nav="security" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
   <main style="max-width:940px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
-    <a href="/sicherheit" style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#3E6E86; text-decoration:none;">← {{ t.back }}</a>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.03em; color:#0B1E33; margin:20px 0 0;">{{ t.h1 }}</h1>
-    <p style="font-family:'Inter',sans-serif; font-size:17px; line-height:1.6; color:#47535F; margin:16px 0 0; max-width:640px;">{{ t.intro }}</p>
+    <a href="/sicherheit" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.06em; color:#12326B; text-decoration:none; display:inline-flex; align-items:center; min-height:44px;">← {{ t.back }}</a>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:20px 0 0;">{{ t.h1 }}</h1>
+    <p style="font-family:'Inter',sans-serif; font-size:17.5px; line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:16px 0 0; max-width:640px;">{{ t.intro }}</p>
 
-    <div style="margin-top:36px; border:1px solid #E4E8EC; border-radius:14px; overflow:hidden; background:#fff;">
-      <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1fr 0.9fr; gap:0; background:#F1F5F8; border-bottom:1px solid #E4E8EC;">
+    <div style="margin-top:36px; border:0; border-radius:20px; overflow-x:auto; -webkit-overflow-scrolling:touch; background:#fff; box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);">
+      <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1fr 0.9fr; min-width:640px; gap:0; background:#F5F8FA; border-bottom:1px solid #E7ECF0;">
         <sc-for list="{{ t.head }}" as="h" hint-placeholder-count="4">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#5A6472; padding:13px 16px;">{{ h }}</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#2E6C86; padding:13px 16px;">{{ h }}</div>
         </sc-for>
       </div>
       <sc-for list="{{ t.rows }}" as="r" hint-placeholder-count="4">
-        <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1fr 0.9fr; gap:0; border-bottom:1px solid #EEF1F4; align-items:center;">
+        <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1fr 0.9fr; min-width:640px; gap:0; border-bottom:1px solid #EEF1F4; align-items:center;">
           <div style="padding:15px 16px; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:500; color:#0B1E33;">{{ r.name }}</div>
-          <div style="padding:15px 16px; font-family:'Inter',sans-serif; font-size:14px; color:#4A5560;">{{ r.purpose }}</div>
-          <div style="padding:15px 16px; font-family:'Inter',sans-serif; font-size:14px; color:#4A5560;">{{ r.location }}</div>
+          <div style="padding:15px 16px; font-family:'Inter',sans-serif; font-size:14px; line-height:1.52; color:#41505E;">{{ r.purpose }}</div>
+          <div style="padding:15px 16px; font-family:'Inter',sans-serif; font-size:14px; line-height:1.52; color:#41505E;">{{ r.location }}</div>
           <div style="padding:15px 16px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:{{ r.tagColor }}; background:{{ r.tagBg }}; border:1px solid {{ r.tagBorder }}; border-radius:99px; padding:4px 10px;">{{ r.region }}</span></div>
         </div>
       </sc-for>
     </div>
-    <p style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:#66727F; margin:22px 0 0;">{{ t.note }}</p>
+    <p style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:#5A6472; margin:22px 0 0;">{{ t.note }}</p>
   </main>
   <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
 </div>
@@ -91,7 +125,7 @@ class Component extends DCLogic {
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Hosting & Rechenzentrum, ISO 27001', location:'Lupfig, Schweiz', region:'CH', eu:true },
           { name:'EuRouter', purpose:'Modell-Inferenz, EU-verarbeitet', location:'EU', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Websuche, ohne Drittanbieter-Tracking', location:'Auf EU-Cowork-Infrastruktur', region:'CH/EU', eu:true }
+          { name:'SearXNG (self-hosted)', purpose:'Websuche, ohne Drittanbieter-Tracking', location:'Auf Infrastruktur von EU Cowork AI', region:'CH/EU', eu:true }
         ],
         note:'Stand: laufend gepflegt. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den von euch selbst gewählten Modellanbietern.'
       },
@@ -102,7 +136,7 @@ class Component extends DCLogic {
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Hosting & data centre, ISO 27001', location:'Lupfig, Switzerland', region:'CH', eu:true },
           { name:'EuRouter', purpose:'Model inference, EU-processed', location:'EU', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Web search, no third-party tracking', location:'On EU-Cowork infrastructure', region:'CH/EU', eu:true }
+          { name:'SearXNG (self-hosted)', purpose:'Web search, no third-party tracking', location:'On EU Cowork AI infrastructure', region:'CH/EU', eu:true }
         ],
         note:'Status: continuously maintained. When self-hosting, all subprocessors are removed except the model providers you choose yourself.'
       }
@@ -129,7 +163,7 @@ class Component extends DCLogic {
   "inLanguage": "de-CH",
   "isPartOf": { "@id": "https://eucowork.ai/#website" },
   "about": { "@id": "https://eucowork.ai/#software" },
-  "description": "Aktuelle Liste der Unterauftragsverarbeiter von EU-Cowork; sie ist Teil des AVV, Änderungen werden vorab angekündigt. Green (Lupfig AG) stellt Hosting und Rechenzentrum nach ISO 27001 in Lupfig, Schweiz. EuRouter übernimmt die Modell-Inferenz, EU-verarbeitet. SearXNG läuft self-hosted auf EU-Cowork-Infrastruktur und liefert Websuche ohne Drittanbieter-Tracking. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den selbst gewählten Modellanbietern.",
+  "description": "Aktuelle Liste der Unterauftragsverarbeiter von EU Cowork AI; sie ist Teil des AVV, Änderungen werden vorab angekündigt. Green (Lupfig AG) stellt Hosting und Rechenzentrum nach ISO 27001 in Lupfig, Schweiz. EuRouter übernimmt die Modell-Inferenz, EU-verarbeitet. SearXNG läuft self-hosted auf Infrastruktur von EU Cowork AI und liefert Websuche ohne Drittanbieter-Tracking. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den selbst gewählten Modellanbietern.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [

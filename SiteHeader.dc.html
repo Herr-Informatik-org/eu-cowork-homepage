@@ -8,58 +8,241 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
+<style>
+  /* ---- Design v2, Kopfleiste -------------------------------------------
+     Tokens identisch zu assets/content.css. Die Darstellung liegt bewusst
+     in Klassen und nicht in inline-styles: nur so greifen :hover, :active
+     und :focus-visible (Inline-Stile schlagen jede Regel). ---------------- */
+  .euc-hd{
+    --hd-ease:cubic-bezier(.23,1,.32,1);
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; gap:24px;
+    min-height:68px; padding:12px clamp(20px,5vw,80px);
+    background:rgba(250,250,247,.72);
+    border-bottom:0;
+    transition:background 200ms var(--hd-ease);
+  }
+  .euc-hd.is-scrolled{ background:rgba(250,250,247,.86); }
+  /* Milchglas liegt auf einer Pseudo-Element-Schicht, NICHT auf .euc-hd selbst:
+     backdrop-filter macht das Element sonst zum Containing Block fuer das
+     position:fixed-Mobilmenue darin, das dann auf Leistenhoehe geclippt wird. */
+  .euc-hd::before{
+    content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+  }
+
+  /* Scroll-Edge statt 1px-Hairline: 24px weicher Verlauf unter der Leiste,
+     sichtbar erst ab scrollY > 8. */
+  .euc-hd::after{
+    content:''; position:absolute; left:0; right:0; top:100%; height:24px;
+    pointer-events:none; opacity:0;
+    background:linear-gradient(to bottom, rgba(11,30,51,.055), rgba(11,30,51,0));
+    transition:opacity 200ms var(--hd-ease);
+  }
+  .euc-hd.is-scrolled::after{ opacity:1; }
+
+  .euc-hd-brand{
+    display:flex; align-items:center; gap:11px;
+    min-height:44px; flex:0 0 auto; text-decoration:none;
+  }
+  .euc-hd-brand svg{ display:block; }
+  .euc-hd-word{
+    font-family:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#0B1E33;
+  }
+  /* Wortmarke: „EU Cowork" in Tinte, „AI" in Europa-Blau. DE wie EN. */
+  .euc-hd-ai{ color:#12326B; font-style:normal; }
+
+  .euc-hd-nav{ display:flex; align-items:center; gap:30px; margin-left:auto; margin-right:8px; }
+  .euc-hd-nav a{
+    display:inline-flex; align-items:center; min-height:44px;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    font-size:14.5px; font-weight:500; letter-spacing:0;
+    text-decoration:none; color:#5A6472; white-space:nowrap;
+    transition:color 150ms ease;
+  }
+  .euc-hd-nav a.is-active{ color:#12326B; }
+
+  .euc-hd-cta{ display:flex; align-items:center; gap:14px; flex:0 0 auto; }
+
+  .euc-hd-btn, .euc-hd-btn2{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; border-radius:10px; border:0; cursor:pointer;
+    text-decoration:none; white-space:nowrap;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    transition:transform 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
+               background 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
+               box-shadow 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1));
+  }
+  .euc-hd-btn{
+    font-size:14px; font-weight:600; color:#F7FAFC; background:#0B1E33; padding:11px 18px;
+    box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
+               inset 0 1px 0 rgba(255,255,255,.10);
+  }
+  /* Deckend, nicht transluzent: über der bereits transluzenten Leiste
+     dürfen keine zwei hellen Milchglasflächen stapeln. */
+  .euc-hd-btn2{
+    font-size:14px; font-weight:500; color:#0B1E33; background:#FFFFFF; padding:11px 16px;
+    box-shadow:0 1px 2px rgba(11,30,51,.05),
+               inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
+  }
+  .euc-hd-btn:active, .euc-hd-btn2:active{ transform:scale(.97); }
+
+  .euc-hd-burger{
+    margin-left:auto; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:5px;
+    width:44px; height:44px; padding:0;
+    background:none; border:0; border-radius:10px; cursor:pointer;
+    transition:background-color 120ms ease;
+  }
+  /* Der Hover-Hintergrund unten liegt hinter @media (hover:hover) und feuert auf
+     dem Telefon nie — der Burger wäre sonst das einzige Bedienelement ohne
+     Antwort. Nur Tönung, keine Bewegung: dafür wird er zu oft benutzt. */
+  .euc-hd-burger:active{ background-color:rgba(11,30,51,.06); }
+  .euc-hd-burger span{ display:block; width:22px; height:1.5px; background:#0B1E33; }
+
+  .euc-hd-sheet{
+    position:fixed; inset:0; z-index:200; background:#FAFAF7;
+    display:flex; flex-direction:column; padding:14px clamp(20px,5vw,80px) 28px;
+    overflow-y:auto;
+    opacity:1; transform:none;
+    transition:opacity 220ms var(--hd-ease), transform 220ms var(--hd-ease);
+  }
+  /* Das Blatt kommt von oben, wo der Burger sitzt — die Richtung erzählt die
+     Herkunft. Kein scale: eine bildschirmfüllende Fläche, die skaliert, liest
+     sich als Zoom, nicht als Blatt. */
+  @starting-style{
+    .euc-hd-sheet{ opacity:0; transform:translateY(-8px); }
+  }
+  .euc-hd-sheet-top{ display:flex; align-items:center; justify-content:space-between; min-height:44px; }
+  .euc-hd-close{
+    width:44px; height:44px; margin-right:-10px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:none; border:0; border-radius:10px; cursor:pointer;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif; font-size:26px; line-height:1; color:#0B1E33;
+    transition:background 150ms ease;
+  }
+  .euc-hd-close:active{ background:rgba(11,30,51,.06); }
+  .euc-hd-sheet nav{ display:flex; flex-direction:column; margin-top:30px; }
+  .euc-hd-sheet nav a{
+    display:flex; align-items:center; min-height:56px; padding:12px 0;
+    font-family:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    font-size:26px; font-weight:400; letter-spacing:-0.024em; line-height:1.16;
+    text-decoration:none; color:#0B1E33; border-bottom:1px solid #E7ECF0;
+  }
+  .euc-hd-sheet nav a:active{ color:#12326B; }
+  .euc-hd-sheet-cta{ display:flex; flex-direction:column; gap:12px; margin-top:30px; }
+  .euc-hd-sheet-cta a{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:52px; padding:14px; border-radius:10px;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    font-size:15px; text-decoration:none;
+    transition:transform 140ms cubic-bezier(.23,1,.32,1);
+  }
+  .euc-hd-sheet-cta a:active{ transform:scale(.985); }
+  .euc-hd-sheet-cta .euc-hd-btn{ font-size:15px; font-weight:600; }
+  .euc-hd-sheet-cta .euc-hd-btn2{ font-size:15px; font-weight:500; }
+
+  .euc-hd :focus-visible{ outline:2px solid #12326B; outline-offset:3px; border-radius:6px; }
+  .euc-hd-sheet :focus-visible{ outline:2px solid #12326B; outline-offset:3px; border-radius:6px; }
+
+  /* Bewegung nur für echte Zeigegeräte, keine Information hängt an Hover. */
+  @media (hover:hover) and (pointer:fine){
+    .euc-hd-nav a:hover{ color:#0B1E33; }
+    .euc-hd-btn:hover{
+      background:#123456; transform:translateY(-2px);
+      box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
+                 0 24px 48px -28px rgba(11,30,51,.22), inset 0 1px 0 rgba(255,255,255,.10);
+    }
+    .euc-hd-btn2:hover{
+      transform:translateY(-2px);
+      box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
+                 inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
+    }
+    .euc-hd-burger:hover{ background:rgba(11,30,51,.05); }
+    .euc-hd-sheet nav a:hover{ color:#12326B; }
+  }
+
+  /* Milchglas ist Zierde, nicht Voraussetzung: ohne backdrop-filter und bei
+     reduzierter Transparenz wird die Leiste deckend. */
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+    .euc-hd, .euc-hd.is-scrolled{ background:#FAFAF7; }
+  }
+  @media (prefers-reduced-transparency: reduce){
+    .euc-hd, .euc-hd.is-scrolled{ background:#FAFAF7; }
+    .euc-hd::before{ backdrop-filter:none; -webkit-backdrop-filter:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+    .euc-hd-btn:hover, .euc-hd-btn2:hover{ transform:none; }
+    /* Sanfter statt null: reine Opazität bleibt, die Verschiebung fällt weg.
+       .euc-hd-sheet (0-1-0) schlägt den *-Selektor auch unter !important. */
+    .euc-hd-sheet{ transition:opacity 150ms linear !important; transform:none !important; }
+    @starting-style{
+      .euc-hd-sheet{ opacity:0; transform:none; }
+    }
+  }
 </style>
 </helmet>
-<header ref="{{ headerRef }}" style="position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px clamp(20px,5vw,80px); background:rgba(250,250,247,0.72); backdrop-filter:saturate(140%) blur(14px); -webkit-backdrop-filter:saturate(140%) blur(14px); border-bottom:1px solid rgba(229,229,229,0); transition:padding .25s cubic-bezier(.4,0,.2,1), background .25s cubic-bezier(.4,0,.2,1), border-color .25s cubic-bezier(.4,0,.2,1);">
+<header ref="{{ headerRef }}" class="euc-hd {{ headerClass }}">
 
-  <a href="{{ homeHref }}" style="display:flex; align-items:center; gap:11px; text-decoration:none; flex:0 0 auto;">
+  <a href="{{ homeHref }}" class="euc-hd-brand">
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
       <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
       <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
     </svg>
-    <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#0B1E33;">{{ brand }}</span>
+    <span class="euc-hd-word">{{ brandMain }} <span class="euc-hd-ai">{{ brandAi }}</span></span>
   </a>
 
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
-    <nav style="display:flex; align-items:center; gap:30px; margin-left:auto; margin-right:8px;">
+    <nav class="euc-hd-nav">
       <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
-        <a href="{{ item.href }}" style="font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500; text-decoration:none; color:{{ item.color }}; transition:color .15s ease;" style-hover="color:#0B1E33;">{{ item.label }}</a>
+        <a href="{{ item.href }}" class="{{ item.cls }}">{{ item.label }}</a>
       </sc-for>
     </nav>
 
-    <div style="display:flex; align-items:center; gap:14px; flex:0 0 auto;">
-<a href="{{ secondaryHref }}" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; text-decoration:none; color:#0B1E33; padding:9px 14px; border:1px solid #D9DEE4; border-radius:9px; transition:border-color .15s ease, background .15s ease;" style-hover="border-color:#0B1E33; background:rgba(11,30,51,0.03);">{{ secondaryLabel }}</a>
-      <a href="{{ primaryHref }}" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:10px 16px; border-radius:9px; white-space:nowrap; transition:transform .15s ease, background .15s ease; box-shadow:0 1px 2px rgba(11,30,51,0.12);" style-hover="background:#123456; transform:translateY(-1px);">{{ primaryLabel }}</a>
+    <div class="euc-hd-cta">
+      <a href="{{ secondaryHref }}" class="euc-hd-btn2">{{ secondaryLabel }}</a>
+      <a href="{{ primaryHref }}" class="euc-hd-btn">{{ primaryLabel }}</a>
     </div>
   </sc-if>
 
   <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
-    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="margin-left:auto; display:flex; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:8px;">
-      <span style="display:block; width:22px; height:1.5px; background:#0B1E33;"></span>
-      <span style="display:block; width:22px; height:1.5px; background:#0B1E33;"></span>
-      <span style="display:block; width:22px; height:1.5px; background:#0B1E33;"></span>
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" class="euc-hd-burger">
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
   </sc-if>
 
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed; top:0; left:0; right:0; bottom:0; z-index:200; background:#FAFAF7; display:flex; flex-direction:column; padding:22px clamp(20px,5vw,80px);">
-      <div style="display:flex; align-items:center; justify-content:space-between;">
-        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:#0B1E33;">{{ brand }}</span>
-        <button onClick="{{ toggleMenu }}" aria-label="Close" style="background:none; border:0; cursor:pointer; font-size:26px; line-height:1; color:#0B1E33;">&times;</button>
+    <div class="euc-hd-sheet">
+      <div class="euc-hd-sheet-top">
+        <span class="euc-hd-word">{{ brandMain }} <span class="euc-hd-ai">{{ brandAi }}</span></span>
+        <button onClick="{{ toggleMenu }}" aria-label="Close" class="euc-hd-close">&times;</button>
       </div>
-      <nav style="display:flex; flex-direction:column; gap:6px; margin-top:34px;">
+      <nav>
         <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
-          <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:400; text-decoration:none; color:#0B1E33; padding:12px 0; border-bottom:1px solid #E5E5E5;">{{ item.label }}</a>
+          <a href="{{ item.href }}" onClick="{{ closeMenu }}">{{ item.label }}</a>
         </sc-for>
       </nav>
-      <div style="display:flex; flex-direction:column; gap:12px; margin-top:32px;">
-        <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-align:center; text-decoration:none; color:#F7FAFC; background:#0B1E33; padding:14px; border-radius:10px;">{{ primaryLabel }}</a>
-        <a href="{{ secondaryHref }}" onClick="{{ closeMenu }}" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-align:center; text-decoration:none; color:#0B1E33; border:1px solid #D9DEE4; padding:14px; border-radius:10px;">{{ secondaryLabel }}</a>
+      <div class="euc-hd-sheet-cta">
+        <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" class="euc-hd-btn">{{ primaryLabel }}</a>
+        <a href="{{ secondaryHref }}" onClick="{{ closeMenu }}" class="euc-hd-btn2">{{ secondaryLabel }}</a>
       </div>
     </div>
   </sc-if>
@@ -69,21 +252,18 @@
 class Component extends DCLogic {
   constructor(props){
     super(props);
-    this.BRAND = 'EU-Cowork';
+    this.BRAND = 'EU Cowork AI';
+    this.BRAND_MAIN = 'EU Cowork';
+    this.BRAND_AI = 'AI';
     this.SELFHOST = '/self-hosting'; // Release-Repository wird zum Launch veroeffentlicht
     this.headerRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     const initMobile = (typeof window !== 'undefined' && window.innerWidth < 940) || false;
     this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile };
+    // Feuert nur beim Überschreiten der Schwelle, nicht bei jedem Scroll-Tick.
     this._onScroll = () => {
-      const el = this.headerRef.current; if (!el) return;
       const s = window.scrollY > 8;
-      if (s !== this._scrolled){
-        this._scrolled = s;
-        el.style.padding = s ? '11px clamp(20px,5vw,80px)' : '18px clamp(20px,5vw,80px)';
-        el.style.background = s ? 'rgba(250,250,247,0.9)' : 'rgba(250,250,247,0.72)';
-        el.style.borderBottomColor = s ? 'rgba(229,229,229,1)' : 'rgba(229,229,229,0)';
-      }
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
     };
     this._onResize = () => {
       const m = window.innerWidth < 940;
@@ -122,16 +302,19 @@ class Component extends DCLogic {
       { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
       { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
       { key:'faq',         label:T.faq,            href: '/faq' }
-    ].map(n => ({ ...n, color: n.key === active ? '#0B1E33' : '#5A6472' }));
+    ].map(n => ({ ...n, cls: n.key === active ? 'is-active' : '' }));
     const isDe = lang === 'de';
     return {
       brand: this.BRAND,
+      brandMain: this.BRAND_MAIN,
+      brandAi: this.BRAND_AI,
       homeHref: onLanding ? '#top' : '/',
       nav,
       isDesktop: !this.state.isMobile,
       isMobile: this.state.isMobile,
       menuOpen: this.state.menuOpen,
       headerRef: this.headerRef,
+      headerClass: this.state.scrolled ? 'is-scrolled' : '',
       primaryLabel: T.primary,
       primaryHref: '/warteliste',
       secondaryLabel: T.secondary,
