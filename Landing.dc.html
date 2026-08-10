@@ -499,6 +499,25 @@
      „der Add-in-Bereich wird zur Hauptsache". */
   .euc-fit{ position:relative; width:100%; }
   .euc-fit-in{ width:100%; transform-origin:top left; }
+
+  /* ---------- Attrappen sind zum Ansehen, nicht zum Auslesen ----------
+     Jede Produktaufnahme dieser Seite ist eine nachgebaute Oberfläche aus
+     echtem HTML mit erfundenen Demo-Daten. Wer mit der Maus darüberzieht,
+     bekämt einen blauen Auswahlbalken quer durch eine vermeintliche
+     Bildschirmaufnahme — das verrät die Attrappe und wirkt unfertig; im
+     Zwischenspeicher landen zusammenhanglose Bruchstücke.
+     Bewusst NICHT pointer-events:none: die Attrappen reagieren auf Hover und
+     tragen Schaltflächen („Wiederholen"), das muss anklickbar bleiben.
+     Vorlesegeräte trifft es nicht — user-select regelt allein die Auswahl
+     mit Zeiger und Tastatur, nicht den Zugang zum Text.
+     Die zwei echten Bildschirmfotos zusätzlich gegen Herausziehen sichern:
+     ein an den Schreibtisch gezogenes Panel-Bild wäre dasselbe Missgeschick
+     eine Ebene tiefer. `draggable="false"` steht am Element, weil Firefox
+     die CSS-Eigenschaft dafür nicht kennt. */
+  .euc-fit, .euc-shot, .euc-mob-stage, .euc-globe{
+    -webkit-user-select:none; user-select:none;
+  }
+  .euc-shot-img{ -webkit-user-drag:none; }
   @keyframes euc-mob-shimmer { from { background-position:150% center; } to { background-position:-50% center; } }
   .euc-mob-shimmer{ background:linear-gradient(90deg,#8A96A2 40%,#0B1E33 50%,#8A96A2 60%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:euc-mob-shimmer 1.6s linear infinite; }
   @keyframes euc-mob-marker { from { background-size:0% 88%; } to { background-size:100% 88%; } }
@@ -1744,7 +1763,7 @@
             <p class="euc-tile-d">{{ t.features.d1 }}</p>
           </div>
           <div class="euc-shot">
-            <img class="euc-shot-img" src="/assets/shots/admin-verbrauch-modelle.webp"
+            <img class="euc-shot-img" draggable="false" src="/assets/shots/admin-verbrauch-modelle.webp"
                  width="1200" height="1030" loading="lazy" decoding="async"
                  alt="{{ t.features.shot1 }}">
           </div>
@@ -1844,7 +1863,7 @@
             <p class="euc-tile-d">{{ t.features.d5 }}</p>
           </div>
           <div class="euc-shot">
-            <img class="euc-shot-img" src="/assets/shots/admin-mcp-rechte.webp"
+            <img class="euc-shot-img" draggable="false" src="/assets/shots/admin-mcp-rechte.webp"
                  width="932" height="798" loading="lazy" decoding="async"
                  alt="{{ t.features.shot5 }}">
           </div>
@@ -2978,10 +2997,16 @@ var EUC_SG = (function(){
     europaSoft:{ c:['#0B1E33','#12326B','#2E6C86','#3F7CC9','#A5D8E6'], int:0.85, acc:0.55, spd:0.068, sc:1.40 },
     /* Fünf Paletten für die fünf Kapitel der Enterprise-Sektion. Eine Familie,
        nicht fünf Launen: alle bleiben hell genug, dass das weisse Fenster
-       darauf schwebt, und alle bleiben im Blau der Marke. Unterschieden wird
-       über Temperatur — Eis, Indigo, Blau mit Gold-Insel, Stahl, Violett —,
-       damit ein Kapitelwechsel spürbar ist, ohne die Seite zu wechseln. */
-    capConnect:{ c:['#E9F5FB','#BCE2EF','#79BFD8','#3B85A8','#2A6480'], int:0.94, acc:0.76, spd:0.068, sc:1.50 },
+       darauf schwebt. Unterschieden wird über Temperatur — Sand, Indigo, Blau
+       mit Gold-Insel, Stahl, Violett —, damit ein Kapitelwechsel spürbar ist,
+       ohne die Seite zu wechseln.
+       Das erste Kapitel bricht bewusst aus dem Blau aus und übernimmt die
+       Rampe von „sand". Grund: die Sektion liegt zwischen zwei blauen
+       Nachbarn, und wer die Seite herunterscrollt, sieht sonst dreimal
+       hintereinander denselben Verlauf. Warm ist dabei nicht beliebig — es
+       ist die Gold-Familie der Marke (--c-gold-500), die im Hero und auf dem
+       Marker schon steht, also Abwechslung ohne neue Farbe. */
+    capConnect:{ c:['#FDF9F0','#F6E7C6','#EDCB86','#C9954A','#8C6A2E'], int:0.94, acc:0.76, spd:0.068, sc:1.50 },
     capGovern: { c:['#ECF1FC','#C7D8F4','#8FABE3','#4F6DBD','#33509E'], int:0.94, acc:0.74, spd:0.060, sc:1.50 },
     capWork:   { c:['#EFF7FA','#C9E5EE','#92C7DD','#5DA2C1','#F4C542'], int:0.94, acc:0.46, spd:0.072, sc:1.52 },
     capAudit:  { c:['#EEF4F7','#CCDCE5','#95B3C2','#5C7D8D','#375462'], int:0.94, acc:0.72, spd:0.054, sc:1.46 },
