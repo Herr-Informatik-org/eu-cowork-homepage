@@ -59,6 +59,7 @@
      Werte identisch zu assets/content.css, damit statische und dynamische
      Seiten nicht auseinanderdriften. ------------------------------------- */
   :root{
+    --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
     --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
@@ -94,14 +95,14 @@
       <span style="width:7px; height:7px; border-radius:50%; background:#C7A83A;"></span>
       <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7A6A2E;">{{ t.status }}</span>
     </div>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:16px 0 0;">{{ t.h1 }}</h1>
+    <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:16px 0 0;">{{ t.h1 }}</h1>
     <p style="font-family:'Inter',sans-serif; font-size:17.5px; line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:16px 0 0;">{{ t.intro }}</p>
     <div style="margin-top:40px; display:flex; flex-direction:column; gap:30px;">
       <sc-for list="{{ t.sections }}" as="s" hint-placeholder-count="6">
         <div>
           <div style="display:flex; align-items:baseline; gap:12px;">
             <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#2E6C86; font-weight:500; font-variant-numeric:tabular-nums;">{{ s.n }}</span>
-            <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:22px; line-height:1.2; letter-spacing:-0.020em; color:#0B1E33; margin:0;">{{ s.t }}</h2>
+            <h2 style="font-family:var(--f-display); font-weight:500; font-size:22px; line-height:1.2; letter-spacing:-0.020em; color:#0B1E33; margin:0;">{{ s.t }}</h2>
           </div>
           <p style="font-family:'Inter',sans-serif; font-size:16px; line-height:1.62; color:#41505E; margin:10px 0 0; padding-left:26px;">{{ s.b }}</p>
         </div>

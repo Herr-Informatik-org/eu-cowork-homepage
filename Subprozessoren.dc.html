@@ -57,6 +57,7 @@
      Werte identisch zu assets/content.css, damit statische und dynamische
      Seiten nicht auseinanderdriften. ------------------------------------- */
   :root{
+    --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
     --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
@@ -88,7 +89,7 @@
   <dc-import name="SiteHeader" active-nav="security" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
   <main style="max-width:940px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
     <a href="/sicherheit" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.06em; color:#12326B; text-decoration:none; display:inline-flex; align-items:center; min-height:44px;">← {{ t.back }}</a>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:20px 0 0;">{{ t.h1 }}</h1>
+    <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:20px 0 0;">{{ t.h1 }}</h1>
     <p style="font-family:'Inter',sans-serif; font-size:17.5px; line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:16px 0 0; max-width:640px;">{{ t.intro }}</p>
 
     <div style="margin-top:36px; border:0; border-radius:20px; overflow-x:auto; -webkit-overflow-scrolling:touch; background:#fff; box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);">
@@ -99,7 +100,7 @@
       </div>
       <sc-for list="{{ t.rows }}" as="r" hint-placeholder-count="4">
         <div style="display:grid; grid-template-columns:1.4fr 1.6fr 1fr 0.9fr; min-width:640px; gap:0; border-bottom:1px solid #EEF1F4; align-items:center;">
-          <div style="padding:15px 16px; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:500; color:#0B1E33;">{{ r.name }}</div>
+          <div style="padding:15px 16px; font-family:var(--f-display); font-size:15px; font-weight:500; color:#0B1E33;">{{ r.name }}</div>
           <div style="padding:15px 16px; font-family:'Inter',sans-serif; font-size:14px; line-height:1.52; color:#41505E;">{{ r.purpose }}</div>
           <div style="padding:15px 16px; font-family:'Inter',sans-serif; font-size:14px; line-height:1.52; color:#41505E;">{{ r.location }}</div>
           <div style="padding:15px 16px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:{{ r.tagColor }}; background:{{ r.tagBg }}; border:1px solid {{ r.tagBorder }}; border-radius:99px; padding:4px 10px;">{{ r.region }}</span></div>

@@ -64,6 +64,7 @@
      Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
      und :active (Inline-Stile schlagen jede Regel). ---------------------- */
   :root{
+    --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
     --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
@@ -233,7 +234,7 @@
             <span style="position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-pulse 2.4s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
             <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2E6C86;">{{ t.pill }}</span>
           </div>
-          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(40px,5.2vw,58px); line-height:1.02; letter-spacing:-0.035em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
+          <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(40px,5.2vw,58px); line-height:1.02; letter-spacing:-0.035em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
           <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.sub }}</p>
 
           <div style="margin-top:30px; display:flex; flex-direction:column; gap:13px;">
@@ -262,7 +263,7 @@
 
             <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
               <div style="padding:clamp(24px,3vw,34px);">
-                <div style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:600; color:#0B1E33; letter-spacing:-.018em;">{{ t.formTitle }}</div>
+                <div style="font-family:var(--f-display); font-size:20px; font-weight:600; color:#0B1E33; letter-spacing:-.018em;">{{ t.formTitle }}</div>
 
                 <div style="margin-top:20px;">
                   <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.email }}</span><span style="color:#B4472F;">*</span></div>
@@ -338,7 +339,7 @@
             <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
               <div class="wl-done" style="padding:clamp(30px,4vw,44px); text-align:center;">
                 <div class="wl-done-check" style="width:60px; height:60px; margin:0 auto; border-radius:50%; background:#EAF3F7; border:0; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.16); display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em; margin-top:20px;">{{ t.success.title }}</div>
+                <div style="font-family:var(--f-display); font-size:clamp(24px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em; margin-top:20px;">{{ t.success.title }}</div>
                 <p style="font-family:'Inter',sans-serif; font-size:15.5px; line-height:1.6; color:#556170; margin:12px auto 0; max-width:360px;">{{ t.success.body }}</p>
 
                 <div style="margin-top:26px; text-align:left; border:0; border-radius:16px; background:#F5F8FA; box-shadow:0 1px 2px rgba(11,30,51,.05), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06); overflow:hidden;">

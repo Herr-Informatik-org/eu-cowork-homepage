@@ -65,6 +65,10 @@
   @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
 </style>
 <style>
+  /* Titel-Schrift an EINER Stelle. Vorher stand die Familie in jeder
+     Regel und in jedem inline-style — ein Schriftwechsel war damit eine
+     Suchen-und-Ersetzen-Aktion quer durch die Datei. */
+  :root{ --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif; }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{ margin:0; background:#FAFAF7; color:#111111; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
@@ -80,7 +84,7 @@
       <div style="max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(36px,6vw,64px); align-items:center;">
         <div style="flex:1 1 380px; min-width:0;">
           <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#3E6E86;">{{ t.eyebrow }}</div>
-          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(36px,5.4vw,62px); line-height:1.03; letter-spacing:-0.03em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
+          <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(36px,5.4vw,62px); line-height:1.03; letter-spacing:-0.03em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#3E6E86; margin-top:14px;">{{ t.tagline }}</div>
           <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18px); line-height:1.6; color:#47535F; margin:18px 0 0; max-width:460px; text-wrap:pretty;">{{ t.sub }}</p>
           <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:28px;">
@@ -108,12 +112,12 @@
 
     <section id="stack" style="scroll-margin-top:90px; background:#F7FAFC; border-top:1px solid #EBEEF1; padding:clamp(56px,7vw,92px) clamp(20px,5vw,80px);">
       <div style="max-width:1120px; margin:0 auto;">
-        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em;">{{ t.stepsTitle }}</div>
+        <div style="font-family:var(--f-display); font-size:clamp(22px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em;">{{ t.stepsTitle }}</div>
         <div style="margin-top:26px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
           <sc-for list="{{ t.steps }}" as="s" hint-placeholder-count="3">
             <div style="border:1px solid #E7ECF0; background:#fff; border-radius:14px; padding:22px;">
               <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#A5D8E6; font-weight:600;">{{ s.n }}</div>
-              <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:500; color:#0B1E33; margin-top:10px;">{{ s.t }}</div>
+              <div style="font-family:var(--f-display); font-size:18px; font-weight:500; color:#0B1E33; margin-top:10px;">{{ s.t }}</div>
               <div style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.55; color:#5A6472; margin-top:7px;">{{ s.d }}</div>
             </div>
           </sc-for>
@@ -121,7 +125,7 @@
 
         <div style="margin-top:44px; display:flex; flex-wrap:wrap; gap:28px 48px; align-items:flex-start;">
           <div style="flex:1 1 320px; min-width:0;">
-            <div style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:500; color:#0B1E33;">{{ t.stackTitle }}</div>
+            <div style="font-family:var(--f-display); font-size:20px; font-weight:500; color:#0B1E33;">{{ t.stackTitle }}</div>
             <p style="font-family:'Inter',sans-serif; font-size:14.5px; color:#5A6472; margin:8px 0 0;">{{ t.stackNote }}</p>
           </div>
           <div style="flex:1.4 1 420px; min-width:0; border:1px solid rgba(11,30,51,.12); border-radius:12px; background:#07131F; overflow:hidden;">
@@ -141,13 +145,13 @@
 
     <section style="padding:clamp(56px,7vw,92px) clamp(20px,5vw,80px);">
       <div style="max-width:1120px; margin:0 auto;">
-        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em;">{{ t.featsTitle }}</div>
+        <div style="font-family:var(--f-display); font-size:clamp(22px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.02em;">{{ t.featsTitle }}</div>
         <div style="margin-top:24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
           <sc-for list="{{ t.feats }}" as="f" hint-placeholder-count="4">
             <div style="border:1px solid #E7ECF0; background:#fff; border-radius:14px; padding:20px;">
               <div style="display:flex; align-items:center; gap:10px;">
                 <span style="flex:0 0 auto; width:26px; height:26px; border-radius:7px; background:#EAF3F7; border:1px solid #D6EDF5; display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E6C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                <div style="font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:500; color:#0B1E33;">{{ f.t }}</div>
+                <div style="font-family:var(--f-display); font-size:16px; font-weight:500; color:#0B1E33;">{{ f.t }}</div>
               </div>
               <div style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.55; color:#5A6472; margin-top:10px;">{{ f.d }}</div>
             </div>
