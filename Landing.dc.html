@@ -635,9 +635,15 @@
      zulässig, weil die Auswahl nichts kostet und nichts verdeckt; sie zeigt
      nur, was rechts steht. Ein Klick tut dasselbe sofort, die Tastatur
      ebenfalls über den Fokus. */
-  .euc-cap-shell{ position:relative; overflow:hidden; max-width:var(--w-max); margin:0 auto;
+  /* Der Innenabstand steht als Token da, weil die Bühne ihn wieder heraus-
+     rechnet: die Shader-Fläche füllt die linke Kachelhälfte randlos (siehe
+     .euc-cap-stage), und ein negativer Rand kann nur zurücknehmen, was er
+     kennt. Dieselbe Mechanik wie in der Outlook-Sektion — zwei Kacheln
+     nebeneinander dürfen ihre Flächen nicht verschieden anschneiden. */
+  .euc-cap-shell{ --cap-pad-x:clamp(24px,3.4vw,50px); --cap-pad-y:clamp(24px,3.4vw,50px);
+    position:relative; overflow:hidden; max-width:var(--w-max); margin:0 auto;
     border-radius:clamp(20px,2.8vw,38px); background:var(--c-surface); box-shadow:var(--sh-3), var(--edge);
-    padding:clamp(24px,3.4vw,50px); }
+    padding:var(--cap-pad-y) var(--cap-pad-x); }
   .euc-cap-in{ position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(26px,3.2vw,44px); }
   /* Die Textspalte hat ihr Mass (486px = rund 46 Zeichen), sie wächst nicht
      weiter. Jeder zusätzliche Pixel gehört der Bühne, dort wird er zu
@@ -693,17 +699,34 @@
 
   .euc-cap-links{ display:flex; flex-wrap:wrap; gap:12px var(--s-5); margin-top:26px; }
 
-  /* ---------- Die Bühne: Shader-Fläche mit EINEM Fenster in fünf Zuständen ---------- */
-  /* Die Fläche folgt der Höhe der Textspalte, das Fenster sitzt mittig darin.
-     Der Verlauf ringsum ist nicht Rest, sondern Zweck: er trägt die Aufnahme,
-     wie ein Passepartout ein Bild. */
-  .euc-cap-stage{ flex:1 1 440px; min-width:0; max-width:640px; align-self:stretch;
-    display:flex; flex-direction:column; justify-content:center; }
-  .euc-cap-glass{ position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-xl);
-    flex:0 0 auto; min-width:0; display:flex; flex-direction:column; justify-content:center;
-    padding:clamp(26px,3.6vw,54px) clamp(12px,1.6vw,22px); }
+  /* ---------- Die Bühne: Shader-Fläche mit EINEM Fenster in fünf Zuständen ----------
+     Die Fläche ist keine zweite Kachel IN der Kachel, sondern deren linke
+     Hälfte: sie stösst oben, links und unten an die Kachelkante. Der Zuschnitt
+     kommt gratis vom `overflow:hidden` der Aussenkachel — die Ecken sitzen
+     dadurch exakt auf deren Radius, ohne ihn ein zweites Mal zu notieren.
+     `order:-1` statt Umstellen im Markup: die Überschrift bleibt damit das
+     erste Element im Baum — Vorlesesoftware und Tabulator lesen weiter
+     Aussage vor Abbildung, während das Auge links die Aufnahme zuerst trifft.
+     Gestapelt (unten) fällt die Vertauschung weg, dort MUSS der Text führen. */
+  .euc-cap-stage{ order:-1; flex:1 1 440px; min-width:0; max-width:calc(640px + var(--cap-pad-x));
+    align-self:stretch; display:flex;
+    margin:calc(var(--cap-pad-y) * -1) 0 calc(var(--cap-pad-y) * -1) calc(var(--cap-pad-x) * -1); }
+  /* Flex-Kind statt height:100%: die Höhe kommt garantiert an, auch wenn die
+     Bühne ihre eigene erst durch das Strecken bekommt. */
+  .euc-cap-glass{ position:relative; isolation:isolate; overflow:hidden; border-radius:0;
+    flex:1 1 auto; min-width:0; display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(26px,3.6vw,54px) clamp(14px,1.9vw,26px); }
+  /* Nur die Innenkante wird gezeichnet — die rechte. Ein Ring rundum liefe an
+     drei Seiten auf der Kachelkante mit und läse sich dort als doppelte Linie. */
   .euc-cap-glass::after{ content:''; position:absolute; inset:0; z-index:4; pointer-events:none;
-    border-radius:inherit; box-shadow:var(--edge); }
+    box-shadow:inset -1px 0 0 rgba(11,30,51,.07); }
+  /* Der Deckel sitzt auf der Attrappe, nicht auf der Fläche: die Fläche darf
+     jede Breite füllen, die Attrappe soll ab ihrer Entwurfsbreite nicht mehr
+     wachsen und mittig stehen bleiben, statt in einer breiten Fläche links zu
+     kleben. Der Deckel ist exakt die Entwurfsbreite (data-fit-w="600") — jeder
+     Pixel darüber wäre Luft im Rahmen, die die Attrappe nach links zöge, weil
+     _fitStages ihren Massstab an der Oberkante links verankert. */
+  .euc-cap-glass .euc-fit{ max-width:600px; margin-inline:auto; }
   .euc-cap-win{ position:relative; z-index:2; border-radius:14px; background:var(--c-surface); overflow:hidden;
     box-shadow:0 1px 2px rgba(11,30,51,.08), 0 4px 10px -4px rgba(11,30,51,.14), 0 26px 52px -22px rgba(11,30,51,.40); }
   .euc-cap-chrome{ display:flex; align-items:center; gap:9px; padding:10px 13px;
@@ -892,14 +915,23 @@
      neben dem Text unter 540px, die Attrappe fiele auf Massstab 0.75 und
      ihre Zeilen unter acht Pixel. Gestapelt bekommt sie 620px und steht
      nahezu unskaliert — schmaler ist hier also grösser. */
+  /* Gestapelt sitzt die Fläche nicht mehr links, sondern unten: sie bleibt
+     randlos, gibt aber die Oberkante frei — dort steht die Textspalte.
+     `order:0` nimmt die Vertauschung zurück: übereinander gehört die Aussage
+     nach oben, sonst begänne die Sektion mit einer Abbildung ohne Überschrift.
+     Die Fläche läuft jetzt über die volle Kachelbreite, der Deckel liegt auf
+     der Attrappe darin (siehe .euc-cap-glass .euc-fit). */
   @media (max-width:1199px){
     .euc-cap-in{ justify-content:center; }
     .euc-cap-copy{ flex:1 1 100%; max-width:620px; margin-inline:auto; }
-    .euc-cap-stage{ flex:1 1 100%; max-width:620px; margin-inline:auto; align-self:auto; }
+    .euc-cap-stage{ order:0; flex:1 1 100%; max-width:none; align-self:auto;
+      margin:0 calc(var(--cap-pad-x) * -1) calc(var(--cap-pad-y) * -1); }
+    .euc-cap-glass{ border-radius:var(--r-l) var(--r-l) 0 0; }
+    .euc-cap-glass::after{ box-shadow:inset 0 1px 0 rgba(11,30,51,.07); }
   }
   @media (max-width:560px){
-    .euc-cap-shell{ border-radius:18px; padding:22px 16px 24px; }
-    .euc-cap-glass{ padding:10px; border-radius:16px; }
+    .euc-cap-shell{ --cap-pad-x:16px; --cap-pad-y:22px; border-radius:18px; }
+    .euc-cap-glass{ padding:20px 12px; border-radius:14px 14px 0 0; }
     .euc-cap-head{ padding:14px 8px 14px 15px; gap:11px; }
     .euc-cap-t{ font-size:15.5px; }
     .euc-cap-d{ font-size:14px; padding:0 6px 16px 46px; }
@@ -1753,7 +1785,7 @@
         <div class="euc-cap-in">
 
           <!-- ---------- Textspalte mit dem Akkordeon ---------- -->
-          <div class="euc-cap-copy" data-reveal>
+          <div class="euc-cap-copy" data-reveal data-reveal-delay="120">
             <h2 class="euc-cap-h2">{{ t.cap.h2 }}</h2>
             <p class="euc-cap-sub">{{ t.cap.sub }}</p>
 
@@ -1834,7 +1866,7 @@
           </div>
 
           <!-- ---------- Bühne ---------- -->
-          <div class="euc-cap-stage" data-reveal data-reveal-delay="120">
+          <div class="euc-cap-stage" data-reveal>
             <div class="euc-cap-glass">
               <!-- Der Verlauf wechselt mit dem Kapitel die Palette (setPreset),
                    ohne neu zu starten: die Bewegung im Verlauf läuft durch. -->
