@@ -279,10 +279,22 @@
             mask-image:radial-gradient(150% 92% at 68% 8%, #000 0%, rgba(0,0,0,.94) 28%, rgba(0,0,0,.58) 55%, rgba(0,0,0,.2) 80%, rgba(0,0,0,0) 97%); }
   /* Lese-Schirm statt Verlaufsdeckelung: der Text bleibt lesbar, egal wo der Verlauf steht. */
   .euc-veil{ position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(100deg, rgba(250,250,247,.94) 0%, rgba(250,250,247,.72) 34%, rgba(250,250,247,.12) 60%, rgba(250,250,247,0) 78%); }
+  /* 90deg statt 100deg: der Schirm deckt jetzt den ganzen Rahmen, und bei
+     einem geneigten Verlauf haengt die Laenge der Verlaufslinie an der
+     Boxhoehe — derselbe Winkel haette ueber 2000px anders gestanden als ueber
+     800px. Waagrecht ist er von der Hoehe unabhaengig und damit in Hero und
+     Enterprise-Sektion identisch. Die senkrechte Abnahme macht ohnehin schon
+     die Maske des Verlaufs; zwei Abnahmen uebereinander waeren doppelt. */
+  .euc-veil-top{ background:linear-gradient(90deg, rgba(250,250,247,.94) 0%, rgba(250,250,247,.72) 34%, rgba(250,250,247,.12) 60%, rgba(250,250,247,0) 78%); }
   .euc-veil-deep{ background:linear-gradient(100deg, rgba(11,30,51,.92) 0%, rgba(11,30,51,.72) 38%, rgba(11,30,51,.34) 66%, rgba(11,30,51,.12) 100%); }
   .euc-veil-center{ background:radial-gradient(96% 92% at 50% 48%, rgba(11,30,51,.86) 0%, rgba(11,30,51,.66) 42%, rgba(11,30,51,.24) 76%, rgba(11,30,51,0) 100%); }
   @media (max-width:900px){
     .euc-veil{ background:linear-gradient(180deg, rgba(250,250,247,.94) 0%, rgba(250,250,247,.86) 46%, rgba(250,250,247,.55) 78%, rgba(250,250,247,.18) 100%); }
+    /* Schmal steht die Attrappe unter dem Text statt daneben, der Schirm muss
+       also senkrecht arbeiten. Die Stops sind auf den Rahmen gerechnet, nicht
+       auf den Hero: dicht dort, wo der Verlauf am staerksten ist, und offen,
+       bevor die Maske ihn ohnehin ausloescht. */
+    .euc-veil-top{ background:linear-gradient(180deg, rgba(250,250,247,.90) 0%, rgba(250,250,247,.82) 18%, rgba(250,250,247,.52) 42%, rgba(250,250,247,.18) 70%, rgba(250,250,247,0) 100%); }
     .euc-veil-deep{ background:linear-gradient(180deg, rgba(11,30,51,.92) 0%, rgba(11,30,51,.80) 50%, rgba(11,30,51,.52) 100%); }
   }
 
@@ -1343,9 +1355,13 @@
          Sektion darunter: der Uebergang ist ein Verlauf, keine Naht. -->
     <div class="euc-top">
       <div class="euc-sg euc-sg-top" data-shader="hero" aria-hidden="true"></div>
+      <!-- Der Lese-Schirm gehoert an DIESELBE Flaeche wie der Verlauf. Lag er
+           im Hero, endete er an dessen Unterkante: darueber gedaempfter
+           Verlauf, darunter voller — eine waagrechte Stufe quer durch die
+           Seite, und der Verlauf sah aus, als finge er unten neu an. -->
+      <div class="euc-veil euc-veil-top" aria-hidden="true"></div>
 
     <section data-screen-label="Hero" ref="{{ hero2Ref }}" style="position:relative; overflow:hidden; padding:clamp(122px,15vw,172px) var(--gutter) var(--sec-y);">
-          <div class="euc-veil" aria-hidden="true"></div>
 
           <div style="position:relative; z-index:2; max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
             <!-- 540px statt 490: in einer Flex-Zeile ist die Basis zugleich die
