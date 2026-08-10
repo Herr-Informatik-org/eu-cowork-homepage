@@ -263,7 +263,20 @@
      Leerzeichen dekodiert, bevor das SVG geparst wird. */
   .euc-sg::after{ content:''; position:absolute; inset:0; opacity:.05; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise'%20baseFrequency='0.9'%20numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
   /* Die Fläche endet nie als Rechteck. */
-  .euc-sg-hero{ -webkit-mask-image:radial-gradient(125% 105% at 78% 22%, #000 0%, rgba(0,0,0,.85) 45%, rgba(0,0,0,0) 88%); mask-image:radial-gradient(125% 105% at 78% 22%, #000 0%, rgba(0,0,0,.85) 45%, rgba(0,0,0,0) 88%); }
+  /* Der gemeinsame Grund des Seitenanfangs. Die Unterkante blendet auf die
+     Farbe der naechsten Sektion, damit dort kein Kantensprung steht. */
+  .euc-top{ position:relative; isolation:isolate;
+    background:linear-gradient(180deg, var(--c-bg) 0%, var(--c-bg) 58%, var(--c-bg-cool) 100%); }
+  /* Eine Maske statt zweier: `mask-composite` haette den senkrechten Verlauf
+     mit der Insel verrechnet, wird aber je nach Browser anders geschrieben.
+     Die Ellipse leistet beides — sie sitzt oben rechts (die Insel des Hero),
+     ist waagrecht weit (150 %, also kaum Abfall zur Seite) und senkrecht so
+     bemessen, dass sie bei 97 % der Rahmenhoehe auf null steht. Damit bleibt
+     hinter „Enterprise-ready" noch Verlauf stehen und die Unterkante ist
+     sauber leer. */
+  .euc-sg-top{ z-index:0;
+    -webkit-mask-image:radial-gradient(150% 92% at 68% 8%, #000 0%, rgba(0,0,0,.94) 28%, rgba(0,0,0,.58) 55%, rgba(0,0,0,.2) 80%, rgba(0,0,0,0) 97%);
+            mask-image:radial-gradient(150% 92% at 68% 8%, #000 0%, rgba(0,0,0,.94) 28%, rgba(0,0,0,.58) 55%, rgba(0,0,0,.2) 80%, rgba(0,0,0,0) 97%); }
   /* Lese-Schirm statt Verlaufsdeckelung: der Text bleibt lesbar, egal wo der Verlauf steht. */
   .euc-veil{ position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(100deg, rgba(250,250,247,.94) 0%, rgba(250,250,247,.72) 34%, rgba(250,250,247,.12) 60%, rgba(250,250,247,0) 78%); }
   .euc-veil-deep{ background:linear-gradient(100deg, rgba(11,30,51,.92) 0%, rgba(11,30,51,.72) 38%, rgba(11,30,51,.34) 66%, rgba(11,30,51,.12) 100%); }
@@ -864,9 +877,11 @@
   .euc-cap-say{ margin-top:10px; font-family:'Inter',sans-serif; font-size:11.5px; line-height:1.5; color:#2C3742; }
   .euc-cap-file{ margin-top:9px; display:flex; align-items:center; gap:10px; border:1px solid #E2E7EC; border-radius:10px;
     background:#FFFFFF; padding:10px 11px; box-shadow:var(--sh-1); }
+  /* 500, nicht 700: von JetBrains Mono liegen nur 400 und 500 lokal. 700 haette
+     der Browser gefaelscht — synthetisch verfettet, mit verzerrten Rundungen. */
   .euc-cap-xls{ flex:0 0 auto; width:30px; height:30px; border-radius:7px; background:#1E7145; color:#FFFFFF;
     display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace;
-    font-size:9px; font-weight:700; letter-spacing:.02em; }
+    font-size:9px; font-weight:500; letter-spacing:.04em; }
   .euc-cap-src{ display:flex; align-items:center; gap:6px; margin-top:9px; padding-top:8px; border-top:1px solid #F2F5F7;
     font-family:'JetBrains Mono',monospace; font-size:8.5px; color:#8A96A2; }
   .euc-cap-src svg{ flex:0 0 auto; }
@@ -1319,8 +1334,17 @@
   <dc-import name="SiteHeader" active-nav="home" on-landing="{{ true }}" hint-size="100%,88px"></dc-import>
 
   <main>
+    <!-- ==================== Seitenanfang mit gemeinsamem Grund ====================
+         Der Verlauf ist nicht mehr Kulisse EINER Sektion, sondern der Grund des
+         ganzen Seitenanfangs: er traegt Hero, Wellen-Trenner und die
+         Enterprise-Sektion und verliert sich nach unten. Deshalb liegt er hier
+         am Rahmen und nicht mehr im Hero — der schneidet mit overflow:hidden ab.
+         Die Unterkante des Rahmens blendet auf --c-bg-cool, die Farbe der
+         Sektion darunter: der Uebergang ist ein Verlauf, keine Naht. -->
+    <div class="euc-top">
+      <div class="euc-sg euc-sg-top" data-shader="hero" aria-hidden="true"></div>
+
     <section data-screen-label="Hero" ref="{{ hero2Ref }}" style="position:relative; overflow:hidden; padding:clamp(122px,15vw,172px) var(--gutter) var(--sec-y);">
-          <div class="euc-sg euc-sg-hero" data-shader="hero" aria-hidden="true"></div>
           <div class="euc-veil" aria-hidden="true"></div>
 
           <div style="position:relative; z-index:2; max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
@@ -1579,7 +1603,7 @@
          schwächt beide. Hier steht nur Substanz, in zwei gleich schweren
          Hälften auf EINER Bühne — die Komposition ist die Aussage.
          ===================================================================== -->
-    <section id="open-source" data-screen-label="Enterprise &amp; Open Source" style="scroll-margin-top:90px; padding:var(--sec-y) var(--gutter);">
+    <section id="open-source" data-screen-label="Enterprise &amp; Open Source" style="position:relative; z-index:1; scroll-margin-top:90px; padding:var(--sec-y) var(--gutter);">
       <div style="max-width:var(--w-max); margin:0 auto;">
         <div data-reveal style="max-width:700px;">
           <h2 class="euc-h2">{{ t.os.h2a }}<br>{{ t.os.h2b }}</h2>
@@ -1664,8 +1688,12 @@
         </div>
       </div>
     </section>
+    </div>
 
-    <section id="funktionen" data-screen-label="Features" style="scroll-margin-top:90px; background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) 0;">
+    <!-- Kein border-top mehr: der Rahmen darueber blendet bereits auf diese
+         Farbe, eine Haarlinie wuerde genau die Naht wieder zeichnen, die der
+         Verlauf verstecken soll. -->
+    <section id="funktionen" data-screen-label="Features" style="scroll-margin-top:90px; background:var(--c-bg-cool); padding:var(--sec-y) 0;">
       <div style="max-width:calc(var(--w-max) + var(--gutter) * 2); margin:0 auto; padding-inline:var(--gutter);">
         <div data-reveal style="max-width:620px;">
           <h2 class="euc-h2">{{ t.features.h2 }}</h2>
@@ -2910,7 +2938,7 @@ var EUC_SG = (function(){
      c4 = Akzent, der nur im obersten Band auftaucht. Diese fünf sind die
      vollständige Liste; eine sechste Farbe wäre ein Inhaltsproblem. */
   var PRESETS = {
-    hero:    { c:['#FAFAF7','#E2F0F6','#A5D8E6','#8FA6E0','#F4C542'], int:0.74, acc:0.30, spd:0.055, sc:1.15 },
+    hero:    { c:['#FAFAF7','#DCEDF5','#9BD1E1','#8199DA','#F4C542'], int:0.82, acc:0.32, spd:0.055, sc:1.15 },
     heroDeep:{ c:['#0B1E33','#12326B','#2E6C86','#3F7CC9','#F4C542'], int:0.78, acc:0.34, spd:0.052, sc:1.20 },
     glacier: { c:['#F2FAFC','#C4E7F1','#7FC2DC','#3E86A8','#2E6C86'], int:0.94, acc:0.80, spd:0.085, sc:1.55 },
     lilac:   { c:['#F5F3F9','#D9D3EB','#A79ED6','#7069B4','#4E4C8E'], int:0.94, acc:0.78, spd:0.080, sc:1.55 },
