@@ -17,7 +17,6 @@
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -43,9 +42,6 @@
 <style>
   /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
      Identischer Satz wie in assets/content.css. */
-  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
-  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
-  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
   @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
   @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
   @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
@@ -57,7 +53,7 @@
      Werte identisch zu assets/content.css, damit statische und dynamische
      Seiten nicht auseinanderdriften. ------------------------------------- */
   :root{
-    --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
@@ -89,7 +85,7 @@
   <dc-import name="SiteHeader" active-nav="security" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
   <main style="max-width:940px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
     <a href="/sicherheit" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.06em; color:#12326B; text-decoration:none; display:inline-flex; align-items:center; min-height:44px;">← {{ t.back }}</a>
-    <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.04; letter-spacing:-0.035em; color:#0B1E33; margin:20px 0 0;">{{ t.h1 }}</h1>
+    <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.08; letter-spacing:-.019em; color:#0B1E33; margin:20px 0 0;">{{ t.h1 }}</h1>
     <p style="font-family:'Inter',sans-serif; font-size:17.5px; line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:16px 0 0; max-width:640px;">{{ t.intro }}</p>
 
     <div style="margin-top:36px; border:0; border-radius:20px; overflow-x:auto; -webkit-overflow-scrolling:touch; background:#fff; box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);">

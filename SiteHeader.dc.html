@@ -11,9 +11,6 @@
 <style>
   /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
      Identischer Satz wie in assets/content.css. */
-  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2')}
-  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2')}
-  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2')}
   @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
   @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
   @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
@@ -24,7 +21,7 @@
   /* Titel-Schrift an EINER Stelle. Vorher stand die Familie in jeder
      Regel und in jedem inline-style — ein Schriftwechsel war damit eine
      Suchen-und-Ersetzen-Aktion quer durch die Datei. */
-  :root{ --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif; }
+  :root{ --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif; }
   /* ---- Design v2, Kopfleiste -------------------------------------------
      Tokens identisch zu assets/content.css. Die Darstellung liegt bewusst
      in Klassen und nicht in inline-styles: nur so greifen :hover, :active
@@ -106,7 +103,7 @@
   .euc-hd-brand svg{ display:block; }
   .euc-hd-word{
     font-family:var(--f-display);
-    font-weight:600; font-size:19px; letter-spacing:-0.02em; color:#0B1E33;
+    font-weight:600; font-size:19px; letter-spacing:-.010em; color:#0B1E33;
     transition:color 200ms var(--hd-ease);
   }
   /* Wortmarke: „EU Cowork" in Tinte, „AI" in Europa-Blau. DE wie EN. */
@@ -198,7 +195,7 @@
   .euc-hd-sheet nav a{
     display:flex; align-items:center; min-height:56px; padding:12px 0;
     font-family:var(--f-display);
-    font-size:26px; font-weight:400; letter-spacing:-0.024em; line-height:1.16;
+    font-size:26px; font-weight:400; letter-spacing:-.012em; line-height:1.24;
     text-decoration:none; color:#0B1E33; border-bottom:1px solid #E7ECF0;
   }
   .euc-hd-sheet nav a:active{ color:#12326B; }

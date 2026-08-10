@@ -106,7 +106,6 @@
 </noscript>
 <x-dc>
 <helmet>
-<link rel="preload" href="/fonts/space-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   /* ======================================================================
@@ -114,9 +113,6 @@
      des Besuchers vor jeder Zustimmung nirgendwo hingeht. Identischer Satz
      wie assets/content.css, damit Landing und Content-Seiten nicht driften.
      ====================================================================== */
-  @font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/space-grotesk-400-latin.woff2') format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-  @font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:500; font-display:swap; src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-  @font-face{ font-family:'Space Grotesk'; font-style:normal; font-weight:600; font-display:swap; src:url('/fonts/space-grotesk-600-latin.woff2') format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   @font-face{ font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/inter-400-latin.woff2') format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   @font-face{ font-family:'Inter'; font-style:normal; font-weight:500; font-display:swap; src:url('/fonts/inter-500-latin.woff2') format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
   @font-face{ font-family:'Inter'; font-style:normal; font-weight:600; font-display:swap; src:url('/fonts/inter-600-latin.woff2') format('woff2'); unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -141,7 +137,7 @@
     --c-line:#E7ECF0; --c-line-soft:#EEF1F4;
 
     /* Schrift */
-    --f-display:'Space Grotesk','Segoe UI',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     --f-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
 
@@ -182,8 +178,8 @@
   ::selection{ background:var(--c-ice-300); color:var(--c-ink); }
 
   /* ---------- Typo-Skala: Tracking und Leading sind grössenabhängig ---------- */
-  .euc-h1{ font-family:var(--f-display); font-weight:400; font-size:clamp(40px,6.2vw,72px); line-height:1.02; letter-spacing:-.035em; color:var(--c-ink); margin:0; text-wrap:balance; }
-  .euc-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(30px,4.2vw,50px); line-height:1.06; letter-spacing:-.030em; color:var(--c-ink); margin:0; text-wrap:balance; }
+  .euc-h1{ font-family:var(--f-display); font-weight:400; font-size:clamp(40px,6.2vw,72px); line-height:1.08; letter-spacing:-.022em; color:var(--c-ink); margin:0; text-wrap:balance; }
+  .euc-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(30px,4.2vw,50px); line-height:1.10; letter-spacing:-.019em; color:var(--c-ink); margin:0; text-wrap:balance; }
   .euc-h2-deep{ color:var(--c-on-deep); }
   .euc-lead{ font-family:var(--f-body); font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-.005em; color:var(--c-body); margin:var(--s-4) 0 0; max-width:48ch; text-wrap:pretty; }
   .euc-lead-deep{ color:var(--c-on-deep-body); }
@@ -219,11 +215,16 @@
      dadurch exakt waagrecht — ein gedrehter Titel läse sich als Satzfehler.
      Weil Wort und Schriftgrad immer im selben Verhältnis stehen, bleibt der
      gerenderte Winkel in jeder Breite bei rund 1.4 Grad.
-     94 % / 58 % sind aus der Vorlage zurückgerechnet: der Streifen deckt am
-     Ende dieselben ~76px bei 72px Schriftgrad wie dort. */
+     84 % / 86 % sind an Inters Metrik gemessen, nicht geschätzt: die Inline-
+     Box misst 1.225 em, die Grundlinie liegt bei 0.976 em, die Versalhöhe
+     beginnt bei 0.249 em. Daraus deckt der Streifen von 4 px über der
+     Versalhöhe bis knapp unter die Unterlänge. Die Vorlagenwerte (94 % / 58 %)
+     stammten von Space Grotesk und liefen unter Inter oben aus dem Wort
+     heraus — der Streifen schnitt in die Zeile darüber. Wer die Titelschrift
+     wechselt, muss diese zwei Zahlen neu messen. */
   .euc-mark{
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%20viewBox='0 0 200 40'%20preserveAspectRatio='none'%3E%3Cpath d='M2.2 4C40 0.8 118 1.6 197.4 1.2c2.2 7.6 1.8 28.4 0.4 35.2C140 40 58 38.8 3.4 39c-2.2-7.4-2.4-27.8-1.2-35Z' fill='rgba(244,197,66,0.42)'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:0 58%; background-size:100% 94%;
+    background-repeat:no-repeat; background-position:0 86%; background-size:100% 84%;
     box-decoration-break:clone; -webkit-box-decoration-break:clone;
   }
   @media (prefers-contrast:more){
@@ -335,7 +336,7 @@
      Reihe, in der immer zwei bis drei Kacheln nebeneinander stehen, liest sich
      das als Schlamperei. Der Titel „ERP-Anbindung mit Rechte-Kontrolle" bricht
      in jeder Breite zweizeilig und setzt damit das Mass. */
-  .euc-tile-t{ font-family:var(--f-display); font-weight:500; font-size:22px; line-height:1.20; letter-spacing:-.020em; margin:0; min-height:2.4em; text-wrap:balance; }
+  .euc-tile-t{ font-family:var(--f-display); font-weight:500; font-size:22px; line-height:1.24; letter-spacing:-.011em; margin:0; min-height:2.4em; text-wrap:balance; }
   .euc-tile-d{ font-family:var(--f-body); font-size:14.5px; line-height:1.52; letter-spacing:.002em; margin:10px 0 0; max-width:33ch; text-wrap:pretty; }
   /* Auf der Kachel trägt das tiefe Europa-Blau: eu-500 bleibt bei 10.5px auch
      mit Lese-Schirm unter 4.5:1, eu-700 liegt bei 9:1. */
@@ -632,8 +633,8 @@
   .euc-os-k{ display:flex; align-items:center; gap:9px; font-family:var(--f-mono); font-size:11.5px;
     font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--c-eu-700); }
   .euc-os-k svg{ flex:0 0 auto; }
-  .euc-os-claim{ font-family:var(--f-display); font-weight:500; font-size:17px; line-height:1.32;
-    letter-spacing:-.014em; color:var(--c-ink); margin:12px 0 0; max-width:34ch; text-wrap:pretty; }
+  .euc-os-claim{ font-family:var(--f-display); font-weight:500; font-size:17px; line-height:1.35;
+    letter-spacing:-.008em; color:var(--c-ink); margin:12px 0 0; max-width:34ch; text-wrap:pretty; }
   .euc-os-list{ list-style:none; margin:var(--s-5) 0 0; padding:0; display:flex; flex-direction:column; }
   .euc-os-item{ display:flex; align-items:flex-start; gap:13px; padding:13px 0; border-top:1px solid var(--c-line-soft); }
   .euc-os-item:first-child{ border-top:0; padding-top:0; }
@@ -642,8 +643,8 @@
   .euc-os-ico{ flex:0 0 auto; width:21px; height:21px; margin-top:2px; color:var(--c-eu-500);
     display:inline-flex; align-items:center; justify-content:center; transition:color .22s ease; }
   .euc-os-ico svg{ display:block; }
-  .euc-os-t{ font-family:var(--f-display); font-weight:500; font-size:15.5px; line-height:1.3;
-    letter-spacing:-.012em; color:var(--c-ink); transition:color .22s ease; }
+  .euc-os-t{ font-family:var(--f-display); font-weight:500; font-size:15.5px; line-height:1.34;
+    letter-spacing:-.006em; color:var(--c-ink); transition:color .22s ease; }
   .euc-os-d{ font-family:var(--f-body); font-size:13.5px; line-height:1.55; color:var(--c-body-soft); margin-top:4px; }
   @media (hover:hover) and (pointer:fine){
     .euc-os-item:hover .euc-os-ico{ color:var(--c-eu-700); }
@@ -689,8 +690,8 @@
      weiter. Jeder zusätzliche Pixel gehört der Bühne, dort wird er zu
      lesbarer Attrappe statt zu langen Zeilen. */
   .euc-cap-copy{ flex:0 1 466px; min-width:0; }
-  .euc-cap-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(29px,3.5vw,44px); line-height:1.07;
-    letter-spacing:-0.030em; color:var(--c-ink); margin:0; text-wrap:balance; }
+  .euc-cap-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(29px,3.5vw,44px); line-height:1.10;
+    letter-spacing:-0.018em; color:var(--c-ink); margin:0; text-wrap:balance; }
   .euc-cap-sub{ font-family:var(--f-body); font-size:clamp(16px,1.3vw,18.5px); line-height:1.56; letter-spacing:-.006em;
     color:var(--c-body); margin:19px 0 0; max-width:46ch; text-wrap:pretty; }
 
@@ -718,7 +719,7 @@
   .euc-cap-ico svg{ display:block; }
   .euc-cap-item.is-on .euc-cap-ico{ color:var(--c-eu-500); }
   .euc-cap-t{ flex:1 1 auto; min-width:0; font-family:var(--f-display); font-weight:500; font-size:16.5px;
-    line-height:1.3; letter-spacing:-.014em; color:var(--c-body); transition:color .26s ease; }
+    line-height:1.34; letter-spacing:-.007em; color:var(--c-body); transition:color .26s ease; }
   .euc-cap-item.is-on .euc-cap-t{ color:var(--c-ink); }
   .euc-cap-chev{ flex:0 0 auto; display:inline-flex; color:#B3BCC6; transform:rotate(0deg);
     transition:transform .3s var(--ease-out), color .24s ease; }
@@ -1027,7 +1028,7 @@
     filter:blur(70px); pointer-events:none; }
 
   .euc-olk-copy{ flex:1 1 360px; min-width:0; max-width:462px; }
-  .euc-olk-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(30px,4.2vw,50px); line-height:1.06; letter-spacing:-0.030em; color:var(--c-ink); margin:0; text-wrap:balance; }
+  .euc-olk-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(30px,4.2vw,50px); line-height:1.10; letter-spacing:-0.019em; color:var(--c-ink); margin:0; text-wrap:balance; }
   /* Ohne den goldenen Chip darüber trägt die Überschrift die Sektion allein.
      Der Vorspann rückt deshalb eine Spur weiter ab und wird eine Spur enger
      gesetzt, sonst schwimmt er unter der grossen Zeile. */
@@ -1036,7 +1037,7 @@
   .euc-olk-point{ display:flex; align-items:flex-start; gap:12px; }
   /* Ohne Kachel: die drei Punkte sind eine Aufzählung, keine Knopfreihe. */
   .euc-olk-point-ico{ flex:0 0 auto; width:22px; height:22px; color:var(--c-eu-500); display:inline-flex; align-items:center; justify-content:center; }
-  .euc-olk-point-t{ font-family:var(--f-display); font-size:15.5px; font-weight:500; letter-spacing:-.012em; color:var(--c-ink); }
+  .euc-olk-point-t{ font-family:var(--f-display); font-size:15.5px; font-weight:500; letter-spacing:-.006em; color:var(--c-ink); }
   .euc-olk-point-d{ font-family:var(--f-body); font-size:13.5px; line-height:1.55; color:var(--c-body-soft); margin-top:3px; }
 
   /* ---------- Innenkachel: Shader-Fläche, darauf das Outlook-Fenster ----------
@@ -2855,7 +2856,7 @@
     <section id="self-host" data-hd-dark data-screen-label="Self-host (dark)" style="scroll-margin-top:90px; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
       <div style="max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
         <div style="flex:1 1 400px; min-width:0;" data-reveal>
-          <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.02; letter-spacing:-0.03em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
+          <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.020em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.02em; color:#A5D8E6; margin-top:14px;">{{ t.selfhost.tagline }}</div>
           <p style="font-family:'Inter',sans-serif; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:#C4D0DD; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.selfhost.sub }}</p>
 
@@ -2936,7 +2937,7 @@
       <div class="euc-sg" data-shader="heroDeep" aria-hidden="true"></div>
       <div class="euc-veil euc-veil-center" aria-hidden="true"></div>
       <div style="position:relative; z-index:2; max-width:760px; margin:0 auto; text-align:center;" data-reveal>
-        <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(36px,5.6vw,66px); line-height:1.03; letter-spacing:-0.03em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.finalcta.h2 }}</h2>
+        <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(36px,5.6vw,66px); line-height:1.08; letter-spacing:-0.021em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.finalcta.h2 }}</h2>
         <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.4vw,19px); line-height:1.6; color:#C4D0DD; margin:18px auto 0; max-width:480px; text-wrap:balance;">{{ t.finalcta.sub }}</p>
         <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:34px;">
           <a href="/warteliste" class="euc-btn-press" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none; color:#0B1E33; background:var(--c-bg-cool); padding:15px 22px; border-radius:10px; transition:transform var(--d-press) var(--ease-out);">{{ t.finalcta.primary }}</a>
