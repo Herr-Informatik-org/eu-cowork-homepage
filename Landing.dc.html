@@ -659,7 +659,7 @@
      Baum und wuerde den Streifen sonst ueberdecken.
      `pointer-events:none`, weil ein 180px hoher unsichtbarer Balken sonst quer
      ueber die Naht liegt und Klicks schluckt. */
-  .euc-wave{ --wave-h:clamp(118px,12vw,180px);
+  .euc-wave{ --wave-h:clamp(150px,15vw,224px);
     position:relative; z-index:2; height:var(--wave-h); overflow:hidden; pointer-events:none;
     margin:calc(var(--wave-h) * -0.68) 0 calc(var(--wave-h) * -0.32); }
   .euc-wave svg{ display:block; width:100%; height:100%; }
@@ -1563,50 +1563,64 @@
          also nicht ueberschreiten. Die negativen Raender heben sich exakt auf
          (-0.68 und -0.32 der Hoehe) — der Streifen kostet damit keine
          Bauhoehe, er liegt nur ueber der Naht: gut zwei Drittel im Hero,
-         ein Drittel in der Sektion darunter, wie in der Vorlage (125px oben,
-         55px unten von 180px).
+         ein Drittel in der Sektion darunter, wie in der Vorlage.
          Die Maske blendet oben und unten aus, damit die Linien nicht an einer
-         Kante enden, sondern in beide Flaechen hinein verloeschen. -->
+         Kante enden, sondern in beide Flaechen hinein verloeschen.
+         Der viewBox ist 230 hoch statt 180, weil das Buendel auf 20 Linien
+         gewachsen ist: die Tinte spannt 36..193, oben und unten bleiben 36
+         Einheiten Luft fuer die Maske. Wer Linien ergaenzt, muss die Hoehe
+         mitziehen, sonst schneidet der Rand die untersten ab. -->
     <div class="euc-wave" aria-hidden="true">
-      <svg viewBox="0 0 1600 180" preserveAspectRatio="none">
+      <svg viewBox="0 0 1600 230" preserveAspectRatio="none">
         <defs>
-          <!-- Farbe entlang der Welle: die Linien sind nirgends gleich stark,
-               dadurch liest sich das Buendel als Stroemung statt als Raster. -->
+          <!-- Farbe entlang der Welle, aus der Markenpalette statt Blassblau:
+               Eis aussen, Europa-Blau auf den beiden Kaemmen. Die Linien sind
+               nirgends gleich stark, dadurch liest sich das Buendel als
+               Stroemung statt als Raster. -->
           <linearGradient id="euc-wave-g" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#d9e8f3" stop-opacity="0.25"></stop>
-            <stop offset="30%" stop-color="#b9daf1" stop-opacity="0.7"></stop>
-            <stop offset="58%" stop-color="#c9ddf2" stop-opacity="0.4"></stop>
-            <stop offset="82%" stop-color="#bdd9ee" stop-opacity="0.75"></stop>
-            <stop offset="100%" stop-color="#e0eaf4" stop-opacity="0.25"></stop>
+            <stop offset="0%" stop-color="#A5D8E6" stop-opacity="0.3"></stop>
+            <stop offset="26%" stop-color="#3F7CC9" stop-opacity="0.92"></stop>
+            <stop offset="52%" stop-color="#2E6C86" stop-opacity="0.62"></stop>
+            <stop offset="78%" stop-color="#12326B" stop-opacity="0.72"></stop>
+            <stop offset="100%" stop-color="#A5D8E6" stop-opacity="0.3"></stop>
           </linearGradient>
           <linearGradient id="euc-wave-fadeg" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#fff" stop-opacity="0"></stop>
-            <stop offset="30%" stop-color="#fff" stop-opacity="1"></stop>
-            <stop offset="70%" stop-color="#fff" stop-opacity="1"></stop>
+            <stop offset="18%" stop-color="#fff" stop-opacity="1"></stop>
+            <stop offset="82%" stop-color="#fff" stop-opacity="1"></stop>
             <stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
           </linearGradient>
           <mask id="euc-wave-fade">
-            <rect width="1600" height="180" fill="url(#euc-wave-fadeg)"></rect>
+            <rect width="1600" height="230" fill="url(#euc-wave-fadeg)"></rect>
           </mask>
         </defs>
 
         <g mask="url(#euc-wave-fade)">
-            <path d="M -80 92 C 130 155, 330 20, 560 85 C 790 150, 900 150, 1080 85 C 1270 18, 1460 35, 1680 105" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.06"></path>
-            <path d="M -80 95 C 130 158, 330 23, 560 88 C 790 153, 900 153, 1080 88 C 1270 21, 1460 38, 1680 108" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.078"></path>
-            <path d="M -80 98 C 130 161, 330 26, 560 91 C 790 156, 900 156, 1080 91 C 1270 24, 1460 41, 1680 111" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.096"></path>
-            <path d="M -80 101 C 130 164, 330 29, 560 94 C 790 159, 900 159, 1080 94 C 1270 27, 1460 44, 1680 114" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.114"></path>
-            <path d="M -80 104 C 130 167, 330 32, 560 97 C 790 162, 900 162, 1080 97 C 1270 30, 1460 47, 1680 117" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.132"></path>
-            <path d="M -80 107 C 130 170, 330 35, 560 100 C 790 165, 900 165, 1080 100 C 1270 33, 1460 50, 1680 120" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.15"></path>
-            <path d="M -80 110 C 130 173, 330 38, 560 103 C 790 168, 900 168, 1080 103 C 1270 36, 1460 53, 1680 123" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.168"></path>
-            <path d="M -80 113 C 130 176, 330 41, 560 106 C 790 171, 900 171, 1080 106 C 1270 39, 1460 56, 1680 126" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.186"></path>
-            <path d="M -80 116 C 130 179, 330 44, 560 109 C 790 174, 900 174, 1080 109 C 1270 42, 1460 59, 1680 129" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.204"></path>
-            <path d="M -80 119 C 130 182, 330 47, 560 112 C 790 177, 900 177, 1080 112 C 1270 45, 1460 62, 1680 132" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.222"></path>
-            <path d="M -80 122 C 130 185, 330 50, 560 115 C 790 180, 900 180, 1080 115 C 1270 48, 1460 65, 1680 135" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.24"></path>
-            <path d="M -80 125 C 130 188, 330 53, 560 118 C 790 183, 900 183, 1080 118 C 1270 51, 1460 68, 1680 138" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.258"></path>
-            <path d="M -80 128 C 130 191, 330 56, 560 121 C 790 186, 900 186, 1080 121 C 1270 54, 1460 71, 1680 141" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.276"></path>
-            <path d="M -80 131 C 130 194, 330 59, 560 124 C 790 189, 900 189, 1080 124 C 1270 57, 1460 74, 1680 144" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.294"></path>
-          <!-- Eine kraeftigere Hauptlinie gibt dem Buendel eine Fuehrung. -->
-          <path d="M -80 125 C 130 188, 330 53, 560 118 C 790 183, 900 183, 1080 118 C 1270 51, 1460 68, 1680 138" fill="none" stroke="url(#euc-wave-g)" stroke-width="4" opacity="0.55"></path>
+          <path d="M -80 85 C 130 148, 330 13, 560 78 C 790 143, 900 143, 1080 78 C 1270 11, 1460 28, 1680 98" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.12"></path>
+          <path d="M -80 88.5 C 130 151.5, 330 16.5, 560 81.5 C 790 146.5, 900 146.5, 1080 81.5 C 1270 14.5, 1460 31.5, 1680 101.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.141"></path>
+          <path d="M -80 92 C 130 155, 330 20, 560 85 C 790 150, 900 150, 1080 85 C 1270 18, 1460 35, 1680 105" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.162"></path>
+          <path d="M -80 95.5 C 130 158.5, 330 23.5, 560 88.5 C 790 153.5, 900 153.5, 1080 88.5 C 1270 21.5, 1460 38.5, 1680 108.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.183"></path>
+          <path d="M -80 99 C 130 162, 330 27, 560 92 C 790 157, 900 157, 1080 92 C 1270 25, 1460 42, 1680 112" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.204"></path>
+          <path d="M -80 102.5 C 130 165.5, 330 30.5, 560 95.5 C 790 160.5, 900 160.5, 1080 95.5 C 1270 28.5, 1460 45.5, 1680 115.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.225"></path>
+          <path d="M -80 106 C 130 169, 330 34, 560 99 C 790 164, 900 164, 1080 99 C 1270 32, 1460 49, 1680 119" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.246"></path>
+          <path d="M -80 109.5 C 130 172.5, 330 37.5, 560 102.5 C 790 167.5, 900 167.5, 1080 102.5 C 1270 35.5, 1460 52.5, 1680 122.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.267"></path>
+          <path d="M -80 113 C 130 176, 330 41, 560 106 C 790 171, 900 171, 1080 106 C 1270 39, 1460 56, 1680 126" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.288"></path>
+          <path d="M -80 116.5 C 130 179.5, 330 44.5, 560 109.5 C 790 174.5, 900 174.5, 1080 109.5 C 1270 42.5, 1460 59.5, 1680 129.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.309"></path>
+          <path d="M -80 120 C 130 183, 330 48, 560 113 C 790 178, 900 178, 1080 113 C 1270 46, 1460 63, 1680 133" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.33"></path>
+          <path d="M -80 123.5 C 130 186.5, 330 51.5, 560 116.5 C 790 181.5, 900 181.5, 1080 116.5 C 1270 49.5, 1460 66.5, 1680 136.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.351"></path>
+          <path d="M -80 127 C 130 190, 330 55, 560 120 C 790 185, 900 185, 1080 120 C 1270 53, 1460 70, 1680 140" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.372"></path>
+          <path d="M -80 130.5 C 130 193.5, 330 58.5, 560 123.5 C 790 188.5, 900 188.5, 1080 123.5 C 1270 56.5, 1460 73.5, 1680 143.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.393"></path>
+          <path d="M -80 134 C 130 197, 330 62, 560 127 C 790 192, 900 192, 1080 127 C 1270 60, 1460 77, 1680 147" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.414"></path>
+          <path d="M -80 137.5 C 130 200.5, 330 65.5, 560 130.5 C 790 195.5, 900 195.5, 1080 130.5 C 1270 63.5, 1460 80.5, 1680 150.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.435"></path>
+          <path d="M -80 141 C 130 204, 330 69, 560 134 C 790 199, 900 199, 1080 134 C 1270 67, 1460 84, 1680 154" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.456"></path>
+          <path d="M -80 144.5 C 130 207.5, 330 72.5, 560 137.5 C 790 202.5, 900 202.5, 1080 137.5 C 1270 70.5, 1460 87.5, 1680 157.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.477"></path>
+          <path d="M -80 148 C 130 211, 330 76, 560 141 C 790 206, 900 206, 1080 141 C 1270 74, 1460 91, 1680 161" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.498"></path>
+          <path d="M -80 151.5 C 130 214.5, 330 79.5, 560 144.5 C 790 209.5, 900 209.5, 1080 144.5 C 1270 77.5, 1460 94.5, 1680 164.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="1.25" opacity="0.519"></path>
+          <!-- Zwei kraeftigere Linien geben dem Buendel eine Fuehrung und
+               damit Tiefe: die obere traegt, die untere liest sich als
+               vorlaufende Kante. -->
+          <path d="M -80 116.5 C 130 179.5, 330 44.5, 560 109.5 C 790 174.5, 900 174.5, 1080 109.5 C 1270 42.5, 1460 59.5, 1680 129.5" fill="none" stroke="url(#euc-wave-g)" stroke-width="5" opacity="0.8"></path>
+          <path d="M -80 134 C 130 197, 330 62, 560 127 C 790 192, 900 192, 1080 127 C 1270 60, 1460 77, 1680 147" fill="none" stroke="url(#euc-wave-g)" stroke-width="2.6" opacity="0.46"></path>
         </g>
       </svg>
     </div>
