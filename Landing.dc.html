@@ -626,6 +626,19 @@
   .euc-os-foot{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:var(--s-4) var(--s-7); margin-top:var(--s-6); }
   .euc-os-links{ flex:0 1 auto; display:flex; flex-wrap:wrap; gap:var(--s-5); }
 
+  /* ---------- Wellen-Trenner zwischen Hero und Enterprise-Sektion ----------
+     Die Hoehe steht als Token, weil drei Werte sie brauchen: die Bauhoehe und
+     die beiden negativen Raender, die sie wieder aufheben. Als drei getippte
+     clamp() liefen sie beim naechsten Anfassen auseinander.
+     `z-index:2` ist noetig, nicht Deko: die Sektion darunter kommt spaeter im
+     Baum und wuerde den Streifen sonst ueberdecken.
+     `pointer-events:none`, weil ein 180px hoher unsichtbarer Balken sonst quer
+     ueber die Naht liegt und Klicks schluckt. */
+  .euc-wave{ --wave-h:clamp(118px,12vw,180px);
+    position:relative; z-index:2; height:var(--wave-h); overflow:hidden; pointer-events:none;
+    margin:calc(var(--wave-h) * -0.68) 0 calc(var(--wave-h) * -0.32); }
+  .euc-wave svg{ display:block; width:100%; height:100%; }
+
   /* ===== Kapitel-Sektion „Für den Einsatz im Unternehmen gebaut" =====
      Fünf Kapitel als Akkordeon links, dazu rechts EINE Produktaufnahme, die
      mitwandert. Die Aufnahme ist bewusst dasselbe Fenster in fünf Zuständen
@@ -1501,19 +1514,62 @@
           </div>
         </section>
 
-    <!-- Der Trust-Streifen ist ein Trenner, keine Sektion: volles --sec-y-tight
-         ergab bei 1280px 90px Polster auf 53px Inhalt und liess den Streifen
-         wie eine vergessene Lücke wirken. 0.6 hält ihn kompakt. -->
-    <section data-screen-label="Trust strip" style="border-top:1px solid var(--c-line-soft); border-bottom:1px solid var(--c-line-soft); background:var(--c-bg-cool); padding:calc(var(--sec-y-tight) * .6) var(--gutter);">
-      <div style="max-width:var(--w-max); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); align-items:start; gap:var(--s-4) var(--s-6);">
-        <sc-for list="{{ t.trust.items }}" as="item" hint-placeholder-count="4">
-          <div style="display:flex; align-items:flex-start; gap:9px;" data-reveal>
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true" style="flex:0 0 auto; margin-top:3px;"><path d="M3 8 L6.2 11 L12 4" stroke="var(--c-eu-500)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            <span style="font-family:var(--f-mono); font-size:12px; line-height:1.4; letter-spacing:.04em; color:#3D4855;">{{ item.label }}</span>
-          </div>
-        </sc-for>
-      </div>
-    </section>
+    <!-- ==================== Wellen-Trenner ====================
+         Ersetzt den frueheren Trust-Streifen. Die Aussagen von dort stehen
+         weiter auf /governance und /sicherheit; hier trugen sie vier Zeilen
+         Kleingedrucktes zwischen zwei starke Sektionen.
+         Der Trenner ist ein GESCHWISTER des Hero, kein Kind: der Hero
+         schneidet mit overflow:hidden ab, ein Kind koennte seine Unterkante
+         also nicht ueberschreiten. Die negativen Raender heben sich exakt auf
+         (-0.68 und -0.32 der Hoehe) — der Streifen kostet damit keine
+         Bauhoehe, er liegt nur ueber der Naht: gut zwei Drittel im Hero,
+         ein Drittel in der Sektion darunter, wie in der Vorlage (125px oben,
+         55px unten von 180px).
+         Die Maske blendet oben und unten aus, damit die Linien nicht an einer
+         Kante enden, sondern in beide Flaechen hinein verloeschen. -->
+    <div class="euc-wave" aria-hidden="true">
+      <svg viewBox="0 0 1600 180" preserveAspectRatio="none">
+        <defs>
+          <!-- Farbe entlang der Welle: die Linien sind nirgends gleich stark,
+               dadurch liest sich das Buendel als Stroemung statt als Raster. -->
+          <linearGradient id="euc-wave-g" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#d9e8f3" stop-opacity="0.25"></stop>
+            <stop offset="30%" stop-color="#b9daf1" stop-opacity="0.7"></stop>
+            <stop offset="58%" stop-color="#c9ddf2" stop-opacity="0.4"></stop>
+            <stop offset="82%" stop-color="#bdd9ee" stop-opacity="0.75"></stop>
+            <stop offset="100%" stop-color="#e0eaf4" stop-opacity="0.25"></stop>
+          </linearGradient>
+          <linearGradient id="euc-wave-fadeg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0"></stop>
+            <stop offset="30%" stop-color="#fff" stop-opacity="1"></stop>
+            <stop offset="70%" stop-color="#fff" stop-opacity="1"></stop>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
+          </linearGradient>
+          <mask id="euc-wave-fade">
+            <rect width="1600" height="180" fill="url(#euc-wave-fadeg)"></rect>
+          </mask>
+        </defs>
+
+        <g mask="url(#euc-wave-fade)">
+            <path d="M -80 92 C 130 155, 330 20, 560 85 C 790 150, 900 150, 1080 85 C 1270 18, 1460 35, 1680 105" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.06"></path>
+            <path d="M -80 95 C 130 158, 330 23, 560 88 C 790 153, 900 153, 1080 88 C 1270 21, 1460 38, 1680 108" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.078"></path>
+            <path d="M -80 98 C 130 161, 330 26, 560 91 C 790 156, 900 156, 1080 91 C 1270 24, 1460 41, 1680 111" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.096"></path>
+            <path d="M -80 101 C 130 164, 330 29, 560 94 C 790 159, 900 159, 1080 94 C 1270 27, 1460 44, 1680 114" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.114"></path>
+            <path d="M -80 104 C 130 167, 330 32, 560 97 C 790 162, 900 162, 1080 97 C 1270 30, 1460 47, 1680 117" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.132"></path>
+            <path d="M -80 107 C 130 170, 330 35, 560 100 C 790 165, 900 165, 1080 100 C 1270 33, 1460 50, 1680 120" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.15"></path>
+            <path d="M -80 110 C 130 173, 330 38, 560 103 C 790 168, 900 168, 1080 103 C 1270 36, 1460 53, 1680 123" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.168"></path>
+            <path d="M -80 113 C 130 176, 330 41, 560 106 C 790 171, 900 171, 1080 106 C 1270 39, 1460 56, 1680 126" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.186"></path>
+            <path d="M -80 116 C 130 179, 330 44, 560 109 C 790 174, 900 174, 1080 109 C 1270 42, 1460 59, 1680 129" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.204"></path>
+            <path d="M -80 119 C 130 182, 330 47, 560 112 C 790 177, 900 177, 1080 112 C 1270 45, 1460 62, 1680 132" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.222"></path>
+            <path d="M -80 122 C 130 185, 330 50, 560 115 C 790 180, 900 180, 1080 115 C 1270 48, 1460 65, 1680 135" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.24"></path>
+            <path d="M -80 125 C 130 188, 330 53, 560 118 C 790 183, 900 183, 1080 118 C 1270 51, 1460 68, 1680 138" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.258"></path>
+            <path d="M -80 128 C 130 191, 330 56, 560 121 C 790 186, 900 186, 1080 121 C 1270 54, 1460 71, 1680 141" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.276"></path>
+            <path d="M -80 131 C 130 194, 330 59, 560 124 C 790 189, 900 189, 1080 124 C 1270 57, 1460 74, 1680 144" fill="none" stroke="url(#euc-wave-g)" stroke-width="1" opacity="0.294"></path>
+          <!-- Eine kraeftigere Hauptlinie gibt dem Buendel eine Fuehrung. -->
+          <path d="M -80 125 C 130 188, 330 53, 560 118 C 790 183, 900 183, 1080 118 C 1270 51, 1460 68, 1680 138" fill="none" stroke="url(#euc-wave-g)" stroke-width="4" opacity="0.55"></path>
+        </g>
+      </svg>
+    </div>
 
     <!-- =====================================================================
          Enterprise und Open Source. Die wichtigste Aussage der Seite und
@@ -3205,21 +3261,6 @@ this.mobRef = React.createRef();
     this._onLang = (e) => { this._setDocLang(e.detail); this.setState({ lang: e.detail }); };
 
     this.C = {
-      trust: {
-        de: { items: [
-          { label:"Built on LibreChat: 40'000+ Stars, MIT", delay:'0' },
-          { label:'Betrieben in ISO-27001-zertifizierten Rechenzentren von Green (Lupfig AG, Schweiz)', delay:'80' },
-          { label:'Telemetrie aus by default', delay:'160' },
-          { label:'DSGVO- & revDSG-konform', delay:'240' }
-        ]},
-        en: { items: [
-          { label:'Built on LibreChat: 40,000+ stars, MIT', delay:'0' },
-          { label:'Operated in ISO 27001-certified data centres by Green (Lupfig AG, Switzerland)', delay:'80' },
-          { label:'Telemetry off by default', delay:'160' },
-          { label:'GDPR & revDSG compliant', delay:'240' }
-        ]}
-      }
-      ,
       /* Enterprise und Open Source. Ehrlichkeitsregel fuer diesen Block:
          „etabliert" darf sich nur auf die Basis (LibreChat) und die Bauweise
          stützen. Keine erfundenen Kunden, keine Logos, keine Nutzerzahlen. */
