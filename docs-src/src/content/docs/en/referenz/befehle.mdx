@@ -1,0 +1,188 @@
+---
+title: Command reference
+description: All commands for installation, operation, updating, backup, migration and diagnostics on one page for looking up.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page is meant for looking things up. Every command is written the way it is entered on
+the server. Unless noted otherwise, the working directory is always
+`~/eu-cowork/distribution`.
+
+## Installation
+
+| Command | Effect |
+|---|---|
+| `sudo apt-get update && sudo apt-get install -y git` | install Git, without it the repository cannot be fetched |
+| `git clone https://github.com/herr-informatik/eu-cowork.git` | clone the repository |
+| `./setup-server.sh` | prepare a fresh Ubuntu server: Docker, firewall, log rotation, swap, time zone, security updates |
+| `./setup-server.sh --user eucowork` | set the service user explicitly, create it if needed |
+| `./setup-server.sh --no-firewall --no-swap` | skip the firewall and swap steps |
+| `./install.sh` | create the `.env` with generated secrets, create network and directories, start the stack |
+| `./install.sh --profiles production` | additionally Caddy with an automatic certificate |
+| `./install.sh --profiles production,internal,microsoft,filesearch` | with connectors, Microsoft integration and file search |
+| `./install.sh --migrate --profiles ...` | leave an existing `.env` untouched, for updates and migration |
+| `./install.sh --no-build` | do not rebuild the own services, only useful when they are up to date |
+
+After `setup-server.sh` you have to sign in again, otherwise the `docker` group does not take
+effect. Then these three checks:
+
+| Command | Expectation |
+|---|---|
+| `docker compose version` | a version 2, otherwise the Compose plugin is missing |
+| `id -u` | in the simplest case 1000, the containers write with that ID |
+| `ls -l /dev/kvm` | present means the hardened code interpreter backend is possible |
+
+## Operation
+
+| Purpose | Command |
+|---|---|
+| Start | `docker compose up -d` |
+| With file search | `docker compose --profile filesearch up -d` |
+| With Caddy and TLS | `docker compose --profile production up -d` |
+| With internal connectors | `docker compose --profile internal up -d` |
+| With Microsoft 365 | `docker compose --profile microsoft up -d` |
+| Rebuild a single service | `docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway` |
+| Restart a service | `docker compose restart api` |
+| Follow the log | `docker compose logs -f api` |
+| Status | `docker compose ps` |
+| Stop | `docker compose down` |
+
+The profiles belong to **every** call. After a `docker compose down` and a
+`docker compose up -d` without `--profile internal`, the connectors are missing, because
+without their profile they do not come back up.
+
+<Aside type="note" title="Permission changes and the tool catalog">
+Changes to the access rules take effect for tool calls within about ten seconds. The list of
+tools in the model context, however, depends on a cache with a twelve hour lifetime. After a
+permission change, therefore, run `docker compose restart api`, otherwise the person concerned
+only sees the change the next day.
+</Aside>
+
+## Updating
+
+```bash title="Full update run"
+cd ~/eu-cowork && git pull
+cd distribution
+diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | sort -u)
+./backup.sh backup
+./install.sh --migrate --profiles production,internal,microsoft,filesearch
+```
+
+| Line | Effect |
+|---|---|
+| `git pull` | fetch the new state of the repository |
+| `diff <(...) <(...)` | shows which variables are new in `.env.example` and missing in your `.env` |
+| `./backup.sh backup` | backup before every update, without exception |
+| `./install.sh --migrate --profiles ...` | the `.env` stays unchanged, the own services are rebuilt |
+
+<Aside type="caution" title="--force-recreate does not renew the own services">
+`docker compose up -d --force-recreate api` recreates the chat container, but leaves `admin`,
+`mcp-gateway`, `office-addin` and `ninjaone-mcp` unchanged. These four are built from source and need
+`--build`. That is exactly what `./install.sh` does unless you pass `--no-build`. Anyone
+working only with `--force-recreate` keeps running old sidecars after an update.
+</Aside>
+
+The LibreChat version is deliberately pinned to a digest. To move it up:
+
+```bash title="Determine the new digest"
+docker pull registry.librechat.ai/danny-avila/librechat-dev:latest
+docker image inspect registry.librechat.ai/danny-avila/librechat-dev:latest --format '{{index .RepoDigests 0}}'
+```
+
+Enter the printed digest in `docker-compose.yml`, restart the stack and then check that
+everything is running.
+
+## Backup and migration
+
+| Command | Effect |
+|---|---|
+| `./backup.sh backup` | one archive in `backups/` with a database dump and the files that are not in version control |
+| `./backup.sh backup --dest /pfad --keep 30` | different target directory, different number of archives kept |
+| `./backup.sh list` | existing archives with date and size |
+| `./backup.sh restore <archiv.tar.gz>` | destructive, replaces the database, asks first |
+| `./backup.sh restore <archiv.tar.gz> --yes` | without a prompt, for scripts |
+| `./backup.sh restore <archiv.tar.gz> --force-env` | additionally overwrites an existing `.env` |
+
+The placeholders keep their names from the scripts: `/pfad` is the target path,
+`<archiv.tar.gz>` the archive file.
+
+Without `--yes` you have to type `JA` literally. The defaults are the `./backups` directory
+and 14 archives kept. Every archive gets permissions 600, because it contains the `.env` with
+all secrets.
+
+Backed up are the database `LibreChat`, plus `.env`, `librechat.yaml`,
+`librechat.internal.yaml`, `searxng/settings.yml`, `skills/`, `seed-agents/*.json`,
+`uploads/` and `images/`. Deliberately not backed up are `data-node/`, `meili_data/` and
+`logs/`, because they are either contained in the dump or rebuild themselves.
+
+```bash title="Daily backup at 03:15, line from crontab -e"
+15 3 * * * cd <pfad> && ./backup.sh backup --keep <N> >> <dest>/backup.log 2>&1
+```
+
+The matching line with your own paths is printed by `./backup.sh backup` itself at the end.
+
+### Migrating to a new server
+
+```bash title="1. On the old server"
+./backup.sh backup
+```
+
+```bash title="2. Transfer the archive"
+scp backups/eucowork-<zeitstempel>.tar.gz <neuer-server>:~/
+```
+
+```bash title="3. On the new server, take the .env out of the archive"
+tar -xzf ~/eucowork-<zeitstempel>.tar.gz -O ./files/.env > .env
+chmod 600 .env
+```
+
+```bash title="4. On the new server, stack and data"
+./install.sh --migrate --profiles production,internal,microsoft,filesearch
+./backup.sh restore ~/eucowork-<zeitstempel>.tar.gz
+```
+
+The path in the `tar` call needs the leading `./`. Without it, GNU tar does not find the entry
+and the redirection creates an **empty** `.env`. Check with `wc -l .env` that the file has
+content.
+
+<Aside type="danger" title="CREDS_KEY and CREDS_IV have to come along">
+If these two values are generated anew on the new server instead of being taken from the old
+`.env`, all encrypted credentials in the database become unreadable. Every person would have
+to set up their SharePoint connection again, and the keys stored in the panel would be lost.
+</Aside>
+
+## Diagnostics
+
+| Command | What for |
+|---|---|
+| `docker compose ps` | is every container running, or does one restart continuously |
+| `docker compose logs -f api` | startup errors and configuration errors of the application |
+| `docker compose logs caddy` | certificate issuance and redirects |
+| `docker system df` | how much space images, containers, volumes and the build cache occupy |
+| `docker network create eucowork-sandbox` | create the missing sandbox network |
+| `docker exec eucowork-api id` | which ID the chat container writes with |
+| `ls -ldn uploads` | who owns the upload directory, has to match the ID above |
+
+```bash title="Do the containers reach the internet?"
+docker run --rm curlimages/curl -sI -m 10 https://api.eurouter.ai/api/v1/models
+```
+
+HTTP 401 means the path to the outside works. A timeout or HTTP 000 means it is blocked,
+typically by a VPN client, a corporate proxy or a collision of the Docker subnet with an
+existing route.
+
+```bash title="Fix the permissions on the mounted directories"
+chown -R $(id -u):$(id -g) logs uploads images data-node meili_data
+```
+
+This helps when `api` hangs in a restart loop and the log shows `EACCES` on `/app/logs`, or
+when an upload fails with `EACCES` on `/app/uploads/temp`.
+
+```bash title="Self test of the NinjaOne bridge"
+docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+```
+
+Checks credentials, granted permissions, read access and that writing paths are blocked.

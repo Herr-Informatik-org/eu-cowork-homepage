@@ -1,0 +1,134 @@
+---
+title: Modelle und Modellkarten
+description: Provider anbinden, Modellkarten definieren, ihre Sichtbarkeit pro Rolle und Gruppe steuern und den Model-Router betreiben.
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Nutzer wählen im Chat kein rohes Modell aus, sondern eine **Modellkarte**. Eine Karte bündelt einen Anbieter, ein Modell und die Voreinstellungen dazu, insbesondere den deutschen Systemprompt, unter einem verständlichen Namen. Diese Seite zeigt, wie Sie Karten pflegen, wer sie sieht und wie der eigene Model-Router arbeitet.
+
+## Was eine Modellkarte ist
+
+Eine Karte ist ein kuratiertes Preset. Statt „glm-5.2 über EuRouter" liest die Person im Modell-Picker „EU-Cowork Kollege (EU · Text)" und bekommt damit automatisch den passenden Systemprompt und die passenden Parameter. Das hat drei Vorteile: die Auswahl bleibt verständlich, der Systemprompt wird serverseitig eingefügt und landet nicht im Browser, und Sie können die Auswahl pro Rolle und Gruppe zuschneiden.
+
+Gepflegt werden Karten unter **Konfiguration → Modell-Karten**. Freigegeben werden sie nicht dort, sondern bei den Rollen und Gruppen.
+
+## Provider pflegen
+
+Die Anbieter selbst liegen unter **Konfiguration → KI-Provider**. Dort stehen Name, Basis-URL, Schlüssel und Modell-Liste je Endpoint.
+
+<Aside type="danger" title="Schlüssel nur als Variablenreferenz">
+Ein Provider-Schlüssel darf ausschliesslich als `${VARIABLE}` oder als `user_provided` eingetragen werden. Klartext wird abgelehnt, weil der Wert sonst lesbar in der Datenbank landen würde. Die Fehlermeldung im Panel lautet sinngemäss: der API-Key muss `${ENV_NAME}` oder `user_provided` sein, nie Klartext. Der eigentliche Wert gehört in die `.env` auf dem Server beziehungsweise unter **Einstellungen → API-Schlüssel**. `user_provided` bedeutet, dass jede Person ihren eigenen Schlüssel im Chat hinterlegt.
+</Aside>
+
+Der Knopf **Verbindung testen** prüft die Anbindung, ohne das Geheimnis preiszugeben: der Sidecar löst die Variablenreferenz serverseitig auf, ruft damit die Modellliste des Providers ab und meldet nur Status und Modellzahl zurück. Der Schlüssel verlässt den Server nie, auch nicht in Fehlertexten. Getestet wird der Stand, der gerade im Formular steht, also auch ungespeicherte Änderungen.
+
+<Aside type="note" title="Overrides sichtbar machen und entfernen">
+Alles, was Sie in der Konfiguration ändern, ist ein Override über der Auslieferungsdatei `librechat.yaml` und wirkt sofort, ohne Neustart. Abschnitte mit aktivem Override tragen den Badge **aus DB-Override**. Ein Feld einfach zu leeren entfernt den Override **nicht**, dafür gibt es das Rücksetz-Symbol neben dem Feld. Für den kompletten Rückbau gibt es **Auf YAML zurücksetzen**, dieser Dialog listet auf, was gelöscht wird und was bleibt, und verlangt das Eintippen von `ZURÜCKSETZEN`.
+</Aside>
+
+## Karten definieren
+
+Über der Kartenliste stehen drei Schalter, die für alle Karten gelten:
+
+| Feld | Bedeutung |
+| --- | --- |
+| **Erzwingen (enforce)** | Nur Karten erlaubt, keine freie Modellwahl |
+| **Priorisieren (prioritize)** | Karten stehen im Picker vor allem anderen |
+| **Zusätzliche Endpoints** | Erscheinen neben den Karten im Picker |
+
+Jede einzelne Karte hat diese Felder:
+
+| Feld | Bedeutung |
+| --- | --- |
+| **Name (intern)** | technischer Schlüssel der Karte, taucht in den Regeln pro Rolle und Gruppe auf |
+| **Label (sichtbar)** | das, was die Person im Picker liest |
+| **Standard-Karte** | Genau eine Karte sollte Standard sein |
+| **Beschreibung** | eine Zeile Erklärung unter dem Label |
+| **Reihenfolge** | Position im Picker |
+| **Icon-URL** | optionales Bild |
+| **Endpoint** | welcher Provider bedient die Karte |
+| **Modell** | Modell-Slug beim Provider |
+| **Temperatur** | Voreinstellung der Kreativität |
+| **Begrüssung (greeting)** | Text im leeren Chat |
+| **System-Prompt (promptPrefix)** | wird serverseitig injiziert und leakt nicht über die Chat-Konfiguration |
+
+Sind mehrere Karten als Standard markiert, warnt das Panel und weist darauf hin, dass im Chat nur die erste greift. Weitere Preset-Felder, für die es hier kein Formularfeld gibt, bleiben beim Speichern erhalten und lassen sich im Reiter **Experten** vollständig bearbeiten.
+
+## Sichtbarkeit pro Rolle und Gruppe
+
+Welche Karte wer sieht, entscheidet eine Kaskade. Im Panel steht sie als Legende über den Schaltern: **Es gewinnt: Gruppe › Rolle › Basis**.
+
+<Steps>
+
+1. **Basis** ist die Auslieferungskonfiguration. Sie gilt für alle, für die es keine engere Regel gibt.
+
+2. **Rolle** übersteuert die Basis. Im Rollen-Editor schalten Sie die Karten einzeln an oder aus. Alle an bedeutet: die Rolle folgt wieder der Basis. Der Schalter **Weitere Modelle (Roh-Untermenü)** mit dem Untertitel „Aus = diese Rolle sieht NUR die oben aktivierten Karten" blendet zusätzliche Endpoints wie die rohe Modellliste aus.
+
+3. **Gruppe** übersteuert die Rolle. Im Gruppen-Dialog wählen Sie zwischen **Erben** (keine eigene Regel für diese Gruppe) und **Eigene Auswahl (übersteuert die Rollen-Regel)**.
+
+</Steps>
+
+Der Knopf **Auf YAML-Stand zurücksetzen** wählt auf beiden Ebenen wieder alle Karten der Basis an. Bei einer Gruppe bleibt die Regel dabei bestehen, zum vollständigen Entfernen stellen Sie den Modus auf **Erben**.
+
+<Aside type="note" title="Nach Kartenänderungen einmal neu speichern">
+Die Auswahl speichert eine Kopie der Kartennamen. Wenn Sie danach in der Konfiguration eine Karte umbenennen oder hinzufügen, speichern Sie die betroffenen Rollen- und Gruppenregeln einmal neu. Karten aus einer Regel, die es nicht mehr gibt, werden beim Speichern entfernt und vorher als Warnung angezeigt.
+</Aside>
+
+## Provider-Routing
+
+Auf derselben Seite liegt die Karte **Provider-Routing (OpenRouter)**. Sie beschränkt, welche Anbieter OpenRouter für Ihre Anfragen einsetzen darf. Zwei Schalter und eine Liste:
+
+- **Keine Datennutzung durch Provider** setzt `data_collection: deny`, also nur Anbieter ohne Prompt-Speicherung und ohne Training.
+- **Provider einschränken (Allowlist)** aktiviert die Liste darunter. Der Knopf **Nur EU-Provider auswählen** setzt sie in einem Schritt auf die Anbieter mit Sitz oder Rechenzentrum in EU, EWR und Schweiz.
+
+<Aside type="caution" title="Zwei ehrliche Einschränkungen, die auch im Panel stehen">
+Erstens: die Angaben zu Sitz und Rechenzentrum stammen von OpenRouter, und **der Sitz eines Anbieters ist keine Garantie für den Verarbeitungsort**. Behandeln Sie „Nur EU" als sinnvolle Einschränkung, nicht als Zusicherung.
+
+Zweitens: **Modelle ohne passenden Anbieter liefern danach einen Fehler.** Wenn Sie die Liste eng setzen, prüfen Sie jede Karte, die über diesen Endpoint läuft. Ein bekannter Fall ist die Kombination aus Quantisierung `fp8` und „Nur EU": für GLM bleibt dann kein Anbieter übrig, weil der einzige EU-Anbieter `fp4` liefert. OpenRouter antwortet in dem Fall damit, dass kein Endpoint gefunden wurde.
+</Aside>
+
+## Der Model-Router
+
+<Aside type="note" title="Im Auslieferungszustand nicht aktiv">
+Der Router läuft intern als Pilot und ist im Kunden-Template **nicht** ausgerollt. Die Routen lassen sich im Panel bereits vollständig konfigurieren, nach der Installation sehen Ihre Mitarbeitenden aber die ausgelieferten Modellkarten und keine Router-Karte. Der Zusammenhang ist in [Chat und Modelle](/docs/funktionen/chat-und-modelle) beschrieben.
+</Aside>
+
+Der Model-Router ist eine Eigenentwicklung und läuft im MCP-Gateway. Er nimmt eine Anfrage entgegen, schätzt sie ein und schickt sie an das passende Modell, statt jede Frage vom teuersten Modell beantworten zu lassen. Gepflegt wird er unter **Einstellungen → Router**.
+
+### Die drei Routen
+
+| Route | Wann sie greift |
+| --- | --- |
+| **Komplexe Aufgaben (Standard-Route)** | Klassifikator sagt KOMPLEX, und zusätzlich immer dann, wenn der Klassifikator selbst ausfällt |
+| **Einfache Aufgaben (günstige Route)** | Klassifikator sagt SIMPEL |
+| **Bilder (Vision-Route)** | Foto in der Nachricht oder Bild-Bezug im Verlauf |
+
+Pro Route tragen Sie das Modell ein und stellen zwei Feinheiten ein:
+
+- **Denkaufwand** ist der reasoning effort, den der Router dem Modell mitgibt. Mehr Aufwand heisst mehr Denk-Tokens, bessere Ergebnisse, höhere Kosten und höhere Latenz. Zur Auswahl stehen **Standard**, **Aus**, **niedrig**, **mittel**, **hoch** und **maximal (xhigh)**. Bringt die Anfrage bereits einen eigenen Wert mit, rührt der Router nichts an.
+- **Quantisierung** verlangt vom Anbieter eine Rechengenauigkeit, etwa `fp8` oder `bf16`. Ohne Vorgabe kann dieselbe Anfrage bei einem `fp4`-Anbieter landen und spürbar schwächer antworten. Die Einstellung wirkt nur, wenn OpenRouter der Upstream ist.
+
+### Klassifikator und Fail-open
+
+Die Einordnung übernimmt ein eigenes, bewusst kleines Modell. Zwei Felder steuern es:
+
+- **Klassifikator-Modell**: bewertet jede Anfrage mit einem Wort, sollte also günstig und schnell bleiben.
+- **Klassifikator-Timeout (ms)**: erlaubt sind 1000 bis 60000 Millisekunden.
+
+Läuft der Klassifikator in den Timeout oder fällt er aus, greift **Fail-open auf die Standard-Route**. Der Router entscheidet sich im Zweifel also für Qualität und nicht für die Ersparnis. Eine Störung des Klassifikators führt damit zu höheren Kosten, aber nie zu einem Ausfall.
+
+### Betriebshinweis für eigene Router
+
+Sie können neben dem Standard-Router `eu-auto` eigene Router-Profile anlegen. Jedes Profil ist ein zusätzliches virtuelles Modell mit eigenem Slug.
+
+<Aside type="caution" title="Ein neuer Router braucht zwei weitere Einträge">
+Ein angelegtes Profil allein reicht nicht. Tragen Sie den Slug zusätzlich
+
+1. in die **Modell-Liste** des Endpoints „EU-Cowork Router" unter **Konfiguration → KI-Provider** ein, sonst ist er nicht wählbar, und
+2. in die **Preistabelle** unter **Konfiguration → Preise**, sonst rechnet die Verbrauchsmessung für diesen Slug mit null.
+
+Beim Löschen eines Profils gilt dasselbe rückwärts: den Slug auch aus Modell-Liste und Preistabelle entfernen. Der Slug lässt sich nachträglich nicht ändern, weil sonst Karten, Preise und laufende Chats brechen würden.
+</Aside>

@@ -1,0 +1,174 @@
+---
+title: Domain and certificate
+description: The three Caddy variants of EU Cowork AI, namely Let's Encrypt, an internal CA on the LAN and operation behind an existing WAF.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+The stack ships Caddy as a reverse proxy. Caddy distributes the requests to chat, admin panel
+and Outlook add-in and takes care of the certificate. There are three ready made variants,
+depending on whether the server is publicly reachable, sits on the LAN only or runs behind an
+existing security appliance.
+
+The variant is selected through `CADDY_FILE` in the `.env`, and started with the profile
+`production`.
+
+## DNS and ports
+
+You need **two** names pointing to the same server:
+
+| Name | Used for |
+|---|---|
+| `<ihre-domain.ch>` | Chat, Outlook add-in and the API |
+| `admin.<ihre-domain.ch>` | Admin panel |
+
+Set both as an A record (or CNAME) to the server address. For automatic certificate issuance,
+ports 80 and 443 have to be reachable from outside.
+
+Caddy then distributes as follows: `/api/office/*` and the confirmation page `/office/verify` go
+to the admin sidecar, `/office/*` to the Outlook add-in, everything else to the chat. The
+subdomain `admin.` goes entirely to the panel. This order is identical in all three variants.
+
+## Variant 1: Let's Encrypt
+
+The normal case for a server with a public address. Caddy obtains and renews the certificate on
+its own.
+
+```bash title="distribution/.env"
+EUCOWORK_DOMAIN=<ihre-domain.ch>
+DOMAIN_CLIENT=https://<ihre-domain.ch>
+DOMAIN_SERVER=https://<ihre-domain.ch>
+API_BIND=127.0.0.1
+```
+
+`CADDY_FILE` stays empty here or is set to `Caddyfile`, which is the default.
+
+```bash title="On the server"
+docker compose --profile production up -d
+docker compose logs caddy
+```
+
+In Caddy's log you can see whether issuance worked. Limitation of this variant: it needs publicly
+resolving DNS and reachable ports 80 and 443. In an isolated network it does not work.
+
+## Variant 2: Internal CA on the LAN
+
+For servers without public reachability. Caddy issues the certificates from its own local
+certificate authority.
+
+```bash title="distribution/.env"
+CADDY_FILE=Caddyfile.internal
+EUCOWORK_DOMAIN=<ihr-hostname>
+DOMAIN_CLIENT=https://<ihr-hostname>
+DOMAIN_SERVER=https://<ihr-hostname>
+```
+
+So that the devices find the name, they need an internal DNS record. As long as that is missing,
+an entry in the hosts file helps per device:
+
+```bash title="On a client, macOS example"
+sudo sh -c 'echo "<server-ip> <ihr-hostname> admin.<ihr-hostname>" >> /etc/hosts'
+```
+
+After that, register Caddy's root certificate authority as trusted once, or accept the browser
+warning. It can be exported from the running container:
+
+```bash title="Fetch the root certificate"
+ssh <user>@<server-ip> 'docker exec eucowork-caddy cat /data/caddy/pki/authorities/local/root.crt' > eucowork-root-ca.crt
+```
+
+If your stack carries its own `STACK_NAME`, the container is named accordingly differently.
+
+Limitations:
+
+- Every device that does not trust the CA shows a certificate warning.
+- Switching to real certificates later is easy: just remove the `CADDY_FILE` line. Hostname,
+  links and redirect URIs stay the same.
+
+<Aside type="caution" title="An internal CA is not enough for the Outlook add-in">
+The web view in Office does not display a certificate warning that you could click away. Without
+the root CA installed on the device, the add-in window simply stays empty, without an error
+message. For a broad rollout of the add-in you need a publicly trusted certificate, so variant 1
+or variant 3.
+</Aside>
+
+## Variant 3: Behind an existing WAF
+
+When an upstream appliance such as Sophos, F5, HAProxy or nginx already terminates HTTPS, Caddy
+should not fetch a second certificate. In this variant Caddy only listens unencrypted on port 80
+and handles nothing but the distribution by hostname and path.
+
+```bash title="distribution/.env"
+CADDY_FILE=Caddyfile.proxied
+EUCOWORK_DOMAIN=<ihre-domain.ch>
+DOMAIN_CLIENT=https://<ihre-domain.ch>
+DOMAIN_SERVER=https://<ihre-domain.ch>
+```
+
+`DOMAIN_CLIENT` and `DOMAIN_SERVER` stay on `https://`, meaning the public address, even though
+the application internally only sees HTTP. Otherwise it builds invitation links with the wrong
+scheme. You do not need `EUCOWORK_PUBLIC_URL`.
+
+```bash title="On the server"
+docker compose --profile production up -d caddy
+```
+
+On the WAF you set two rules, both to port **80** of the same server:
+
+| Rule | Target |
+|---|---|
+| `<ihre-domain.ch>` | `<server-ip>:80` |
+| `admin.<ihre-domain.ch>` | `<server-ip>:80` |
+
+Caddy tells the two apart by the host header. Passing the host header through therefore has to be
+active on the WAF, otherwise the mapping does not work.
+
+Two points that go wrong in practice:
+
+- **Do not point the WAF directly at the chat port.** That would bypass Caddy and with it the
+  routes for the panel and for the Outlook add-in. Only the chat itself would work.
+- **Restrict port 80 to the WAF.** Ports published by Docker bypass ufw, so only a rule in the
+  DOCKER-USER chain has any effect here:
+
+  ```bash title="On the server"
+  sudo iptables -I DOCKER-USER -p tcp --dport 80 ! -s <WAF-IP> -j DROP
+  ```
+
+<Aside type="caution" title="WAF and streaming">
+Many appliances buffer the response stream in order to inspect the answer. The chat, however,
+sends its answers piece by piece. If buffering is active, the answer appears only at the end all
+at once, or it breaks off on long answers. Set an exception for `/api/*` in the WAF so that the
+answer is not scanned, and enable the disabling of compression there. On the application side
+`DISABLE_COMPRESSION=true` has to stay.
+</Aside>
+
+## Why `API_BIND=127.0.0.1` belongs in production
+
+Out of the box the chat container publishes its port on all network interfaces. Locally that is
+convenient, in production it is a hole: LibreChat would then additionally be reachable at
+`http://<server-ip>:3080`, so past Caddy and past the certificate. Logins would travel
+unencrypted through the network.
+
+<Aside type="danger" title="The firewall does not help here">
+Ports published by Docker through `ports:` write their own iptables rules and are reachable
+despite an active ufw. The only effective protection is binding to `127.0.0.1`. Set
+`API_BIND=127.0.0.1` as soon as access runs through Caddy. Admin panel and Outlook add-in are
+already bound to `127.0.0.1` out of the box.
+</Aside>
+
+## Next
+
+<CardGrid>
+  <LinkCard
+    title="Updating"
+    href="/docs/en/betrieb/aktualisieren"
+    description="The verified update chain, the digest change and the way back."
+  />
+  <LinkCard
+    title="Troubleshooting"
+    href="/docs/en/betrieb/fehlerbehebung"
+    description="The failure modes that really occur in daily operation, with cause and fix."
+  />
+</CardGrid>

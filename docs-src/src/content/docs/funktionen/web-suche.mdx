@@ -1,0 +1,145 @@
+---
+title: Web-Suche
+description: Wie die Web-Suche im Chat funktioniert, warum sie im Auslieferungszustand noch nicht auslöst und wie ein Scraper konfiguriert wird.
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Die Web-Suche holt aktuelle Informationen aus dem Internet in den Chat: Preise, Nachrichten,
+Rechtsstand, Angaben zu fremden Firmen. Diese Seite erklärt, wie sie benutzt wird, aus
+welchen Bausteinen sie besteht und was im Auslieferungszustand noch fehlt.
+
+Das Such-Gerüst stammt von [LibreChat](https://www.librechat.ai/docs). Von uns kommt die
+eigene Suchmaschine im Stack und die Vorkonfiguration.
+
+## So wird sie im Chat benutzt
+
+Im Eingabefeld gibt es einen Schalter für die Web-Suche. Ist er an und ist die Suche
+vollständig eingerichtet, entscheidet der Kollege selbst, wann er sucht. Sie müssen nicht
+„such im Internet" schreiben, eine Frage nach dem aktuellen Stand genügt.
+
+Die Antwort wird dann auf den gefundenen Seiten aufgebaut, mit Quellenangabe. Der hinterlegte
+Systemprompt verlangt das ausdrücklich.
+
+## Die drei Bausteine
+
+Eine funktionierende Web-Suche besteht aus mehr als einer Suchmaschine.
+
+| Baustein | Aufgabe | Pflicht |
+|---|---|---|
+| Suchmaschine | Liefert Treffer, also Links und kurze Textausschnitte | ja |
+| Scraper | Holt den Volltext der gefundenen Seiten | ja |
+| Reranker | Sortiert die Fundstellen nach Passgenauigkeit | nein |
+
+Ohne Scraper hätte der Kollege nur Überschriften und Zweizeiler, aus denen sich keine
+belastbare Antwort bauen lässt.
+
+<Aside type="caution" title="Im Auslieferungszustand löst die Suche nicht aus">
+Das Kunden-Template bringt die Suchmaschine mit: **SearXNG** läuft als eigener Dienst im
+Stack, `webSearch.searchProvider` steht auf `searxng`. Ein **Scraper ist aber nicht
+konfiguriert**, und ein Reranker ist bewusst auf `none` gesetzt.
+
+Die Folge ist konkret: LibreChat hängt das Such-Werkzeug ohne authentifizierten Scraper gar
+nicht erst an das Modell. Der Schalter im Chat ist sichtbar, die Suche feuert aber nie. Kein
+Fehler, keine Meldung, es passiert schlicht nichts.
+
+Erst mit einem konfigurierten Scraper wird aus dem Schalter eine funktionierende Suche. Das
+ist die eine Stelle, an der ein frisch installierter Stack noch Handarbeit braucht.
+</Aside>
+
+## Für Admins: Scraper und Reranker konfigurieren
+
+Beides wird im Admin-Panel unter **Konfiguration → Funktionen** gepflegt, in zwei Karten.
+
+**Karte „Web-Suche"**
+
+| Feld | Bedeutung |
+|---|---|
+| Such-Provider | `searxng`, `serper` oder `tavily`. Ausgeliefert ist `searxng` |
+| SearXNG-URL | Zeigt auf den internen Dienst, als Referenz `${SEARXNG_INSTANCE_URL}` halten |
+| SearXNG-Schlüssel | optional |
+| SafeSearch | 0 aus, 1 moderat, 2 streng |
+| Scraper-Timeout (ms) | Geduld beim Abholen einer Seite |
+
+**Karte „Web-Suche: Scraper & Reranker"**
+
+| Feld | Bedeutung |
+|---|---|
+| Scraper | `firecrawl`, `serper` oder `tavily`. Zusatz im Panel: „Holt die Seiteninhalte zu den Treffern" |
+| Firecrawl-Schlüssel, Serper-Schlüssel, Tavily-Schlüssel | Schlüssel zum gewählten Scraper |
+| Reranker | `jina`, `cohere` oder `none`. Die ersten beiden brauchen zwingend den passenden Schlüssel |
+| Jina-Schlüssel, Cohere-Schlüssel | Schlüssel zum gewählten Reranker |
+
+Schlüssel gehören **nie im Klartext** in die Konfiguration. Tragen Sie sie als
+`${VARIABLE}` ein und hinterlegen Sie den Wert im Panel unter **Einstellungen →
+API-Schlüssel** oder in der `.env` auf dem Server.
+
+<Aside type="note" title="Welcher Scraper passt zur EU-Positionierung">
+Der vorgesehene europäische Weg ist ein **selbst gehostetes Firecrawl** neben dem Stack.
+Dann verlässt der Volltext-Abruf Ihre Infrastruktur nicht. Der Container ist noch nicht Teil
+des Compose-Pakets, Sie stellen ihn selbst bereit. Die Zeilen dafür stehen auskommentiert im
+Kunden-Template.
+
+Die gehosteten Varianten der Scraper-Anbieter sind schnell eingerichtet, verarbeiten aber
+nicht EU-resident. Wer sie einsetzt, sollte das genauso benennen wie die Nicht-EU-Modellkarten.
+</Aside>
+
+### Damit der Kollege von selbst sucht
+
+Zwei weitere Stellschrauben und ein Neustart entscheiden, ob gesucht wird:
+
+<Steps>
+
+1. **Rollen-Recht.** Im Rollen-Editor unter **Werkzeuge** das Recht **Web-Suche** für die
+   betroffenen Rollen. Im Auslieferungszustand steht `interface.webSearch: true` in der
+   Konfigurationsdatei, das Recht ist also gesetzt.
+
+2. **Karten-Flag.** Auf den Modellkarten ist `webSearch: true` auskommentiert. Erst wenn Sie
+   es setzen, hängt das Werkzeug an der Karte und das Modell entscheidet selbst über den
+   Einsatz. Das gehört auf **alle** Karten, die Sie anbieten.
+
+3. **Neu starten**, danach in einem frischen Chat prüfen.
+
+   ```bash title="Auf dem Server"
+   docker compose up -d --force-recreate api
+   ```
+
+</Steps>
+
+### Wie viel Text beim Modell ankommt
+
+Das Zeichenbudget der Suchergebnisse steuert `SEARCH_MAX_LLM_OUTPUT_CHARS` in der `.env`,
+Standard `15000`. Höher bedeutet mehr Kontext für die Antwort und mehr Tokens pro Anfrage,
+also höhere Kosten. Niedriger bedeutet knappere Grundlage.
+
+### SearXNG im Stack
+
+SearXNG ist eine Metasuchmaschine, die selbst keine Ergebnisse hat, sondern mehrere
+Suchmaschinen abfragt und die Treffer zusammenführt. Der Dienst läuft nur intern, ohne
+Host-Port, und belegt im Leerlauf rund 65 MB.
+
+In `distribution/searxng/settings.yml` sind drei Dinge wichtig:
+
+- `formats` enthält `json`. Ohne das JSON-Format kann LibreChat die Ergebnisse nicht lesen.
+- `safe_search: 1`, also moderat.
+- `secret_key` wird beim Installieren durch ein generiertes Geheimnis ersetzt.
+
+## Datenschutz, ehrlich beschrieben
+
+SearXNG läuft bei Ihnen, die Suchanfrage geht aber weiter. Die Metasuchmaschine fragt externe
+Suchmaschinen ab und gibt deren Treffer zurück. Was dabei passiert und was nicht:
+
+| | |
+|---|---|
+| Geht nach draussen | der Suchbegriff, sowie die abgerufenen Seiten beim Scraper |
+| Geht **nicht** nach draussen | wer gesucht hat. Die Identität der Person bleibt bei Ihnen |
+| Bleibt bei Ihnen | die Unterhaltung, die Dokumente, die Antwort |
+
+<Aside type="caution" title="Was Sie nicht behaupten sollten">
+Der Satz „bei der Web-Suche bleibt alles in der EU" ist falsch und sollte weder auf einer
+Folie noch in einer Schulung stehen. Richtig ist: Speicherung und Inferenz laufen dort, wo
+Sie den Stack betreiben, die Suchanfrage selbst geht an externe Suchmaschinen, aber ohne
+Nutzeridentität.
+</Aside>

@@ -1,0 +1,179 @@
+---
+title: Backup und Umzug
+description: Was backup.sh sichert und was bewusst nicht, wie ein Restore wirkt und wie eine bestehende Instanz auf einen neuen Server zieht.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Ein Skript deckt beides ab: die tägliche Sicherung und den Umzug auf eine neue Maschine. Ein
+Umzug ist technisch nichts anderes als ein Backup auf dem alten Server, eine Kopie und ein
+Restore auf dem neuen. Diese Seite zeigt beide Wege und die Stelle, an der ein Umzug teuer
+werden kann.
+
+## Was gesichert wird
+
+Ein Lauf erzeugt genau ein Archiv mit:
+
+- dem vollständigen Abzug der Datenbank `LibreChat`, also Konten, Konversationen, Agenten,
+  Guthaben und Buchungen, Rechteregeln und Protokolle,
+- `.env` mit allen Geheimnissen,
+- `librechat.yaml` und `librechat.internal.yaml`,
+- `searxng/settings.yml`,
+- dem Verzeichnis `skills/`,
+- den Agenten-Definitionen `seed-agents/*.json`,
+- den Verzeichnissen `uploads/` und `images/`.
+
+## Was bewusst nicht gesichert wird
+
+| Nicht im Archiv | Warum |
+|---|---|
+| `data-node/` | Rohdaten der Datenbank. Der logische Abzug oben deckt denselben Inhalt ab und lässt sich versionsunabhängig zurückspielen. |
+| `meili_data/` | Suchindex. Reine Ableitung, wird nach dem Restore selbstständig neu aufgebaut. |
+| `logs/` | Laufzeitprotokolle, kein Zustand. |
+| Alles, was im Repository liegt | Kommt über `git clone` oder `git pull` zurück. |
+
+## Die Befehle
+
+```bash title="Im Verzeichnis distribution"
+./backup.sh backup
+./backup.sh list
+./backup.sh restore backups/<archiv>.tar.gz
+```
+
+Vollständige Aufrufform:
+
+| Befehl | Optionen | Standard |
+|---|---|---|
+| `./backup.sh backup` | `--dest VERZEICHNIS`, `--keep N` | `./backups`, 14 Archive |
+| `./backup.sh restore <archiv.tar.gz>` | `--yes`, `--force-env` | Rückfrage aktiv, `.env` bleibt erhalten |
+| `./backup.sh list` | `--dest VERZEICHNIS` | `./backups` |
+
+Das Archiv heisst `<stack>-<datum>-<uhrzeit>.tar.gz` und bekommt die Rechte `600`, denn es
+enthält die `.env` mit allen Geheimnissen. Ältere Archive werden nach der `--keep`-Regel
+gelöscht. Für den Abzug muss der Datenbank-Container laufen.
+
+## Täglich sichern
+
+`./backup.sh backup` gibt am Ende die passende Cron-Zeile aus, mit den Pfaden Ihrer Instanz
+bereits eingesetzt:
+
+```text title="crontab -e"
+15 3 * * * cd <pfad-zur-distribution> && ./backup.sh backup --keep <N> >> <ziel>/backup.log 2>&1
+```
+
+## Restore und seine Wirkung
+
+Ein Restore ist **zerstörend**. Das passiert dabei:
+
+1. Die Container `api` und `admin` werden gestoppt.
+2. Die Datenbank `LibreChat` wird durch den Stand aus dem Archiv **ersetzt**, der bisherige
+   Inhalt ist danach weg.
+3. Die Dateien aus dem Archiv werden zurückgeschrieben und überschreiben Gleichnamiges.
+4. Die Container werden wieder gestartet, der Suchindex baut sich selbstständig neu auf.
+
+Ohne `--yes` fragt das Skript vorher und verlangt die Eingabe von `JA` in Grossbuchstaben.
+
+Eine Ausnahme gibt es: eine bereits vorhandene `.env` wird **nicht** überschrieben, weil sie
+Domain und Ports der aktuellen Maschine enthält. Die Version aus dem Archiv landet daneben als
+`.env.aus-backup`. Wer sie vollständig übernehmen will, wiederholt den Restore mit
+`--force-env`.
+
+## Umzug auf einen neuen Server
+
+<Steps>
+
+1. **Auf dem alten Server sichern.**
+
+   ```bash title="Alter Server"
+   cd ~/eu-cowork/distribution
+   ./backup.sh backup
+   ```
+
+2. **Archiv übertragen.** Der Pfad steht in der Ausgabe des vorigen Schritts.
+
+   ```bash title="Alter Server"
+   scp backups/eucowork-<zeitstempel>.tar.gz <neuer-server>:~/
+   ```
+
+3. **Neuen Server vorbereiten.** Betriebssystem einrichten mit
+   [`setup-server.sh`](/docs/betrieb/server-vorbereiten), danach neu anmelden und das
+   Repository klonen.
+
+4. **Die `.env` aus dem Archiv holen.**
+
+   ```bash title="Neuer Server"
+   cd ~/eu-cowork/distribution
+   tar -xzf ~/eucowork-<zeitstempel>.tar.gz -O ./files/.env > .env
+   chmod 600 .env
+   wc -l .env
+   ```
+
+   Der Pfad im Archiv braucht das führende `./`. Ohne diesen Punkt findet `tar` den Eintrag
+   nicht, die Umleitung legt aber trotzdem eine Datei an, und zwar eine leere. Genau dafür ist
+   die letzte Zeile da: `wc -l .env` muss deutlich mehr als null Zeilen melden.
+
+5. **Die `.env` anpassen.** Nur die Werte ändern, die sich mit der Maschine ändern:
+
+   ```bash title="Neuer Server, distribution/.env"
+   DOMAIN_CLIENT=https://<ihre-domain.ch>
+   DOMAIN_SERVER=https://<ihre-domain.ch>
+   EUCOWORK_DOMAIN=<ihre-domain.ch>
+   API_BIND=127.0.0.1
+   ```
+
+6. **Stack starten und Daten einspielen.**
+
+   ```bash title="Neuer Server"
+   ./install.sh --migrate --profiles production,internal,microsoft,filesearch
+   ./backup.sh restore ~/eucowork-<zeitstempel>.tar.gz
+   docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
+   ```
+
+7. **Prüfen und umschalten.** Anmeldung am Chat und am Panel, alte Konversationen sichtbar,
+   Nutzerliste vollständig. Danach den DNS-Eintrag auf die neue Maschine umhängen und die
+   Zertifikatsausstellung im Log von Caddy kontrollieren.
+
+8. **Nachzügler holen.** Zwischen dem ersten Abzug und dem Umschalten entstehen noch Daten.
+   Auf dem alten Server `docker compose stop api admin`, dann ein zweites Backup ziehen und
+   auf dem neuen Server einspielen.
+
+</Steps>
+
+Die übertragene Kopie des Archivs enthält Geheimnisse und Konversationen. Löschen Sie sie nach
+dem Umzug vom Übergabepfad und behalten Sie nur die reguläre Backup-Rotation.
+
+<Aside type="danger" title="CREDS_KEY und CREDS_IV übernehmen">
+Das ist der teuerste Fehler beim Umzug. Werden diese beiden Werte auf dem neuen Server neu
+erzeugt statt aus der alten `.env` übernommen, sind alle verschlüsselten Zugangsdaten in der
+Datenbank unlesbar: die OAuth-Token jeder Person für SharePoint und OneDrive und die im Panel
+hinterlegten API-Schlüssel. Jede Person müsste jede Verbindung neu aufbauen. Deshalb der Weg
+über die `.env` aus dem Archiv. Dasselbe Prinzip gilt abgeschwächt für `JWT_SECRET` und
+`JWT_REFRESH_SECRET`, dort werden nur alle Sitzungen ungültig, und für `MEILI_MASTER_KEY`,
+dort wird der Suchindex neu aufgebaut.
+</Aside>
+
+## Zwei Empfehlungen, die wirklich zählen
+
+- **Den Restore einmal testen, bevor Sie sich darauf verlassen.** Ein Archiv, das nie
+  zurückgespielt wurde, ist eine Annahme, keine Sicherung. Der Test gehört auf eine
+  Testmaschine, nicht auf das Produktivsystem.
+- **Das Archiv ausserhalb des Servers spiegeln.** Eine Kopie auf derselben Maschine schützt
+  gegen ein versehentliches Löschen, nicht gegen den Verlust der Maschine. Weil das Archiv
+  Geheimnisse enthält, gehört es nur verschlüsselt in eine Cloud und nie in ein Repository.
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Mehrere Instanzen auf einem Server"
+    href="/docs/betrieb/mehrere-instanzen"
+    description="Backup pro Stack, eigene Netze, eigener Code-Interpreter."
+  />
+  <LinkCard
+    title="Fehlerbehebung"
+    href="/docs/betrieb/fehlerbehebung"
+    description="Wenn nach dem Umzug etwas klemmt: Symptom, Ursache, Lösung."
+  />
+</CardGrid>

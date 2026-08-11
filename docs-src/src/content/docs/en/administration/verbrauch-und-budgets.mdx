@@ -1,0 +1,117 @@
+---
+title: Usage, budgets and billing
+description: How tokens become euros, how the shared monthly budget and personal limits work together and how receipts come into being.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Usage metering is always active. It shows what the usage actually costs, and it is the basis for budgets, limits and receipts. This page explains the calculation behind it and the places in the panel where you intervene.
+
+## What is measured
+
+The basis is the transactions from LibreChat, meaning the tokens of every single request, separated into input and output. From that comes an amount per request, which the panel adds up by person, model, day and month.
+
+The path from tokens to euros has two steps:
+
+<Steps>
+
+1. **Tokens times price gives USD.** The prices are in the price table in USD per one million tokens.
+
+2. **USD times rate gives euros.** The rate is in the environment variable `USD_EUR_RATE` and is visible under **"Einstellungen → Abrechnung"** (settings, billing) in the card **"Wechselkurs"** (exchange rate).
+
+</Steps>
+
+<Aside type="note" title="The rate is frozen per billing month">
+As soon as a month is closed, the panel records the rate that was used. If you change `USD_EUR_RATE` later, that only affects the current and coming months. Closed months and their receipts stay as they were. In the monthly archive, the column **"Kurs"** (rate) shows which value applies to the respective month.
+</Aside>
+
+## The price table
+
+You maintain the prices under **"Konfiguration → Preise"** (configuration, prices), one table per endpoint with the columns **"Modell"** (model), **"Kontext (Tokens)"** (context in tokens), **"Eingabe (USD/1M)"** (input) and **"Ausgabe (USD/1M)"** (output).
+
+The button **"Von OpenRouter übernehmen"** (take over from OpenRouter) fills context size and prices from the live catalog into the draft. It is only written with **"Speichern"** (save), so that every change appears in the history.
+
+<Aside type="danger" title="Two traps that cost money or quality">
+**An empty price field does not mean free.** If the price is missing, LibreChat calculates with its built in table, and for unknown models that is a flat 6 USD per million tokens. Your analysis then looks plausible and is wrong all the same.
+
+**An empty context size is more expensive than it looks.** In that case the chat frontend silently falls back to around 32,000 tokens and truncates long conversations, even with a model that has a very large context. Values maintained here win over both and take effect immediately for new answers.
+</Aside>
+
+## The shared monthly budget
+
+Under **"Einstellungen → Budget & Durchsetzung"** (settings, budget and enforcement) sits the field **"Budget in EUR pro Monat"** (budget in EUR per month). This is a shared monthly tank for the whole organization, not an amount per person. Empty means no budget. On the **"Übersicht"** (overview) the status is set against real usage, from 80 percent a warning appears, plus a projection for the month.
+
+Below it sits the switch **"Budget hart durchsetzen"** (enforce budget hard). It is **off** in the shipped state.
+
+| Switch | Effect |
+| --- | --- |
+| off (default) | The budget is display only. Overage is permitted, nobody gets locked out. Technically LibreChat checks nothing at all, so nobody can get stuck accidentally either. |
+| on | Once the budget is used up, new requests are rejected, for **all** accounts including the admins. A notice bar appears in the chat. The panel itself always stays operable. |
+
+Raising the budget, switching the toggle off and the change of month all release the block within a minute.
+
+In the same form sits **"Plattformgebühr in EUR pro Nutzer/Monat (Abrechnung)"** (platform fee in EUR per user per month, billing), default 6 euros. It appears as a line item on the monthly invoice and is saved together with the budget.
+
+## The personal monthly limit
+
+On the page **"Finanzen → Verbrauch"** (finance, usage), the column **"Monatslimit"** (monthly limit) appears per person. A limit is optional; without an entry there is no personal limit.
+
+<Aside type="caution" title="The pool beats the personal limit">
+Personal limits only take effect when **"Budget hart durchsetzen"** (enforce budget hard) is switched on, it is the same switch. And more importantly: if the shared pot is empty, everyone is at zero, including anyone who is nowhere near exhausting their own limit. The personal limit is an additional brake, not a reservation.
+</Aside>
+
+The row shows the reason for the block as a badge:
+
+| Badge | Meaning |
+| --- | --- |
+| **"gesperrt (Budget)"** (blocked, budget) | the shared monthly budget of the organization is used up |
+| **"gesperrt (Limit)"** (blocked, limit) | the personal monthly limit of this person has been reached |
+
+The table also has the columns **"Nutzer"** (user), **"Verbrauch"** (usage) for the selected month, **"Tokens"** (tokens), **"Anfragen"** (requests), **"Letzte Aktivität"** (last activity) and **"Guthaben"** (credit balance). The button **"Guthaben-CSV"** (credit balance CSV) exports the view.
+
+## Credit balance per person and credit balance of the organization
+
+The word **"Guthaben"** (credit balance) appears in two places in the panel and means two different things. Do not confuse them.
+
+| | **"Guthaben"** on the usage page | **"Guthaben"** on the billing page |
+| --- | --- | --- |
+| What it is | the individual limit account of a person in euros | the account balance of the organization from recorded deposits |
+| What it is for | technical enforcement of blocks per account | commercial overview of what was paid in and what was used |
+| When it is relevant | only when hard enforcement is active | independently of that, as soon as you record deposits |
+| How it changes | through **"Guthaben-Top-up"** (top up credit balance) on the row | through **"Einzahlung erfassen"** (record deposit) in the ledger |
+
+Put briefly: the credit balance per person is a valve, the credit balance of the organization is bookkeeping. The token credit itself is deliberately pooled across the organization, so that individual people do not stand at an artificial limit while budget is left over elsewhere.
+
+## Billing
+
+The page **"Finanzen → Abrechnung"** (finance, billing) shows the selected month with two line items:
+
+- **"Plattformgebühr"** (platform fee), calculated from the number of users times the amount from the settings. It hangs on the account, not on usage.
+- **"Token-Verbrauch"** (token usage) from usage metering.
+
+Two buttons create receipts: **"CSV-Beleg"** (CSV receipt) and **"PDF"**. Provider and customer addresses for the PDF header are under **"Einstellungen → Abrechnung"** (settings, billing) in the card **"Anschriften"** (addresses).
+
+<Aside type="note" title="Better blocked than wrong">
+If a basis is missing, for example the number of users, the panel blocks the receipts instead of silently calculating with zero. A receipt that shows too small a figure without an error message would be worse than no receipt at all.
+</Aside>
+
+### Ledger and reversal
+
+You record deposits through **"Einzahlung erfassen"** (record deposit). The ledger is append-only: a correction happens as a **"Storno"** (reversal), meaning as a counter entry referencing the original receipt. The original entry stays in place and never disappears. The summary shows the balance as deposits minus usage, whereby the platform fee is not included there and is billed separately.
+
+Under **"Vergangene Abrechnungen"** (past billing periods) sits the monthly archive with the columns **"Monat"** (month), **"Aktive Nutzer"** (active users), **"Tokens"** (tokens), **"Token-Kosten"** (token cost) and **"Kurs"** (rate), plus **"Anzeigen"** (view) and **"PDF"** per row.
+
+<Aside type="caution" title="Receipts are not tax invoices">
+The footnote in the panel states it clearly: invoicing happens outside this system, CSV and PDF are receipts, not tax invoices. There is no payment integration either. Invoicing and incoming payments continue to run through your accounting.
+</Aside>
+
+## The dashboard views
+
+Two pages under **"Analyse"** (analysis) show the same figures from different angles:
+
+- **"Übersicht"** (overview) is the monthly view of the calendar month. At the top the key figures usage in euros, budget status with projection, tokens and active users; below that a daily chart per model as well as the tables **"Verbrauch pro Nutzer"** (usage per user) and **"Verbrauch pro Modell"** (usage per model).
+- **"Aktivität"** (activity) is a rolling window over **"7 Tage"** (7 days), **"30 Tage"** (30 days) or **"90 Tage"** (90 days), with a comparison to the previous period, the **"Modellen im Zeitraum"** (models in the period), the **"Router-Verteilung (eu-auto)"** (router distribution) and the imported OpenRouter account. For the OpenRouter part the view silently raises 7 days to 30, because the provider delivers no usable statistics for shorter periods.
+
+Neither of the two pages is responsible for the question about a single request; the [logs](/docs/en/administration/protokolle-und-audit) are there for that.

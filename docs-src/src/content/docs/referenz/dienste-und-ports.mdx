@@ -1,0 +1,137 @@
+---
+title: Dienste und Ports
+description: Alle Container des Stacks mit Image, Zweck, Port und Profil. Dazu die Docker-Netze, die Healthchecks und die Frage, welche Ports nach aussen gehören.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Diese Seite listet jeden Container des Compose-Stacks mit Image, Aufgabe, Port und Profil.
+Sie ist zum Nachschlagen gedacht, etwa wenn Sie eine Firewall-Regel schreiben oder wissen
+wollen, warum ein Dienst nicht gestartet ist.
+
+Alle Containernamen tragen ein Präfix aus der Variablen `STACK_NAME`, ohne Angabe lautet es
+`eucowork`. Der Container des Chats heisst also standardmässig `eucowork-api`.
+
+## Die Dienste
+
+| Dienst | Image | Zweck | Port | Profil |
+|---|---|---|---|---|
+| `api` | `registry.librechat.ai/danny-avila/librechat-dev`, auf Digest gepinnt | LibreChat, Oberfläche und Schnittstelle | Host `${API_BIND}:${PORT}`, Vorgabe `0.0.0.0:3080` | ohne Profil |
+| `admin` | Build aus `../services/admin` | eigenes Admin-Panel und Sidecar | Host `127.0.0.1:3010` | ohne Profil |
+| `office-addin` | Build aus `../services/office-addin` | Task Pane und Manifest für Outlook | Host `127.0.0.1:3040`, im Container 8080 | ohne Profil |
+| `mongodb` | `mongo:8.0.20` | Datenbank `LibreChat` | nur intern, 27017 | ohne Profil |
+| `meilisearch` | `getmeili/meilisearch:v1.35.1` | Volltextsuche über Konversationen | nur intern, 7700 | ohne Profil |
+| `searxng` | `searxng/searxng:latest` | eigene Metasuchmaschine für die Web-Suche | nur intern, 8080 | ohne Profil |
+| `vectordb` | `pgvector/pgvector:0.8.0-pg15-trixie` | Vektordatenbank der Dateisuche | nur intern | `filesearch` |
+| `rag_api` | `registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest` | Auswertung hochgeladener Dokumente | nur intern, `${RAG_PORT}`, Vorgabe 8000 | `filesearch` |
+| `mcp-gateway` | Build aus `../services/mcp-gateway` | Rechteprüfung und Protokoll vor allen Konnektoren, dazu der Model-Router | nur intern, 3020 | `internal` |
+| `odoo-mcp-administrator` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo-Brücke mit eigenem Dienstkonto | nur intern, 8000 | `internal` |
+| `odoo-mcp-admin` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo-Brücke mit eigenem Dienstkonto | nur intern, 8000 | `internal` |
+| `odoo-mcp-technik` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo-Brücke mit eigenem Dienstkonto | nur intern, 8000 | `internal` |
+| `ninjaone-mcp` | Build aus `../services/ninjaone-mcp` | NinjaOne-Brücke, ausschliesslich lesend | nur intern, 3030 | `internal` |
+| `ms365-mcp` | `node:22-alpine` mit `@softeria/ms-365-mcp-server@0.128.2` | SharePoint und OneDrive über Microsoft Graph, nur lesend | nur intern, 3000 | `microsoft` |
+| `caddy` | `caddy:2-alpine` | Reverse-Proxy mit automatischem TLS | Host 80 und 443 | `production` |
+| `admin-panel` | AGPL-Panel von LibreChat | Übergangswerkzeug, nicht Teil des Produkts | Host `${ADMIN_PANEL_PORT}`, Vorgabe 3000 | `interim` |
+
+Die drei Odoo-Brücken sind dasselbe Image mit derselben Konfiguration, nur mit je eigenem
+Odoo-Schlüssel. Der Schlüssel gehört zu einem eigenen Odoo-Benutzer, dessen Rechte im ERP die
+Berechtigungsgrenze bilden.
+
+<Aside type="caution" title="Drei Images laufen noch auf einem beweglichen Tag">
+`searxng`, `rag_api` und das Interim-Panel `admin-panel` stehen auf `:latest`, während das
+LibreChat-Image bewusst auf einen Digest gepinnt ist. Das ist ein offener Punkt und keine
+begründete Ausnahme: Bei diesen drei Diensten kann ein `docker compose pull` also eine andere
+Version ziehen als die zuletzt geprüfte. Warum ein fester Digest die bessere Wahl ist, steht
+unter [Aktualisieren](/docs/betrieb/aktualisieren). Wer das jetzt schon vermeiden will, pinnt
+die drei Images in `distribution/docker-compose.yml` selbst auf einen Digest.
+</Aside>
+
+## Welche Ports gehören nach aussen
+
+Nur drei: **22, 80 und 443.** Alles andere bleibt lokal.
+
+| Port | Dienst | Begründung |
+|---|---|---|
+| 22 | SSH | Administration |
+| 80 | Caddy | Ausstellung der Zertifikate und Weiterleitung auf HTTPS |
+| 443 | Caddy | Chat, Admin-Panel und Outlook-Add-in |
+
+Caddy ist der einzige Dienst, der auf allen Schnittstellen lauschen darf. Das Admin-Panel und
+das Outlook-Add-in sind bereits ab Werk an `127.0.0.1` gebunden. Die Datenbank, der
+Suchindex, das Gateway und sämtliche Konnektor-Brücken sind gar nicht auf dem Host
+veröffentlicht, sie sind ausschliesslich im internen Docker-Netz erreichbar.
+
+Zwei Punkte müssen Sie selbst beachten:
+
+- **Der Chat-Port ist standardmässig auf `0.0.0.0` gebunden.** In Produktion gehört
+  `API_BIND=127.0.0.1` in die `.env`, sonst ist LibreChat unverschlüsselt unter
+  `<server-ip>:3080` erreichbar, an Caddy und TLS vorbei.
+- **Das Übergangs-Panel des Profils `interim` bindet auf allen Schnittstellen.** Es ist ein
+  Testwerkzeug und gehört nicht auf einen erreichbaren Server.
+
+<Aside type="danger" title="Die Firewall greift bei Docker-Ports nicht">
+Von Docker über `ports:` veröffentlichte Ports umgehen `ufw`, weil Docker eigene
+iptables-Regeln in der Kette `DOCKER-USER` schreibt. Ein auf `0.0.0.0` gebundener Container
+ist trotz aktiver Firewall von aussen erreichbar. Der Schutz liegt in der Bindung an
+`127.0.0.1`, nicht in der Firewall-Regel.
+
+Wo eine Regel wirklich nötig ist, etwa bei den Debug-Ports der Code-Interpreter-Substacks,
+muss sie in dieselbe Kette:
+
+```bash
+sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
+```
+</Aside>
+
+## Die Docker-Netze
+
+Der Stack verwendet zwei Netze.
+
+| Netz | Art | Wer hängt drin |
+|---|---|---|
+| `default` | Bridge mit festem Subnetz aus `DOCKER_SUBNET`, Vorgabe `172.28.0.0/16` | alle Dienste des Stacks |
+| `sandbox` | externes Netz aus `SANDBOX_NETWORK`, Vorgabe `eucowork-sandbox` | nur `api`, dazu der getrennte Code-Interpreter-Stack |
+
+Das Sandbox-Netz wird bewusst ausserhalb des Stacks angelegt, damit beide Compose-Projekte
+unabhängig voneinander starten und stoppen können. `install.sh` legt es an. Fehlt es, meldet
+Compose beim Start, das als extern deklarierte Netz sei nicht auffindbar. Der Befehl dazu:
+
+```bash
+docker network create eucowork-sandbox
+```
+
+Das feste Subnetz ist Absicht. Kollidiert es mit einer Route, die ein VPN auf die Maschine
+schiebt, brechen die ausgehenden Verbindungen der Container. Dann tragen Sie in der `.env`
+einen freien Bereich in `DOCKER_SUBNET` ein.
+
+<Aside type="caution" title="Mehrere Instanzen auf einer Maschine">
+`STACK_NAME`, `DOCKER_SUBNET` und `SANDBOX_NETWORK` gelten Docker-weit und müssen deshalb pro
+Instanz eindeutig sein. Dasselbe gilt für die Host-Ports `PORT`, `ADMIN_SIDECAR_PORT` und
+`OFFICE_ADDIN_PORT`. Zwei Instanzen am selben Sandbox-Netz würden im schlimmsten Fall im
+Code-Interpreter des jeweils anderen Kunden landen.
+</Aside>
+
+## Healthchecks
+
+Healthchecks haben nur die Konnektor-Brücken, also die drei Odoo-Instanzen und
+`ninjaone-mcp`. Sie fragen alle 30 Sekunden den eigenen Gesundheitsendpunkt ab, mit fünf
+Sekunden Zeitlimit und drei Versuchen. Die Anlaufzeit beträgt 20 Sekunden für die
+Odoo-Brücken und 15 Sekunden für die NinjaOne-Brücke.
+
+Alle übrigen Dienste haben keinen Healthcheck. In `docker compose ps` erscheinen sie deshalb
+als `Up` ohne Gesundheitsangabe, das ist kein Fehler. Ob die Anwendung wirklich sauber
+gestartet ist, sehen Sie im Protokoll:
+
+```bash
+docker compose logs -f api
+```
+
+Die NinjaOne-Brücke bringt zusätzlich einen eigenen Selbsttest mit. Er prüft die
+Zugangsdaten, die tatsächlich gewährten Berechtigungen, den Lesezugriff und dass schreibende
+Pfade blockiert werden:
+
+```bash
+docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+```

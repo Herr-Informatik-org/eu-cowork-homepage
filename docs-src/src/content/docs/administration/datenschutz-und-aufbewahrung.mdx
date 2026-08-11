@@ -1,0 +1,94 @@
+---
+title: Datenschutz und Aufbewahrung
+description: Aufbewahrungsfrist setzen, Auskunft und Löschung pro Person, Telemetrie und was den Stack tatsächlich verlässt.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Diese Seite sagt möglichst genau, welche Daten wie lange bleiben, wie Sie eine Auskunft erteilen oder eine Löschung durchführen und was die Installation nach aussen sendet. Sie enthält bewusst auch das, was nicht vorhanden ist.
+
+## Die Aufbewahrungsfrist
+
+Unter **Einstellungen → Aufbewahrung** steht die Karte **Aufbewahrung (Retention)** mit dem Feld **Aufbewahrung in Tagen**.
+
+| Eigenschaft | Wert |
+| --- | --- |
+| Zulässiger Bereich | 1 bis 3650 Tage |
+| Feld leer | Aufbewahrung ist aus, es wird nichts automatisch gelöscht |
+| Massgeblich | die letzte Änderung an der Konversation, nicht ihr Anlagedatum |
+| Wann gelöscht wird | in einem täglichen Lauf |
+
+Gelöscht werden **Konversationen samt ihren Nachrichten und den dazu erzeugten geteilten Links**, und zwar endgültig. Nicht gelöscht werden die **Abrechnungsdaten**, also die Transaktionen der Verbrauchsmessung. Der Verbrauch eines vergangenen Monats bleibt damit nachvollziehbar, auch wenn die zugehörigen Chats längst weg sind.
+
+<Aside type="caution" title="Jede Verkürzung fragt nach">
+Setzen oder verkürzen Sie die Frist, kommt eine Rückfrage. Sie nennt die alte und die neue Frist und weist darauf hin, dass die kürzere Frist beim nächsten Lauf zusätzliche, ältere Konversationen endgültig löscht. Bestätigt wird mit **Frist setzen**. Eine Verlängerung holt nichts zurück, bereits Gelöschtes bleibt gelöscht.
+</Aside>
+
+Der Knopf **Jetzt ausführen** erscheint, sobald eine Frist gesetzt ist, und stösst den Lauf sofort an, ebenfalls mit Rückfrage. Unter dem Feld steht, wann der letzte Lauf war, ob er automatisch oder manuell ausgelöst wurde und wie viele Konversationen und Nachrichten er entfernt hat.
+
+## Auskunft und Löschung pro Person
+
+Beides erreichen Sie aus der Benutzerliste. Die Reihenfolge ist nicht beliebig.
+
+<Steps>
+
+1. **Exportieren.** Der Knopf **Daten exportieren (JSON)** liefert alle Daten dieser Person als eine JSON-Datei: Konto, Gruppen, Guthaben, Konversationen, Nachrichten, Datei-Metadaten und Transaktionen.
+
+2. **Löschen.** Erst danach löschen. Nach der Löschung lässt sich keine Auskunft mehr erteilen, deshalb steht der Export-Knopf auch direkt im Lösch-Dialog im Block **Erst exportieren, dann löschen**.
+
+</Steps>
+
+Zwei Punkte zum Export:
+
+- **Dateien sind als Metadaten enthalten, nicht als Inhalt.** Die eigentlichen Dateien liegen im Upload-Verzeichnis des Stacks. Sie mitzuliefern hiesse, aus dem Export einen Dateiserver zu machen.
+- **Zugangsdaten sind bewusst nicht enthalten**, also weder Passwort-Hash noch Zwei-Faktor-Geheimnisse noch die verschlüsselt hinterlegten API-Schlüssel der Person.
+
+Im Lösch-Dialog entscheidet die Checkbox **Auch Verbrauchs-Transaktionen löschen** über die Tiefe:
+
+| Auswahl | Ergebnis |
+| --- | --- |
+| ohne Haken | Konto, Konversationen, Nachrichten, Dateien, Schlüssel, Agenten und Guthaben verschwinden. Die Transaktionen bleiben als Abrechnungsbeleg erhalten. |
+| mit Haken | zusätzlich die Transaktionen. Das ist die DSGVO-Volllöschung, und die **Abrechnungsbelege gehen dabei verloren**. |
+
+Bestätigt wird in beiden Fällen durch exaktes Eintippen der E-Mail-Adresse.
+
+## Telemetrie
+
+Der Auslieferungszustand schaltet Telemetrie ab. Zwei Werte in der `.env` sind dafür zuständig:
+
+| Variable | Wirkung |
+| --- | --- |
+| `MEILI_NO_ANALYTICS=true` | Meilisearch, die Volltextsuche über die Konversationen, sendet keine Nutzungsdaten an seinen Hersteller |
+| `NO_INDEX=true` | Suchmaschinen indexieren die Oberfläche nicht |
+
+Beide stehen im Auslieferungszustand auf `true`. Wenn Sie eine bestehende Installation übernehmen, prüfen Sie das einmal nach.
+
+## Wo die Daten liegen und was den Stack verlässt
+
+Die Installation läuft vollständig auf Ihrer Maschine. Konversationen und Nachrichten liegen in der MongoDB des Stacks, der Suchindex in Meilisearch, hochgeladene Dateien in lokalen Volumes. Von allen Diensten veröffentlicht nur der Reverse-Proxy Caddy Ports nach aussen, alles andere ist auf die lokale Schnittstelle beziehungsweise auf das interne Docker-Netz beschränkt. Wo diese Maschine physisch steht, entscheiden Sie mit der Wahl des Hosters.
+
+Zwei Dinge verlassen den Stack zwangsläufig, und die sollten Sie kennen und intern kommunizieren:
+
+**Modellanfragen gehen an den konfigurierten Provider.** Ein Sprachmodell rechnet dort, wo es betrieben wird. Im Auslieferungszustand ist das EuRouter mit Verarbeitung in der EU. Wenn Sie zusätzlich Anbieter ausserhalb der EU zuschalten, gehen die Anfragen dieser Karten dorthin. Es gibt keinen Modus, in dem eine Cloud-Anfrage die Maschine nicht verlässt. Lokal betriebene Modelle sind die Ausnahme, sie brauchen aber passende Hardware.
+
+**Web-Suchanfragen gehen an externe Suchmaschinen.** Die Suche läuft über das selbst gehostete SearXNG im Stack. SearXNG ist ein Metasucher, es leitet die Suchanfrage an externe Suchmaschinen weiter, allerdings **ohne die Identität der suchenden Person**. Die Anfragen selbst verlassen also den Stack.
+
+<Aside type="caution" title="Sagen Sie es genau">
+Die ehrliche Formulierung lautet: Speicherung und Inferenz lassen sich in der EU beziehungsweise der Schweiz halten. Bei der Web-Suche verlässt der Suchtext das Haus, nur eben ohne Nutzerbezug. Die Aussage „bei der Web-Suche bleibt alles in der EU" wäre falsch, und sie fällt einem beim ersten kritischen Nachfragen auf die Füsse.
+</Aside>
+
+## Kennzeichnung von Anbietern ausserhalb der EU
+
+Anbieter, die nicht EU-resident sind, werden im Panel und im Chat als solche gekennzeichnet, damit die Wahl bewusst geschieht. Das betrifft insbesondere Modellkarten über OpenRouter, deren sichtbares Label den Hinweis „Nicht-EU" trägt. Dieselbe Regel gilt für Konnektoren: ein Konnektor, dessen Zielsystem ausserhalb der EU betrieben wird, muss gekennzeichnet werden und gehört nicht ungefragt in ein Kundendeployment.
+
+Beachten Sie ausserdem, dass die Herkunftsangaben im **Provider-Routing** vom Anbieter stammen und der Sitz eines Anbieters keine Garantie für den Verarbeitungsort ist. Mehr dazu unter [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
+
+## Was es nicht gibt
+
+**Kein SCIM.** Es gibt keine automatische Bereitstellung und keine automatische Deaktivierung von Konten aus dem Identity Provider heraus. Konten entstehen beim ersten Login über OIDC, und die Deprovisionierung läuft über den Identity Provider: wer dort deaktiviert ist, kommt nicht mehr durch die Anmeldung und damit an keine Daten. Für den vollständigen Rückbau eines Kontos samt Daten nutzen Sie den Lösch-Dialog im Panel.
+
+**Keine automatische Abrechnung.** Belege ja, Zahlungsanbindung nein. Details unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).
+
+**Der gehärtete Sandbox-Runner mit Egress-Allowlist ist noch nicht fertig.** Für die Code-Ausführung läuft derzeit ein Übergangs-Backend. Das ist die grösste bekannte offene Stelle, und sie wird hier bewusst genannt statt verschwiegen.

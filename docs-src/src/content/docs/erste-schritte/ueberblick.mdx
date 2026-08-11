@@ -1,0 +1,148 @@
+---
+title: Was ist EU Cowork AI?
+description: Überblick über die Plattform, ihre Bausteine, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob EU Cowork AI passt.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI ist eine KI-Chatplattform für Unternehmen, die auf dem eigenen Server läuft.
+Diese Seite sagt in wenigen Minuten, was das System ist, woraus es besteht, was es kann und
+was es bewusst nicht kann. Sie richtet sich an IT-Verantwortliche, die vor der Entscheidung
+stehen, ob sie die Plattform einsetzen.
+
+## Für wen die Plattform gedacht ist
+
+Es gibt drei Ausgangslagen, und alle drei nutzen dieselbe technische Bauform. Einen
+gesonderten Hosting-Build gibt es nicht.
+
+| Ausgangslage | Wer betreibt den Server | Was Sie tun |
+|---|---|---|
+| **Sie nutzen die Plattform selbst** | Ihre eigene IT | Server aufsetzen, Instanz installieren, Mitarbeitende einladen |
+| **Sie sind KMU-Kunde und lassen betreiben** | Ihr IT-Dienstleister | Sie bekommen eine fertige Instanz und arbeiten im Chat und im Admin-Panel |
+| **Sie sind IT-Dienstleister** | Sie, für mehrere Kunden | Pro Kunde ein eigener Stack, wahlweise auf eigener oder geteilter Maschine |
+
+Der dritte Fall ist der Grund für viele Design-Entscheidungen: Ein Kunde ist immer ein
+eigener, vollständig getrennter Stack mit eigener Datenbank, eigenen Dateien und eigenem
+Inferenz-Schlüssel. Details dazu stehen unter [Architektur](/docs/erste-schritte/architektur).
+
+## Woraus das System besteht
+
+Die Chat-Oberfläche ist [LibreChat](https://www.librechat.ai), eine quelloffene Plattform
+unter MIT-Lizenz. Darum herum liegen unsere eigenen Dienste, die sogenannten Sidecars. Der
+Fork von LibreChat bleibt bewusst nah am Original, damit Aktualisierungen weiterhin möglich
+bleiben.
+
+| Baustein | Herkunft | Aufgabe |
+|---|---|---|
+| Chat, Agenten, Dateiverarbeitung, Modellanbindung | LibreChat | die Anwendung, die Ihre Mitarbeitenden sehen |
+| Admin-Panel und Sidecar | EU Cowork AI | Benutzer, Rollen, Rechte, Verbrauch, Konfiguration, Protokolle |
+| MCP-Gateway | EU Cowork AI | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem |
+| NinjaOne-Brücke | EU Cowork AI | lesender Zugang zu Geräte- und Organisationsdaten aus dem RMM |
+| Outlook-Add-in | EU Cowork AI | Chat-Bereich in Outlook mit der geöffneten Mail als Kontext |
+| Installationspaket | EU Cowork AI | Compose-Stack, Installationsskripte, Backup, Konfigurationsprofile |
+
+Dazu kommen Standardbausteine als fertige Images: MongoDB als Datenbank, Meilisearch für die
+Volltextsuche über alte Chats, SearXNG als eigene Metasuchmaschine und Caddy als
+Reverse-Proxy mit automatischem Zertifikat.
+
+## Was die Plattform kann
+
+Nach der Installation mit dem Kunden-Template stehen unter anderem bereit: Chat mit
+Streaming und Verlauf, ein Modell-Picker mit vier kuratierten Karten, Dateien als Kontext
+hochladen, Bilder verstehen auf den passenden Karten, Artifacts wie Diagramme und HTML direkt
+im Chat, Agenten nutzen, das Gerüst für Skills als Standard-Prozesse, deren Inhalte Sie selbst
+anlegen, ein Langzeitgedächtnis mit Opt-out und die Volltextsuche über frühere Konversationen.
+
+Drei Funktionen sind im Auslieferungszustand bewusst ausgeschaltet, weil sie zusätzliche
+Bausteine brauchen und sonst zu einem toten Knopf führen würden:
+
+| Funktion | Warum aus | Was nötig ist |
+|---|---|---|
+| Dateisuche über hochgeladene Dokumente | braucht RAG-Dienst und Vektordatenbank | Compose-Profil `filesearch` |
+| Code-Ausführung, etwa eine Excel-Datei erzeugen | braucht ein Code-Backend | einen der beiden Code-Interpreter-Substacks |
+| Parameter-Panel für Temperatur und Ähnliches | für Nicht-Entwickler unnötig | pro Rolle im Panel wieder aktivierbar |
+
+## Was die Plattform bewusst nicht tut
+
+- **Keine Mandantenfähigkeit in der Anwendung.** Ein Kunde ist ein eigener Stack. Das ist
+  eine bewusste Entscheidung, weil die Trennung dadurch unterhalb der Anwendung liegt.
+- **Nutzer legen keine eigenen Konnektoren an.** Welche Fremdsysteme erreichbar sind,
+  entscheidet ausschliesslich die Administration.
+- **Der NinjaOne-Konnektor kennt nur Lesezugriffe.** Es gibt keine Werkzeuge für Neustart,
+  Skriptausführung oder Patch-Verteilung. Ein Werkzeug, das nicht existiert, kann nicht
+  versehentlich aufgerufen werden.
+- **Das Outlook-Add-in sendet nie automatisch.** Ein Entwurf landet im normalen
+  Antwortfenster, das Absenden bleibt beim Menschen.
+
+## Was Open Source hier bedeutet
+
+Das Gesamtprodukt steht unter der MIT-Lizenz. Praktisch heisst das:
+
+- **Kein Per-Seat-Gating.** Die Nutzerzahl ist technisch nirgends begrenzt und wird nirgends
+  lizenzrechtlich gedeckelt.
+- **Kein Feature-Gating.** Es gibt keine Enterprise-Ausgabe mit zusätzlichen Funktionen. Was
+  im Repository liegt, ist der volle Funktionsumfang.
+- **Kein Branding-Zwang.** Name, Logo und Begrüssungstext sind Konfiguration.
+- **Selbst hosten ist kostenlos.** Bezahlt werden Betrieb, Support und Integration, wenn Sie
+  das von jemandem beziehen wollen.
+
+Das offizielle Admin-Panel von LibreChat steht unter der AGPL und wird deshalb bewusst
+**nicht** verwendet. Stattdessen gibt es ein eigenes, permissiv lizenziertes Panel, das gegen
+die MIT-lizenzierte Administrations-Schnittstelle von LibreChat arbeitet. So bleibt das
+Gesamtprodukt frei von Copyleft-Pflichten.
+
+## Wo die Daten liegen
+
+Konversationen, Nachrichten, Benutzer und Verbrauchsdaten liegen in der MongoDB Ihres eigenen
+Stacks. Hochgeladene Dateien liegen als Verzeichnis daneben auf demselben Server. Es gibt
+keinen Rückkanal zu uns. Telemetrie ist ausgeschaltet, für Meilisearch etwa fest im
+Compose-Stack.
+
+Für die Modellantworten selbst verlassen die Inhalte den Server, denn die Rechenlast liegt
+beim Inferenz-Anbieter. Standard ist **EuRouter** unter `https://api.eurouter.ai/api/v1`, dort
+wird in der EU verarbeitet. **OpenRouter** ist optional zuschaltbar und **nicht** EU-resident.
+Zwei der vier ausgelieferten Modellkarten sind deshalb sichtbar als Nicht-EU gekennzeichnet.
+
+<Aside type="caution" title="Web-Suche ehrlich betrachtet">
+SearXNG läuft in Ihrem Stack, leitet die Suchanfrage aber an externe Suchmaschinen weiter,
+ohne die Identität des Nutzers mitzuschicken. Die Aussage „alles bleibt in der EU" gilt für
+Speicherung und Inferenz, nicht für die Web-Suche.
+</Aside>
+
+Die interne Instanz von Herr Informatik liegt in der Schweiz. Wo Ihre Instanz liegt,
+entscheiden Sie mit der Wahl des Servers.
+
+## Was noch nicht fertig ist
+
+Diese Punkte sind offen. Sie stehen hier, damit Sie nicht davon ausgehen, dass sie da sind.
+
+| Offener Punkt | Stand |
+|---|---|
+| Gehärteter Sandbox-Runner mit Egress-Proxy und Domain-Allowlist | grösste bekannte Lücke. Für die Code-Ausführung stehen zwei Backends bereit, die Freigabeliste für ausgehende Verbindungen fehlt |
+| Web-Suche im Kunden-Template | der Scraper fehlt, deshalb hängt LibreChat das Such-Werkzeug nicht ans Modell. Der Knopf ist sichtbar, löst aber nichts aus, bis ein Scraper konfiguriert ist |
+| SCIM-Bereitstellung | nicht vorhanden. Konten entstehen beim ersten Login über OIDC, das Entziehen läuft über den Identity Provider |
+| Automatische Abrechnung | Belege als CSV und PDF gibt es, eine Zahlungsanbindung nicht |
+| Vorgebaute Sidecar-Images | die vier eigenen Dienste werden heute auf dem Zielserver aus Quelle gebaut |
+| OCR, Bildgenerierung, Sprachein- und -ausgabe | nicht enthalten. Gescannte PDF-Dateien werden nicht gelesen |
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Systemanforderungen"
+    href="/docs/erste-schritte/systemanforderungen"
+    description="Wie viel Arbeitsspeicher, CPU und Plattenplatz eine Instanz wirklich braucht, mit gemessenen Werten."
+  />
+  <LinkCard
+    title="Schnellstart"
+    href="/docs/erste-schritte/schnellstart"
+    description="Vom leeren Ubuntu-Server zur laufenden Instanz, Befehl für Befehl."
+  />
+  <LinkCard
+    title="Architektur"
+    href="/docs/erste-schritte/architektur"
+    description="Welche Dienste es gibt, wie die Daten fliessen und warum die Mandantengrenze der Compose-Stack ist."
+  />
+</CardGrid>

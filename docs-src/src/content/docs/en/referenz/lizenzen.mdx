@@ -1,0 +1,153 @@
+---
+title: Licenses and origin
+description: Which license EU Cowork AI is released under, what that means for you as a customer, and which license every shipped building block carries.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+EU Cowork AI is genuine open source, and the third party components shipped with it are
+released under their own licenses. This page states what that means in practice and lists
+every building block with its license. It is written for everyone who needs to know before a
+purchase what they are getting into.
+
+## The license of the overall product
+
+All of our own code is released under the **MIT license**. It is one of the most permissive
+licenses there is: you may use, modify, redistribute and commercially deploy the software as
+long as the license text and the copyright notice are preserved.
+
+What that means for you as a customer in concrete terms:
+
+| Commitment | What is behind it |
+|---|---|
+| **Self hosting is free** | You pay nothing for the software. You pay for operation, support and integration if you want to buy those from someone |
+| **No per seat gating** | The number of users is nowhere limited technically and nowhere capped by the license. Ten people cost the same as three hundred, namely nothing |
+| **No feature gating** | There is no enterprise edition with extra features. What is in the repository is the full feature set |
+| **No branding clause** | Name, logo, favicon and welcome text are configuration. You may rename the interface to your own company without observing a user count or a deadline |
+| **No copyleft** | You are not obliged to publish your own extensions |
+
+The license text is in the file `LICENSE` in the repository. Copyright: Herr Informatik GmbH.
+
+<Aside type="note" title="Why this is spelled out explicitly">
+Other projects in this space are formally open source, but cap the number of users for
+removing the vendor logo, or hide administration features behind a paid edition. That was the
+reason for putting the license question right at the beginning.
+</Aside>
+
+## Our own building blocks
+
+| Component | Location in the repository | License |
+|---|---|---|
+| monorepo with distribution, scripts and documentation | root of the repository | MIT |
+| admin panel, sidecar API and frontend | `services/admin` | MIT |
+| MCP gateway including the model router | `services/mcp-gateway` | MIT |
+| NinjaOne bridge | `services/ninjaone-mcp` | MIT |
+| Outlook add-in | `services/office-addin` | MIT |
+
+## The shipped third party components
+
+The distribution starts unmodified third party images under their own licenses. These services
+run as standalone containers. Our code does not link any of them in, it talks to them through
+their normal network interfaces.
+
+| Component | Task | License |
+|---|---|---|
+| [LibreChat](https://github.com/danny-avila/LibreChat) | the chat application itself | MIT |
+| [MongoDB](https://github.com/mongodb/mongo) `8.0` | database for conversations, users and usage | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) `v1.35.1` | full text search across earlier conversations | MIT, individual parts of the Enterprise Edition under BUSL-1.1 ² |
+| [SearXNG](https://github.com/searxng/searxng) | own metasearch engine for web search | AGPL-3.0 ³ |
+| [pgvector](https://github.com/pgvector/pgvector) | vector database for file search | PostgreSQL license |
+| [rag_api](https://github.com/danny-avila/rag_api) | embedding of uploaded files for file search | MIT |
+| [Caddy](https://github.com/caddyserver/caddy) | reverse proxy with automatic TLS | Apache-2.0 |
+| [mcp-server-odoo](https://github.com/ivnvxd/mcp-server-odoo) | bridge to the Odoo ERP | MPL-2.0 |
+| [@softeria/ms-365-mcp-server](https://www.npmjs.com/package/@softeria/ms-365-mcp-server) | bridge to Microsoft 365 and SharePoint | MIT |
+
+Only some of these components start in the base state. pgvector and rag_api need the Compose
+profile `filesearch`, the Odoo bridge the `internal` profile, the Microsoft bridge the
+`microsoft` profile and Caddy the `production` profile. Which service runs when is described
+on the [services and ports](/docs/en/referenz/dienste-und-ports) page.
+
+### Code execution
+
+The two backends for code execution are not part of the main Compose stack, but separate
+substacks. Only one is ever active.
+
+| Backend | Role | License |
+|---|---|---|
+| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | hardened variant with microVM isolation, needs `/dev/kvm` | Apache-2.0 |
+| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | lighter transitional variant with a prebuilt image | Apache-2.0 |
+
+Both substacks bring further helper services from the Compose files of their projects, for
+example a cache and an S3 compatible object store. Their licenses are documented in the
+respective projects and are deliberately not listed here, because they differ depending on the
+version.
+
+### This documentation
+
+The documentation site is built with [Astro](https://astro.build) and
+[Starlight](https://starlight.astro.build), both under the **MIT license**. The full text
+search runs entirely in the browser, there is no search service and no tracking.
+
+### Footnotes
+
+**¹ MongoDB is released under the SSPL-1.0.** This license applies when someone sells MongoDB
+itself as a database service to third parties. Using it as the internal database of your own
+installation, as is the case here, is not affected by it.
+
+**² Meilisearch** declares `MIT AND BUSL-1.1` for the shipped version. By far the largest part
+is under MIT, individual components of the Enterprise Edition are under the Business Source
+License. We run the official image unmodified.
+
+**³ SearXNG is released under the AGPL-3.0 and runs in the base state.** We name that openly
+instead of hiding it. We run the official image unmodified as a standalone service, only the
+configuration file is mounted, and LibreChat calls it over HTTP. This has no effect on the MIT
+licensing of our code, because it is neither linked in nor modified and no combined work comes
+into being.
+
+## Why we built our own admin panel
+
+For some time now LibreChat has shipped an official admin panel. That panel is released under
+the **AGPL-3.0**, meaning a copyleft license with a network clause. Anyone who deploys and
+modifies it has to disclose the source code even when the software is only provided over the
+network and never distributed.
+
+For a product that is meant to stay explicitly permissive, that is the wrong path. Therefore:
+
+- **The AGPL panel is not part of the distribution.** In the Compose stack it sits only behind
+  the explicit `interim` profile and never starts on its own. It was a transitional solution
+  for internal tests, before our own panel was finished.
+- **Our panel is an independent new build** under the MIT license. It works against the same
+  administration interface of LibreChat, which is itself under MIT.
+- **No code was taken from the AGPL panel.** The panel served as a model for the interaction
+  design, not as a source. The same rule applies to outside contributions.
+
+The result: you can self host, modify and redistribute EU Cowork AI without copyleft
+obligations. That is the actual reason for the extra effort.
+
+## Contributing
+
+The source code is in the repository **`herr-informatik/eu-cowork`** on GitHub.
+
+Contributions go in as a pull request against `main`. Before your first contribution it is
+worth looking at the file `CONTRIBUTING.md` in the repository, which describes the process.
+The binding conventions on structure, building, checking, commit format and secret handling
+are in `AGENTS.md`.
+
+A few points that have proven useful in practice:
+
+- **Where the change belongs.** Sidecars, distribution and documentation go into this
+  repository. Changes to LibreChat itself belong in the fork repository, which is included as
+  the submodule `librechat/`.
+- **Small and limited to one topic.** Do not mix reformatting with substantive changes.
+- **No secrets in the diff.** Keys are referenced exclusively as `${VARIABLE}`, and new
+  variables get a placeholder in `distribution/.env.example`.
+- **Contributions are released under the MIT license** of this project. Third party code may
+  only be taken over with a compatible license and an attribution note. **No code from AGPL
+  sources**, in particular not from the AGPL admin panel of LibreChat.
+
+<Aside type="caution" title="Security vulnerabilities">
+Please do not report a possible security vulnerability as a public issue. The path for that is
+described in the file `SECURITY.md` in the repository.
+</Aside>

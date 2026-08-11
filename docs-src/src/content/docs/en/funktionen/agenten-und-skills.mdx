@@ -1,0 +1,180 @@
+---
+title: Agents and skills
+description: What an agent is, what a skill is, how the two work together and why skills are never rolled out to everyone at once.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Agents and skills are the two tools that turn the general AI colleague into a colleague for
+your company. This page explains the difference, the division of labor between them and the
+rules for granting them, which have to be followed strictly.
+
+Both features come from [LibreChat](https://www.librechat.ai/docs). What we add is the grant
+logic in the admin panel and the operating rules.
+
+## Agent and skill, the difference
+
+| | Agent | Skill |
+|---|---|---|
+| What it is | a role with fixed equipment | a stored standard process |
+| Contains | persona and instructions, a fixed model, a selection of tools | step by step knowledge: which fields, which order, which rules |
+| In the context | permanently, as long as you talk to it | only name and short description. The content is loaded on demand |
+| Example | "Outlook-Assistent", which summarizes mail and drafts replies | "How we create a quote", with mandatory fields and order |
+
+The second point is the important one: a skill costs almost nothing as long as it is not
+needed. The model only sees the description and uses it to decide whether to load the full text.
+That is why a skill can be far more detailed than a system prompt.
+
+## The division of labor
+
+Process knowledge belongs in **skills**, not in the agent. The agent stays a thin shell:
+persona, model, tools.
+
+The reason is practical. Skills are plain files, portable and versionable. An agent on the other
+hand lives in the database of one instance and can neither be created from the configuration
+file nor exported conveniently. Whoever puts their knowledge into agents rebuilds it by hand on
+every new instance. Whoever puts it into skills copies a file.
+
+You only need an agent of your own once a model card is not enough, for example because a
+particular connector is firmly intended or a role should get its own set of tools.
+
+## Using agents
+
+Agents appear in the model picker in a submenu of their own. You select the agent like a model
+card, after which the conversation runs with its instructions and its tools.
+
+An agent may take several steps in sequence, so look something up, read, calculate and only then
+answer. The step budget per run is 100 in the shipped state.
+
+### Who is allowed to build agents
+
+**Using** agents is open to everyone in the shipped state. **Building** agents is a separate
+permission and is stored in the role editor under **"Erstellen & Teilen"** (create and share):
+
+| Permission | Meaning |
+|---|---|
+| **"Agents nutzen"** (use agents) | select existing agents and work with them |
+| **"Agents erstellen"** (create agents) | build your own agents in the builder |
+| **"Agents teilen"** (share agents) | grant an agent to people or groups |
+
+The usual arrangement: ordinary team members use, a small group builds. That keeps the number of
+agents manageable and prevents twenty half finished variants of the same assistant from
+appearing.
+
+Self built agents run exclusively on the EU provider in the customer template. That is a
+deliberate boundary: a self built agent should not accidentally send data through a non EU
+provider.
+
+## How a skill takes effect
+
+A skill is a folder with a file `SKILL.md`. Name and description are at the top, the
+instructions below.
+
+The description is the most important field. It decides whether the skill takes hold at all. It
+should contain the phrasings your team really uses to raise the task ("erstelle eine Offerte",
+"erfasse das in Odoo"). A vague description means the skill never fires.
+
+There are three ways a skill comes into play:
+
+1. The model picks it out of the catalog itself, based on the description.
+2. You call it manually in the chat, through the `$` menu.
+3. It is marked as always active. Use that sparingly, because its content is then present in
+   every conversation.
+
+The system prompt obliges the colleague to follow a stored standard process **strictly** and to
+name deviations explicitly and have them confirmed. So the skill supplies the knowledge and the
+prompt the discipline.
+
+## Granting skills
+
+There are two ways to provide a skill, and they behave differently.
+
+| Route | How | Visible to whom |
+|---|---|---|
+| Upload in the interface | Admin uploads the skill and shares it deliberately | only the people and groups it was granted to |
+| Deployment directory `distribution/skills/` | Put the file on the server | the whole instance, read only |
+
+The skill catalog is active on the model cards. What is in it, however, is not "everything" but
+exactly what has been granted to the person in question. On top of that comes the role
+permission **"Skills nutzen"** (use skills), which in the panel carries the note "Freigabe pro
+Person/Rolle, nie pauschal ausrollen" (grant per person or role, never roll out to everyone).
+
+<Aside type="danger" title="Never roll out skills to everyone">
+A skill in the deployment directory **wins against a skill of the same name from the database**.
+So if you additionally put a skill that is only meant for sales into the deployment directory as
+a file, you defeat the targeted grant. The skill is visible to everyone afterwards, without
+anyone having changed anything.
+
+Rule: the deployment directory is exclusively for skills that may apply instance wide and
+contain no confidential material. Everything else is uploaded and shared deliberately.
+
+For the same reason the configuration contains **no fixed skill list**. Such a list would bind
+the named skills to all users of the card.
+</Aside>
+
+<Aside type="note" title="Shared skills are inactive at first">
+A skill shared with a person is **not** active for that person by default, they would have to
+switch it on themselves first. If granted skills should take effect immediately, set the base
+override `interface.skills.defaultActiveOnShare` to `true` during setup. That belongs in the
+panel, not in the configuration file, otherwise the startup seeder overwrites the skill
+permissions maintained in the role editor on every restart.
+</Aside>
+
+## What is shipped
+
+A skeleton, not a finished agent.
+
+- `distribution/skills/` contains the instructions only. Skill contents do not belong in the
+  public repository, because they contain hourly rates, internal identifiers and processes. They
+  are brought onto the server by hand, like the `.env`.
+- `distribution/seed-agents/` contains a script and example definitions with which standard
+  agents can be created once per instance. It is explicitly marked as a skeleton and is to be
+  checked against the running instance.
+
+The reason for this is a peculiarity of LibreChat: agents cannot be defined in the
+configuration file and there is no export in the builder. The configuration can only reference
+an agent by its identifier.
+
+## For admins
+
+### Sharing an agent globally as viewer
+
+<Aside type="caution" title="Otherwise the card disappears for ordinary users">
+If you point a model card at an agent, you have to **share the agent globally as viewer**.
+Otherwise the access check filters the card out for everyone who does not own the agent. To you
+as admin everything then looks right, while your team simply does not see the card.
+
+The sharing is set once in the agent interface.
+</Aside>
+
+If the agent should additionally be reachable outside the chat, for example in the
+[Outlook add-in](/docs/en/funktionen/outlook-add-in), it needs a separate grant for remote
+access. Which agents are affected can be seen in the panel under **"Verwaltung →
+Remote-Agenten"** (administration, remote agents).
+
+### Maintaining skills on the server
+
+<Steps>
+
+1. Put the folder containing `SKILL.md` into `distribution/skills/`.
+
+2. Restart, because skills from the deployment directory are read at startup:
+
+   ```bash title="On the server"
+   docker compose restart api
+   ```
+
+3. Test, and do it in both directions. Positive: does the skill trigger on the phrasings that
+   are in its description? Negative: does it stay out of unrelated tasks?
+
+</Steps>
+
+### Limiting the catalog
+
+From about five skills onward it pays to cap the catalog, through
+`endpoints.agents.skills.maxCatalogSkills`. Otherwise the list of descriptions carried along in
+every conversation grows and costs tokens in every chat.
+
+The same principle applies to connectors: few, clearly described tools beat many.

@@ -1,0 +1,152 @@
+---
+title: Server vorbereiten
+description: Was setup-server.sh auf einem frischen Ubuntu-Server einrichtet, welche Optionen es gibt und wie Sie das Ergebnis prüfen.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Bevor EU Cowork AI installiert wird, muss die Maschine Docker sprechen, Logs rotieren und eine
+Firewall haben. Genau das erledigt `setup-server.sh`. Diese Seite richtet sich an alle, die
+einen frischen Ubuntu-Server selbst aufsetzen, und erklärt Schritt für Schritt, was das Skript
+verändert.
+
+## Aufruf
+
+```bash title="Auf dem frischen Server"
+sudo apt-get update && sudo apt-get install -y git
+git clone https://github.com/herr-informatik/eu-cowork.git
+cd eu-cowork/distribution
+./setup-server.sh
+```
+
+Das Skript läuft als `root` oder als Benutzer mit `sudo`. Es ist idempotent: Sie können es
+mehrfach ausführen, bereits erledigte Schritte werden übersprungen und gemeldet.
+
+Getestet ist Ubuntu 22.04 und 24.04, empfohlen ist Ubuntu 24.04 LTS. Auf anderen
+Distributionen läuft das Skript weiter, warnt aber, dass es abweichen kann.
+
+## Was das Skript tut
+
+Die zehn Schritte in der Reihenfolge, in der sie ablaufen:
+
+1. **Preflight-Bericht.** Zeigt Betriebssystem, Architektur, CPU-Kerne, Arbeitsspeicher,
+   freien Plattenplatz und ob `/dev/kvm` vorhanden ist. `/dev/kvm` entscheidet später, welches
+   Backend für die Code-Ausführung möglich ist. Unter 4 GB RAM erscheint eine Warnung, das
+   Skript läuft trotzdem weiter.
+2. **Basis-Pakete.** Installiert nur, was fehlt: `ca-certificates`, `curl`, `git`, `openssl`,
+   `rsync`, `ufw`, `jq`, `tar`, `gzip`.
+3. **Docker Engine und Compose-Plugin.** Aus der offiziellen Docker-Quelle, also
+   `docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-buildx-plugin` und
+   `docker-compose-plugin`. Ist Docker samt Compose v2 schon vorhanden, wird der Schritt
+   übersprungen.
+4. **Log-Rotation für Docker.** Trägt in `/etc/docker/daemon.json` die Werte `max-size 10m`
+   und `max-file 3` ein und startet den Docker-Dienst neu. Vorhandene Einstellungen in der
+   Datei bleiben erhalten, sie werden zusammengeführt. Ohne Rotation wächst das Log der
+   Container unbegrenzt und füllt über Wochen die Systemplatte.
+5. **Dienstbenutzer und Gruppen.** Nimmt den aufrufenden Benutzer in die Gruppe `docker` auf,
+   zusätzlich in `kvm`, falls `/dev/kvm` existiert.
+6. **Firewall.** Setzt in ufw `default deny incoming` und `default allow outgoing` und öffnet
+   die Ports 22, 80 und 443 (TCP). Ist ufw noch nicht aktiv, wird es aktiviert.
+7. **Swap.** Legt eine 4 GB grosse Datei `/swapfile` an und trägt sie in `/etc/fstab` ein,
+   aber nur, wenn noch kein Swap aktiv ist und die Maschine weniger als 8 GB RAM hat.
+   Zusätzlich wird `vm.swappiness=10` über `/etc/sysctl.d/99-eucowork-swap.conf` gesetzt,
+   damit Swap nur die Notreserve bleibt.
+8. **Zeitzone und Zeitsynchronisation.** Setzt `Europe/Zurich` und aktiviert NTP.
+9. **Automatische Security-Updates.** Installiert `unattended-upgrades` und aktiviert es über
+   `/etc/apt/apt.conf.d/20auto-upgrades`.
+10. **Zusammenfassung.** Listet auf, was eingerichtet wurde, und nennt das passende Backend
+    für die Code-Ausführung, abhängig davon, ob `/dev/kvm` vorhanden ist.
+
+## Was das Skript bewusst nicht tut
+
+`setup-server.sh` fasst den Stack nicht an. Es erzeugt keine `.env`, startet keine Container
+und ruft kein `docker compose` auf. Alles, was mit der Anwendung selbst zu tun hat, macht erst
+[`install.sh`](/docs/betrieb/installation). Diese Trennung ist Absicht: die
+Server-Vorbereitung darf jederzeit wiederholt werden, ohne eine laufende Instanz zu berühren.
+
+## Optionen
+
+| Option | Wirkung |
+|---|---|
+| `--user NAME` | Legt den Dienstbenutzer fest, der in die Gruppe `docker` kommt. Existiert er nicht, wird er angelegt (Home-Verzeichnis, Passwort-Login gesperrt). Ohne die Option wird der aufrufende Benutzer verwendet. |
+| `--no-firewall` | Überspringt die ufw-Konfiguration. Sinnvoll, wenn die Firewall zentral gepflegt wird. |
+| `--no-swap` | Überspringt Swap-Datei und `vm.swappiness`. |
+| `-h`, `--help` | Zeigt die Hilfe. |
+
+Wird das Skript als `root` ohne `sudo` gestartet, findet es keinen Nicht-root-Benutzer und
+überspringt den Gruppen-Schritt. Setzen Sie den Benutzer in diesem Fall ausdrücklich mit
+`--user NAME`.
+
+## Warum Sie sich danach neu anmelden müssen
+
+Die Mitgliedschaft in der Gruppe `docker` wird beim Login ausgewertet. Die laufende
+SSH-Sitzung kennt sie deshalb noch nicht, `docker ps` scheitert dort mit einem
+Rechte-Fehler.
+
+```bash title="Sitzung neu aufbauen"
+exit
+```
+
+Danach erneut per SSH verbinden. Für einen schnellen Test in derselben Sitzung genügt
+alternativ `newgrp docker`.
+
+## Prüfen, ob alles sitzt
+
+```bash title="Nach dem Neuanmelden"
+docker compose version
+id -u
+ls -l /dev/kvm
+```
+
+- `docker compose version` muss eine Version 2.x melden. Kommt hier ein Fehler, ist Compose v2
+  nicht installiert.
+- `id -u` sollte `1000` ergeben. Der Admin-Sidecar läuft im Container als UID 1000 und schreibt
+  im Panel hinterlegte Schlüssel in die eingebundene `.env`. Ist der Serverbenutzer eine andere
+  UID, fehlt ihm später das Schreibrecht auf diese Datei.
+- `ls -l /dev/kvm` zeigt, ob das gehärtete Backend für die Code-Ausführung möglich ist. Fehlt
+  die Datei, bleibt nur die Interim-Variante.
+
+## Warum `docker.io` abgelehnt wird
+
+Das Ubuntu-Paket `docker.io` bringt **kein** Compose v2 mit, der Stack braucht aber
+`docker compose` als Plugin. Findet das Skript dieses Paket, bricht es ab und nennt den Weg
+zurück:
+
+```bash title="Nur falls docker.io installiert ist"
+sudo apt-get remove -y docker.io
+```
+
+Das stoppt laufende Container. Danach `setup-server.sh` erneut ausführen, es installiert dann
+die offizielle Engine samt Compose-Plugin.
+
+## Wenn ufw sich nicht aktivieren lässt
+
+In manchen Umgebungen fehlen die nötigen Kernel-Rechte, etwa in LXC-Containern. Das Skript
+bricht dann nicht ab, sondern warnt: der Server ist ohne Firewall unterwegs. Nachziehen können
+Sie es später mit `sudo ufw --force enable`. Prüfen lässt sich der Zustand mit
+`sudo ufw status verbose`.
+
+<Aside type="caution" title="Docker umgeht die Firewall">
+Von Docker per `ports:` veröffentlichte Container-Ports schreiben eigene iptables-Regeln und
+sind trotz aktiver ufw von aussen erreichbar. Die Firewall schützt nur Dienste, die direkt auf
+dem Host lauschen. Deshalb gilt für den Stack: ausser Caddy auf 80 und 443 bindet kein Dienst
+auf `0.0.0.0`. Alles andere gehört an `127.0.0.1`, siehe
+[Domain und Zertifikat](/docs/betrieb/domain-und-tls).
+</Aside>
+
+## Nächster Schritt
+
+<CardGrid>
+  <LinkCard
+    title="Installation"
+    href="/docs/betrieb/installation"
+    description="Secrets, Verzeichnisse, Sandbox-Netz und Stack-Start mit install.sh."
+  />
+  <LinkCard
+    title="Systemanforderungen"
+    href="/docs/erste-schritte/systemanforderungen"
+    description="Wie viel Arbeitsspeicher, CPU und Platz eine Instanz wirklich braucht."
+  />
+</CardGrid>

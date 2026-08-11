@@ -1,0 +1,102 @@
+---
+title: Logs and audit
+description: Requests, sessions and diagnostics under logs, plus the complete change history and the connector audit.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+There are two log pages with two different jobs. **"Logs"** (logs) answers the question of what the system did, meaning which requests ran and what they cost. **"Audit-Log"** (audit log) answers the question of who changed something and who accessed which data. This page goes through both.
+
+## The page "Logs"
+
+Under **"Analyse → Logs"** (analysis, logs) there are four tabs: **"Anfragen"** (requests), **"Sessions"** (sessions), **"Client-Fehler"** (client errors) and **"Diagnose"** (diagnostics).
+
+### "Anfragen" (requests)
+
+Every row is a single request to the model, reconstructed from usage metering. The table has these columns:
+
+| Column | Content |
+| --- | --- |
+| **"Datum"** (date) | point in time, also carries the day separators and cannot be hidden |
+| **"Modell"** (model) | requested model |
+| **"Provider"** (provider) | provider that served it |
+| **"Akteur"** (actor) | person, linked to their usage page |
+| **"Input"** (input) | input tokens |
+| **"Output"** (output) | output tokens |
+| **"Tokens"** (tokens) | input and output together |
+| **"Kosten"** (cost) | amount in euros at the monthly rate, the original USD value is in the tooltip |
+| **"Speed"** (speed) | output speed |
+| **"TTFT"** | time to first token |
+| **"Cache"** (cache) | share coming from the prompt cache |
+| **"Ende"** (end) | reason the answer finished |
+| **"Konversation"** (conversation) | identifier of the conversation, filters the view down to exactly this one |
+| **"Typ"** (type) | kind of request, hidden by default |
+
+Through the gear icon you show and hide columns, a click on a column header sorts.
+
+<Aside type="tip" title="The filter state is in the URL">
+Tab, model, person, conversation, period and sorting land as parameters in the address bar. A filtered view is therefore linkable: you can send a colleague exactly the view you have in front of you, instead of describing the path through the filters. Default values are deliberately not written into the URL, so that the links stay short.
+</Aside>
+
+The button **"CSV"** exports exactly the filtered view, not the whole table. Export and display use the same parameters and therefore see the same thing, guaranteed.
+
+### "Sessions" (sessions)
+
+A session is one chat conversation with all its requests bundled together. The columns are **"Zeitraum"** (period), **"Session"** (session), **"Nutzer"** (user), **"Primärmodell"** (primary model), **"Weitere Modelle"** (further models), **"Anfragen"** (requests), **"Tokens"** (tokens) and **"Kosten"** (cost). The title and memory requests of the conversation are included as well.
+
+Only the identifier of the conversation is displayed, never its title. That is a deliberate data protection decision: the admin view is meant to show what something cost, not what somebody wrote about.
+
+### "Client-Fehler" (client errors)
+
+This is where errors occurring in the Outlook add-in land, for example an unreadable file or an aborted request. An empty list is a good sign. This tab has a CSV export as well.
+
+### "Diagnose" (diagnostics)
+
+The tab **"Diagnose"** (diagnostics) is meant for troubleshooting connectors and switches between two sources:
+
+| View | Content |
+| --- | --- |
+| **"LibreChat-Log"** (LibreChat log) | the last lines of the log file of the chat container, read directly. Handshake and connection errors to MCP servers appear here in plain text. Filterable by file, number of lines, free text and level. |
+| **"Gateway-Fehler"** (gateway errors) | errors that the MCP gateway recorded while forwarding to a connector, regardless of whether anyone is currently active in the chat. |
+
+<Aside type="note" title="Rejected calls do not appear in the diagnostics">
+When the gateway refuses a call because of the permission rules, that is not an error but a decision. Such cases therefore do not appear here but in the audit log under **"MCP-Tool-Calls"** (MCP tool calls).
+</Aside>
+
+## The page "Audit-Log"
+
+Under **"System → Audit-Log"** (system, audit log) there are two tabs: **"Panel-Aktionen"** (panel actions) and **"MCP-Tool-Calls"** (MCP tool calls). Both can be exported as CSV.
+
+### "Panel-Aktionen" (panel actions)
+
+**Every modifying request** to the panel is logged, so everything that creates, changes or deletes. That applies centrally to all forms, including those that are added later. The table has the columns **"Zeit"** (time), **"Aktion"** (action), **"Bereich"** (area), **"Akteur"** (actor), **"Ziel"** (target) and **"Status"** (status); every row can be expanded.
+
+Three properties are important:
+
+- **Sign-ins are included, failed ones too.** The area is then called **"Anmeldung"** (sign-in), and the status shows whether the attempt went through.
+- **Old versus new comparison.** The expanded entry shows the columns **"Vorher"** (before) and **"Nachher"** (after) under **"Alt → Neu"** (old to new). Where the before state cannot be captured for a route, the entry says so explicitly instead of showing an empty value.
+- **Append-only.** It is only ever written, never changed or deleted, and there is no automatic expiry period.
+
+<Aside type="caution" title="For key changes only the name is logged">
+If you change an API key, the audit states that the key with this name was changed, but never the value. The entry is fully redacted for this path. Likewise, field names that look like a secret are replaced by a placeholder everywhere else. The audit log is therefore safe to export even when the recipient must not see any keys.
+</Aside>
+
+Deliberately not captured are: the calls of the Outlook add-in, the pure token refresh, the metering retrieval through a service token and the MCP connection tests. Those are either not changes or they would flood the history.
+
+### "MCP-Tool-Calls" (MCP tool calls)
+
+This tab shows every tool call that ran through the MCP gateway, with the columns **"Zeit"** (time), **"Server · Werkzeug"** (server and tool), **"Nutzer"** (user), **"Entscheid"** (decision) and **"Grund"** (reason). The filter lets you narrow the entries down to one decision, the default being **"Jeder Entscheid"** (any decision).
+
+The reason names the level that decided, so for example the user exception, the role rule, the group rule or the server default. That makes it traceable why an access was permitted or denied, and not just that it was.
+
+This trail is also kept **without an expiry period**. There is no index that removes entries after a while.
+
+## What you need this for
+
+**Duty of proof.** When somebody asks who changed which setting when, or who accessed which data from a connected system, that cannot be answered without a complete log. That is exactly why both trails are designed to be append-only and without an expiry period. This applies in particular to connectors running in service account mode: there the gateway is the only point of enforcement, and its log is the only proof.
+
+**Troubleshooting.** When somebody reports "the tool does not answer", the views separate the cases cleanly. A refused call appears as a decision in the audit, a technical error appears under **"Diagnose"** (diagnostics), and a request that never arrived is missing in both. That saves guesswork.
+
+**Cost analysis.** The tabs **"Anfragen"** (requests) and **"Sessions"** (sessions) show which model, which person and which kind of conversation is driving usage. A filtered view plus CSV export is usually enough to answer the question "why was last month more expensive". The aggregated view for that is under [Usage, budgets and billing](/docs/en/administration/verbrauch-und-budgets).

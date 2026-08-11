@@ -1,0 +1,128 @@
+---
+title: Updating
+description: The verified update chain for a running instance, changing the LibreChat version through the digest, and the way back.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+An update consists of four moves: fetch the new state, compare the `.env` against the template,
+back up, install. This page describes the chain in the order in which it is verified, and the
+two places where something tends to get overlooked.
+
+## The update chain
+
+```bash title="On the server"
+cd ~/eu-cowork && git pull
+cd distribution
+diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | sort -u)
+./backup.sh backup
+./install.sh --migrate --profiles production,internal,microsoft,filesearch
+```
+
+In the last command, pass the same profiles as during installation. If a profile is missing, the
+corresponding services are not renewed along with the rest.
+
+## The comparison with `.env.example`
+
+The `diff` only compares the **names** of the variables, not the values. Secrets therefore do not
+show up in it. You can read two things from it:
+
+- Lines that only appear in `.env.example` are newly added. Check in the example file what they
+  do, and add them if needed.
+- Lines that only appear in your `.env` are either instance specific or come from an old version
+  and can go.
+
+New variables are almost always optional, the stack starts without them too. The template is
+commented throughout, and states for each value what it is needed for.
+
+## Why always back up first
+
+An update swaps program versions underneath an existing database. If something goes wrong, the
+fastest way back is an archive from before. A backup takes seconds, a lost data set costs days.
+
+```bash title="Before every update"
+./backup.sh backup
+```
+
+The archive is then in `backups/` and carries permissions `600`. Details are described under
+[Backup and migration](/docs/en/betrieb/backup-und-umzug).
+
+## What `--migrate` does
+
+With `--migrate` the installer leaves the existing `.env` untouched and generates no new secrets.
+That is exactly what you want during an update: your keys, domains and ports stay as they are. If
+no `.env` exists, the mode aborts.
+
+At the same time `install.sh` rebuilds the services developed in house.
+
+<Aside type="caution" title="Pitfall force-recreate">
+`docker compose up -d --force-recreate api` renews **only** the chat. The admin panel, the MCP
+gateway, the NinjaOne bridge and the Outlook add-in are built from source and stay on the old
+version. You need
+`--build`, and that is exactly what `install.sh` does. So use the installer and not the Compose
+command by hand.
+</Aside>
+
+## Raising the LibreChat version
+
+The LibreChat image is deliberately not set to `latest`, but to a digest, meaning to a fixed,
+immutable version. The reason: `latest` pulls a different state on every server and on every
+fetch. A release of EU Cowork AI, however, is a **tested combination** of a LibreChat version and
+the services of our own. Only with a digest does every server run exactly the combination that
+was verified.
+
+<Steps>
+
+1. Fetch the new state and determine the digest:
+
+   ```bash title="On the server"
+   docker pull registry.librechat.ai/danny-avila/librechat-dev:latest
+   docker image inspect registry.librechat.ai/danny-avila/librechat-dev:latest --format '{{index .RepoDigests 0}}'
+   ```
+
+2. Enter the printed digest in `distribution/docker-compose.yml` at the service `api`. The
+   previous digest stays above it as a comment, that is the way back.
+
+3. Restart the stack and go through the checkpoints: login to the chat, login to the panel, a
+   test question in the chat and `docker compose ps` without restart loops.
+
+</Steps>
+
+## Checking after the update
+
+```bash title="On the server"
+docker compose ps
+docker compose logs -f api
+```
+
+All containers have to report `Up`. Configuration errors become visible in the chat log, for
+example a YAML file that no longer matches the schema.
+
+## Rollback
+
+```bash title="On the server"
+git checkout <voriger-commit> -- distribution/docker-compose.yml
+./install.sh --migrate --profiles production,internal,microsoft,filesearch
+./backup.sh restore backups/<archiv-vor-dem-update>.tar.gz
+```
+
+The first two lines roll back the program version and the image. You only need the third line if
+data is affected too. It is destructive and replaces the database with the state from the
+archive, see [Backup and migration](/docs/en/betrieb/backup-und-umzug).
+
+## Next
+
+<CardGrid>
+  <LinkCard
+    title="Backup and migration"
+    href="/docs/en/betrieb/backup-und-umzug"
+    description="What gets backed up, how a restore behaves and how an instance moves to a new server."
+  />
+  <LinkCard
+    title="Troubleshooting"
+    href="/docs/en/betrieb/fehlerbehebung"
+    description="Symptom, cause and fix for the most common failures."
+  />
+</CardGrid>

@@ -1,0 +1,102 @@
+---
+title: Was ist MCP
+description: Das Model Context Protocol von Grund auf erklärt, damit Sie verstehen, wie EU Cowork AI an Ihre eigenen Systeme angeschlossen wird.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Diese Seite erklärt, wie ein Sprachmodell an Daten aus Ihren eigenen Systemen kommt. Sie richtet sich an IT-Verantwortliche, die den Begriff MCP noch nie gehört haben, und legt die Grundlage für alle weiteren Seiten dieses Kapitels.
+
+## Das Problem, das MCP löst
+
+Ein Sprachmodell kennt nur, was in seinem Trainingsmaterial stand, und was im laufenden Gespräch steht. Es weiss nichts über Ihre Kunden, Ihre Rechnungen oder Ihre Geräte. Damit es solche Fragen beantworten kann, braucht es einen Weg, während des Gesprächs bei einem Ihrer Fachsysteme nachzufragen.
+
+Genau dafür gibt es das **Model Context Protocol**, kurz MCP. Es ist eine gemeinsame Sprache dafür, wie ein Chat-System einem Fachsystem Fragen stellt und Antworten zurückbekommt. MCP ist ein **offener Standard mit öffentlicher Spezifikation**, ursprünglich von Anthropic veröffentlicht und inzwischen von vielen Herstellern übernommen. Es ist keine Erfindung von EU Cowork AI, und Sie binden sich damit nicht an uns.
+
+Für Sie heisst das zweierlei. Erstens: Für viele verbreitete Produkte existiert bereits ein fertiger MCP-Server, den Sie anschliessen können. Zweitens: Was Sie einmal für EU Cowork AI bauen, funktioniert auch mit anderer Software, die MCP spricht.
+
+## Drei Begriffe, die Sie brauchen
+
+**Werkzeug.** Ein Werkzeug ist eine einzelne, klar umrissene Fähigkeit. Es hat einen technischen Namen, eine Beschreibung in Prosa und eine Liste von Parametern. Die NinjaOne-Anbindung hat zum Beispiel ein Werkzeug `ninja_devices` mit der Aufgabe „Geräte suchen, nach Organisation, Name, Klasse oder Online-Status". Ein Werkzeug ist immer eine Aktion, nie ein ganzes System.
+
+**Konnektor, technisch MCP-Server.** Ein Konnektor ist ein kleiner Dienst, der eine Sammlung von Werkzeugen anbietet und dahinter mit dem eigentlichen Zielsystem spricht. In dieser Dokumentation nennen wir ihn Konnektor, weil das für Nicht-Entwickler verständlicher ist. In der Konfiguration und im Admin-Panel heisst er MCP-Server.
+
+**Client.** Der Client ist die Seite, der die Werkzeuge angeboten werden und die sie aufruft. Bei uns ist das LibreChat, die Chat-Schicht von EU Cowork AI.
+
+Ein Konnektor ist häufig eine **Brücke**: Das Zielsystem selbst spricht kein MCP, sondern hat nur eine gewöhnliche Programmierschnittstelle. Der Konnektor übersetzt dann zwischen beiden Welten. Genau so funktionieren die Odoo-Anbindung und die NinjaOne-Anbindung.
+
+## Ein Beispiel: „Welche offenen Rechnungen hat Kunde X?"
+
+Ohne Konnektor kann das Modell diese Frage nicht beantworten. Es weiss nicht, wer Kunde X ist, und es hat keinen Zugang zu Ihrer Buchhaltung. Mit angebundenem ERP-Konnektor läuft Folgendes ab:
+
+1. Die Person stellt die Frage im Chat.
+2. Zusammen mit der Frage bekommt das Modell die Liste der freigegebenen Werkzeuge, jeweils mit Namen und Beschreibung. Darunter sind die Werkzeuge des ERP-Konnektors.
+3. Das Modell entscheidet, dass es die Frage nicht aus eigenem Wissen beantworten kann, und ruft ein Werkzeug auf, etwa „Datensätze suchen" mit dem Kundennamen als Filter.
+4. Der Aufruf geht nicht direkt zum Konnektor, sondern zuerst an das Rechte-Gateway. Dort wird geprüft, ob diese Person diesen Konnektor überhaupt benutzen darf. Der Aufruf wird protokolliert.
+5. Ist der Aufruf erlaubt, fragt der Konnektor beim ERP nach und gibt das Ergebnis als Text zurück.
+6. Das Modell liest das Ergebnis, ruft bei Bedarf ein zweites Werkzeug auf, etwa „Datensatz lesen" mit der gefundenen Kundennummer, und formuliert daraus die Antwort.
+
+Wichtig an diesem Ablauf: Das Modell **entscheidet**, welches Werkzeug es aufruft, aber es **bestimmt nicht**, was es darf. Die Grenze zieht das Gateway davor und das Zielsystem dahinter. Ein Modell kann sich keine Rechte ausdenken, die es nicht hat.
+
+## Die zwei Verbindungsarten
+
+Jeder Konnektor muss sich beim Zielsystem anmelden. Dafür gibt es zwei grundsätzlich verschiedene Wege, und die Wahl entscheidet darüber, wo die Berechtigungsgrenze liegt.
+
+| | Anmeldung pro Person | Dienstkonto |
+|---|---|---|
+| Wer meldet sich an | jede Person mit dem eigenen Konto | ein einziges technisches Konto für alle |
+| Wer kennt die Rechte | das Zielsystem selbst | das Zielsystem kennt nur das Dienstkonto |
+| Berechtigungsgrenze | die Rechte der Person im Zielsystem | die Gateway-Regeln plus die Rechte des Dienstkontos |
+| Feinheit | bis auf Dokument- und Feldebene | bis auf Konnektor- und Werkzeugebene |
+| Beispiel bei uns | Microsoft 365 und SharePoint | Odoo, NinjaOne |
+
+**Anmeldung pro Person** bedeutet: Beim ersten Gebrauch wird die Person zum Anmeldedialog des Zielsystems geschickt, bestätigt dort den Zugriff, und der Konnektor arbeitet ab dann mit ihrem persönlichen Zugang. Wer in SharePoint einen Ordner nicht sehen darf, sieht ihn auch im Chat nicht. Das Zielsystem bleibt die massgebliche Instanz, und Sie müssen die Rechte nicht ein zweites Mal nachbauen.
+
+**Dienstkonto** bedeutet: Der Konnektor hält einen einzigen Schlüssel und meldet sich für alle gleich an. Das Zielsystem sieht nur dieses eine Konto und kann deshalb nicht zwischen Ihren Mitarbeitenden unterscheiden. Die Trennung muss dann davor passieren, im Rechte-Gateway.
+
+<Aside type="tip" title="Faustregel">
+Nehmen Sie **Anmeldung pro Person**, wann immer das Zielsystem das anbietet. Sie ist die sicherere Variante, weil die Rechte dort gepflegt werden, wo sie ohnehin gepflegt werden. Ein Dienstkonto ist die Notlösung für Systeme, die keinen personenbezogenen Zugang über eine Schnittstelle anbieten. Wenn Sie ein Dienstkonto brauchen, legen Sie lieber mehrere schmale Konten an als ein breites.
+</Aside>
+
+## Was ein Konnektor kostet
+
+Ein Konnektor ist nicht gratis, auch wenn er nichts kostet. Der Werkzeug-Katalog, also Name, Beschreibung und Parameter jedes Werkzeugs, wird dem Modell **bei jeder einzelnen Nachricht** mitgeschickt. Er belegt also dauerhaft Platz im Kontext und wird bei jedem Aufruf mitbezahlt.
+
+Die Grössenordnung ist erheblich. Die Microsoft-365-Brücke bietet ungefiltert 164 Werkzeuge an, das sind rund 96 000 Tokens pro Konversation. Auf die 21 Werkzeuge gefiltert, die wir tatsächlich brauchen, sind es noch rund 8 000 Tokens, also 92 Prozent weniger. Die NinjaOne-Brücke hat bewusst nur 7 Werkzeuge und liegt damit bei rund 2 000 Tokens.
+
+Dazu kommt ein zweiter Effekt: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Wenige, klar benannte Werkzeuge liefern also nicht nur günstigere, sondern auch bessere Antworten.
+
+<CardGrid>
+  <LinkCard
+    title="Rechte-Gateway"
+    href="/docs/konnektoren/gateway-und-rechte"
+    description="Wie EU Cowork AI durchsetzt, wer welchen Konnektor benutzen darf, und warum es diese Schicht überhaupt braucht."
+  />
+  <LinkCard
+    title="Eigenen Konnektor anbinden"
+    href="/docs/konnektoren/eigenen-konnektor-anbinden"
+    description="Der vollständige Weg von der leeren Maske bis zum freigegebenen Werkzeug, im Panel oder über die Konfigurationsdateien."
+  />
+  <LinkCard
+    title="Best Practices für Konnektoren"
+    href="/docs/konnektoren/best-practices"
+    description="Zehn Regeln mit Begründung und Messzahlen, dazu eine Checkliste vor der Freigabe."
+  />
+  <LinkCard
+    title="Odoo (ERP)"
+    href="/docs/konnektoren/konnektor-odoo"
+    description="Wie das ERP als Konnektor angebunden wird und warum es drei Instanzen mit je eigenem Dienstkonto gibt."
+  />
+  <LinkCard
+    title="Microsoft 365 und SharePoint"
+    href="/docs/konnektoren/konnektor-microsoft-365"
+    description="Zugriff auf SharePoint und OneDrive mit den Rechten der jeweiligen Person, über eine Entra-App-Registrierung."
+  />
+  <LinkCard
+    title="NinjaOne (RMM)"
+    href="/docs/konnektoren/konnektor-ninjaone"
+    description="Geräte- und Organisationsdaten aus dem RMM im Chat, ausschliesslich lesend, abgesichert in vier Schichten."
+  />
+</CardGrid>

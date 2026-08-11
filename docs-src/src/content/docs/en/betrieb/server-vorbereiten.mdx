@@ -1,0 +1,147 @@
+---
+title: Prepare the server
+description: What setup-server.sh sets up on a fresh Ubuntu server, which options exist and how you verify the result.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Before EU Cowork AI is installed, the machine needs to speak Docker, rotate logs and have a
+firewall. That is exactly what `setup-server.sh` does. This page is for anyone setting up a
+fresh Ubuntu server themselves, and explains step by step what the script changes.
+
+## Invocation
+
+```bash title="On the fresh server"
+sudo apt-get update && sudo apt-get install -y git
+git clone https://github.com/herr-informatik/eu-cowork.git
+cd eu-cowork/distribution
+./setup-server.sh
+```
+
+The script runs as `root` or as a user with `sudo`. It is idempotent: you can run it several
+times, steps that are already done are skipped and reported.
+
+Ubuntu 22.04 and 24.04 are tested, Ubuntu 24.04 LTS is recommended. On other distributions the
+script still runs, but warns that things may differ.
+
+## What the script does
+
+The ten steps in the order in which they run:
+
+1. **Preflight report.** Shows the operating system, architecture, CPU cores, memory, free disk
+   space and whether `/dev/kvm` is present. `/dev/kvm` later decides which backend for code
+   execution is possible. Below 4 GB of RAM a warning appears, the script continues anyway.
+2. **Base packages.** Installs only what is missing: `ca-certificates`, `curl`, `git`, `openssl`,
+   `rsync`, `ufw`, `jq`, `tar`, `gzip`.
+3. **Docker Engine and Compose plugin.** From the official Docker source, meaning
+   `docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-buildx-plugin` and
+   `docker-compose-plugin`. If Docker including Compose v2 is already present, the step is
+   skipped.
+4. **Log rotation for Docker.** Writes the values `max-size 10m` and `max-file 3` into
+   `/etc/docker/daemon.json` and restarts the Docker service. Existing settings in the file are
+   preserved, they are merged. Without rotation the container logs grow without limit and fill
+   up the system disk over a few weeks.
+5. **Service user and groups.** Adds the calling user to the group `docker`, and additionally to
+   `kvm` if `/dev/kvm` exists.
+6. **Firewall.** Sets `default deny incoming` and `default allow outgoing` in ufw and opens
+   ports 22, 80 and 443 (TCP). If ufw is not yet active, it is enabled.
+7. **Swap.** Creates a 4 GB file `/swapfile` and adds it to `/etc/fstab`, but only if no swap is
+   active yet and the machine has less than 8 GB of RAM. In addition, `vm.swappiness=10` is set
+   through `/etc/sysctl.d/99-eucowork-swap.conf`, so that swap stays a last resort.
+8. **Time zone and time synchronization.** Sets `Europe/Zurich` and enables NTP.
+9. **Automatic security updates.** Installs `unattended-upgrades` and enables it through
+   `/etc/apt/apt.conf.d/20auto-upgrades`.
+10. **Summary.** Lists what was set up and names the matching backend for code execution,
+    depending on whether `/dev/kvm` is present.
+
+## What the script deliberately does not do
+
+`setup-server.sh` does not touch the stack. It creates no `.env`, starts no containers and calls
+no `docker compose`. Everything that concerns the application itself is done by
+[`install.sh`](/docs/en/betrieb/installation). This separation is intentional: server
+preparation may be repeated at any time without touching a running instance.
+
+## Options
+
+| Option | Effect |
+|---|---|
+| `--user NAME` | Defines the service user who is added to the group `docker`. If the user does not exist, it is created (home directory, password login disabled). Without the option the calling user is used. |
+| `--no-firewall` | Skips the ufw configuration. Useful when the firewall is managed centrally. |
+| `--no-swap` | Skips the swap file and `vm.swappiness`. |
+| `-h`, `--help` | Shows the help. |
+
+If the script is started as `root` without `sudo`, it finds no non-root user and skips the group
+step. In that case set the user explicitly with `--user NAME`.
+
+## Why you have to log in again afterwards
+
+Membership in the group `docker` is evaluated at login. The running SSH session therefore does
+not know about it yet, `docker ps` fails there with a permission error.
+
+```bash title="Rebuild the session"
+exit
+```
+
+Then connect again over SSH. For a quick test in the same session, `newgrp docker` is an
+alternative.
+
+## Checking that everything is in place
+
+```bash title="After logging in again"
+docker compose version
+id -u
+ls -l /dev/kvm
+```
+
+- `docker compose version` must report a version 2.x. If an error appears here, Compose v2 is
+  not installed.
+- `id -u` should return `1000`. The admin sidecar runs in the container as UID 1000 and writes
+  keys stored in the panel into the mounted `.env`. If the server user has a different UID, it
+  will later lack write permission on that file.
+- `ls -l /dev/kvm` shows whether the hardened backend for code execution is possible. If the
+  file is missing, only the interim variant remains.
+
+## Why `docker.io` is rejected
+
+The Ubuntu package `docker.io` does **not** ship Compose v2, but the stack needs
+`docker compose` as a plugin. If the script finds this package, it aborts and names the way
+back:
+
+```bash title="Only if docker.io is installed"
+sudo apt-get remove -y docker.io
+```
+
+This stops running containers. Afterwards run `setup-server.sh` again, it then installs the
+official engine including the Compose plugin.
+
+## When ufw cannot be enabled
+
+In some environments the necessary kernel permissions are missing, for example in LXC
+containers. The script then does not abort, but warns: the server is running without a firewall.
+You can catch up later with `sudo ufw --force enable`. The state can be checked with
+`sudo ufw status verbose`.
+
+<Aside type="caution" title="Docker bypasses the firewall">
+Container ports published by Docker through `ports:` write their own iptables rules and are
+reachable from outside despite an active ufw. The firewall only protects services that listen
+directly on the host. So the rule for the stack is: apart from Caddy on 80 and 443, no service
+binds to `0.0.0.0`. Everything else belongs on `127.0.0.1`, see
+[Domain and certificate](/docs/en/betrieb/domain-und-tls).
+</Aside>
+
+## Next step
+
+<CardGrid>
+  <LinkCard
+    title="Installation"
+    href="/docs/en/betrieb/installation"
+    description="Secrets, directories, sandbox network and starting the stack with install.sh."
+  />
+  <LinkCard
+    title="System requirements"
+    href="/docs/en/erste-schritte/systemanforderungen"
+    description="How much memory, CPU and disk an instance really needs."
+  />
+</CardGrid>

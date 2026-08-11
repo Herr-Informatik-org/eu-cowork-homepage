@@ -1,0 +1,114 @@
+---
+title: Admin panel
+description: Where the admin panel is reachable, how it is structured and in which order a new admin should proceed.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+The admin panel is the interface through which you administer EU Cowork AI: accounts, roles, groups, connectors, models, usage and logs. This page describes how to get in and how it is structured. The individual areas are explained in the following chapters. It is aimed at the person who looks after the instance.
+
+## Access and sign-in
+
+The panel runs as a separate service next to the chat and is reachable at an address of its own.
+
+| Environment | Address |
+| --- | --- |
+| Production behind Caddy | `https://admin.<ihre-domain.ch>` |
+| Local or without a reverse proxy | `http://localhost:3010` |
+
+You sign in with your **existing LibreChat admin account**, so with the same email address and the same password as in the chat. There is no second account and no additional secret you would have to store anywhere. Whoever has the role `ADMIN` in LibreChat gets in here, nobody else.
+
+<Aside type="note" title="No user management of its own">
+The panel keeps no user database of its own. It checks the sign-in against LibreChat and then continues to work with the same token. If an account is blocked in LibreChat or its role withdrawn, that takes effect here immediately as well.
+</Aside>
+
+## The navigation
+
+The sidebar is divided into four groups: **"Analyse"** (analysis), **"Verwaltung"** (administration), **"Finanzen"** (finance) and **"System"** (system).
+
+| Group | Menu item | Purpose |
+| --- | --- | --- |
+| Analyse | **"Übersicht"** (overview) | Monthly dashboard: usage in euros, budget status, tokens, active users, daily bars per model and top tables |
+| Analyse | **"Aktivität"** (activity) | Rolling window over 7, 30 or 90 days, router distribution, OpenRouter account |
+| Analyse | **"Logs"** (logs) | Individual requests, sessions, client errors and diagnostics |
+| Verwaltung | **"Benutzer"** (users) | Create accounts, invite, change role, credit balance, block, delete, export data |
+| Verwaltung | **"Rollen"** (roles) | Roles, their permissions and the model cards per role |
+| Verwaltung | **"Gruppen"** (groups) | Groups, members and the model cards per group |
+| Verwaltung | **"MCP-Zugriff"** (MCP access) | Who may use which connector |
+| Verwaltung | **"Remote-Agenten"** (remote agents) | Which agents are visible outside the chat, for example in the Outlook add-in |
+| Finanzen | **"Verbrauch"** (usage) | Usage per person, monthly limit, credit balance, block |
+| Finanzen | **"Abrechnung"** (billing) | Monthly invoice, CSV and PDF receipt, deposits, monthly archive |
+| System | **"Konfiguration"** (configuration) | Seven tabs for the LibreChat configuration, plus YAML import and export |
+| System | **"Audit-Log"** (audit log) | Change history of all panel actions and all connector calls |
+| System | **"Einstellungen"** (settings) | Values belonging to the panel itself: budget, billing, router, API keys, retention |
+
+On top of that there are two subpages per person, which you open from the user list:
+
+- **"Verbrauch: `<Name>`"** (usage for a person) shows the usage of a single person in detail.
+- **"Zugriffe: `<Name>`"** (access for a person) answers the question "what is this person allowed to do, and why". This is the first tool to reach for when somebody reports that they cannot see a connector or a model.
+
+## The card "Erste Schritte"
+
+On a freshly installed instance, the card **"Erste Schritte"** (first steps) appears at the top of the **"Übersicht"** (overview) with four items:
+
+1. **"Gruppe anlegen"** (create a group)
+2. **"Modell-Karten pro Gruppe"** (model cards per group)
+3. **"MCP-Zugriff regeln"** (regulate MCP access)
+4. **"Mitarbeitende einladen"** (invite your team)
+
+The check marks come from the real data, there is no separately ticked state that could go stale. The card disappears by itself as soon as groups and MCP rules exist, and can be clicked away beforehand through **"Ausblenden"** (hide).
+
+## Two basic principles
+
+### Saving is explicit everywhere
+
+The panel works with a working copy and only writes when you press **"Speichern"** (save). As long as changes are open, the affected areas carry a notice, for example the badge **"Nicht gespeichert"** (not saved) under **"MCP-Zugriff"** (MCP access), in the role editor "1 Bereich ungespeichert" (one area unsaved) or "N Bereiche ungespeichert" (N areas unsaved), and in the configuration a save bar with the number of open changes.
+
+<Aside type="caution" title="Separate save paths">
+A few fields deliberately save separately and are therefore not part of the big save button: the field **"Gateway-Ziel"** (gateway target) of an MCP server has its own button **"Ziel speichern"** (save target), and under **"Einstellungen"** (settings) budget and PDF addresses each save on their own. If you have the impression that a change has disappeared, check first whether the matching button was pressed.
+</Aside>
+
+### There are no plain text secrets in the panel
+
+This is a deliberate design decision and runs through all the forms:
+
+- A provider key may only appear in the configuration as `${VARIABLE}` or as `user_provided`. Plain text is rejected, because the value would otherwise end up readable in the database.
+- Stored keys under **"Einstellungen → API-Schlüssel"** (settings, API keys) are write only. They are never shown again, changing one means overwriting it.
+- The connection test resolves the variable reference server side. The key does not leave the server, not even in error messages.
+- In the audit log only the name is recorded for key changes, the value is forcibly redacted.
+
+## Order for a new admin
+
+When you take over a fresh instance, work through these eight items in order. They build on one another.
+
+<Steps>
+
+1. **Set the domain lock** under **"Konfiguration → Funktionen"** (configuration, features tab), field **"Erlaubte E-Mail-Domains"** (permitted email domains). That way only someone with an address of your company can register.
+
+2. **Maintain the prices** under **"Konfiguration → Preise"** (configuration, prices), fastest with the button **"Von OpenRouter übernehmen"** (take over from OpenRouter). Without maintained prices, usage metering calculates with flat rates.
+
+3. **Set a budget** under **"Einstellungen → Budget & Durchsetzung"** (settings, budget and enforcement), at first without hard enforcement. That way you see for a month where you actually land, without locking anyone out.
+
+4. **Create groups** under **"Verwaltung → Gruppen"** (administration, groups). Groups are the basis for access and models.
+
+5. **Define the model cards per group** so that every group sees exactly the models intended for it.
+
+6. **Connect the connectors** and under **"MCP-Zugriff"** (MCP access) set the **"Server-Standard"** (server default) to denied, then grant deliberately. Without a rule the gateway lets calls through.
+
+7. **Invite your team** under **"Verwaltung → Benutzer"** (administration, users), with the automatic group set.
+
+8. **Define the retention period** under **"Einstellungen → Aufbewahrung"** (settings, retention).
+
+</Steps>
+
+## Further in this chapter
+
+<CardGrid>
+  <LinkCard title="Users, groups and roles" href="/docs/en/administration/benutzer-und-gruppen" description="Invite and create accounts, assign permissions, block and delete." />
+  <LinkCard title="Models and model cards" href="/docs/en/administration/modelle-und-karten" description="Maintain providers, define cards, control visibility, model router." />
+  <LinkCard title="Usage, budgets and billing" href="/docs/en/administration/verbrauch-und-budgets" description="From tokens to euros, budget, monthly limit, receipts." />
+  <LinkCard title="Logs and audit" href="/docs/en/administration/protokolle-und-audit" description="Requests, sessions, diagnostics and the complete change history." />
+  <LinkCard title="Data protection and retention" href="/docs/en/administration/datenschutz-und-aufbewahrung" description="Retention, disclosure, telemetry and what leaves the stack." />
+</CardGrid>

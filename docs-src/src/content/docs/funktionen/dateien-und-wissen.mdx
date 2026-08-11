@@ -1,0 +1,178 @@
+---
+title: Dateien und Wissen
+description: Dateien an eine Nachricht anhängen, die Dateisuche über einen Dokumentenbestand und die Suche über eigene Chats. Was standardmässig an ist und was nicht.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Diese Seite trennt drei Dinge, die im Alltag ständig verwechselt werden: eine Datei an eine
+Nachricht anhängen, einen ganzen Dokumentenbestand durchsuchbar machen und die eigenen
+Unterhaltungen durchsuchen. Zwei davon sind nach der Installation da, eines nicht.
+
+## Drei Dinge, ein Wort
+
+| Was Sie wollen | Wie es heisst | Auslieferungszustand |
+|---|---|---|
+| Diese eine Datei soll der Kollege jetzt lesen | Datei anhängen (Kontext) | **an** |
+| Ein Bestand aus vielen Dokumenten soll dauerhaft durchsuchbar sein | Dateisuche, auch RAG genannt, kurz für Retrieval-Augmented Generation, also Antworten aus nachgeschlagenen Textstellen | **aus**, braucht das Profil `filesearch` |
+| Ich suche eine Stelle in meinen alten Chats | Volltextsuche über Unterhaltungen | **an**, läuft über Meilisearch |
+
+Die Dateiverarbeitung stammt von [LibreChat](https://www.librechat.ai/docs), ebenso die
+RAG-Schnittstelle dahinter.
+
+## Datei an eine Nachricht anhängen
+
+Das ist der Normalfall. Sie hängen ein Dokument an Ihre Nachricht, der Inhalt wandert in den
+Kontext dieser Unterhaltung, und Sie stellen Ihre Frage dazu. Anhängen geht über das Menü im
+Eingabefeld oder per Ziehen auf das Chat-Fenster.
+
+Sinnvoll ist das für einzelne Dokumente: einen Vertrag prüfen, ein Protokoll zusammenfassen,
+eine Tabelle auswerten lassen. Der Inhalt bleibt in dieser Unterhaltung und wird nicht zu
+einem durchsuchbaren Bestand.
+
+### Formate
+
+Verarbeitet werden die üblichen Büro- und Textformate, unter anderem PDF, Word (`.docx`),
+Excel (`.xlsx`), PowerPoint (`.pptx`), Text, Markdown, CSV, JSON und XML. Bilder in den
+Formaten JPEG, PNG, GIF und HEIC gehen ebenfalls, allerdings nur auf einer Modellkarte, die
+Bilder versteht. Auf der reinen Text-Karte bleibt ein Bild wirkungslos, siehe
+[Chat und Modelle](/docs/funktionen/chat-und-modelle).
+
+Die genaue Liste der erlaubten Dateitypen ist konfigurierbar. Wo, steht weiter unten im
+Abschnitt für Admins.
+
+### Grenzen
+
+Es gelten die Standardwerte von LibreChat, solange der Admin nichts anderes setzt:
+
+| Grenze | Wert |
+|---|---|
+| Dateien pro Nachricht | 10 |
+| Grösse je Datei | 512 MB |
+| Grösse aller Dateien zusammen | 512 MB |
+| Serverseitiges Limit je Upload | 512 MB |
+| Profilbild | 2 MB |
+
+Diese Zahlen sind grosszügig gesetzt und selten die eigentliche Grenze. Praktisch wichtiger
+ist, wie viel Text ein Modell in einer Anfrage lesen kann. Ein Dokument mit mehreren hundert
+Seiten füllt den Kontext, verdrängt den Rest des Gesprächs und macht die Antwort schlechter.
+Für solche Bestände ist die Dateisuche da.
+
+<Aside type="caution" title="Es gibt kein OCR">
+Gescannte Dokumente werden **nicht** gelesen. Ein PDF, das nur aus Bildern besteht, etwa ein
+eingescannter Vertrag oder ein abfotografierter Beleg, liefert keinen Text. Der Kollege sieht
+dann eine leere Seite und kann dazu nichts sagen. Das gilt im Web-Chat genauso wie im
+[Outlook-Add-in](/docs/funktionen/outlook-add-in). Ein Texterkennungs-Backend ist nicht Teil
+des Auslieferungszustands.
+
+Behelf: das Dokument vorher mit einem Werkzeug Ihrer Wahl in ein Text-PDF wandeln, oder den
+Text herauskopieren und in den Chat einfügen.
+</Aside>
+
+## Dateisuche über einen Dokumentenbestand
+
+Die Dateisuche ist etwas anderes als das Anhängen. Hochgeladene Dokumente werden in
+Abschnitte zerlegt, in Zahlenvektoren übersetzt und in einer Vektordatenbank abgelegt, also in
+einem Speicher, der nicht nach Stichwörtern sucht, sondern nach inhaltlicher Ähnlichkeit. Auf
+eine Frage hin holt der Kollege dann gezielt die passenden Abschnitte heraus, statt das ganze
+Dokument in den Kontext zu legen.
+
+Der Vorteil zeigt sich bei vielen und langen Dokumenten: eine Handvoll Handbücher, eine
+Sammlung von Richtlinien, ein Projektarchiv. Statt „lies diese 400 Seiten" heisst es dann
+„finde die drei Stellen, die meine Frage beantworten".
+
+<Aside type="caution" title="Im Kunden-Template ausgeschaltet">
+Im Auslieferungszustand steht `interface.fileSearch: false`. Der Grund ist ehrlich: die
+Dateisuche braucht ein zusätzliches Backend und einen Anbieter für die Embeddings. Wäre der
+Schalter an, ohne dass beides läuft, hätten Ihre Mitarbeitenden einen Knopf, der ins Leere
+greift. Wie Sie beides einschalten, steht unten.
+</Aside>
+
+## Volltextsuche über eigene Chats
+
+Die Suche in der Seitenleiste durchsucht Ihre Unterhaltungen, nicht Ihre Dokumente. Sie
+findet die Stelle, an der etwas besprochen wurde. Diese Suche ist immer an, sie braucht kein
+zusätzliches Profil und keinen Embeddings-Anbieter. Dahinter läuft Meilisearch.
+
+## Für Admins
+
+### Dateisuche einschalten
+
+<Steps>
+
+1. **Embeddings-Anbieter in der `.env` hinterlegen.** Beispiel aus `distribution/.env.example`,
+   Embeddings über EuRouter:
+
+   ```bash title="distribution/.env"
+   EMBEDDINGS_PROVIDER=openai
+   RAG_OPENAI_BASEURL=https://api.eurouter.ai/api/v1
+   RAG_OPENAI_API_KEY=${EUROUTER_API_KEY}
+   EMBEDDINGS_MODEL=mistral-embed
+   ```
+
+2. **Stack mit dem Profil starten.**
+
+   ```bash title="Auf dem Server"
+   cd ~/eu-cowork/distribution
+   docker compose --profile filesearch up -d
+   ```
+
+   Damit kommen zwei Dienste dazu: `vectordb` (pgvector) als Vektordatenbank und `rag_api`
+   als Dienst, der Dokumente zerlegt und durchsucht. Beide sind nur intern erreichbar.
+
+3. **Oberfläche freischalten.** In `distribution/librechat.yaml` `interface.fileSearch` auf
+   `true` setzen.
+
+   ```yaml title="distribution/librechat.yaml"
+   interface:
+     fileSearch: true
+   ```
+
+   Dieser Schalter gehört in die Datei, nicht ins Panel. `fileSearch` ist ein Rechte-Feld:
+   der Wert aus der Konfigurationsdatei wird bei **jedem** Start in die Rollen geschrieben.
+   Wer die Dateisuche nur für einzelne Rollen freigeben will, nimmt die Zeile aus der Datei
+   heraus und pflegt das Recht ausschliesslich im Rollen-Editor. Ein Wert im Reiter
+   **Funktionen** des Panels würde für Werkzeug-Rechte serverseitig verworfen.
+
+4. **Fähigkeit ergänzen.** In `endpoints.agents.capabilities` muss `'file_search'` stehen.
+   Wichtig: diese Liste **ersetzt** die Standardliste, sie wird nicht dazugemischt. Wer dort
+   etwas ergänzt, muss alles aufzählen, was er behalten will.
+
+5. **Rollen-Recht prüfen.** Im Rollen-Editor unter **Werkzeuge** steht das Recht
+   **Datei-Suche (RAG)** mit dem Zusatz „Hochgeladene Dokumente durchsuchen". Optional dazu
+   **Datei-Zitate** für Quellenangaben aus Dateien.
+
+6. **Neu starten**, damit die Rollen den neuen Stand bekommen:
+
+   ```bash title="Auf dem Server"
+   docker compose --profile filesearch up -d --force-recreate api
+   ```
+
+</Steps>
+
+Zur Dimensionierung: `rag_api` belegt im Leerlauf rund 100 MB, `vectordb` rund 29 MB.
+Spitzen entstehen beim Einlesen grosser Dokumente, weil dann Embeddings berechnet werden.
+
+<Aside type="note" title="Häufigstes Fehlerbild">
+Die Dateisuche bleibt wirkungslos, weil der Stack ohne `--profile filesearch` gestartet
+wurde. Dann laufen `vectordb` und `rag_api` schlicht nicht mit. Prüfen mit
+`docker compose ps`.
+</Aside>
+
+### Limits und erlaubte Dateitypen ändern
+
+Im Panel unter **Konfiguration → Dateien & Speicher**. Dort stehen unter anderem **Max.
+Dateigrösse Server (MB)**, **Avatar-Limit (MB)** und die **Endpoint-Limits (JSON)** mit den
+Feldern `fileLimit`, `fileSizeLimit`, `totalSizeLimit` und `supportedMimeTypes`.
+
+Ein sinnvoller Eingriff ist, die Obergrenze pro Datei deutlich zu senken. 512 MB sind für ein
+Chat-Werkzeug unrealistisch hoch, und ein versehentlich hochgeladenes Video kostet nur
+Speicher.
+
+### Was beim Löschen eines Kontos passiert
+
+Beim Löschen einer Person über das Admin-Panel werden auch deren Dateien entfernt und die
+Suchindizes aufgeräumt. Der Dialog bietet vorher ausdrücklich **Daten exportieren (JSON)**
+an, weil die Auskunft nach DSGVO vor der Löschung erfolgen muss.

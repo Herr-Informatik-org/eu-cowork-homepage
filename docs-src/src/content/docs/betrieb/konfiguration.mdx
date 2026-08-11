@@ -1,0 +1,218 @@
+---
+title: Konfiguration
+description: Die drei Konfigurationsebenen von EU Cowork AI, die wichtigsten Werte in der .env, die Compose-Profile und der interface-Block.
+sidebar:
+  order: 3
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI wird an drei Stellen konfiguriert. Wer weiss, welche Stelle wofür zuständig ist
+und welche Ebene bei einem Widerspruch gewinnt, spart sich das Suchen. Diese Seite ordnet die
+Ebenen ein und listet die Werte auf, die im Alltag wirklich gebraucht werden.
+
+## Die drei Ebenen
+
+| Ebene | Datei oder Ort | Inhalt | Wann es wirkt |
+|---|---|---|---|
+| Infrastruktur und Geheimnisse | `distribution/.env` | Ports, Domains, Schlüssel, Bindungen, Profile-Werte | nach `docker compose up -d` |
+| Produktverhalten | `distribution/librechat.yaml` | Modellkarten, Oberfläche, Konnektoren, Registrierung | nach Neustart des Dienstes `api` |
+| Laufzeit-Overrides | Admin-Panel, Seite **Konfiguration** | dieselben Produkteinstellungen, pro Instanz, Rolle oder Gruppe | sofort, ohne Neustart |
+
+Welche YAML-Datei aktiv ist, entscheidet `LIBRECHAT_CONFIG_FILE` in der `.env`. Standard ist
+`librechat.yaml`, das Kundentemplate. Die interne Instanz von Herr Informatik fährt
+`librechat.internal.yaml`. Alle öffentlichen Aussagen dieser Dokumentation beziehen sich auf
+das Kundentemplate.
+
+## Welche Ebene gewinnt
+
+Ein im Panel gesetzter Wert steht **über** der YAML. Das Panel schreibt seine Werte in die
+Datenbank, LibreChat liest sie beim nächsten Aufruf und sie überleben einen Neustart. Die YAML
+bleibt der Ausgangszustand, der greift, solange kein Override existiert.
+
+Im Panel erkennen Sie das an zwei Details: Abschnitte mit aktivem Override tragen den Badge
+**aus DB-Override**, und neben jedem überschriebenen Feld gibt es ein Symbol zum Entfernen.
+
+<Aside type="caution" title="Ein Feld zu leeren entfernt den Override nicht">
+Wer ein überschriebenes Feld im Panel leert, speichert einen leeren Wert und behält den
+Override. Zurück zum YAML-Stand kommen Sie nur über das Rücksetz-Symbol neben dem Feld.
+</Aside>
+
+Für Modellkarten gilt zusätzlich eine eigene Kaskade: **Gruppe vor Rolle vor Basis**. Die
+Rechte an Werkzeugen gehören dagegen in den Rollen-Editor und nicht in die Konfiguration, im
+Reiter Funktionen würden sie serverseitig verworfen.
+
+## Die wichtigsten Werte in der `.env`
+
+| Variable | Zweck | Standard |
+|---|---|---|
+| `EUROUTER_API_KEY` | Schlüssel des Inferenz-Anbieters, der einzige Pflichtwert | Platzhalter |
+| `DOMAIN_CLIENT` | Im Browser erreichbare Chat-URL, auch Basis der Einladungslinks | `http://localhost:3080` |
+| `DOMAIN_SERVER` | Server-URL, Basis der SharePoint-Redirect-URI | `http://localhost:3080` |
+| `EUCOWORK_DOMAIN` | Domain für Caddy und das Office-Manifest | `localhost` |
+| `PORT` | Port des Chats | `3080` |
+| `API_BIND` | Host-Bindung des Chat-Ports, in Produktion `127.0.0.1` | `0.0.0.0` |
+| `ADMIN_SIDECAR_PORT`, `ADMIN_SIDECAR_BIND` | Port und Bindung des Admin-Panels | `3010`, `127.0.0.1` |
+| `CADDY_FILE` | Wählt die TLS-Variante: `Caddyfile`, `Caddyfile.internal` oder `Caddyfile.proxied` | `Caddyfile` |
+| `LIBRECHAT_CONFIG_FILE` | Wählt die aktive YAML-Datei | `librechat.yaml` |
+| `DISABLE_COMPRESSION` | Muss `true` bleiben, sonst puffert LibreChat den Antwortstrom | `true` |
+| `BAN_VIOLATIONS` | Ohne diesen Wert wirken Sperren aus dem Panel nicht | `true` |
+| `LIBRECHAT_CODE_BASEURL` | Entscheidet, welches Backend die Code-Ausführung übernimmt | nicht gesetzt |
+| `SEARCH_MAX_LLM_OUTPUT_CHARS` | Zeichenbudget des Web-Such-Kontexts | `15000` |
+| `USD_EUR_RATE` | Umrechnungskurs im Verbrauchs-Dashboard, pro Monat fixieren | `0.92` |
+| `UID`, `GID` | Benutzer, unter dem die Container schreiben | vom Installer gesetzt |
+| `ALLOW_REGISTRATION` | Selbstregistrierung erlaubt | `true` |
+| `NO_INDEX` | Keine Indexierung durch Suchmaschinen | `true` |
+| `APP_TITLE` | Titel im Browser-Tab | `EU-Cowork AI` |
+| `STACK_NAME`, `DOCKER_SUBNET`, `SANDBOX_NETWORK` | Nur nötig, wenn mehrere Instanzen auf einer Maschine laufen | `eucowork`, `172.28.0.0/16`, `eucowork-sandbox` |
+
+Die vollständige Liste mit Kommentaren steht in `distribution/.env.example`.
+
+<Aside type="caution" title="DISABLE_COMPRESSION nicht auf false stellen">
+LibreChat schreibt seine Antworten als Strom, ruft dabei aber kein `res.flush()` auf. Mit
+aktiver Kompression puffert der Server deshalb die ganze Antwort bis zum Ende. Clients mit
+Zeitlimit, allen voran die Ansicht des Outlook-Add-ins, brechen dann bei langen Antworten ab.
+Caddy komprimiert für Browser weiterhin, es entsteht also kein Nachteil.
+</Aside>
+
+## Compose-Profile
+
+Ohne Profil startet der Basis-Stack: Chat, Admin-Panel, Outlook-Add-in, MongoDB, Meilisearch
+und SearXNG. Jedes Profil schaltet weitere Dienste dazu.
+
+| Profil | Schaltet zu |
+|---|---|
+| `production` | Caddy als Reverse-Proxy mit automatischem TLS auf Port 80 und 443 |
+| `filesearch` | Vektordatenbank und RAG-Dienst für die Suche in hochgeladenen Dateien |
+| `internal` | MCP-Gateway, die drei Odoo-Brücken und die NinjaOne-Brücke |
+| `microsoft` | Brücke zu SharePoint und OneDrive über Microsoft Graph |
+| `interim` | Das alte Admin-Panel unter AGPL, reine Übergangslösung |
+
+```bash title="Beispiele"
+docker compose up -d
+docker compose --profile production up -d
+docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway
+```
+
+Profile werden bei jedem Aufruf mitgegeben. Wer den Stack später ohne die Profile neu startet,
+stoppt die zugehörigen Dienste nicht, startet sie aber auch nicht neu. Führen Sie deshalb
+Update und Neustart immer mit derselben Profilliste aus, mit der Sie installiert haben.
+
+## Der `interface`-Block
+
+Der Block steht in der aktiven YAML-Datei und steuert, was in der Oberfläche sichtbar ist. Das
+sind die Schalter, die im Kundentemplate tatsächlich gesetzt sind:
+
+| Schalter | Standard | Wirkung |
+|---|---|---|
+| `customWelcome` | gesetzt | Begrüssungstext auf der Startseite des Chats |
+| `mcpServers.use` | `true` | Mitarbeitende dürfen die vom Admin definierten Konnektoren nutzen |
+| `mcpServers.create` | `false` | Niemand ausser dem Admin legt eigene Konnektoren an |
+| `mcpServers.share` | `false` | Konnektoren werden nicht von Person zu Person geteilt |
+| `webSearch` | `true` | Der Knopf für die Web-Suche ist sichtbar |
+| `fileSearch` | `false` | [Suche in hochgeladenen Dateien](/docs/funktionen/dateien-und-wissen), braucht das Profil `filesearch` und einen Embeddings-Anbieter |
+| `runCode` | `false` | [Code-Ausführung](/docs/funktionen/code-und-auswertungen), braucht ein Backend hinter `LIBRECHAT_CODE_BASEURL` |
+| `remoteAgents.use` | `true` | Agenten dürfen von aussen angesprochen werden, Voraussetzung fürs Outlook-Add-in |
+| `remoteAgents.create` | `false` | Agenten werden in der Oberfläche gepflegt, nicht über die Schnittstelle angelegt |
+| `parameters` | `false` | Das Parameter-Panel für Temperatur und Ähnliches bleibt verborgen |
+| `modelSelect` | `true` | Der Modell-Picker mit den kuratierten Karten ist sichtbar |
+
+`fileSearch` und `runCode` sind bewusst aus, solange ihr Backend nicht läuft. Ein sichtbarer
+Knopf ohne Wirkung ist schlechter als kein Knopf. Sobald das Profil `filesearch` läuft und ein
+Embeddings-Anbieter eingetragen ist, setzen Sie `fileSearch: true`, für die Code-Ausführung
+entsprechend `runCode: true`.
+
+<Aside type="note" title="Web-Suche im Kundentemplate">
+Der Knopf ist sichtbar und die eigene Metasuchmaschine läuft im Stack. Es fehlt aber noch der
+Scraper, der die Trefferseiten ausliest. Solange er nicht konfiguriert ist, hängt LibreChat das
+Such-Werkzeug nicht an das Modell, die Suche löst also nicht aus. Konfiguriert wird das im
+Panel unter **Konfiguration** im Reiter Funktionen.
+</Aside>
+
+### Regel 1: Der Block ist global
+
+Die Werte werden beim Start in alle Rollen geschrieben und bei jedem Neustart erneut gesetzt.
+Ein Unterschied zwischen Rollen lässt sich in der YAML deshalb nicht abbilden. Wollen Sie ein
+Werkzeug nur für eine Rolle freigeben, lassen Sie das Feld aus der YAML weg und setzen es im
+Rollen-Editor des Admin-Panels. Genau darum stehen Skills und Agenten bewusst nicht im
+`interface`-Block.
+
+### Regel 2: `capabilities` ersetzt, statt zu mischen
+
+Welche Fähigkeiten es überhaupt gibt, legt `endpoints.agents.capabilities` fest. Artifacts,
+also Diagramme und HTML direkt im Chat, sind ausschliesslich dort steuerbar, ein
+`interface.artifacts` gibt es nicht. Wer die Liste anfasst, ersetzt die Standardliste
+vollständig. Es wird nichts zusammengeführt, alles Behaltene muss also erneut aufgezählt
+werden.
+
+## KMU-Einfach-Profil
+
+Für Unternehmen, die eine möglichst schlichte Oberfläche wollen, schalten Sie die Bedienteile
+ab, die nur Poweruser brauchen. Alle Felder unten sind im Kundentemplate als Vorlage
+vorhanden:
+
+```yaml title="distribution/librechat.yaml"
+interface:
+  modelSelect: false
+  presets: false
+  multiConvo: false
+  bookmarks: false
+  marketplace:
+    use: false
+  parameters: false
+  mcpServers:
+    use: true
+    create: false
+    share: false
+    public: false
+```
+
+Was das bewirkt:
+
+- `modelSelect: false` blendet den Modell-Picker aus. Alle arbeiten dann mit der Standardkarte
+  samt hinterlegtem Systemprompt, ohne selbst ein Rohmodell wählen zu können.
+- `presets: false` entfernt die Voreinstellungen, `multiConvo: false` die parallelen Chats,
+  `bookmarks: false` die Lesezeichen und `marketplace.use: false` den Werkzeug-Marktplatz.
+- `parameters: false` hält das Parameter-Panel verborgen. Soll der Admin es trotzdem sehen,
+  bekommt die Rolle ADMIN im Panel einen Override auf `interface.parameters`.
+
+Nach jeder Änderung an der YAML den Chat-Dienst neu starten:
+
+```bash title="Auf dem Server"
+docker compose restart api
+```
+
+## Domain-Lock
+
+Die Selbstregistrierung ist ab Werk offen. Der eigentliche Zugangsschutz ist nicht
+`ALLOW_REGISTRATION`, sondern die Liste der erlaubten E-Mail-Domänen. Ohne sie kann sich jede
+Person mit dem Registrierungslink ein Konto anlegen.
+
+```yaml title="distribution/librechat.yaml"
+registration:
+  allowedDomains:
+    - 'ihre-firma.ch'
+```
+
+Dieselbe Liste pflegen Sie im Panel unter **Konfiguration** im Reiter Funktionen im Feld
+**Erlaubte E-Mail-Domains**. Sie gilt für die Selbstregistrierung und für Einladungen: eine
+Einladung an eine Adresse ausserhalb der Liste greift nicht.
+
+Prüfen lässt sich das mit einer Registrierung unter einer fremden Domäne, sie muss abgelehnt
+werden. Damit Sperren aus dem Panel überhaupt greifen, muss zusätzlich `BAN_VIOLATIONS=true`
+in der `.env` stehen.
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Domain und Zertifikat"
+    href="/docs/betrieb/domain-und-tls"
+    description="Die drei Caddy-Varianten und wann Sie welche brauchen."
+  />
+  <LinkCard
+    title="Mehrere Instanzen auf einem Server"
+    href="/docs/betrieb/mehrere-instanzen"
+    description="Was pro Kunde getrennt bleiben muss und was geteilt werden darf."
+  />
+</CardGrid>

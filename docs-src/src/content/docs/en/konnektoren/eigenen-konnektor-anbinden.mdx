@@ -1,0 +1,199 @@
+---
+title: Connecting your own connector
+description: 'Two complete ways to attach one of your own systems to EU Cowork AI: in the admin panel without a restart, or through the configuration files.'
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+This page shows how to attach one of your own systems as a connector. There are two ways: entirely in the admin panel, without a restart and without access to the server, or through the configuration files. Both are described here in full, you only need one of them.
+
+## Before you start
+
+**A connector has to run through the gateway if it is to be controllable per role or group.** For technical reasons the chat layer passes directly connected connectors on to all users unchanged, and there only the master switch per role applies. The one sensible exception is a connector with per-user sign-in, where the person's own permissions apply anyway.
+
+You need two pieces of information:
+
+- the **technical name** the connector is to run under in your setup, for example `crm-lesen`
+- the **real address of the connector**, meaning the URL where it speaks MCP, for example `http://mein-dienst:8080/mcp`
+
+<Aside type="caution" title="Two traps with the name and the address">
+The name may only contain letters, digits, and the characters `.` `_` `-`, at most 64 characters. When you create a connector, the panel only checks that pattern and whether the name is already taken. The names `router`, `healthz`, and `errors` can be created, but they cannot be routed through the gateway: the gateway occupies those paths itself, and saving the **"Gateway-Ziel"** (gateway target) then fails with "Reservierter Name (vom Gateway belegt)" (reserved name, occupied by the gateway). So for a connector that is meant to run through the gateway, pick a different name from the start.
+
+The address of the connector must **not have a trailing slash**. So `http://mein-dienst:8080/mcp` and not `http://mein-dienst:8080/mcp/`. With the slash the service answers with a redirect, and that is blocked by the built in protection against requests to internal addresses.
+</Aside>
+
+## Path A: through the admin panel
+
+This path needs no server access and no restart. It is the recommended path for everything you do not ship with the stack.
+
+<Steps>
+1. **Create the connector.**
+
+   **"Konfiguration → MCP-Server → + MCP-Server"** (configuration → MCP servers → add MCP server). In the dialog *"Neuer MCP-Server"* (new MCP server) you enter the technical name under **"Server-Name (Schlüssel)"** (server name, the key). The field **"Vorlage (optional)"** (template, optional) offers to copy an existing entry. Note the warning in the dialog: a copy starts **without permission rules and without a gateway target**, both of which hang off the old key and have to be set again. Click **"Anlegen"** (create).
+
+2. **Fill in the basics.**
+
+   The new tile expands. Fill in:
+
+   - **"Anzeigename"** (display name): the readable name your staff see. Leaving it empty means the technical name is shown. The technical key itself cannot be renamed later, because rules and the gateway target hang off it.
+   - **"Typ"** (type): `streamable-http` for a connector via the gateway. Also available are `sse`, `websocket`, and `stdio`.
+   - **"URL"**: `http://mcp-gateway:3020/<name>`, so for our example `http://mcp-gateway:3020/crm-lesen`. That is deliberately **not** the address of your service, but the one of the gateway.
+   - **"Timeout (ms)"**: for a bridge that needs a moment to get going on the first call, `60000` is a proven value.
+   - **"Beim Start verbinden"** (connect at startup) and **"Im Chat-Menü"** (in the chat menu): if *"Im Chat-Menü"* is off, the connector can only be used through agents, not from the tool menu of the chat.
+   - **"Server-Instruktionen"** (server instructions): a short guide in prose about when this tool should be used and what it cannot do. This text is only inserted when the connector is active, so it does not bloat the general system prompt.
+
+   The fields **"Command"** and **"Args"** only apply to `stdio`. You only need **"OAuth (JSON)"** for per-user sign-in.
+
+3. **Enter the gateway target and save it separately.**
+
+   As soon as the URL points at the gateway, the field **"Gateway-Ziel"** (gateway target) appears in the tile. Enter the **real address of your connector** there, so `http://mein-dienst:8080/mcp`, and click **"Ziel speichern"** (save target).
+
+   This is a **separate save path**, independent of the save button of the tab. Only this tells the gateway where it should forward this name. The change takes effect within roughly 10 seconds, without a restart.
+
+4. **Store the key as a variable reference.**
+
+   If your connector needs a key, enter it in the field **"Headers (JSON)"** exclusively as a reference, never in plain text:
+
+   ```json
+   { "x-api-key": "${CRM_API_KEY}" }
+   ```
+
+   You store the value itself under **"Einstellungen → API-Schlüssel"** (settings → API keys). Saved keys are write only, they are never displayed again, and changing one means overwriting it. Keys that end up in the `.env` on the server only take effect after a `docker compose ... up -d`, because the containers concerned read their keys at startup.
+
+5. **Test the connection.**
+
+   At the very bottom of the tile is the area **"Verbindung"** (connection) with the button **"Verbindung testen"** (test connection). The test builds a real MCP connection from the server and reports at which stage it fails. What is tested is the **current state of the form**, so including changes that have not been saved yet. The key does not leave the server in the process.
+
+   The test checks the connection, **not the permissions**. Who may use the connector is defined in the "MCP-Zugriff" (MCP access) tab.
+
+6. **Save the configuration.**
+
+   The new connector is only permanently registered after you click **"Speichern"** (save) on the tab. The gateway target from step 3 is independent of this and has already been saved.
+
+7. **Extend the SSRF allowlist.**
+
+   **"Konfiguration → Funktionen → Abschnitt MCP-Netzwerk → Feld Erlaubte MCP-Hosts"** (configuration → features → MCP network section → allowed MCP hosts field). What goes in there are **host names, not URLs**, separated by commas.
+
+   The chat layer blocks connections to internal hosts and private addresses by default. What counts is the host from the **"URL"** field. If your connector runs through the gateway, that is `mcp-gateway`, and a single entry is enough for all connectors behind it. If you connect a connector directly, its own host name has to go into the list. In a freshly installed customer instance this list is empty, so check it when you add your first connector.
+
+8. **Set the permissions.**
+
+   **"Verwaltung → MCP-Zugriff"** (administration → MCP access), the card of the new connector: set **"Server-Standard"** (server default) to denied, click **"Speichern"** (save), then grant access deliberately to roles, groups, or individual people. Without a rule the gateway lets everyone through, so this step is not a finishing touch, it is mandatory.
+
+9. **Restart the chat layer.**
+
+   So that the tool catalog in the prompt is updated:
+
+   ```bash title="On the server"
+   cd ~/eu-cowork/distribution
+   docker compose restart api
+   ```
+</Steps>
+
+## Path B: through the configuration files
+
+This path is the right one if the connector is to be part of your shipped configuration, meaning it is versioned in the repository and comes along with every installation. You need two entries for that, and **both have to use the same name**.
+
+<Tabs>
+<TabItem label="Chat configuration">
+
+In the active configuration file, so `distribution/librechat.yaml` or `distribution/librechat.internal.yaml`:
+
+```yaml title="librechat.yaml"
+mcpServers:
+  mein-konnektor:
+    type: streamable-http
+    url: "http://mcp-gateway:3020/mein-konnektor"
+    headers:
+      X-EUCowork-User-Id: "{{LIBRECHAT_USER_ID}}"
+      X-EUCowork-User-Role: "{{LIBRECHAT_USER_ROLE}}"
+      X-EUCowork-User-Email: "{{LIBRECHAT_USER_EMAIL}}"
+    timeout: 60000
+    serverInstructions: |
+      Short note on when this tool should be used.
+
+mcpSettings:
+  allowedDomains:
+    - mcp-gateway
+```
+
+The three `X-EUCowork-*` headers are **not optional**. They are the identity the gateway decides on. If they are missing, the request arrives without an identity and is denied. The placeholders in double curly braces are filled in per person by the chat layer, and the gateway strips the headers out again before the request moves on to your connector.
+
+</TabItem>
+<TabItem label="Compose">
+
+In `distribution/docker-compose.yml`, at the `mcp-gateway` service:
+
+```yaml title="docker-compose.yml"
+    environment:
+      - MCP_GATEWAY_UPSTREAMS={"mein-konnektor":"http://mein-dienst:8080/mcp"}
+```
+
+This is **a single JSON mapping for all connectors**. If entries are already there, add yours instead of replacing the line. Watch out for the missing trailing slash at the end of the address.
+
+Then:
+
+```bash title="On the server"
+cd ~/eu-cowork/distribution
+docker compose --profile internal up -d --build mcp-gateway
+docker compose restart api
+```
+
+</TabItem>
+</Tabs>
+
+<Aside type="note" title="When both paths use the same name">
+The gateway knows two sources for targets: the Compose variable `MCP_GATEWAY_UPSTREAMS` and the targets maintained in the panel. With an identical name, **the Compose variable wins**. That is intentional, so that a panel entry cannot take over the connectors that ship with the product. In practice it means: a gateway target set in the panel stays ineffective if the same name is already in the Compose variable. The connection test shows you which source the target comes from.
+</Aside>
+
+## Where do I get an MCP server for my system
+
+**Ready-made servers exist for many products.** Because MCP is an open standard, vendors and communities publish connectors for common software. Search for the product name together with "MCP server". For systems with a programming interface of their own, chances are good that someone has already built the bridge.
+
+**You can build one yourself.** A connector is a small HTTP service that offers a handful of tools and calls the interface of your system behind them. For a limited purpose, for example "five read queries against our line of business application", that is manageable. Our NinjaOne bridge came about exactly that way and gets by with seven tools.
+
+**Review a third party server before you connect it.** A connector gets access to your data, that is not a formality. Four questions:
+
+1. **Which tools does it expose?** Read the list in full. Writing tools you do not need are pure risk, and they cost context on top.
+2. **Is there a read only mode?** A switch that disables write access in the code is worth considerably more than the intention not to use it.
+3. **Is it suitable for multiple users?** Connectors that remember state across several calls do not work reliably behind a shared gateway.
+4. **Where do the credentials live, and what is the license?** A connector that holds keys itself belongs on the internal network and nowhere else.
+
+An example from practice: for NinjaOne we reviewed three existing servers. All three offered reboot, script execution, patch deployment, and write access to tickets, and none had a read only mode. One of them also had a stateful mode that does not work behind a multi user proxy. That is why there is a bridge of our own there. The outcome of such a review can very well be "we build it ourselves".
+
+## Troubleshooting
+
+The connection test in the panel works in four stages and reports at which one it fails. Look for the first stage with a cross, that is where the cause lies.
+
+| Stage | What is checked | Typical causes |
+|---|---|---|
+| **"Konfiguration"** (configuration) | Is the URL a valid address at all, and does it run through the gateway | Typo in the URL, a protocol other than `http` or `https`. The test also reports here if there is a direct connection without permission enforcement |
+| **"MCP-Gateway"** | Is the gateway running, and does it know a connector with this name | The stack is running without the `internal` profile. Or the field "Gateway-Ziel" (gateway target) was not set, in which case the message names the names the gateway actually knows |
+| **"Handshake (initialize)"** | Does an MCP server really answer at the target address | The referenced variable is empty or not set, in which case the connector would get an empty key. The service is not running. Or a firewall delivers an HTML error page instead of an MCP response |
+| **"Tool-Liste (tools/list)"** (tool list) | Does the connector deliver its tools | An error here deliberately does not flip the overall result, some servers do not implement the query |
+
+You can also check directly on the server whether the gateway knows a name:
+
+```bash title="On the server"
+docker compose --profile internal exec mcp-gateway \
+  node -e "fetch('http://localhost:3020/healthz').then(r=>r.json()).then(j=>console.log(j.servers))"
+```
+
+The name of your connector has to appear in this list. If it does not, the gateway target is missing.
+
+Further failure modes that the connection test does not see:
+
+| Symptom | Cause and solution |
+|---|---|
+| Connection test is green, but the connector stays invisible in the chat | The tool catalog hangs on a cache of 12 hours. `docker compose restart api` |
+| A message about a blocked private or reserved address | The host from the URL field is missing under **"Erlaubte MCP-Hosts"** (allowed MCP hosts) |
+| The connector answers with a redirect | Remove the trailing slash from the target address |
+| A gateway target set in the panel has no effect | The same name is in the Compose variable, and that one wins |
+| All calls are denied although access was granted | The identity headers are missing in the connector entry. Without an identity the gateway denies |
+| A tool reports "access denied" | That is not an error, that is the permission rule. Check **"MCP-Zugriff"** (MCP access) and the **"Zugriffe"** (access) subpage of the person concerned |
+| The connector cannot even be created | The name contains disallowed characters, is longer than 64 characters, or is already taken |
+| Message "Reservierter Name (vom Gateway belegt)" (reserved name, occupied by the gateway) when saving the gateway target | The connector is called `router`, `healthz`, or `errors`. It does get created, but it never becomes routable through the gateway. Create it again under a different name |
+
+You see ongoing gateway errors in the panel under **"Analyse → Logs"** (analysis → logs), tab **"Diagnose"** (diagnostics), toggle **"Gateway-Fehler"** (gateway errors). Deliberately only the message text along with connector and method appears there, never headers or payloads, because that is where the credentials sit.

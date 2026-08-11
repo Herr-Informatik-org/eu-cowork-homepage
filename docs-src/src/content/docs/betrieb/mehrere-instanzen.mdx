@@ -1,0 +1,150 @@
+---
+title: Mehrere Instanzen auf einem Server
+description: Warum die Mandantengrenze der Compose-Stack ist, was pro Kunde getrennt bleiben muss und wie mehrere Stacks eine Maschine teilen.
+sidebar:
+  order: 7
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Für einen Kunden mit drei Personen ist eine eigene virtuelle Maschine Verschwendung: die
+Grundlast einer Instanz liegt bei etwa 0,7 GB Arbeitsspeicher und praktisch null CPU. Mehrere
+Instanzen dürfen sich deshalb eine Maschine teilen. Diese Seite beschreibt, wo dabei die
+Trennlinie verläuft und welche Werte pro Instanz eindeutig sein müssen. Sie richtet sich an
+IT-Dienstleister, die mehrere Kunden betreiben.
+
+## Die Mandantengrenze ist der Stack, nicht die Maschine
+
+Ein Kunde ist genau **ein Compose-Stack**: eigene Datenbank, eigene Volltextsuche, eigene
+Uploads, eigene `.env`, eigenes Docker-Netz, eigener Code-Interpreter. Das ist nicht
+verhandelbar und folgt direkt aus der Architektur: die Anwendung selbst kennt keine Mandanten.
+Die Trennung muss deshalb unterhalb der Anwendung liegen, und dort liegt sie sauber.
+
+Ob zwei Stacks dieselbe Maschine teilen, ist danach eine Kosten- und Risikofrage, keine
+Architekturfrage mehr.
+
+## Was nie geteilt wird
+
+| Bereich | Grund |
+|---|---|
+| Datenbank | Enthält Konten, Konversationen und Buchungen eines Kunden |
+| Uploads und Bilder | Kundeninhalte |
+| `.env` und alle Geheimnisse | Ein gemeinsames Geheimnis hebt jede Trennung auf |
+| Sandbox-Netz und Code-Interpreter | Die einzige Stelle, an der Code von Nutzenden läuft |
+| Inferenz-Schlüssel | Mit einem geteilten Schlüssel sind die Kosten pro Kunde nicht mehr auflösbar |
+| Eigene Metasuchmaschine | Sieht die Suchanfragen und damit Nutzerinhalte. Die Trennung kostet 65 MB, also trennen |
+
+## Was geteilt werden darf
+
+- **Docker-Images und deren Schichten.** Das ist der grösste Spareffekt, ein LibreChat-Image
+  belegt rund 2 GB und wird nur einmal vorgehalten.
+- **Ein Edge-Reverse-Proxy** als einziger Dienst auf Port 80 und 443.
+- **Host-Monitoring, Backup-Cron und automatische Security-Updates.**
+
+Geteilt werden zwangsläufig auch Kernel, Docker-Dienst und die Hardware-Ressourcen. Das ist die
+eigentliche Grenze dieser Betriebsart: ein Neustart wegen eines Kernel-Updates trifft alle
+Kunden der Maschine.
+
+<Aside type="caution" title="Der Code-Interpreter ist der harte Punkt">
+Überall sonst führt die Plattform nur eigenen Code aus, Nutzende haben keinen Zugang zur
+Kommandozeile. Die Ausnahme ist die Code-Ausführung. Geben Sie deshalb jedem Stack ein eigenes
+`SANDBOX_NETWORK`. Sonst hängen zwei Kunden am selben Netzwerknamen und ein Chat des einen
+Kunden kann im Backend des anderen landen. Auf einer geteilten Maschine ist zudem das
+gehärtete Backend die bessere Wahl, es setzt allerdings `/dev/kvm` voraus.
+</Aside>
+
+## Die drei Variablen
+
+Docker-weit eindeutig und damit die eigentlichen Kollisionsstellen sind genau drei Namen. Alle
+drei stehen in der `.env`:
+
+```bash title="distribution/.env von Kunde A"
+STACK_NAME=eucowork-kunde-a
+DOCKER_SUBNET=172.29.0.0/16
+SANDBOX_NETWORK=eucowork-sandbox-a
+PORT=3081
+ADMIN_SIDECAR_PORT=3011
+OFFICE_ADDIN_PORT=3041
+```
+
+`STACK_NAME` ist das Präfix aller Container-Namen, `DOCKER_SUBNET` das eigene Bridge-Netz und
+`SANDBOX_NETWORK` das Netz zum Code-Interpreter. Zusätzlich müssen die drei Host-Ports pro
+Stack unterschiedlich sein. Bleiben die Werte auf ihren Standardwerten, startet der zweite
+Stack nicht.
+
+## Verzeichnis-Layout
+
+```text
+/srv/eucowork/kunde-a/distribution/
+/srv/eucowork/kunde-b/distribution/
+/srv/eucowork/edge/
+```
+
+Jeder Kunde bekommt einen eigenen Klon mit eigener `.env` und eigenen Daten. Der
+Compose-Projektname ergibt sich aus dem Verzeichnisnamen, dadurch sind auch die benannten
+Volumes automatisch getrennt.
+
+## Ein gemeinsamer Edge-Proxy
+
+Port 80 und 443 gibt es auf einer Maschine nur einmal. Die Kunden-Stacks laufen deshalb
+**ohne** das Profil `production`, bringen also keinen eigenen Caddy mit. Stattdessen steht ein
+kleiner gemeinsamer Stack davor, der beide Ports hält und pro Kunde einen Block in seiner
+Konfiguration bekommt:
+
+```text title="Vorlage für den geteilten Proxy"
+kunde-a.cowork.example.ch {
+	encode zstd gzip
+	handle /api/office/* { reverse_proxy host.docker.internal:3011 }
+	handle_path /office/* { reverse_proxy host.docker.internal:3041 }
+	handle { reverse_proxy host.docker.internal:3081 }
+}
+admin.kunde-a.cowork.example.ch { reverse_proxy host.docker.internal:3011 }
+```
+
+Die Portnummern sind dieselben, die in der `.env` des jeweiligen Kunden stehen.
+
+<Aside type="note" title="Der Edge-Stack liegt noch nicht im Repository">
+Die interne Instanz und jeder Einzelkunde fahren den mitgelieferten Caddy mit dem Profil
+`production`. Der gemeinsame Edge-Stack ist als vollständige Vorlage dokumentiert, aber noch
+kein fertiger Baustein im Repository. Gebaut wird er mit dem ersten Kunden, der sich eine
+Maschine teilt.
+</Aside>
+
+## Wann eine eigene Maschine
+
+| Nutzerzahl | Empfehlung | Maschine |
+|---|---|---|
+| 1 bis 15 | mehrere Stacks auf einer Maschine, drei bis fünf Kunden | 4 vCPU, 16 GB RAM, 80 GB |
+| 15 bis 50 | eigene Maschine | 4 vCPU, 8 bis 16 GB RAM, 100 GB |
+| über 50, regulierte Branche, vertraglich zugesicherte dedizierte Infrastruktur oder eigener ERP-Anschluss | eigene Maschine | 8 vCPU, 32 GB RAM, ab 200 GB |
+
+Budget pro Kundeninstanz inklusive eigenem Code-Interpreter: 1,5 bis 2 GB Arbeitsspeicher. Die
+Images belegen einmalig rund 5 bis 6 GB und werden geteilt, danach wachsen vor allem die
+Uploads.
+
+## Betrieb mit mehreren Stacks
+
+- **Backup pro Stack.** `backup.sh` läuft im jeweiligen Kundenverzeichnis und sichert genau
+  dessen Daten. Ein Cron-Eintrag pro Stack, mit versetzten Uhrzeiten.
+- **Update pro Stack.** Kunden dürfen unterschiedliche Versionen fahren. Genau dafür ist das
+  Image auf einen Digest gepinnt, siehe [Aktualisieren](/docs/betrieb/aktualisieren).
+- **Monitoring.** Die erste Grenze ist der Plattenplatz, nicht der Arbeitsspeicher. Ein Alarm
+  ab 70 Prozent Belegung ist sinnvoll, ebenso die Überwachung auf Container-Neustarts.
+- **Offboarding.** Verzeichnis stoppen, Archiv ziehen, Verzeichnis und Netze löschen. Kein
+  Eingriff in andere Stacks, keine Aufräumarbeit in einer gemeinsamen Datenbank. Das ist der
+  eigentliche Gewinn der Stack-Grenze.
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Konfiguration"
+    href="/docs/betrieb/konfiguration"
+    description="Wo STACK_NAME, DOCKER_SUBNET und SANDBOX_NETWORK stehen und was sonst in die .env gehört."
+  />
+  <LinkCard
+    title="Backup und Umzug"
+    href="/docs/betrieb/backup-und-umzug"
+    description="Sicherung pro Stack, Restore und der komplette Umzug."
+  />
+</CardGrid>

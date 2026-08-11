@@ -1,0 +1,152 @@
+---
+title: Users, groups and roles
+description: Invite and create accounts, assign permissions through roles, run groups, block and delete accounts.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Who has access and what they may do is decided in three places: at the account, at the role and at the group. This page goes through the forms one by one and names the labels you see in the panel.
+
+## The user list
+
+Under **"Verwaltung → Benutzer"** (administration, users) you find all accounts with these columns:
+
+| Column | Content |
+| --- | --- |
+| **"Nutzer"** (user) | Name and email address |
+| **"Rolle"** (role) | current role, usually `USER` or `ADMIN` |
+| **"Anmeldung"** (sign-in) | how the person signs in, open invitations appear here as "Einladung" (invitation) |
+| **"Status"** (status) | active or blocked |
+| **"Zuletzt online"** (last online) | date of the last access |
+| **"Verbrauchsanteil"** (share of usage) | share of total company usage over the last 30 days, as an absolute bar from 0 to 100 percent |
+| **"Erstellt"** (created) | date the account was created |
+
+A click on the name opens that person's usage in detail. Through the menu at the end of the row you reach **"Verbrauch ansehen"** (view usage), **"Zugriffe ansehen"** (view access), **"Daten exportieren (JSON)"** (export data as JSON), **"Rolle ändern"** (change role), **"Guthaben-Top-up"** (top up credit balance), **"Sperren"** (block) or **"Entsperren"** (unblock), and **"Löschen"** (delete).
+
+<Aside type="tip" title="Last online is deliberately accurate to the day only">
+The column shows the day, not the time. That is not an oversight but a design decision: no minute by minute tracking of your team should come into being. For the question "is the tool being used at all", the day is enough; for performance monitoring the figure is deliberately useless.
+</Aside>
+
+## Inviting people
+
+The dialog **"Benutzer einladen"** (invite user) is the normal route, because the person sets their own password and you never have to transmit one.
+
+<Steps>
+
+1. Enter the email address of the person to be invited.
+
+2. Optionally tick one or more groups under **"Automatisch in Gruppe(n) aufnehmen (optional)"** (add automatically to groups, optional).
+
+3. Press **"Einladen"** (invite). In every case you get a link back, which you can copy and send yourself.
+
+</Steps>
+
+Three points belong with this:
+
+- **The invitation is valid for 7 days** and only for exactly this address. A different person cannot use the link.
+- **The domain has to match the registration whitelist**, meaning the **"Erlaubte E-Mail-Domains"** (permitted email domains) under **"Konfiguration → Funktionen"** (configuration, features tab). If it does not match, registration fails even though the link is valid.
+- **If SMTP is configured**, an email goes out as well. Without mail delivery you are left with the link.
+
+<Aside type="note" title="Why the group only takes effect about a minute later">
+At the time of the invitation the account does not exist yet, it only comes into being with registration. The panel therefore notes down the intended group assignment and a background reconciliation sets it as soon as the account is there. In practice that takes about a minute. So if a freshly registered person briefly sees nothing, wait a moment before you go looking for a fault.
+</Aside>
+
+## Creating users
+
+The dialog **"Benutzer anlegen"** (create user) creates an account directly, without registration. It has the fields **"Name"** (name), **"E-Mail"** (email), **"Initial-Passwort"** (initial password), **"Rolle"** (role) and **"Gruppen (optional)"** (groups, optional).
+
+The password needs at least 8 characters. The button **"Generieren"** (generate) creates one and puts it straight into the clipboard, from where you transfer it into the person's password manager. The field itself does not show the value in plain text, so that it does not end up in screenshots or in browser autofill.
+
+## Roles and permissions
+
+Under **"Verwaltung → Rollen"** (administration, roles) you create roles and open the role editor **"Rolle: `<Name>`"** (role) with a click. The permissions are grouped there into five cards.
+
+### "Werkzeuge" (tools)
+
+| Permission | Meaning |
+| --- | --- |
+| **"Web-Suche"** (web search) | Search the web (SearXNG/Serper) |
+| **"Code-Interpreter"** (code interpreter) | Create Excel, PDF and CSV files, run code in the sandbox |
+| **"Datei-Suche (RAG)"** (file search) | Search uploaded documents |
+| **"Datei-Zitate"** (file citations) | Source references from files |
+| **"MCP-Server (Odoo, SharePoint …)"** (MCP servers) | Master switch, the fine grained control per server sits under **"MCP-Zugriff"** (MCP access) |
+
+### "Chat-Funktionen" (chat features)
+
+**"Parallel-Antworten"** (parallel answers), **"Temporäre Chats"** (temporary chats), **"Lesezeichen"** (bookmarks), **"Memories nutzen"** (use memories), **"Memories anlegen"** (create memories).
+
+### "Erstellen & Teilen" (create and share)
+
+**"Agents nutzen"** (use agents), **"Agents erstellen"** (create agents), **"Agents teilen"** (share agents), **"Prompts nutzen"** (use prompts), **"Prompts erstellen"** (create prompts), **"Skills nutzen"** (use skills), **"Skills erstellen"** (create skills), **"Geteilte Links erzeugen"** (create shared links), **"Agent-Marketplace"** (agent marketplace).
+
+<Aside type="caution" title="Never roll out skills to everyone">
+Skills are stored standard processes and are granted exclusively through this role permission, not through the configuration file. Grant them deliberately per role or person. A skill sitting in the deployment directory also wins against a skill of the same name from the database and would defeat a targeted grant.
+</Aside>
+
+### "Remote-Agenten" (remote agents)
+
+**"Remote-Agenten (Agents API / Outlook)"** (remote agents), **"Remote-Agenten erstellen"** (create remote agents), **"Remote-Agenten teilen"** (share remote agents), **"Remote-Agenten öffentlich freigeben"** (grant remote agents publicly). Which agents are visible in the process is controlled under **"Verwaltung → Remote-Agenten"** (administration, remote agents).
+
+### "Sichtbarkeit" (visibility)
+
+**"Nutzer im Teilen-Dialog sehen"** (see users in the sharing dialog) and **"Gruppen im Teilen-Dialog sehen"** (see groups in the sharing dialog).
+
+<Aside type="danger" title="Careful with the role ADMIN">
+If you open the role `ADMIN`, the panel displays the warning that this affects your own account too and that withdrawn permissions apply immediately to all admins. There is no exception for the person flipping the switch. So check changes to this role twice.
+</Aside>
+
+When you delete a role you created yourself, the dialog states how many accounts fall back to `USER` as a result. The system roles `ADMIN` and `USER` cannot be deleted.
+
+### Model cards per role
+
+In the same editor, the card **"Modell-Karten"** (model cards) sits at the top with one switch per card. All switches on means the role follows the base configuration. Below it sits the switch **"Weitere Modelle (Roh-Untermenü)"** (further models, raw submenu) with the subtitle "Aus = diese Rolle sieht NUR die oben aktivierten Karten" (off means this role sees ONLY the cards enabled above). The button **"Auf YAML-Stand zurücksetzen"** (reset to the YAML state) selects all cards of the base again. Details are covered under [Models and model cards](/docs/en/administration/modelle-und-karten).
+
+## Groups
+
+Under **"Verwaltung → Gruppen"** (administration, groups) the groups are listed with the columns **"Gruppe"** (group), **"Quelle"** (source), **"Mitglieder"** (members) and **"MCP-Regeln"** (MCP rules).
+
+The **"Quelle"** (source) is either **"Lokal"** (local) or **"Entra ID"**. Local groups are maintained here in the panel. Groups from Entra ID come in through OIDC sync and are read only, their members are managed by the identity provider.
+
+The column **"MCP-Regeln"** (MCP rules) counts for how many connectors this group has a rule of its own, and jumps straight into the filtered view under **"MCP-Zugriff"** (MCP access). That is the fastest route from the question "what may this group do" to the answer.
+
+The card selection can additionally be set per group. The mode selection offers **"Erben"** (inherit, no rule of its own for this group) and **"Eigene Auswahl (übersteuert die Rollen-Regel)"** (own selection, overrides the role rule).
+
+## Blocking accounts
+
+The dialog **"Sperren: `<E-Mail>`"** (block) knows the durations **"24 Stunden"** (24 hours), **"7 Tage"** (7 days), **"30 Tage"** (30 days), **"1 Jahr"** (1 year) and **"Unbefristet"** (indefinite). You can lift any block at any time through **"Entsperren"** (unblock).
+
+A block takes effect at the next login or the next request, not on a session already running. That one only ends when its token expires.
+
+<Aside type="caution" title="BAN_VIOLATIONS has to be set">
+For blocks from the panel to take effect at all, `BAN_VIOLATIONS=true` has to be in the `.env` of the stack. That is the case in the shipped state. If the value was set to `false`, blocks come to nothing without the panel noticing.
+</Aside>
+
+## Deleting accounts
+
+Deleting removes the account, conversations, messages, files, keys, agents and credit balance, and additionally cleans up the Meilisearch indexes. This cannot be undone.
+
+The dialog **"Löschen: `<E-Mail>`"** (delete) is therefore built in three stages:
+
+<Steps>
+
+1. **Export first, then delete.** The block at the top of the dialog contains the button **"Daten exportieren (JSON)"** (export data as JSON). After deletion no disclosure can be given any more, so the disclosure required by the GDPR has to happen beforehand. The export contains conversations, messages, file metadata and transactions, but no credentials.
+
+2. Optionally tick the checkbox **"Auch Verbrauchs-Transaktionen löschen"** (delete usage transactions as well), subtitle "DSGVO-Volllöschung, Abrechnungsbelege gehen verloren" (full GDPR deletion, billing receipts are lost). Without the tick the transactions remain as a receipt, the account disappears all the same.
+
+3. To confirm, type the email address exactly, then **"Endgültig löschen"** (delete permanently).
+
+</Steps>
+
+## The page "Zugriffe: `<Name>`"
+
+You reach this subpage from the user list through **"Zugriffe ansehen"** (view access). It answers the question that comes up most often in everyday work: "why can I not see this connector?"
+
+The page shows the role and groups of the person and below that three areas: **"MCP-Zugriff"** (MCP access), **"Modell-Karten"** (model cards) and **"Remote-Agent-Freigaben"** (remote agent grants). The MCP table has the columns **"Server"** (server), **"Zugriff"** (access), **"Entschieden durch"** (decided by) and **"Werkzeuge"** (tools).
+
+The decisive column is **"Entschieden durch"** (decided by). It names the level that actually won, for example "via Gruppe GL" (via the group GL) or "Server-Default" (server default), and links to the place where that can be changed. The order in the gateway is: exception for this person, then role rule, then group rule, then server default. If several groups contradict each other, "verweigert" (denied) wins.
+
+<Aside type="caution" title="A server with no rule at all is let through">
+If every rule is missing for a connector, the gateway lets calls through. The page then points out in that row that the default should be set to "verweigert" (denied). Check this after every newly connected connector.
+</Aside>

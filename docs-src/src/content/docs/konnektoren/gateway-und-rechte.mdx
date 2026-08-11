@@ -1,0 +1,101 @@
+---
+title: Rechte-Gateway
+description: Warum jeder Konnektor über ein eigenes Gateway läuft, wie die Rechtekaskade entscheidet und was Sie nach jeder Änderung tun müssen.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import DiagrammGateway from '../../../components/DiagrammGateway.astro';
+
+Das Rechte-Gateway ist die Stelle, an der EU Cowork AI entscheidet, wer welchen Konnektor benutzen darf. Diese Seite erklärt, warum es diese Schicht braucht, wie sie entscheidet und wo Sie die Regeln pflegen.
+
+## Warum es das Gateway gibt
+
+LibreChat, die Chat-Schicht unter EU Cowork AI, kann MCP-Server, die in der Konfigurationsdatei stehen, **nicht pro Rolle oder pro Person filtern**. Die interne Werkzeug-Registrierung löst diese Server für jeden Nutzer unverändert auf. Wer überhaupt MCP benutzen darf, sieht damit alle konfigurierten Server, oder keinen.
+
+Für ein Werkzeug wie eine Wetterabfrage ist das egal. Für ein ERP ist es das nicht: „Rechnungen darf die Buchhaltung sehen, Löhne nicht" ist auf dieser Ebene nicht abbildbar. Genau diese Lücke schliesst das Gateway. Es ist ein eigener kleiner Dienst, der zwischen der Chat-Schicht und jedem Konnektor sitzt, jede Anfrage prüft und danach erst weiterleitet.
+
+## Was das Gateway tut
+
+- **Rechteprüfung vor dem Aufruf.** Bei jedem Werkzeug-Aufruf wird zuerst die Regel geprüft. Ist der Zugriff verweigert, wird der Konnektor gar nicht erst kontaktiert. Die anfragende Person bekommt eine Klartext-Meldung im Chat, die auf den Admin verweist. Der Chat läuft normal weiter, es gibt keinen Absturz.
+- **Gefilterte Werkzeugliste.** Fragt die Chat-Schicht ab, welche Werkzeuge ein Konnektor anbietet, antwortet das Gateway personenbezogen. Für jemanden ohne Freigabe ist die Liste leer, der Konnektor wirkt also schlicht leer statt gesperrt.
+- **Protokoll jedes Aufrufs.** Jede Entscheidung wird unveränderlich mitgeschrieben, mit Zeit, Konnektor, Werkzeug, Person, Rolle, Entscheid und Begründung. Es gibt bewusst keine automatische Löschfrist auf diesen Einträgen.
+- **Fail-closed.** Lässt sich die Regel nicht lesen, etwa weil die Datenbank klemmt, wird verweigert statt erlaubt. Kommt eine Anfrage ohne Identität an, wird ebenfalls verweigert.
+- **Identitäts-Header werden entfernt.** Die Chat-Schicht schickt die Kennung der Person als HTTP-Header mit, damit das Gateway entscheiden kann. Bevor die Anfrage weiterläuft, streicht das Gateway diese Header wieder heraus. Der Konnektor erfährt sie nicht.
+- **Keine eigenen Zugangsdaten.** Das Gateway hält selbst keinen Schlüssel für die Konnektoren. Zugangsdaten bleiben dort, wo sie hingehören: in der Chat-Konfiguration als Variablenreferenz oder im Konnektor selbst.
+
+## Der Weg einer Anfrage
+
+<DiagrammGateway />
+
+## Die Rechtekaskade
+
+Pro Konnektor gilt genau eine Entscheidungskette. Sie wird von oben nach unten geprüft, und die erste Stufe, die eine Aussage macht, gewinnt:
+
+<Steps>
+1. **Benutzer.** Gibt es für diese Person eine ausdrückliche Ausnahme, gilt sie. Punkt.
+2. **Rolle.** Sonst zählt die Regel für die Rolle der Person.
+3. **Gruppe.** Sonst zählen die Regeln der Gruppen, in denen die Person Mitglied ist. Ist die Person in mehreren Gruppen mit widersprüchlichen Regeln, **gewinnt „verweigert"**. Das ist Absicht: Eine Sicherheitsgrenze darf sich nicht dadurch aufheben lassen, dass jemand zusätzlich in einer harmlosen Gruppe ist.
+4. **Server-Standard.** Sonst gilt der Standard, den Sie für diesen Konnektor gesetzt haben.
+</Steps>
+
+Im Admin-Panel steht diese Kette als Legende über den Karten: **Es gewinnt: Benutzer › Rolle › Gruppe › Standard**.
+
+<Aside type="danger" title="Ohne Regel lässt das Gateway durch">
+Existiert für einen Konnektor **kein Regeldokument**, behandelt das Gateway ihn als erlaubt. Ein frisch angelegter Konnektor ist also für jede Person sichtbar, die überhaupt MCP benutzen darf.
+
+Das ist bewusst so gebaut, damit ein Konfigurationsfehler nicht den ganzen Chat lahmlegt. Für Sie heisst es aber: **Setzen Sie direkt nach dem Anlegen den Server-Standard auf „verweigert" und geben Sie danach gezielt frei.** Sonst sieht in dem Zeitfenster zwischen Anlegen und Freigabe jede Person alles, was hinter diesem Konnektor liegt.
+</Aside>
+
+## Die zusätzliche Werkzeug-Ebene
+
+Über der Konnektor-Ebene gibt es eine zweite, feinere Ebene für einzelne Werkzeuge. Auch sie hat eine Kette: **Werkzeug-Benutzer vor Werkzeug-Rolle vor Werkzeug-Standard vor dem Entscheid auf Konnektor-Ebene.** Ein Werkzeug ohne eigene Regel erbt schlicht den Entscheid des Konnektors.
+
+Eine Regel ist dabei absolut: **Ein verweigerter Konnektor schlägt jede Werkzeug-Erlaubnis.** Sie können also nicht über die Werkzeug-Ebene einen gesperrten Konnektor teilweise wieder öffnen.
+
+<Aside type="note" title="Stand der Werkzeug-Ebene">
+Das Gateway setzt Werkzeug-Regeln durch, und vorhandene Regeln bleiben beim Speichern erhalten. Eine Maske zum Pflegen dieser Regeln hat das Admin-Panel derzeit **nicht**, sie wurde bewusst wieder entfernt, weil die Steuerung auf Konnektor-Ebene im Alltag ausreicht. Planen Sie Ihre Konnektoren deshalb so, dass die Konnektor-Ebene genügt: lieber zwei schmale Konnektoren mit je eigenem Dienstkonto als einer mit vielen Werkzeugen, von denen die Hälfte gesperrt sein müsste.
+</Aside>
+
+## Wirkzeiten, und warum ein Neustart nötig ist
+
+Rechteänderungen wirken an zwei Stellen unterschiedlich schnell. Das ist der häufigste Stolperstein im Betrieb.
+
+| Was | Wann es wirkt |
+|---|---|
+| Werkzeug-**Aufrufe** | innert rund 10 Sekunden, das Gateway hält die Regeln nur kurz zwischengespeichert |
+| Änderung der **Gruppenmitgliedschaft** | innert rund einer Minute |
+| **Werkzeug-Katalog im Prompt**, also was das Modell überhaupt angeboten bekommt | erst nach einem Neustart der Chat-Schicht, sonst nach 12 Stunden |
+
+Der Grund für die dritte Zeile: Die Chat-Schicht legt den Werkzeug-Katalog pro Person für 12 Stunden ab. Nehmen Sie jemandem einen Konnektor weg, kann der Aufruf sofort blockiert sein, während das Werkzeug im Menü noch angeboten wird. Umgekehrt taucht ein neu freigegebener Konnektor nicht sofort auf.
+
+```bash title="Nach Rechteänderungen auf dem Server"
+cd ~/eu-cowork/distribution
+docker compose restart api
+```
+
+## Wo Sie das im Panel pflegen
+
+Alles zu Rechten liegt unter **Verwaltung → MCP-Zugriff**. Die Seite hat drei Ebenen:
+
+**Karte „Generalschalter pro Rolle"** ganz oben, mit dem Untertitel *„Aus = die Rolle sieht keinerlei MCP-Server"*. Das ist der Hauptschalter. Steht er für eine Rolle aus, ist jede weitere Regel bedeutungslos.
+
+**Eine Karte pro Konnektor.** Jede trägt einen Badge: **Gateway** heisst, dieser Konnektor läuft über das Gateway und ist pro Rolle, Gruppe und Person steuerbar. **Direkt** heisst, er ist ohne Gateway verbunden, und dann gilt nur der Generalschalter. In der Karte finden Sie:
+
+- Feld **Server-Standard** mit dem Untertitel *„Gilt für alle ohne eigene Regel"*
+- Abschnitte **Gruppen** und **Benutzer-Ausnahmen**, letzterer mit dem Button **+ Benutzer-Ausnahme**
+- die Buttons **Verwerfen**, **Regeln zurücksetzen** und **Speichern**
+
+**Speichern ist ausdrücklich.** Jede Karte hält eine Arbeitskopie, Ihre Schalter wirken erst nach dem Klick auf **Speichern**. Solange etwas offen ist, steht unter der Karte der Hinweis, dass die Änderungen noch nicht greifen.
+
+Das Protokoll finden Sie unter **System → Audit-Log**, Reiter **MCP-Tool-Calls**, mit den Spalten Zeit, Server, Werkzeug, Nutzer, Entscheid und Grund. Die Ansicht lässt sich als CSV exportieren.
+
+Wenn Sie umgekehrt von einer Person ausgehen wollen, öffnen Sie aus der Benutzerliste die Unterseite **Zugriffe**. Sie beantwortet „Was darf diese Person, und warum", nennt pro Zeile die entscheidende Stufe, etwa „via Gruppe GL" oder „Server-Default", und verlinkt dorthin, wo man sie ändert.
+
+## Was das Gateway nicht tut
+
+- **Es ersetzt die Rechte im Quellsystem nicht.** Ein Dienstkonto mit zu breiten Rechten bleibt ein Risiko, auch wenn das Gateway davor steht. Ziehen Sie die Datengrenze im Quellsystem, nicht im Prompt.
+- **Es filtert keine Argumente und keine Inhalte.** Ein Werkzeug, das eine freie Abfragesprache entgegennimmt, lässt sich nicht sinnvoll auf „nur Rechnungen" einschränken. Bevorzugen Sie Konnektoren mit getrennten Werkzeugen oder mit einem Nur-Lese-Modus.
+- **Es prüft keine eingehende Anmeldung.** Das Gateway hat keinen Port auf dem Host und ist ausschliesslich im internen Docker-Netz erreichbar. Genau deshalb darf es ohne eigene Anmeldung arbeiten.
+- **Es kann direkt verbundene Konnektoren nicht steuern.** Wer pro Rolle oder Gruppe steuerbar sein soll, muss über das Gateway laufen.

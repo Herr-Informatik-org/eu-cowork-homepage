@@ -1,0 +1,355 @@
+---
+title: Umgebungsvariablen
+description: Vollständige Referenz der Datei distribution/.env, gruppiert nach Themen, mit Zweck, Pflichtangabe und Standardwert.
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Alle Einstellungen einer Instanz stehen in einer einzigen Datei: `distribution/.env`. Diese
+Seite listet jede Variable aus der mitgelieferten Vorlage `distribution/.env.example` auf,
+gruppiert nach Themen. Sie richtet sich an alle, die eine Instanz einrichten oder betreiben.
+
+Der Installer legt die `.env` beim ersten Lauf aus der Vorlage an, erzeugt die Geheimnisse
+und setzt die Rechte auf `600`. Die Datei gehört nie in ein Repository und nie in ein Ticket.
+
+<Aside type="danger" title="Keine echten Werte in dieser Dokumentation">
+Auf dieser Seite stehen ausschliesslich die Platzhalter aus der Vorlage. Ein Wert wie
+`__SET_YOUR_EUROUTER_KEY__` ist genau das: ein Platzhalter, den Sie auf Ihrem Server durch
+Ihren eigenen Schlüssel ersetzen. Geben Sie Inhalte Ihrer echten `.env` nie weiter.
+</Aside>
+
+## Was die Spalten bedeuten
+
+| Spalte | Bedeutung |
+|---|---|
+| **Variable** | der Name genau so, wie er in der `.env` steht |
+| **Zweck** | wofür der Wert gebraucht wird |
+| **Pflicht** | ob die Instanz ohne diesen Wert läuft. Manche Werte sind nur mit einem bestimmten Compose-Profil nötig |
+| **Standard** | der Wert aus `.env.example`. `auskommentiert` heisst, die Zeile beginnt mit `#` und ist damit inaktiv |
+
+## Die drei Dinge, die Sie wirklich anfassen müssen
+
+Der Rest der Datei ist so vorbelegt, dass eine Instanz startet. Drei Bereiche müssen Sie
+selbst setzen.
+
+<Aside type="tip" title="Kurzfassung">
+1. `EUROUTER_API_KEY` eintragen, sonst antwortet kein Modell.
+2. `DOMAIN_CLIENT`, `DOMAIN_SERVER` und `EUCOWORK_DOMAIN` auf Ihre Domain setzen, sobald die
+   Instanz nicht mehr nur lokal läuft.
+3. In Produktion hinter Caddy `API_BIND=127.0.0.1` setzen.
+</Aside>
+
+**`EUROUTER_API_KEY`** ist der einzige Wert, den ein Standardkunde zwingend selbst eintragen
+muss. Ohne ihn startet der Stack zwar, aber jede Modellanfrage scheitert.
+
+**Die drei Domain-Variablen** stehen ab Werk auf `localhost`. `DOMAIN_CLIENT` ist die URL, die
+der Browser sieht, und zugleich die Basis für Einladungslinks. `DOMAIN_SERVER` ist die
+Server-URL und damit die Basis der SharePoint-Redirect-URI. `EUCOWORK_DOMAIN` trägt Caddy und
+das Office-Manifest. Bleiben sie auf `localhost`, verschicken Sie Einladungen mit einem Link,
+der nur auf dem Server selbst funktioniert.
+
+**`API_BIND`** steht ab Werk auf `0.0.0.0`, weil das lokal bequem ist. In Produktion mit Caddy
+gehört der Wert auf `127.0.0.1`. Sonst ist LibreChat zusätzlich direkt per HTTP auf
+`<server-ip>:3080` erreichbar, also an TLS vorbei, mit Passwörtern im Klartext im Netz. Die
+Firewall hilft dagegen nicht: von Docker veröffentlichte Ports umgehen die ufw-Regeln. Panel
+und Add-in binden bereits ab Werk auf `127.0.0.1`.
+
+## Geheimnisse
+
+Diese Werte erzeugt `install.sh` beim ersten Lauf selbst. Sie müssen dafür nichts tun.
+
+| Variable | Wofür |
+|---|---|
+| `CREDS_KEY` | verschlüsselt gespeicherte Zugangsdaten der Nutzer, etwa die SharePoint-Verbindung |
+| `CREDS_IV` | Initialisierungsvektor zur Verschlüsselung |
+| `JWT_SECRET` | signiert die Sitzungs-Token |
+| `JWT_REFRESH_SECRET` | signiert die Erneuerungs-Token |
+| `MEILI_MASTER_KEY` | Zugang zur Volltextsuche |
+| `POSTGRES_PASSWORD` | Zugang zur Vektordatenbank der Dateisuche |
+| `SEARXNG_SECRET` | Zugang zur eigenen Metasuchmaschine |
+| `ADMIN_PANEL_SESSION_SECRET` | Sitzungen des Übergangs-Panels |
+
+Diese Werte müssen Sie selbst eintragen, der Installer kann sie nicht erfinden:
+`EUROUTER_API_KEY`, wahlweise `OPENROUTER_API_KEY`, die SMTP-Zugangsdaten sowie sämtliche
+Konnektor-Schlüssel.
+
+<Aside type="caution" title="Beim Umzug auf einen neuen Server">
+`CREDS_KEY` und `CREDS_IV` müssen aus der alten `.env` übernommen werden. Werden sie neu
+erzeugt, lassen sich die gespeicherten Zugangsdaten nicht mehr entschlüsseln und alle Nutzer
+müssen ihre SharePoint-Verbindung neu aufbauen.
+</Aside>
+
+## Host und Ports
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `HOST` | Adresse, auf der LibreChat innerhalb des Containers lauscht | Pflicht | `0.0.0.0` |
+| `PORT` | Port der Chat-Anwendung, im Container und auf dem Host | Pflicht | `3080` |
+| `API_BIND` | Host-Bindung des Chat-Ports, in Produktion `127.0.0.1` | optional | `0.0.0.0`, Zeile auskommentiert |
+| `UID` | Benutzerkennung, mit der die Container in die Bind-Mounts schreiben | Pflicht | `1000`, der Installer trägt die Kennung des ausführenden Kontos ein |
+| `GID` | Gruppenkennung dazu | Pflicht | `1000`, wird ebenfalls gesetzt |
+| `ADMIN_SIDECAR_PORT` | Host-Port des eigenen Admin-Panels | Pflicht | `3010` |
+| `ADMIN_SIDECAR_BIND` | Host-Bindung des Admin-Panels | optional | `127.0.0.1`, Zeile auskommentiert |
+| `OFFICE_ADDIN_PORT` | Host-Port des Outlook-Add-ins, nur auf `127.0.0.1` | optional | `3040`, Zeile auskommentiert |
+| `ADMIN_PANEL_PORT` | Host-Port des Übergangs-Panels, nur mit Profil `interim` | optional | `3000` |
+
+## Domain und Verhalten
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `DOMAIN_CLIENT` | im Browser erreichbare Chat-URL, auch Basis für Einladungslinks | Pflicht in Produktion | `http://localhost:3080` |
+| `DOMAIN_SERVER` | Server-URL, Basis der SharePoint-Redirect-URI | Pflicht in Produktion | `http://localhost:3080` |
+| `EUCOWORK_DOMAIN` | Domain für Caddy und für das Office-Manifest | Pflicht in Produktion | `localhost` |
+| `CADDY_FILE` | wählt die Caddy-Variante: `Caddyfile` für öffentliches Let's Encrypt, `Caddyfile.internal` für einen LAN-Server mit eigener Root-CA, `Caddyfile.proxied` hinter einer WAF, die HTTPS bereits terminiert | optional | `Caddyfile`, Zeile auskommentiert |
+| `LIBRECHAT_CONFIG_FILE` | wählt die aktive Konfigurationsdatei | optional | `librechat.yaml`, Zeile auskommentiert |
+| `APP_TITLE` | Titel im Browser-Tab und in der Anwendung | optional | `EU-Cowork AI` |
+| `NO_INDEX` | hält Suchmaschinen von der Instanz fern | Pflicht | `true` |
+| `DISABLE_COMPRESSION` | schaltet die Kompression ab, damit das Antwort-Streaming funktioniert | nicht ändern, siehe unten | `true`, im Compose-Stack als Vorgabe gesetzt |
+| `EUCOWORK_PUBLIC_URL` | öffentliche Basis-URL für den Geräte-Login-Link des Add-ins, nur nötig, wenn die Bridge nicht hinter Caddy läuft | optional | leer, Zeile auskommentiert |
+| `OFFICE_DEFAULT_AGENT_ID` | Agent, der im Outlook-Pane vorausgewählt ist | optional | leer, Zeile auskommentiert |
+| `OFFICE_ENTRA_CLIENT_ID` | Entra-App für die Schreibstil-Erfassung über Microsoft Graph | optional | leer, Zeile auskommentiert |
+| `OFFICE_ENTRA_TENANT_ID` | Mandant dazu | optional | leer, Zeile auskommentiert |
+
+## Authentifizierung und Verschlüsselung
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `CREDS_KEY` | **Geheimnis.** Verschlüsselt gespeicherte Zugangsdaten der Nutzer | Pflicht | `GENERATE`, vom Installer erzeugt |
+| `CREDS_IV` | **Geheimnis.** Initialisierungsvektor dazu | Pflicht | `GENERATE`, vom Installer erzeugt |
+| `JWT_SECRET` | **Geheimnis.** Signiert die Sitzungs-Token | Pflicht | `GENERATE`, vom Installer erzeugt |
+| `JWT_REFRESH_SECRET` | **Geheimnis.** Signiert die Erneuerungs-Token | Pflicht | `GENERATE`, vom Installer erzeugt |
+| `ALLOW_EMAIL_LOGIN` | Anmeldung mit E-Mail und Passwort | Pflicht | `true` |
+| `ALLOW_REGISTRATION` | Selbst-Registrierung neuer Konten | Pflicht | `true` |
+| `ALLOW_SOCIAL_LOGIN` | Anmeldung über soziale Anbieter | Pflicht | `false` |
+| `ALLOW_UNVERIFIED_EMAIL_LOGIN` | steuert, ob eine Verifikations-Mail nötig ist. Ohne konfigurierten Mailversand muss der Wert `true` bleiben, sonst scheitert jede Registrierung | optional | `true`, Zeile auskommentiert |
+| `BAN_VIOLATIONS` | schaltet die Prüfung von Sperren an der Anmeldung ein | nicht ändern, siehe unten | `true` |
+| `NON_BROWSER_VIOLATION_SCORE` | entschärft die Heuristik „kein Browser-User-Agent", die sonst Sidecar-Zugriffe sofort sperren würde | Pflicht | `0` |
+
+Wer die Selbst-Registrierung offen lässt, sollte die erlaubten E-Mail-Domains im Admin-Panel
+unter **Konfiguration → Funktionen → Erlaubte E-Mail-Domains** eintragen. Sonst kann sich
+jede Adresse ein Konto anlegen.
+
+## E-Mail
+
+Der Mailversand ist optional und in der Vorlage vollständig auskommentiert. Ein Satz
+Zugangsdaten treibt zwei Wege: die Verifikation und den Passwort-Reset von LibreChat sowie
+den automatischen Versand der Einladungen aus dem Admin-Panel. Ohne diese Werte gibt es keinen
+Mailversand, die Einladung liefert dann nur einen Link zum Kopieren.
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `EMAIL_SERVICE` | benannter Dienst statt Host und Port, dann entfallen die beiden nächsten Zeilen | optional | leer, Zeile auskommentiert |
+| `EMAIL_HOST` | SMTP-Server | optional | `mail-eu.smtp2go.com`, Zeile auskommentiert |
+| `EMAIL_PORT` | SMTP-Port. `2525`, `587` und `8025` sprechen STARTTLS, `465` und `8465` sprechen TLS | optional | `2525`, Zeile auskommentiert |
+| `EMAIL_ENCRYPTION` | `starttls` oder `tls`, passend zum Port | optional | `starttls`, Zeile auskommentiert |
+| `EMAIL_USERNAME` | **Geheimnis.** SMTP-Benutzer | optional | `__SET_SMTP2GO_SMTP_USER__`, Zeile auskommentiert |
+| `EMAIL_PASSWORD` | **Geheimnis.** SMTP-Passwort | optional | `__SET_SMTP2GO_SMTP_PASSWORD__`, Zeile auskommentiert |
+| `EMAIL_FROM` | verifizierte Absenderadresse | optional | Beispielwert, Zeile auskommentiert |
+| `EMAIL_FROM_NAME` | Absendername | optional | `EU-Cowork AI`, Zeile auskommentiert |
+
+<Aside type="note" title="Hinweis zu SMTP2GO">
+Nicht den API-Schlüssel eintragen. Unter **Sending → SMTP Users** einen eigenen SMTP-Benutzer
+mit eigenem Passwort anlegen. Die Absender-Domain muss verifiziert sein, also SPF und DKIM
+gesetzt, sonst lehnt der Server die Mail ab. Der Host `mail-eu.smtp2go.com` ist die EU-Region,
+`mail.smtp2go.com` ist die globale Variante.
+</Aside>
+
+## Suche und Dateisuche
+
+Die Volltextsuche über alte Konversationen läuft immer mit. Die Dateisuche über hochgeladene
+Dokumente braucht zusätzlich das Compose-Profil `filesearch`.
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `SEARCH` | schaltet die Volltextsuche über Konversationen ein | Pflicht | `true` |
+| `MEILI_NO_ANALYTICS` | schaltet die Telemetrie von Meilisearch ab | Pflicht | `true` |
+| `MEILI_HOST` | Adresse von Meilisearch im internen Netz | Pflicht | `http://meilisearch:7700` |
+| `MEILI_MASTER_KEY` | **Geheimnis.** Zugang zu Meilisearch | Pflicht | `GENERATE`, vom Installer erzeugt |
+| `RAG_PORT` | Port des RAG-Dienstes im internen Netz | Pflicht mit Profil `filesearch` | `8000` |
+| `RAG_API_URL` | Adresse des RAG-Dienstes | Pflicht mit Profil `filesearch` | `http://rag_api:8000` |
+| `POSTGRES_PASSWORD` | **Geheimnis.** Zugang zur Vektordatenbank | Pflicht mit Profil `filesearch` | `GENERATE`, vom Installer erzeugt |
+| `EMBEDDINGS_PROVIDER` | Anbieter für die Einbettungen der Dateisuche | optional | leer, Zeile auskommentiert |
+| `RAG_OPENAI_BASEURL` | Endpunkt des Einbettungs-Anbieters | optional | `https://api.eurouter.ai/api/v1`, Zeile auskommentiert |
+| `RAG_OPENAI_API_KEY` | **Geheimnis.** Schlüssel dazu, kann auf `EUROUTER_API_KEY` verweisen | optional | Verweis auf `EUROUTER_API_KEY`, Zeile auskommentiert |
+| `EMBEDDINGS_MODEL` | Einbettungs-Modell | optional | `mistral-embed`, Zeile auskommentiert |
+| `SEARXNG_INSTANCE_URL` | Adresse der eigenen Metasuchmaschine | Pflicht | `http://searxng:8080` |
+| `SEARXNG_SECRET` | **Geheimnis.** Zugang zu SearXNG | Pflicht | `GENERATE`, vom Installer erzeugt |
+| `SEARCH_MAX_LLM_OUTPUT_CHARS` | hartes Zeichenbudget des Web-Such-Kontexts an das Modell | optional | `15000` |
+
+## Modell-Provider
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `EUROUTER_API_KEY` | **Geheimnis.** Schlüssel für EuRouter, den Standard-Inferenzweg mit EU-Verarbeitung | Pflicht | `__SET_YOUR_EUROUTER_KEY__`, selbst eintragen |
+| `OPENROUTER_API_KEY` | **Geheimnis.** Schlüssel für OpenRouter. Ohne gültigen Schlüssel registriert sich der Endpunkt, jeder Aufruf liefert aber HTTP 401 | optional | `__SET_YOUR_OPENROUTER_KEY__` |
+| `OPENROUTER_MANAGEMENT_KEY` | **Geheimnis.** Nur für den Reiter **Aktivität** im Admin-Panel, importiert die Tages-Aktivität pro Modell | optional | leer |
+| `OPENROUTER_ACTIVITY_SINCE` | Untergrenze dieses Imports im Format `YYYY-MM-DD`, nützlich nach einem Schlüsselwechsel | optional | leer |
+
+<Aside type="caution" title="OpenRouter ist nicht EU-resident">
+OpenRouter ist ein US-Gateway und bewusst als Nicht-EU-Option eingebunden. Für rein
+europäische Instanzen den Schlüssel leer lassen und zusätzlich den OpenRouter-Endpunkt samt
+Modellkarten aus der `librechat.yaml` entfernen.
+</Aside>
+
+## Code-Ausführung
+
+Die Code-Ausführung ist kein Dienst der Haupt-Compose, sondern ein eigener Substack am
+geteilten Docker-Netz. Es stehen zwei Backends bereit. Welches aktiv ist, entscheidet
+ausschliesslich die Basis-URL.
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `LIBRECHAT_CODE_BASEURL` | wählt das Code-Backend | Pflicht, sobald die Code-Ausführung genutzt wird | Zeile auskommentiert |
+| `LIBRECHAT_CODE_API_KEY` | Schlüssel gegenüber dem Backend. Im internen Netz unkritisch, muss aber gesetzt sein | Pflicht, sobald die Code-Ausführung genutzt wird | `eucowork-librecode`, Zeile auskommentiert |
+
+Der Unterschied liegt im Pfad. Genau ein Wert darf aktiv sein:
+
+```bash title="distribution/.env"
+LIBRECHAT_CODE_BASEURL=http://code-interpreter:3112/v1   # MIT  /v1
+LIBRECHAT_CODE_BASEURL=http://librecode:8000            # OHNE /v1
+```
+
+Die erste Zeile zeigt auf das gehärtete Backend mit microVM-Isolation, das `/dev/kvm`
+voraussetzt. Die zweite Zeile zeigt auf das leichtere Übergangs-Backend mit vorgebautem Image.
+
+<Aside type="caution" title="Offene Lücke">
+Die Freigabeliste für ausgehende Verbindungen aus der Code-Ausführung fehlt noch. Der eigene
+gehärtete Runner mit Egress-Proxy ist geplant, aber nicht gebaut.
+</Aside>
+
+## Konnektoren
+
+Alle Konnektor-Variablen sind in der Vorlage auskommentiert. Das Kunden-Template liefert
+bewusst keinen vorkonfigurierten Konnektor aus.
+
+### Odoo, Compose-Profil `internal`
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `ODOO_URL` | Basis-URL Ihrer Odoo-Installation | Pflicht mit Profil `internal` | Beispielwert, Zeile auskommentiert |
+| `ODOO_DB` | Name der Odoo-Datenbank, explizit setzen | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
+| `ODOO_MCP_API_KEY_ADMINISTRATOR` | **Geheimnis.** API-Schlüssel für die Instanz `odoo-administrator` | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
+| `ODOO_MCP_API_KEY_ADMIN` | **Geheimnis.** API-Schlüssel für die Instanz `odoo-admin` | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
+| `ODOO_MCP_API_KEY_TECHNIK` | **Geheimnis.** API-Schlüssel für die Instanz `odoo-technik` | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
+
+Drei Brücken-Instanzen bedeuten drei getrennte Odoo-Benutzer mit je eigenem Rechteprofil. Die
+Rechte des jeweiligen Benutzers in Odoo sind die eigentliche Datengrenze, das Admin-Panel
+regelt darüber hinaus, wer welche Instanz überhaupt sieht.
+
+### NinjaOne, Compose-Profil `internal`
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `NINJAONE_INSTANCE` | Region der Instanz: `eu`, `us`, `us2`, `ca`, `oc` oder ein vollständiger Hostname | Pflicht für den Konnektor | `eu`, Zeile auskommentiert |
+| `NINJAONE_CLIENT_ID` | Client-ID der API-App | Pflicht für den Konnektor | leer, Zeile auskommentiert |
+| `NINJAONE_CLIENT_SECRET` | **Geheimnis.** Client-Secret der API-App | Pflicht für den Konnektor | leer, Zeile auskommentiert |
+| `NINJAONE_SCOPE_ENFORCE` | `strict` bricht den Start ab, sobald die App schreibende Rechte hätte | optional | `strict`, Zeile auskommentiert |
+
+Die API-App in NinjaOne bekommt ausschliesslich den Bereich „Monitoring" und den Grant
+„Client Credentials". Gewährt sie zusätzlich Management oder Control, verweigert die Brücke
+absichtlich den Start.
+
+### Microsoft 365 und SharePoint, Compose-Profil `microsoft`
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `MS365_TENANT_ID` | Verzeichnis-ID des Entra-Mandanten, nicht `common` | Pflicht mit Profil `microsoft` | leer, Zeile auskommentiert |
+| `MS365_MCP_CLIENT_ID` | Application-ID der Entra-App | Pflicht mit Profil `microsoft` | leer, Zeile auskommentiert |
+| `MS365_MCP_CLIENT_SECRET` | **Geheimnis.** Client-Secret der Entra-App | Pflicht mit Profil `microsoft` | leer, Zeile auskommentiert |
+
+Hier meldet sich jede Person mit dem eigenen Konto an und sieht nur, was die eigenen
+SharePoint- und OneDrive-Rechte hergeben. Die Brücke arbeitet ausschliesslich lesend.
+
+### Web-Suche mit externen Anbietern
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `SERPER_API_KEY` | **Geheimnis.** Such-API von serper.dev | optional | leer, Zeile auskommentiert |
+| `FIRECRAWL_API_KEY` | **Geheimnis.** Scraper von firecrawl.dev | optional | leer, Zeile auskommentiert |
+
+<Aside type="caution" title="Nicht EU-resident">
+Beide Dienste laufen in einer US-Cloud. Sie sind für die interne Instanz gedacht, nicht für
+das Kunden-Template. Kunden nutzen stattdessen SearXNG im eigenen Stack, für den Scraper ist
+eine selbst gehostete Variante vorgesehen.
+</Aside>
+
+## Admin-Panel und Verbrauchsmessung
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `USD_EUR_RATE` | Umrechnungskurs für das Verbrauchs-Dashboard | Pflicht | `0.92` |
+| `METERING_TOKEN` | **Geheimnis.** Dienst-Token für den monatlichen Abruf der Verbrauchs-Aggregate durch einen Betreiber. Leer bedeutet, der Endpunkt ist abgeschaltet | optional | leer, Zeile auskommentiert |
+| `ADMIN_PANEL_SESSION_SECRET` | **Geheimnis.** Sitzungen des Übergangs-Panels, nur mit Profil `interim` | optional | `GENERATE`, vom Installer erzeugt |
+| `ADMIN_PANEL_SESSION_COOKIE_SECURE` | Cookie-Kennzeichnung des Übergangs-Panels | optional | `false` |
+
+Den Kurs in `USD_EUR_RATE` pro Abrechnungsmonat einfrieren statt live nachzuführen. Sonst
+schwankt die Prozentanzeige, ohne dass jemand mehr verbraucht hätte. Das Panel friert den
+Kurs eines abgeschlossenen Monats ohnehin ein, ein späterer Wechsel ändert alte Monate nicht.
+
+Das Übergangs-Panel ist das offizielle AGPL-Panel von LibreChat. Es startet nur mit dem
+ausdrücklichen Profil `interim` und ist nicht Teil des Produkts. Details dazu stehen unter
+[Lizenzen und Herkunft](/docs/referenz/lizenzen).
+
+## Mehrfach-Instanzen
+
+Diese drei Namen sind Docker-weit eindeutig. Läuft nur eine Instanz auf der Maschine, bleiben
+sie auskommentiert. Sollen mehrere Kunden-Stacks auf derselben Maschine laufen, müssen sie
+sich pro Stack unterscheiden, sonst startet der zweite Stack nicht.
+
+| Variable | Zweck | Pflicht | Standard |
+|---|---|---|---|
+| `STACK_NAME` | Präfix aller Container dieses Stacks | optional | `eucowork`, Zeile auskommentiert |
+| `DOCKER_SUBNET` | eigenes Bridge-Subnetz, kollisionsfrei zu anderen Stacks und zu VPN-Routen | optional | `172.28.0.0/16`, Zeile auskommentiert |
+| `SANDBOX_NETWORK` | eigenes Netz zum Code-Interpreter | optional | `eucowork-sandbox`, Zeile auskommentiert |
+
+Zusätzlich müssen `PORT`, `ADMIN_SIDECAR_PORT` und `OFFICE_ADDIN_PORT` pro Stack
+unterschiedlich sein.
+
+<Aside type="danger" title="Das Sandbox-Netz nie teilen">
+`SANDBOX_NETWORK` ist die einzige Stelle, an der Code von Nutzern auf der Maschine läuft.
+Jeder Kunde bekommt ein eigenes Netz. Ebenfalls nie geteilt werden: Datenbank, Uploads, die
+`.env` und der Inferenz-Schlüssel.
+</Aside>
+
+Mehr dazu unter [Mehrere Instanzen](/docs/betrieb/mehrere-instanzen).
+
+## Variablen, die man nicht ändern sollte
+
+Zwei Werte stehen in der Vorlage bewusst so, wie sie stehen. Beide sehen harmlos aus, und
+beide brechen etwas, wenn man sie umstellt.
+
+### `DISABLE_COMPRESSION=true`
+
+LibreChat schreibt seine Antworten als Server-Sent-Events, ruft dabei aber nie `res.flush()`
+auf. Die Kompression von Express puffert deshalb den gesamten Datenstrom bis zum Ende der
+Antwort. Gemessen wurde ein Antwort-Header nach 26 Sekunden statt nach 0,3 Sekunden.
+
+Für den Browser fällt das kaum auf. Für Clients mit einem Leerlauf-Zeitlimit bricht damit
+jede längere Antwort ab. Das betrifft besonders das Outlook-Add-in, dessen Webview nach rund
+60 Sekunden abbricht, obwohl die Antwort serverseitig fertig läuft. Typisches Fehlerbild: das
+Add-in meldet einen Ladefehler.
+
+Ein Nachteil entsteht nicht, denn Caddy komprimiert für Browser weiterhin und lässt
+`text/event-stream` korrekt in Ruhe.
+
+### `BAN_VIOLATIONS=true`
+
+Ohne dieses Flag prüft LibreChat Sperren überhaupt nicht. Die Funktion **Sperren** im
+Admin-Panel legt zwar einen Eintrag an, aber niemand wird ausgesperrt. Wer die Sperrfunktion
+für glaubwürdig hält und den Wert auf `false` setzt, hat eine Schaltfläche ohne Wirkung.
+
+Verwandt dazu: `NON_BROWSER_VIOLATION_SCORE=0`. Die Anti-Missbrauchs-Heuristik von LibreChat
+bewertet Anfragen ohne browsertypischen User-Agent so hoch, dass sie Benutzer und IP-Adresse
+sofort sperrt. In einem Stack mit Sidecars und API-Zugriffen führt das zu Aussperrungen. Die
+Begrenzung von Anmeldeversuchen bleibt davon unberührt aktiv.
+
+## Verwandte Seiten
+
+- [Dienste und Ports](/docs/referenz/dienste-und-ports) zeigt, welcher Container welche
+  Variable liest.
+- [Konfiguration](/docs/betrieb/konfiguration) beschreibt, was stattdessen in der
+  `librechat.yaml` und was im Admin-Panel gesetzt wird.
+- [Fehlerbehebung](/docs/betrieb/fehlerbehebung) sammelt die Fehlerbilder, die auf eine
+  falsch gesetzte Variable zurückgehen.

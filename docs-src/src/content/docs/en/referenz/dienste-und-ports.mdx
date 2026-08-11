@@ -1,0 +1,137 @@
+---
+title: Services and ports
+description: All containers of the stack with image, purpose, port and profile, plus the Docker networks and which ports belong to the outside.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page lists every container of the Compose stack with image, task, port and profile. It is
+meant for looking things up, for example when you are writing a firewall rule or want to know
+why a service did not start.
+
+All container names carry a prefix from the variable `STACK_NAME`, which defaults to
+`eucowork`. The container of the chat is therefore called `eucowork-api` by default.
+
+## The services
+
+| Service | Image | Purpose | Port | Profile |
+|---|---|---|---|---|
+| `api` | `registry.librechat.ai/danny-avila/librechat-dev`, pinned to a digest | LibreChat, interface and API | host `${API_BIND}:${PORT}`, default `0.0.0.0:3080` | no profile |
+| `admin` | build from `../services/admin` | own admin panel and sidecar | host `127.0.0.1:3010` | no profile |
+| `office-addin` | build from `../services/office-addin` | task pane and manifest for Outlook | host `127.0.0.1:3040`, 8080 inside the container | no profile |
+| `mongodb` | `mongo:8.0.20` | database `LibreChat` | internal only, 27017 | no profile |
+| `meilisearch` | `getmeili/meilisearch:v1.35.1` | full text search across conversations | internal only, 7700 | no profile |
+| `searxng` | `searxng/searxng:latest` | own metasearch engine for web search | internal only, 8080 | no profile |
+| `vectordb` | `pgvector/pgvector:0.8.0-pg15-trixie` | vector database of the file search | internal only | `filesearch` |
+| `rag_api` | `registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest` | processing of uploaded documents | internal only, `${RAG_PORT}`, default 8000 | `filesearch` |
+| `mcp-gateway` | build from `../services/mcp-gateway` | permission check and log in front of all connectors, plus the model router | internal only, 3020 | `internal` |
+| `odoo-mcp-administrator` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo bridge with its own service account | internal only, 8000 | `internal` |
+| `odoo-mcp-admin` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo bridge with its own service account | internal only, 8000 | `internal` |
+| `odoo-mcp-technik` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo bridge with its own service account | internal only, 8000 | `internal` |
+| `ninjaone-mcp` | build from `../services/ninjaone-mcp` | NinjaOne bridge, read only | internal only, 3030 | `internal` |
+| `ms365-mcp` | `node:22-alpine` with `@softeria/ms-365-mcp-server@0.128.2` | SharePoint and OneDrive through Microsoft Graph, read only | internal only, 3000 | `microsoft` |
+| `caddy` | `caddy:2-alpine` | reverse proxy with automatic TLS | host 80 and 443 | `production` |
+| `admin-panel` | AGPL panel of LibreChat | transitional tool, not part of the product | host `${ADMIN_PANEL_PORT}`, default 3000 | `interim` |
+
+The three Odoo bridges are the same image with the same configuration, only with a separate
+Odoo key each. The key belongs to a dedicated Odoo user whose permissions in the ERP form the
+authorization boundary.
+
+<Aside type="caution" title="Three images still run on a floating tag">
+`searxng`, `rag_api` and the interim panel `admin-panel` sit on `:latest`, while the LibreChat
+image is deliberately pinned to a digest. This is an open point, not a justified exception: for
+these three services a `docker compose pull` can therefore fetch a different version than the
+one last verified. Why a fixed digest is the better choice is explained under
+[Updating](/docs/en/betrieb/aktualisieren). Anyone who wants to avoid this already today pins
+the three images to a digest themselves in `distribution/docker-compose.yml`.
+</Aside>
+
+## Which ports belong to the outside
+
+Only three: **22, 80 and 443.** Everything else stays local.
+
+| Port | Service | Reason |
+|---|---|---|
+| 22 | SSH | administration |
+| 80 | Caddy | issuance of the certificates and redirect to HTTPS |
+| 443 | Caddy | chat, admin panel and Outlook add-in |
+
+Caddy is the only service that may listen on all interfaces. The admin panel and the Outlook
+add-in are already bound to `127.0.0.1` out of the box. The database, the search index, the
+gateway and all connector bridges are not published on the host at all, they are reachable
+exclusively on the internal Docker network.
+
+Two points you have to take care of yourself:
+
+- **The chat port is bound to `0.0.0.0` by default.** In production `API_BIND=127.0.0.1`
+  belongs in the `.env`, otherwise LibreChat is reachable unencrypted at `<server-ip>:3080`,
+  bypassing Caddy and TLS.
+- **The transitional panel of the `interim` profile binds to all interfaces.** It is a test
+  tool and does not belong on a reachable server.
+
+<Aside type="danger" title="The firewall does not take effect on Docker ports">
+Ports published by Docker through `ports:` bypass `ufw`, because Docker writes its own iptables
+rules into the `DOCKER-USER` chain. A container bound to `0.0.0.0` is reachable from the
+outside despite an active firewall. The protection lies in binding to `127.0.0.1`, not in the
+firewall rule.
+
+Where a rule really is needed, for example for the debug ports of the code interpreter
+substacks, it has to go into the same chain:
+
+```bash
+sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
+```
+</Aside>
+
+## The Docker networks
+
+The stack uses two networks.
+
+| Network | Type | Who is in it |
+|---|---|---|
+| `default` | bridge with a fixed subnet from `DOCKER_SUBNET`, default `172.28.0.0/16` | all services of the stack |
+| `sandbox` | external network from `SANDBOX_NETWORK`, default `eucowork-sandbox` | only `api`, plus the separate code interpreter stack |
+
+The sandbox network is deliberately created outside the stack, so that both Compose projects
+can start and stop independently of each other. `install.sh` creates it. If it is missing,
+Compose reports on startup that the network declared as external cannot be found. The command
+for it:
+
+```bash
+docker network create eucowork-sandbox
+```
+
+The fixed subnet is intentional. If it collides with a route that a VPN pushes onto the
+machine, the outbound connections of the containers break. In that case enter a free range in
+`DOCKER_SUBNET` in the `.env`.
+
+<Aside type="caution" title="Several instances on one machine">
+`STACK_NAME`, `DOCKER_SUBNET` and `SANDBOX_NETWORK` apply across all of Docker and therefore
+have to be unique per instance. The same applies to the host ports `PORT`,
+`ADMIN_SIDECAR_PORT` and `OFFICE_ADDIN_PORT`. In the worst case, two instances on the same
+sandbox network would end up in the code interpreter of the other customer.
+</Aside>
+
+## Health checks
+
+Only the connector bridges have health checks, meaning the three Odoo instances and
+`ninjaone-mcp`. They query their own health endpoint every 30 seconds, with a five second
+timeout and three attempts. The start period is 20 seconds for the Odoo bridges and 15 seconds
+for the NinjaOne bridge.
+
+All other services have no health check. In `docker compose ps` they therefore appear as `Up`
+without a health status, which is not an error. Whether the application really started cleanly
+is visible in the log:
+
+```bash
+docker compose logs -f api
+```
+
+The NinjaOne bridge additionally ships a self test of its own. It checks the credentials, the
+permissions actually granted, read access and that writing paths are blocked:
+
+```bash
+docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+```

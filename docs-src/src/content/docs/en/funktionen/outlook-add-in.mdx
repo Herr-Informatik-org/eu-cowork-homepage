@@ -1,0 +1,240 @@
+---
+title: Outlook add-in
+description: 'The AI colleague in your inbox: summarize mail, draft replies, pull out tasks. Including attachment limits, sign-in and distribution.'
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+The Outlook add-in brings the AI colleague into the inbox as a side pane. The open message
+serves as the context. This page describes the feature set, the actual limits on attachments,
+the sign-in and the route for distribution inside the company.
+
+The add-in is our own development and lives in `services/office-addin`.
+
+## What it can do
+
+- Summarize the open mail, including long threads.
+- Write a draft reply that lands in the normal Outlook reply window.
+- Pull tasks and deadlines out of a message.
+- Read files and attachments along the way, see below.
+- Adopt your writing style on request, if the admin has set that up.
+
+It runs in Outlook for Windows, for Mac, on the web and in the new Outlook.
+
+<Aside type="caution" title="It never sends automatically">
+The add-in delivers text. The draft lands in the native reply window, and you are the one who
+sends it. There is no automatic sending, and the corresponding Microsoft permission to send is
+deliberately not requested.
+</Aside>
+
+## It is not a side route around the platform
+
+Behind the pane, a real agent runs on your server, in the same instance as the web chat. That
+has three consequences for administrators:
+
+| | |
+|---|---|
+| Permissions | The same roles and the same gateway rule for connectors apply as in the web chat |
+| Usage | Every turn is metered and appears in usage and billing |
+| Log | Connector calls appear in the audit log, as everywhere else |
+
+No model traffic runs past the platform.
+
+## Files and attachments
+
+The pane reads files **itself** and only sends on the text. The file does not leave your
+machine.
+
+| Format | What is read | Limit |
+|---|---|---|
+| PDF | Text per page, **no OCR** | 40 pages |
+| Word `.docx` | Paragraphs including table cells and line breaks | none of its own |
+| Excel `.xlsx` | Sheet name and rows, gaps between columns are preserved | 8 sheets, 300 rows per sheet |
+| Text `.txt .md .csv .tsv .json .log .yml .xml` | raw text | none of its own |
+| Images JPEG and PNG | as an image attachment, scaled down before sending | 4 images |
+
+Documents and images are counted separately, each with its own limits per message:
+
+| | Documents | Images |
+|---|---|---|
+| Number per message | at most 5 | at most 4 |
+| Size per file | 10 MB | 4 MB |
+| Characters per file | 20,000 | not applicable |
+| Characters in total | 40,000 | not applicable |
+
+The two counters run independently of each other. Four images therefore use up none of the five
+document slots.
+
+**Not read** are the old binary formats `.doc`, `.xls` and `.ppt`, PowerPoint, archives, cloud
+attachments (only a link arrives there) and attached emails. In each of these cases the pane
+tells you the reason instead of silently leaving something out.
+
+Files reach the conversation in three ways: through the menu in the input field, by dragging
+onto the chat area and, for images, through the clipboard.
+
+<Aside type="caution" title="No OCR here either">
+A scanned PDF without a text layer delivers no text. The pane reports that explicitly instead of
+producing an empty summary.
+</Aside>
+
+### Attachments of the open mail
+
+The attachments of the open message are **never read unasked**. If the mail has attachments, a
+card halts the process after sending and lets you choose individually what may be read. On
+request the pane remembers the choice for this one email.
+
+For that the Outlook client needs a sufficiently recent version of the mailbox interface. If it
+is too old, the card says so and the process continues without attachments.
+
+## Personal instructions
+
+The settings of the pane contain a field for personal specifications, for example "immer Sie,
+nie Gedankenstriche, Grussformel Freundliche Grüsse" (always the formal address, never dashes,
+closing Freundliche Grüsse). These specifications sit **at the very top** of the hierarchy: they
+beat skills, the writing style profile and the instructions of the agent.
+
+They are formed fresh from the settings on every send and are not stored in the history. If you
+change them in the middle of a conversation, the new version applies immediately.
+
+## Sign-in without a password
+
+The pane does not ask for a password. Instead, sign-in runs through a device code:
+
+<Steps>
+
+1. In the pane press **"Anmelden"** (sign in). An eight character code in the form `XXXX-XXXX`
+   appears.
+
+2. **"Im Browser fortfahren"** (continue in the browser). A confirmation page opens there on your
+   own chat domain, showing the same code.
+
+3. Click **"Verbinden"** (connect). The page uses your existing browser sign-in. If you are not
+   signed in in the browser, the page offers the login and the code stays valid.
+
+4. The pane completes the connection itself.
+
+</Steps>
+
+The process expires after 10 minutes. At the end the pane receives exactly one value: your
+personal key named **"Outlook-Add-in"**. It is valid for **90 days** and can be revoked at any
+time, in the settings of the web chat under **"API-Schlüssel für Agenten"** (API keys for
+agents).
+
+The advantage of this route: two factor sign-in and, later, Entra sign-in work without extra
+effort, because the browser login already covers it.
+
+## One limit you should know about
+
+<Aside type="caution" title="Answers from the pane do not appear in the web chat">
+What you discuss in the Outlook pane does **not** show up in the history of the web chat. The
+history lives in the pane. That is a known limitation of the interface through which external
+clients are connected.
+
+Usage metering and logging still apply in full. So there is no gap in cost and traceability,
+there is simply no second conversation history.
+</Aside>
+
+## For admins: prerequisites
+
+| Prerequisite | Detail |
+|---|---|
+| Publicly valid TLS | Office loads publicly trusted HTTPS only. An **internal certificate authority is not enough**, the pane would stay empty. The stack has to run with the `production` profile |
+| Mailboxes on Exchange Online | POP3, IMAP and on premises Exchange are not supported by the add-in platform. There is no way around this |
+| Admin rights in Microsoft 365 | Role "Global Administrator" or "Exchange Administrator" |
+| Domain set in the `.env` | `EUCOWORK_DOMAIN`, `DOMAIN_CLIENT` and `DOMAIN_SERVER` |
+
+<Aside type="danger" title="DISABLE_COMPRESSION=true is mandatory">
+If the value is `false`, LibreChat holds the response stream back until the end instead of
+sending it continuously. The Outlook display window then aborts after around 60 seconds with "no
+connection", even though everything on the server side is running correctly. What is affected is
+exactly the long, tool heavy answers you want the add-in for in the first place.
+
+The value is set to `true` by default in the compose package. Leave it there.
+</Aside>
+
+## For admins: setup
+
+<Steps>
+
+1. **Build and start the add-in service**, then have the reverse proxy learn the new routes.
+
+   ```bash title="On the server"
+   cd ~/eu-cowork/distribution
+   docker compose build office-addin
+   docker compose up -d office-addin
+   docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile
+   ```
+
+2. **Create the agent.** Create an agent in the chat, for example with the name
+   `Outlook-Assistent`, with the customer's default model and initially without connectors. A
+   ready made instruction template is in `services/office-addin/README.md`.
+
+3. **Grant the agent remote access.** Without that grant the interface answers with
+   `403 No remote access to agent`. In addition the role permission **"Remote-Agenten"** (remote
+   agents) has to be set. In the customer template it is set globally, because the add-in is
+   distributed to everyone.
+
+4. **Store the identifier of the agent** so that nobody has to select it in the pane.
+
+   ```bash title="distribution/.env"
+   OFFICE_DEFAULT_AGENT_ID=agent_xxxxxxxxxxxxxxxxxxxxx
+   ```
+
+   ```bash title="On the server"
+   docker compose up -d admin
+   ```
+
+5. **Check the manifest.** It sits at `https://<ihre-domain.ch>/office/manifest.xml` and must no
+   longer contain a placeholder.
+
+</Steps>
+
+### Distribution in the Microsoft 365 admin center
+
+<Steps>
+
+1. Open [admin.microsoft.com](https://admin.microsoft.com), then **Settings → Integrated apps**.
+
+2. **Upload custom apps**, then *Office Add-In* and *Upload manifest file*.
+
+3. Assign to **Just me** for testing, to individual **Users/groups** for a pilot or to the
+   **Entire organization** for the rollout. Confirm permissions and deploy.
+
+</Steps>
+
+<Aside type="note" title="Count on 24 hours">
+According to Microsoft it takes **up to 24 hours** until the add-in appears in the ribbon for all
+users. Classic Outlook has a local cache on top of that.
+
+For a pilot, the route through [aka.ms/olksideload](https://aka.ms/olksideload) is considerably
+faster. It works per mailbox and takes effect immediately on all clients of that mailbox.
+</Aside>
+
+**For updates**, increase the version number in the manifest and update it under Integrated
+apps. The **GUID always stays the same**. A new GUID counts as a different add-in and would
+appear a second time in the ribbon.
+
+### Optional: adopting the writing style
+
+If the pane should learn your personal writing style from sent mail, it needs its own app
+registration in Entra with the delegated permission `Mail.Read`. Without this step the add-in
+works completely, only the style adoption is missing. The access token stays in the client and
+does not go to your server. `Mail.Send` is deliberately not requested.
+
+### Troubleshooting
+
+| Symptom | Cause and solution |
+|---|---|
+| Add-in does not appear in the ribbon | Distribution takes up to 24 hours. Test immediately through sideload. Restart classic Outlook |
+| Pane stays white | Check the certificate. It needs a publicly valid one, not an internal certificate authority |
+| Pane empty only in Outlook on the web | The reverse proxy sets framing headers. Neither container nor proxy may send `X-Frame-Options` or `frame-ancestors` |
+| `403 No remote access to agent` | The remote access grant for the agent is missing, or the role permission is off |
+| `401` while chatting | The personal key has expired. Sign out in the pane and sign in again |
+| Abort after around 60 seconds | `DISABLE_COMPRESSION` is set to `false` |
+| Add-in missing for individual people | Their mailbox is not on Exchange Online |
+
+Errors from the pane additionally land in the admin panel under **"Logs"**, tab
+**"Client-Fehler"** (client errors). The technical cause is listed there with person, platform
+and file name, never a file content. The entries are removed automatically after 30 days.

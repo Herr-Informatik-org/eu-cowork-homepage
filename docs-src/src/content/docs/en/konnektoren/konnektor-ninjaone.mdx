@@ -1,0 +1,130 @@
+---
+title: NinjaOne (RMM)
+description: Device and organization data from the RMM in the chat, read only, secured in four independent layers.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+This connection makes the device and organization data from your RMM queryable in the chat. It is our showcase for a cleanly built service account connector: seven tools, read only, and secured in four places that are independent of each other.
+
+<Aside type="caution" title="Not EU resident, therefore not in the customer template">
+NinjaOne is a vendor from the USA. Even the European instance remains processing outside your own stack. For internal use at Herr Informatik this is a deliberate trade-off. In the shipped customer template the connection is therefore **not** included.
+
+If you switch it on, flag that to your users and in your data protection documentation. The statement "everything stays in Europe" does not hold for this connector.
+</Aside>
+
+## What it can do
+
+| Tool | Purpose | Example question |
+|---|---|---|
+| `ninja_organizations` | customers and tenants including locations, optionally with device counts | "Which customers do we have in NinjaOne?" |
+| `ninja_devices` | search devices, by organization, name, class, or online status | "Show me the servers of Muster AG" |
+| `ninja_device` | a single device in detail | "What is running on SRV-DC01?" |
+| `ninja_device_software` | software inventory of a device, filterable | "Is Office installed on that device, and in which version?" |
+| `ninja_device_patches` | open and failed patches for the operating system and software | "Which patches are missing on that machine?" |
+| `ninja_alerts` | open alerts, instance wide, per customer, or per device | "What is currently open at customer X?" |
+| `ninja_report` | fleet evaluations across many devices at once | "Where is Windows 10 still running?" |
+
+Seven tools are deliberately few. The catalog therefore costs roughly 2,000 tokens per conversation, and the model has no selection it could get wrong.
+
+One detail that saves context in everyday use: `ninja_device` loads only master data, operating system, hardware, storage, network, last user, and open alerts by default. The expensive sections for software, services, patches, custom fields, and history only come on explicit request. If a question concerns many devices, `ninja_report` is the right answer, not a series of individual queries.
+
+## Read only, in four layers
+
+Each of these layers would be enough on its own. That is exactly the point: if one fails, the others carry.
+
+| # | Layer | Effect |
+|---|---|---|
+| 1 | The OAuth app in NinjaOne carries only the scope `monitoring` | NinjaOne rejects every write call itself |
+| 2 | The bridge only knows read calls and a path allowlist | There is no line of code that could issue a write call |
+| 3 | At startup the bridge checks which scopes NinjaOne actually granted | If a write scope is among them, the service does not come up |
+| 4 | The rules in the permission gateway | Who sees the tools at all is decided by the admin in the panel |
+
+There is deliberately **no** tool for reboot, script execution, patch deployment, maintenance windows, alert acknowledgement, or ticket changes. A tool that does not exist cannot be called by a model by accident either. If someone asks for a reboot in the chat, the assistant says that this has to be done directly in NinjaOne.
+
+## Setup
+
+<Steps>
+1. **Create an API app in NinjaOne.** You need administration rights in NinjaOne for this, and the path leads through **Administration → Apps → API**.
+
+   - **Application Platform**: API Services, meaning the machine to machine variant
+   - **Allowed Grant Types**: **only** Client Credentials. No Authorization Code, no Refresh Token. A redirect URI is then not required
+   - **Scopes**: **only** Monitoring. According to the NinjaOne documentation that is the read only access to monitoring data and organizational structure. **Management** and **Control** must not be ticked, they allow scripts, device changes, and remote access
+   - Save and note the **client ID and secret**, the secret is only visible once
+
+2. **Enter the values in `distribution/.env`.** Only the names:
+
+   | Variable | Meaning |
+   |---|---|
+   | `NINJAONE_INSTANCE` | your region, `eu`, `us`, `us2`, `ca`, or `oc`, alternatively the full host name. It is the same region you sign in under |
+   | `NINJAONE_CLIENT_ID` | client ID from step 1 |
+   | `NINJAONE_CLIENT_SECRET` | secret from step 1 |
+   | `NINJAONE_SCOPE_ENFORCE` | `strict` aborts the start if NinjaOne grants a write scope. `warn` only writes a message to the log. The default is `strict`, and it should stay that way |
+
+   The scope itself is fixed at `monitoring` and is not extended.
+
+3. **Build, start, and self test:**
+
+   ```bash title="On the server"
+   cd ~/eu-cowork/distribution
+   docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway
+   docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+   docker compose --profile internal restart api
+   ```
+
+4. **Set the permissions, immediately.** Admin panel → **"MCP-Zugriff"** (MCP access) → card `ninjaone` → **"Server-Standard"** (server default) to denied, save, then grant access deliberately, for example to a group for the technical staff.
+
+   Without a rule the gateway lets everyone through. As long as the default is not set to denied, every person who may use MCP sees **all customer devices**.
+</Steps>
+
+## The self test
+
+The self test from step 3 checks the credentials, the scopes that were actually granted, read access, and that the allowlist blocks write paths. The expected output looks like this:
+
+```text
+[OK  ] Anmeldung (client_credentials)
+[OK  ] Gewaehrte Scopes sind nur lesend — monitoring
+[OK  ] Organisationen lesbar — 5 in der ersten Seite
+        Beispiel: Muster AG (id 1) · Beispiel Bau (id 3)
+[OK  ] Geraete lesbar — 3 abgerufen
+[OK  ] Allowlist blockt /v2/device/1/reboot/NORMAL
+[OK  ] Allowlist blockt /v2/device/1/script/run
+[OK  ] Allowlist blockt /v2/organization/1/documents
+
+Alle Pruefungen bestanden — die Bruecke ist einsatzbereit.
+```
+
+If the line about the granted scopes fails, the API app in NinjaOne has more than monitoring. Creating the app again is usually faster than reconfiguring it.
+
+In ongoing operation the bridge reports the instance, the granted scopes, and the confirmation that it works read only under `/healthz`. It has a built in health check, so `docker compose ps` shows the state as well.
+
+## The recommended fifth boundary
+
+The four layers above prevent writing. They say nothing about **how much** may be read. By default the app sees the entire instance, meaning all of your customers.
+
+**Give the app in NinjaOne a role with restricted organization access.** What the app does not see simply does not exist for the chat. That is the hardest boundary available, it lies entirely with you in the RMM, and it cannot be bypassed by a prompt or by a bug in our software.
+
+If you need several views, the way is the same as with Odoo: a second API app with narrower organization access, a second instance of the bridge, and in the panel every person gets exactly one of them.
+
+## Behavior in everyday use
+
+**Ambiguous customer names.** If a search term matches several organizations, for example "Muster" matching *Muster AG* and *Muster GmbH*, a list comes back and the assistant asks instead of guessing. That is intended. An answer about the wrong customer would be worse than a follow-up question.
+
+**Responses that are too large.** A tool response is capped in length. If a response looks truncated, that is not an error, it is the protection against a response that fills up half the context. Ask more narrowly: for one organization, with a filter, or with a limit on the number of hits. For questions about many devices `ninja_report` is the right way anyway.
+
+**A snapshot, not live access.** The values are as current as the last contact of the NinjaOne agent with the device. The timestamp is included in every device response. All times are in UTC.
+
+**Everyone sees the same thing.** NinjaOne does not know the individual chat user, it only sees the service account. The separation between your staff is done solely by the rule in the panel.
+
+## Failure modes
+
+| Symptom | Cause and solution |
+|---|---|
+| The container does not start, the log names granted write scopes | The API app has Management or Control. Correct the app. As a stopgap `NINJAONE_SCOPE_ENFORCE` can be set to `warn` |
+| Sign-in fails with a hint about an unknown app | Wrong region in `NINJAONE_INSTANCE` or wrong client ID |
+| A tool answers "access denied" | That is the gateway rule, the person is not granted access to `ninjaone` |
+| Error 403 for individual organizations | The API app has no access to that organization, that is the NinjaOne role |
+| The tool is missing from the chat | Does `LIBRECHAT_CONFIG_FILE` point at the configuration with the connectors? Does the gateway know the name? Was the chat layer restarted? |
+| Responses look truncated | Intended for very large results, ask more narrowly |

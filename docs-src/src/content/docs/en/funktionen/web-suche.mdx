@@ -1,0 +1,144 @@
+---
+title: Web search
+description: How web search works in the chat, why it does not trigger yet in the shipped state and how to configure a scraper.
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Web search brings current information from the internet into the chat: prices, news, the state
+of the law, details about other companies. This page explains how it is used, which building
+blocks it consists of and what is still missing in the shipped state.
+
+The search framework comes from [LibreChat](https://www.librechat.ai/docs). What we add is the
+search engine inside the stack and the preconfiguration.
+
+## How it is used in the chat
+
+There is a switch for web search in the input field. If it is on and the search is fully set
+up, the colleague decides for itself when to search. You do not have to write "search the
+internet", a question about the current state of something is enough.
+
+The answer is then built on the pages found, with source references. The stored system prompt
+demands that explicitly.
+
+## The three building blocks
+
+A working web search consists of more than a search engine.
+
+| Building block | Task | Required |
+|---|---|---|
+| Search engine | Delivers hits, meaning links and short text excerpts | yes |
+| Scraper | Fetches the full text of the pages found | yes |
+| Reranker | Sorts the findings by how well they fit | no |
+
+Without a scraper the colleague would only have headlines and two liners, and no reliable
+answer can be built from those.
+
+<Aside type="caution" title="In the shipped state the search does not trigger">
+The customer template brings the search engine along: **SearXNG** runs as its own service in the
+stack, `webSearch.searchProvider` is set to `searxng`. But **no scraper is configured**, and a
+reranker is deliberately set to `none`.
+
+The consequence is concrete: without an authenticated scraper, LibreChat does not attach the
+search tool to the model in the first place. The switch in the chat is visible, but the search
+never fires. No error, no message, simply nothing happens.
+
+Only with a configured scraper does the switch become a working search. This is the one spot
+where a freshly installed stack still needs manual work.
+</Aside>
+
+## For admins: configuring scraper and reranker
+
+Both are maintained in the admin panel under **"Konfiguration → Funktionen"** (configuration,
+features tab), in two cards.
+
+**Card "Web-Suche"** (web search)
+
+| Field | Meaning |
+|---|---|
+| Such-Provider (search provider) | `searxng`, `serper` or `tavily`. Shipped is `searxng` |
+| SearXNG-URL (SearXNG URL) | Points at the internal service, keep it as the reference `${SEARXNG_INSTANCE_URL}` |
+| SearXNG-Schlüssel (SearXNG key) | optional |
+| SafeSearch | 0 off, 1 moderate, 2 strict |
+| Scraper-Timeout (ms) (scraper timeout) | Patience when fetching a page |
+
+**Card "Web-Suche: Scraper & Reranker"** (web search: scraper and reranker)
+
+| Field | Meaning |
+|---|---|
+| Scraper | `firecrawl`, `serper` or `tavily`. Note in the panel: "Holt die Seiteninhalte zu den Treffern" (fetches the page contents for the hits) |
+| Firecrawl-Schlüssel, Serper-Schlüssel, Tavily-Schlüssel | Key for the chosen scraper |
+| Reranker | `jina`, `cohere` or `none`. The first two strictly require the matching key |
+| Jina-Schlüssel, Cohere-Schlüssel | Key for the chosen reranker |
+
+Keys **never** belong in the configuration in plain text. Enter them as `${VARIABLE}` and store
+the value in the panel under **"Einstellungen → API-Schlüssel"** (settings, API keys) or in the
+`.env` on the server.
+
+<Aside type="note" title="Which scraper fits the EU positioning">
+The intended European route is a **self hosted Firecrawl** next to the stack. Then fetching full
+text never leaves your infrastructure. The container is not yet part of the compose package, you
+provide it yourself. The lines for it are in the customer template, commented out.
+
+The hosted variants of the scraper providers are set up quickly but do not process EU resident.
+Anyone using them should name that just as clearly as the non EU model cards.
+</Aside>
+
+### So that the colleague searches by itself
+
+Two more adjustment points and a restart decide whether a search happens:
+
+<Steps>
+
+1. **Role permission.** In the role editor under **"Werkzeuge"** (tools), the permission
+   **"Web-Suche"** (web search) for the roles concerned. In the shipped state
+   `interface.webSearch: true` is in the configuration file, so the permission is set.
+
+2. **Card flag.** On the model cards, `webSearch: true` is commented out. Only once you set it
+   is the tool attached to the card and the model decides for itself when to use it. This
+   belongs on **all** cards you offer.
+
+3. **Restart**, then check in a fresh chat.
+
+   ```bash title="On the server"
+   docker compose up -d --force-recreate api
+   ```
+
+</Steps>
+
+### How much text reaches the model
+
+The character budget of the search results is controlled by `SEARCH_MAX_LLM_OUTPUT_CHARS` in the
+`.env`, default `15000`. Higher means more context for the answer and more tokens per request,
+so higher cost. Lower means a thinner basis.
+
+### SearXNG in the stack
+
+SearXNG is a meta search engine that has no results of its own but queries several search
+engines and merges the hits. The service runs internally only, without a host port, and uses
+around 65 MB when idle.
+
+Three things matter in `distribution/searxng/settings.yml`:
+
+- `formats` contains `json`. Without the JSON format LibreChat cannot read the results.
+- `safe_search: 1`, so moderate.
+- `secret_key` is replaced during installation by a generated secret.
+
+## Data protection, described honestly
+
+SearXNG runs on your side, but the search query still goes out. The meta search engine queries
+external search engines and returns their hits. What happens in the process and what does not:
+
+| | |
+|---|---|
+| Goes outside | the search term, plus the pages fetched by the scraper |
+| Does **not** go outside | who searched. The identity of the person stays with you |
+| Stays with you | the conversation, the documents, the answer |
+
+<Aside type="caution" title="What you should not claim">
+The sentence "with web search everything stays in the EU" is wrong and should appear neither on
+a slide nor in a training session. What is correct: storage and inference run where you operate
+the stack, the search query itself goes to external search engines, but without user identity.
+</Aside>

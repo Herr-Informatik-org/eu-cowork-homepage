@@ -1,0 +1,228 @@
+---
+title: Chat and models
+description: How the chat works, which model cards are shipped, and how memories and the automatic compaction of long conversations behave.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+This page describes what your team finds in the chat: history, search, model cards,
+memories and the behavior of very long conversations. At the end there is a section for
+administrators with the switches behind all of it.
+
+The chat interface comes from [LibreChat](https://www.librechat.ai/docs). What we add is the
+curation of the model cards, the stored system prompt and the permission handling on top.
+
+<Aside type="tip" title="Four terms up front">
+
+| Term | In one sentence |
+|---|---|
+| **Token** | The unit language models compute in: a piece of text of roughly four characters, so about half a word to a whole word. Everything you write and everything the colleague answers is counted in tokens, and usage, budgets and context limits all hang on that. |
+| **Model card** | A ready made package of provider, model and presets that you pick under a comprehensible name instead of naming a raw model. |
+| **System prompt** | The working instruction handed to the model ahead of your question, which sets language, tone and behavior. It belongs to the card and is not visible in the chat. |
+| **Context** | Everything the model can read at once for one request: your question, the history so far, attached files and tool results. The room for it is limited and is measured in tokens. |
+
+</Aside>
+
+## Everyday use
+
+You type a question and the answer appears progressively, word by word. Every conversation
+lands in the history in the left column and is given a title automatically, derived by a model
+from the first messages. You can overwrite that title at any time.
+
+| Feature | What it does |
+|---|---|
+| History | All conversations stay stored until you delete them or the retention period takes effect |
+| Automatic titles | The title is created on the first exchange, without you doing anything |
+| Bookmarks | Mark important conversations and find them again faster |
+| Parallel answers | Run several chats side by side and compare the answers |
+| Private chat | A conversation that is not stored |
+| Fork | Open a new branch from any message without changing the original |
+| Share | Publish a conversation as a link |
+
+**"Privater Chat"** (private chat) is called **"Temporäre Chats"** (temporary chats) in the role
+editor of the admin panel, where it carries the note "Unterhaltungen ohne Speicherung"
+(conversations without storage). How long such a conversation is kept at all is set by the admin in the
+panel, under **"Konfiguration → Funktionen"** (configuration, features tab) in the field
+**"Temporäre Chats: Aufbewahrung (Stunden)"** (temporary chats: retention in hours).
+
+**Forking** is the right move when a conversation should continue in two directions. You keep
+the history so far and try a different variant in the branch, without losing the original
+conversation.
+
+**Sharing** creates a link to a snapshot of the conversation. Whoever has the link can read
+along. The permission for this is a separate role permission and can be withdrawn.
+
+## Searching old chats
+
+The sidebar offers a search across the full text of all your own conversations. Meilisearch
+runs behind it as a separate service in the stack. So the search also finds a phrase in the
+middle of an answer from three weeks ago.
+
+<Aside type="note" title="Three searches that are not the same thing">
+The full text search across your chats is something different from **file search** across a
+document collection, and different again from **web search**. Which one is responsible for
+what is covered in
+[Files and knowledge](/docs/en/funktionen/dateien-und-wissen) and in
+[Web search](/docs/en/funktionen/web-suche).
+</Aside>
+
+## What a model card is
+
+A model card is a ready made preset. It bundles three things:
+
+1. a specific model at a specific provider,
+2. the stored system prompt, meaning the working instruction given to the model,
+3. the preselection of tools that are armed on this card.
+
+The system prompt is inserted server side and never reaches the browser. All shipped cards
+carry the same German prompt: answer in German, factual tone, no invented facts, ask back when
+a request is unclear.
+
+New chats start on the default card. You are allowed to switch cards, the switch is not
+locked.
+
+## The cards as shipped
+
+The customer template `distribution/librechat.yaml` ships exactly four cards:
+
+| Card in the picker | Provider and model | Processing |
+|---|---|---|
+| EU-Cowork Kollege (EU · Text) | EuRouter, `glm-5.2`. Default card | EU |
+| EU-Cowork Kollege (EU · Text + Bilder) | EuRouter, `kimi-k2.6` | EU |
+| EU-Cowork Kollege (Sonnet 5 · ⚠ Nicht-EU) | OpenRouter, `anthropic/claude-sonnet-5` | not EU resident |
+| EU-Cowork Kollege (Opus 4.8 · ⚠ Nicht-EU) | OpenRouter, `anthropic/claude-opus-4.8` | not EU resident |
+
+The default card understands text only. Images and screenshots belong on the
+"Text + Bilder" (text and images) card or on one of the two non EU cards, which can also read
+images.
+
+In addition, the picker shows a submenu with further OpenRouter models. Those models run
+**without** the EU Cowork system prompt, they are raw. Anyone who wants a purely European
+instance removes the OpenRouter endpoint and the two non EU cards from the configuration.
+
+<Aside type="caution" title="The marking is deliberate">
+The sign ⚠ and the addition "Nicht-EU" (non EU) are part of the card name so that it is visible
+at the moment of choosing that this request leaves the EU. The marking must not be removed as
+long as the card points at OpenRouter. OpenRouter is a US gateway and does not process
+requests EU resident.
+</Aside>
+
+## The model router as an option
+
+There is also a model router of our own. It takes a single card for everything and decides per
+request which model gets the task: a cheap route for simple questions, a strong route for
+complex tasks, an image route as soon as an image is part of the message.
+
+<Aside type="caution" title="Not yet rolled out in the customer template">
+The router runs internally as a pilot and is **not** active as shipped. After installation your
+team sees the four cards above, no router card. The routes themselves can already be configured
+in the admin panel under **"Einstellungen → Router"** (settings, router)
+("Komplexe Aufgaben (Standard-Route)" for complex tasks on the default route, "Einfache
+Aufgaben (günstige Route)" for simple tasks on the cheap route, "Bilder (Vision-Route)" for
+images on the vision route), but the rollout into the customer template is still pending.
+</Aside>
+
+## Memories: the long term memory
+
+The AI colleague remembers a few things about you across conversations and pulls them into
+every new answer. This happens by itself, you do not have to say "remember this".
+
+Deliberately little is stored, and only in four categories:
+
+| Category | Content |
+|---|---|
+| `praeferenzen` | How you want answers: language, format, level of detail, tone, recurring corrections |
+| `arbeitskontext` | Role, team, responsibilities, systems in use |
+| `projekte` | Ongoing projects, customers and topics with a short status |
+| `notizen` | Other stable facts that make future answers better |
+
+Explicitly **not** stored are passwords and keys, health, religious and political information,
+salary data, sensitive facts about third parties and one off details with no reuse value.
+
+The store is deliberately kept small. When it fills up, the colleague merges related entries
+instead of appending indefinitely.
+
+**How to turn it off.** In the settings under **"Datenschutz & Sicherheit"** (privacy and
+security), section **"Erinnerungen"** (memories), you find the switch **"Gespeicherte
+Erinnerungen verwenden"** (use stored memories). Off means your memories no longer flow into
+the answers. In the same area you can view your entries, edit them individually and delete
+them.
+
+## Very long conversations
+
+A model can only read a limited amount of text per request. When a conversation gets very
+long, a separate run summarizes the older messages automatically and from then on sends that
+summary to the model instead of the full history.
+
+- On the large cards this kicks in at around **250,000 tokens**, so after very long work on one
+  topic.
+- On the image card it kicks in earlier, because its window is smaller, at around 205,000
+  tokens.
+- Old tool results are cleared out first, for example long hit lists from a business system.
+  Only after that do actual messages get their turn.
+
+Your visible history stays complete throughout. Only what goes to the model is summarized.
+
+<Aside type="note" title="There is no manual command for this">
+A command such as `/compact` with which you trigger compaction yourself does not exist. The
+process runs automatically and only automatically. If you want a deliberate fresh start, open a
+new chat or fork at the appropriate point.
+</Aside>
+
+## For admins
+
+### Model cards per role and group
+
+Which cards a person sees is not decided by the configuration file alone, but by the admin
+panel. The cascade is **group before role before base**.
+
+- **"Verwaltung → Rollen"** (administration, roles): one switch per card, per role. Plus the
+  switch **"Weitere Modelle (Roh-Untermenü)"** (further models, raw submenu) with the note "Aus
+  = diese Rolle sieht NUR die oben aktivierten Karten" (off means this role sees ONLY the cards
+  enabled above). The button **"Auf YAML-Stand zurücksetzen"** (reset to the YAML state)
+  restores the selection of the base configuration.
+- **"Verwaltung → Gruppen"** (administration, groups): per group either **"Erben"** (inherit) or
+  **"Eigene Auswahl (übersteuert die Rollen-Regel)"** (own selection, overrides the role rule).
+
+This is the clean way to give management the non EU cards, for example, and show everyone else
+only the two EU cards.
+
+### Hiding the model picker entirely
+
+The template sets `interface.modelSelect: true`, so the picker is visible. For a deliberately
+simple setup, set it in the panel under **"Konfiguration → Funktionen"** (configuration,
+features tab) to **"Modell-Auswahl anzeigen: aus"** (show model selection: off). Then everyone
+works on the default card and no longer sees any model selection.
+
+### Parameter panel
+
+The panel for temperature and similar fine settings is **off** as shipped
+(`interface.parameters: false`). That is deliberate: team members without an AI background
+would otherwise change values whose effect they cannot judge.
+
+Turning it back on is done per role through the configuration cascade in the panel, not through
+the role editor. `parameters` is not a permission field, it is a configuration option. In
+practice the role ADMIN gets the override `interface.parameters: true` and all other roles
+inherit the disabled behavior.
+
+### OpenRouter key
+
+The two non EU cards need a valid `OPENROUTER_API_KEY`. If it is missing, the cards still
+appear in the picker but every call ends in an error. If you do not want to offer these cards,
+remove them from the configuration instead of leaving out the key.
+
+### A sensible order when setting up
+
+<Steps>
+
+1. Maintain prices and context sizes under **"Konfiguration → Preise"** (configuration, prices)
+   so that usage metering is correct. An empty price field does not mean free, LibreChat then
+   calculates with a built in flat rate.
+
+2. Define the cards per role and group.
+
+3. Only then invite your team.
+
+</Steps>

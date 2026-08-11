@@ -1,0 +1,169 @@
+---
+title: Installation
+description: install.sh im Detail, von den erzeugten Geheimnissen über die Verzeichnisse bis zu den Schritten, die manuell bleiben.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+`install.sh` bringt den Stack von null auf laufend: es legt die `.env` an, erzeugt alle
+Geheimnisse, richtet Verzeichnisse und das Sandbox-Netz ein und startet die Container. Diese
+Seite zeigt, was dabei automatisch passiert und was danach von Hand zu tun bleibt.
+
+Voraussetzung ist ein vorbereiteter Server. Auf einem frischen Ubuntu-System läuft dafür
+zuerst [`setup-server.sh`](/docs/betrieb/server-vorbereiten), danach melden Sie sich neu an.
+
+## Aufruf
+
+```bash title="Auf dem Server"
+cd ~/eu-cowork/distribution
+./install.sh --profiles production,internal,microsoft,filesearch
+```
+
+Lokal zum Ausprobieren genügt `./install.sh` ohne Optionen. Der Chat läuft dann auf
+`http://localhost:3080`, das Admin-Panel auf `http://localhost:3010`.
+
+## Optionen
+
+| Option | Wirkung |
+|---|---|
+| `--profiles LISTE` | Compose-Profile, kommagetrennt. Erlaubt sind `production`, `internal`, `microsoft`, `filesearch` und `interim`. Letzteres startet zusätzlich das AGPL-Übergangs-Panel und wird im Normalbetrieb nicht gebraucht. Ohne Angabe startet nur der Basis-Stack. |
+| `--migrate` | Umzugs- und Update-Modus. Eine vorhandene `.env` bleibt unangetastet, es werden keine Geheimnisse erzeugt. Fehlt die `.env`, bricht der Modus ab. |
+| `--no-build` | Baut die selbst entwickelten Dienste nicht neu. Schneller, aber nur sinnvoll, wenn die Images bereits gebaut sind. |
+| `-h`, `--help` | Zeigt die Hilfe. |
+
+Was die einzelnen Profile zuschalten, steht unter
+[Konfiguration](/docs/betrieb/konfiguration#compose-profile).
+
+## Was der Installer automatisch erledigt
+
+1. **Preflight.** Prüft, ob Docker läuft, ob `docker compose` in Version 2 vorhanden ist und
+   ob `openssl`, `curl` und `tar` installiert sind. Fehlt davon etwas, bricht er ab. Bei
+   weniger als 4 GB RAM oder weniger als 20 GB freiem Plattenplatz warnt er nur, er bricht
+   deswegen nicht ab.
+2. **`.env` anlegen.** Kopiert `.env.example` nach `.env`, ersetzt alle `GENERATE`-Platzhalter
+   durch frisch erzeugte Zufallswerte, trägt `UID` und `GID` des ausführenden Benutzers ein
+   und setzt die Dateirechte auf `600`.
+3. **SearXNG-Konfiguration.** Erzeugt `searxng/settings.yml` aus der Beispieldatei und setzt
+   darin ein eigenes Geheimnis ein.
+4. **Offene Platzhalter melden.** Listet auf, welche Werte in der `.env` noch fehlen. Gemeldet
+   werden nur die Namen der Variablen, nie deren Inhalt.
+5. **Sandbox-Netz anlegen.** Legt das Docker-Netz aus `SANDBOX_NETWORK` an, standardmässig
+   `eucowork-sandbox`. Darüber erreicht der Chat später das Backend für die Code-Ausführung.
+6. **Verzeichnisse anlegen und Besitzer korrigieren.** Erstellt `logs`, `uploads`, `images`,
+   `data-node` und `meili_data` und setzt den Besitzer auf den ausführenden Benutzer. Ohne
+   diesen Schritt legt Docker die Verzeichnisse beim ersten Start als `root` an, der Container
+   läuft aber unter Ihrer UID und landet in einer Neustartschleife.
+7. **Images ziehen.** Holt alle Images aus der Registry. Was aus Quelle gebaut wird, wird
+   übersprungen.
+8. **Stack starten.** Startet die Container mit den gewählten Profilen und baut dabei die
+   selbst entwickelten Dienste neu, sofern `--no-build` nicht gesetzt ist.
+9. **Adressen ausgeben.** Nennt am Ende die URLs für Chat und Admin-Panel sowie die Befehle
+   für Logs und Backup.
+
+## Diese Geheimnisse erzeugt der Installer
+
+| Variable | Wofür |
+|---|---|
+| `CREDS_KEY` | Verschlüsselt gespeicherte Zugangsdaten in der Datenbank |
+| `CREDS_IV` | Initialisierungsvektor zur selben Verschlüsselung |
+| `JWT_SECRET` | Signatur der Anmelde-Token |
+| `JWT_REFRESH_SECRET` | Signatur der Erneuerungs-Token |
+| `MEILI_MASTER_KEY` | Zugriff auf die Volltextsuche |
+| `POSTGRES_PASSWORD` | Zugriff auf die Vektordatenbank der Dateisuche |
+| `SEARXNG_SECRET` | Eigene Metasuchmaschine |
+| `ADMIN_PANEL_SESSION_SECRET` | Sitzungen des Panels |
+
+Alle Werte landen in `distribution/.env`, die Datei bekommt die Rechte `600`. Sie gehört nie
+in ein Repository und nie unverschlüsselt in eine Cloud.
+
+<Aside type="danger" title="CREDS_KEY und CREDS_IV sichern">
+Diese beiden Werte entschlüsseln alles, was verschlüsselt in der Datenbank liegt: die
+OAuth-Token, mit denen Ihre Mitarbeitenden SharePoint oder OneDrive verbunden haben, und die
+im Panel hinterlegten API-Schlüssel. Gehen sie verloren oder werden sie bei einem Umzug neu
+erzeugt statt übernommen, sind diese Daten unwiederbringlich unlesbar. Jede Person muss dann
+jede Verbindung neu aufbauen. Das reguläre Backup enthält die `.env` und damit beide Werte,
+siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+</Aside>
+
+## Der einzige Pflichtwert
+
+Für eine Standardinstallation müssen Sie genau einen Wert selbst eintragen: den Schlüssel für
+EuRouter, den Inferenz-Anbieter mit EU-Verarbeitung.
+
+```bash title="distribution/.env"
+EUROUTER_API_KEY=__IHR_SCHLUESSEL__
+```
+
+Der Installer meldet diesen Platzhalter am Ende ausdrücklich. Nach dem Eintragen den Stack
+neu starten:
+
+```bash title="Auf dem Server"
+docker compose up -d
+```
+
+Alles Weitere ist optional: OpenRouter als bewusst nicht EU-residente Zweitoption, die
+Konnektoren, der SMTP-Versand und das Backend für die Code-Ausführung.
+
+## Was manuell bleibt
+
+- Nach `setup-server.sh` neu anmelden, sonst greift die Gruppe `docker` nicht.
+- DNS-Einträge für `<ihre-domain.ch>` **und** `admin.<ihre-domain.ch>` setzen.
+- Produktionswerte in die `.env` eintragen: `DOMAIN_CLIENT`, `DOMAIN_SERVER`,
+  `EUCOWORK_DOMAIN` und `API_BIND=127.0.0.1`.
+- Die TLS-Variante wählen, siehe [Domain und Zertifikat](/docs/betrieb/domain-und-tls).
+- Das Backend für die Code-Ausführung als eigenen Compose-Stack installieren, falls Excel-
+  und PDF-Ausgaben gebraucht werden.
+- Den Domain-Lock für die Registrierung setzen, siehe
+  [Konfiguration](/docs/betrieb/konfiguration#domain-lock).
+- Rollenrechte und Modellkarten im Admin-Panel festlegen.
+- Für jeden Konnektor im Panel unter **MCP-Zugriff** den Server-Standard auf verweigert
+  stellen und danach gezielt freigeben.
+- Backup einrichten, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Nach dem ersten Start
+
+<Steps>
+
+1. **Chat öffnen.** In Produktion unter `https://<ihre-domain.ch>`, lokal unter
+   `http://localhost:3080`.
+
+2. **Erstes Konto anlegen.** Registrieren Sie sich im Chat. Das erste registrierte Konto einer
+   Instanz bekommt automatisch die Rolle ADMIN.
+
+3. **Admin-Panel prüfen.** In Produktion `https://admin.<ihre-domain.ch>`, lokal
+   `http://localhost:3010`. Die Anmeldung erfolgt mit dem eben angelegten LibreChat-Konto. Das
+   Panel hat keine eigene Nutzerverwaltung und kein eigenes Passwort.
+
+4. **Zugang schliessen.** Domain-Lock setzen, damit sich nur Personen aus Ihrer
+   E-Mail-Domäne registrieren können.
+
+5. **Zweites Admin-Konto anlegen.** Nicht nur das persönliche Konto, sonst sperren Sie sich
+   im Ernstfall selbst aus.
+
+6. **Backup einrichten.** Einmal `./backup.sh backup` ausführen und die ausgegebene Cron-Zeile
+   eintragen.
+
+</Steps>
+
+<Aside type="tip" title="Erster Funktionstest">
+Eine Testfrage im Chat zeigt, ob der Inferenz-Schlüssel greift. Bleibt die Antwort aus oder
+läuft sie in einen Timeout, prüfen Sie zuerst, ob die Container ins Internet kommen. Der Test
+dafür steht unter [Fehlerbehebung](/docs/betrieb/fehlerbehebung#egress-test).
+</Aside>
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Konfiguration"
+    href="/docs/betrieb/konfiguration"
+    description="Die drei Ebenen: .env, librechat.yaml und die Overrides im Admin-Panel."
+  />
+  <LinkCard
+    title="Domain und Zertifikat"
+    href="/docs/betrieb/domain-und-tls"
+    description="Let's Encrypt, interne CA im LAN oder Betrieb hinter einer bestehenden WAF."
+  />
+</CardGrid>

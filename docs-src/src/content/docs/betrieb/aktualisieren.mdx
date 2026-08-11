@@ -1,0 +1,129 @@
+---
+title: Aktualisieren
+description: Die geprüfte Update-Kette für eine laufende Instanz, der Wechsel der LibreChat-Version über den Digest und der Rückweg.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Ein Update besteht aus vier Handgriffen: neuen Stand holen, `.env` gegen die Vorlage
+vergleichen, sichern, installieren. Diese Seite beschreibt die Kette in der Reihenfolge, in
+der sie geprüft ist, und die beiden Stellen, an denen erfahrungsgemäss etwas übersehen wird.
+
+## Die Update-Kette
+
+```bash title="Auf dem Server"
+cd ~/eu-cowork && git pull
+cd distribution
+diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | sort -u)
+./backup.sh backup
+./install.sh --migrate --profiles production,internal,microsoft,filesearch
+```
+
+Geben Sie beim letzten Befehl dieselben Profile an wie bei der Installation. Fehlt ein Profil,
+werden die zugehörigen Dienste nicht mit erneuert.
+
+## Der Vergleich mit `.env.example`
+
+Der `diff` stellt nur die **Namen** der Variablen gegenüber, keine Werte. Geheimnisse tauchen
+dabei also nicht auf. Zwei Dinge lesen Sie daraus ab:
+
+- Zeilen, die nur in `.env.example` stehen, sind neu hinzugekommen. Prüfen Sie in der
+  Beispieldatei, was sie tun, und ergänzen Sie sie bei Bedarf.
+- Zeilen, die nur in Ihrer `.env` stehen, sind entweder instanzspezifisch oder stammen aus
+  einer alten Version und können weg.
+
+Neue Variablen sind fast immer optional, der Stack startet auch ohne sie. Die Vorlage ist
+durchgehend kommentiert, dort steht jeweils, wofür ein Wert gebraucht wird.
+
+## Warum immer vorher ein Backup
+
+Ein Update wechselt Programmstände unter einer bestehenden Datenbank. Geht dabei etwas schief,
+ist der schnellste Weg zurück ein Archiv von vorher. Ein Backup dauert Sekunden, ein verlorener
+Datenbestand kostet Tage.
+
+```bash title="Vor jedem Update"
+./backup.sh backup
+```
+
+Das Archiv liegt danach unter `backups/` und trägt die Rechte `600`. Details dazu stehen unter
+[Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Was `--migrate` macht
+
+Mit `--migrate` lässt der Installer die vorhandene `.env` unangetastet und erzeugt keine neuen
+Geheimnisse. Genau das wollen Sie beim Update: Ihre Schlüssel, Domains und Ports bleiben, wie
+sie sind. Existiert keine `.env`, bricht der Modus ab.
+
+Gleichzeitig baut `install.sh` die selbst entwickelten Dienste neu.
+
+<Aside type="caution" title="Fallstrick force-recreate">
+`docker compose up -d --force-recreate api` erneuert **nur** den Chat. Das Admin-Panel, das
+MCP-Gateway, die NinjaOne-Brücke und das Outlook-Add-in werden aus Quelle gebaut und bleiben
+auf dem alten Stand.
+Sie brauchen `--build`, und genau das macht `install.sh`. Nutzen Sie deshalb den Installer und
+nicht den Compose-Befehl von Hand.
+</Aside>
+
+## LibreChat-Version anheben
+
+Das LibreChat-Image ist bewusst nicht auf `latest` gesetzt, sondern auf einen Digest, also auf
+eine feste, unveränderliche Version. Der Grund: `latest` zieht auf jedem Server und bei jedem
+Abruf einen anderen Stand. Ein Release von EU Cowork AI ist aber eine **getestete Kombination**
+aus LibreChat-Version und den eigenen Diensten. Nur mit einem Digest fährt jeder Server genau
+die Kombination, die auch geprüft wurde.
+
+<Steps>
+
+1. Neuen Stand holen und den Digest ermitteln:
+
+   ```bash title="Auf dem Server"
+   docker pull registry.librechat.ai/danny-avila/librechat-dev:latest
+   docker image inspect registry.librechat.ai/danny-avila/librechat-dev:latest --format '{{index .RepoDigests 0}}'
+   ```
+
+2. Den ausgegebenen Digest in `distribution/docker-compose.yml` beim Dienst `api` eintragen.
+   Der bisherige Digest bleibt als Kommentar darüber stehen, das ist der Rückweg.
+
+3. Den Stack neu starten und die Prüfpunkte durchgehen: Anmeldung am Chat, Anmeldung am Panel,
+   eine Testfrage im Chat und `docker compose ps` ohne Neustartschleifen.
+
+</Steps>
+
+## Nach dem Update prüfen
+
+```bash title="Auf dem Server"
+docker compose ps
+docker compose logs -f api
+```
+
+Alle Container müssen `Up` melden. Im Log des Chats werden Konfigurationsfehler sichtbar,
+etwa eine YAML-Datei, die nicht mehr zum Schema passt.
+
+## Rollback
+
+```bash title="Auf dem Server"
+git checkout <voriger-commit> -- distribution/docker-compose.yml
+./install.sh --migrate --profiles production,internal,microsoft,filesearch
+./backup.sh restore backups/<archiv-vor-dem-update>.tar.gz
+```
+
+Die ersten beiden Zeilen drehen Programmstand und Image zurück. Die dritte Zeile brauchen Sie
+nur, wenn auch Daten betroffen sind. Sie ist zerstörend und ersetzt die Datenbank durch den
+Stand aus dem Archiv, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Backup und Umzug"
+    href="/docs/betrieb/backup-und-umzug"
+    description="Was gesichert wird, wie ein Restore wirkt und wie eine Instanz auf einen neuen Server zieht."
+  />
+  <LinkCard
+    title="Fehlerbehebung"
+    href="/docs/betrieb/fehlerbehebung"
+    description="Symptom, Ursache, Lösung für die häufigsten Störungen."
+  />
+</CardGrid>

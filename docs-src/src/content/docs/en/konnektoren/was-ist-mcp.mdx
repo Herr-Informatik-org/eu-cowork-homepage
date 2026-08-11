@@ -1,0 +1,102 @@
+---
+title: What is MCP
+description: The Model Context Protocol explained from the ground up, so you understand how EU Cowork AI is connected to your own systems.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+This page explains how a language model gets at data from your own systems. It is written for IT decision makers who have never heard the term MCP, and it lays the groundwork for every other page in this chapter.
+
+## The problem MCP solves
+
+A language model only knows what was in its training material and what is in the running conversation. It knows nothing about your customers, your invoices, or your devices. For it to answer questions like that, it needs a way to ask one of your business systems while the conversation is running.
+
+That is exactly what the **Model Context Protocol**, MCP for short, exists for. It is a common language for how a chat system asks a business system a question and gets an answer back. MCP is an **open standard with a public specification**, originally published by Anthropic and by now adopted by many vendors. It is not an invention of EU Cowork AI, and it does not tie you to us.
+
+For you that means two things. First: for many widely used products a ready-made MCP server already exists that you can connect. Second: whatever you build once for EU Cowork AI also works with other software that speaks MCP.
+
+## Three terms you need
+
+**Tool.** A tool is a single, clearly defined capability. It has a technical name, a description in prose, and a list of parameters. The NinjaOne connection, for example, has a tool `ninja_devices` whose job is "search devices, by organization, name, class, or online status". A tool is always an action, never a whole system.
+
+**Connector, technically an MCP server.** A connector is a small service that offers a collection of tools and talks to the actual target system behind them. In this documentation we call it a connector, because that is easier to follow for non developers. In the configuration and in the admin panel it is called "MCP-Server" (MCP server).
+
+**Client.** The client is the side that is offered the tools and calls them. In our case that is LibreChat, the chat layer of EU Cowork AI.
+
+A connector is often a **bridge**: the target system itself does not speak MCP, it only has an ordinary programming interface. The connector then translates between the two worlds. That is exactly how the Odoo connection and the NinjaOne connection work.
+
+## An example: "Which open invoices does customer X have?"
+
+Without a connector the model cannot answer this question. It does not know who customer X is, and it has no access to your accounting. With an ERP connector attached, this is what happens:
+
+1. The person asks the question in the chat.
+2. Along with the question, the model receives the list of granted tools, each with a name and a description. Among them are the tools of the ERP connector.
+3. The model decides that it cannot answer the question from its own knowledge, and calls a tool, for example "search records" with the customer name as a filter.
+4. The call does not go straight to the connector, it goes to the permission gateway first. There it is checked whether this person is allowed to use this connector at all. The call is logged.
+5. If the call is allowed, the connector queries the ERP and returns the result as text.
+6. The model reads the result, calls a second tool if needed, for example "read record" with the customer number it found, and phrases its answer from that.
+
+The important part of this sequence: the model **decides** which tool it calls, but it **does not determine** what it is allowed to do. The boundary is drawn by the gateway in front of it and by the target system behind it. A model cannot invent permissions it does not have.
+
+## The two connection types
+
+Every connector has to sign in to the target system. There are two fundamentally different ways to do that, and the choice determines where the permission boundary sits.
+
+| | Per-user sign-in | Service account |
+|---|---|---|
+| Who signs in | every person with their own account | a single technical account for everyone |
+| Who knows the permissions | the target system itself | the target system only knows the service account |
+| Permission boundary | the person's permissions in the target system | the gateway rules plus the permissions of the service account |
+| Granularity | down to document and field level | down to connector and tool level |
+| Example in our setup | Microsoft 365 and SharePoint | Odoo, NinjaOne |
+
+**Per-user sign-in** means: on first use the person is sent to the sign-in dialog of the target system, confirms the access there, and from then on the connector works with their personal access. Someone who is not allowed to see a folder in SharePoint does not see it in the chat either. The target system remains the authoritative instance, and you do not have to rebuild the permissions a second time.
+
+**Service account** means: the connector holds a single key and signs in the same way for everyone. The target system only sees this one account and therefore cannot tell your staff apart. The separation then has to happen in front of it, in the permission gateway.
+
+<Aside type="tip" title="Rule of thumb">
+Use **per-user sign-in** whenever the target system offers it. It is the safer variant, because the permissions are maintained where they are maintained anyway. A service account is the fallback for systems that offer no per-person access through an interface. If you do need a service account, create several narrow accounts rather than one broad one.
+</Aside>
+
+## What a connector costs
+
+A connector is not free, even when it does not cost anything. The tool catalog, meaning the name, description, and parameters of every tool, is sent to the model **with every single message**. So it permanently occupies space in the context, and it is paid for on every call.
+
+The order of magnitude is substantial. Unfiltered, the Microsoft 365 bridge offers 164 tools, which is roughly 96,000 tokens per conversation. Filtered down to the 21 tools we actually need, it is roughly 8,000 tokens, so 92 percent less. The NinjaOne bridge deliberately has only 7 tools and therefore sits at roughly 2,000 tokens.
+
+On top of that comes a second effect: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. So few, clearly named tools deliver not only cheaper but also better answers.
+
+<CardGrid>
+  <LinkCard
+    title="Permission gateway"
+    href="/docs/en/konnektoren/gateway-und-rechte"
+    description="How EU Cowork AI enforces who may use which connector, and why this layer is needed at all."
+  />
+  <LinkCard
+    title="Connecting your own connector"
+    href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
+    description="The complete path from the empty form to the granted tool, in the panel or through the configuration files."
+  />
+  <LinkCard
+    title="Best practices for connectors"
+    href="/docs/en/konnektoren/best-practices"
+    description="Ten rules with reasoning and measured figures, plus a checklist to run before granting access."
+  />
+  <LinkCard
+    title="Odoo (ERP)"
+    href="/docs/en/konnektoren/konnektor-odoo"
+    description="How the ERP is attached as a connector and why there are three instances each with its own service account."
+  />
+  <LinkCard
+    title="Microsoft 365 and SharePoint"
+    href="/docs/en/konnektoren/konnektor-microsoft-365"
+    description="Access to SharePoint and OneDrive with the permissions of the individual person, through an Entra app registration."
+  />
+  <LinkCard
+    title="NinjaOne (RMM)"
+    href="/docs/en/konnektoren/konnektor-ninjaone"
+    description="Device and organization data from the RMM in the chat, read only, secured in four independent layers."
+  />
+</CardGrid>

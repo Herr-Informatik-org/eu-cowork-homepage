@@ -1,0 +1,175 @@
+---
+title: Systemanforderungen
+description: Was eine Instanz an CPU, Arbeitsspeicher und Plattenplatz braucht. Mit gemessenen Werten pro Container, Faustregeln und Betriebserfahrung.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Diese Seite sagt konkret, was eine Instanz an Hardware braucht. Alle Werte sind an einem
+laufenden Stack gemessen oder stammen aus den Prüfungen der Installationsskripte. Sie ist für
+diejenigen gedacht, die eine VM bestellen oder eine bestehende Maschine bewerten.
+
+## Minimum und Empfehlung
+
+| | Minimum | Empfohlen |
+|---|---|---|
+| CPU | 2 vCPU | 4 vCPU |
+| Arbeitsspeicher | 4 GB | 16 GB |
+| Plattenplatz | 40 GB | 200 GB |
+| Betriebssystem | Ubuntu 22.04 LTS | Ubuntu 24.04 LTS |
+| Virtualisierung | nicht nötig | `/dev/kvm` verfügbar, dann ist das gehärtete Code-Interpreter-Backend möglich |
+
+Für eine einzelne Instanz mit wenigen Nutzern sind 80 GB ein bequemer Wert. 200 GB lohnen
+sich, sobald viele Dateien hochgeladen werden, denn die Uploads bestimmen das Wachstum.
+
+Beide Installationsskripte prüfen die Maschine und **warnen**, ohne abzubrechen. Unter 4 GB
+Arbeitsspeicher melden sich beide, unter 20 GB freiem Platz zusätzlich der Installer. Kleine
+Instanzen sind also ausdrücklich zulässig.
+
+## Gemessene Werte pro Container
+
+Ruhelast, mit `docker stats` am laufenden Stack erhoben:
+
+| Container | Arbeitsspeicher im Leerlauf |
+|---|---|
+| `api`, LibreChat | 374 MB |
+| `mongodb` | 102 MB |
+| `rag_api`, nur mit Profil `filesearch` | 100 MB |
+| `searxng` | 65 MB |
+| `admin` | 60 MB |
+| `odoo-mcp-*`, je Instanz | 45 MB |
+| `mcp-gateway` | 33 MB |
+| `meilisearch` | 29 MB |
+| `vectordb` | 29 MB |
+| `office-addin` | 15 MB |
+| **Grundstack gesamt** | **rund 0,7 GB** |
+| Code-Interpreter mit Runner, Redis und Ablage | rund 0,5 GB |
+
+Unter Last wächst praktisch nur der Speicher von `api`. Rechnen Sie mit **1,5 bis 2 GB pro
+Kundeninstanz** einschliesslich eigenem Code-Interpreter.
+
+<Aside type="note" title="0,7 GB gemessen, 2 GB einplanen">
+Die Ruhelast liegt gemessen bei rund 0,7 GB. Einzuplanen sind trotzdem etwa 2 GB, weil beim
+Installieren Images gebaut werden und der Code-Interpreter dazukommt. Beide Zahlen sind
+richtig, sie beschreiben unterschiedliche Zustände.
+</Aside>
+
+Die CPU-Last ist im Normalbetrieb nahe null, denn gerechnet wird beim Inferenz-Anbieter.
+Echte Spitzen gibt es nur an drei Stellen: beim Neuaufbau des Suchindex, beim Berechnen der
+Einbettungen für die Dateisuche und bei Code-Läufen.
+
+## Von der Nutzerzahl zur VM-Grösse
+
+| Nutzer | Empfehlung | VM |
+|---|---|---|
+| 1 bis 15 | mehrere Instanzen auf einer VM, drei bis fünf Kunden | 4 vCPU, 16 GB, 80 GB |
+| 15 bis 50 | eigene VM | 4 vCPU, 8 bis 16 GB, 100 GB |
+| über 50, regulierte Branche, vertraglich zugesicherte dedizierte Infrastruktur oder eigener ERP-Anschluss | eigene VM | 8 vCPU, 32 GB, 200 GB und mehr |
+
+Vier kleine Kunden auf einer 16-GB-Maschine nutzen diese sinnvoll aus und lassen Reserve für
+Lastspitzen. Sinnvoll ist, VMs nach Klassen zu bilden statt pro Kunde neu zu entscheiden.
+
+## Plattenplatz
+
+Die Docker-Images belegen einmalig rund 5 bis 6 GB. Sie werden von allen Instanzen auf
+derselben Maschine geteilt, ein zweiter Stack kostet sie also nicht erneut. Danach wachsen vor
+allem drei Dinge: die hochgeladenen Dateien, die Datenbank und die Container-Protokolle.
+
+Der Plattenplatz ist die erste Grenze im Betrieb, nicht der Arbeitsspeicher. Richten Sie einen
+Alarm bei 70 Prozent Belegung ein. Die Protokoll-Rotation von Docker richtet
+`setup-server.sh` ein, ohne sie läuft die Systemplatte über Wochen voll.
+
+## Aus dem Betrieb
+
+Die interne Instanz von Herr Informatik läuft auf einer Ubuntu-VM mit **4 GB
+Arbeitsspeicher**. Das reicht im Alltag aus, auch mit den Odoo-Brücken, der
+Microsoft-365-Brücke und dem Code-Interpreter.
+
+Belegt sind auf dieser Maschine rund **30 GB**. Ein erheblicher Teil davon stammt nicht aus
+den Nutzdaten, sondern aus mehreren Deployments nebeneinander und aus alten Docker-Schichten,
+die sich über Updates angesammelt haben. Wer die Maschine regelmässig aufräumt, kommt mit
+deutlich weniger aus.
+
+Praktische Ableitung: **40 GB sind das Minimum, 80 GB sind bequem.** Wer nie aufräumt, sollte
+eher grosszügig planen.
+
+### Speicher aufräumen
+
+Zuerst schauen, dann löschen. Die folgenden Befehle laufen im Verzeichnis `distribution`
+oder an beliebiger Stelle, sie betreffen den ganzen Docker-Host.
+
+```bash title="Erst nachsehen"
+docker system df
+```
+
+Die Ausgabe zeigt getrennt, wie viel Platz Images, Container, lokale Volumes und der
+Build-Cache belegen, und wie viel davon zurückgewinnbar ist.
+
+```bash title="Gefahrlos aufräumen, Stack läuft weiter"
+docker system prune -f
+```
+
+Entfernt gestoppte Container, ungenutzte Netze, namenlose Image-Schichten und den Build-Cache.
+Der laufende Stack ist davon nicht betroffen. In der Praxis bringt der Build-Cache den
+grössten Teil, weil die vier eigenen Sidecars bei jedem Update neu gebaut werden.
+
+```bash title="Gründlicher, nur bei laufendem Stack"
+docker image prune -a -f
+```
+
+Entfernt zusätzlich alle Images, zu denen kein Container mehr existiert. Das trifft
+typischerweise die alten LibreChat-Digests nach einem Versionswechsel.
+
+<Aside type="caution" title="docker system prune -a nur mit Bedacht">
+`docker system prune -a` löscht auch Images, die ein **gestoppter** Stack noch braucht. Nach
+dem nächsten Start müssen dann alle Images neu geladen und alle Sidecars neu gebaut werden,
+das dauert. Prüfen Sie vorher mit `docker compose ps`, ob wirklich alles läuft.
+
+Ergänzen Sie nie `--volumes`, solange Sie nicht genau wissen, was Sie tun. Das würde die
+Vektordatenbank der Dateisuche und die von Caddy verwalteten Zertifikate mitnehmen.
+</Aside>
+
+## Betriebssystem und Docker
+
+Getestet ist Ubuntu 22.04 und 24.04, empfohlen ist 24.04 LTS. Auf anderen Distributionen
+läuft `setup-server.sh` weiter, warnt aber und kann abweichen.
+
+Zwingend ist **Docker Engine mit Compose v2 als Plugin**. Das Ubuntu-Paket `docker.io` bringt
+Compose v2 **nicht** mit. Ist es installiert, bricht `setup-server.sh` mit einem Hinweis ab
+und verlangt, es vorher zu entfernen. Das Skript installiert Docker deshalb aus der
+offiziellen Docker-Paketquelle.
+
+## Ports, DNS und Firewall
+
+Nach aussen gehören genau drei Ports:
+
+| Port | Wofür |
+|---|---|
+| 22 | SSH für die Administration |
+| 80 | Zertifikatsausstellung und Weiterleitung auf HTTPS |
+| 443 | Chat, Admin-Panel und Outlook-Add-in |
+
+`setup-server.sh` setzt `ufw` auf „eingehend verbieten" und öffnet genau diese drei.
+
+**DNS:** Zwei A-Records müssen auf den Server zeigen, `<ihre-domain.ch>` und
+`admin.<ihre-domain.ch>`. Beide braucht Caddy, um die Zertifikate ausstellen zu lassen. Ohne den
+zweiten Eintrag ist das Admin-Panel nicht erreichbar.
+
+<Aside type="danger" title="ufw schützt keine Docker-Ports">
+Von Docker über `ports:` veröffentlichte Ports umgehen `ufw`, weil Docker eigene
+iptables-Regeln in der Kette `DOCKER-USER` schreibt. Ein Dienst, der auf `0.0.0.0` gebunden
+ist, ist trotz aktiver Firewall von aussen erreichbar. Deshalb gilt: ausser Caddy bindet kein
+Dienst auf `0.0.0.0`, und in Produktion gehört `API_BIND=127.0.0.1` in die `.env`.
+</Aside>
+
+## Swap
+
+Auf Maschinen mit weniger als 8 GB Arbeitsspeicher und ohne vorhandenen Swap legt
+`setup-server.sh` eine **4 GB grosse Swap-Datei** unter `/swapfile` an, trägt sie in
+`/etc/fstab` ein und setzt `vm.swappiness=10`. Swap ist damit eine Notreserve und keine
+Dauerlösung. Ab 8 GB Arbeitsspeicher verzichtet das Skript darauf.
+
+Mit `--no-swap` überspringen Sie den Schritt, etwa wenn Ihre Virtualisierung Swap selbst
+verwaltet.

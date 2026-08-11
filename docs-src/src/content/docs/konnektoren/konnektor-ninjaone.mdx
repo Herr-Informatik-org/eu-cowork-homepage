@@ -1,0 +1,130 @@
+---
+title: NinjaOne (RMM)
+description: Geräte- und Organisationsdaten aus dem RMM im Chat, ausschliesslich lesend, abgesichert in vier unabhängigen Schichten.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Diese Anbindung macht die Geräte- und Organisationsdaten aus Ihrem RMM im Chat abfragbar. Sie ist unser Vorzeigebeispiel für einen sauber gebauten Dienstkonto-Konnektor: sieben Werkzeuge, ausschliesslich lesend, und das an vier voneinander unabhängigen Stellen abgesichert.
+
+<Aside type="caution" title="Nicht EU-resident, deshalb nicht im Kunden-Template">
+NinjaOne ist ein Anbieter aus den USA. Auch die europäische Instanz bleibt eine Verarbeitung ausserhalb Ihres eigenen Stacks. Für die interne Nutzung bei Herr Informatik ist das eine bewusste Abwägung. Im ausgelieferten Kunden-Template ist die Anbindung deshalb **nicht** enthalten.
+
+Wenn Sie sie einschalten, kennzeichnen Sie das gegenüber Ihren Nutzern und in Ihrer Datenschutzdokumentation. Die Aussage „alles bleibt in Europa" gilt für diesen Konnektor nicht.
+</Aside>
+
+## Was er kann
+
+| Werkzeug | Zweck | Beispielfrage |
+|---|---|---|
+| `ninja_organizations` | Kunden und Mandanten samt Standorten, optional mit Gerätezahl | „Welche Kunden haben wir in NinjaOne?" |
+| `ninja_devices` | Geräte suchen, nach Organisation, Name, Klasse oder Online-Status | „Zeig mir die Server der Muster AG" |
+| `ninja_device` | ein einzelnes Gerät im Detail | „Was läuft auf SRV-DC01?" |
+| `ninja_device_software` | Softwareinventar eines Geräts, filterbar | „Ist auf dem Gerät Office installiert, und in welcher Version?" |
+| `ninja_device_patches` | offene und fehlgeschlagene Patches für Betriebssystem und Software | „Welche Patches fehlen auf dem Rechner?" |
+| `ninja_alerts` | offene Alarme, instanzweit, je Kunde oder je Gerät | „Was ist bei Kunde X gerade offen?" |
+| `ninja_report` | Flotten-Auswertungen über viele Geräte auf einmal | „Wo läuft noch Windows 10?" |
+
+Sieben Werkzeuge sind bewusst wenig. Der Katalog kostet damit rund 2 000 Tokens pro Konversation, und das Modell hat keine Auswahl, bei der es sich vergreifen könnte.
+
+Ein Detail, das im Alltag Kontext spart: `ninja_device` lädt standardmässig nur Stammdaten, Betriebssystem, Hardware, Datenträger, Netzwerk, letzten Benutzer und offene Alarme. Die teuren Abschnitte für Software, Dienste, Patches, benutzerdefinierte Felder und Verlauf kommen nur auf ausdrückliche Anforderung. Betrifft eine Frage viele Geräte, ist `ninja_report` die richtige Antwort, nicht eine Reihe von Einzelabfragen.
+
+## Nur lesend, in vier Schichten
+
+Jede dieser Schichten würde für sich allein genügen. Genau das ist der Punkt: Fällt eine aus, tragen die anderen.
+
+| # | Schicht | Wirkung |
+|---|---|---|
+| 1 | Die OAuth-App in NinjaOne trägt nur den Bereich `monitoring` | NinjaOne lehnt jeden schreibenden Aufruf selbst ab |
+| 2 | Die Brücke kennt nur lesende Aufrufe und eine Pfad-Freigabeliste | Es gibt keine Codezeile, die einen schreibenden Aufruf absetzen könnte |
+| 3 | Beim Start prüft die Brücke, welche Bereiche NinjaOne tatsächlich gewährt hat | Ist ein schreibender Bereich dabei, fährt der Dienst nicht hoch |
+| 4 | Die Regeln im Rechte-Gateway | Wer die Werkzeuge überhaupt sieht, entscheidet der Admin im Panel |
+
+Es gibt bewusst **kein** Werkzeug für Neustart, Skriptausführung, Patch-Verteilung, Wartungsfenster, Alarm-Quittierung oder Ticket-Änderung. Ein Werkzeug, das es nicht gibt, kann ein Modell auch nicht versehentlich aufrufen. Fragt jemand im Chat nach einem Neustart, sagt der Assistent, dass das direkt in NinjaOne gemacht werden muss.
+
+## Einrichtung
+
+<Steps>
+1. **API-App in NinjaOne anlegen.** Sie brauchen dafür Administrationsrechte in NinjaOne, der Weg führt über **Administration → Apps → API**.
+
+   - **Application Platform**: API Services, also die Maschine-zu-Maschine-Variante
+   - **Allowed Grant Types**: **ausschliesslich** Client Credentials. Kein Authorization Code, kein Refresh Token. Ein Redirect-URI wird dann nicht verlangt
+   - **Scopes**: **ausschliesslich** Monitoring. Das ist laut NinjaOne-Dokumentation der nur lesende Zugriff auf Überwachungsdaten und Organisationsstruktur. **Management** und **Control** dürfen nicht angehakt werden, sie erlauben Skripte, Geräteänderungen und Fernzugriff
+   - Speichern und **Client-ID und Secret** notieren, das Secret ist nur einmal sichtbar
+
+2. **Werte in `distribution/.env` eintragen.** Nur die Namen:
+
+   | Variable | Bedeutung |
+   |---|---|
+   | `NINJAONE_INSTANCE` | Ihre Region, `eu`, `us`, `us2`, `ca` oder `oc`, alternativ der volle Hostname. Es ist dieselbe Region, unter der Sie sich anmelden |
+   | `NINJAONE_CLIENT_ID` | Client-ID aus Schritt 1 |
+   | `NINJAONE_CLIENT_SECRET` | Secret aus Schritt 1 |
+   | `NINJAONE_SCOPE_ENFORCE` | `strict` bricht den Start ab, wenn NinjaOne einen schreibenden Bereich gewährt. `warn` schreibt nur eine Meldung ins Log. Der Standard ist `strict`, und dabei sollte es bleiben |
+
+   Der Bereich selbst steht fest auf `monitoring` und wird nicht erweitert.
+
+3. **Bauen, starten und selbst testen:**
+
+   ```bash title="Auf dem Server"
+   cd ~/eu-cowork/distribution
+   docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway
+   docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+   docker compose --profile internal restart api
+   ```
+
+4. **Rechte setzen, sofort.** Admin-Panel → **MCP-Zugriff** → Karte `ninjaone` → **Server-Standard** auf verweigert, speichern, danach gezielt freigeben, zum Beispiel an eine Gruppe für die Technik.
+
+   Ohne Regel lässt das Gateway durch. Solange der Standard nicht auf verweigert steht, sieht jede Person, die MCP nutzen darf, **alle Kundengeräte**.
+</Steps>
+
+## Der Selbsttest
+
+Der Selbsttest aus Schritt 3 prüft die Zugangsdaten, die tatsächlich gewährten Bereiche, den Lesezugriff und dass die Freigabeliste schreibende Pfade blockt. Die erwartete Ausgabe sieht so aus:
+
+```text
+[OK  ] Anmeldung (client_credentials)
+[OK  ] Gewaehrte Scopes sind nur lesend — monitoring
+[OK  ] Organisationen lesbar — 5 in der ersten Seite
+        Beispiel: Muster AG (id 1) · Beispiel Bau (id 3)
+[OK  ] Geraete lesbar — 3 abgerufen
+[OK  ] Allowlist blockt /v2/device/1/reboot/NORMAL
+[OK  ] Allowlist blockt /v2/device/1/script/run
+[OK  ] Allowlist blockt /v2/organization/1/documents
+
+Alle Pruefungen bestanden — die Bruecke ist einsatzbereit.
+```
+
+Schlägt die Zeile zu den gewährten Bereichen fehl, hat die API-App in NinjaOne mehr als Monitoring. Die App neu anzulegen ist meist schneller, als sie umzukonfigurieren.
+
+Im laufenden Betrieb meldet die Brücke unter `/healthz` die Instanz, die gewährten Bereiche und die Bestätigung, dass sie nur lesend arbeitet. Sie hat einen eingebauten Gesundheitscheck, `docker compose ps` zeigt den Zustand also mit an.
+
+## Die empfohlene fünfte Grenze
+
+Die vier Schichten oben verhindern, dass geschrieben wird. Sie sagen nichts darüber, **wie viel** gelesen werden darf. Standardmässig sieht die App die ganze Instanz, also alle Ihre Kunden.
+
+**Geben Sie der App in NinjaOne eine Rolle mit eingeschränktem Organisations-Zugriff.** Was die App nicht sieht, existiert für den Chat schlicht nicht. Das ist die härteste verfügbare Grenze, sie liegt vollständig bei Ihnen im RMM, und sie lässt sich weder durch einen Prompt noch durch einen Fehler in unserer Software umgehen.
+
+Brauchen Sie mehrere Sichten, ist der Weg derselbe wie bei Odoo: eine zweite API-App mit engerem Organisations-Zugriff, eine zweite Instanz der Brücke, und im Panel bekommt jede Person genau eine davon.
+
+## Verhalten im Alltag
+
+**Mehrdeutige Kundennamen.** Passt ein Suchbegriff auf mehrere Organisationen, etwa „Muster" auf *Muster AG* und *Muster GmbH*, kommt eine Liste zurück, und der Assistent fragt nach, statt zu raten. Das ist gewollt. Eine Antwort über den falschen Kunden wäre schlimmer als eine Rückfrage.
+
+**Zu grosse Antworten.** Eine Werkzeug-Antwort ist in der Länge gedeckelt. Wirkt eine Antwort abgeschnitten, ist das kein Fehler, sondern der Schutz vor einer Antwort, die den halben Kontext auffüllt. Fragen Sie enger: nach einer Organisation, mit einem Filter oder mit einer Begrenzung der Trefferzahl. Bei Fragen über viele Geräte ist ohnehin `ninja_report` der richtige Weg.
+
+**Momentaufnahme, kein Live-Zugriff.** Die Werte sind so aktuell wie der letzte Kontakt des NinjaOne-Agenten mit dem Gerät. Der Zeitpunkt steht in jeder Geräteantwort mit dabei. Alle Zeitangaben sind in UTC.
+
+**Alle sehen dasselbe.** NinjaOne kennt den einzelnen Chat-Nutzer nicht, es sieht nur das Dienstkonto. Die Trennung zwischen Ihren Mitarbeitenden macht ausschliesslich die Regel im Panel.
+
+## Fehlerbilder
+
+| Symptom | Ursache und Lösung |
+|---|---|
+| Der Container startet nicht, das Log nennt gewährte schreibende Bereiche | Die API-App hat Management oder Control. App korrigieren. Als Notnagel lässt sich `NINJAONE_SCOPE_ENFORCE` auf `warn` stellen |
+| Anmeldung schlägt mit einem Hinweis auf eine unbekannte App fehl | Falsche Region in `NINJAONE_INSTANCE` oder falsche Client-ID |
+| Ein Werkzeug antwortet „Zugriff verweigert" | Das ist die Gateway-Regel, die Person ist für `ninjaone` nicht freigegeben |
+| Fehler 403 bei einzelnen Organisationen | Die API-App hat auf diese Organisation keinen Zugriff, das ist die NinjaOne-Rolle |
+| Das Werkzeug fehlt im Chat | Zeigt `LIBRECHAT_CONFIG_FILE` auf die Konfiguration mit den Konnektoren? Kennt das Gateway den Namen? Wurde die Chat-Schicht neu gestartet? |
+| Antworten wirken abgeschnitten | Absicht bei sehr grossen Ergebnissen, enger fragen |

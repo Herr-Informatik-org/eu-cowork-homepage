@@ -1,0 +1,229 @@
+---
+title: Fehlerbehebung
+description: Die Fehlerbilder, die im Betrieb wirklich auftreten, mit Symptom, Ursache und Lösung, dazu Log-Befehle und der Egress-Test.
+sidebar:
+  order: 8
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Die meisten Störungen im Betrieb haben eine von zehn Ursachen. Diese Seite beschreibt sie
+einzeln, jeweils mit Symptom, Ursache und Lösung, und nennt vorher die Werkzeuge, mit denen
+Sie in wenigen Minuten eingrenzen, wo das Problem liegt.
+
+## Wo schaue ich zuerst hin
+
+1. **Admin-Panel, Seite Logs.** Vier Reiter: **Anfragen** zeigt jede einzelne Anfrage mit
+   Modell, Dauer und Kosten, **Sessions** fasst dieselben Anfragen pro Konversation zusammen,
+   **Client-Fehler** zeigt die Fehler, die im Outlook-Add-in auftreten, und
+   **Diagnose** die Serverprotokolle.
+2. **Reiter Diagnose.** Dort schalten Sie zwischen dem Protokoll von LibreChat und den Fehlern
+   des Rechte-Gateways um. Für die Frage, warum eine Person einen Konnektor nicht sieht, ist
+   zusätzlich die Seite **Zugriffe** der jeweiligen Person die schnellste Antwort, sie nennt
+   pro Konnektor die entscheidende Regelstufe.
+3. **Erst danach auf die Kommandozeile.** Was im Panel nicht sichtbar wird, sind Startfehler
+   der Container. Die stehen in `docker compose logs`.
+
+## Log- und Statusbefehle
+
+```bash title="Im Verzeichnis distribution"
+docker compose ps
+docker compose logs -f api
+docker compose logs caddy
+docker compose --profile internal logs -f mcp-gateway
+```
+
+`docker compose ps` zeigt, ob ein Container in einer Neustartschleife hängt. Im Log des
+Dienstes `api` werden Konfigurationsfehler sichtbar, etwa eine YAML-Datei, die nicht zum
+Schema passt. Das Log von Caddy beantwortet alle Fragen rund um Zertifikate.
+
+## Egress-Test
+
+Viele Störungen sind in Wahrheit blockierte Verbindungen nach draussen. Der Test prüft, ob die
+**Container** ins Internet kommen, unabhängig von der Anwendung:
+
+```bash title="Auf dem Server"
+docker run --rm curlimages/curl -sI -m 10 https://api.eurouter.ai/api/v1/models
+```
+
+- **HTTP 401** heisst: der Weg nach draussen funktioniert. Der Fehler liegt dann beim
+  Schlüssel oder beim gewählten Modell.
+- **Timeout oder HTTP 000** heisst: der Egress ist blockiert. Typische Ursachen sind ein
+  VPN-Client auf dem Arbeitsgerät, ein Firmen-Proxy oder eine Kollision des Docker-Subnetzes
+  mit einer bestehenden Route.
+
+## Häufige Fehlerbilder
+
+### Das Sandbox-Netz fehlt beim Start
+
+**Symptom:** Der Start bricht ab mit `network eucowork-sandbox declared as external, but could
+not be found`.
+
+**Ursache:** Das externe Docker-Netz zum Code-Interpreter existiert nicht. Normalerweise legt
+`install.sh` es an, nach einem manuellen `docker compose up` fehlt es.
+
+**Lösung:**
+
+```bash title="Auf dem Server"
+docker network create eucowork-sandbox
+```
+
+Trägt Ihr Stack einen eigenen `SANDBOX_NETWORK`, verwenden Sie diesen Namen.
+
+### Der Chat startet immer wieder neu, im Log steht EACCES auf /app/logs
+
+**Symptom:** Der Container `api` hängt in einer Neustartschleife, das Log zeigt einen
+Rechte-Fehler auf `/app/logs`.
+
+**Ursache:** Die eingebundenen Verzeichnisse gehören `root`. Der Container läuft aber unter der
+UID aus der `.env` und darf nicht hineinschreiben. Das passiert, wenn Docker die Verzeichnisse
+beim ersten Start selbst anlegt.
+
+**Lösung:**
+
+```bash title="Im Verzeichnis distribution"
+chown -R $(id -u):$(id -g) logs uploads images data-node meili_data
+```
+
+Danach den Stack neu starten. Beim regulären Weg über `install.sh` tritt das nicht auf, das
+Skript legt die Verzeichnisse vorab mit dem richtigen Besitzer an.
+
+### Das Panel kann keine Schlüssel in die `.env` schreiben
+
+**Symptom:** Ein unter **Einstellungen** im Panel hinterlegter API-Schlüssel wird nicht
+gespeichert.
+
+**Ursache:** Der Admin-Sidecar läuft im Container als UID 1000. Ist der Serverbenutzer eine
+andere UID, fehlt ihm das Schreibrecht auf die eingebundene `.env`.
+
+**Lösung:** Den Besitzer der Datei auf UID 1000 setzen. Prüfen können Sie die eigene UID mit
+`id -u`, siehe auch [Server vorbereiten](/docs/betrieb/server-vorbereiten).
+
+### Antworten im Outlook-Add-in brechen nach etwa einer Minute ab
+
+**Symptom:** Im Task-Pane erscheint ein Ladefehler, obwohl die Antwort auf dem Server
+fertiggerechnet wird. Im Browser funktioniert dieselbe Frage.
+
+**Ursache:** `DISABLE_COMPRESSION` steht auf `false`. Die Kompression puffert dann den ganzen
+Antwortstrom bis zum Ende, und die Ansicht in Outlook bricht nach ihrem Zeitlimit ab.
+
+**Lösung:** In der `.env` `DISABLE_COMPRESSION=true` setzen, das ist auch der Standard, und den
+Chat neu starten.
+
+### Modellaufrufe und Web-Suche laufen in Timeouts
+
+**Symptom:** Die Anwendung läuft, aber Antworten kommen nicht an, die Aufrufe laufen in
+Zeitüberschreitungen.
+
+**Ursache:** Die Container erreichen das Internet nicht.
+
+**Lösung:** Den Egress-Test oben ausführen. Bei einem Timeout je nach Umfeld: den VPN-Client so
+konfigurieren, dass er Docker nicht abfängt, den Firmen-Proxy über `HTTP_PROXY`, `HTTPS_PROXY`
+und `NO_PROXY` bekannt machen, oder das Docker-Subnetz ändern, wenn es mit einer VPN-Route
+kollidiert. Auf einem gewöhnlichen Ubuntu-Server tritt das Problem in der Regel nicht auf, es
+ist ein Thema auf Arbeitsgeräten mit Sicherheits-Software.
+
+### Nach dem Umzug muss jede Person SharePoint neu verbinden
+
+**Symptom:** Bestehende Verbindungen zu SharePoint und OneDrive funktionieren auf dem neuen
+Server nicht mehr, jede Person muss sich neu verbinden.
+
+**Ursache:** `CREDS_KEY` und `CREDS_IV` wurden auf dem neuen Server neu erzeugt statt aus der
+alten `.env` übernommen. Damit sind alle verschlüsselten Zugangsdaten in der Datenbank
+unlesbar.
+
+**Lösung:** Beide Werte aus der alten `.env` übernehmen und den Chat neu starten. Liegt nur
+noch ein Archiv vor, holen Sie die Datei daraus, siehe
+[Backup und Umzug](/docs/betrieb/backup-und-umzug). Ist die alte `.env` endgültig verloren,
+hilft nur das Neuverbinden.
+
+### Die Dateisuche bleibt ohne Wirkung
+
+**Symptom:** Der Knopf für die Suche in hochgeladenen Dateien ist da, es passiert aber nichts.
+
+**Ursache:** Das Profil `filesearch` wurde beim Start nicht mitgegeben, die Vektordatenbank und
+der RAG-Dienst laufen also gar nicht. Oder es fehlt der Embeddings-Anbieter in der `.env`.
+
+**Lösung:**
+
+```bash title="Auf dem Server"
+docker compose --profile filesearch up -d
+```
+
+Danach in der aktiven YAML-Datei `interface.fileSearch: true` setzen und den Chat neu starten.
+
+### Der Datei-Upload scheitert mit EACCES auf /app/uploads/temp
+
+**Symptom:** Beim Hochladen erscheint ein Fehler, im Log steht ein Rechte-Fehler auf
+`/app/uploads/temp`.
+
+**Ursache:** Der Besitzer des eingebundenen Verzeichnisses `uploads` passt nicht zur UID des
+Containers. Nach einem Umzug stammen `UID` und `GID` in der `.env` oft noch von der alten
+Maschine.
+
+**Lösung:** Zuerst prüfen, welche UID der Container nutzt und wem das Verzeichnis gehört:
+
+```bash title="Im Verzeichnis distribution"
+docker exec eucowork-api id
+ls -ldn uploads
+```
+
+Dann entweder den Besitzer korrigieren mit
+`sudo chown -R $(id -u):$(id -g) uploads images`, was sofort wirkt, oder `UID` und `GID` in
+der `.env` auf die Werte des Serverbenutzers setzen und die betroffenen Container neu
+erzeugen.
+
+### Hinter einer WAF erscheint die Antwort erst am Ende
+
+**Symptom:** Die Antwort baut sich nicht Stück für Stück auf, sondern erscheint auf einen
+Schlag, oder sie bricht bei langen Antworten ab.
+
+**Ursache:** Die vorgelagerte Appliance puffert den Antwortstrom, um ihn zu prüfen.
+
+**Lösung:** In der WAF eine Ausnahme für `/api/*` setzen, damit die Antwort nicht gescannt
+wird, und dort die Unterstützung für Kompression abschalten. Auf Anwendungsseite muss
+`DISABLE_COMPRESSION=true` bleiben. Details unter
+[Domain und Zertifikat](/docs/betrieb/domain-und-tls).
+
+### Nach Tests mit curl ist keine Anmeldung mehr möglich
+
+**Symptom:** Nach Skript-Aufrufen gegen die Schnittstelle kann sich plötzlich niemand mehr
+anmelden, der vom Server kommt.
+
+**Ursache:** LibreChat wertet Anfragen ohne Browser-Kennung als Missbrauchsversuch und sperrt
+nicht nur das Konto, sondern auch die Quell-Adresse für 120 Minuten. Bei Docker ist das die
+Gateway-Adresse **aller** Anfragen vom Host. Die Sperre liegt in der Datenbank und übersteht
+einen Neustart, und das Entsperren der Person im Panel räumt sie nicht weg.
+
+**Lösung:** Das Dokument mit dem Schlüssel `BANS:<ip>` in der Collection `logs` der Datenbank
+`LibreChat` löschen. Vermeiden lässt sich das, indem Sie Funktionstests in der Oberfläche
+machen statt per Skript. Die mitgelieferte `.env.example` setzt zusätzlich
+`NON_BROWSER_VIOLATION_SCORE=0` als Sicherheitsnetz, die Begrenzung fehlgeschlagener
+Anmeldeversuche bleibt davon unberührt.
+
+<Aside type="tip" title="Wenn nichts davon passt">
+Notieren Sie, was zuletzt geändert wurde, und vergleichen Sie die `.env` mit
+`.env.example`. Ein Grossteil der übrigen Störungen geht auf eine fehlende Variable, ein
+vergessenes Compose-Profil oder eine YAML-Datei zurück, die nach einem Update nicht mehr zum
+Schema passt. Beides wird im Log des Dienstes `api` sichtbar.
+</Aside>
+
+## Weiter
+
+<CardGrid>
+  <LinkCard
+    title="Konfiguration"
+    href="/docs/betrieb/konfiguration"
+    description="Welche Ebene gewinnt, welche Variablen es gibt und was die Profile zuschalten."
+  />
+  <LinkCard
+    title="Backup und Umzug"
+    href="/docs/betrieb/backup-und-umzug"
+    description="Sichern, wiederherstellen und auf einen neuen Server ziehen."
+  />
+  <LinkCard
+    title="Befehlsübersicht"
+    href="/docs/referenz/befehle"
+    description="Alle Befehle für Betrieb, Aktualisierung, Backup und Diagnose auf einer Seite zum Nachschlagen."
+  />
+</CardGrid>

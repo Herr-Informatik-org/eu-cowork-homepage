@@ -1,0 +1,127 @@
+---
+title: Microsoft 365 und SharePoint
+description: Zugriff auf SharePoint und OneDrive mit den Rechten der jeweiligen Person, eingerichtet über eine Entra-App-Registrierung.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Diese Anbindung lässt Ihre Mitarbeitenden im Chat nach Dateien in SharePoint und OneDrive fragen, und zwar **mit ihren eigenen Microsoft-365-Rechten**. Sie ist das Musterbeispiel für die bevorzugte Verbindungsart und braucht eine einmalige App-Registrierung in Entra.
+
+## Anmeldung pro Person, und warum das der bessere Weg ist
+
+Beim ersten Gebrauch wählt die Person im Chat das Werkzeug und klickt auf Verbinden. Sie landet im gewohnten Microsoft-Anmeldedialog, bestätigt den Zugriff, und ab dann arbeitet der Konnektor mit **ihrem persönlichen delegierten Zugang**. Der Ablauf im Einzelnen:
+
+1. Die Person startet die Verbindung im Chat.
+2. Der Browser führt zum Microsoft-Login samt Einwilligung, ausschliesslich für lesende Berechtigungen.
+3. Die Chat-Schicht tauscht den Rückgabecode serverseitig gegen ein persönliches Zugriffstoken und reicht es an die Brücke weiter.
+4. Die Brücke ruft Microsoft Graph **als diese Person** auf.
+
+Damit gilt: Wer einen Ordner in SharePoint nicht sehen darf, sieht ihn auch im Chat nicht. Die Rechte werden dort gepflegt, wo sie ohnehin gepflegt werden, und müssen bei uns nicht nachgebaut werden. Das ist der eigentliche Abnahmetest dieser Anbindung: Zwei Testpersonen mit unterschiedlichen SharePoint-Rechten müssen unterschiedlich viel sehen.
+
+<Aside type="note" title="Dieser Konnektor läuft bewusst nicht über das Gateway">
+Weil die Rechte der Person bereits die Grenze sind, wäre eine zusätzliche Prüfung im Gateway kein Sicherheitsgewinn, sondern nur zusätzliche Komplexität im Anmeldeverfahren. Der Konnektor ist deshalb direkt verbunden und trägt im Panel den Badge **Direkt**.
+
+Praktische Folge: Für diesen Konnektor gibt es **keine** Regeln pro Rolle, Gruppe oder Person. Es gilt nur der **Generalschalter pro Rolle** auf der Seite MCP-Zugriff. Wer den Konnektor gar nicht haben soll, muss über die Modell- und Agentenkonfiguration gesteuert werden oder darf MCP insgesamt nicht nutzen.
+</Aside>
+
+## Was der Konnektor kann
+
+Er liest **SharePoint und OneDrive** über Microsoft Graph. Typische Anwendungsfälle sind das Auffinden einer Datei in einer Bibliothek, das Zusammenfassen eines gefundenen Dokuments und das Durchsuchen von Ordnerstrukturen.
+
+Die Brücke läuft mit einem ausdrücklichen Nur-Lese-Schalter. Es gibt kein Schreiben, kein Verschieben und kein Löschen in Microsoft 365, unabhängig davon, was das Modell versucht. Dokumente werden nicht in unsere Systeme kopiert oder synchronisiert. Es fliessen die Abfragen und die gelesenen Inhalte durch die Instanz und weiter an das Sprachmodell, und der Gesprächsverlauf liegt danach in der Datenbank Ihrer Instanz.
+
+Mail, Kalender und Teams sind bewusst **nicht** freigeschaltet. Dieselbe Brücke könnte das, es wären dafür zusätzliche Berechtigungen und eine erneute Einwilligung nötig.
+
+## Die Entra-App-Registrierung
+
+Diese Schritte macht eine Person mit Entra-Administrationsrechten im Ziel-Mandanten, einmalig. Bei einem Kundenprojekt ist es der Mandant des Kunden, also eine eigene Registrierung mit eigenen Werten.
+
+<Steps>
+1. **Neue Registrierung** anlegen unter **Microsoft Entra ID → App registrations → New registration**. Der Name ist frei wählbar. Als Kontotyp **nur Konten in diesem Organisationsverzeichnis**, also Einzelmandant.
+
+2. **Redirect-URI vom Typ Web** eintragen, beide Varianten, die Sie brauchen:
+
+   ```text
+   http://localhost:3080/api/mcp/sharepoint/oauth/callback
+   https://<ihre-chat-domain>/api/mcp/sharepoint/oauth/callback
+   ```
+
+   Die Server-Variante baut die Chat-Schicht aus der Variable `DOMAIN_SERVER`. Sie muss **exakt** übereinstimmen, inklusive `http` gegenüber `https` und inklusive Port.
+
+3. **Delegierte Berechtigungen für Microsoft Graph** hinzufügen, genau diese vier:
+
+   | Berechtigung | Wofür |
+   |---|---|
+   | `User.Read` | das eigene Konto identifizieren |
+   | `Sites.Read.All` | SharePoint-Sites und Bibliotheken lesen |
+   | `Files.Read.All` | Dateien lesen |
+   | `offline_access` | die Verbindung am Leben halten |
+
+   `Sites.Read.All` klingt breit, ist aber **delegiert**. Es gilt immer die Schnittmenge mit den echten Rechten der angemeldeten Person, nie mehr.
+
+   **`offline_access` ist nicht optional.** Ohne diese Berechtigung gibt es kein Erneuerungs-Token, und die Verbindung stirbt nach rund einer Stunde. Dasselbe passiert, wenn der Mandant nicht auf die echte Mandanten-Kennung gesetzt ist.
+
+4. **Administrator-Einwilligung erteilen**, also *Grant admin consent* klicken. Danach muss die Statusspalte überall grüne Haken zeigen.
+
+   Ohne diesen Klick sehen Ihre Mitarbeitenden beim Verbinden den Dialog **Need admin approval** und kommen nicht weiter, weil `Sites.Read.All` und `Files.Read.All` nicht selbst bestätigt werden können. Mit dem Klick entfällt der Dialog für alle.
+
+5. **Client-Secret erzeugen** und den Wert sofort kopieren, er ist nur einmal sichtbar. **Notieren Sie das Ablaufdatum** und planen Sie die Erneuerung ein. Ein abgelaufenes Secret zeigt sich später als Fehler 401 an der Brücke, obwohl der Login funktioniert.
+
+6. **Drei Werte notieren**: Verzeichnis-Kennung des Mandanten, Anwendungs-Kennung und den Secret-Wert.
+</Steps>
+
+## Nötige Variablen
+
+In `distribution/.env`, nur die Namen:
+
+| Variable | Zweck |
+|---|---|
+| `MS365_TENANT_ID` | Verzeichnis-Kennung des Mandanten. Immer die echte Kennung setzen |
+| `MS365_MCP_CLIENT_ID` | Anwendungs-Kennung der registrierten App |
+| `MS365_MCP_CLIENT_SECRET` | der Secret-Wert aus Schritt 5 |
+| `DOMAIN_SERVER` | Basis der Redirect-URI, muss zur Entra-Registrierung passen |
+
+Zusätzlich müssen die Hostnamen `ms365-mcp` und `login.microsoftonline.com` unter **Konfiguration → Funktionen → MCP-Netzwerk → Erlaubte MCP-Hosts** stehen, sonst blockt der Schutz gegen Anfragen an interne Adressen den Verbindungsaufbau.
+
+Gestartet wird der Konnektor über das Profil `microsoft`:
+
+```bash title="Auf dem Server"
+cd ~/eu-cowork/distribution
+docker compose --profile production --profile internal --profile microsoft up -d
+```
+
+## Der Token-Sparhinweis
+
+Diese Brücke ist das deutlichste Beispiel dafür, dass ein Konnektor Geld kostet, auch wenn er nichts kostet.
+
+| | Werkzeuge | Kontext pro Konversation |
+|---|---|---|
+| Ungefiltert | 164 | rund 96 000 Tokens |
+| Gefiltert | 21 | rund 8 000 Tokens |
+
+Das sind **92 Prozent weniger**, und zwar bei jeder einzelnen Nachricht jeder Konversation. Ungefiltert brächte die Brücke Werkzeuge für Mail, Teams, Planner, Excel und OneNote mit, die der Anwendungsfall Dateisuche nicht braucht.
+
+Die Auslieferung ist deshalb auf **15 Datei- und Site-Werkzeuge** eingeschränkt, dazu kommen 6 fest eingebaute Werkzeuge für die Anmeldung, macht 21. Die Einschränkung steht als Ausdruck im Compose-Eintrag des Dienstes. Ein weiteres Werkzeug freischalten heisst: den Namen in diesen Ausdruck aufnehmen und den Dienst neu starten. Tun Sie das gezielt und einzeln, nicht vorsorglich.
+
+## Nach einem Umzug
+
+<Aside type="caution" title="Ohne übernommene Schlüssel muss jede Person neu verbinden">
+Die persönlichen Zugriffstoken liegen verschlüsselt in der Datenbank Ihrer Instanz. Der Schlüssel dafür steht in der `.env` und wird bei einer Neuinstallation **neu erzeugt**.
+
+Ziehen Sie auf einen neuen Server um, müssen Sie `CREDS_KEY` und `CREDS_IV` aus der alten `.env` übernehmen. Vergessen Sie das, sind alle gespeicherten Verbindungen unbrauchbar, und **jede Person muss ihr Microsoft-Konto einmal neu verbinden**. Es gehen dabei keine Daten verloren, aber es ist ein Support-Fall pro Mitarbeitendem.
+</Aside>
+
+## Fehlerbilder und Grenzen
+
+| Symptom | Ursache und Lösung |
+|---|---|
+| Fehler zur nicht übereinstimmenden Redirect-URI | Die URI in der Entra-App weicht von `DOMAIN_SERVER` plus `/api/mcp/sharepoint/oauth/callback` ab. Achten Sie auf `http` gegenüber `https` und auf den Port |
+| Dialog **Need admin approval** beim Verbinden | Die Administrator-Einwilligung fehlt |
+| Verbindung stirbt nach rund einer Stunde | `offline_access` fehlt in den Berechtigungen, oder der Mandant ist nicht auf die echte Kennung gesetzt |
+| Meldung über eine blockierte private oder reservierte Adresse | `ms365-mcp` fehlt unter **Erlaubte MCP-Hosts** |
+| Fehler 401 an der Brücke trotz erfolgreichem Login | Das Client-Secret ist abgelaufen. Neues Secret erzeugen und die `.env` aktualisieren |
+| Die Brücke startet nicht | Meist fehlen die `MS365_*`-Werte in der `.env` |
+
+Zwei fachliche Grenzen sollten Sie kennen. Mandantenweite Auswertungen sind ohne zusätzliche Administratorrechte häufig gesperrt, ein garantiert vollständiges Verzeichnis aller Sites gibt es deshalb nicht. Und Ordnergrössen aus SharePoint sind aufsummierte Näherungswerte, gut zum Sortieren, aber keine exakte Abrechnungsgrundlage.

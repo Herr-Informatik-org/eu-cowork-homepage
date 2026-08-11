@@ -1,0 +1,98 @@
+---
+title: Dokumentation
+description: Dokumentation von EU Cowork AI. Installation auf dem eigenen Server, Betrieb, Administration, eigene Konnektoren und Rechteverwaltung.
+template: splash
+editUrl: false
+hero:
+  title: EU Cowork AI
+  tagline: Der KI-Kollege, der auf Ihrem eigenen Server läuft. Diese Dokumentation zeigt, wie Sie ihn installieren, betreiben und an Ihre Systeme anschliessen.
+  actions:
+    - text: In 30 Minuten startklar
+      link: /docs/erste-schritte/schnellstart
+      icon: right-arrow
+      variant: primary
+    - text: Systemanforderungen
+      link: /docs/erste-schritte/systemanforderungen
+      icon: document
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Wo möchten Sie anfangen?
+
+<CardGrid>
+  <LinkCard
+    title="Was ist EU Cowork AI?"
+    href="/docs/erste-schritte/ueberblick"
+    description="Der Überblick in fünf Minuten: was die Plattform kann, woraus sie besteht und was von LibreChat kommt."
+  />
+  <LinkCard
+    title="Schnellstart"
+    href="/docs/erste-schritte/schnellstart"
+    description="Vom leeren Ubuntu-Server zur laufenden Instanz. Jeder Befehl zum Kopieren."
+  />
+  <LinkCard
+    title="Systemanforderungen"
+    href="/docs/erste-schritte/systemanforderungen"
+    description="Wie viel Arbeitsspeicher, CPU und Platz eine Instanz wirklich braucht. Mit gemessenen Werten."
+  />
+  <LinkCard
+    title="Eigenen Konnektor anbinden"
+    href="/docs/konnektoren/eigenen-konnektor-anbinden"
+    description="Ihr ERP, Ihr Ticketsystem, Ihre Dateiablage. Schritt für Schritt über das Admin-Panel."
+  />
+</CardGrid>
+
+## Die Dokumentation in sechs Teilen
+
+<CardGrid>
+  <Card title="Erste Schritte" icon="rocket">
+    Überblick, Architektur, Systemanforderungen und der Schnellstart auf einem frischen
+    Server. Beginnen Sie hier, wenn Sie EU Cowork AI zum ersten Mal aufsetzen.
+  </Card>
+
+  <Card title="Installation und Betrieb" icon="setting">
+    Server vorbereiten, installieren, Domain und Zertifikat einrichten, aktualisieren,
+    sichern, umziehen. Dazu die Fehlerbilder, die im Alltag wirklich auftreten.
+  </Card>
+
+  <Card title="Für Mitarbeitende" icon="approve-check">
+    Was ein Mitarbeitender im Chat tun kann: Modelle wählen, Dateien auswerten,
+    im Web suchen, Auswertungen und Tabellen erzeugen lassen, Agenten nutzen.
+  </Card>
+
+  <Card title="Administration" icon="seti:config">
+    Das Admin-Panel: Benutzer und Gruppen, Rollen und Rechte, Modellkarten,
+    Verbrauch und Budgets, Protokolle und Aufbewahrung.
+  </Card>
+
+  <Card title="Konnektoren und MCP" icon="puzzle">
+    Wie die Plattform an Fremdsysteme kommt, wie das Rechte-Gateway davorsteht
+    und wie Sie eigene Konnektoren sicher anbinden.
+  </Card>
+
+  <Card title="Referenz" icon="list-format">
+    Umgebungsvariablen, Dienste und Ports, Befehlsübersicht, Lizenzen und die
+    Stellen, an denen die Dokumentation von LibreChat weiterführt.
+  </Card>
+</CardGrid>
+
+## Diese Dokumentation und LibreChat
+
+EU Cowork AI baut auf [LibreChat](https://www.librechat.ai) auf, einer quelloffenen
+Chat-Plattform unter MIT-Lizenz. Die Chat-Oberfläche, das Agenten-System, die
+Dateiverarbeitung und die Modellanbindung stammen von dort. Ergänzt haben wir alles,
+was ein Unternehmen für den geregelten Betrieb braucht: ein eigenes Admin-Panel,
+ein Rechte-Gateway vor allen Konnektoren, Verbrauchsmessung mit Budgets und ein
+Installationspaket für den eigenen Server.
+
+Diese Dokumentation beschreibt das Gesamtsystem und sagt an jeder Stelle, woher ein
+Baustein kommt. Wo die Dokumentation von LibreChat tiefer geht, verweisen wir dorthin,
+statt sie schlechter nachzuerzählen. Welcher Baustein von wem stammt, steht im Detail
+unter [LibreChat und EU Cowork](/docs/referenz/librechat-und-eu-cowork).
+
+<div class="euc-footnote">
+Fehlt etwas oder stimmt eine Angabe nicht? Schreiben Sie an
+<a href="mailto:hallo@eucowork.ai">hallo@eucowork.ai</a>.
+</div>

@@ -1,0 +1,244 @@
+---
+title: Outlook-Add-in
+description: 'Der KI-Kollege im Posteingang: Mails zusammenfassen, Antworten entwerfen, Aufgaben herausziehen. Mit Anhang-Grenzen, Anmeldung und Verteilung.'
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Das Outlook-Add-in bringt den KI-Kollegen als seitliches Fenster direkt in den Posteingang.
+Die geöffnete Nachricht dient dabei als Kontext. Diese Seite beschreibt den Funktionsumfang,
+die tatsächlichen Grenzen bei Anhängen, die Anmeldung und den Weg der Verteilung im
+Unternehmen.
+
+Das Add-in ist eine Eigenentwicklung und liegt in `services/office-addin`.
+
+## Was es kann
+
+- Die geöffnete Mail zusammenfassen, auch lange Verläufe.
+- Einen Antwortentwurf schreiben, der im normalen Antwortfenster von Outlook landet.
+- Aufgaben und Fristen aus einer Nachricht herausziehen.
+- Dateien und Anhänge mitlesen, siehe unten.
+- Auf Wunsch Ihren Schreibstil übernehmen, wenn der Admin das eingerichtet hat.
+
+Es läuft in Outlook für Windows, für Mac, im Web und im neuen Outlook.
+
+<Aside type="caution" title="Es wird nie automatisch gesendet">
+Das Add-in liefert Text. Der Entwurf landet im nativen Antwortfenster, und abgeschickt wird
+er von Ihnen. Es gibt keinen Automatikversand, und die zugehörige Microsoft-Berechtigung zum
+Senden wird bewusst nicht angefragt.
+</Aside>
+
+## Es ist kein Nebenweg an der Plattform vorbei
+
+Hinter dem Pane läuft ein echter Agent auf Ihrem Server, in derselben Instanz wie der
+Web-Chat. Das hat für Administratoren drei Folgen:
+
+| | |
+|---|---|
+| Rechte | Es gelten dieselben Rollen und dieselbe Gateway-Regel für Konnektoren wie im Web-Chat |
+| Verbrauch | Jeder Turn wird gemessen und erscheint in Verbrauch und Abrechnung |
+| Protokoll | Konnektor-Aufrufe stehen im Audit-Log, wie sonst auch |
+
+Kein Modell-Verkehr läuft an der Plattform vorbei.
+
+## Dateien und Anhänge
+
+Das Pane liest Dateien **selbst aus** und schickt nur den Text weiter. Die Datei verlässt
+Ihren Rechner nicht.
+
+| Format | Was gelesen wird | Grenze |
+|---|---|---|
+| PDF | Text pro Seite, **kein OCR** | 40 Seiten |
+| Word `.docx` | Absätze inklusive Tabellenzellen und Zeilenumbrüchen | keine eigene |
+| Excel `.xlsx` | Blattname und Zeilen, Spaltenlücken bleiben erhalten | 8 Blätter, 300 Zeilen je Blatt |
+| Text `.txt .md .csv .tsv .json .log .yml .xml` | roher Text | keine eigene |
+| Bilder JPEG und PNG | als Bild-Anhang, vor dem Senden verkleinert | 4 Bilder |
+
+Dokumente und Bilder werden getrennt gezählt, mit je eigenen Grenzen pro Nachricht:
+
+| | Dokumente | Bilder |
+|---|---|---|
+| Anzahl je Nachricht | höchstens 5 | höchstens 4 |
+| Grösse je Datei | 10 MB | 4 MB |
+| Zeichen je Datei | 20 000 | entfällt |
+| Zeichen zusammen | 40 000 | entfällt |
+
+Die beiden Zähler laufen unabhängig voneinander. Vier Bilder verbrauchen also keinen der fünf
+Dokumentenplätze.
+
+**Nicht gelesen** werden die alten Binärformate `.doc`, `.xls` und `.ppt`, PowerPoint,
+Archive, Cloud-Anhänge (dort kommt nur ein Link an) und angehängte E-Mails. In jedem dieser
+Fälle sagt Ihnen das Pane den Grund, statt still etwas wegzulassen.
+
+Dateien kommen auf drei Wegen ins Gespräch: über das Menü im Eingabefeld, per Ziehen auf den
+Chat-Bereich und, bei Bildern, über die Zwischenablage.
+
+<Aside type="caution" title="Kein OCR, auch hier nicht">
+Ein eingescanntes PDF ohne Textebene liefert keinen Text. Das Pane meldet das ausdrücklich,
+statt eine leere Zusammenfassung zu erzeugen.
+</Aside>
+
+### Anhänge der offenen Mail
+
+Die Anhänge der geöffneten Nachricht werden **nie ungefragt** gelesen. Hat die Mail Anhänge,
+hält nach dem Absenden eine Karte den Vorgang an und lässt Sie einzeln auswählen, was gelesen
+werden darf. Auf Wunsch merkt sich das Pane die Auswahl für diese eine E-Mail.
+
+Dafür braucht der Outlook-Client eine ausreichend neue Version der Mailbox-Schnittstelle. Ist
+er zu alt, sagt die Karte das, und der Vorgang läuft ohne Anhänge weiter.
+
+## Persönliche Anweisungen
+
+In den Einstellungen des Panes gibt es ein Feld für persönliche Vorgaben, etwa „immer Sie,
+nie Gedankenstriche, Grussformel Freundliche Grüsse". Diese Vorgaben stehen in der Rangfolge
+**ganz oben**: sie schlagen Skills, das Schreibstil-Profil und die Anweisungen des Agenten.
+
+Sie werden bei jedem Senden frisch aus den Einstellungen gebildet und nicht im Verlauf
+gespeichert. Ändern Sie sie mitten im Gespräch, gilt sofort die neue Fassung.
+
+## Anmeldung ohne Passwort
+
+Das Pane fragt kein Passwort ab. Stattdessen läuft die Anmeldung über einen Gerätecode:
+
+<Steps>
+
+1. Im Pane auf **Anmelden**. Es erscheint ein achtstelliger Code in der Form `XXXX-XXXX`.
+
+2. **Im Browser fortfahren**. Dort öffnet sich eine Bestätigungsseite auf Ihrer eigenen
+   Chat-Domain, mit demselben Code.
+
+3. Auf **Verbinden** klicken. Die Seite nutzt Ihre bestehende Browser-Anmeldung. Sind Sie im
+   Browser nicht angemeldet, bietet die Seite den Login an, der Code bleibt gültig.
+
+4. Das Pane schliesst die Verbindung selbst ab.
+
+</Steps>
+
+Der Vorgang verfällt nach 10 Minuten. Am Ende bekommt das Pane genau einen Wert: Ihren
+persönlichen Schlüssel mit dem Namen **Outlook-Add-in**. Er gilt **90 Tage** und lässt sich
+jederzeit widerrufen, in den Einstellungen des Web-Chats unter **API-Schlüssel für Agenten**.
+
+Der Vorteil dieses Wegs: Zwei-Faktor-Anmeldung und später Entra-Anmeldung funktionieren ohne
+Zusatzarbeit, weil der Browser-Login das ohnehin abdeckt.
+
+## Eine Grenze, die Sie kennen sollten
+
+<Aside type="caution" title="Antworten aus dem Pane erscheinen nicht im Web-Chat">
+Was Sie im Outlook-Pane besprechen, taucht **nicht** im Verlauf des Web-Chats auf. Der
+Verlauf lebt im Pane. Das ist eine bekannte Einschränkung der Schnittstelle, über die
+externe Clients angebunden sind.
+
+Verbrauchsmessung und Protokollierung greifen trotzdem vollständig. Es entsteht also keine
+Lücke bei Kosten und Nachvollziehbarkeit, nur eben kein zweiter Gesprächsverlauf.
+</Aside>
+
+## Für Admins: Voraussetzungen
+
+| Voraussetzung | Detail |
+|---|---|
+| Öffentlich gültiges TLS | Office lädt ausschliesslich öffentlich vertrauenswürdiges HTTPS. Eine **interne Zertifizierungsstelle reicht nicht**, das Pane bliebe leer. Der Stack muss mit dem Profil `production` laufen |
+| Postfächer auf Exchange Online | POP3, IMAP und lokales Exchange werden von der Add-in-Plattform nicht unterstützt. Dafür gibt es keine Umgehung |
+| Adminrechte in Microsoft 365 | Rolle „Globaler Administrator" oder „Exchange-Administrator" |
+| Domain in der `.env` gesetzt | `EUCOWORK_DOMAIN`, `DOMAIN_CLIENT` und `DOMAIN_SERVER` |
+
+<Aside type="danger" title="DISABLE_COMPRESSION=true ist Pflicht">
+Steht der Wert auf `false`, hält LibreChat den Antwortstrom bis zum Schluss zurück, statt ihn
+laufend zu senden. Das Anzeigefenster von Outlook bricht dann nach rund 60 Sekunden mit
+„Keine Verbindung" ab, obwohl serverseitig alles korrekt läuft. Betroffen sind genau die
+langen, werkzeuglastigen Antworten, für die man das Add-in eigentlich haben will.
+
+Der Wert steht im Compose-Paket standardmässig auf `true`. Lassen Sie ihn dort.
+</Aside>
+
+## Für Admins: Einrichtung
+
+<Steps>
+
+1. **Add-in-Dienst bauen und starten**, danach den Reverse-Proxy die neuen Routen lernen
+   lassen.
+
+   ```bash title="Auf dem Server"
+   cd ~/eu-cowork/distribution
+   docker compose build office-addin
+   docker compose up -d office-addin
+   docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile
+   ```
+
+2. **Agenten anlegen.** Im Chat einen Agenten erstellen, zum Beispiel mit dem Namen
+   `Outlook-Assistent`, mit dem Standardmodell des Kunden und zunächst ohne Konnektoren.
+   Eine fertige Anweisungs-Vorlage liegt in `services/office-addin/README.md`.
+
+3. **Agenten für den Fernzugriff freigeben.** Ohne diese Freigabe antwortet die
+   Schnittstelle mit `403 No remote access to agent`. Zusätzlich muss das Rollen-Recht
+   **Remote-Agenten** gesetzt sein. Im Kunden-Template ist es global gesetzt, weil das
+   Add-in an alle verteilt wird.
+
+4. **Kennung des Agenten hinterlegen**, damit niemand ihn im Pane auswählen muss.
+
+   ```bash title="distribution/.env"
+   OFFICE_DEFAULT_AGENT_ID=agent_xxxxxxxxxxxxxxxxxxxxx
+   ```
+
+   ```bash title="Auf dem Server"
+   docker compose up -d admin
+   ```
+
+5. **Manifest prüfen.** Es liegt unter `https://<ihre-domain.ch>/office/manifest.xml` und darf
+   keinen Platzhalter mehr enthalten.
+
+</Steps>
+
+### Verteilung im Microsoft-365-Admin-Center
+
+<Steps>
+
+1. [admin.microsoft.com](https://admin.microsoft.com) öffnen, dann **Einstellungen →
+   Integrierte Apps**.
+
+2. **Benutzerdefinierte Apps hochladen**, danach *Office-Add-In* und *Manifestdatei
+   hochladen*.
+
+3. Zuweisen an **Nur ich** zum Testen, an einzelne **Benutzer/Gruppen** für einen Piloten
+   oder an die **Gesamte Organisation** für den Rollout. Berechtigungen bestätigen und
+   bereitstellen.
+
+</Steps>
+
+<Aside type="note" title="Rechnen Sie mit 24 Stunden">
+Bis das Add-in bei allen Nutzern im Menüband erscheint, vergehen laut Microsoft **bis zu 24
+Stunden**. Das klassische Outlook hat zusätzlich einen lokalen Zwischenspeicher.
+
+Für einen Piloten ist der Weg über [aka.ms/olksideload](https://aka.ms/olksideload) deutlich
+schneller. Er wirkt
+pro Postfach und sofort auf allen Clients dieses Postfachs.
+</Aside>
+
+**Bei Updates** zählen Sie die Versionsnummer im Manifest hoch und aktualisieren es unter
+Integrierte Apps. Die **GUID bleibt dabei immer gleich**. Eine neue GUID gilt als fremdes
+Add-in und würde ein zweites Mal im Menüband erscheinen.
+
+### Optional: Schreibstil übernehmen
+
+Soll das Pane den persönlichen Schreibstil aus gesendeten Mails lernen, braucht es eine
+eigene App-Registrierung in Entra mit der delegierten Berechtigung `Mail.Read`. Ohne diesen
+Schritt funktioniert das Add-in vollständig, nur die Stil-Übernahme fehlt. Das Zugriffstoken
+bleibt dabei im Client und geht nicht an Ihren Server. Um `Mail.Send` wird bewusst nicht
+gebeten.
+
+### Fehlersuche
+
+| Symptom | Ursache und Lösung |
+|---|---|
+| Add-in erscheint nicht im Menüband | Verteilung braucht bis zu 24 Stunden. Sofort testen über Sideload. Klassisches Outlook neu starten |
+| Pane bleibt weiss | Zertifikat prüfen. Es braucht ein öffentlich gültiges, keine interne Zertifizierungsstelle |
+| Pane leer nur in Outlook im Web | Der Reverse-Proxy setzt Framing-Header. Weder Container noch Proxy dürfen `X-Frame-Options` oder `frame-ancestors` senden |
+| `403 No remote access to agent` | Die Freigabe des Agenten für den Fernzugriff fehlt, oder das Rollen-Recht ist aus |
+| `401` beim Chatten | Der persönliche Schlüssel ist abgelaufen. Im Pane abmelden und neu anmelden |
+| Abbruch nach rund 60 Sekunden | `DISABLE_COMPRESSION` steht auf `false` |
+| Add-in fehlt bei einzelnen Personen | Deren Postfach liegt nicht auf Exchange Online |
+
+Fehler aus dem Pane landen zusätzlich im Admin-Panel unter **Logs**, Reiter **Client-Fehler**.
+Dort steht die technische Ursache mit Person, Plattform und Dateiname, nie ein Dateiinhalt.
+Die Einträge werden nach 30 Tagen automatisch entfernt.

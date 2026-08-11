@@ -1,0 +1,175 @@
+---
+title: System requirements
+description: What an instance needs in terms of CPU, memory and disk. With measured figures per container, rules of thumb and operational experience.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page states concretely what hardware an instance needs. All figures are measured on a
+running stack or taken from the checks in the installation scripts. It is written for anyone
+who is ordering a VM or assessing an existing machine.
+
+## Minimum and recommendation
+
+| | Minimum | Recommended |
+|---|---|---|
+| CPU | 2 vCPU | 4 vCPU |
+| Memory | 4 GB | 16 GB |
+| Disk | 40 GB | 200 GB |
+| Operating system | Ubuntu 22.04 LTS | Ubuntu 24.04 LTS |
+| Virtualization | not required | `/dev/kvm` available, then the hardened code interpreter backend is possible |
+
+For a single instance with few users, 80 GB is a comfortable figure. 200 GB pays off as soon
+as many files are uploaded, because uploads drive the growth.
+
+Both installation scripts check the machine and **warn** without aborting. Below 4 GB of
+memory both of them speak up, below 20 GB of free disk the installer does as well. Small
+instances are therefore explicitly allowed.
+
+## Measured figures per container
+
+Idle load, taken with `docker stats` on a running stack:
+
+| Container | Memory at idle |
+|---|---|
+| `api`, LibreChat | 374 MB |
+| `mongodb` | 102 MB |
+| `rag_api`, only with the `filesearch` profile | 100 MB |
+| `searxng` | 65 MB |
+| `admin` | 60 MB |
+| `odoo-mcp-*`, per instance | 45 MB |
+| `mcp-gateway` | 33 MB |
+| `meilisearch` | 29 MB |
+| `vectordb` | 29 MB |
+| `office-addin` | 15 MB |
+| **base stack in total** | **around 0.7 GB** |
+| code interpreter with runner, Redis and storage | around 0.5 GB |
+
+Under load, practically only the memory of `api` grows. Plan for **1.5 to 2 GB per customer
+instance** including its own code interpreter.
+
+<Aside type="note" title="0.7 GB measured, plan for 2 GB">
+The measured idle load is around 0.7 GB. You should still plan for about 2 GB, because images
+are built during installation and the code interpreter is added on top. Both figures are
+correct, they describe different states.
+</Aside>
+
+CPU load in normal operation is close to zero, because the computation happens at the
+inference provider. Real peaks only occur in three places: when the search index is rebuilt,
+when the embeddings for file search are computed and during code runs.
+
+## From user count to VM size
+
+| Users | Recommendation | VM |
+|---|---|---|
+| 1 to 15 | several instances on one VM, three to five customers | 4 vCPU, 16 GB, 80 GB |
+| 15 to 50 | dedicated VM | 4 vCPU, 8 to 16 GB, 100 GB |
+| more than 50, regulated industry, contractually guaranteed dedicated infrastructure or an own ERP connection | dedicated VM | 8 vCPU, 32 GB, 200 GB and more |
+
+Four small customers on a 16 GB machine use it sensibly and leave headroom for load peaks. It
+makes sense to build VMs in classes instead of deciding anew per customer.
+
+## Disk
+
+The Docker images occupy around 5 to 6 GB once. They are shared by all instances on the same
+machine, so a second stack does not cost that again. After that, three things grow above all:
+the uploaded files, the database and the container logs.
+
+Disk is the first limit in operation, not memory. Set up an alert at 70 percent usage. Docker
+log rotation is set up by `setup-server.sh`, without it the system disk fills up over the
+course of weeks.
+
+## From operation
+
+The internal instance of Herr Informatik runs on an Ubuntu VM with **4 GB of memory**. In
+daily use that is enough, even with the Odoo bridges, the Microsoft 365 bridge and the code
+interpreter.
+
+Around **30 GB** are occupied on this machine. A considerable part of that does not come from
+the payload data, but from several deployments next to each other and from old Docker layers
+that have piled up over updates. Anyone who cleans up the machine regularly gets by with
+considerably less.
+
+Practical conclusion: **40 GB is the minimum, 80 GB is comfortable.** Anyone who never cleans
+up should plan generously.
+
+### Cleaning up disk space
+
+Look first, then delete. The following commands run in the `distribution` directory or
+anywhere else, they affect the whole Docker host.
+
+```bash title="Look first"
+docker system df
+```
+
+The output shows separately how much space images, containers, local volumes and the build
+cache occupy, and how much of that is reclaimable.
+
+```bash title="Safe cleanup, the stack keeps running"
+docker system prune -f
+```
+
+Removes stopped containers, unused networks, unnamed image layers and the build cache. The
+running stack is not affected. In practice the build cache accounts for the largest part,
+because the four own sidecars are rebuilt with every update.
+
+```bash title="More thorough, only while the stack is running"
+docker image prune -a -f
+```
+
+Additionally removes all images for which no container exists any more. This typically hits
+the old LibreChat digests after a version change.
+
+<Aside type="caution" title="Use docker system prune -a with care">
+`docker system prune -a` also deletes images that a **stopped** stack still needs. After the
+next start, all images then have to be pulled again and all sidecars rebuilt, which takes
+time. Check with `docker compose ps` beforehand that everything is really running.
+
+Never add `--volumes` unless you know exactly what you are doing. That would take the vector
+database of the file search and the certificates managed by Caddy with it.
+</Aside>
+
+## Operating system and Docker
+
+Tested are Ubuntu 22.04 and 24.04, recommended is 24.04 LTS. On other distributions
+`setup-server.sh` keeps running, but it warns and behavior may differ.
+
+Mandatory is **Docker Engine with Compose v2 as a plugin**. The Ubuntu package `docker.io` does
+**not** include Compose v2. If it is installed, `setup-server.sh` aborts with a note and
+requires you to remove it first. This is why the script installs Docker from the official
+Docker package source.
+
+## Ports, DNS and firewall
+
+Exactly three ports belong to the outside:
+
+| Port | What for |
+|---|---|
+| 22 | SSH for administration |
+| 80 | certificate issuance and redirect to HTTPS |
+| 443 | chat, admin panel and Outlook add-in |
+
+`setup-server.sh` sets `ufw` to "deny incoming" and opens exactly these three.
+
+**DNS:** two A records have to point to the server, `<ihre-domain.ch>` and
+`admin.<ihre-domain.ch>`. The placeholder stands for your own domain, it is kept as it appears in
+the configuration files. Caddy needs both records in order to have the certificates issued.
+Without the second record the admin panel is not reachable.
+
+<Aside type="danger" title="ufw does not protect Docker ports">
+Ports published by Docker through `ports:` bypass `ufw`, because Docker writes its own iptables
+rules into the `DOCKER-USER` chain. A service bound to `0.0.0.0` is reachable from the outside
+despite an active firewall. Therefore the rule is: apart from Caddy, no service binds to
+`0.0.0.0`, and in production `API_BIND=127.0.0.1` belongs in the `.env`.
+</Aside>
+
+## Swap
+
+On machines with less than 8 GB of memory and without existing swap, `setup-server.sh` creates
+a **4 GB swap file** at `/swapfile`, registers it in `/etc/fstab` and sets `vm.swappiness=10`.
+Swap is an emergency reserve, not a permanent solution. From 8 GB of memory upwards the script
+skips it.
+
+With `--no-swap` you skip the step, for example if your virtualization manages swap itself.

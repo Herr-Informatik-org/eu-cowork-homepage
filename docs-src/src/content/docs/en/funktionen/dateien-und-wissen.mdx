@@ -1,0 +1,179 @@
+---
+title: Files and knowledge
+description: Attaching files to a message, file search across a document collection and search across your own chats. What is on by default and what is not.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+This page separates three things that get confused constantly in daily work: attaching a file
+to a message, making a whole document collection searchable, and searching your own
+conversations. Two of them are there after installation, one is not.
+
+## Three things, one word
+
+| What you want | What it is called | State as shipped |
+|---|---|---|
+| The colleague should read this one file now | Attaching a file (context) | **on** |
+| A collection of many documents should be permanently searchable | File search, also known as RAG, short for retrieval augmented generation, meaning answers built from looked up passages | **off**, needs the `filesearch` profile |
+| I am looking for a passage in my old chats | Full text search across conversations | **on**, runs through Meilisearch |
+
+File handling comes from [LibreChat](https://www.librechat.ai/docs), as does the RAG interface
+behind it.
+
+## Attaching a file to a message
+
+This is the normal case. You attach a document to your message, the content moves into the
+context of this conversation, and you ask your question about it. Attaching works through the
+menu in the input field or by dragging onto the chat window.
+
+This makes sense for individual documents: reviewing a contract, summarizing minutes, having a
+table analyzed. The content stays in this conversation and does not become a searchable
+collection.
+
+### Formats
+
+The usual office and text formats are processed, among them PDF, Word (`.docx`), Excel
+(`.xlsx`), PowerPoint (`.pptx`), text, Markdown, CSV, JSON and XML. Images in JPEG, PNG, GIF
+and HEIC work too, but only on a model card that understands images. On the text only card an
+image has no effect, see
+[Chat and models](/docs/en/funktionen/chat-und-modelle).
+
+The exact list of permitted file types is configurable. Where, is covered further down in the
+section for admins.
+
+### Limits
+
+The LibreChat defaults apply as long as the admin sets nothing else:
+
+| Limit | Value |
+|---|---|
+| Files per message | 10 |
+| Size per file | 512 MB |
+| Size of all files together | 512 MB |
+| Server side limit per upload | 512 MB |
+| Profile picture | 2 MB |
+
+These numbers are set generously and are rarely the real limit. What matters more in practice
+is how much text a model can read in one request. A document of several hundred pages fills the
+context, crowds out the rest of the conversation and makes the answer worse. File search exists
+for collections like that.
+
+<Aside type="caution" title="There is no OCR">
+Scanned documents are **not** read. A PDF consisting only of images, for example a scanned
+contract or a photographed receipt, delivers no text. The colleague then sees an empty page and
+can say nothing about it. This applies in the web chat exactly as it does in the
+[Outlook add-in](/docs/en/funktionen/outlook-add-in). A text recognition backend is not part of
+the shipped state.
+
+Workaround: convert the document into a text PDF beforehand with a tool of your choice, or copy
+the text out and paste it into the chat.
+</Aside>
+
+## File search across a document collection
+
+File search is something different from attaching. Uploaded documents are split into sections,
+translated into number vectors and stored in a vector database, meaning a store that does not
+search by keyword but by similarity of meaning. In response to a question the colleague then
+fetches exactly the matching sections instead of putting the whole document into the context.
+
+The advantage shows with many long documents: a handful of manuals, a collection of policies, a
+project archive. Instead of "read these 400 pages" it becomes "find the three passages that
+answer my question".
+
+<Aside type="caution" title="Switched off in the customer template">
+As shipped, `interface.fileSearch: false`. The reason is an honest one: file search needs an
+additional backend and a provider for the embeddings. If the switch were on without both
+running, your team would have a button that grabs at nothing. How to switch both on is
+explained below.
+</Aside>
+
+## Full text search across your own chats
+
+The search in the sidebar searches your conversations, not your documents. It finds the passage
+where something was discussed. This search is always on, it needs no additional profile and no
+embeddings provider. Meilisearch runs behind it.
+
+## For admins
+
+### Switching on file search
+
+<Steps>
+
+1. **Store an embeddings provider in the `.env`.** Example from `distribution/.env.example`,
+   embeddings through EuRouter:
+
+   ```bash title="distribution/.env"
+   EMBEDDINGS_PROVIDER=openai
+   RAG_OPENAI_BASEURL=https://api.eurouter.ai/api/v1
+   RAG_OPENAI_API_KEY=${EUROUTER_API_KEY}
+   EMBEDDINGS_MODEL=mistral-embed
+   ```
+
+2. **Start the stack with the profile.**
+
+   ```bash title="On the server"
+   cd ~/eu-cowork/distribution
+   docker compose --profile filesearch up -d
+   ```
+
+   That adds two services: `vectordb` (pgvector) as the vector database and `rag_api` as the
+   service that splits and searches documents. Both are only reachable internally.
+
+3. **Enable the interface.** In `distribution/librechat.yaml`, set `interface.fileSearch` to
+   `true`.
+
+   ```yaml title="distribution/librechat.yaml"
+   interface:
+     fileSearch: true
+   ```
+
+   This switch belongs in the file, not in the panel. `fileSearch` is a permission field: the
+   value from the configuration file is written into the roles on **every** start. If you want
+   to grant file search to individual roles only, take the line out of the file and maintain the
+   permission exclusively in the role editor. A value in the panel tab **"Funktionen"**
+   (features) would be discarded server side for tool permissions.
+
+4. **Add the capability.** `'file_search'` must be listed in `endpoints.agents.capabilities`.
+   Important: this list **replaces** the default list, it is not merged into it. Whoever adds
+   something there has to enumerate everything they want to keep.
+
+5. **Check the role permission.** In the role editor under **"Werkzeuge"** (tools) you find the
+   permission **"Datei-Suche (RAG)"** (file search) with the note "Hochgeladene Dokumente
+   durchsuchen" (search uploaded documents). Optionally alongside it **"Datei-Zitate"** (file
+   citations) for source references from files.
+
+6. **Restart** so that the roles pick up the new state:
+
+   ```bash title="On the server"
+   docker compose --profile filesearch up -d --force-recreate api
+   ```
+
+</Steps>
+
+On sizing: `rag_api` uses around 100 MB when idle, `vectordb` around 29 MB. Peaks occur while
+reading in large documents, because embeddings are computed then.
+
+<Aside type="note" title="Most common failure pattern">
+File search stays ineffective because the stack was started without `--profile filesearch`.
+Then `vectordb` and `rag_api` simply do not run. Check with `docker compose ps`.
+</Aside>
+
+### Changing limits and permitted file types
+
+In the panel under **"Konfiguration → Dateien & Speicher"** (configuration, files and storage).
+Among other things you find **"Max. Dateigrösse Server (MB)"** (maximum file size on the
+server), **"Avatar-Limit (MB)"** (avatar limit) and the **"Endpoint-Limits (JSON)"** (endpoint
+limits) with the fields `fileLimit`, `fileSizeLimit`, `totalSizeLimit` and
+`supportedMimeTypes`.
+
+One sensible intervention is to lower the upper limit per file considerably. 512 MB is
+unrealistically high for a chat tool, and an accidentally uploaded video only costs storage.
+
+### What happens when an account is deleted
+
+When a person is deleted through the admin panel, their files are removed as well and the
+search indexes are cleaned up. The dialog explicitly offers **"Daten exportieren (JSON)"**
+(export data as JSON) beforehand, because the disclosure required by the GDPR has to happen
+before deletion.

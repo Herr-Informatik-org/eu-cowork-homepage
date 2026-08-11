@@ -1,0 +1,184 @@
+---
+title: What comes from LibreChat
+description: An honest breakdown of which parts of the platform come from LibreChat and which we built ourselves, and why the fork deliberately stays thin.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI is not a ground up new development. The chat interface and a large part of the
+application logic come from an existing open source project, our work lies in the layer around
+it. This page separates the two cleanly, so that you know where to look for an answer and whom
+to report a bug to.
+
+## What LibreChat is
+
+[LibreChat](https://www.librechat.ai) is an open source chat platform under the **MIT
+license**. It brings the interface, the connectivity to arbitrary model providers, the agent
+and file system as well as an administration interface. The project is mature and is actively
+developed further.
+
+Our running stack uses the **official LibreChat image, pinned to a digest**. Not to `:latest`,
+but to a specific version that we tested. So anyone who only wants to operate the platform
+never builds LibreChat from source. A version jump is a deliberate act: pull the new image,
+enter the digest, restart the stack, work through the checklist.
+
+## What comes from LibreChat
+
+| Area | What it covers |
+|---|---|
+| **Chat** | streaming, history, automatic titles, branching conversations, shared links, temporary chats, multiple chats |
+| **Agents** | creating and using agents, tool selection per agent, agent marketplace |
+| **Skills** | stored standard procedures that a model works through on request |
+| **Memory** | long term memory across conversations, with opt-out in the chat |
+| **Artifacts** | React, HTML, Mermaid and SVG directly in the chat, independent of code execution |
+| **Files** | upload as context, image understanding, the RAG API with pgvector for file search |
+| **Web search** | the framework for it, including the connection to SearXNG |
+| **Code execution** | the pluggable interface to the sandbox backend |
+| **MCP client** | the ability to talk to connectors through the Model Context Protocol |
+| **Presets and prompts** | prompt library, presets, bookmarks |
+| **Full text search** | search across earlier conversations through Meilisearch |
+| **Administration** | the REST interface `/api/admin/*` including a continuous audit chain |
+| **Identity** | OIDC including Entra ID, LDAP and SAML, plus the role synchronization |
+| **Usage metering** | token accounting and balance per person |
+
+## What we built
+
+| Building block | What it does | Where it lives |
+|---|---|---|
+| **Admin panel** | our own, permissively licensed panel against the MIT interface of LibreChat, plus a sidecar for everything that interface cannot do: usage in euros, shared monthly budget, retention, data export and deletion per account | `services/admin` |
+| **MCP gateway** | permission check and log before every access to a third party system, along the chain user, role, group, default. If the check fails, access is denied | `services/mcp-gateway` |
+| **Model router** | distributes requests across different models and reasoning efforts depending on the task | inside the MCP gateway |
+| **NinjaOne bridge** | read only access to device and organization data from the RMM | `services/ninjaone-mcp` |
+| **Outlook add-in** | side chat pane in Outlook with the open mail as context, against the same instance and the same permissions | `services/office-addin` |
+| **Model cards and system prompt** | the curated selection in the model picker and the German system prompt that is inserted on the server side | `distribution/librechat.yaml` |
+| **Installation package** | Compose stack, server preparation, installer, backup and migration, Caddy, SearXNG, branding | `distribution/` |
+| **Configuration profiles** | customer template versus internal instance, plus the Compose profiles for file search, connectors, Microsoft 365 and TLS | `distribution/` |
+
+<Aside type="note" title="Not built yet">
+Our own hardened sandbox runner with an egress proxy and an allowlist is planned, but not
+finished. Two third party backends are available for code execution. This is the largest known
+gap.
+</Aside>
+
+## Why the fork stays thin
+
+LibreChat is forked, but the fork deliberately stays close to the original. The reason is
+simple: the further a fork drifts, the more expensive every update becomes, and at some point
+it stops happening. A chat platform that lags two years behind the original is not an
+advantage but a risk.
+
+From this follows a fixed order in which a change is attempted:
+
+1. **Configuration.** Can it be solved in the `librechat.yaml`, in the `.env` or in the admin
+   panel?
+2. **CSS.** Is an adjustment of the presentation enough?
+3. **Small patch.** A narrowly scoped change in the fork.
+4. **Own component.** Only when nothing else carries.
+
+Everything that can be solved without touching LibreChat is therefore built as a separate
+service next to it. These services are called sidecars: standalone containers with their own
+lifecycle that talk to LibreChat through normal network interfaces. The admin panel, the MCP
+gateway, the NinjaOne bridge and the Outlook add-in are all built that way.
+
+In practice that means for you: an update of LibreChat does not touch our services, and a new
+version of the admin panel does not touch LibreChat. Both are updated separately. A release of
+EU Cowork AI is always a tested pair of one specific LibreChat digest and specific sidecar
+versions.
+
+## The file `librechat.yaml`
+
+The central configuration file of the chat application lives at
+`distribution/librechat.yaml`. It controls which models exist, how the interface looks, which
+connectors are wired in and how web search works.
+
+**The complete field reference is with LibreChat**, at
+[www.librechat.ai/docs](https://www.librechat.ai/docs). Here we only document what is
+particularly relevant in our setup.
+
+| Block | What it controls in our setup |
+|---|---|
+| `interface` | which controls are visible. In the customer template the parameter panel, the file search and the code execution are switched off here, and here it also says that users may not create connectors of their own |
+| `endpoints` | the model providers. EuRouter as the default path with EU processing, optionally OpenRouter as a deliberately marked non EU option. Below that also sit the capabilities of the agents |
+| `modelSpecs` | the curated model cards that appear in the picker, including labels, default card and the German system prompt |
+| `mcpServers` | the connectors. In the customer template this block is deliberately empty, no connector is preconfigured. On the internal instance the Odoo bridges and the other integrations sit here |
+| `webSearch` | search engine, scraper and reranker. In the customer template SearXNG is configured, the scraper is still missing |
+| `memory` | the long term memory: which rules apply, what its limits are and that users can switch it off |
+
+Two mechanics that keep causing surprises:
+
+- **The `interface` block is global.** Its values are written into all roles at startup and set
+  again on every restart. Differences per role therefore belong in the role editor of the admin
+  panel, not in the file.
+- **`endpoints.agents.capabilities` replaces the default list**, it does not merge with it.
+  Anyone who enters something there has to list everything that should be preserved.
+
+<Aside type="tip" title="The panel wins over the file">
+What you set in the admin panel under **Konfiguration** (configuration) sits as an override on
+top of the `librechat.yaml` and takes effect immediately, without a restart. Affected sections
+carry the note **aus DB-Override** (from a database override) in the panel. If you make a
+change in the file and do not see it, you probably have an override sitting on top of it.
+</Aside>
+
+## Where to read on
+
+The split is simple. Everything that concerns the chat application itself is with LibreChat.
+Everything that has to do with operation, permissions, usage and connectors is here.
+
+### With LibreChat
+
+For chat features in detail, agents, skills, memory, artifacts and the complete field
+reference of the configuration:
+**[www.librechat.ai/docs](https://www.librechat.ai/docs)**
+
+There you also find the description of fields we do not set, as well as the details on OIDC,
+LDAP and SAML.
+
+### In this documentation
+
+<CardGrid>
+  <LinkCard
+    title="Installation and operation"
+    href="/docs/en/betrieb/installation"
+    description="From an empty server to a running instance, updating, backup and migration."
+  />
+  <LinkCard
+    title="Permissions and gateway"
+    href="/docs/en/konnektoren/gateway-und-rechte"
+    description="Who may see which connector, how the permission cascade works and what is logged."
+  />
+  <LinkCard
+    title="Usage and budgets"
+    href="/docs/en/administration/verbrauch-und-budgets"
+    description="Tokens in euros, shared monthly budget, personal limits and receipts."
+  />
+  <LinkCard
+    title="Connect your own system"
+    href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
+    description="Create an MCP server, route it through the gateway and grant access selectively."
+  />
+  <LinkCard
+    title="Admin panel"
+    href="/docs/en/administration/admin-panel"
+    description="The structure of the panel, page by page, and the order to follow as a new admin."
+  />
+  <LinkCard
+    title="Environment variables"
+    href="/docs/en/referenz/umgebungsvariablen"
+    description="Every variable of the .env with purpose, whether it is required and its default."
+  />
+</CardGrid>
+
+## Where to report a bug
+
+| The bug concerns | Responsible |
+|---|---|
+| chat interface, agents, model connectivity, file handling | LibreChat |
+| admin panel, usage display, budget, retention | EU Cowork AI |
+| permissions on connectors, log of the tool calls | EU Cowork AI |
+| installation, backup, migration, Compose stack, TLS | EU Cowork AI |
+| Outlook add-in | EU Cowork AI |
+
+The licenses of all building blocks involved are on the
+[licenses and origin](/docs/en/referenz/lizenzen) page.

@@ -418,9 +418,9 @@ class Component extends DCLogic {
     const base = onLanding ? '' : '/';
     const active = this.props.activeNav || 'home';
     const T = {
-      de: { funktionen:'Funktionen', governance:'Governance', souveraenitaet:'Souveränität', selfhost:'Self-Host', faq:'FAQ',
+      de: { funktionen:'Funktionen', governance:'Governance', souveraenitaet:'Souveränität', selfhost:'Self-Host', faq:'FAQ', docs:'Docs',
             primary:'Auf die Warteliste', secondary:'Self-host for free' },
-      en: { funktionen:'Features', governance:'Governance', souveraenitaet:'Sovereignty', selfhost:'Self-Host', faq:'FAQ',
+      en: { funktionen:'Features', governance:'Governance', souveraenitaet:'Sovereignty', selfhost:'Self-Host', faq:'FAQ', docs:'Docs',
             primary:'Join the waitlist', secondary:'Self-host for free' }
     }[lang];
     /* „Governance" zeigt auf die eigene Seite, nicht auf einen Anker: der
@@ -431,7 +431,8 @@ class Component extends DCLogic {
       { key:'governance',  label:T.governance,     href: '/governance' },
       { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
       { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
-      { key:'faq',         label:T.faq,            href: '/faq' }
+      { key:'faq',         label:T.faq,            href: '/faq' },
+      { key:'docs',        label:T.docs,           href: '/docs' }
     ].map(n => ({ ...n, cls: n.key === active ? 'is-active' : '' }));
     const isDe = lang === 'de';
     return {

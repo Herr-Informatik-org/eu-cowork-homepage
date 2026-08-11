@@ -1,0 +1,130 @@
+---
+title: Best practices for connectors
+description: Ten rules with reasoning and measured figures, plus a checklist to run before granting access to a new connector.
+sidebar:
+  order: 7
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+This page sums up what has proven itself in operation. The rules are ordered by importance, and the first one is the one that gets forgotten most often and costs the most.
+
+## 1. Set the server default to denied right away
+
+Without a rule document the permission gateway lets everyone through. A freshly created connector is therefore visible to every person who may use MCP at all.
+
+This is built that way on purpose, because a configuration mistake should not paralyze the whole chat. For you it means that the period between "connector created" and "permissions set" is an open window. With an ERP connection, that window covers every customer, every document, and all the personnel data the service account can see.
+
+So set **"Server-Standard"** (server default) to denied in the same work step in which you create the connector, and only grant access afterwards. Remember to save, the panel only writes when you press the button.
+
+## 2. Few tools rather than many
+
+The tool catalog of a connector is sent to the model **with every single message**. It is not a one time investment, it is ongoing rent on every chat.
+
+| Example | Tools | Context per conversation |
+|---|---|---|
+| Microsoft 365 bridge, unfiltered | 164 | roughly 96,000 tokens |
+| Microsoft 365 bridge, filtered | 21 | roughly 8,000 tokens |
+| NinjaOne bridge | 7 | roughly 2,000 tokens |
+
+The filtering saves 92 percent. The second effect is at least as important: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. A narrow catalog delivers not only cheaper but also more reliable answers.
+
+So enable tools one at a time and on request, not as a precaution.
+
+## 3. A tool that does not exist cannot be called
+
+The most reliable security measure is leaving things out. A model cannot call a tool by accident that does not exist at all, and no instruction inside a document can talk one into being.
+
+The [NinjaOne connection](/docs/en/konnektoren/konnektor-ninjaone) demonstrates this: there is deliberately no tool for reboot, script execution, patch deployment, maintenance windows, alert acknowledgement, or ticket changes. That is also why there is no rule anywhere that would have to prevent someone from restarting a customer server from the chat. It simply is not possible.
+
+That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers reboots and script runs alongside reading and that cannot be switched off, a narrow connector of your own is often the faster solution than the discussion about who is allowed to use it.
+
+## 4. Separate service accounts instead of one master key
+
+An access key inherits the permissions of its account in the source system. So one key for everyone means the widest permissions for everyone, and the separation then hangs on our software alone.
+
+Instead, create several narrow service accounts, one per permission profile, and run a separate instance of the connector per account. That is exactly how the [Odoo connection](/docs/en/konnektoren/konnektor-odoo) is built: three instances of the same bridge, three Odoo users, three permission profiles. If the rule in the panel ever fails, a person still only sees what their service account is allowed to see.
+
+The side effect is valuable too: in the log of the source system you can tell which profile a query came from.
+
+## 5. The data boundary belongs in the source system
+
+The temptation to draw a boundary in the prompt is strong: "do not query salary data." That is not a boundary, that is a request.
+
+Filtering at argument level does not carry far either. Many tools accept free search expressions or filter conditions. What is possible in there cannot be judged reliably from the outside, and every filter rule is a race against phrasings nobody thought of.
+
+Only two levels are reliable: the permissions of the account in the source system, so for example the record rules of the Odoo user or the organization access of the NinjaOne role, and the tool level, because a tool that does not exist cannot deliver anything. Draw the boundary there, and treat the prompt as a convenience, not as a control.
+
+## 6. Per-user sign-in beats a service account
+
+If a system offers per-person access through an interface, take it. Then the target system knows the person making the request, and their permissions there apply unchanged. You have to rebuild nothing and maintain nothing on top, and a permission change in the source system takes effect in the chat right away.
+
+The Microsoft 365 connection works this way. The price for it is that every person has to connect once, and that this connector does not run through the gateway and therefore cannot be controlled per role or group. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
+
+A service account is the fallback for systems without this option. It is not bad, but it demands rules 1, 4, and 8 with some insistence.
+
+## 7. Keys only as a variable reference
+
+Never enter credentials into the configuration in plain text, only ever as a reference to an environment variable, so in the form `${MEIN_SCHLUESSEL}`. You store the value itself in the `.env` on the server or in the panel under **"Einstellungen → API-Schlüssel"** (settings → API keys).
+
+This is not a formality. A plain text value in the configuration would be readable through the configuration view and would come along in exports and backups of the settings. That is why the panel explicitly rejects plain text for provider keys.
+
+The rest of the system is built on the same assumption: saved keys are write only and are never displayed again, the connection test resolves the reference server side and does not let the value out, and the change log records only the **name** of a variable, never the value.
+
+## 8. Exactly one instance of the same connector per person
+
+Several instances of the same connector expose identical tool names. If two of them are granted to one person, two things happen: the catalog sits in the context twice and costs double on every message, and the model has to guess between two identically named tools. Both are avoidable.
+
+So grant exactly one instance per person. If someone needs a different permission profile, **switch** the grant instead of adding a second one. The **"Zugriffe"** (access) subpage of a person shows at a glance what actually applies and through which stage.
+
+## 9. Manage context size actively
+
+The tool catalog is only one half. The other half is the **results** of the calls. An unconsidered query across the whole device landscape or an unfiltered hit list from the ERP fills up the context, pushes out the conversation history, and makes the answer worse, not better.
+
+Four levers help:
+
+- **Upper limits are set and should stay that way.** Tool results are capped in length, and so is the character budget that web search passes on to the model. If a response looks truncated, that is the protection doing its job.
+- **Prefer connectors with staged responses.** For a device question the NinjaOne connection loads only the master data and fetches software, services, or patches only on explicit request. That saves on every single question.
+- **For questions about many objects, use an evaluation tool instead of many individual queries.** Ten individual queries cost ten results in the context, one evaluation costs one.
+- **With tool heavy agents, load the tool definitions only when needed.** There is a capability for this that puts the catalog behind a search tool instead of writing it into every prompt in full. The internal instance uses it, in the customer template it is not set.
+
+What you do not have to handle yourself: if a conversation runs very long, the history is compacted automatically.
+
+## 10. Flag connectors outside the EU
+
+A connector carries data from your instance to a vendor. If that vendor is outside the EU, that is a statement about your data handling that you should not make silently.
+
+So handle it the way we do: NinjaOne is a vendor from the USA, and even the European instance remains processing outside your own stack. For internal use this is a deliberate trade-off, and **in the shipped customer template the connection is not included**.
+
+Keep a short list of which connector passes data where, name non EU connections explicitly to your users and in your data protection documentation, and do not claim for such connectors that everything stays in Europe.
+
+## Checklist before granting access to a new connector
+
+Work through these points before the first person uses the connector:
+
+- [ ] The list of exposed tools has been read in full and understood.
+- [ ] Everything that is not needed is switched off or not present in the first place.
+- [ ] There is a read only mode, or there is a reason why writing is necessary.
+- [ ] The service account in the source system has exactly the permissions it needs, and no more.
+- [ ] The data boundary is drawn in the source system, not in the prompt.
+- [ ] Credentials appear in the configuration only as a variable reference.
+- [ ] The connector runs through the gateway, or there is a reason why it does not.
+- [ ] **"Server-Standard"** (server default) is set to denied and has been saved.
+- [ ] The grants are set, and only one instance is granted per person.
+- [ ] The connection test is green, and the chat layer has been restarted.
+- [ ] A test user with narrow permissions demonstrably sees less than one with wide permissions.
+- [ ] For a vendor outside the EU this is documented and communicated.
+- [ ] A look at the log under **"Audit-Log → MCP-Tool-Calls"** (audit log) shows the expected calls and decisions.
+
+<CardGrid>
+  <LinkCard
+    title="Permission gateway"
+    href="/docs/en/konnektoren/gateway-und-rechte"
+    description="The permission cascade, the effective times, and where you maintain the rules."
+  />
+  <LinkCard
+    title="Connecting your own connector"
+    href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
+    description="The complete path in the panel or through the configuration files, including troubleshooting."
+  />
+</CardGrid>

@@ -1,0 +1,127 @@
+---
+title: Microsoft 365 and SharePoint
+description: Access to SharePoint and OneDrive with the permissions of the individual person, set up through an Entra app registration.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+This connection lets your staff ask about files in SharePoint and OneDrive from the chat, and it does so **with their own Microsoft 365 permissions**. It is the model example for the preferred connection type and needs a one time app registration in Entra.
+
+## Per-user sign-in, and why it is the better way
+
+On first use the person picks the tool in the chat and clicks connect. They land in the familiar Microsoft sign-in dialog, confirm the access, and from then on the connector works with **their personal delegated access**. The sequence in detail:
+
+1. The person starts the connection in the chat.
+2. The browser leads to the Microsoft login including consent, exclusively for read permissions.
+3. The chat layer exchanges the returned code server side for a personal access token and passes it on to the bridge.
+4. The bridge calls Microsoft Graph **as that person**.
+
+So it holds that someone who is not allowed to see a folder in SharePoint does not see it in the chat either. The permissions are maintained where they are maintained anyway, and they do not have to be rebuilt in our system. That is the actual acceptance test for this connection: two test users with different SharePoint permissions have to see different amounts.
+
+<Aside type="note" title="This connector deliberately does not run through the gateway">
+Because the person's permissions are already the boundary, an additional check in the gateway would not be a security gain, only extra complexity in the sign-in procedure. The connector is therefore connected directly and carries the badge **"Direkt"** (direct) in the panel.
+
+Practical consequence: for this connector there are **no** rules per role, group, or person. Only the **"Generalschalter pro Rolle"** (master switch per role) on the "MCP-Zugriff" (MCP access) page applies. Anyone who should not have the connector at all has to be steered through the model and agent configuration, or must not be allowed to use MCP at all.
+</Aside>
+
+## What the connector can do
+
+It reads **SharePoint and OneDrive** through Microsoft Graph. Typical use cases are finding a file in a library, summarizing a document that was found, and searching through folder structures.
+
+The bridge runs with an explicit read only switch. There is no writing, no moving, and no deleting in Microsoft 365, no matter what the model tries. Documents are not copied or synchronized into our systems. What flows through the instance and on to the language model are the queries and the content that was read, and the conversation history then sits in the database of your instance.
+
+Mail, calendar, and Teams are deliberately **not** enabled. The same bridge could do that, it would require additional permissions and a fresh consent.
+
+## The Entra app registration
+
+These steps are done once by a person with Entra administration rights in the target tenant. In a customer project that is the customer's tenant, so a separate registration with its own values.
+
+<Steps>
+1. **Create a new registration** under **Microsoft Entra ID → App registrations → New registration**. The name is up to you. As the account type choose **accounts in this organizational directory only**, meaning single tenant.
+
+2. **Enter a redirect URI of type Web**, both variants you need:
+
+   ```text
+   http://localhost:3080/api/mcp/sharepoint/oauth/callback
+   https://<ihre-chat-domain>/api/mcp/sharepoint/oauth/callback
+   ```
+
+   The chat layer builds the server variant from the variable `DOMAIN_SERVER`. It has to match **exactly**, including `http` versus `https` and including the port.
+
+3. **Add delegated permissions for Microsoft Graph**, exactly these four:
+
+   | Permission | What for |
+   |---|---|
+   | `User.Read` | identify your own account |
+   | `Sites.Read.All` | read SharePoint sites and libraries |
+   | `Files.Read.All` | read files |
+   | `offline_access` | keep the connection alive |
+
+   `Sites.Read.All` sounds broad, but it is **delegated**. What always applies is the intersection with the real permissions of the signed in person, never more.
+
+   **`offline_access` is not optional.** Without this permission there is no refresh token, and the connection dies after roughly an hour. The same happens if the tenant is not set to the real tenant identifier.
+
+4. **Grant administrator consent**, meaning click *Grant admin consent*. After that the status column has to show green check marks everywhere.
+
+   Without this click your staff see the dialog **Need admin approval** when connecting and get no further, because `Sites.Read.All` and `Files.Read.All` cannot be consented to by the users themselves. With the click the dialog disappears for everyone.
+
+5. **Create a client secret** and copy the value right away, it is only visible once. **Note the expiry date** and plan the renewal. An expired secret later shows up as error 401 at the bridge, even though the login works.
+
+6. **Note three values**: the directory identifier of the tenant, the application identifier, and the secret value.
+</Steps>
+
+## Required variables
+
+In `distribution/.env`, only the names:
+
+| Variable | Purpose |
+|---|---|
+| `MS365_TENANT_ID` | directory identifier of the tenant. Always set the real identifier |
+| `MS365_MCP_CLIENT_ID` | application identifier of the registered app |
+| `MS365_MCP_CLIENT_SECRET` | the secret value from step 5 |
+| `DOMAIN_SERVER` | base of the redirect URI, has to match the Entra registration |
+
+In addition the host names `ms365-mcp` and `login.microsoftonline.com` have to be listed under **"Konfiguration → Funktionen → MCP-Netzwerk → Erlaubte MCP-Hosts"** (configuration → features → MCP network → allowed MCP hosts), otherwise the protection against requests to internal addresses blocks the connection.
+
+The connector is started through the profile `microsoft`:
+
+```bash title="On the server"
+cd ~/eu-cowork/distribution
+docker compose --profile production --profile internal --profile microsoft up -d
+```
+
+## The token saving note
+
+This bridge is the clearest example of the fact that a connector costs money, even when it does not cost anything.
+
+| | Tools | Context per conversation |
+|---|---|---|
+| Unfiltered | 164 | roughly 96,000 tokens |
+| Filtered | 21 | roughly 8,000 tokens |
+
+That is **92 percent less**, and it applies to every single message of every conversation. Unfiltered, the bridge would bring along tools for mail, Teams, Planner, Excel, and OneNote, which the file search use case does not need.
+
+The shipped state is therefore restricted to **15 file and site tools**, plus 6 built in tools for the sign-in, which makes 21. The restriction is written as an expression in the Compose entry of the service. Enabling another tool means adding its name to that expression and restarting the service. Do that deliberately and one at a time, not as a precaution.
+
+## After a migration
+
+<Aside type="caution" title="Without carrying over the keys every person has to reconnect">
+The personal access tokens sit encrypted in the database of your instance. The key for that is in the `.env` and is **generated anew** during a fresh installation.
+
+If you move to a new server, you have to carry `CREDS_KEY` and `CREDS_IV` over from the old `.env`. If you forget that, all stored connections are unusable, and **every person has to connect their Microsoft account once more**. No data is lost in the process, but it is one support case per staff member.
+</Aside>
+
+## Failure modes and limits
+
+| Symptom | Cause and solution |
+|---|---|
+| An error about a redirect URI that does not match | The URI in the Entra app differs from `DOMAIN_SERVER` plus `/api/mcp/sharepoint/oauth/callback`. Watch out for `http` versus `https` and for the port |
+| The dialog **Need admin approval** when connecting | The administrator consent is missing |
+| The connection dies after roughly an hour | `offline_access` is missing from the permissions, or the tenant is not set to the real identifier |
+| A message about a blocked private or reserved address | `ms365-mcp` is missing under **"Erlaubte MCP-Hosts"** (allowed MCP hosts) |
+| Error 401 at the bridge despite a successful login | The client secret has expired. Create a new secret and update the `.env` |
+| The bridge does not start | Usually the `MS365_*` values are missing from the `.env` |
+
+There are two functional limits you should know about. Tenant wide evaluations are often blocked without additional administrator rights, so there is no guaranteed complete directory of all sites. And folder sizes from SharePoint are aggregated approximations, good for sorting, but not an exact basis for billing.

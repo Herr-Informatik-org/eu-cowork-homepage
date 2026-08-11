@@ -1,0 +1,919 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-vdxcvpsm"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Environment variables | EU Cowork AI</title><link rel="canonical" href="https://eucowork.ai/docs/en/referenz/umgebungsvariablen"/><link rel="alternate" hreflang="de-CH" href="https://eucowork.ai/docs/referenz/umgebungsvariablen"/><link rel="alternate" hreflang="en" href="https://eucowork.ai/docs/en/referenz/umgebungsvariablen"/><link rel="alternate" hreflang="x-default" href="https://eucowork.ai/docs/referenz/umgebungsvariablen"/><link rel="sitemap" href="/docs/sitemap-index.xml"/><link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="shortcut icon" href="/docs/favicon.ico" type="image/x-icon"/><meta name="generator" content="Astro v7.2.0"/><meta name="generator" content="Starlight v0.41.7"/><meta property="og:title" content="Environment variables"/><meta property="og:type" content="article"/><meta property="og:url" content="https://eucowork.ai/docs/en/referenz/umgebungsvariablen"/><meta property="og:locale" content="en"/><meta property="og:description" content="Complete reference of the file distribution/.env, grouped by topic, with purpose, whether it is required and its default."/><meta property="og:site_name" content="EU Cowork AI"/><meta name="description" content="Complete reference of the file distribution/.env, grouped by topic, with purpose, whether it is required and its default."/><meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png"/><meta name="twitter:card" content="summary_large_image"/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/docs/_astro/print.ehPL0gv-.css" media="print"><link rel="stylesheet" href="/docs/_astro/common.CAXIQhnA.css"><style>@layer starlight.components{.card:where(.astro-zts4jgjd){--sl-card-border:var(--sl-color-purple);--sl-card-bg:var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);flex-direction:column;gap:clamp(.5rem,.125rem + 1vw,1rem);padding:clamp(1rem,.125rem + 3vw,2.5rem)}.card:where(.astro-zts4jgjd):nth-child(4n+1){--sl-card-border:var(--sl-color-orange);--sl-card-bg:var(--sl-color-orange-low)}.card:where(.astro-zts4jgjd):nth-child(4n+3){--sl-card-border:var(--sl-color-green);--sl-card-bg:var(--sl-color-green-low)}.card:where(.astro-zts4jgjd):nth-child(4n+4){--sl-card-border:var(--sl-color-red);--sl-card-bg:var(--sl-color-red-low)}.card:where(.astro-zts4jgjd):nth-child(4n+5){--sl-card-border:var(--sl-color-blue);--sl-card-bg:var(--sl-color-blue-low)}.title:where(.astro-zts4jgjd){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);align-items:center;gap:1rem}.card:where(.astro-zts4jgjd) .icon:where(.astro-zts4jgjd){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);border-radius:.25rem;flex-shrink:0;padding:.2em}.card:where(.astro-zts4jgjd) .body:where(.astro-zts4jgjd){font-size:clamp(var(--sl-text-sm), calc(.5rem + 1vw), var(--sl-text-body));margin:0}}
+@layer starlight.components{.card-grid:where(.astro-lmor3ela){grid-template-columns:100%;gap:1rem;display:grid}.card-grid:where(.astro-lmor3ela)>*{margin-top:0!important}@media (width>=50rem){.card-grid:where(.astro-lmor3ela){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-lmor3ela){--stagger-height:5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-lmor3ela)>:nth-child(2n){transform:translateY(var(--stagger-height))}}.sl-link-card:where(.astro-vodiqeol){border:1px solid var(--sl-color-gray-5);box-shadow:var(--sl-shadow-sm);border-radius:.5rem;grid-template-columns:1fr auto;gap:.5rem;padding:1rem;display:grid;position:relative}a:where(.astro-vodiqeol){line-height:var(--sl-line-height-headings);text-decoration:none}a:where(.astro-vodiqeol):before{content:"";position:absolute;inset:0}.stack:where(.astro-vodiqeol){flex-direction:column;gap:.5rem}.title:where(.astro-vodiqeol){color:var(--sl-color-white);font-weight:600;font-size:var(--sl-text-lg)}.description:where(.astro-vodiqeol){color:var(--sl-color-gray-3);line-height:1.5}.icon:where(.astro-vodiqeol){color:var(--sl-color-gray-3)}.sl-link-card:where(.astro-vodiqeol):hover{background:var(--sl-color-gray-7,var(--sl-color-gray-6));border-color:var(--sl-color-gray-2)}.sl-link-card:where(.astro-vodiqeol):hover .icon:where(.astro-vodiqeol){color:var(--sl-color-white)}}
+@layer starlight.components{svg:where(.astro-n5k4ipy7){color:var(--sl-icon-color);font-size:var(--sl-icon-size,1em);width:1em;height:1em}}
+@layer starlight.components{starlight-tabs:where(.astro-hbt4ddzs){display:block}.tablist-wrapper:where(.astro-hbt4ddzs){overflow-x:auto}:where(.astro-hbt4ddzs)[role=tablist]{border-bottom:2px solid var(--sl-color-gray-5);padding:0;list-style:none;display:flex}.tab:where(.astro-hbt4ddzs){display:flex}.tab:where(.astro-hbt4ddzs)>:where(.astro-hbt4ddzs)[role=tab]{--sl-tab-color-border:var(--sl-color-gray-5);line-height:var(--sl-line-height-headings);box-shadow:0 2px 0 var(--sl-tab-color-border);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial;align-items:center;gap:.5rem;padding:.275rem 1.25rem;text-decoration:none;display:flex}.tab:where(.astro-hbt4ddzs) :where(.astro-hbt4ddzs)[role=tab][aria-selected=true]{--sl-tab-color-border:var(--sl-color-text-accent);color:var(--sl-color-white);font-weight:600}.tablist-wrapper:where(.astro-hbt4ddzs)~[role=tabpanel]{margin-top:1rem}}
+@layer starlight.components{.sl-steps{--bullet-size:calc(var(--sl-line-height) * 1rem);--bullet-margin:.375rem;counter-reset:steps-counter var(--sl-steps-start,0);padding-inline-start:0;list-style:none}.sl-steps>li{counter-increment:steps-counter;padding-inline-start:calc(var(--bullet-size) + 1rem);min-height:calc(var(--bullet-size) + var(--bullet-margin));padding-bottom:1px;position:relative}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);top:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);box-shadow:inset 0 0 0 1px var(--sl-color-gray-5);border-radius:99rem;font-weight:600;position:absolute;inset-inline-start:0}.sl-steps>li:after{--guide-width:1px;content:"";top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);width:var(--guide-width);background-color:var(--sl-color-hairline-light);position:absolute;inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2)}}@layer starlight.content{.sl-steps>li>:first-child{--lh:calc(1em * var(--sl-line-height));--shift-y:calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh:calc(1em * var(--sl-line-height-headings))}@supports (--prop:1lh){.sl-steps>li>:first-child{--lh:1lh}}}
+</style><script type="module" src="/docs/_astro/page.Dwipeu-R.js"></script></head><body class="astro-vdxcvpsm"><a class="sl-skip-link astro-vxeigawq" href="#_top">Skip to content</a><div class="page sl-flex astro-gqpr5s5a"><header class="header astro-gqpr5s5a"><div class="header astro-nczgtkxc"><div class="title-wrapper sl-flex astro-nczgtkxc"><div class="euc-sitetitle astro-hen6hmfb"><a href="/" class="euc-wordmark astro-hen6hmfb" aria-label="EU Cowork AI, zur Startseite"><svg class="euc-logo astro-hen6hmfb" width="24" height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" class="astro-hen6hmfb"></path><circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542" class="astro-hen6hmfb"></circle></svg><span class="euc-wordmark-text astro-hen6hmfb">EU Cowork <span class="euc-wordmark-ai astro-hen6hmfb">AI</span></span></a><a href="/docs" class="euc-docslabel astro-hen6hmfb">Docs</a></div></div><div class="sl-flex print:hidden astro-nczgtkxc"><site-search class="astro-nczgtkxc astro-r5ar4xm7" data-translations="{&quot;placeholder&quot;:&quot;Search&quot;}" data-strip-trailing-slash><button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-r5ar4xm7"><svg aria-hidden="true" class="astro-r5ar4xm7 astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg><span class="sl-hidden md:sl-block astro-r5ar4xm7" aria-hidden="true">Search</span><kbd class="sl-hidden md:sl-flex astro-r5ar4xm7" style="display: none;"><kbd class="astro-r5ar4xm7">Ctrl</kbd><kbd class="astro-r5ar4xm7">K</kbd></kbd></button><dialog style="padding:0" aria-label="Search" class="astro-r5ar4xm7"><div class="dialog-frame sl-flex astro-r5ar4xm7"><button data-close-modal class="sl-flex md:sl-hidden astro-r5ar4xm7">Cancel</button><div class="search-container astro-r5ar4xm7"><div id="starlight__search" class="astro-r5ar4xm7"></div></div></div></dialog></site-search><script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script><script type="module" src="/docs/_astro/Search.astro_astro_type_script_index_0_lang.CavldbAs.js"></script></div><div class="sl-hidden md:sl-flex print:hidden right-group astro-nczgtkxc"><div class="sl-flex social-icons astro-nczgtkxc"></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="dark" class="astro-r2p65idu">Dark</option><option value="light" class="astro-r2p65idu">Light</option><option value="auto" selected class="astro-r2p65idu">Auto</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><script type="module">var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStorage.setItem(e,t===`light`||t===`dark`?t:``)}var i=()=>matchMedia(`(prefers-color-scheme: light)`).matches?`light`:`dark`;function a(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e===`auto`?i():e,r(e)}matchMedia(`(prefers-color-scheme: light)`).addEventListener(`change`,()=>{n()===`auto`&&a(`auto`)});var o=class extends HTMLElement{constructor(){super(),a(n()),this.querySelector(`select`)?.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&a(t(e.currentTarget.value))})}};customElements.define(`starlight-theme-select`,o);</script><starlight-lang-select><label style="--sl-select-width: 7em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select language</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path fill-rule="evenodd" d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z" clip-rule="evenodd"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="/docs/referenz/umgebungsvariablen" class="astro-r2p65idu">Deutsch</option><option value="/docs/en/referenz/umgebungsvariablen" selected class="astro-r2p65idu">English</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-lang-select><script type="module">var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=e.currentTarget.value)}),window.addEventListener(`pageshow`,t=>{if(!t.persisted)return;let n=e.querySelector(`option[selected]`)?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}};customElements.define(`starlight-lang-select`,e);</script></div></div></header><nav class="sidebar print:hidden astro-gqpr5s5a" aria-label="Main"><starlight-menu-button class="print:hidden astro-vvx7mffu"><button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-vvx7mffu"><svg aria-hidden="true" class="open-menu astro-vvx7mffu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg><svg aria-hidden="true" class="close-menu astro-vvx7mffu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg></button></starlight-menu-button><script type="module">var e=class extends HTMLElement{btn=this.querySelector(`button`);constructor(){super(),this.btn.addEventListener(`click`,()=>this.toggleExpanded());let e=this.closest(`nav`);e&&e.addEventListener(`keyup`,e=>this.closeOnEscape(e)),matchMedia(`(min-width: 50em)`).addEventListener(`change`,()=>this.setExpanded(!1))}setExpanded(e){this.setAttribute(`aria-expanded`,String(e)),document.body.toggleAttribute(`data-mobile-menu-expanded`,e),document.querySelectorAll(`.main-frame, .sl-skip-link`).forEach(t=>{t.toggleAttribute(`inert`,e)})}toggleExpanded(){this.setExpanded(this.getAttribute(`aria-expanded`)!==`true`)}closeOnEscape(e){e.code===`Escape`&&(this.setExpanded(!1),this.btn.focus())}};customElements.define(`starlight-menu-button`,e);</script><div id="starlight__sidebar" class="sidebar-pane astro-gqpr5s5a"><div class="sidebar-content sl-flex astro-gqpr5s5a"><sl-sidebar-state-persist data-hash="1rj7iy8" class="astro-f5yvicm7"><script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script><ul class="top-level astro-ojxuodky"><li class="astro-ojxuodky"><details open class="astro-ojxuodky"><summary class="astro-ojxuodky"><span class="group-label astro-ojxuodky"><span class="large astro-ojxuodky">Getting started</span></span><svg aria-hidden="true" class="caret astro-ojxuodky astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="0"></sl-sidebar-restore><ul class="astro-ojxuodky"><li class="astro-ojxuodky"><a href="/docs/en/erste-schritte/ueberblick" class="astro-ojxuodky"><span class="astro-ojxuodky">What is EU Cowork AI?</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/erste-schritte/architektur" class="astro-ojxuodky"><span class="astro-ojxuodky">Architecture</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/erste-schritte/systemanforderungen" class="astro-ojxuodky"><span class="astro-ojxuodky">System requirements</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/erste-schritte/schnellstart" class="astro-ojxuodky"><span class="astro-ojxuodky">Quickstart</span></a></li></ul></details></li><li class="astro-ojxuodky"><details open class="astro-ojxuodky"><summary class="astro-ojxuodky"><span class="group-label astro-ojxuodky"><span class="large astro-ojxuodky">Install and operate</span></span><svg aria-hidden="true" class="caret astro-ojxuodky astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="1"></sl-sidebar-restore><ul class="astro-ojxuodky"><li class="astro-ojxuodky"><a href="/docs/en/betrieb/server-vorbereiten" class="astro-ojxuodky"><span class="astro-ojxuodky">Prepare the server</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/installation" class="astro-ojxuodky"><span class="astro-ojxuodky">Installation</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/konfiguration" class="astro-ojxuodky"><span class="astro-ojxuodky">Configuration</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/domain-und-tls" class="astro-ojxuodky"><span class="astro-ojxuodky">Domain and certificate</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/aktualisieren" class="astro-ojxuodky"><span class="astro-ojxuodky">Updating</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/backup-und-umzug" class="astro-ojxuodky"><span class="astro-ojxuodky">Backup and migration</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/mehrere-instanzen" class="astro-ojxuodky"><span class="astro-ojxuodky">Several instances on one server</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/betrieb/fehlerbehebung" class="astro-ojxuodky"><span class="astro-ojxuodky">Troubleshooting</span></a></li></ul></details></li><li class="astro-ojxuodky"><details open class="astro-ojxuodky"><summary class="astro-ojxuodky"><span class="group-label astro-ojxuodky"><span class="large astro-ojxuodky">For your team</span></span><svg aria-hidden="true" class="caret astro-ojxuodky astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="2"></sl-sidebar-restore><ul class="astro-ojxuodky"><li class="astro-ojxuodky"><a href="/docs/en/funktionen/chat-und-modelle" class="astro-ojxuodky"><span class="astro-ojxuodky">Chat and models</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/funktionen/dateien-und-wissen" class="astro-ojxuodky"><span class="astro-ojxuodky">Files and knowledge</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/funktionen/web-suche" class="astro-ojxuodky"><span class="astro-ojxuodky">Web search</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/funktionen/code-und-auswertungen" class="astro-ojxuodky"><span class="astro-ojxuodky">Analyses, spreadsheets and code</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/funktionen/agenten-und-skills" class="astro-ojxuodky"><span class="astro-ojxuodky">Agents and skills</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/funktionen/outlook-add-in" class="astro-ojxuodky"><span class="astro-ojxuodky">Outlook add-in</span></a></li></ul></details></li><li class="astro-ojxuodky"><details open class="astro-ojxuodky"><summary class="astro-ojxuodky"><span class="group-label astro-ojxuodky"><span class="large astro-ojxuodky">Administration</span></span><svg aria-hidden="true" class="caret astro-ojxuodky astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="3"></sl-sidebar-restore><ul class="astro-ojxuodky"><li class="astro-ojxuodky"><a href="/docs/en/administration/admin-panel" class="astro-ojxuodky"><span class="astro-ojxuodky">Admin panel</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/administration/benutzer-und-gruppen" class="astro-ojxuodky"><span class="astro-ojxuodky">Users, groups and roles</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/administration/modelle-und-karten" class="astro-ojxuodky"><span class="astro-ojxuodky">Models and model cards</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/administration/verbrauch-und-budgets" class="astro-ojxuodky"><span class="astro-ojxuodky">Usage, budgets and billing</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/administration/protokolle-und-audit" class="astro-ojxuodky"><span class="astro-ojxuodky">Logs and audit</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/administration/datenschutz-und-aufbewahrung" class="astro-ojxuodky"><span class="astro-ojxuodky">Data protection and retention</span></a></li></ul></details></li><li class="astro-ojxuodky"><details open class="astro-ojxuodky"><summary class="astro-ojxuodky"><span class="group-label astro-ojxuodky"><span class="large astro-ojxuodky">Connectors and MCP</span></span><svg aria-hidden="true" class="caret astro-ojxuodky astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="4"></sl-sidebar-restore><ul class="astro-ojxuodky"><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/was-ist-mcp" class="astro-ojxuodky"><span class="astro-ojxuodky">What is MCP</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/gateway-und-rechte" class="astro-ojxuodky"><span class="astro-ojxuodky">Permission gateway</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/eigenen-konnektor-anbinden" class="astro-ojxuodky"><span class="astro-ojxuodky">Connecting your own connector</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/konnektor-odoo" class="astro-ojxuodky"><span class="astro-ojxuodky">Odoo (ERP)</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/konnektor-microsoft-365" class="astro-ojxuodky"><span class="astro-ojxuodky">Microsoft 365 and SharePoint</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/konnektor-ninjaone" class="astro-ojxuodky"><span class="astro-ojxuodky">NinjaOne (RMM)</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/konnektoren/best-practices" class="astro-ojxuodky"><span class="astro-ojxuodky">Best practices for connectors</span></a></li></ul></details></li><li class="astro-ojxuodky"><details open class="astro-ojxuodky"><summary class="astro-ojxuodky"><span class="group-label astro-ojxuodky"><span class="large astro-ojxuodky">Reference</span></span><svg aria-hidden="true" class="caret astro-ojxuodky astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></summary><sl-sidebar-restore data-index="5"></sl-sidebar-restore><ul class="astro-ojxuodky"><li class="astro-ojxuodky"><a href="/docs/en/referenz/umgebungsvariablen" aria-current="page" class="astro-ojxuodky"><span class="astro-ojxuodky">Environment variables</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/referenz/dienste-und-ports" class="astro-ojxuodky"><span class="astro-ojxuodky">Services and ports</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/referenz/befehle" class="astro-ojxuodky"><span class="astro-ojxuodky">Command reference</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/referenz/librechat-und-eu-cowork" class="astro-ojxuodky"><span class="astro-ojxuodky">What comes from LibreChat</span></a></li><li class="astro-ojxuodky"><a href="/docs/en/referenz/lizenzen" class="astro-ojxuodky"><span class="astro-ojxuodky">Licenses and origin</span></a></li></ul></details></li></ul><script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-b5gddk54"><div class="social-icons astro-b5gddk54"></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="dark" class="astro-r2p65idu">Dark</option><option value="light" class="astro-r2p65idu">Light</option><option value="auto" selected class="astro-r2p65idu">Auto</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
+	StarlightThemeProvider.updatePickers();
+</script><starlight-lang-select><label style="--sl-select-width: 7em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select language</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path fill-rule="evenodd" d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z" clip-rule="evenodd"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="/docs/referenz/umgebungsvariablen" class="astro-r2p65idu">Deutsch</option><option value="/docs/en/referenz/umgebungsvariablen" selected class="astro-r2p65idu">English</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-lang-select></div></div></div></div></nav><div class="main-frame astro-gqpr5s5a"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-abfeecmu"><aside class="right-sidebar-container print:hidden astro-abfeecmu"><div class="right-sidebar astro-abfeecmu"><div class="lg:sl-hidden astro-q5mffni3"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-5ulgm6bh"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-5ulgm6bh"><details id="starlight__mobile-toc" class="astro-5ulgm6bh"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-5ulgm6bh"><span class="toggle sl-flex astro-5ulgm6bh">On this page<svg aria-hidden="true" class="caret astro-5ulgm6bh astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-5ulgm6bh"></span></summary><div class="dropdown astro-5ulgm6bh"><ul class="isMobile astro-cxyftcne" style="--depth: 0;"><li style="--depth: 0;" class="astro-cxyftcne"><a href="#_top" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Overview</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#what-the-columns-mean" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">What the columns mean</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#the-three-things-you-really-have-to-touch" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">The three things you really have to touch</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#secrets" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Secrets</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#host-and-ports" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Host and ports</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#domain-and-behavior" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Domain and behavior</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#authentication-and-encryption" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Authentication and encryption</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#email" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Email</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#search-and-file-search" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Search and file search</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#model-providers" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Model providers</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#code-execution" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Code execution</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#connectors" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Connectors</span></a><ul class="isMobile astro-cxyftcne" style="--depth: 1;"><li style="--depth: 1;" class="astro-cxyftcne"><a href="#odoo-compose-profile-internal" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">Odoo, Compose profile internal</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#ninjaone-compose-profile-internal" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">NinjaOne, Compose profile internal</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#microsoft-365-and-sharepoint-compose-profile-microsoft" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">Microsoft 365 and SharePoint, Compose profile microsoft</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#web-search-with-external-providers" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">Web search with external providers</span></a></li></ul></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#admin-panel-and-usage-metering" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Admin panel and usage metering</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#multiple-instances" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Multiple instances</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#variables-you-should-not-change" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Variables you should not change</span></a><ul class="isMobile astro-cxyftcne" style="--depth: 1;"><li style="--depth: 1;" class="astro-cxyftcne"><a href="#disable_compressiontrue" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">DISABLE_COMPRESSION=true</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#ban_violationstrue" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">BAN_VIOLATIONS=true</span></a></li></ul></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#related-pages" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Related pages</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/docs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-q5mffni3"><div class="sl-container astro-q5mffni3"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-cxyftcne" style="--depth: 0;"><li style="--depth: 0;" class="astro-cxyftcne"><a href="#_top" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Overview</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#what-the-columns-mean" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">What the columns mean</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#the-three-things-you-really-have-to-touch" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">The three things you really have to touch</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#secrets" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Secrets</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#host-and-ports" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Host and ports</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#domain-and-behavior" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Domain and behavior</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#authentication-and-encryption" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Authentication and encryption</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#email" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Email</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#search-and-file-search" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Search and file search</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#model-providers" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Model providers</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#code-execution" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Code execution</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#connectors" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Connectors</span></a><ul class="astro-cxyftcne" style="--depth: 1;"><li style="--depth: 1;" class="astro-cxyftcne"><a href="#odoo-compose-profile-internal" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">Odoo, Compose profile internal</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#ninjaone-compose-profile-internal" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">NinjaOne, Compose profile internal</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#microsoft-365-and-sharepoint-compose-profile-microsoft" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">Microsoft 365 and SharePoint, Compose profile microsoft</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#web-search-with-external-providers" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">Web search with external providers</span></a></li></ul></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#admin-panel-and-usage-metering" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Admin panel and usage metering</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#multiple-instances" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Multiple instances</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#variables-you-should-not-change" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Variables you should not change</span></a><ul class="astro-cxyftcne" style="--depth: 1;"><li style="--depth: 1;" class="astro-cxyftcne"><a href="#disable_compressiontrue" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">DISABLE_COMPRESSION=true</span></a></li><li style="--depth: 1;" class="astro-cxyftcne"><a href="#ban_violationstrue" style="--depth: 1;" class="astro-cxyftcne"><span style="--depth: 1;" class="astro-cxyftcne">BAN_VIOLATIONS=true</span></a></li></ul></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#related-pages" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Related pages</span></a></li></ul></nav></starlight-toc><script type="module" src="/docs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-abfeecmu"><main data-pagefind-body class="astro-vdxcvpsm" lang="en" dir="ltr"><div class="content-panel astro-oil7k7jf"><div class="sl-container astro-oil7k7jf"><h1 id="_top" class="astro-2sm4b3ln">Environment variables</h1></div></div><div class="content-panel astro-oil7k7jf"><div class="sl-container astro-oil7k7jf"><div class="sl-markdown-content">
+<p>All settings of an instance live in a single file: <code dir="auto">distribution/.env</code>. This page lists every
+variable from the shipped template <code dir="auto">distribution/.env.example</code>, grouped by topic. It is
+written for everyone who sets up or operates an instance.</p>
+<p>The installer creates the <code dir="auto">.env</code> from the template on the first run, generates the secrets and
+sets the permissions to <code dir="auto">600</code>. The file never belongs in a repository and never in a ticket.</p>
+<aside aria-label="No real values in this documentation" class="starlight-aside starlight-aside--danger"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm0 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm9.71-7.44-5.27-5.27a1.05 1.05 0 0 0-.71-.29H8.27a1.05 1.05 0 0 0-.71.29L2.29 7.56a1.05 1.05 0 0 0-.29.71v7.46c.004.265.107.518.29.71l5.27 5.27c.192.183.445.286.71.29h7.46a1.05 1.05 0 0 0 .71-.29l5.27-5.27a1.05 1.05 0 0 0 .29-.71V8.27a1.05 1.05 0 0 0-.29-.71ZM20 15.31 15.31 20H8.69L4 15.31V8.69L8.69 4h6.62L20 8.69v6.62Z"/></svg>No real values in this documentation</p><div class="starlight-aside__content"><p>This page contains only the placeholders from the template. A value like
+<code dir="auto">__SET_YOUR_EUROUTER_KEY__</code> is exactly that: a placeholder that you replace with your own key
+on your server. Never pass on the contents of your real <code dir="auto">.env</code>.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="what-the-columns-mean">What the columns mean</h2><a class="sl-anchor-link" href="#what-the-columns-mean"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “What the columns mean”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Variable</strong></td>
+<td>the name exactly as it appears in the <code dir="auto">.env</code></td>
+</tr>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>what the value is needed for</td>
+</tr>
+<tr>
+<td><strong>Required</strong></td>
+<td>whether the instance runs without this value. Some values are only needed with a particular Compose profile</td>
+</tr>
+<tr>
+<td><strong>Default</strong></td>
+<td>the value from <code dir="auto">.env.example</code>. <code dir="auto">commented out</code> means the line starts with <code dir="auto">#</code> and is therefore inactive</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="the-three-things-you-really-have-to-touch">The three things you really have to touch</h2><a class="sl-anchor-link" href="#the-three-things-you-really-have-to-touch"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “The three things you really have to touch”</span></a></div>
+<p>The rest of the file is preset so that an instance starts. Three areas you have to set
+yourself.</p>
+<aside aria-label="Short version" class="starlight-aside starlight-aside--tip"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path fill-rule="evenodd" d="M1.44 8.855v-.001l3.527-3.516c.34-.344.802-.541 1.285-.548h6.649l.947-.947c3.07-3.07 6.207-3.072 7.62-2.868a1.821 1.821 0 0 1 1.557 1.557c.204 1.413.203 4.55-2.868 7.62l-.946.946v6.649a1.845 1.845 0 0 1-.549 1.286l-3.516 3.528a1.844 1.844 0 0 1-3.11-.944l-.858-4.275-4.52-4.52-2.31-.463-1.964-.394A1.847 1.847 0 0 1 .98 10.693a1.843 1.843 0 0 1 .46-1.838Zm5.379 2.017-3.873-.776L6.32 6.733h4.638l-4.14 4.14Zm8.403-5.655c2.459-2.46 4.856-2.463 5.89-2.33.134 1.035.13 3.432-2.329 5.891l-6.71 6.71-3.561-3.56 6.71-6.711Zm-1.318 15.837-.776-3.873 4.14-4.14v4.639l-3.364 3.374Z" clip-rule="evenodd"/><path d="M9.318 18.345a.972.972 0 0 0-1.86-.561c-.482 1.435-1.687 2.204-2.934 2.619a8.22 8.22 0 0 1-1.23.302c.062-.365.157-.79.303-1.229.415-1.247 1.184-2.452 2.62-2.935a.971.971 0 1 0-.62-1.842c-.12.04-.236.084-.35.13-2.02.828-3.012 2.588-3.493 4.033a10.383 10.383 0 0 0-.51 2.845l-.001.016v.063c0 .536.434.972.97.972H2.24a7.21 7.21 0 0 0 .878-.065c.527-.063 1.248-.19 2.02-.447 1.445-.48 3.205-1.472 4.033-3.494a5.828 5.828 0 0 0 .147-.407Z"/></svg>Short version</p><div class="starlight-aside__content"><ol>
+<li>Enter <code dir="auto">EUROUTER_API_KEY</code>, otherwise no model responds.</li>
+<li>Set <code dir="auto">DOMAIN_CLIENT</code>, <code dir="auto">DOMAIN_SERVER</code> and <code dir="auto">EUCOWORK_DOMAIN</code> to your domain as soon as the
+instance no longer runs only locally.</li>
+<li>In production behind Caddy, set <code dir="auto">API_BIND=127.0.0.1</code>.</li>
+</ol></div></aside>
+<p><strong><code dir="auto">EUROUTER_API_KEY</code></strong> is the only value a standard customer has to enter themselves. Without
+it the stack does start, but every model request fails.</p>
+<p><strong>The three domain variables</strong> are set to <code dir="auto">localhost</code> out of the box. <code dir="auto">DOMAIN_CLIENT</code> is the
+URL the browser sees and at the same time the basis for invitation links. <code dir="auto">DOMAIN_SERVER</code> is
+the server URL and therefore the basis of the SharePoint redirect URI. <code dir="auto">EUCOWORK_DOMAIN</code> is
+used by Caddy and by the Office manifest. If they stay on <code dir="auto">localhost</code>, you send invitations
+with a link that only works on the server itself.</p>
+<p><strong><code dir="auto">API_BIND</code></strong> is set to <code dir="auto">0.0.0.0</code> out of the box, because that is convenient locally. In
+production with Caddy the value belongs on <code dir="auto">127.0.0.1</code>. Otherwise LibreChat is additionally
+reachable directly over HTTP at <code dir="auto">&lt;server-ip&gt;:3080</code>, bypassing TLS, with passwords in clear
+text on the network. The firewall does not help against that: ports published by Docker
+bypass the ufw rules. Panel and add-in already bind to <code dir="auto">127.0.0.1</code> out of the box.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="secrets">Secrets</h2><a class="sl-anchor-link" href="#secrets"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Secrets”</span></a></div>
+<p>These values are generated by <code dir="auto">install.sh</code> on the first run. You do not have to do anything
+for them.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>What for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">CREDS_KEY</code></td>
+<td>encrypts the stored credentials of the users, for example the SharePoint connection</td>
+</tr>
+<tr>
+<td><code dir="auto">CREDS_IV</code></td>
+<td>initialization vector for the encryption</td>
+</tr>
+<tr>
+<td><code dir="auto">JWT_SECRET</code></td>
+<td>signs the session tokens</td>
+</tr>
+<tr>
+<td><code dir="auto">JWT_REFRESH_SECRET</code></td>
+<td>signs the refresh tokens</td>
+</tr>
+<tr>
+<td><code dir="auto">MEILI_MASTER_KEY</code></td>
+<td>access to the full text search</td>
+</tr>
+<tr>
+<td><code dir="auto">POSTGRES_PASSWORD</code></td>
+<td>access to the vector database of the file search</td>
+</tr>
+<tr>
+<td><code dir="auto">SEARXNG_SECRET</code></td>
+<td>access to the own metasearch engine</td>
+</tr>
+<tr>
+<td><code dir="auto">ADMIN_PANEL_SESSION_SECRET</code></td>
+<td>sessions of the transitional panel</td>
+</tr>
+</tbody>
+</table>
+<p>These values you have to enter yourself, the installer cannot invent them:
+<code dir="auto">EUROUTER_API_KEY</code>, optionally <code dir="auto">OPENROUTER_API_KEY</code>, the SMTP credentials and all connector
+keys.</p>
+<aside aria-label="When migrating to a new server" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>When migrating to a new server</p><div class="starlight-aside__content"><p><code dir="auto">CREDS_KEY</code> and <code dir="auto">CREDS_IV</code> have to be taken over from the old <code dir="auto">.env</code>. If they are generated
+anew, the stored credentials can no longer be decrypted and all users have to set up their
+SharePoint connection again.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="host-and-ports">Host and ports</h2><a class="sl-anchor-link" href="#host-and-ports"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Host and ports”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">HOST</code></td>
+<td>address on which LibreChat listens inside the container</td>
+<td>required</td>
+<td><code dir="auto">0.0.0.0</code></td>
+</tr>
+<tr>
+<td><code dir="auto">PORT</code></td>
+<td>port of the chat application, in the container and on the host</td>
+<td>required</td>
+<td><code dir="auto">3080</code></td>
+</tr>
+<tr>
+<td><code dir="auto">API_BIND</code></td>
+<td>host binding of the chat port, in production <code dir="auto">127.0.0.1</code></td>
+<td>optional</td>
+<td><code dir="auto">0.0.0.0</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">UID</code></td>
+<td>user ID with which the containers write into the bind mounts</td>
+<td>required</td>
+<td><code dir="auto">1000</code>, the installer enters the ID of the executing account</td>
+</tr>
+<tr>
+<td><code dir="auto">GID</code></td>
+<td>matching group ID</td>
+<td>required</td>
+<td><code dir="auto">1000</code>, set as well</td>
+</tr>
+<tr>
+<td><code dir="auto">ADMIN_SIDECAR_PORT</code></td>
+<td>host port of the own admin panel</td>
+<td>required</td>
+<td><code dir="auto">3010</code></td>
+</tr>
+<tr>
+<td><code dir="auto">ADMIN_SIDECAR_BIND</code></td>
+<td>host binding of the admin panel</td>
+<td>optional</td>
+<td><code dir="auto">127.0.0.1</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">OFFICE_ADDIN_PORT</code></td>
+<td>host port of the Outlook add-in, only on <code dir="auto">127.0.0.1</code></td>
+<td>optional</td>
+<td><code dir="auto">3040</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">ADMIN_PANEL_PORT</code></td>
+<td>host port of the transitional panel, only with the <code dir="auto">interim</code> profile</td>
+<td>optional</td>
+<td><code dir="auto">3000</code></td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="domain-and-behavior">Domain and behavior</h2><a class="sl-anchor-link" href="#domain-and-behavior"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Domain and behavior”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">DOMAIN_CLIENT</code></td>
+<td>chat URL reachable in the browser, also the basis for invitation links</td>
+<td>required in production</td>
+<td><code dir="auto">http://localhost:3080</code></td>
+</tr>
+<tr>
+<td><code dir="auto">DOMAIN_SERVER</code></td>
+<td>server URL, basis of the SharePoint redirect URI</td>
+<td>required in production</td>
+<td><code dir="auto">http://localhost:3080</code></td>
+</tr>
+<tr>
+<td><code dir="auto">EUCOWORK_DOMAIN</code></td>
+<td>domain for Caddy and for the Office manifest</td>
+<td>required in production</td>
+<td><code dir="auto">localhost</code></td>
+</tr>
+<tr>
+<td><code dir="auto">CADDY_FILE</code></td>
+<td>selects the Caddy variant: <code dir="auto">Caddyfile</code> for public Let’s Encrypt, <code dir="auto">Caddyfile.internal</code> for a LAN server with its own root CA, <code dir="auto">Caddyfile.proxied</code> behind a WAF that already terminates HTTPS</td>
+<td>optional</td>
+<td><code dir="auto">Caddyfile</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">LIBRECHAT_CONFIG_FILE</code></td>
+<td>selects the active configuration file</td>
+<td>optional</td>
+<td><code dir="auto">librechat.yaml</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">APP_TITLE</code></td>
+<td>title in the browser tab and in the application</td>
+<td>optional</td>
+<td><code dir="auto">EU-Cowork AI</code></td>
+</tr>
+<tr>
+<td><code dir="auto">NO_INDEX</code></td>
+<td>keeps search engines away from the instance</td>
+<td>required</td>
+<td><code dir="auto">true</code></td>
+</tr>
+<tr>
+<td><code dir="auto">DISABLE_COMPRESSION</code></td>
+<td>switches off compression so that response streaming works</td>
+<td>do not change, see below</td>
+<td><code dir="auto">true</code>, set as the default in the Compose stack</td>
+</tr>
+<tr>
+<td><code dir="auto">EUCOWORK_PUBLIC_URL</code></td>
+<td>public base URL for the device sign-in link of the add-in, only needed when the bridge does not run behind Caddy</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">OFFICE_DEFAULT_AGENT_ID</code></td>
+<td>agent that is preselected in the Outlook pane</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">OFFICE_ENTRA_CLIENT_ID</code></td>
+<td>Entra app for capturing the writing style through Microsoft Graph</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">OFFICE_ENTRA_TENANT_ID</code></td>
+<td>matching tenant</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="authentication-and-encryption">Authentication and encryption</h2><a class="sl-anchor-link" href="#authentication-and-encryption"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Authentication and encryption”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">CREDS_KEY</code></td>
+<td><strong>secret.</strong> Encrypts the stored credentials of the users</td>
+<td>required</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">CREDS_IV</code></td>
+<td><strong>secret.</strong> Matching initialization vector</td>
+<td>required</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">JWT_SECRET</code></td>
+<td><strong>secret.</strong> Signs the session tokens</td>
+<td>required</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">JWT_REFRESH_SECRET</code></td>
+<td><strong>secret.</strong> Signs the refresh tokens</td>
+<td>required</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">ALLOW_EMAIL_LOGIN</code></td>
+<td>sign-in with email and password</td>
+<td>required</td>
+<td><code dir="auto">true</code></td>
+</tr>
+<tr>
+<td><code dir="auto">ALLOW_REGISTRATION</code></td>
+<td>self registration of new accounts</td>
+<td>required</td>
+<td><code dir="auto">true</code></td>
+</tr>
+<tr>
+<td><code dir="auto">ALLOW_SOCIAL_LOGIN</code></td>
+<td>sign-in through social providers</td>
+<td>required</td>
+<td><code dir="auto">false</code></td>
+</tr>
+<tr>
+<td><code dir="auto">ALLOW_UNVERIFIED_EMAIL_LOGIN</code></td>
+<td>controls whether a verification mail is needed. Without configured mail delivery the value has to stay <code dir="auto">true</code>, otherwise every registration fails</td>
+<td>optional</td>
+<td><code dir="auto">true</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">BAN_VIOLATIONS</code></td>
+<td>enables the check for blocks at sign-in</td>
+<td>do not change, see below</td>
+<td><code dir="auto">true</code></td>
+</tr>
+<tr>
+<td><code dir="auto">NON_BROWSER_VIOLATION_SCORE</code></td>
+<td>defuses the heuristic “no browser user agent”, which would otherwise block sidecar access immediately</td>
+<td>required</td>
+<td><code dir="auto">0</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you leave self registration open, you should enter the allowed email domains in the admin
+panel under <strong>Konfiguration → Funktionen → Erlaubte E-Mail-Domains</strong> (configuration, features,
+allowed email domains). Otherwise any address can create an account.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="email">Email</h2><a class="sl-anchor-link" href="#email"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Email”</span></a></div>
+<p>Mail delivery is optional and fully commented out in the template. One set of credentials
+drives two paths: the verification and password reset of LibreChat, and the automatic sending
+of the invitations from the admin panel. Without these values there is no mail delivery, and
+an invitation then only produces a link to copy.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">EMAIL_SERVICE</code></td>
+<td>a named service instead of host and port, then the next two lines are not needed</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_HOST</code></td>
+<td>SMTP server</td>
+<td>optional</td>
+<td><code dir="auto">mail-eu.smtp2go.com</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_PORT</code></td>
+<td>SMTP port. <code dir="auto">2525</code>, <code dir="auto">587</code> and <code dir="auto">8025</code> speak STARTTLS, <code dir="auto">465</code> and <code dir="auto">8465</code> speak TLS</td>
+<td>optional</td>
+<td><code dir="auto">2525</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_ENCRYPTION</code></td>
+<td><code dir="auto">starttls</code> or <code dir="auto">tls</code>, matching the port</td>
+<td>optional</td>
+<td><code dir="auto">starttls</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_USERNAME</code></td>
+<td><strong>secret.</strong> SMTP user</td>
+<td>optional</td>
+<td><code dir="auto">__SET_SMTP2GO_SMTP_USER__</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_PASSWORD</code></td>
+<td><strong>secret.</strong> SMTP password</td>
+<td>optional</td>
+<td><code dir="auto">__SET_SMTP2GO_SMTP_PASSWORD__</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_FROM</code></td>
+<td>verified sender address</td>
+<td>optional</td>
+<td>example value, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMAIL_FROM_NAME</code></td>
+<td>sender name</td>
+<td>optional</td>
+<td><code dir="auto">EU-Cowork AI</code>, line commented out</td>
+</tr>
+</tbody>
+</table>
+<aside aria-label="Note on SMTP2GO" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Note on SMTP2GO</p><div class="starlight-aside__content"><p>Do not enter the API key. Under <strong>Sending → SMTP Users</strong> create a dedicated SMTP user with its
+own password. The sender domain has to be verified, meaning SPF and DKIM are set, otherwise
+the server rejects the mail. The host <code dir="auto">mail-eu.smtp2go.com</code> is the EU region,
+<code dir="auto">mail.smtp2go.com</code> is the global variant.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="search-and-file-search">Search and file search</h2><a class="sl-anchor-link" href="#search-and-file-search"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Search and file search”</span></a></div>
+<p>The full text search across old conversations always runs. The file search across uploaded
+documents additionally needs the Compose profile <code dir="auto">filesearch</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">SEARCH</code></td>
+<td>enables the full text search across conversations</td>
+<td>required</td>
+<td><code dir="auto">true</code></td>
+</tr>
+<tr>
+<td><code dir="auto">MEILI_NO_ANALYTICS</code></td>
+<td>switches off the telemetry of Meilisearch</td>
+<td>required</td>
+<td><code dir="auto">true</code></td>
+</tr>
+<tr>
+<td><code dir="auto">MEILI_HOST</code></td>
+<td>address of Meilisearch on the internal network</td>
+<td>required</td>
+<td><code dir="auto">http://meilisearch:7700</code></td>
+</tr>
+<tr>
+<td><code dir="auto">MEILI_MASTER_KEY</code></td>
+<td><strong>secret.</strong> Access to Meilisearch</td>
+<td>required</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">RAG_PORT</code></td>
+<td>port of the RAG service on the internal network</td>
+<td>required with the <code dir="auto">filesearch</code> profile</td>
+<td><code dir="auto">8000</code></td>
+</tr>
+<tr>
+<td><code dir="auto">RAG_API_URL</code></td>
+<td>address of the RAG service</td>
+<td>required with the <code dir="auto">filesearch</code> profile</td>
+<td><code dir="auto">http://rag_api:8000</code></td>
+</tr>
+<tr>
+<td><code dir="auto">POSTGRES_PASSWORD</code></td>
+<td><strong>secret.</strong> Access to the vector database</td>
+<td>required with the <code dir="auto">filesearch</code> profile</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">EMBEDDINGS_PROVIDER</code></td>
+<td>provider for the embeddings of the file search</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">RAG_OPENAI_BASEURL</code></td>
+<td>endpoint of the embeddings provider</td>
+<td>optional</td>
+<td><code dir="auto">https://api.eurouter.ai/api/v1</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">RAG_OPENAI_API_KEY</code></td>
+<td><strong>secret.</strong> Matching key, can refer to <code dir="auto">EUROUTER_API_KEY</code></td>
+<td>optional</td>
+<td>reference to <code dir="auto">EUROUTER_API_KEY</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">EMBEDDINGS_MODEL</code></td>
+<td>embeddings model</td>
+<td>optional</td>
+<td><code dir="auto">mistral-embed</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">SEARXNG_INSTANCE_URL</code></td>
+<td>address of the own metasearch engine</td>
+<td>required</td>
+<td><code dir="auto">http://searxng:8080</code></td>
+</tr>
+<tr>
+<td><code dir="auto">SEARXNG_SECRET</code></td>
+<td><strong>secret.</strong> Access to SearXNG</td>
+<td>required</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">SEARCH_MAX_LLM_OUTPUT_CHARS</code></td>
+<td>hard character budget of the web search context passed to the model</td>
+<td>optional</td>
+<td><code dir="auto">15000</code></td>
+</tr>
+</tbody>
+</table>
+<div class="sl-heading-wrapper level-h2"><h2 id="model-providers">Model providers</h2><a class="sl-anchor-link" href="#model-providers"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Model providers”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">EUROUTER_API_KEY</code></td>
+<td><strong>secret.</strong> Key for EuRouter, the default inference path with EU processing</td>
+<td>required</td>
+<td><code dir="auto">__SET_YOUR_EUROUTER_KEY__</code>, enter it yourself</td>
+</tr>
+<tr>
+<td><code dir="auto">OPENROUTER_API_KEY</code></td>
+<td><strong>secret.</strong> Key for OpenRouter. Without a valid key the endpoint still registers, but every call returns HTTP 401</td>
+<td>optional</td>
+<td><code dir="auto">__SET_YOUR_OPENROUTER_KEY__</code></td>
+</tr>
+<tr>
+<td><code dir="auto">OPENROUTER_MANAGEMENT_KEY</code></td>
+<td><strong>secret.</strong> Only for the tab <strong>Aktivität</strong> (activity) in the admin panel, imports the daily activity per model</td>
+<td>optional</td>
+<td>empty</td>
+</tr>
+<tr>
+<td><code dir="auto">OPENROUTER_ACTIVITY_SINCE</code></td>
+<td>lower bound of this import in the format <code dir="auto">YYYY-MM-DD</code>, useful after a key change</td>
+<td>optional</td>
+<td>empty</td>
+</tr>
+</tbody>
+</table>
+<aside aria-label="OpenRouter is not EU resident" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>OpenRouter is not EU resident</p><div class="starlight-aside__content"><p>OpenRouter is a US gateway and is deliberately included as a non EU option. For purely
+European instances, leave the key empty and additionally remove the OpenRouter endpoint
+together with its model cards from the <code dir="auto">librechat.yaml</code>.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="code-execution">Code execution</h2><a class="sl-anchor-link" href="#code-execution"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Code execution”</span></a></div>
+<p>Code execution is not a service of the main Compose stack, but a separate substack on the
+shared Docker network. Two backends are available. Which one is active is decided exclusively
+by the base URL.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">LIBRECHAT_CODE_BASEURL</code></td>
+<td>selects the code backend</td>
+<td>required as soon as code execution is used</td>
+<td>line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">LIBRECHAT_CODE_API_KEY</code></td>
+<td>key towards the backend. Uncritical on the internal network, but it has to be set</td>
+<td>required as soon as code execution is used</td>
+<td><code dir="auto">eucowork-librecode</code>, line commented out</td>
+</tr>
+</tbody>
+</table>
+<p>The difference lies in the path. Exactly one value may be active:</p>
+<div class="expressive-code"><link rel="stylesheet" href="/docs/_astro/ec.5ssx4.css"><script type="module" src="/docs/_astro/ec.0vx5m.js"></script><figure class="frame has-title not-content"><figcaption class="header"><span class="title">distribution/.env</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:67ch"><code><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">LIBRECHAT_CODE_BASEURL</span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#ECC48D;--1:#3B61B0">http://code-interpreter:3112/v1</span><span style="--0:#D6DEEB;--1:#403F53">   </span><span style="--0:#919F9F;--1:#5F636F"># MIT  /v1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">LIBRECHAT_CODE_BASEURL</span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#ECC48D;--1:#3B61B0">http://librecode:8000</span><span style="--0:#D6DEEB;--1:#403F53">            </span><span style="--0:#919F9F;--1:#5F636F"># OHNE /v1</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="LIBRECHAT_CODE_BASEURL=http://code-interpreter:3112/v1   # MIT  /v1LIBRECHAT_CODE_BASEURL=http://librecode:8000            # OHNE /v1"><div></div></button></div></figure></div>
+<p>The comments come from the template and are German: <code dir="auto">MIT</code> means with the <code dir="auto">/v1</code> suffix, <code dir="auto">OHNE</code>
+means without it. The first line points to the hardened backend with microVM isolation, which
+requires <code dir="auto">/dev/kvm</code>. The second line points to the lighter transitional backend with a
+prebuilt image.</p>
+<aside aria-label="Open gap" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Open gap</p><div class="starlight-aside__content"><p>The allowlist for outbound connections from code execution is still missing. The own hardened
+runner with an egress proxy is planned, but not built.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="connectors">Connectors</h2><a class="sl-anchor-link" href="#connectors"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Connectors”</span></a></div>
+<p>All connector variables are commented out in the template. The customer template deliberately
+ships without a preconfigured connector.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="odoo-compose-profile-internal">Odoo, Compose profile <code dir="auto">internal</code></h3><a class="sl-anchor-link" href="#odoo-compose-profile-internal"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Odoo, Compose profile internal”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">ODOO_URL</code></td>
+<td>base URL of your Odoo installation</td>
+<td>required with the <code dir="auto">internal</code> profile</td>
+<td>example value, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">ODOO_DB</code></td>
+<td>name of the Odoo database, set it explicitly</td>
+<td>required with the <code dir="auto">internal</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">ODOO_MCP_API_KEY_ADMINISTRATOR</code></td>
+<td><strong>secret.</strong> API key for the instance <code dir="auto">odoo-administrator</code></td>
+<td>required with the <code dir="auto">internal</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">ODOO_MCP_API_KEY_ADMIN</code></td>
+<td><strong>secret.</strong> API key for the instance <code dir="auto">odoo-admin</code></td>
+<td>required with the <code dir="auto">internal</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">ODOO_MCP_API_KEY_TECHNIK</code></td>
+<td><strong>secret.</strong> API key for the instance <code dir="auto">odoo-technik</code></td>
+<td>required with the <code dir="auto">internal</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+</tbody>
+</table>
+<p>Three bridge instances mean three separate Odoo users, each with its own permission profile.
+The permissions of the respective user in Odoo are the actual data boundary, and the admin
+panel additionally governs who gets to see which instance at all.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="ninjaone-compose-profile-internal">NinjaOne, Compose profile <code dir="auto">internal</code></h3><a class="sl-anchor-link" href="#ninjaone-compose-profile-internal"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “NinjaOne, Compose profile internal”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">NINJAONE_INSTANCE</code></td>
+<td>region of the instance: <code dir="auto">eu</code>, <code dir="auto">us</code>, <code dir="auto">us2</code>, <code dir="auto">ca</code>, <code dir="auto">oc</code> or a complete hostname</td>
+<td>required for the connector</td>
+<td><code dir="auto">eu</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">NINJAONE_CLIENT_ID</code></td>
+<td>client ID of the API app</td>
+<td>required for the connector</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">NINJAONE_CLIENT_SECRET</code></td>
+<td><strong>secret.</strong> Client secret of the API app</td>
+<td>required for the connector</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">NINJAONE_SCOPE_ENFORCE</code></td>
+<td><code dir="auto">strict</code> aborts the start as soon as the app would have write permissions</td>
+<td>optional</td>
+<td><code dir="auto">strict</code>, line commented out</td>
+</tr>
+</tbody>
+</table>
+<p>The API app in NinjaOne is given only the “Monitoring” scope and the “Client Credentials”
+grant. If it additionally grants Management or Control, the bridge deliberately refuses to
+start.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="microsoft-365-and-sharepoint-compose-profile-microsoft">Microsoft 365 and SharePoint, Compose profile <code dir="auto">microsoft</code></h3><a class="sl-anchor-link" href="#microsoft-365-and-sharepoint-compose-profile-microsoft"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Microsoft 365 and SharePoint, Compose profile microsoft”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">MS365_TENANT_ID</code></td>
+<td>directory ID of the Entra tenant, not <code dir="auto">common</code></td>
+<td>required with the <code dir="auto">microsoft</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">MS365_MCP_CLIENT_ID</code></td>
+<td>application ID of the Entra app</td>
+<td>required with the <code dir="auto">microsoft</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">MS365_MCP_CLIENT_SECRET</code></td>
+<td><strong>secret.</strong> Client secret of the Entra app</td>
+<td>required with the <code dir="auto">microsoft</code> profile</td>
+<td>empty, line commented out</td>
+</tr>
+</tbody>
+</table>
+<p>Here every person signs in with their own account and only sees what their own SharePoint and
+OneDrive permissions allow. The bridge works read only.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="web-search-with-external-providers">Web search with external providers</h3><a class="sl-anchor-link" href="#web-search-with-external-providers"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Web search with external providers”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">SERPER_API_KEY</code></td>
+<td><strong>secret.</strong> Search API from serper.dev</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">FIRECRAWL_API_KEY</code></td>
+<td><strong>secret.</strong> Scraper from firecrawl.dev</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+</tbody>
+</table>
+<aside aria-label="Not EU resident" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Not EU resident</p><div class="starlight-aside__content"><p>Both services run in a US cloud. They are meant for the internal instance, not for the
+customer template. Customers use SearXNG in their own stack instead, and for the scraper a
+self hosted variant is planned.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="admin-panel-and-usage-metering">Admin panel and usage metering</h2><a class="sl-anchor-link" href="#admin-panel-and-usage-metering"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Admin panel and usage metering”</span></a></div>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">USD_EUR_RATE</code></td>
+<td>conversion rate for the usage dashboard</td>
+<td>required</td>
+<td><code dir="auto">0.92</code></td>
+</tr>
+<tr>
+<td><code dir="auto">METERING_TOKEN</code></td>
+<td><strong>secret.</strong> Service token for the monthly retrieval of the usage aggregates by an operator. Empty means the endpoint is switched off</td>
+<td>optional</td>
+<td>empty, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">ADMIN_PANEL_SESSION_SECRET</code></td>
+<td><strong>secret.</strong> Sessions of the transitional panel, only with the <code dir="auto">interim</code> profile</td>
+<td>optional</td>
+<td><code dir="auto">GENERATE</code>, created by the installer</td>
+</tr>
+<tr>
+<td><code dir="auto">ADMIN_PANEL_SESSION_COOKIE_SECURE</code></td>
+<td>cookie flag of the transitional panel</td>
+<td>optional</td>
+<td><code dir="auto">false</code></td>
+</tr>
+</tbody>
+</table>
+<p>Freeze the rate in <code dir="auto">USD_EUR_RATE</code> per billing month instead of updating it live. Otherwise the
+percentage display fluctuates without anyone having consumed more. The panel freezes the rate
+of a completed month anyway, a later change does not alter past months.</p>
+<p>The transitional panel is the official AGPL panel of LibreChat. It only starts with the
+explicit <code dir="auto">interim</code> profile and is not part of the product. Details are on the
+<a href="/docs/en/referenz/lizenzen">licenses and origin</a> page.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="multiple-instances">Multiple instances</h2><a class="sl-anchor-link" href="#multiple-instances"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Multiple instances”</span></a></div>
+<p>These three names are unique across all of Docker. If only one instance runs on the machine,
+they stay commented out. If several customer stacks are to run on the same machine, they have
+to differ per stack, otherwise the second stack does not start.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Purpose</th>
+<th>Required</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code dir="auto">STACK_NAME</code></td>
+<td>prefix of all containers of this stack</td>
+<td>optional</td>
+<td><code dir="auto">eucowork</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">DOCKER_SUBNET</code></td>
+<td>own bridge subnet, free of collisions with other stacks and with VPN routes</td>
+<td>optional</td>
+<td><code dir="auto">172.28.0.0/16</code>, line commented out</td>
+</tr>
+<tr>
+<td><code dir="auto">SANDBOX_NETWORK</code></td>
+<td>own network towards the code interpreter</td>
+<td>optional</td>
+<td><code dir="auto">eucowork-sandbox</code>, line commented out</td>
+</tr>
+</tbody>
+</table>
+<p>In addition, <code dir="auto">PORT</code>, <code dir="auto">ADMIN_SIDECAR_PORT</code> and <code dir="auto">OFFICE_ADDIN_PORT</code> have to differ per stack.</p>
+<aside aria-label="Never share the sandbox network" class="starlight-aside starlight-aside--danger"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm0 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm9.71-7.44-5.27-5.27a1.05 1.05 0 0 0-.71-.29H8.27a1.05 1.05 0 0 0-.71.29L2.29 7.56a1.05 1.05 0 0 0-.29.71v7.46c.004.265.107.518.29.71l5.27 5.27c.192.183.445.286.71.29h7.46a1.05 1.05 0 0 0 .71-.29l5.27-5.27a1.05 1.05 0 0 0 .29-.71V8.27a1.05 1.05 0 0 0-.29-.71ZM20 15.31 15.31 20H8.69L4 15.31V8.69L8.69 4h6.62L20 8.69v6.62Z"/></svg>Never share the sandbox network</p><div class="starlight-aside__content"><p><code dir="auto">SANDBOX_NETWORK</code> is the only place where code from users runs on the machine. Every customer
+gets a separate network. Also never shared: database, uploads, the <code dir="auto">.env</code> and the inference
+key.</p></div></aside>
+<p>More on this on the <a href="/docs/en/betrieb/mehrere-instanzen">multiple instances</a> page.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="variables-you-should-not-change">Variables you should not change</h2><a class="sl-anchor-link" href="#variables-you-should-not-change"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Variables you should not change”</span></a></div>
+<p>Two values are deliberately set the way they are in the template. Both look harmless, and both
+break something when they are changed.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="disable_compressiontrue"><code dir="auto">DISABLE_COMPRESSION=true</code></h3><a class="sl-anchor-link" href="#disable_compressiontrue"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “DISABLE_COMPRESSION=true”</span></a></div>
+<p>LibreChat writes its responses as server sent events, but never calls <code dir="auto">res.flush()</code> while
+doing so. The compression in Express therefore buffers the entire stream until the end of the
+response. A response header was measured after 26 seconds instead of after 0.3 seconds.</p>
+<p>For the browser this is barely noticeable. For clients with an idle timeout it aborts every
+longer response. This affects the Outlook add-in in particular, whose webview aborts after
+around 60 seconds even though the response is still completing on the server. The typical
+symptom: the add-in reports a loading error.</p>
+<p>There is no downside, because Caddy still compresses for browsers and correctly leaves
+<code dir="auto">text/event-stream</code> alone.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="ban_violationstrue"><code dir="auto">BAN_VIOLATIONS=true</code></h3><a class="sl-anchor-link" href="#ban_violationstrue"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “BAN_VIOLATIONS=true”</span></a></div>
+<p>Without this flag LibreChat does not check blocks at all. The <strong>Sperren</strong> (block) function in
+the admin panel does create an entry, but nobody is locked out. Anyone who considers the block
+function credible and sets the value to <code dir="auto">false</code> has a button with no effect.</p>
+<p>Related to this: <code dir="auto">NON_BROWSER_VIOLATION_SCORE=0</code>. The anti abuse heuristic of LibreChat rates
+requests without a browser typical user agent so highly that it blocks the user and the IP
+address immediately. In a stack with sidecars and API access this leads to lockouts. The rate
+limiting of sign-in attempts stays active regardless.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="related-pages">Related pages</h2><a class="sl-anchor-link" href="#related-pages"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Related pages”</span></a></div>
+<ul>
+<li><a href="/docs/en/referenz/dienste-und-ports">Services and ports</a> shows which container reads which
+variable.</li>
+<li><a href="/docs/en/betrieb/konfiguration">Configuration</a> describes what is set in the
+<code dir="auto">librechat.yaml</code> and what in the admin panel instead.</li>
+<li><a href="/docs/en/betrieb/fehlerbehebung">Troubleshooting</a> collects the symptoms that go back to an
+incorrectly set variable.</li>
+</ul></div><footer class="sl-flex astro-xhxjzfa7"><div class="meta sl-flex astro-xhxjzfa7"></div><div class="pagination-links print:hidden astro-jgq3vlii" dir="ltr"><a href="/docs/en/konnektoren/best-practices" rel="prev" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-jgq3vlii">Previous<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Best practices for connectors</span></span></a><a href="/docs/en/referenz/dienste-und-ports" rel="next" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-jgq3vlii">Next<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Services and ports</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>

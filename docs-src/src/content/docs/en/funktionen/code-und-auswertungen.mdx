@@ -1,0 +1,178 @@
+---
+title: Analyses, spreadsheets and code
+description: Excel analyses and PDFs as downloads from the chat, diagrams and interfaces as artifacts, and the two backends for code execution.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+"Turn these numbers into an Excel analysis for me" is one of the tasks your team is most likely
+to need an AI for. This page describes what happens along the way, which part works without
+additional technology and which part requires a backend.
+
+Code execution and artifacts come from [LibreChat](https://www.librechat.ai/docs). What we add
+is the selection and preparation of the two execution backends.
+
+## What you get out of it
+
+You write: "From this list please make an Excel file with one analysis per month." The
+colleague calculates, creates the file and puts it into the chat as a download. You click it
+and you have the file.
+
+This applies to Excel, CSV, Word and PDF alike, and also to analyses of an attached table. Only
+one thing matters: say what should be in the file, not how it should technically come into
+being.
+
+If you want to change a file that has already been created, say so in the same chat. The
+colleague loads the existing file and adapts it instead of rebuilding it. That way what you
+agreed on earlier is preserved.
+
+<Aside type="note" title="The path to the code stays in the background">
+The stored system prompt explicitly forbids the colleague to show scripts, commands or internal
+paths. You get the file and a short summary of what is in it. That is deliberate: the target
+group is professionals, not developers.
+</Aside>
+
+## Artifacts: results directly in the chat
+
+**Artifacts** are something different from code execution. With them the colleague presents
+content directly in a side area of the interface instead of emitting it as a code block:
+
+| Type | Example |
+|---|---|
+| Mermaid | Flowchart, org chart, timeline |
+| SVG | simple graphics and schematics |
+| HTML | a designed page or table to look at |
+| React | a small, operable interface, for example a calculator |
+| Markdown | formatted documents |
+
+**Artifacts need no execution backend.** They are active on all four shipped model cards and
+work immediately after installation. So anyone who only wants a diagram or an overview does not
+need code execution.
+
+<Aside type="caution" title="The preview needs HTTPS">
+The interactive preview only runs in a secure context. If you call the instance through
+`http://<IP-Adresse>`, the preview stays empty or reports a connection error. That is not a
+fault of the backend but a browser rule. The clean route is a real domain name with a valid
+certificate.
+
+For instances with strict data protection requirements there is one more thing to note: the
+React preview pulls its bundler from an external service as long as you do not provide one of
+your own.
+</Aside>
+
+## Code execution is off in the shipped state
+
+The customer template sets `interface.runCode: false`, and `executeCode` is commented out on the
+model cards. The reason is the same as with file search: execution needs a backend of its own,
+which is not part of the compose package. Without a backend the button would be a dead button
+and every attempt would end in an error.
+
+So you decide deliberately whether to offer this feature, and set up one of the two backends for
+it.
+
+## For admins: the two backends
+
+Both are licensed under Apache 2.0 and are operated next to the stack.
+
+| | LibreCodeInterpreter | ClickHouse code-interpreter |
+|---|---|---|
+| Role | quickly set up variant | hardened target variant |
+| Isolation | nsjail | libkrun microVM with its own guest kernel, plus nsjail, seccomp and an egress gateway |
+| Requirement on the host | nothing special | `/dev/kvm`, so a Linux host with KVM |
+| Setup | prebuilt image, ready in minutes | build from source including language runtimes, the first run takes a long time |
+| Address on the network | `http://librecode:8000` | `http://code-interpreter:3112/v1` |
+| Side services | Redis for sessions, Garage as storage | its own compose stack with several services |
+| Setup script | `distribution/librecodeinterpreter/setup.sh` | `distribution/code-interpreter/setup-ubuntu.sh` |
+
+Both scripts are repeatable. They check the prerequisites, clone the respective project at a
+tested version, create the configuration, attach the stack to the internal network and run a
+health and smoke test.
+
+Count on around 0.5 GB of additional memory for runner, Redis and storage.
+
+### Switching is done exclusively through one variable
+
+`LIBRECHAT_CODE_BASEURL` in `distribution/.env` decides which backend LibreChat uses. Both may
+run in parallel, they carry different names on the network.
+
+```bash title="distribution/.env"
+# Schnelle Variante, Routen liegen direkt unter /exec:
+LIBRECHAT_CODE_BASEURL=http://librecode:8000
+LIBRECHAT_CODE_API_KEY=eucowork-librecode
+```
+
+```bash title="distribution/.env"
+# Gehärtete Variante, LibreChat hängt /exec an die Basis-URL an:
+LIBRECHAT_CODE_BASEURL=http://code-interpreter:3112/v1
+LIBRECHAT_CODE_API_KEY=eucowork-server
+```
+
+<Aside type="danger" title="The slash detail otherwise costs an hour">
+One variant needs `/v1` at the end, the other does **not**. Mix them up and the backend answers
+with `Not Found`, and in the chat it looks as if execution is broken.
+
+`LIBRECHAT_CODE_API_KEY` has to be set in both cases, even if the value is arbitrary. Empty
+means LibreChat does not even try.
+</Aside>
+
+### Enabling it afterwards
+
+<Steps>
+
+1. **In the configuration file** set `interface.runCode: true`. As with file search: this is a
+   permission field and is written into the roles on every start. If you want to give execution
+   to individual roles only, leave the line out and maintain the permission
+   **"Code-Interpreter"** (code interpreter) in the role editor under **"Werkzeuge"** (tools).
+
+2. **On the model cards** set `executeCode: true` so that the model uses the tool by itself,
+   without anyone clicking.
+
+3. **Restart and check.**
+
+   ```bash title="On the server"
+   docker compose up -d --force-recreate api
+   ```
+
+</Steps>
+
+### Isolation and network
+
+The path between LibreChat and the execution backend runs exclusively inside the internal
+Docker network `eucowork-sandbox`. There is no host port for **that path**. This holds only for
+the connection between chat and runner, not for the substack as a whole: both backends publish
+ports of their own on the host, and exactly those need a rule. The next section says which.
+
+With several customer instances on one machine, each instance gets its own sandbox network and
+its own interpreter. Executed code is the only place where foreign code runs on your machine,
+which is why it is never shared between customers.
+
+<Aside type="caution" title="Open points, named clearly">
+- **The egress allowlist is missing.** The intention is that executed code may only reach
+  explicitly permitted destinations on the internet, with a log. This enforcement has not been
+  built yet. It is the largest known gap in this area, and `services/sandbox` in the repository
+  is a skeleton to this day.
+</Aside>
+
+<Aside type="danger" title="Both backends publish ports on the host, the quick variant without any authentication">
+The quick variant checks **no client key**: `setup.sh` writes `AUTH_ENABLED=false` into the
+configuration. At the same time its compose stack publishes the runner with
+`${PORT:-8000}:8000`, meaning on **all** interfaces of the host. Redis and the storage are
+correctly bound to `127.0.0.1` there, the runner is not. Whoever reaches that port can execute
+code on your server. The hardened variant likewise publishes debug ports that LibreChat does not
+need.
+
+Access therefore has to be blocked at the firewall level. Ports published by Docker through
+`ports:` **bypass `ufw`**, so a `ufw deny` has no effect here. Only the `DOCKER-USER` chain
+works:
+
+```bash title="On the server"
+sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
+sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
+```
+
+Make the rules permanent with `iptables-persistent`, or, more cleanly, switch the port binding
+in the compose file of the respective substack to `127.0.0.1:`. The path to LibreChat runs over
+the internal network anyway, not over the host port.
+</Aside>
