@@ -39,7 +39,7 @@ Idle load, taken with `docker stats` on a running stack:
 | `rag_api`, only with the `filesearch` profile | 100 MB |
 | `searxng` | 65 MB |
 | `admin` | 60 MB |
-| `odoo-mcp-*`, per instance | 45 MB |
+| connector bridge, per instance | 45 MB |
 | `mcp-gateway` | 33 MB |
 | `meilisearch` | 29 MB |
 | `vectordb` | 29 MB |
@@ -83,8 +83,8 @@ course of weeks.
 
 ## From operation
 
-The internal instance of Herr Informatik runs on an Ubuntu VM with **4 GB of memory**. In
-daily use that is enough, even with the Odoo bridges, the Microsoft 365 bridge and the code
+An instance in production use with around 20 people runs on an Ubuntu VM with **4 GB of
+memory**. In daily use that is enough, even with several connector bridges and the code
 interpreter.
 
 Around **30 GB** are occupied on this machine. A considerable part of that does not come from

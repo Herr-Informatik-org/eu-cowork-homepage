@@ -16,10 +16,13 @@ verändert.
 
 ```bash title="Auf dem frischen Server"
 sudo apt-get update && sudo apt-get install -y git
-git clone https://github.com/herr-informatik/eu-cowork.git
+git clone https://github.com/<organisation>/eu-cowork.git
 cd eu-cowork/distribution
 ./setup-server.sh
 ```
+
+Die konkrete Adresse des Repositorys steht in Ihrer Bezugsquelle beziehungsweise wird Ihnen
+vom Anbieter mitgeteilt.
 
 Das Skript läuft als `root` oder als Benutzer mit `sudo`. Es ist idempotent: Sie können es
 mehrfach ausführen, bereits erledigte Schritte werden übersprungen und gemeldet.

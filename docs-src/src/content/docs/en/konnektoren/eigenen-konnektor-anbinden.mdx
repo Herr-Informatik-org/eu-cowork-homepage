@@ -152,7 +152,7 @@ The gateway knows two sources for targets: the Compose variable `MCP_GATEWAY_UPS
 
 **Ready-made servers exist for many products.** Because MCP is an open standard, vendors and communities publish connectors for common software. Search for the product name together with "MCP server". For systems with a programming interface of their own, chances are good that someone has already built the bridge.
 
-**You can build one yourself.** A connector is a small HTTP service that offers a handful of tools and calls the interface of your system behind them. For a limited purpose, for example "five read queries against our line of business application", that is manageable. Our NinjaOne bridge came about exactly that way and gets by with seven tools.
+**You can build one yourself.** A connector is a small HTTP service that offers a handful of tools and calls the interface of your system behind them. For a limited purpose, for example "five read queries against our line of business application", that is manageable. Experience shows that a deliberately narrow bridge gets by with around seven tools, which makes it far cheaper in context than a ready-made server with a hundred.
 
 **Review a third party server before you connect it.** A connector gets access to your data, that is not a formality. Four questions:
 
@@ -161,7 +161,7 @@ The gateway knows two sources for targets: the Compose variable `MCP_GATEWAY_UPS
 3. **Is it suitable for multiple users?** Connectors that remember state across several calls do not work reliably behind a shared gateway.
 4. **Where do the credentials live, and what is the license?** A connector that holds keys itself belongs on the internal network and nowhere else.
 
-An example from practice: for NinjaOne we reviewed three existing servers. All three offered reboot, script execution, patch deployment, and write access to tickets, and none had a read only mode. One of them also had a stateful mode that does not work behind a multi user proxy. That is why there is a bridge of our own there. The outcome of such a review can very well be "we build it ourselves".
+An example from practice: for a monitoring system we reviewed three existing servers. All three offered reboot, script execution, software deployment, and write access to tickets, and none had a read only mode. One of them also had a stateful mode that does not work behind a multi user proxy. That is why a narrow bridge of our own was built there instead. The outcome of such a review can very well be "we build it ourselves". How such a bridge is put together is described under [connector patterns](/docs/en/konnektoren/muster).
 
 ## Troubleshooting
 

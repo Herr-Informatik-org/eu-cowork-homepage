@@ -51,11 +51,11 @@ abarbeiten.
 | **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu ein Sidecar für alles, was diese Schnittstelle nicht kann: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto | `services/admin` |
 | **MCP-Gateway** | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem, entlang der Kette Benutzer, Rolle, Gruppe, Standard. Fällt die Prüfung aus, wird verweigert | `services/mcp-gateway` |
 | **Model-Router** | verteilt Anfragen je nach Aufgabe auf unterschiedliche Modelle und Denkaufwände | im MCP-Gateway |
-| **NinjaOne-Brücke** | ausschliesslich lesender Zugang zu Geräte- und Organisationsdaten aus dem RMM | `services/ninjaone-mcp` |
+| **Beispiel-Konnektor-Brücke** | ausschliesslich lesender Zugang zu einem Fachsystem, als Vorlage für eigene Anbindungen | eigener Ordner unter `services/` |
 | **Outlook-Add-in** | seitliches Chat-Pane in Outlook mit der geöffneten Mail als Kontext, gegen dieselbe Instanz und dieselben Rechte | `services/office-addin` |
 | **Modellkarten und Systemprompt** | die kuratierte Auswahl im Modell-Picker und der deutsche Systemprompt, der serverseitig eingefügt wird | `distribution/librechat.yaml` |
 | **Installationspaket** | Compose-Stack, Server-Vorbereitung, Installer, Backup und Umzug, Caddy, SearXNG, Branding | `distribution/` |
-| **Konfigurationsprofile** | Kunden-Template gegenüber interner Instanz, dazu die Compose-Profile für Dateisuche, Konnektoren, Microsoft 365 und TLS | `distribution/` |
+| **Konfigurationsprofile** | Kunden-Template gegenüber einer Instanz mit Konnektoren, dazu die Compose-Profile für Dateisuche, Konnektoren und TLS | `distribution/` |
 
 <Aside type="note" title="Noch nicht gebaut">
 Der eigene gehärtete Sandbox-Runner mit Egress-Proxy und Freigabeliste ist geplant, aber nicht
@@ -81,7 +81,7 @@ Daraus folgt eine feste Reihenfolge, in der eine Änderung versucht wird:
 Alles, was ohne Eingriff in LibreChat lösbar ist, wird deshalb als eigener Dienst daneben
 gebaut. Diese Dienste heissen Sidecars: eigenständige Container mit eigenem Lebenszyklus, die
 über normale Netzwerk-Schnittstellen mit LibreChat sprechen. Das Admin-Panel, das
-MCP-Gateway, die NinjaOne-Brücke und das Outlook-Add-in sind alle so gebaut.
+MCP-Gateway, die mitgelieferte Konnektor-Brücke und das Outlook-Add-in sind alle so gebaut.
 
 Praktisch heisst das für Sie: Ein Update von LibreChat berührt unsere Dienste nicht, und eine
 neue Fassung des Admin-Panels berührt LibreChat nicht. Beides wird getrennt aktualisiert. Eine
@@ -103,7 +103,7 @@ uns davon besonders relevant ist.
 | `interface` | welche Bedienelemente sichtbar sind. Hier sind im Kunden-Template das Parameter-Panel, die Dateisuche und die Code-Ausführung ausgeschaltet, und hier steht, dass Nutzer keine eigenen Konnektoren anlegen dürfen |
 | `endpoints` | die Modell-Anbieter. EuRouter als Standardweg mit EU-Verarbeitung, wahlweise OpenRouter als bewusst gekennzeichnete Nicht-EU-Option. Darunter liegen auch die Fähigkeiten der Agenten |
 | `modelSpecs` | die kuratierten Modellkarten, die im Picker erscheinen, samt Beschriftung, Standardkarte und dem deutschen Systemprompt |
-| `mcpServers` | die Konnektoren. Im Kunden-Template ist dieser Block bewusst leer, es ist kein Konnektor vorkonfiguriert. Auf der internen Instanz stehen hier die Odoo-Brücken und die weiteren Anbindungen |
+| `mcpServers` | die Konnektoren. Im Kunden-Template ist dieser Block bewusst leer, es ist kein Konnektor vorkonfiguriert. In der Beispielkonfiguration mit Konnektoren stehen hier die einzelnen Brücken |
 | `webSearch` | Suchmaschine, Scraper und Reranker. Im Kunden-Template ist SearXNG hinterlegt, der Scraper fehlt noch |
 | `memory` | das Langzeitgedächtnis: welche Regeln gelten, welche Grenzen es hat und dass Nutzer es abschalten können |
 

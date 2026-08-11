@@ -39,7 +39,7 @@ Ruhelast, mit `docker stats` am laufenden Stack erhoben:
 | `rag_api`, nur mit Profil `filesearch` | 100 MB |
 | `searxng` | 65 MB |
 | `admin` | 60 MB |
-| `odoo-mcp-*`, je Instanz | 45 MB |
+| Konnektor-Brücke, je Instanz | 45 MB |
 | `mcp-gateway` | 33 MB |
 | `meilisearch` | 29 MB |
 | `vectordb` | 29 MB |
@@ -83,9 +83,9 @@ Alarm bei 70 Prozent Belegung ein. Die Protokoll-Rotation von Docker richtet
 
 ## Aus dem Betrieb
 
-Die interne Instanz von Herr Informatik läuft auf einer Ubuntu-VM mit **4 GB
-Arbeitsspeicher**. Das reicht im Alltag aus, auch mit den Odoo-Brücken, der
-Microsoft-365-Brücke und dem Code-Interpreter.
+Eine produktiv genutzte Instanz mit rund 20 Nutzenden läuft auf einer Ubuntu-VM mit **4 GB
+Arbeitsspeicher**. Das reicht im Alltag aus, auch mit mehreren Konnektor-Brücken und dem
+Code-Interpreter.
 
 Belegt sind auf dieser Maschine rund **30 GB**. Ein erheblicher Teil davon stammt nicht aus
 den Nutzdaten, sondern aus mehreren Deployments nebeneinander und aus alten Docker-Schichten,

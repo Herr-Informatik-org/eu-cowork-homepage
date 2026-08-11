@@ -120,10 +120,10 @@ client so that it does not intercept Docker, make the corporate proxy known thro
 ordinary Ubuntu server the problem usually does not occur, it is a topic on work devices with
 security software.
 
-### After the migration every person has to reconnect SharePoint
+### After the migration every person has to reconnect their connectors
 
-**Symptom:** Existing connections to SharePoint and OneDrive no longer work on the new server,
-every person has to connect again.
+**Symptom:** Existing connections to connectors with per-user sign-in no longer work on the new
+server, every person has to connect again.
 
 **Cause:** `CREDS_KEY` and `CREDS_IV` were regenerated on the new server instead of carried over
 from the old `.env`. That makes all encrypted credentials in the database unreadable.

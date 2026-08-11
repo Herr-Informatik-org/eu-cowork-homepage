@@ -16,13 +16,13 @@ eingegeben wird. Sofern nicht anders vermerkt, ist das Arbeitsverzeichnis immer
 | Befehl | Wirkung |
 |---|---|
 | `sudo apt-get update && sudo apt-get install -y git` | Git installieren, ohne das lässt sich das Repository nicht holen |
-| `git clone https://github.com/herr-informatik/eu-cowork.git` | Repository klonen |
+| `git clone https://github.com/<organisation>/eu-cowork.git` | Repository klonen. Die konkrete Adresse steht in Ihrer Bezugsquelle beziehungsweise wird Ihnen vom Anbieter mitgeteilt |
 | `./setup-server.sh` | frischen Ubuntu-Server vorbereiten: Docker, Firewall, Protokoll-Rotation, Swap, Zeitzone, Sicherheitsaktualisierungen |
 | `./setup-server.sh --user eucowork` | Dienstbenutzer explizit setzen, bei Bedarf anlegen |
 | `./setup-server.sh --no-firewall --no-swap` | Firewall- und Swap-Schritt überspringen |
 | `./install.sh` | `.env` mit erzeugten Secrets anlegen, Netz und Verzeichnisse erstellen, Stack starten |
 | `./install.sh --profiles production` | zusätzlich Caddy mit automatischem Zertifikat |
-| `./install.sh --profiles production,internal,microsoft,filesearch` | mit Konnektoren, Microsoft-Anbindung und Dateisuche |
+| `./install.sh --profiles production,internal,microsoft,filesearch` | mit allen Konnektor-Profilen und der Dateisuche |
 | `./install.sh --migrate --profiles ...` | vorhandene `.env` unangetastet lassen, für Update und Umzug |
 | `./install.sh --no-build` | eigene Dienste nicht neu bauen, nur sinnvoll wenn sie aktuell sind |
 
@@ -42,9 +42,9 @@ Danach diese drei Prüfungen:
 | Starten | `docker compose up -d` |
 | Mit Dateisuche | `docker compose --profile filesearch up -d` |
 | Mit Caddy und TLS | `docker compose --profile production up -d` |
-| Mit internen Konnektoren | `docker compose --profile internal up -d` |
-| Mit Microsoft 365 | `docker compose --profile microsoft up -d` |
-| Einzelnen Dienst neu bauen | `docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway` |
+| Mit Konnektoren über das Gateway | `docker compose --profile internal up -d` |
+| Mit dem Konnektor mit Anmeldung pro Person | `docker compose --profile microsoft up -d` |
+| Einzelnen Dienst neu bauen | `docker compose --profile internal up -d --build mcp-gateway` |
 | Neustart eines Dienstes | `docker compose restart api` |
 | Protokoll mitlesen | `docker compose logs -f api` |
 | Status | `docker compose ps` |
@@ -80,8 +80,8 @@ diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | so
 
 <Aside type="caution" title="--force-recreate erneuert die eigenen Dienste nicht">
 `docker compose up -d --force-recreate api` erzeugt den Chat-Container neu, lässt `admin`,
-`mcp-gateway`, `office-addin` und `ninjaone-mcp` aber unverändert. Diese vier werden aus Quellcode gebaut und
-brauchen `--build`. Genau das macht `./install.sh`, wenn Sie nicht `--no-build` angeben. Wer
+`mcp-gateway`, `office-addin` und die selbst gebaute Konnektor-Brücke aber unverändert. Diese
+vier werden aus Quellcode gebaut und brauchen `--build`. Genau das macht `./install.sh`, wenn Sie nicht `--no-build` angeben. Wer
 nur mit `--force-recreate` arbeitet, fährt nach einem Update alte Sidecars weiter.
 </Aside>
 
@@ -148,7 +148,7 @@ Datei Inhalt hat.
 <Aside type="danger" title="CREDS_KEY und CREDS_IV müssen mitkommen">
 Werden diese beiden Werte auf dem neuen Server neu erzeugt statt aus der alten `.env`
 übernommen, sind alle verschlüsselten Zugangsdaten in der Datenbank unlesbar. Jede Person
-müsste ihre SharePoint-Verbindung neu aufbauen, und die im Panel hinterlegten Schlüssel wären
+müsste ihre Konnektor-Verbindungen neu aufbauen, und die im Panel hinterlegten Schlüssel wären
 verloren.
 </Aside>
 
@@ -179,9 +179,10 @@ chown -R $(id -u):$(id -g) logs uploads images data-node meili_data
 Das hilft, wenn `api` in einer Neustartschleife hängt und im Protokoll `EACCES` auf `/app/logs`
 steht oder wenn ein Upload mit `EACCES` auf `/app/uploads/temp` scheitert.
 
-```bash title="Selbsttest der NinjaOne-Brücke"
-docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+```bash title="Selbsttest einer selbst gebauten Konnektor-Brücke"
+docker compose --profile internal run --rm <brücke> node src/selftest.js
 ```
 
 Prüft Zugangsdaten, gewährte Berechtigungen, Lesezugriff und dass schreibende Pfade
-blockiert werden.
+blockiert werden. Den Dienstnamen entnehmen Sie Ihrer `docker-compose.yml`, das Vorgehen
+beschreibt [das Konnektor-Muster](/docs/konnektoren/muster).

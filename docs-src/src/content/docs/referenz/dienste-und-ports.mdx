@@ -27,17 +27,15 @@ Alle Containernamen tragen ein Präfix aus der Variablen `STACK_NAME`, ohne Anga
 | `vectordb` | `pgvector/pgvector:0.8.0-pg15-trixie` | Vektordatenbank der Dateisuche | nur intern | `filesearch` |
 | `rag_api` | `registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest` | Auswertung hochgeladener Dokumente | nur intern, `${RAG_PORT}`, Vorgabe 8000 | `filesearch` |
 | `mcp-gateway` | Build aus `../services/mcp-gateway` | Rechteprüfung und Protokoll vor allen Konnektoren, dazu der Model-Router | nur intern, 3020 | `internal` |
-| `odoo-mcp-administrator` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo-Brücke mit eigenem Dienstkonto | nur intern, 8000 | `internal` |
-| `odoo-mcp-admin` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo-Brücke mit eigenem Dienstkonto | nur intern, 8000 | `internal` |
-| `odoo-mcp-technik` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo-Brücke mit eigenem Dienstkonto | nur intern, 8000 | `internal` |
-| `ninjaone-mcp` | Build aus `../services/ninjaone-mcp` | NinjaOne-Brücke, ausschliesslich lesend | nur intern, 3030 | `internal` |
-| `ms365-mcp` | `node:22-alpine` mit `@softeria/ms-365-mcp-server@0.128.2` | SharePoint und OneDrive über Microsoft Graph, nur lesend | nur intern, 3000 | `microsoft` |
+| Konnektor-Brücken, Profile `internal` und `microsoft` | teils eigener Build aus `../services`, teils unverändertes Fremd-Image | übersetzen zwischen der Chat-Schicht und einem Fremdsystem, im Kunden-Template nicht aktiv | nur intern, je nach Brücke 3000, 3030 oder 8000 | `internal`, `microsoft` |
 | `caddy` | `caddy:2-alpine` | Reverse-Proxy mit automatischem TLS | Host 80 und 443 | `production` |
 | `admin-panel` | AGPL-Panel von LibreChat | Übergangswerkzeug, nicht Teil des Produkts | Host `${ADMIN_PANEL_PORT}`, Vorgabe 3000 | `interim` |
 
-Die drei Odoo-Brücken sind dasselbe Image mit derselben Konfiguration, nur mit je eigenem
-Odoo-Schlüssel. Der Schlüssel gehört zu einem eigenen Odoo-Benutzer, dessen Rechte im ERP die
-Berechtigungsgrenze bilden.
+Die Brücken des Profils `internal` laufen über das Gateway und halten je ein eigenes
+Dienstkonto im Fremdsystem, dessen Rechte dort die eigentliche Berechtigungsgrenze bilden. Die
+Brücke des Profils `microsoft` läuft bewusst am Gateway vorbei, weil sich dort jede Person
+selbst anmeldet. Wie so eine Brücke aufgebaut ist und welche Bauteile dazugehören, beschreibt
+[das Konnektor-Muster](/docs/konnektoren/muster).
 
 <Aside type="caution" title="Drei Images laufen noch auf einem beweglichen Tag">
 `searxng`, `rag_api` und das Interim-Panel `admin-panel` stehen auf `:latest`, während das
@@ -120,10 +118,9 @@ Code-Interpreter des jeweils anderen Kunden landen.
 
 ## Healthchecks
 
-Healthchecks haben nur die Konnektor-Brücken, also die drei Odoo-Instanzen und
-`ninjaone-mcp`. Sie fragen alle 30 Sekunden den eigenen Gesundheitsendpunkt ab, mit fünf
-Sekunden Zeitlimit und drei Versuchen. Die Anlaufzeit beträgt 20 Sekunden für die
-Odoo-Brücken und 15 Sekunden für die NinjaOne-Brücke.
+Healthchecks haben nur die Konnektor-Brücken des Profils `internal`. Sie fragen alle 30
+Sekunden den eigenen Gesundheitsendpunkt ab, mit fünf Sekunden Zeitlimit und drei Versuchen.
+Die Anlaufzeit liegt je nach Brücke bei 15 bis 20 Sekunden.
 
 Alle übrigen Dienste haben keinen Healthcheck. In `docker compose ps` erscheinen sie deshalb
 als `Up` ohne Gesundheitsangabe, das ist kein Fehler. Ob die Anwendung wirklich sauber
@@ -133,10 +130,13 @@ gestartet ist, sehen Sie im Protokoll:
 docker compose logs -f api
 ```
 
-Die NinjaOne-Brücke bringt zusätzlich einen eigenen Selbsttest mit. Er prüft die
-Zugangsdaten, die tatsächlich gewährten Berechtigungen, den Lesezugriff und dass schreibende
-Pfade blockiert werden:
+Eine selbst entwickelte Konnektor-Brücke bringt zusätzlich einen eigenen Selbsttest mit. Er
+prüft die Zugangsdaten, die tatsächlich gewährten Berechtigungen, den Lesezugriff und dass
+schreibende Pfade blockiert werden:
 
 ```bash
-docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+docker compose --profile internal run --rm <brücke> node src/selftest.js
 ```
+
+Den Namen des Dienstes entnehmen Sie Ihrer `docker-compose.yml`, das Vorgehen beschreibt
+[das Konnektor-Muster](/docs/konnektoren/muster).

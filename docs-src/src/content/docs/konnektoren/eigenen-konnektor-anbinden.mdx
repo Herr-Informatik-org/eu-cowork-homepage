@@ -152,7 +152,7 @@ Das Gateway kennt zwei Quellen für Ziele: die Compose-Variable `MCP_GATEWAY_UPS
 
 **Es gibt fertige Server für viele Produkte.** Weil MCP ein offener Standard ist, veröffentlichen Hersteller und Communities Konnektoren für gängige Software. Suchen Sie nach dem Produktnamen zusammen mit „MCP server". Für Systeme mit eigener Programmierschnittstelle ist die Chance gut, dass jemand die Brücke schon gebaut hat.
 
-**Sie können einen eigenen bauen.** Ein Konnektor ist ein kleiner HTTP-Dienst, der eine Handvoll Werkzeuge anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Für einen begrenzten Zweck, etwa „fünf Leseabfragen auf unsere Fachanwendung", ist das überschaubar. Unsere NinjaOne-Brücke ist genau so entstanden und kommt mit sieben Werkzeugen aus.
+**Sie können einen eigenen bauen.** Ein Konnektor ist ein kleiner HTTP-Dienst, der eine Handvoll Werkzeuge anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Für einen begrenzten Zweck, etwa „fünf Leseabfragen auf unsere Fachanwendung", ist das überschaubar. Eine bewusst schmal gebaute Brücke kommt erfahrungsgemäss mit rund sieben Werkzeugen aus und ist damit im Kontext deutlich günstiger als ein fertiger Server mit hundert.
 
 **Prüfen Sie einen fremden Server, bevor Sie ihn anschliessen.** Ein Konnektor bekommt Zugriff auf Ihre Daten, das ist keine Formalität. Vier Fragen:
 
@@ -161,7 +161,7 @@ Das Gateway kennt zwei Quellen für Ziele: die Compose-Variable `MCP_GATEWAY_UPS
 3. **Ist er für mehrere Nutzer geeignet?** Konnektoren, die sich einen Zustand über mehrere Aufrufe merken, funktionieren hinter einem gemeinsam genutzten Gateway nicht zuverlässig.
 4. **Wo liegen die Zugangsdaten und wie ist die Lizenz?** Ein Konnektor, der selbst Schlüssel hält, gehört ausschliesslich ins interne Netz.
 
-Ein Beispiel aus der Praxis: Für NinjaOne haben wir drei vorhandene Server geprüft. Alle drei boten Neustart, Skriptausführung, Patch-Verteilung und schreibenden Ticket-Zugriff an, und keiner hatte einen Nur-Lese-Modus. Einer hielt zusätzlich einen zustandsbehafteten Modus, der hinter einem Mehrbenutzer-Proxy nicht funktioniert. Deshalb gibt es dort eine eigene Brücke. Das Ergebnis dieser Prüfung kann durchaus „wir bauen selbst" lauten.
+Ein Beispiel aus der Praxis: Für ein Monitoring-System haben wir drei vorhandene Server geprüft. Alle drei boten Neustart, Skriptausführung, Verteilung von Software und schreibenden Ticket-Zugriff an, und keiner hatte einen Nur-Lese-Modus. Einer hielt zusätzlich einen zustandsbehafteten Modus, der hinter einem Mehrbenutzer-Proxy nicht funktioniert. Deshalb ist dort eine eigene, schmale Brücke entstanden. Das Ergebnis dieser Prüfung kann durchaus „wir bauen selbst" lauten. Wie eine solche Brücke aufgebaut wird, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
 
 ## Fehlersuche
 

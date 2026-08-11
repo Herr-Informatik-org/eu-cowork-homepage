@@ -19,7 +19,8 @@ verstehen wollen, wo eine Anfrage entlangläuft.
 
 Zwei Dinge fallen auf. Erstens führt jeder Weg von aussen über Caddy, kein anderer Dienst
 nimmt Verbindungen aus dem Netz an. Zweitens gehen die Konnektoren über das MCP-Gateway,
-der SharePoint-Konnektor jedoch bewusst nicht. Die Begründung steht weiter unten.
+ein Konnektor mit Anmeldung pro Person jedoch bewusst nicht. Die Begründung steht weiter
+unten.
 
 ## Die Schichten
 
@@ -67,21 +68,22 @@ Die eigenen Dienste liegen als Quellcode im Repository und werden beim Installie
   schreibt jeden Aufruf mit Zeit, Server, Werkzeug, Person, Entscheid und Begründung in ein
   Protokoll. Fällt die Prüfung aus, wird verweigert. Im selben Container läuft zusätzlich der
   Model-Router.
-- **`ninjaone-mcp`** ist unsere Brücke zum RMM-System und arbeitet ausschliesslich lesend.
-
-Daneben laufen zwei **Konnektor-Brücken, die wir nicht selbst geschrieben haben**: drei Instanzen
-des Odoo-Konnektors mit je eigenem Dienstkonto und die Microsoft-365-Brücke. Beide sind
-unveränderte Fremd-Images, siehe [Lizenzen und Herkunft](/docs/referenz/lizenzen). Alle Brücken
-halten Zugangsdaten und haben selbst keine eigene Anmeldung, deshalb sind sie nur im internen
-Docker-Netz erreichbar.
 - **`office-addin`** liefert das Task Pane für Outlook und das Manifest aus. Die eigentliche
   Arbeit macht ein Agent auf dem Server, das Pane ist nur die Oberfläche.
+
+Daneben liegen im Stack die **Beispiel-Konnektoren**. Es sind Brücken zu einem Fremdsystem,
+teils selbst geschrieben, teils unveränderte Fremd-Images, siehe
+[Lizenzen und Herkunft](/docs/referenz/lizenzen). Im Kunden-Template ist keine davon aktiv.
+Alle Brücken halten Zugangsdaten und haben selbst keine eigene Anmeldung, deshalb sind sie
+nur im internen Docker-Netz erreichbar. Wie so eine Brücke aufgebaut ist, beschreibt
+[das Konnektor-Muster](/docs/konnektoren/muster).
 
 <Aside type="note" title="Warum es das Gateway überhaupt gibt">
 LibreChat kann in der Konfiguration definierte MCP-Server **nicht** pro Rolle oder Person
 filtern. Sie werden für jeden Nutzer ungefiltert aufgelöst. Genau diese Lücke schliesst das
-Gateway. Der SharePoint-Konnektor läuft bewusst direkt daran vorbei, weil dort jede Person
-sich einzeln bei Microsoft anmeldet und die eigenen Rechte bereits die Grenze sind.
+Gateway. Ein Konnektor mit Anmeldung pro Person läuft bewusst direkt daran vorbei, weil dort
+jede Person sich einzeln beim Fremdsystem anmeldet und die eigenen Rechte dort bereits die
+Grenze sind.
 </Aside>
 
 ### Sandbox-Netz
@@ -111,8 +113,8 @@ die Profile als kommagetrennte Liste entgegen und reicht sie an Docker Compose w
 |---|---|---|
 | ohne Profil | `api`, `admin`, `office-addin`, `mongodb`, `meilisearch`, `searxng` | immer, das ist der Grundstack |
 | `production` | `caddy` | sobald die Instanz unter einer Domain mit TLS erreichbar sein soll |
-| `internal` | `mcp-gateway`, drei Odoo-Brücken, `ninjaone-mcp` | wenn Konnektoren über das Rechte-Gateway laufen sollen |
-| `microsoft` | `ms365-mcp` | für SharePoint und OneDrive über Microsoft Graph |
+| `internal` | `mcp-gateway` und die Beispiel-Konnektoren, die darüber laufen | wenn Konnektoren über das Rechte-Gateway laufen sollen |
+| `microsoft` | die Beispiel-Brücke zu einer Dateiablage mit Anmeldung pro Person | wenn Ihre Dateiablage im Chat lesbar sein soll |
 | `filesearch` | `vectordb`, `rag_api` | für die Dateisuche über hochgeladene Dokumente |
 | `interim` | das alte AGPL-Panel von LibreChat | nur als Übergangswerkzeug, nicht Teil des Produkts |
 

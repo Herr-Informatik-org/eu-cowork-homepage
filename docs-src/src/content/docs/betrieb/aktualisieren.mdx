@@ -60,8 +60,8 @@ Gleichzeitig baut `install.sh` die selbst entwickelten Dienste neu.
 
 <Aside type="caution" title="Fallstrick force-recreate">
 `docker compose up -d --force-recreate api` erneuert **nur** den Chat. Das Admin-Panel, das
-MCP-Gateway, die NinjaOne-Brücke und das Outlook-Add-in werden aus Quelle gebaut und bleiben
-auf dem alten Stand.
+MCP-Gateway, die mitgelieferte Konnektor-Brücke und das Outlook-Add-in werden aus Quelle
+gebaut und bleiben auf dem alten Stand.
 Sie brauchen `--build`, und genau das macht `install.sh`. Nutzen Sie deshalb den Installer und
 nicht den Compose-Befehl von Hand.
 </Aside>

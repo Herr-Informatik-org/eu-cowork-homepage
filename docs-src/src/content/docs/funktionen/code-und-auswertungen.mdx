@@ -143,7 +143,7 @@ Der Weg zwischen LibreChat und dem Ausführungs-Backend läuft ausschliesslich i
 Docker-Netz `eucowork-sandbox`. Für **diesen Weg** gibt es keinen Host-Port. Das gilt aber nur
 für die Verbindung zwischen Chat und Runner, nicht für den Substack als Ganzes: beide Backends
 veröffentlichen daneben eigene Ports auf dem Host. Bei der schnellen Variante binden die
-`127.0.0.1`, bei der gehärteten nicht — für die braucht es eine Regel. Der nächste Abschnitt
+`127.0.0.1`, bei der gehärteten nicht. Für die braucht es eine Regel. Der nächste Abschnitt
 sagt, welche.
 
 Bei mehreren Kundeninstanzen auf einer Maschine bekommt jede Instanz ihr eigenes
@@ -170,7 +170,7 @@ etwas ausserhalb `127.0.0.1`, stoppt es den Stack. Bei einer so eingerichteten I
 Sie für Port 8000 keine Firewall-Regel mehr.
 
 **Eine Instanz, die vor dieser Änderung aufgesetzt wurde, behält die alte Bindung**, bis
-`setup.sh` einmal neu läuft — dort ist die Regel weiter nötig. Nachsehen können Sie selbst:
+`setup.sh` einmal neu läuft. Dort ist die Regel weiter nötig. Nachsehen können Sie selbst:
 
 ```bash title="Auf dem Server"
 docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'

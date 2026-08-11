@@ -16,13 +16,13 @@ the server. Unless noted otherwise, the working directory is always
 | Command | Effect |
 |---|---|
 | `sudo apt-get update && sudo apt-get install -y git` | install Git, without it the repository cannot be fetched |
-| `git clone https://github.com/herr-informatik/eu-cowork.git` | clone the repository |
+| `git clone https://github.com/<organisation>/eu-cowork.git` | clone the repository. The exact address is stated by your source of supply, or your provider tells you what it is |
 | `./setup-server.sh` | prepare a fresh Ubuntu server: Docker, firewall, log rotation, swap, time zone, security updates |
 | `./setup-server.sh --user eucowork` | set the service user explicitly, create it if needed |
 | `./setup-server.sh --no-firewall --no-swap` | skip the firewall and swap steps |
 | `./install.sh` | create the `.env` with generated secrets, create network and directories, start the stack |
 | `./install.sh --profiles production` | additionally Caddy with an automatic certificate |
-| `./install.sh --profiles production,internal,microsoft,filesearch` | with connectors, Microsoft integration and file search |
+| `./install.sh --profiles production,internal,microsoft,filesearch` | with all connector profiles and file search |
 | `./install.sh --migrate --profiles ...` | leave an existing `.env` untouched, for updates and migration |
 | `./install.sh --no-build` | do not rebuild the own services, only useful when they are up to date |
 
@@ -42,9 +42,9 @@ effect. Then these three checks:
 | Start | `docker compose up -d` |
 | With file search | `docker compose --profile filesearch up -d` |
 | With Caddy and TLS | `docker compose --profile production up -d` |
-| With internal connectors | `docker compose --profile internal up -d` |
-| With Microsoft 365 | `docker compose --profile microsoft up -d` |
-| Rebuild a single service | `docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway` |
+| With connectors through the gateway | `docker compose --profile internal up -d` |
+| With the connector with per-user sign-in | `docker compose --profile microsoft up -d` |
+| Rebuild a single service | `docker compose --profile internal up -d --build mcp-gateway` |
 | Restart a service | `docker compose restart api` |
 | Follow the log | `docker compose logs -f api` |
 | Status | `docker compose ps` |
@@ -80,8 +80,8 @@ diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | so
 
 <Aside type="caution" title="--force-recreate does not renew the own services">
 `docker compose up -d --force-recreate api` recreates the chat container, but leaves `admin`,
-`mcp-gateway`, `office-addin` and `ninjaone-mcp` unchanged. These four are built from source and need
-`--build`. That is exactly what `./install.sh` does unless you pass `--no-build`. Anyone
+`mcp-gateway`, `office-addin` and the connector bridge built in house unchanged. These four are
+built from source and need `--build`. That is exactly what `./install.sh` does unless you pass `--no-build`. Anyone
 working only with `--force-recreate` keeps running old sidecars after an update.
 </Aside>
 
@@ -151,7 +151,7 @@ content.
 <Aside type="danger" title="CREDS_KEY and CREDS_IV have to come along">
 If these two values are generated anew on the new server instead of being taken from the old
 `.env`, all encrypted credentials in the database become unreadable. Every person would have
-to set up their SharePoint connection again, and the keys stored in the panel would be lost.
+to set up their connector connections again, and the keys stored in the panel would be lost.
 </Aside>
 
 ## Diagnostics
@@ -181,8 +181,10 @@ chown -R $(id -u):$(id -g) logs uploads images data-node meili_data
 This helps when `api` hangs in a restart loop and the log shows `EACCES` on `/app/logs`, or
 when an upload fails with `EACCES` on `/app/uploads/temp`.
 
-```bash title="Self test of the NinjaOne bridge"
-docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+```bash title="Self test of a connector bridge built in house"
+docker compose --profile internal run --rm <bridge> node src/selftest.js
 ```
 
-Checks credentials, granted permissions, read access and that writing paths are blocked.
+Checks credentials, granted permissions, read access and that writing paths are blocked. The
+service name is in your `docker-compose.yml`, the procedure is described by
+[the connector pattern](/docs/en/konnektoren/muster).

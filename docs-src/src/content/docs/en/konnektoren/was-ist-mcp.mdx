@@ -19,13 +19,13 @@ For you that means two things. First: for many widely used products a ready-made
 
 ## Three terms you need
 
-**Tool.** A tool is a single, clearly defined capability. It has a technical name, a description in prose, and a list of parameters. The NinjaOne connection, for example, has a tool `ninja_devices` whose job is "search devices, by organization, name, class, or online status". A tool is always an action, never a whole system.
+**Tool.** A tool is a single, clearly defined capability. It has a technical name, a description in prose, and a list of parameters. A connection to your monitoring system, for example, would have a tool `geraete_suchen` whose job is "search devices, by organization, name, class, or online status". A tool is always an action, never a whole system.
 
 **Connector, technically an MCP server.** A connector is a small service that offers a collection of tools and talks to the actual target system behind them. In this documentation we call it a connector, because that is easier to follow for non developers. In the configuration and in the admin panel it is called "MCP-Server" (MCP server).
 
 **Client.** The client is the side that is offered the tools and calls them. In our case that is LibreChat, the chat layer of EU Cowork AI.
 
-A connector is often a **bridge**: the target system itself does not speak MCP, it only has an ordinary programming interface. The connector then translates between the two worlds. That is exactly how the Odoo connection and the NinjaOne connection work.
+A connector is often a **bridge**: the target system itself does not speak MCP, it only has an ordinary programming interface. The connector then translates between the two worlds. That is how most connections to an ERP, a monitoring system, or a ticketing system work.
 
 ## An example: "Which open invoices does customer X have?"
 
@@ -50,9 +50,9 @@ Every connector has to sign in to the target system. There are two fundamentally
 | Who knows the permissions | the target system itself | the target system only knows the service account |
 | Permission boundary | the person's permissions in the target system | the gateway rules plus the permissions of the service account |
 | Granularity | down to document and field level | down to connector and tool level |
-| Example in our setup | Microsoft 365 and SharePoint | Odoo, NinjaOne |
+| Typical for | file storage, document management, cloud storage | ERP, inventory management, accounting, monitoring |
 
-**Per-user sign-in** means: on first use the person is sent to the sign-in dialog of the target system, confirms the access there, and from then on the connector works with their personal access. Someone who is not allowed to see a folder in SharePoint does not see it in the chat either. The target system remains the authoritative instance, and you do not have to rebuild the permissions a second time.
+**Per-user sign-in** means: on first use the person is sent to the sign-in dialog of the target system, confirms the access there, and from then on the connector works with their personal access. Someone who is not allowed to see a folder in your file storage does not see it in the chat either. The target system remains the authoritative instance, and you do not have to rebuild the permissions a second time.
 
 **Service account** means: the connector holds a single key and signs in the same way for everyone. The target system only sees this one account and therefore cannot tell your staff apart. The separation then has to happen in front of it, in the permission gateway.
 
@@ -64,7 +64,7 @@ Use **per-user sign-in** whenever the target system offers it. It is the safer v
 
 A connector is not free, even when it does not cost anything. The tool catalog, meaning the name, description, and parameters of every tool, is sent to the model **with every single message**. So it permanently occupies space in the context, and it is paid for on every call.
 
-The order of magnitude is substantial. Unfiltered, the Microsoft 365 bridge offers 164 tools, which is roughly 96,000 tokens per conversation. Filtered down to the 21 tools we actually need, it is roughly 8,000 tokens, so 92 percent less. The NinjaOne bridge deliberately has only 7 tools and therefore sits at roughly 2,000 tokens.
+The order of magnitude is substantial, and it is measured. Unfiltered, a bridge to a large product family offered 164 tools, which is roughly 96,000 tokens per conversation. Filtered down to the 21 tools the use case actually needs, it was roughly 8,000 tokens, so 92 percent less. A deliberately narrow bridge with 7 tools sits at roughly 2,000 tokens.
 
 On top of that comes a second effect: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. So few, clearly named tools deliver not only cheaper but also better answers.
 
@@ -80,23 +80,13 @@ On top of that comes a second effect: the more similar sounding tools there are 
     description="The complete path from the empty form to the granted tool, in the panel or through the configuration files."
   />
   <LinkCard
+    title="Connector patterns"
+    href="/docs/en/konnektoren/muster"
+    description="Three proven shapes: service account, per-person sign-in, and read-only bridge, with how the permissions flow."
+  />
+  <LinkCard
     title="Best practices for connectors"
     href="/docs/en/konnektoren/best-practices"
     description="Ten rules with reasoning and measured figures, plus a checklist to run before granting access."
-  />
-  <LinkCard
-    title="Odoo (ERP)"
-    href="/docs/en/konnektoren/konnektor-odoo"
-    description="How the ERP is attached as a connector and why there are three instances each with its own service account."
-  />
-  <LinkCard
-    title="Microsoft 365 and SharePoint"
-    href="/docs/en/konnektoren/konnektor-microsoft-365"
-    description="Access to SharePoint and OneDrive with the permissions of the individual person, through an Entra app registration."
-  />
-  <LinkCard
-    title="NinjaOne (RMM)"
-    href="/docs/en/konnektoren/konnektor-ninjaone"
-    description="Device and organization data from the RMM in the chat, read only, secured in four independent layers."
   />
 </CardGrid>

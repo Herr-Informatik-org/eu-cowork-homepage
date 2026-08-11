@@ -31,9 +31,12 @@ etwa 30 Minuten, wovon der grösste Teil auf das Herunterladen und Bauen der Ima
 
    ```bash title="Auf dem Server"
    sudo apt-get update && sudo apt-get install -y git
-   git clone https://github.com/herr-informatik/eu-cowork.git
+   git clone https://github.com/<organisation>/eu-cowork.git
    cd eu-cowork/distribution
    ```
+
+   Die konkrete Adresse des Repositorys steht in Ihrer Bezugsquelle beziehungsweise wird
+   Ihnen vom Anbieter mitgeteilt.
 
 3. **Server vorbereiten**
 
@@ -110,8 +113,7 @@ etwa 30 Minuten, wovon der grösste Teil auf das Herunterladen und Bauen der Ima
    vorhandene `.env`, überspringt die Erzeugung der Secrets und weist am Schluss nur noch auf
    Einträge hin, die weiterhin auf einem Platzhalter stehen.
 
-   Brauchen Sie Konnektoren, die Microsoft-Anbindung oder die Dateisuche, geben Sie die
-   Profile gleich mit an:
+   Brauchen Sie Konnektoren oder die Dateisuche, geben Sie die Profile gleich mit an:
 
    ```bash title="Optional, mit allen Profilen"
    ./install.sh --profiles production,internal,microsoft,filesearch
@@ -206,7 +208,7 @@ Sie können den Stack ohne Server auf dem eigenen Rechner starten, etwa um das P
 anzusehen. Docker mit Compose v2 genügt.
 
 ```bash title="Auf dem eigenen Rechner"
-git clone https://github.com/herr-informatik/eu-cowork.git
+git clone https://github.com/<organisation>/eu-cowork.git
 cd eu-cowork/distribution
 ./install.sh
 ```

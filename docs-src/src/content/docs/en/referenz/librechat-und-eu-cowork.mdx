@@ -50,11 +50,11 @@ enter the digest, restart the stack, work through the checklist.
 | **Admin panel** | our own, permissively licensed panel against the MIT interface of LibreChat, plus a sidecar for everything that interface cannot do: usage in euros, shared monthly budget, retention, data export and deletion per account | `services/admin` |
 | **MCP gateway** | permission check and log before every access to a third party system, along the chain user, role, group, default. If the check fails, access is denied | `services/mcp-gateway` |
 | **Model router** | distributes requests across different models and reasoning efforts depending on the task | inside the MCP gateway |
-| **NinjaOne bridge** | read only access to device and organization data from the RMM | `services/ninjaone-mcp` |
+| **Example connector bridge** | read only access to a line of business system, as a template for your own integrations | its own folder under `services/` |
 | **Outlook add-in** | side chat pane in Outlook with the open mail as context, against the same instance and the same permissions | `services/office-addin` |
 | **Model cards and system prompt** | the curated selection in the model picker and the German system prompt that is inserted on the server side | `distribution/librechat.yaml` |
 | **Installation package** | Compose stack, server preparation, installer, backup and migration, Caddy, SearXNG, branding | `distribution/` |
-| **Configuration profiles** | customer template versus internal instance, plus the Compose profiles for file search, connectors, Microsoft 365 and TLS | `distribution/` |
+| **Configuration profiles** | customer template versus an instance with connectors, plus the Compose profiles for file search, connectors and TLS | `distribution/` |
 
 <Aside type="note" title="Not built yet">
 Our own hardened sandbox runner with an egress proxy and an allowlist is planned, but not
@@ -80,7 +80,7 @@ From this follows a fixed order in which a change is attempted:
 Everything that can be solved without touching LibreChat is therefore built as a separate
 service next to it. These services are called sidecars: standalone containers with their own
 lifecycle that talk to LibreChat through normal network interfaces. The admin panel, the MCP
-gateway, the NinjaOne bridge and the Outlook add-in are all built that way.
+gateway, the bundled connector bridge and the Outlook add-in are all built that way.
 
 In practice that means for you: an update of LibreChat does not touch our services, and a new
 version of the admin panel does not touch LibreChat. Both are updated separately. A release of
@@ -102,7 +102,7 @@ particularly relevant in our setup.
 | `interface` | which controls are visible. In the customer template the parameter panel, the file search and the code execution are switched off here, and here it also says that users may not create connectors of their own |
 | `endpoints` | the model providers. EuRouter as the default path with EU processing, optionally OpenRouter as a deliberately marked non EU option. Below that also sit the capabilities of the agents |
 | `modelSpecs` | the curated model cards that appear in the picker, including labels, default card and the German system prompt |
-| `mcpServers` | the connectors. In the customer template this block is deliberately empty, no connector is preconfigured. On the internal instance the Odoo bridges and the other integrations sit here |
+| `mcpServers` | the connectors. In the customer template this block is deliberately empty, no connector is preconfigured. In the example configuration with connectors the individual bridges sit here |
 | `webSearch` | search engine, scraper and reranker. In the customer template SearXNG is configured, the scraper is still missing |
 | `memory` | the long term memory: which rules apply, what its limits are and that users can switch it off |
 

@@ -27,17 +27,16 @@ All container names carry a prefix from the variable `STACK_NAME`, which default
 | `vectordb` | `pgvector/pgvector:0.8.0-pg15-trixie` | vector database of the file search | internal only | `filesearch` |
 | `rag_api` | `registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest` | processing of uploaded documents | internal only, `${RAG_PORT}`, default 8000 | `filesearch` |
 | `mcp-gateway` | build from `../services/mcp-gateway` | permission check and log in front of all connectors, plus the model router | internal only, 3020 | `internal` |
-| `odoo-mcp-administrator` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo bridge with its own service account | internal only, 8000 | `internal` |
-| `odoo-mcp-admin` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo bridge with its own service account | internal only, 8000 | `internal` |
-| `odoo-mcp-technik` | `ivnvxd/mcp-server-odoo:0.7.1` | Odoo bridge with its own service account | internal only, 8000 | `internal` |
-| `ninjaone-mcp` | build from `../services/ninjaone-mcp` | NinjaOne bridge, read only | internal only, 3030 | `internal` |
-| `ms365-mcp` | `node:22-alpine` with `@softeria/ms-365-mcp-server@0.128.2` | SharePoint and OneDrive through Microsoft Graph, read only | internal only, 3000 | `microsoft` |
+| connector bridges, profiles `internal` and `microsoft` | partly built from `../services`, partly an unmodified third party image | translate between the chat layer and a third party system, not active in the customer template | internal only, 3000, 3030 or 8000 depending on the bridge | `internal`, `microsoft` |
 | `caddy` | `caddy:2-alpine` | reverse proxy with automatic TLS | host 80 and 443 | `production` |
 | `admin-panel` | AGPL panel of LibreChat | transitional tool, not part of the product | host `${ADMIN_PANEL_PORT}`, default 3000 | `interim` |
 
-The three Odoo bridges are the same image with the same configuration, only with a separate
-Odoo key each. The key belongs to a dedicated Odoo user whose permissions in the ERP form the
-authorization boundary.
+The bridges of the `internal` profile run through the gateway and each hold their own service
+account in the third party system, whose permissions there form the actual authorization
+boundary. The bridge of the `microsoft` profile deliberately bypasses the gateway, because
+there every person signs in individually. How such a bridge is put together and which parts
+belong to it is described by
+[the connector pattern](/docs/en/konnektoren/muster).
 
 <Aside type="caution" title="Three images still run on a floating tag">
 `searxng`, `rag_api` and the interim panel `admin-panel` sit on `:latest`, while the LibreChat
@@ -120,10 +119,9 @@ sandbox network would end up in the code interpreter of the other customer.
 
 ## Health checks
 
-Only the connector bridges have health checks, meaning the three Odoo instances and
-`ninjaone-mcp`. They query their own health endpoint every 30 seconds, with a five second
-timeout and three attempts. The start period is 20 seconds for the Odoo bridges and 15 seconds
-for the NinjaOne bridge.
+Only the connector bridges of the `internal` profile have health checks. They query their own
+health endpoint every 30 seconds, with a five second timeout and three attempts. The start
+period is 15 to 20 seconds depending on the bridge.
 
 All other services have no health check. In `docker compose ps` they therefore appear as `Up`
 without a health status, which is not an error. Whether the application really started cleanly
@@ -133,9 +131,12 @@ is visible in the log:
 docker compose logs -f api
 ```
 
-The NinjaOne bridge additionally ships a self test of its own. It checks the credentials, the
-permissions actually granted, read access and that writing paths are blocked:
+A connector bridge developed in house additionally ships a self test of its own. It checks the
+credentials, the permissions actually granted, read access and that writing paths are blocked:
 
 ```bash
-docker compose --profile internal run --rm ninjaone-mcp node src/selftest.js
+docker compose --profile internal run --rm <bridge> node src/selftest.js
 ```
+
+The name of the service is in your `docker-compose.yml`, the procedure is described by
+[the connector pattern](/docs/en/konnektoren/muster).

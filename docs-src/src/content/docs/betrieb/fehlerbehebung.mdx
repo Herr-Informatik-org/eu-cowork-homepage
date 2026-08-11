@@ -123,10 +123,10 @@ und `NO_PROXY` bekannt machen, oder das Docker-Subnetz ändern, wenn es mit eine
 kollidiert. Auf einem gewöhnlichen Ubuntu-Server tritt das Problem in der Regel nicht auf, es
 ist ein Thema auf Arbeitsgeräten mit Sicherheits-Software.
 
-### Nach dem Umzug muss jede Person SharePoint neu verbinden
+### Nach dem Umzug muss jede Person ihre Konnektoren neu verbinden
 
-**Symptom:** Bestehende Verbindungen zu SharePoint und OneDrive funktionieren auf dem neuen
-Server nicht mehr, jede Person muss sich neu verbinden.
+**Symptom:** Bestehende Verbindungen zu Konnektoren mit Anmeldung pro Person funktionieren auf
+dem neuen Server nicht mehr, jede Person muss sich neu verbinden.
 
 **Ursache:** `CREDS_KEY` und `CREDS_IV` wurden auf dem neuen Server neu erzeugt statt aus der
 alten `.env` übernommen. Damit sind alle verschlüsselten Zugangsdaten in der Datenbank

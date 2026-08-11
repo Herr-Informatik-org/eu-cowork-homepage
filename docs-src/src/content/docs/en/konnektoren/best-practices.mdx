@@ -23,9 +23,9 @@ The tool catalog of a connector is sent to the model **with every single message
 
 | Example | Tools | Context per conversation |
 |---|---|---|
-| Microsoft 365 bridge, unfiltered | 164 | roughly 96,000 tokens |
-| Microsoft 365 bridge, filtered | 21 | roughly 8,000 tokens |
-| NinjaOne bridge | 7 | roughly 2,000 tokens |
+| Bridge to a large product family, unfiltered | 164 | roughly 96,000 tokens |
+| The same bridge, filtered to the use case | 21 | roughly 8,000 tokens |
+| Deliberately narrow bridge | 7 | roughly 2,000 tokens |
 
 The filtering saves 92 percent. The second effect is at least as important: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. A narrow catalog delivers not only cheaper but also more reliable answers.
 
@@ -35,7 +35,7 @@ So enable tools one at a time and on request, not as a precaution.
 
 The most reliable security measure is leaving things out. A model cannot call a tool by accident that does not exist at all, and no instruction inside a document can talk one into being.
 
-The [NinjaOne connection](/docs/en/konnektoren/konnektor-ninjaone) demonstrates this: there is deliberately no tool for reboot, script execution, patch deployment, maintenance windows, alert acknowledgement, or ticket changes. That is also why there is no rule anywhere that would have to prevent someone from restarting a customer server from the chat. It simply is not possible.
+A read-only bridge to a specialist system demonstrates this, see [pattern C](/docs/en/konnektoren/muster): there is deliberately no tool for reboot, script execution, software deployment, maintenance windows, alert acknowledgement, or ticket changes. That is also why there is no rule anywhere that would have to prevent someone from restarting a customer server from the chat. It simply is not possible.
 
 That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers reboots and script runs alongside reading and that cannot be switched off, a narrow connector of your own is often the faster solution than the discussion about who is allowed to use it.
 
@@ -43,7 +43,7 @@ That is exactly the measure you apply to a third party connector: which tools do
 
 An access key inherits the permissions of its account in the source system. So one key for everyone means the widest permissions for everyone, and the separation then hangs on our software alone.
 
-Instead, create several narrow service accounts, one per permission profile, and run a separate instance of the connector per account. That is exactly how the [Odoo connection](/docs/en/konnektoren/konnektor-odoo) is built: three instances of the same bridge, three Odoo users, three permission profiles. If the rule in the panel ever fails, a person still only sees what their service account is allowed to see.
+Instead, create several narrow service accounts, one per permission profile, and run a separate instance of the connector per account. That is exactly how [pattern A](/docs/en/konnektoren/muster) is built: several instances of the same bridge, each with its own account in the target system, each with its own permission profile. If the rule in the panel ever fails, a person still only sees what their service account is allowed to see.
 
 The side effect is valuable too: in the log of the source system you can tell which profile a query came from.
 
@@ -53,13 +53,13 @@ The temptation to draw a boundary in the prompt is strong: "do not query salary 
 
 Filtering at argument level does not carry far either. Many tools accept free search expressions or filter conditions. What is possible in there cannot be judged reliably from the outside, and every filter rule is a race against phrasings nobody thought of.
 
-Only two levels are reliable: the permissions of the account in the source system, so for example the record rules of the Odoo user or the organization access of the NinjaOne role, and the tool level, because a tool that does not exist cannot deliver anything. Draw the boundary there, and treat the prompt as a convenience, not as a control.
+Only two levels are reliable: the permissions of the account in the source system, so for example the record rules of the user behind the key or the restricted organization access of their role, and the tool level, because a tool that does not exist cannot deliver anything. Draw the boundary there, and treat the prompt as a convenience, not as a control.
 
 ## 6. Per-user sign-in beats a service account
 
 If a system offers per-person access through an interface, take it. Then the target system knows the person making the request, and their permissions there apply unchanged. You have to rebuild nothing and maintain nothing on top, and a permission change in the source system takes effect in the chat right away.
 
-The Microsoft 365 connection works this way. The price for it is that every person has to connect once, and that this connector does not run through the gateway and therefore cannot be controlled per role or group. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
+A connection to your file storage typically works this way, see [pattern B](/docs/en/konnektoren/muster). The price for it is that every person has to connect once, and that such a connector does not run through the gateway and therefore cannot be controlled per role or group. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
 
 A service account is the fallback for systems without this option. It is not bad, but it demands rules 1, 4, and 8 with some insistence.
 
@@ -84,9 +84,9 @@ The tool catalog is only one half. The other half is the **results** of the call
 Four levers help:
 
 - **Upper limits are set and should stay that way.** Tool results are capped in length, and so is the character budget that web search passes on to the model. If a response looks truncated, that is the protection doing its job.
-- **Prefer connectors with staged responses.** For a device question the NinjaOne connection loads only the master data and fetches software, services, or patches only on explicit request. That saves on every single question.
+- **Prefer connectors with staged responses.** A well built detail query loads only the master data first and fetches expensive sections such as software inventory, services, or patch levels only on explicit request. That saves on every single question.
 - **For questions about many objects, use an evaluation tool instead of many individual queries.** Ten individual queries cost ten results in the context, one evaluation costs one.
-- **With tool heavy agents, load the tool definitions only when needed.** There is a capability for this that puts the catalog behind a search tool instead of writing it into every prompt in full. The internal instance uses it, in the customer template it is not set.
+- **With tool heavy agents, load the tool definitions only when needed.** There is a capability for this that puts the catalog behind a search tool instead of writing it into every prompt in full. It only pays off with a large number of tools and is not set in the shipped customer template.
 
 What you do not have to handle yourself: if a conversation runs very long, the history is compacted automatically.
 
@@ -94,7 +94,9 @@ What you do not have to handle yourself: if a conversation runs very long, the h
 
 A connector carries data from your instance to a vendor. If that vendor is outside the EU, that is a statement about your data handling that you should not make silently.
 
-So handle it the way we do: NinjaOne is a vendor from the USA, and even the European instance remains processing outside your own stack. For internal use this is a deliberate trade-off, and **in the shipped customer template the connection is not included**.
+This holds even when the vendor runs a European instance: as soon as data leaves your own stack, it is processing at a third party, and the legal situation follows that party's seat. Such a connector can be an entirely correct decision, but it has to be a **deliberate** one.
+
+That is why a fresh installation ships with **no preconfigured connector**. What gets attached is your decision.
 
 Keep a short list of which connector passes data where, name non EU connections explicitly to your users and in your data protection documentation, and do not claim for such connectors that everything stays in Europe.
 
@@ -117,6 +119,11 @@ Work through these points before the first person uses the connector:
 - [ ] A look at the log under **"Audit-Log → MCP-Tool-Calls"** (audit log) shows the expected calls and decisions.
 
 <CardGrid>
+  <LinkCard
+    title="Connector patterns"
+    href="/docs/en/konnektoren/muster"
+    description="Three proven shapes: service account, per-person sign-in, and read-only bridge, with how the permissions flow."
+  />
   <LinkCard
     title="Permission gateway"
     href="/docs/en/konnektoren/gateway-und-rechte"

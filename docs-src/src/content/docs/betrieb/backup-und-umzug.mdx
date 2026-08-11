@@ -147,8 +147,8 @@ dem Umzug vom Übergabepfad und behalten Sie nur die reguläre Backup-Rotation.
 <Aside type="danger" title="CREDS_KEY und CREDS_IV übernehmen">
 Das ist der teuerste Fehler beim Umzug. Werden diese beiden Werte auf dem neuen Server neu
 erzeugt statt aus der alten `.env` übernommen, sind alle verschlüsselten Zugangsdaten in der
-Datenbank unlesbar: die OAuth-Token jeder Person für SharePoint und OneDrive und die im Panel
-hinterlegten API-Schlüssel. Jede Person müsste jede Verbindung neu aufbauen. Deshalb der Weg
+Datenbank unlesbar: die OAuth-Token jeder Person für Konnektoren mit Anmeldung pro Person und
+die im Panel hinterlegten API-Schlüssel. Jede Person müsste jede Verbindung neu aufbauen. Deshalb der Weg
 über die `.env` aus dem Archiv. Dasselbe Prinzip gilt abgeschwächt für `JWT_SECRET` und
 `JWT_REFRESH_SECRET`, dort werden nur alle Sitzungen ungültig, und für `MEILI_MASTER_KEY`,
 dort wird der Suchindex neu aufgebaut.

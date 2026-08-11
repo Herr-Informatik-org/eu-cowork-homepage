@@ -59,8 +59,8 @@ At the same time `install.sh` rebuilds the services developed in house.
 
 <Aside type="caution" title="Pitfall force-recreate">
 `docker compose up -d --force-recreate api` renews **only** the chat. The admin panel, the MCP
-gateway, the NinjaOne bridge and the Outlook add-in are built from source and stay on the old
-version. You need
+gateway, the bundled connector bridge and the Outlook add-in are built from source and stay on
+the old version. You need
 `--build`, and that is exactly what `install.sh` does. So use the installer and not the Compose
 command by hand.
 </Aside>

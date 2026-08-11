@@ -19,13 +19,13 @@ Für Sie heisst das zweierlei. Erstens: Für viele verbreitete Produkte existier
 
 ## Drei Begriffe, die Sie brauchen
 
-**Werkzeug.** Ein Werkzeug ist eine einzelne, klar umrissene Fähigkeit. Es hat einen technischen Namen, eine Beschreibung in Prosa und eine Liste von Parametern. Die NinjaOne-Anbindung hat zum Beispiel ein Werkzeug `ninja_devices` mit der Aufgabe „Geräte suchen, nach Organisation, Name, Klasse oder Online-Status". Ein Werkzeug ist immer eine Aktion, nie ein ganzes System.
+**Werkzeug.** Ein Werkzeug ist eine einzelne, klar umrissene Fähigkeit. Es hat einen technischen Namen, eine Beschreibung in Prosa und eine Liste von Parametern. Eine Anbindung an Ihr Monitoring-System hätte zum Beispiel ein Werkzeug `geraete_suchen` mit der Aufgabe „Geräte suchen, nach Organisation, Name, Klasse oder Online-Status". Ein Werkzeug ist immer eine Aktion, nie ein ganzes System.
 
 **Konnektor, technisch MCP-Server.** Ein Konnektor ist ein kleiner Dienst, der eine Sammlung von Werkzeugen anbietet und dahinter mit dem eigentlichen Zielsystem spricht. In dieser Dokumentation nennen wir ihn Konnektor, weil das für Nicht-Entwickler verständlicher ist. In der Konfiguration und im Admin-Panel heisst er MCP-Server.
 
 **Client.** Der Client ist die Seite, der die Werkzeuge angeboten werden und die sie aufruft. Bei uns ist das LibreChat, die Chat-Schicht von EU Cowork AI.
 
-Ein Konnektor ist häufig eine **Brücke**: Das Zielsystem selbst spricht kein MCP, sondern hat nur eine gewöhnliche Programmierschnittstelle. Der Konnektor übersetzt dann zwischen beiden Welten. Genau so funktionieren die Odoo-Anbindung und die NinjaOne-Anbindung.
+Ein Konnektor ist häufig eine **Brücke**: Das Zielsystem selbst spricht kein MCP, sondern hat nur eine gewöhnliche Programmierschnittstelle. Der Konnektor übersetzt dann zwischen beiden Welten. So funktionieren die meisten Anbindungen an ein ERP, ein Monitoring-System oder ein Ticketsystem.
 
 ## Ein Beispiel: „Welche offenen Rechnungen hat Kunde X?"
 
@@ -50,9 +50,9 @@ Jeder Konnektor muss sich beim Zielsystem anmelden. Dafür gibt es zwei grundsä
 | Wer kennt die Rechte | das Zielsystem selbst | das Zielsystem kennt nur das Dienstkonto |
 | Berechtigungsgrenze | die Rechte der Person im Zielsystem | die Gateway-Regeln plus die Rechte des Dienstkontos |
 | Feinheit | bis auf Dokument- und Feldebene | bis auf Konnektor- und Werkzeugebene |
-| Beispiel bei uns | Microsoft 365 und SharePoint | Odoo, NinjaOne |
+| Typisch für | Dateiablage, Dokumentenmanagement, Cloud-Speicher | ERP, Warenwirtschaft, Buchhaltung, Monitoring |
 
-**Anmeldung pro Person** bedeutet: Beim ersten Gebrauch wird die Person zum Anmeldedialog des Zielsystems geschickt, bestätigt dort den Zugriff, und der Konnektor arbeitet ab dann mit ihrem persönlichen Zugang. Wer in SharePoint einen Ordner nicht sehen darf, sieht ihn auch im Chat nicht. Das Zielsystem bleibt die massgebliche Instanz, und Sie müssen die Rechte nicht ein zweites Mal nachbauen.
+**Anmeldung pro Person** bedeutet: Beim ersten Gebrauch wird die Person zum Anmeldedialog des Zielsystems geschickt, bestätigt dort den Zugriff, und der Konnektor arbeitet ab dann mit ihrem persönlichen Zugang. Wer in Ihrer Dateiablage einen Ordner nicht sehen darf, sieht ihn auch im Chat nicht. Das Zielsystem bleibt die massgebliche Instanz, und Sie müssen die Rechte nicht ein zweites Mal nachbauen.
 
 **Dienstkonto** bedeutet: Der Konnektor hält einen einzigen Schlüssel und meldet sich für alle gleich an. Das Zielsystem sieht nur dieses eine Konto und kann deshalb nicht zwischen Ihren Mitarbeitenden unterscheiden. Die Trennung muss dann davor passieren, im Rechte-Gateway.
 
@@ -64,7 +64,7 @@ Nehmen Sie **Anmeldung pro Person**, wann immer das Zielsystem das anbietet. Sie
 
 Ein Konnektor ist nicht gratis, auch wenn er nichts kostet. Der Werkzeug-Katalog, also Name, Beschreibung und Parameter jedes Werkzeugs, wird dem Modell **bei jeder einzelnen Nachricht** mitgeschickt. Er belegt also dauerhaft Platz im Kontext und wird bei jedem Aufruf mitbezahlt.
 
-Die Grössenordnung ist erheblich. Die Microsoft-365-Brücke bietet ungefiltert 164 Werkzeuge an, das sind rund 96 000 Tokens pro Konversation. Auf die 21 Werkzeuge gefiltert, die wir tatsächlich brauchen, sind es noch rund 8 000 Tokens, also 92 Prozent weniger. Die NinjaOne-Brücke hat bewusst nur 7 Werkzeuge und liegt damit bei rund 2 000 Tokens.
+Die Grössenordnung ist erheblich und gemessen. Eine Brücke zu einer grossen Produktfamilie bot ungefiltert 164 Werkzeuge an, das sind rund 96 000 Tokens pro Konversation. Auf die 21 Werkzeuge gefiltert, die der Anwendungsfall tatsächlich braucht, waren es noch rund 8 000 Tokens, also 92 Prozent weniger. Eine bewusst schmal gebaute Brücke mit 7 Werkzeugen liegt bei rund 2 000 Tokens.
 
 Dazu kommt ein zweiter Effekt: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Wenige, klar benannte Werkzeuge liefern also nicht nur günstigere, sondern auch bessere Antworten.
 
@@ -80,23 +80,13 @@ Dazu kommt ein zweiter Effekt: Je mehr ähnlich klingende Werkzeuge im Katalog s
     description="Der vollständige Weg von der leeren Maske bis zum freigegebenen Werkzeug, im Panel oder über die Konfigurationsdateien."
   />
   <LinkCard
+    title="Muster für Konnektoren"
+    href="/docs/konnektoren/muster"
+    description="Drei bewährte Bauformen: Dienstkonto, Anmeldung pro Person und nur lesende Brücke, mit dem Verlauf der Rechte."
+  />
+  <LinkCard
     title="Best Practices für Konnektoren"
     href="/docs/konnektoren/best-practices"
     description="Zehn Regeln mit Begründung und Messzahlen, dazu eine Checkliste vor der Freigabe."
-  />
-  <LinkCard
-    title="Odoo (ERP)"
-    href="/docs/konnektoren/konnektor-odoo"
-    description="Wie das ERP als Konnektor angebunden wird und warum es drei Instanzen mit je eigenem Dienstkonto gibt."
-  />
-  <LinkCard
-    title="Microsoft 365 und SharePoint"
-    href="/docs/konnektoren/konnektor-microsoft-365"
-    description="Zugriff auf SharePoint und OneDrive mit den Rechten der jeweiligen Person, über eine Entra-App-Registrierung."
-  />
-  <LinkCard
-    title="NinjaOne (RMM)"
-    href="/docs/konnektoren/konnektor-ninjaone"
-    description="Geräte- und Organisationsdaten aus dem RMM im Chat, ausschliesslich lesend, abgesichert in vier Schichten."
   />
 </CardGrid>

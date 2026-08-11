@@ -15,10 +15,13 @@ fresh Ubuntu server themselves, and explains step by step what the script change
 
 ```bash title="On the fresh server"
 sudo apt-get update && sudo apt-get install -y git
-git clone https://github.com/herr-informatik/eu-cowork.git
+git clone https://github.com/<organisation>/eu-cowork.git
 cd eu-cowork/distribution
 ./setup-server.sh
 ```
+
+The exact address of the repository is stated by your source of supply, or your provider tells
+you what it is.
 
 The script runs as `root` or as a user with `sudo`. It is idempotent: you can run it several
 times, steps that are already done are skipped and reported.

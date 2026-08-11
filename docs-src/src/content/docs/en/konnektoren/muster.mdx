@@ -1,0 +1,140 @@
+---
+title: Connector patterns
+description: Three proven shapes for connectors, each with its use case, how the permissions flow, and what you have to watch out for in operation.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Connectors differ less in the product behind them than in the way they sign in to the target system. That way of signing in is exactly what determines where the data boundary sits and how much work you have in the admin panel.
+
+Three shapes cover practically everything that comes up in a small or medium business. This page describes each one with the same three questions: what it is good for, how the permissions flow, and what you have to watch out for. Which product you actually attach makes no difference to the shape.
+
+## Pattern A: business application through a service account
+
+**What it is good for.** Your ERP, your inventory management, your accounting, meaning the systems with customers, documents, projects, and personnel data. Applications like these usually offer a technical access path through a key, but no per-person access through an interface.
+
+**How the permissions flow.** The connector holds a technical access path and signs in the same way for everyone. **The target system does not know the person making the request**, it only sees the service account. It therefore cannot tell your staff apart.
+
+The answer to that is not a filter in the prompt, it is the structure of the accounts: **one service account and one connector instance per permission profile**, rather than a single master key for everyone. An access key fully inherits the permissions of its account in the target system. That makes the account behind the key the actual data boundary, not the configuration and not the prompt. What the account is not allowed to see, the chat does not see either, no matter what the model tries.
+
+The rules in the permission gateway come **on top of that**. They decide who gets to see which instance at all. If a rule in the panel ever fails, the permission boundary of the service account still holds.
+
+| Instance | Own service account with | Intended for |
+|---|---|---|
+| `erp-leitung` | the widest permission profile | management |
+| `erp-buchhaltung` | a commercial view | finance and administration |
+| `erp-technik` | a technical view without commercial data | service and projects |
+
+The names are mere labels. Which permissions these profiles actually carry is defined in the target system, not with us.
+
+**What to watch out for.**
+
+<Aside type="danger" title="Grant exactly one instance per person">
+If several instances of the same connector are running, they expose **identical tool names**. If two of them are granted to one person, the same tool catalog lands in every conversation twice. That costs double the context tokens on every message, and the model has to guess between two identically named tools, which leads to wrong calls.
+
+So grant **exactly one** instance per person. If someone needs a different profile, **switch** the grant instead of adding a second one.
+</Aside>
+
+Three points on top of that matter in day to day work:
+
+- **Set the server default to denied right away.** Without a rule document the gateway lets everyone through. As long as the default is not set to denied, every person sees every instance, and with it everything the service accounts can see.
+- **Keep the release in the target system read only** wherever the use case allows. Enable writing, creating, and deleting only for the individual objects where you genuinely have the need.
+- **Use the log.** Every call through the gateway is written down immutably. In the log of the target system you can additionally tell which profile a query came from. Separate service accounts pay off a second time here.
+
+If you need a finer separation, the way to get it is not an extra filter in the chat, it is another account with narrower permissions and another instance of the connector.
+
+## Pattern B: file storage with per-person sign-in
+
+**What it is good for.** Your document management, your cloud storage, your team file shares. So systems where the access permissions are already maintained finely and per person, and where a per-person access path through an interface exists.
+
+**How the permissions flow.** Every person **signs in once themselves**. On first use they pick the tool in the chat and click connect, land in the familiar sign-in dialog of the target system, confirm the access there, and from then on the connector works with their personal access.
+
+That means: someone who is not allowed to see a folder in the target system does not see it in the chat either. The permissions are maintained where they are maintained anyway, and do not have to be rebuilt with us. A permission change in the source system takes effect in the chat right away.
+
+**This is the preferred route.** If a system offers this kind of sign-in, take it. The permissions of the target system are already the boundary, and they are finer than a rule in front of it could ever be: down to document and field level instead of only down to connector and tool level.
+
+<Aside type="note" title="Connectors like this may run past the gateway">
+Because the person's permissions are already the boundary, an additional check in the gateway would be no security gain, only additional complexity in the sign-in flow. A connector like this is therefore connected directly and carries the badge **"Direkt"** (direct) in the panel.
+
+The practical consequence: there are **no** rules per role, group, or person for it. Only the **"Generalschalter pro Rolle"** (master switch per role) on the "MCP-Zugriff" (MCP access) page applies. Anyone who should not have the connector at all is steered through the model and agent configuration, or may not use MCP in the first place.
+</Aside>
+
+**What to watch out for.**
+
+- **The acceptance test is a comparison.** Two test users with different permissions in the target system have to demonstrably see different amounts in the chat. If each of them sees everything, the connector is not working with the person's permissions.
+- **Read only wherever that is enough.** An explicit read only switch in the bridge is worth more than the intention not to write. Areas the use case does not need, such as mail, calendar, or chat history, are best not enabled at all. Every additional permission requires fresh consent anyway.
+- **The access has to survive and be renewable.** If the permission to renew the connection in the background is missing, it dies after a short while and every person has to connect again.
+
+<Aside type="caution" title="After a migration: without the carried-over keys every person has to reconnect">
+The personal access tokens sit encrypted in the database of your instance. The key for that is in the `.env` and is **generated fresh** on a new installation.
+
+If you move to a new server, you have to carry `CREDS_KEY` and `CREDS_IV` over from the old `.env`. Forget that and all stored connections are unusable, and **every person has to set up their access again**. No data is lost in the process, but it is one support case per member of staff.
+</Aside>
+
+## Pattern C: read-only bridge to a specialist system
+
+**What it is good for.** Your monitoring, your inventory, your ticketing system. So specialist systems you want information out of, but where nobody should change anything from the chat.
+
+**How the permissions flow.** Technically this is a service account like in pattern A. The difference lies in the intent: here the point is to read and nothing else. And that is exactly where the effort of **genuinely enforcing read-only rather than promising it** pays off.
+
+Each of the following layers would be enough on its own. That is the point: if one fails, the others carry.
+
+| # | Layer | Effect |
+|---|---|---|
+| 1 | The technical access in the target system gets read permissions only | The target system rejects every write call itself, independently of our software |
+| 2 | The bridge only knows `GET` and a path allowlist | There is no line of code that could issue a write call |
+| 3 | At startup the bridge checks which permissions it was actually granted | If a write permission is among them, the service does not come up |
+| 4 | The rule in the permission gateway | Who sees the tools at all is decided by the admin in the panel |
+
+**The fifth and hardest boundary.** The four layers prevent writing. They say nothing about **how much** may be read. By default a technical access path usually sees the whole system.
+
+So give the technical access in the target system only the areas it genuinely needs. What it does not see simply does not exist as far as the chat is concerned. That is the hardest boundary available, it sits entirely with you in the specialist system, and it can be bypassed neither by a prompt nor by a bug in our software. If you need several views, the way is the same as in pattern A: a second technical access path with a narrower area, a second instance of the bridge, and in the panel every person gets exactly one of them.
+
+<Aside type="tip" title="The rule behind it">
+**A tool that does not exist cannot be called by a model by accident.** So do not build tools for reboot, script execution, software deployment, maintenance windows, or write access to tickets in the first place. Then no rule is needed anywhere that would have to prevent someone from restarting a customer server from the chat. It simply is not possible.
+
+That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers reboots and script runs alongside reading and that cannot be switched off, a narrow bridge of your own is often the faster solution than the discussion about who is allowed to use it.
+</Aside>
+
+**What to watch out for.**
+
+- **A self-test is worth the effort.** A small check program that proves the sign-in, the permissions actually granted, a read access, and the blocking of write paths turns an assurance into evidence. It can be run again after every change.
+- **Staged responses save on every question.** A detail query should first load only the master data and deliver expensive sections such as software inventory, services, or patch levels only on explicit request.
+- **For questions about many objects, use an evaluation tool.** Ten individual queries cost ten results in the context, one evaluation costs one.
+- **Everybody sees the same thing.** The specialist system does not know the individual chat user, it only sees the technical access. The separation between your staff is made solely by the rule in the panel and by the area you gave that access.
+
+## What the tool catalog costs
+
+All three patterns share one property: the tool catalog of a connector, meaning the name, description, and parameters of every tool, is sent to the model **with every single message**. It is not a one time investment, it is ongoing rent on every chat.
+
+The order of magnitude is substantial, and it is measured:
+
+| Example | Tools | Context per conversation |
+|---|---|---|
+| Bridge to a large product family, unfiltered | 164 | roughly 96,000 tokens |
+| The same bridge, filtered to the use case | 21 | roughly 8,000 tokens |
+| Deliberately narrow bridge | 7 | roughly 2,000 tokens |
+
+The filtering saves **92 percent**, and it does so on every single message of every conversation. The second effect is at least as important: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. A narrow catalog delivers not only cheaper but also more reliable answers.
+
+So enable tools one at a time and on request, not as a precaution.
+
+<CardGrid>
+  <LinkCard
+    title="Permission gateway"
+    href="/docs/en/konnektoren/gateway-und-rechte"
+    description="The permission cascade, the effective times, and where you maintain the rules."
+  />
+  <LinkCard
+    title="Connecting your own connector"
+    href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
+    description="The complete path in the panel or through the configuration files, including troubleshooting."
+  />
+  <LinkCard
+    title="Best practices for connectors"
+    href="/docs/en/konnektoren/best-practices"
+    description="Ten rules with reasoning and measured figures, plus a checklist to run before granting access."
+  />
+</CardGrid>

@@ -22,8 +22,6 @@ export default defineConfig({
   outDir: '../docs',
   trailingSlash: 'never',
   build: { format: 'directory' },
-  // Die Website hostet ihre Bilder statisch; kein Bild-Endpunkt zur Laufzeit.
-  image: { service: { entrypoint: 'astro/assets/services/sharp' } },
   integrations: [
     // Eigene Sitemap unter /docs/sitemap-index.xml. Die Haupt-sitemap.xml der
     // Website bleibt handgepflegt; beide sind in robots.txt eingetragen.
@@ -35,8 +33,10 @@ export default defineConfig({
       description:
         'Dokumentation von EU Cowork AI: Installation, Betrieb, Administration und eigene Konnektoren.',
       tagline: 'Dokumentation',
-      // Kein `logo`-Eintrag: die Markenzeile kommt aus der eigenen
-      // SiteTitle-Komponente, die das Zeichen direkt als SVG einbettet.
+      logo: {
+        light: './src/assets/logo-light.svg',
+        dark: './src/assets/logo-dark.svg',
+      },
       favicon: '/favicon.ico',
       customCss: ['./src/styles/eucowork.css'],
       expressiveCode: {
@@ -57,10 +57,9 @@ export default defineConfig({
         root: { label: 'Deutsch', lang: 'de-CH' },
         en: { label: 'English', lang: 'en' },
       },
-      components: {
-        // Kopfzeile mit Rücksprung auf die Website, gleicher Aufbau wie eucowork.ai.
-        SiteTitle: './src/components/SiteTitle.astro',
-      },
+      // Bewusst keine überschriebenen Komponenten. Die Kopfleiste, die
+      // Seitenleiste und das Suchfeld kommen unverändert von Starlight;
+      // eigene Nachbauten sehen schnell zusammengesetzt aus.
       head: [
         {
           tag: 'meta',

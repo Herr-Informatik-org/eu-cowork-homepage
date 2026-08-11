@@ -145,8 +145,8 @@ handover path after the migration and keep only the regular backup rotation.
 <Aside type="danger" title="Carry over CREDS_KEY and CREDS_IV">
 This is the most expensive mistake during a migration. If these two values are regenerated on the
 new server instead of carried over from the old `.env`, all encrypted credentials in the database
-are unreadable: every person's OAuth tokens for SharePoint and OneDrive, and the API keys stored
-in the panel. Every person would have to set up every connection again. That is why the path goes
+are unreadable: every person's OAuth tokens for connectors with per-user sign-in, and the API
+keys stored in the panel. Every person would have to set up every connection again. That is why the path goes
 through the `.env` from the archive. The same principle applies in a milder form to `JWT_SECRET`
 and `JWT_REFRESH_SECRET`, where only all sessions become invalid, and to `MEILI_MASTER_KEY`,
 where the search index is rebuilt.

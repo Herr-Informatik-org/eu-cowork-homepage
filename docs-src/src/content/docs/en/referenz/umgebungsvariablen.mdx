@@ -46,7 +46,8 @@ it the stack does start, but every model request fails.
 
 **The three domain variables** are set to `localhost` out of the box. `DOMAIN_CLIENT` is the
 URL the browser sees and at the same time the basis for invitation links. `DOMAIN_SERVER` is
-the server URL and therefore the basis of the SharePoint redirect URI. `EUCOWORK_DOMAIN` is
+the server URL and therefore the basis of the redirect URI for connectors with per-user
+sign-in. `EUCOWORK_DOMAIN` is
 used by Caddy and by the Office manifest. If they stay on `localhost`, you send invitations
 with a link that only works on the server itself.
 
@@ -63,7 +64,7 @@ for them.
 
 | Variable | What for |
 |---|---|
-| `CREDS_KEY` | encrypts the stored credentials of the users, for example the SharePoint connection |
+| `CREDS_KEY` | encrypts the stored credentials of the users, for example a connector connection |
 | `CREDS_IV` | initialization vector for the encryption |
 | `JWT_SECRET` | signs the session tokens |
 | `JWT_REFRESH_SECRET` | signs the refresh tokens |
@@ -79,7 +80,7 @@ keys.
 <Aside type="caution" title="When migrating to a new server">
 `CREDS_KEY` and `CREDS_IV` have to be taken over from the old `.env`. If they are generated
 anew, the stored credentials can no longer be decrypted and all users have to set up their
-SharePoint connection again.
+connector connections again.
 </Aside>
 
 ## Host and ports
@@ -101,7 +102,7 @@ SharePoint connection again.
 | Variable | Purpose | Required | Default |
 |---|---|---|---|
 | `DOMAIN_CLIENT` | chat URL reachable in the browser, also the basis for invitation links | required in production | `http://localhost:3080` |
-| `DOMAIN_SERVER` | server URL, basis of the SharePoint redirect URI | required in production | `http://localhost:3080` |
+| `DOMAIN_SERVER` | server URL, basis of the redirect URI for connectors with per-user sign-in | required in production | `http://localhost:3080` |
 | `EUCOWORK_DOMAIN` | domain for Caddy and for the Office manifest | required in production | `localhost` |
 | `CADDY_FILE` | selects the Caddy variant: `Caddyfile` for public Let's Encrypt, `Caddyfile.internal` for a LAN server with its own root CA, `Caddyfile.proxied` behind a WAF that already terminates HTTPS | optional | `Caddyfile`, line commented out |
 | `LIBRECHAT_CONFIG_FILE` | selects the active configuration file | optional | `librechat.yaml`, line commented out |
@@ -222,60 +223,32 @@ The allowlist for outbound connections from code execution is still missing. The
 runner with an egress proxy is planned, but not built.
 </Aside>
 
-## Connectors
+## Connector variables
 
 All connector variables are commented out in the template. The customer template deliberately
 ships without a preconfigured connector.
 
-### Odoo, Compose profile `internal`
+The bundled `.env.example` contains a block of its own for every example connector, together
+with the Compose profile the matching bridge starts under. Every connector brings its own
+variables, usually a base URL or region of the third party system and a secret the bridge
+identifies itself with. Which variables those are in detail, and how the account behind them
+is set up, is described in the
+[connectors](/docs/en/konnektoren/muster) chapter.
+
+Two points apply to all connectors alike. First, the permissions granted in the third party
+system are the actual data boundary, and the admin panel additionally governs who gets to see
+a bridge at all. Second, these keys never belong in a repository, which is why the `.env`
+carries the permissions `600`.
+
+## Web search with an external provider
 
 | Variable | Purpose | Required | Default |
 |---|---|---|---|
-| `ODOO_URL` | base URL of your Odoo installation | required with the `internal` profile | example value, line commented out |
-| `ODOO_DB` | name of the Odoo database, set it explicitly | required with the `internal` profile | empty, line commented out |
-| `ODOO_MCP_API_KEY_ADMINISTRATOR` | **secret.** API key for the instance `odoo-administrator` | required with the `internal` profile | empty, line commented out |
-| `ODOO_MCP_API_KEY_ADMIN` | **secret.** API key for the instance `odoo-admin` | required with the `internal` profile | empty, line commented out |
-| `ODOO_MCP_API_KEY_TECHNIK` | **secret.** API key for the instance `odoo-technik` | required with the `internal` profile | empty, line commented out |
-
-Three bridge instances mean three separate Odoo users, each with its own permission profile.
-The permissions of the respective user in Odoo are the actual data boundary, and the admin
-panel additionally governs who gets to see which instance at all.
-
-### NinjaOne, Compose profile `internal`
-
-| Variable | Purpose | Required | Default |
-|---|---|---|---|
-| `NINJAONE_INSTANCE` | region of the instance: `eu`, `us`, `us2`, `ca`, `oc` or a complete hostname | required for the connector | `eu`, line commented out |
-| `NINJAONE_CLIENT_ID` | client ID of the API app | required for the connector | empty, line commented out |
-| `NINJAONE_CLIENT_SECRET` | **secret.** Client secret of the API app | required for the connector | empty, line commented out |
-| `NINJAONE_SCOPE_ENFORCE` | `strict` aborts the start as soon as the app would have write permissions | optional | `strict`, line commented out |
-
-The API app in NinjaOne is given only the "Monitoring" scope and the "Client Credentials"
-grant. If it additionally grants Management or Control, the bridge deliberately refuses to
-start.
-
-### Microsoft 365 and SharePoint, Compose profile `microsoft`
-
-| Variable | Purpose | Required | Default |
-|---|---|---|---|
-| `MS365_TENANT_ID` | directory ID of the Entra tenant, not `common` | required with the `microsoft` profile | empty, line commented out |
-| `MS365_MCP_CLIENT_ID` | application ID of the Entra app | required with the `microsoft` profile | empty, line commented out |
-| `MS365_MCP_CLIENT_SECRET` | **secret.** Client secret of the Entra app | required with the `microsoft` profile | empty, line commented out |
-
-Here every person signs in with their own account and only sees what their own SharePoint and
-OneDrive permissions allow. The bridge works read only.
-
-### Web search with external providers
-
-| Variable | Purpose | Required | Default |
-|---|---|---|---|
-| `SERPER_API_KEY` | **secret.** Search API from serper.dev | optional | empty, line commented out |
 | `FIRECRAWL_API_KEY` | **secret.** Scraper from firecrawl.dev | optional | empty, line commented out |
 
 <Aside type="caution" title="Not EU resident">
-Both services run in a US cloud. They are meant for the internal instance, not for the
-customer template. Customers use SearXNG in their own stack instead, and for the scraper a
-self hosted variant is planned.
+The hosted service runs in a US cloud. For the search itself the customer template uses
+SearXNG in its own stack, and for the scraper a self hosted variant is planned.
 </Aside>
 
 ## Admin panel and usage metering

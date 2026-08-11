@@ -23,9 +23,9 @@ Der Werkzeug-Katalog eines Konnektors wird dem Modell bei **jeder einzelnen Nach
 
 | Beispiel | Werkzeuge | Kontext pro Konversation |
 |---|---|---|
-| Microsoft-365-Brücke ungefiltert | 164 | rund 96 000 Tokens |
-| Microsoft-365-Brücke gefiltert | 21 | rund 8 000 Tokens |
-| NinjaOne-Brücke | 7 | rund 2 000 Tokens |
+| Brücke zu einer grossen Produktfamilie, ungefiltert | 164 | rund 96 000 Tokens |
+| Dieselbe Brücke, auf den Anwendungsfall gefiltert | 21 | rund 8 000 Tokens |
+| Bewusst schmal gebaute Brücke | 7 | rund 2 000 Tokens |
 
 Die Filterung spart 92 Prozent. Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
 
@@ -35,7 +35,7 @@ Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich
 
 Die verlässlichste Sicherheitsmassnahme ist Weglassen. Ein Modell kann kein Werkzeug versehentlich aufrufen, das gar nicht existiert, und keine Anweisung in einem Dokument kann eines herbeireden.
 
-Die [NinjaOne-Anbindung](/docs/konnektoren/konnektor-ninjaone) führt das vor: Es gibt bewusst kein Werkzeug für Neustart, Skriptausführung, Patch-Verteilung, Wartungsfenster, Alarm-Quittierung oder Ticket-Änderung. Deshalb steht auch nirgends eine Regel, die verhindern müsste, dass jemand einen Kundenserver aus dem Chat neu startet. Es geht schlicht nicht.
+Eine nur lesende Brücke zu einem Fachsystem führt das vor, siehe [Muster C](/docs/konnektoren/muster): Es gibt dort bewusst kein Werkzeug für Neustart, Skriptausführung, Verteilung von Software, Wartungsfenster, Alarm-Quittierung oder Ticket-Änderung. Deshalb steht auch nirgends eine Regel, die verhindern müsste, dass jemand einen Kundenserver aus dem Chat neu startet. Es geht schlicht nicht.
 
 Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, und gibt es einen Nur-Lese-Modus? Wenn ein fertiger Server neben dem Lesen auch Neustarts und Skriptläufe anbietet und sich das nicht abschalten lässt, ist ein eigener schmaler Konnektor oft die schnellere Lösung als die Diskussion darüber, wer ihn benutzen darf.
 
@@ -43,7 +43,7 @@ Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, u
 
 Ein Zugangsschlüssel erbt die Rechte seines Kontos im Quellsystem. Ein Schlüssel für alle bedeutet also: die weitesten Rechte für alle, und die Trennung hängt allein an unserer Software.
 
-Legen Sie stattdessen mehrere schmale Dienstkonten an, je eines pro Rechteprofil, und fahren Sie pro Konto eine eigene Instanz des Konnektors. Genau so ist die [Odoo-Anbindung](/docs/konnektoren/konnektor-odoo) gebaut: drei Instanzen derselben Brücke, drei Odoo-Benutzer, drei Rechteprofile. Fällt die Regel im Panel einmal aus, sieht eine Person immer noch nur das, was ihr Dienstkonto sehen darf.
+Legen Sie stattdessen mehrere schmale Dienstkonten an, je eines pro Rechteprofil, und fahren Sie pro Konto eine eigene Instanz des Konnektors. Genau so ist [Muster A](/docs/konnektoren/muster) gebaut: mehrere Instanzen derselben Brücke, je ein eigenes Konto im Zielsystem, je ein eigenes Rechteprofil. Fällt die Regel im Panel einmal aus, sieht eine Person immer noch nur das, was ihr Dienstkonto sehen darf.
 
 Der Nebeneffekt ist ebenfalls wertvoll: Im Protokoll des Quellsystems ist erkennbar, aus welchem Profil eine Abfrage kam.
 
@@ -53,13 +53,13 @@ Die Versuchung ist gross, eine Grenze im Prompt zu ziehen: „Frage keine Lohnda
 
 Auch eine Filterung auf Argumentebene trägt nicht weit. Viele Werkzeuge nehmen freie Suchausdrücke oder Filterbedingungen entgegen. Was dort alles möglich ist, lässt sich von aussen nicht zuverlässig beurteilen, und jede Filterregel ist ein Wettlauf gegen Formulierungen, an die niemand gedacht hat.
 
-Verlässlich sind nur zwei Ebenen: die Rechte des Kontos im Quellsystem, also etwa die Record Rules des Odoo-Benutzers oder der Organisations-Zugriff der NinjaOne-Rolle, und die Werkzeug-Ebene, weil ein nicht vorhandenes Werkzeug nichts liefern kann. Ziehen Sie die Grenze dort, und behandeln Sie den Prompt als Bequemlichkeit, nicht als Kontrolle.
+Verlässlich sind nur zwei Ebenen: die Rechte des Kontos im Quellsystem, also etwa die Datensatzregeln des Benutzers hinter dem Schlüssel oder der eingeschränkte Organisations-Zugriff seiner Rolle, und die Werkzeug-Ebene, weil ein nicht vorhandenes Werkzeug nichts liefern kann. Ziehen Sie die Grenze dort, und behandeln Sie den Prompt als Bequemlichkeit, nicht als Kontrolle.
 
 ## 6. Anmeldung pro Person schlägt Dienstkonto
 
 Wenn ein System einen personenbezogenen Zugang über eine Schnittstelle anbietet, nehmen Sie ihn. Dann kennt das Zielsystem die anfragende Person, und ihre dortigen Rechte gelten unverändert. Sie müssen nichts nachbauen, nichts nachpflegen, und ein Rechtewechsel im Quellsystem wirkt sofort auch im Chat.
 
-Die Microsoft-365-Anbindung funktioniert so. Der Preis dafür ist, dass jede Person sich einmal verbinden muss, und dass dieser Konnektor nicht über das Gateway läuft und damit nicht pro Rolle oder Gruppe steuerbar ist. Das ist der richtige Tausch: Eine feinere Grenze im Zielsystem ist mehr wert als eine gröbere Grenze davor.
+Eine Anbindung an Ihre Dateiablage funktioniert typischerweise so, siehe [Muster B](/docs/konnektoren/muster). Der Preis dafür ist, dass jede Person sich einmal verbinden muss, und dass ein solcher Konnektor nicht über das Gateway läuft und damit nicht pro Rolle oder Gruppe steuerbar ist. Das ist der richtige Tausch: Eine feinere Grenze im Zielsystem ist mehr wert als eine gröbere Grenze davor.
 
 Ein Dienstkonto ist die Notlösung für Systeme ohne diese Möglichkeit. Es ist nicht schlecht, aber es verlangt die Regeln 1, 4 und 8 mit Nachdruck.
 
@@ -84,9 +84,9 @@ Der Werkzeug-Katalog ist nur die eine Hälfte. Die andere sind die **Ergebnisse*
 Vier Stellschrauben helfen:
 
 - **Obergrenzen sind gesetzt und sollten es bleiben.** Werkzeug-Ergebnisse sind in der Länge gedeckelt, ebenso das Zeichenbudget, das die Web-Suche ans Modell weitergibt. Wirkt eine Antwort abgeschnitten, ist das der Schutz bei der Arbeit.
-- **Konnektoren mit gestuften Antworten bevorzugen.** Die NinjaOne-Anbindung lädt bei einer Gerätefrage nur die Stammdaten und holt Software, Dienste oder Patches erst auf ausdrückliche Anforderung. Das spart bei jeder einzelnen Frage.
+- **Konnektoren mit gestuften Antworten bevorzugen.** Eine gut gebaute Detailabfrage lädt zuerst nur die Stammdaten und holt teure Abschnitte wie Softwareinventar, Dienste oder Patch-Stände erst auf ausdrückliche Anforderung. Das spart bei jeder einzelnen Frage.
 - **Für Fragen über viele Objekte ein Auswertungswerkzeug statt vieler Einzelabfragen.** Zehn Einzelabfragen kosten zehn Ergebnisse im Kontext, eine Auswertung kostet eines.
-- **Bei werkzeugschweren Agenten die Werkzeug-Definitionen erst bei Bedarf laden.** Es gibt dafür eine Fähigkeit, die den Katalog hinter ein Suchwerkzeug legt, statt ihn komplett in jeden Prompt zu schreiben. Die interne Instanz nutzt das, im Kunden-Template ist es nicht gesetzt.
+- **Bei werkzeugschweren Agenten die Werkzeug-Definitionen erst bei Bedarf laden.** Es gibt dafür eine Fähigkeit, die den Katalog hinter ein Suchwerkzeug legt, statt ihn komplett in jeden Prompt zu schreiben. Sie lohnt sich erst bei sehr vielen Werkzeugen und ist im ausgelieferten Kunden-Template nicht gesetzt.
 
 Was Sie nicht selbst regeln müssen: Läuft ein Gespräch sehr lang, wird der Verlauf automatisch verdichtet.
 
@@ -94,7 +94,9 @@ Was Sie nicht selbst regeln müssen: Läuft ein Gespräch sehr lang, wird der Ve
 
 Ein Konnektor führt Daten aus Ihrer Instanz zu einem Anbieter. Liegt dieser Anbieter ausserhalb der EU, ist das eine Aussage über Ihre Datenhaltung, die Sie nicht stillschweigend treffen sollten.
 
-Halten Sie es deshalb wie wir: NinjaOne ist ein Anbieter aus den USA, auch die europäische Instanz bleibt eine Verarbeitung ausserhalb des eigenen Stacks. Für die interne Nutzung ist das eine bewusste Abwägung, und **im ausgelieferten Kunden-Template ist die Anbindung nicht enthalten**.
+Das gilt auch dann, wenn der Anbieter eine europäische Instanz betreibt: Sobald Daten Ihren eigenen Stack verlassen, ist das eine Verarbeitung bei einem Dritten, und die Rechtslage richtet sich nach dessen Sitz. Ein solcher Konnektor kann eine völlig richtige Entscheidung sein, aber es muss eine **bewusste** sein.
+
+Deshalb enthält der Auslieferungszustand einer neuen Installation **keinen vorkonfigurierten Konnektor**. Was angeschlossen wird, entscheiden Sie.
 
 Führen Sie eine kurze Liste, welcher Konnektor Daten wohin gibt, benennen Sie Nicht-EU-Anbindungen ausdrücklich gegenüber Ihren Nutzern und in Ihrer Datenschutzdokumentation, und behaupten Sie für solche Konnektoren nicht, alles bleibe in Europa.
 
@@ -117,6 +119,11 @@ Gehen Sie diese Punkte durch, bevor die erste Person den Konnektor benutzt:
 - [ ] Ein Blick ins Protokoll unter **Audit-Log → MCP-Tool-Calls** zeigt die erwarteten Aufrufe und Entscheide.
 
 <CardGrid>
+  <LinkCard
+    title="Muster für Konnektoren"
+    href="/docs/konnektoren/muster"
+    description="Drei bewährte Bauformen: Dienstkonto, Anmeldung pro Person und nur lesende Brücke, mit dem Verlauf der Rechte."
+  />
   <LinkCard
     title="Rechte-Gateway"
     href="/docs/konnektoren/gateway-und-rechte"

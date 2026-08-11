@@ -20,9 +20,9 @@ values that are really needed in daily operation.
 | Runtime overrides | Admin panel, page **Configuration** | the same product settings, per instance, role or group | immediately, without a restart |
 
 Which YAML file is active is decided by `LIBRECHAT_CONFIG_FILE` in the `.env`. The default is
-`librechat.yaml`, the customer template. The internal instance of Herr Informatik runs
-`librechat.internal.yaml`. All public statements in this documentation refer to the customer
-template.
+`librechat.yaml`, the customer template. Next to it sits `librechat.internal.yaml` as an
+example of an instance with connectors attached. All statements in this documentation refer
+to the customer template.
 
 ## Which level wins
 
@@ -48,7 +48,7 @@ tools, on the other hand, belong in the role editor and not in the configuration
 |---|---|---|
 | `EUROUTER_API_KEY` | Key of the inference provider, the only mandatory value | placeholder |
 | `DOMAIN_CLIENT` | Chat URL reachable in the browser, also the basis of the invitation links | `http://localhost:3080` |
-| `DOMAIN_SERVER` | Server URL, basis of the SharePoint redirect URI | `http://localhost:3080` |
+| `DOMAIN_SERVER` | Server URL, basis of the redirect URI for connectors with per-user sign-in | `http://localhost:3080` |
 | `EUCOWORK_DOMAIN` | Domain for Caddy and the Office manifest | `localhost` |
 | `PORT` | Port of the chat | `3080` |
 | `API_BIND` | Host binding of the chat port, in production `127.0.0.1` | `0.0.0.0` |
@@ -84,14 +84,14 @@ and SearXNG. Each profile adds further services.
 |---|---|
 | `production` | Caddy as a reverse proxy with automatic TLS on ports 80 and 443 |
 | `filesearch` | Vector database and RAG service for searching uploaded files |
-| `internal` | MCP gateway, the three Odoo bridges and the NinjaOne bridge |
-| `microsoft` | Bridge to SharePoint and OneDrive through Microsoft Graph |
+| `internal` | MCP gateway and the example connectors that run through it |
+| `microsoft` | Example bridge to a file store with per-user sign-in |
 | `interim` | The old admin panel under AGPL, purely a transitional solution |
 
 ```bash title="Examples"
 docker compose up -d
 docker compose --profile production up -d
-docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway
+docker compose --profile internal up -d --build mcp-gateway
 ```
 
 Profiles are passed along on every call. If you later restart the stack without the profiles,

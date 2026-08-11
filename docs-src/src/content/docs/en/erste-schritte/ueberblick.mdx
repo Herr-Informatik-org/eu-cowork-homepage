@@ -38,7 +38,7 @@ deliberately stays close to the original so that updates remain possible.
 | chat, agents, file handling, model connectivity | LibreChat | the application your team members see |
 | admin panel and sidecar | EU Cowork AI | users, roles, permissions, usage, configuration, logs |
 | MCP gateway | EU Cowork AI | permission check and log entry before every access to a third party system |
-| NinjaOne bridge | EU Cowork AI | read only access to device and organization data from the RMM |
+| example connectors | EU Cowork AI and third parties | bridges to a third party system as a template, not active in the customer template |
 | Outlook add-in | EU Cowork AI | chat pane inside Outlook with the open mail as context |
 | installation package | EU Cowork AI | Compose stack, installation scripts, backup, configuration profiles |
 
@@ -69,8 +69,8 @@ additional building blocks and would otherwise result in a dead button:
   decision, because it puts the separation below the application.
 - **Users do not create their own connectors.** Which third party systems are reachable is
   decided by the administration alone.
-- **The NinjaOne connector only reads.** There are no tools for restart, script execution or
-  patch deployment. A tool that does not exist cannot be called by accident.
+- **The bundled example connectors only read.** They ship no tools that change anything in the
+  third party system. A tool that does not exist cannot be called by accident.
 - **The Outlook add-in never sends on its own.** A draft lands in the normal reply window, and
   sending stays with the human.
 
@@ -109,7 +109,7 @@ without passing along the identity of the user. The statement "everything stays 
 applies to storage and inference, not to web search.
 </Aside>
 
-The internal instance of Herr Informatik is located in Switzerland. Where your instance is
+One instance in production use is located in Switzerland, for example. Where your instance is
 located is decided by your choice of server.
 
 ## What is not finished yet

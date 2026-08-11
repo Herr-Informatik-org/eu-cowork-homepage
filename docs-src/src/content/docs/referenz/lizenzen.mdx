@@ -28,7 +28,7 @@ Was das für Sie als Kunde konkret heisst:
 | **Keine Branding-Klausel** | Name, Logo, Favicon und Begrüssungstext sind Konfiguration. Sie dürfen die Oberfläche auf Ihr eigenes Unternehmen umbenennen, ohne eine Nutzerzahl oder eine Frist zu beachten |
 | **Kein Copyleft** | Sie sind nicht verpflichtet, eigene Erweiterungen zu veröffentlichen |
 
-Der Lizenztext liegt als Datei `LICENSE` im Repository. Urheberrecht: Herr Informatik GmbH.
+Der Lizenztext liegt als Datei `LICENSE` im Repository, dort steht auch der Rechteinhaber.
 
 <Aside type="note" title="Warum das ausdrücklich dasteht">
 Andere Projekte in diesem Bereich sind formal quelloffen, deckeln aber die Nutzerzahl für das
@@ -43,7 +43,7 @@ Ausgabe. Das war der Anlass, die Lizenzfrage ganz an den Anfang zu stellen.
 | Monorepo mit Distribution, Skripten und Dokumentation | Wurzel des Repositorys | MIT |
 | Admin-Panel, Sidecar-API und Frontend | `services/admin` | MIT |
 | MCP-Gateway inklusive Model-Router | `services/mcp-gateway` | MIT |
-| NinjaOne-Brücke | `services/ninjaone-mcp` | MIT |
+| Beispiel-Konnektor-Brücke | eigener Ordner unter `services/` | MIT |
 | Outlook-Add-in | `services/office-addin` | MIT |
 
 ## Die mitgelieferten Fremdkomponenten
@@ -61,12 +61,11 @@ laufen als eigenständige Container. Unser Code bindet nichts davon ein, sondern
 | [pgvector](https://github.com/pgvector/pgvector) | Vektordatenbank für die Dateisuche | PostgreSQL-Lizenz |
 | [rag_api](https://github.com/danny-avila/rag_api) | Einbettung hochgeladener Dateien für die Dateisuche | MIT |
 | [Caddy](https://github.com/caddyserver/caddy) | Reverse-Proxy mit automatischem TLS | Apache-2.0 |
-| [mcp-server-odoo](https://github.com/ivnvxd/mcp-server-odoo) | Brücke zum Odoo-ERP | MPL-2.0 |
-| [@softeria/ms-365-mcp-server](https://www.npmjs.com/package/@softeria/ms-365-mcp-server) | Brücke zu Microsoft 365 und SharePoint | MIT |
+| zwei Konnektor-Brücken aus Fremdprojekten | übersetzen zwischen der Chat-Schicht und einem Fremdsystem. Welches Projekt hinter welcher Brücke steht, benennt `distribution/docker-compose.yml` beim jeweiligen Dienst | MPL-2.0 und MIT |
 
 Von diesen Komponenten startet nur ein Teil im Grundzustand. pgvector und rag_api brauchen das
-Compose-Profil `filesearch`, die Odoo-Brücke das Profil `internal`, die Microsoft-Brücke das
-Profil `microsoft` und Caddy das Profil `production`. Welcher Dienst wann läuft, steht unter
+Compose-Profil `filesearch`, die Konnektor-Brücken die Profile `internal` beziehungsweise
+`microsoft` und Caddy das Profil `production`. Welcher Dienst wann läuft, steht unter
 [Dienste und Ports](/docs/referenz/dienste-und-ports).
 
 ### Die Code-Ausführung
@@ -129,7 +128,8 @@ Copyleft-Pflichten. Das ist der eigentliche Grund für den Mehraufwand.
 
 ## Beitragen
 
-Der Quellcode liegt im Repository **`herr-informatik/eu-cowork`** auf GitHub.
+Der Quellcode liegt im Repository **`eu-cowork`** auf GitHub. Die konkrete Adresse steht in
+Ihrer Bezugsquelle beziehungsweise wird Ihnen vom Anbieter mitgeteilt.
 
 Beiträge gehen als Pull Request gegen `main`. Vor dem ersten Beitrag lohnt ein Blick in die
 Datei `CONTRIBUTING.md` im Repository, dort steht der Ablauf. Die verbindlichen Konventionen

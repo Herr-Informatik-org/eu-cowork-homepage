@@ -39,7 +39,7 @@ bleiben.
 | Chat, Agenten, Dateiverarbeitung, Modellanbindung | LibreChat | die Anwendung, die Ihre Mitarbeitenden sehen |
 | Admin-Panel und Sidecar | EU Cowork AI | Benutzer, Rollen, Rechte, Verbrauch, Konfiguration, Protokolle |
 | MCP-Gateway | EU Cowork AI | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem |
-| NinjaOne-Brücke | EU Cowork AI | lesender Zugang zu Geräte- und Organisationsdaten aus dem RMM |
+| Beispiel-Konnektoren | EU Cowork AI und Dritte | Brücken zu einem Fremdsystem als Vorlage, im Kunden-Template nicht aktiv |
 | Outlook-Add-in | EU Cowork AI | Chat-Bereich in Outlook mit der geöffneten Mail als Kontext |
 | Installationspaket | EU Cowork AI | Compose-Stack, Installationsskripte, Backup, Konfigurationsprofile |
 
@@ -70,9 +70,9 @@ Bausteine brauchen und sonst zu einem toten Knopf führen würden:
   eine bewusste Entscheidung, weil die Trennung dadurch unterhalb der Anwendung liegt.
 - **Nutzer legen keine eigenen Konnektoren an.** Welche Fremdsysteme erreichbar sind,
   entscheidet ausschliesslich die Administration.
-- **Der NinjaOne-Konnektor kennt nur Lesezugriffe.** Es gibt keine Werkzeuge für Neustart,
-  Skriptausführung oder Patch-Verteilung. Ein Werkzeug, das nicht existiert, kann nicht
-  versehentlich aufgerufen werden.
+- **Die mitgelieferten Beispiel-Konnektoren arbeiten ausschliesslich lesend.** Sie bringen
+  keine Werkzeuge mit, die im Fremdsystem etwas verändern. Ein Werkzeug, das nicht existiert,
+  kann nicht versehentlich aufgerufen werden.
 - **Das Outlook-Add-in sendet nie automatisch.** Ein Entwurf landet im normalen
   Antwortfenster, das Absenden bleibt beim Menschen.
 
@@ -111,7 +111,7 @@ ohne die Identität des Nutzers mitzuschicken. Die Aussage „alles bleibt in de
 Speicherung und Inferenz, nicht für die Web-Suche.
 </Aside>
 
-Die interne Instanz von Herr Informatik liegt in der Schweiz. Wo Ihre Instanz liegt,
+Eine produktiv genutzte Instanz liegt beispielsweise in der Schweiz. Wo Ihre Instanz liegt,
 entscheiden Sie mit der Wahl des Servers.
 
 ## Was noch nicht fertig ist

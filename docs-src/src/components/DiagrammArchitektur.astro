@@ -20,7 +20,7 @@ const t = en
   ? {
       titel: 'How the stack is layered',
       beschreibung:
-        'Top to bottom: access through the browser and Outlook, with Caddy in front as the only service on ports 80 and 443. Below that the application layer with LibreChat, the admin panel and the Outlook add-in, then storage with MongoDB, Meilisearch and pgvector, then the internal services SearXNG, RAG API and MCP gateway, then the connectors to Odoo, NinjaOne and Microsoft 365. At the bottom sits everything that lives outside the stack: the sandbox network with the code interpreter, plus model providers and search engines on the internet.',
+        'Top to bottom: access through the browser and Outlook, with Caddy in front as the only service on ports 80 and 443. Below that the application layer with LibreChat, the admin panel and the Outlook add-in, then storage with MongoDB, Meilisearch and pgvector, then the internal services SearXNG, RAG API and MCP gateway, then the connector bridges to third party systems. At the bottom sits everything that lives outside the stack: the sandbox network with the code interpreter, plus model providers and search engines on the internet.',
       zugang: 'Access',
       einstieg: 'Entry',
       ausserhalb: 'Outside',
@@ -35,9 +35,8 @@ const t = en
       searxSub: 'your own metasearch engine',
       ragSub: 'file search, filesearch profile',
       gwSub: 'permissions and logging',
-      odooSub: 'three instances, one account each',
-      ninjaSub: 'read only',
-      msSub: 'per-user sign-in',
+      bruecken: 'Connector bridges',
+      brueckenSub: 'one per third party system, none active in the customer template',
       sandbox: 'Sandbox network',
       sandboxSub: 'code interpreter, separate network',
       internet: 'Internet',
@@ -46,7 +45,7 @@ const t = en
   : {
       titel: 'Aufbau des Stacks in sieben Schichten',
       beschreibung:
-        'Von oben nach unten: Zugang über Browser und Outlook, davor Caddy als einziger Dienst auf Port 80 und 443. Darunter die Anwendungsschicht mit LibreChat, Admin-Panel und Outlook-Add-in, dann die Datenhaltung mit MongoDB, Meilisearch und pgvector, dann die internen Dienste SearXNG, RAG-API und MCP-Gateway, dann die Konnektoren zu Odoo, NinjaOne und Microsoft 365. Ganz unten liegt alles, was ausserhalb des Stacks lebt: das Sandbox-Netz mit dem Code-Interpreter sowie Modellanbieter und Suchmaschinen im Internet.',
+        'Von oben nach unten: Zugang über Browser und Outlook, davor Caddy als einziger Dienst auf Port 80 und 443. Darunter die Anwendungsschicht mit LibreChat, Admin-Panel und Outlook-Add-in, dann die Datenhaltung mit MongoDB, Meilisearch und pgvector, dann die internen Dienste SearXNG, RAG-API und MCP-Gateway, dann die Konnektor-Brücken zu Fremdsystemen. Ganz unten liegt alles, was ausserhalb des Stacks lebt: das Sandbox-Netz mit dem Code-Interpreter sowie Modellanbieter und Suchmaschinen im Internet.',
       zugang: 'Zugang',
       einstieg: 'Einstieg',
       ausserhalb: 'Ausserhalb',
@@ -61,9 +60,8 @@ const t = en
       searxSub: 'eigene Metasuchmaschine',
       ragSub: 'Dateisuche, Profil filesearch',
       gwSub: 'Rechte und Protokoll',
-      odooSub: 'drei Instanzen, je ein Konto',
-      ninjaSub: 'nur lesend',
-      msSub: 'Anmeldung pro Person',
+      bruecken: 'Konnektor-Brücken',
+      brueckenSub: 'je Fremdsystem eine, im Kunden-Template ist keine aktiv',
       sandbox: 'Sandbox-Netz',
       sandboxSub: 'Code-Interpreter, eigenes Netz',
       internet: 'Internet',
@@ -154,20 +152,10 @@ const t = en
       <text class="d-sub" x="705" y="406">{t.gwSub}</text>
     </g>
 
-    <g class="d-node">
-      <rect x="40" y="438" width="250" height="52" rx="10" />
-      <text class="d-label" x="165" y="461">odoo-mcp</text>
-      <text class="d-sub" x="165" y="478">{t.odooSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="310" y="438" width="250" height="52" rx="10" />
-      <text class="d-label" x="435" y="461">ninjaone-mcp</text>
-      <text class="d-sub" x="435" y="478">{t.ninjaSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="580" y="438" width="250" height="52" rx="10" />
-      <text class="d-label" x="705" y="461">ms365-mcp</text>
-      <text class="d-sub" x="705" y="478">{t.msSub}</text>
+    <g class="d-node d-node-muted">
+      <rect x="40" y="438" width="790" height="52" rx="10" />
+      <text class="d-label" x="435" y="461">{t.bruecken}</text>
+      <text class="d-sub" x="435" y="478">{t.brueckenSub}</text>
     </g>
 
     <path class="d-arrow" d="M440 520 L440 548" marker-end="url(#pfeil)" />

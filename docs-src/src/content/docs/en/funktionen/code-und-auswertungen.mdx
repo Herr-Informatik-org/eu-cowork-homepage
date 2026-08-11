@@ -143,7 +143,7 @@ The path between LibreChat and the execution backend runs exclusively inside the
 Docker network `eucowork-sandbox`. There is no host port for **that path**. This holds only for
 the connection between chat and runner, not for the substack as a whole: both backends publish
 ports of their own on the host. In the quick variant those bind to `127.0.0.1`, in the hardened
-one they do not — and that one needs a rule. The next section says which.
+one they do not, and that one needs a rule. The next section says which.
 
 With several customer instances on one machine, each instance gets its own sandbox network and
 its own interpreter. Executed code is the only place where foreign code runs on your machine,
@@ -168,8 +168,8 @@ up, checks the actual bindings of the running containers again. If it finds anyt
 `127.0.0.1`, it stops the stack. On an instance set up this way you no longer need a firewall
 rule for port 8000.
 
-**An instance set up before this change keeps the old binding** until `setup.sh` runs once more —
-there the rule is still needed. You can check for yourself:
+**An instance set up before this change keeps the old binding** until `setup.sh` runs once more.
+There the rule is still needed. You can check for yourself:
 
 ```bash title="On the server"
 docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'

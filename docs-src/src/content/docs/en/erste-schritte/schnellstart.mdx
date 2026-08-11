@@ -30,9 +30,12 @@ which goes into downloading and building the images.
 
    ```bash title="On the server"
    sudo apt-get update && sudo apt-get install -y git
-   git clone https://github.com/herr-informatik/eu-cowork.git
+   git clone https://github.com/<organisation>/eu-cowork.git
    cd eu-cowork/distribution
    ```
+
+   The exact address of the repository is stated by your source of supply, or your provider
+   tells you what it is.
 
 3. **Prepare the server**
 
@@ -110,8 +113,7 @@ which goes into downloading and building the images.
    skips the generation of the secrets and only points out, at the end, any entries that are
    still on a placeholder.
 
-   If you need connectors, the Microsoft integration or file search, pass the profiles right
-   away:
+   If you need connectors or file search, pass the profiles right away:
 
    ```bash title="Optional, with all profiles"
    ./install.sh --profiles production,internal,microsoft,filesearch
@@ -204,7 +206,7 @@ You can start the stack on your own machine without a server, for example to loo
 panel. Docker with Compose v2 is enough.
 
 ```bash title="On your own machine"
-git clone https://github.com/herr-informatik/eu-cowork.git
+git clone https://github.com/<organisation>/eu-cowork.git
 cd eu-cowork/distribution
 ./install.sh
 ```

@@ -19,7 +19,7 @@ takes.
 
 Two things stand out. First, every path from the outside goes through Caddy, no other service
 accepts connections from the network. Second, the connectors go through the MCP gateway,
-while the SharePoint connector deliberately does not. The reason is explained below.
+while a connector with per-user sign-in deliberately does not. The reason is explained below.
 
 ## The layers
 
@@ -68,21 +68,22 @@ Our own services live as source code in the repository and are built during inst
   checks the rule maintained in the panel, filters the tool list per person and writes every
   call with time, server, tool, person, decision and reason into a log. If the check fails,
   access is denied. The model router runs in the same container.
-- **`ninjaone-mcp`** is our bridge to the RMM system and works strictly read only.
-
-Alongside these run two **connector bridges that we did not write ourselves**: three instances of
-the Odoo connector, each with its own service account, and the Microsoft 365 bridge. Both are
-unmodified third party images, see [Licenses and origin](/docs/en/referenz/lizenzen). All bridges
-hold credentials and have no sign-in of their own, which is why they are only reachable on the
-internal Docker network.
 - **`office-addin`** serves the task pane for Outlook and the manifest. The actual work is
   done by an agent on the server, the pane is only the interface.
+
+Alongside these the stack ships the **example connectors**. They are bridges to a third party
+system, partly written by us, partly unmodified third party images, see
+[Licenses and origin](/docs/en/referenz/lizenzen). None of them is active in the customer
+template. All bridges hold credentials and have no sign-in of their own, which is why they are
+only reachable on the internal Docker network. How such a bridge is put together is described
+by [the connector pattern](/docs/en/konnektoren/muster).
 
 <Aside type="note" title="Why the gateway exists at all">
 LibreChat **cannot** filter MCP servers defined in the configuration per role or per person.
 They are resolved unfiltered for every user. This is exactly the gap the gateway closes. The
-SharePoint connector deliberately bypasses it, because there every person signs in to
-Microsoft individually and their own permissions are already the boundary.
+connector with per-user sign-in deliberately bypasses it, because there every person signs in
+to the third party system individually and their own permissions there are already the
+boundary.
 </Aside>
 
 ### Sandbox network
@@ -112,8 +113,8 @@ takes the profiles as a comma separated list and passes them on to Docker Compos
 |---|---|---|
 | no profile | `api`, `admin`, `office-addin`, `mongodb`, `meilisearch`, `searxng` | always, this is the base stack |
 | `production` | `caddy` | as soon as the instance should be reachable under a domain with TLS |
-| `internal` | `mcp-gateway`, three Odoo bridges, `ninjaone-mcp` | when connectors should run through the permission gateway |
-| `microsoft` | `ms365-mcp` | for SharePoint and OneDrive through Microsoft Graph |
+| `internal` | `mcp-gateway` and the example connectors that run through it | when connectors should run through the permission gateway |
+| `microsoft` | the example bridge to a file store with per-user sign-in | when your file store should be readable in the chat |
 | `filesearch` | `vectordb`, `rag_api` | for file search across uploaded documents |
 | `interim` | the old AGPL panel of LibreChat | only as a transitional tool, not part of the product |
 

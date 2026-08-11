@@ -46,7 +46,8 @@ muss. Ohne ihn startet der Stack zwar, aber jede Modellanfrage scheitert.
 
 **Die drei Domain-Variablen** stehen ab Werk auf `localhost`. `DOMAIN_CLIENT` ist die URL, die
 der Browser sieht, und zugleich die Basis für Einladungslinks. `DOMAIN_SERVER` ist die
-Server-URL und damit die Basis der SharePoint-Redirect-URI. `EUCOWORK_DOMAIN` trägt Caddy und
+Server-URL und damit die Basis der Redirect-URI für Konnektoren mit Anmeldung pro Person.
+`EUCOWORK_DOMAIN` trägt Caddy und
 das Office-Manifest. Bleiben sie auf `localhost`, verschicken Sie Einladungen mit einem Link,
 der nur auf dem Server selbst funktioniert.
 
@@ -62,7 +63,7 @@ Diese Werte erzeugt `install.sh` beim ersten Lauf selbst. Sie müssen dafür nic
 
 | Variable | Wofür |
 |---|---|
-| `CREDS_KEY` | verschlüsselt gespeicherte Zugangsdaten der Nutzer, etwa die SharePoint-Verbindung |
+| `CREDS_KEY` | verschlüsselt gespeicherte Zugangsdaten der Nutzer, etwa eine Konnektor-Verbindung |
 | `CREDS_IV` | Initialisierungsvektor zur Verschlüsselung |
 | `JWT_SECRET` | signiert die Sitzungs-Token |
 | `JWT_REFRESH_SECRET` | signiert die Erneuerungs-Token |
@@ -78,7 +79,7 @@ Konnektor-Schlüssel.
 <Aside type="caution" title="Beim Umzug auf einen neuen Server">
 `CREDS_KEY` und `CREDS_IV` müssen aus der alten `.env` übernommen werden. Werden sie neu
 erzeugt, lassen sich die gespeicherten Zugangsdaten nicht mehr entschlüsseln und alle Nutzer
-müssen ihre SharePoint-Verbindung neu aufbauen.
+müssen ihre Konnektor-Verbindungen neu aufbauen.
 </Aside>
 
 ## Host und Ports
@@ -100,7 +101,7 @@ müssen ihre SharePoint-Verbindung neu aufbauen.
 | Variable | Zweck | Pflicht | Standard |
 |---|---|---|---|
 | `DOMAIN_CLIENT` | im Browser erreichbare Chat-URL, auch Basis für Einladungslinks | Pflicht in Produktion | `http://localhost:3080` |
-| `DOMAIN_SERVER` | Server-URL, Basis der SharePoint-Redirect-URI | Pflicht in Produktion | `http://localhost:3080` |
+| `DOMAIN_SERVER` | Server-URL, Basis der Redirect-URI für Konnektoren mit Anmeldung pro Person | Pflicht in Produktion | `http://localhost:3080` |
 | `EUCOWORK_DOMAIN` | Domain für Caddy und für das Office-Manifest | Pflicht in Produktion | `localhost` |
 | `CADDY_FILE` | wählt die Caddy-Variante: `Caddyfile` für öffentliches Let's Encrypt, `Caddyfile.internal` für einen LAN-Server mit eigener Root-CA, `Caddyfile.proxied` hinter einer WAF, die HTTPS bereits terminiert | optional | `Caddyfile`, Zeile auskommentiert |
 | `LIBRECHAT_CONFIG_FILE` | wählt die aktive Konfigurationsdatei | optional | `librechat.yaml`, Zeile auskommentiert |
@@ -219,60 +220,32 @@ Die Freigabeliste für ausgehende Verbindungen aus der Code-Ausführung fehlt no
 gehärtete Runner mit Egress-Proxy ist geplant, aber nicht gebaut.
 </Aside>
 
-## Konnektoren
+## Konnektor-Variablen
 
 Alle Konnektor-Variablen sind in der Vorlage auskommentiert. Das Kunden-Template liefert
 bewusst keinen vorkonfigurierten Konnektor aus.
 
-### Odoo, Compose-Profil `internal`
+Die mitgelieferte `.env.example` enthält für jeden Beispiel-Konnektor einen eigenen Block,
+zusammen mit dem Compose-Profil, unter dem die zugehörige Brücke startet. Jeder Konnektor
+bringt seine eigenen Variablen mit, meist eine Basis-URL oder Region des Fremdsystems und ein
+Geheimnis, mit dem sich die Brücke dort ausweist. Welche Variablen das im Einzelnen sind und
+wie das Konto dahinter eingerichtet wird, steht im Kapitel
+[Konnektoren](/docs/konnektoren/muster).
+
+Zwei Punkte gelten für alle Konnektoren gleich. Erstens ist die Rechtevergabe im Fremdsystem
+die eigentliche Datengrenze, das Admin-Panel regelt darüber hinaus, wer eine Brücke überhaupt
+sieht. Zweitens gehören diese Schlüssel nie in ein Repository, die `.env` trägt deshalb die
+Rechte `600`.
+
+## Web-Suche mit einem externen Anbieter
 
 | Variable | Zweck | Pflicht | Standard |
 |---|---|---|---|
-| `ODOO_URL` | Basis-URL Ihrer Odoo-Installation | Pflicht mit Profil `internal` | Beispielwert, Zeile auskommentiert |
-| `ODOO_DB` | Name der Odoo-Datenbank, explizit setzen | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
-| `ODOO_MCP_API_KEY_ADMINISTRATOR` | **Geheimnis.** API-Schlüssel für die Instanz `odoo-administrator` | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
-| `ODOO_MCP_API_KEY_ADMIN` | **Geheimnis.** API-Schlüssel für die Instanz `odoo-admin` | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
-| `ODOO_MCP_API_KEY_TECHNIK` | **Geheimnis.** API-Schlüssel für die Instanz `odoo-technik` | Pflicht mit Profil `internal` | leer, Zeile auskommentiert |
-
-Drei Brücken-Instanzen bedeuten drei getrennte Odoo-Benutzer mit je eigenem Rechteprofil. Die
-Rechte des jeweiligen Benutzers in Odoo sind die eigentliche Datengrenze, das Admin-Panel
-regelt darüber hinaus, wer welche Instanz überhaupt sieht.
-
-### NinjaOne, Compose-Profil `internal`
-
-| Variable | Zweck | Pflicht | Standard |
-|---|---|---|---|
-| `NINJAONE_INSTANCE` | Region der Instanz: `eu`, `us`, `us2`, `ca`, `oc` oder ein vollständiger Hostname | Pflicht für den Konnektor | `eu`, Zeile auskommentiert |
-| `NINJAONE_CLIENT_ID` | Client-ID der API-App | Pflicht für den Konnektor | leer, Zeile auskommentiert |
-| `NINJAONE_CLIENT_SECRET` | **Geheimnis.** Client-Secret der API-App | Pflicht für den Konnektor | leer, Zeile auskommentiert |
-| `NINJAONE_SCOPE_ENFORCE` | `strict` bricht den Start ab, sobald die App schreibende Rechte hätte | optional | `strict`, Zeile auskommentiert |
-
-Die API-App in NinjaOne bekommt ausschliesslich den Bereich „Monitoring" und den Grant
-„Client Credentials". Gewährt sie zusätzlich Management oder Control, verweigert die Brücke
-absichtlich den Start.
-
-### Microsoft 365 und SharePoint, Compose-Profil `microsoft`
-
-| Variable | Zweck | Pflicht | Standard |
-|---|---|---|---|
-| `MS365_TENANT_ID` | Verzeichnis-ID des Entra-Mandanten, nicht `common` | Pflicht mit Profil `microsoft` | leer, Zeile auskommentiert |
-| `MS365_MCP_CLIENT_ID` | Application-ID der Entra-App | Pflicht mit Profil `microsoft` | leer, Zeile auskommentiert |
-| `MS365_MCP_CLIENT_SECRET` | **Geheimnis.** Client-Secret der Entra-App | Pflicht mit Profil `microsoft` | leer, Zeile auskommentiert |
-
-Hier meldet sich jede Person mit dem eigenen Konto an und sieht nur, was die eigenen
-SharePoint- und OneDrive-Rechte hergeben. Die Brücke arbeitet ausschliesslich lesend.
-
-### Web-Suche mit externen Anbietern
-
-| Variable | Zweck | Pflicht | Standard |
-|---|---|---|---|
-| `SERPER_API_KEY` | **Geheimnis.** Such-API von serper.dev | optional | leer, Zeile auskommentiert |
 | `FIRECRAWL_API_KEY` | **Geheimnis.** Scraper von firecrawl.dev | optional | leer, Zeile auskommentiert |
 
 <Aside type="caution" title="Nicht EU-resident">
-Beide Dienste laufen in einer US-Cloud. Sie sind für die interne Instanz gedacht, nicht für
-das Kunden-Template. Kunden nutzen stattdessen SearXNG im eigenen Stack, für den Scraper ist
-eine selbst gehostete Variante vorgesehen.
+Der gehostete Dienst läuft in einer US-Cloud. Für die Suche selbst nutzt das Kunden-Template
+SearXNG im eigenen Stack, für den Scraper ist eine selbst gehostete Variante vorgesehen.
 </Aside>
 
 ## Admin-Panel und Verbrauchsmessung

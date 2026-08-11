@@ -20,9 +20,9 @@ Ebenen ein und listet die Werte auf, die im Alltag wirklich gebraucht werden.
 | Laufzeit-Overrides | Admin-Panel, Seite **Konfiguration** | dieselben Produkteinstellungen, pro Instanz, Rolle oder Gruppe | sofort, ohne Neustart |
 
 Welche YAML-Datei aktiv ist, entscheidet `LIBRECHAT_CONFIG_FILE` in der `.env`. Standard ist
-`librechat.yaml`, das Kundentemplate. Die interne Instanz von Herr Informatik fährt
-`librechat.internal.yaml`. Alle öffentlichen Aussagen dieser Dokumentation beziehen sich auf
-das Kundentemplate.
+`librechat.yaml`, das Kundentemplate. Daneben liegt `librechat.internal.yaml` als Beispiel
+für eine Instanz mit angebundenen Konnektoren. Alle Aussagen dieser Dokumentation beziehen
+sich auf das Kundentemplate.
 
 ## Welche Ebene gewinnt
 
@@ -48,7 +48,7 @@ Reiter Funktionen würden sie serverseitig verworfen.
 |---|---|---|
 | `EUROUTER_API_KEY` | Schlüssel des Inferenz-Anbieters, der einzige Pflichtwert | Platzhalter |
 | `DOMAIN_CLIENT` | Im Browser erreichbare Chat-URL, auch Basis der Einladungslinks | `http://localhost:3080` |
-| `DOMAIN_SERVER` | Server-URL, Basis der SharePoint-Redirect-URI | `http://localhost:3080` |
+| `DOMAIN_SERVER` | Server-URL, Basis der Redirect-URI für Konnektoren mit Anmeldung pro Person | `http://localhost:3080` |
 | `EUCOWORK_DOMAIN` | Domain für Caddy und das Office-Manifest | `localhost` |
 | `PORT` | Port des Chats | `3080` |
 | `API_BIND` | Host-Bindung des Chat-Ports, in Produktion `127.0.0.1` | `0.0.0.0` |
@@ -84,14 +84,14 @@ und SearXNG. Jedes Profil schaltet weitere Dienste dazu.
 |---|---|
 | `production` | Caddy als Reverse-Proxy mit automatischem TLS auf Port 80 und 443 |
 | `filesearch` | Vektordatenbank und RAG-Dienst für die Suche in hochgeladenen Dateien |
-| `internal` | MCP-Gateway, die drei Odoo-Brücken und die NinjaOne-Brücke |
-| `microsoft` | Brücke zu SharePoint und OneDrive über Microsoft Graph |
+| `internal` | MCP-Gateway und die Beispiel-Konnektoren, die darüber laufen |
+| `microsoft` | Beispiel-Brücke zu einer Dateiablage mit Anmeldung pro Person |
 | `interim` | Das alte Admin-Panel unter AGPL, reine Übergangslösung |
 
 ```bash title="Beispiele"
 docker compose up -d
 docker compose --profile production up -d
-docker compose --profile internal up -d --build ninjaone-mcp mcp-gateway
+docker compose --profile internal up -d --build mcp-gateway
 ```
 
 Profile werden bei jedem Aufruf mitgegeben. Wer den Stack später ohne die Profile neu startet,
