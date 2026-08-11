@@ -218,9 +218,9 @@ means without it. The first line points to the hardened backend with microVM iso
 requires `/dev/kvm`. The second line points to the lighter transitional backend with a
 prebuilt image.
 
-<Aside type="caution" title="Open gap">
-The allowlist for outbound connections from code execution is still missing. The own hardened
-runner with an egress proxy is planned, but not built.
+<Aside type="caution" title="Outbound connections belong in the setup">
+Which destinations executed code may reach on the outside is defined at host or network level.
+Plan this allowlist before you enable code execution.
 </Aside>
 
 ## Connector variables

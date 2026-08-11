@@ -1,6 +1,6 @@
 ---
 title: Web search
-description: How web search works in the chat, why it does not trigger yet in the shipped state and how to configure a scraper.
+description: How web search works in the chat, which building blocks it consists of and how scraper and model cards are configured for it.
 sidebar:
   order: 3
 ---
@@ -9,7 +9,7 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 Web search brings current information from the internet into the chat: prices, news, the state
 of the law, details about other companies. This page explains how it is used, which building
-blocks it consists of and what is still missing in the shipped state.
+blocks it consists of and which of them you choose yourself during setup.
 
 The search framework comes from [LibreChat](https://www.librechat.ai/docs). What we add is the
 search engine inside the stack and the preconfiguration.
@@ -36,17 +36,15 @@ A working web search consists of more than a search engine.
 Without a scraper the colleague would only have headlines and two liners, and no reliable
 answer can be built from those.
 
-<Aside type="caution" title="In the shipped state the search does not trigger">
-The customer template brings the search engine along: **SearXNG** runs as its own service in the
-stack, `webSearch.searchProvider` is set to `searxng`. But **no scraper is configured**, and a
-reranker is deliberately set to `none`.
+<Aside type="caution" title="Web search is completed during setup">
+The customer template brings the search engine along: **SearXNG** runs as its own service in
+the stack, `webSearch.searchProvider` is set to `searxng`. You **choose the scraper yourself**,
+because which provider fits depends on how you handle data residency; a reranker is optional
+and set to `none` out of the box.
 
-The consequence is concrete: without an authenticated scraper, LibreChat does not attach the
-search tool to the model in the first place. The switch in the chat is visible, but the search
-never fires. No error, no message, simply nothing happens.
-
-Only with a configured scraper does the switch become a working search. This is the one spot
-where a freshly installed stack still needs manual work.
+Plan this step in firmly: the search tool is only offered to the model once a scraper is
+configured. The next two sections show the configuration in full — scraper **and**
+`webSearch: true` on every model card you offer.
 </Aside>
 
 ## For admins: configuring scraper and reranker
@@ -78,9 +76,9 @@ the value in the panel under **"Einstellungen → API-Schlüssel"** (settings, A
 `.env` on the server.
 
 <Aside type="note" title="Which scraper fits the EU positioning">
-The intended European route is a **self hosted Firecrawl** next to the stack. Then fetching full
-text never leaves your infrastructure. The container is not yet part of the compose package, you
-provide it yourself. The lines for it are in the customer template, commented out.
+The intended European route is a **self hosted Firecrawl** next to the stack. Then fetching
+full text never leaves your infrastructure. You provide the container yourself; the lines for
+it are prepared in the customer template and only need to be uncommented.
 
 The hosted variants of the scraper providers are set up quickly but do not process EU resident.
 Anyone using them should name that just as clearly as the non EU model cards.
@@ -126,7 +124,7 @@ Three things matter in `distribution/searxng/settings.yml`:
 - `safe_search: 1`, so moderate.
 - `secret_key` is replaced during installation by a generated secret.
 
-## Data protection, described honestly
+## Data protection in web search
 
 SearXNG runs on your side, but the search query still goes out. The meta search engine queries
 external search engines and returns their hits. What happens in the process and what does not:
@@ -137,8 +135,9 @@ external search engines and returns their hits. What happens in the process and 
 | Does **not** go outside | who searched. The identity of the person stays with you |
 | Stays with you | the conversation, the documents, the answer |
 
-<Aside type="caution" title="What you should not claim">
-The sentence "with web search everything stays in the EU" is wrong and should appear neither on
-a slide nor in a training session. What is correct: storage and inference run where you operate
-the stack, the search query itself goes to external search engines, but without user identity.
+<Aside type="note" title="Wording for training and privacy notices">
+Put precisely, the statement reads: storage and inference run where you operate the stack; the
+search query itself goes to external search engines, and it does so without user identity.
+Anyone describing web search in a privacy notice is best served by taking that distinction
+over verbatim.
 </Aside>

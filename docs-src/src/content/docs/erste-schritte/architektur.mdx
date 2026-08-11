@@ -95,8 +95,8 @@ in beiden Netzen hängt. Es gibt zwei Backends, umgeschaltet wird ausschliesslic
 
 Das ist die einzige Stelle im System, an der von Nutzern erzeugter Code auf der Maschine
 läuft. Deshalb bekommt jeder Kunde ein eigenes Sandbox-Netz und eine eigene
-Code-Interpreter-Instanz. Die Freigabeliste für ausgehende Verbindungen aus der Sandbox ist
-noch offen, das ist die grösste bekannte Lücke.
+Code-Interpreter-Instanz. Welche Ziele dieser Code nach aussen erreichen darf, legen Sie auf
+Host- oder Netzebene fest; das gehört bei aktivierter Code-Ausführung in die Einrichtung.
 
 ### Web-Suche
 
@@ -157,20 +157,19 @@ veröffentlicht. Das Admin-Panel auf Port 3010 und das Add-in auf Port 3040 sind
 lokal gebunden. Die Konnektor-Brücken, die Datenbank, der Suchindex und das Gateway sind
 ausschliesslich im internen Docker-Netz erreichbar.
 
-Davon gibt es zwei Ausnahmen. Die erste müssen Sie selbst setzen: Der Chat-Port ist
-standardmässig auf allen Schnittstellen gebunden. In Produktion gehört deshalb
-`API_BIND=127.0.0.1` in die `.env`. Sonst ist LibreChat zusätzlich unverschlüsselt unter
-`<server-ip>:3080` erreichbar, an Caddy und TLS vorbei, mit Passwörtern im Klartext im Netz.
+Zwei Punkte gehören dabei in die Einrichtung. Der erste ist der Chat-Port: In Produktion
+gehört `API_BIND=127.0.0.1` in die `.env`, damit der gesamte Verkehr über Caddy und TLS
+läuft. Prüfen lässt sich das nach dem Start mit `ss -tlnp`.
 
-Die zweite ist das Übergangs-Panel `admin-panel` aus dem Profil `interim`. Es veröffentlicht
-seinen Port ohne die Vorsilbe `127.0.0.1:`, ist also auf allen Schnittstellen erreichbar. Es
-ist ein Testwerkzeug und gehört nicht auf einen erreichbaren Server. Im Normalbetrieb starten
-Sie das Profil `interim` gar nicht erst.
+Der zweite ist das Übergangs-Panel `admin-panel` aus dem Profil `interim`. Es ist ein
+Entwicklungswerkzeug und im Normalbetrieb nicht Teil des Stacks — starten Sie das Profil
+`interim` auf einem produktiven Server gar nicht erst.
 
-<Aside type="danger" title="Die Firewall hilft hier nicht">
-Von Docker veröffentlichte Ports umgehen `ufw`, weil Docker eigene Regeln in der Kette
-`DOCKER-USER` schreibt. Die Bindung an `127.0.0.1` ist die eigentliche Schutzmassnahme, nicht
-die Firewall-Regel.
+<Aside type="danger" title="Bei Docker-Ports zählt die Bindung, nicht die Firewall">
+Von Docker veröffentlichte Ports werden von `ufw` nicht erfasst, weil Docker seine eigenen
+Regeln in der Kette `DOCKER-USER` führt. Die Bindung an `127.0.0.1` ist deshalb die
+massgebliche Massnahme; wo zusätzlich gefiltert werden soll, gehört die Regel in
+`DOCKER-USER`.
 </Aside>
 
 ## Weiter

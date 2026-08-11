@@ -60,14 +60,13 @@ ist, wie viel Text ein Modell in einer Anfrage lesen kann. Ein Dokument mit mehr
 Seiten füllt den Kontext, verdrängt den Rest des Gesprächs und macht die Antwort schlechter.
 Für solche Bestände ist die Dateisuche da.
 
-<Aside type="caution" title="Es gibt kein OCR">
-Gescannte Dokumente werden **nicht** gelesen. Ein PDF, das nur aus Bildern besteht, etwa ein
-eingescannter Vertrag oder ein abfotografierter Beleg, liefert keinen Text. Der Kollege sieht
-dann eine leere Seite und kann dazu nichts sagen. Das gilt im Web-Chat genauso wie im
-[Outlook-Add-in](/docs/funktionen/outlook-add-in). Ein Texterkennungs-Backend ist nicht Teil
-des Auslieferungszustands.
+<Aside type="caution" title="Gescannte Dokumente brauchen eine Textebene">
+Texterkennung ist nicht Teil des Lieferumfangs. Ein PDF, das nur aus Bildern besteht, etwa
+ein eingescannter Vertrag oder ein abfotografierter Beleg, enthält keinen auslesbaren Text.
+Das gilt im Web-Chat wie im [Outlook-Add-in](/docs/funktionen/outlook-add-in).
 
-Behelf: das Dokument vorher mit einem Werkzeug Ihrer Wahl in ein Text-PDF wandeln, oder den
+Der übliche Weg: das Dokument vorher mit dem Werkzeug Ihrer Wahl in ein durchsuchbares
+Text-PDF wandeln — viele Scanner und Dokumentenmanagement-Systeme tun das ohnehin — oder den
 Text herauskopieren und in den Chat einfügen.
 </Aside>
 
@@ -83,11 +82,10 @@ Der Vorteil zeigt sich bei vielen und langen Dokumenten: eine Handvoll Handbüch
 Sammlung von Richtlinien, ein Projektarchiv. Statt „lies diese 400 Seiten" heisst es dann
 „finde die drei Stellen, die meine Frage beantworten".
 
-<Aside type="caution" title="Im Kunden-Template ausgeschaltet">
-Im Auslieferungszustand steht `interface.fileSearch: false`. Der Grund ist ehrlich: die
-Dateisuche braucht ein zusätzliches Backend und einen Anbieter für die Embeddings. Wäre der
-Schalter an, ohne dass beides läuft, hätten Ihre Mitarbeitenden einen Knopf, der ins Leere
-greift. Wie Sie beides einschalten, steht unten.
+<Aside type="note" title="Im Auslieferungszustand ausgeschaltet">
+Im Auslieferungszustand steht `interface.fileSearch: false`, weil die Dateisuche ein
+zusätzliches Backend und einen Anbieter für die Embeddings voraussetzt. So ist nach der
+Installation nur sichtbar, was auch funktioniert. Wie Sie beides einschalten, steht unten.
 </Aside>
 
 ## Volltextsuche über eigene Chats
@@ -167,9 +165,9 @@ Im Panel unter **Konfiguration → Dateien & Speicher**. Dort stehen unter ander
 Dateigrösse Server (MB)**, **Avatar-Limit (MB)** und die **Endpoint-Limits (JSON)** mit den
 Feldern `fileLimit`, `fileSizeLimit`, `totalSizeLimit` und `supportedMimeTypes`.
 
-Ein sinnvoller Eingriff ist, die Obergrenze pro Datei deutlich zu senken. 512 MB sind für ein
-Chat-Werkzeug unrealistisch hoch, und ein versehentlich hochgeladenes Video kostet nur
-Speicher.
+Ein sinnvoller Eingriff bei der Einrichtung ist, die Obergrenze pro Datei auf einen für Ihren
+Alltag realistischen Wert zu senken — für reine Dokumentenarbeit genügen meist 25 bis 50 MB.
+Das hält versehentlich hochgeladene Videos und Archive aus dem Speicher heraus.
 
 ### Was beim Löschen eines Kontos passiert
 

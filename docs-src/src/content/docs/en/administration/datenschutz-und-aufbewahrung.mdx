@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-This page states as precisely as possible which data stays for how long, how you provide a disclosure or carry out a deletion and what the installation sends outward. It deliberately also contains what is not there.
+This page states as precisely as possible which data stays for how long, how you provide a disclosure or carry out a deletion and what the installation sends outward. It is meant as the basis for your own deletion policy.
 
 ## The retention period
 
@@ -16,7 +16,7 @@ Under **"Einstellungen → Aufbewahrung"** (settings, retention) sits the card *
 | Property | Value |
 | --- | --- |
 | Permitted range | 1 to 3650 days |
-| Field empty | Retention is off, nothing is deleted automatically |
+| Field empty | Nothing is deleted automatically. Set the period during setup to match your deletion policy |
 | Decisive | the last change to the conversation, not the date it was created |
 | When deletion happens | in a daily run |
 
@@ -75,8 +75,8 @@ Two things inevitably leave the stack, and you should know them and communicate 
 
 **Web search requests go to external search engines.** The search runs through the self hosted SearXNG in the stack. SearXNG is a meta searcher, it forwards the search query to external search engines, though **without the identity of the person searching**. The queries themselves therefore do leave the stack.
 
-<Aside type="caution" title="Say it precisely">
-The honest formulation is: storage and inference can be kept in the EU or in Switzerland. With web search the search text leaves the building, only without any link to the user. The statement "with web search everything stays in the EU" would be wrong, and it comes back at you the first time somebody asks a critical question.
+<Aside type="note" title="Wording for your privacy notices">
+Put precisely, the statement reads: storage and inference can be kept in the EU or in Switzerland; with web search the search text leaves the instance, and it does so without any link to the user. Anyone who takes that distinction over verbatim into privacy notices and training is on safe ground even when critical questions come up.
 </Aside>
 
 ## Marking providers outside the EU
@@ -85,10 +85,10 @@ Providers that are not EU resident are marked as such in the panel and in the ch
 
 Also note that the origin information in **"Provider-Routing"** (provider routing) comes from the provider and that the registered office of a provider is no guarantee of the place of processing. More on that under [Models and model cards](/docs/en/administration/modelle-und-karten).
 
-## What does not exist
+## Scope
 
-**No SCIM.** There is no automatic provisioning and no automatic deactivation of accounts from the identity provider. Accounts come into being at the first login through OIDC, and deprovisioning runs through the identity provider: whoever is deactivated there does not get through the sign-in any more and therefore reaches no data. For the complete removal of an account including its data, use the deletion dialog in the panel.
+**Provisioning without SCIM.** Accounts come into being at the first login through OIDC. Deprovisioning runs through your identity provider: whoever is deactivated there does not get through the sign-in any more and therefore reaches no data. For the complete removal of an account including its data, use the deletion dialog in the panel.
 
-**No automatic billing.** Receipts yes, payment integration no. Details under [Usage, budgets and billing](/docs/en/administration/verbrauch-und-budgets).
+**Receipts instead of a payment integration.** Usage is recorded in full and issued as CSV and PDF; the payment itself you handle in your own system. Details under [Usage, budgets and billing](/docs/en/administration/verbrauch-und-budgets).
 
-**The hardened sandbox runner with an egress allowlist is not finished yet.** For code execution an interim backend currently runs. That is the largest known open point, and it is named here deliberately instead of being concealed.
+**Outbound connections from code execution** are governed at host or network level, not inside the application. Code execution is switched off out of the box.

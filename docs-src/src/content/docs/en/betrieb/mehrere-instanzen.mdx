@@ -52,12 +52,13 @@ backend. On a shared machine the hardened backend is also the better choice, alt
 `/dev/kvm`.
 </Aside>
 
-## The three variables
+## The four variables
 
-Unique across all of Docker, and therefore the actual collision points, are exactly three names.
-All three are in the `.env`:
+Unique across all of Docker, and therefore the actual collision points, are four names. All of
+them are in the `.env`:
 
 ```bash title="distribution/.env of customer A"
+COMPOSE_PROJECT_NAME=eucowork-kunde-a
 STACK_NAME=eucowork-kunde-a
 DOCKER_SUBNET=172.29.0.0/16
 SANDBOX_NETWORK=eucowork-sandbox-a
@@ -66,9 +67,26 @@ ADMIN_SIDECAR_PORT=3011
 OFFICE_ADDIN_PORT=3041
 ```
 
+`COMPOSE_PROJECT_NAME` is the name of the compose project and determines what the named volumes
+are called — that is, where a customer's database, search index and certificates live.
 `STACK_NAME` is the prefix of all container names, `DOCKER_SUBNET` the dedicated bridge network
 and `SANDBOX_NETWORK` the network to the code interpreter. In addition, the three host ports have
 to differ per stack. If the values stay on their defaults, the second stack does not start.
+
+<Aside type="danger" title="Set COMPOSE_PROJECT_NAME per customer">
+Without this variable, Docker Compose derives the project name from the name of the project
+directory. Since every customer sits in an identically named `distribution/` subdirectory,
+several stacks would otherwise carry the same project name and therefore the same volume names.
+So set `COMPOSE_PROJECT_NAME` to its own value for **every** stack before starting it for the
+first time, and verify afterwards:
+
+```bash title="On the server"
+docker compose config --format json | head -c 200
+docker volume ls
+```
+
+Every customer must have their own set of volumes prefixed with their project name.
+</Aside>
 
 ## Directory layout
 
@@ -78,8 +96,9 @@ to differ per stack. If the values stay on their defaults, the second stack does
 /srv/eucowork/edge/
 ```
 
-Every customer gets their own clone with their own `.env` and their own data. The Compose project
-name is derived from the directory name, which also separates the named volumes automatically.
+Every customer gets their own clone with their own `.env` and their own data. The separation of
+the named volumes comes from `COMPOSE_PROJECT_NAME`, see above — not from the directory name,
+which is `distribution` for every customer here.
 
 ## A shared edge proxy
 

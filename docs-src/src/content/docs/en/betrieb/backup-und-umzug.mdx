@@ -129,13 +129,31 @@ the domain and ports of the current machine. The version from the archive is pla
    docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
    ```
 
-7. **Check and switch over.** Login to the chat and to the panel, old conversations visible, user
-   list complete. Then move the DNS record over to the new machine and check the certificate
-   issuance in Caddy's log.
+7. **Trial run on the new machine.** Before the domain is moved over: sign in to the chat and
+   the panel, check old conversations and the user list. At this point the instance is reachable
+   through its IP address or an entry in your local `hosts` file.
 
-8. **Collect the stragglers.** Between the first dump and the switchover, more data is created. On
-   the old server run `docker compose stop api admin`, then take a second backup and load it on
-   the new server.
+8. **Collect the stragglers — before the switchover.** Between the first dump and the
+   switchover, more data is created on the old server. So freeze it **first**, take a second
+   backup and load it on the new machine:
+
+   ```bash title="Old server"
+   docker compose stop api admin
+   ./backup.sh backup
+   ```
+
+   ```bash title="New server"
+   ./backup.sh restore ~/eucowork-<timestamp-2>.tar.gz
+   docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
+   ```
+
+   The order matters: the restore replaces the data on the new machine completely. Everything
+   that is to survive there must therefore be created after the restore — which is why the
+   switchover comes only in the next step.
+
+9. **Move DNS and verify.** Now set the DNS record to the new machine and check the certificate
+   issuance in Caddy's log. Leave the old stack stopped for a few days until the migration is
+   confirmed.
 
 </Steps>
 

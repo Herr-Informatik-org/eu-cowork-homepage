@@ -38,13 +38,13 @@ there every person signs in individually. How such a bridge is put together and 
 belong to it is described by
 [the connector pattern](/docs/en/konnektoren/muster).
 
-<Aside type="caution" title="Three images still run on a floating tag">
-`searxng`, `rag_api` and the interim panel `admin-panel` sit on `:latest`, while the LibreChat
-image is deliberately pinned to a digest. This is an open point, not a justified exception: for
-these three services a `docker compose pull` can therefore fetch a different version than the
-one last verified. Why a fixed digest is the better choice is explained under
-[Updating](/docs/en/betrieb/aktualisieren). Anyone who wants to avoid this already today pins
-the three images to a digest themselves in `distribution/docker-compose.yml`.
+<Aside type="caution" title="Pin images to a digest for production">
+The LibreChat image is pinned to a digest so that the same verified version runs on every
+server. `searxng`, `rag_api` and the interim panel `admin-panel` sit on `:latest` and may fetch
+a newer build on a `docker compose pull`. For a reproducible installation, pin those three to a
+digest as well in `distribution/docker-compose.yml` and make changing the digest part of your
+update procedure. Why a fixed digest is the better choice is explained under
+[Updating](/docs/en/betrieb/aktualisieren).
 </Aside>
 
 ## Which ports belong to the outside

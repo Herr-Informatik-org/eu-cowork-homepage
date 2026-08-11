@@ -37,13 +37,13 @@ Brücke des Profils `microsoft` läuft bewusst am Gateway vorbei, weil sich dort
 selbst anmeldet. Wie so eine Brücke aufgebaut ist und welche Bauteile dazugehören, beschreibt
 [das Konnektor-Muster](/docs/konnektoren/muster).
 
-<Aside type="caution" title="Drei Images laufen noch auf einem beweglichen Tag">
-`searxng`, `rag_api` und das Interim-Panel `admin-panel` stehen auf `:latest`, während das
-LibreChat-Image bewusst auf einen Digest gepinnt ist. Das ist ein offener Punkt und keine
-begründete Ausnahme: Bei diesen drei Diensten kann ein `docker compose pull` also eine andere
-Version ziehen als die zuletzt geprüfte. Warum ein fester Digest die bessere Wahl ist, steht
-unter [Aktualisieren](/docs/betrieb/aktualisieren). Wer das jetzt schon vermeiden will, pinnt
-die drei Images in `distribution/docker-compose.yml` selbst auf einen Digest.
+<Aside type="caution" title="Images für den produktiven Betrieb auf einen Digest pinnen">
+Das LibreChat-Image ist auf einen Digest gepinnt, damit auf jedem Server dieselbe geprüfte
+Version läuft. `searxng`, `rag_api` und das Interim-Panel `admin-panel` stehen auf `:latest`
+und können bei einem `docker compose pull` eine neuere Fassung ziehen. Für eine reproduzierbare
+Installation pinnen Sie diese drei in `distribution/docker-compose.yml` ebenfalls auf einen
+Digest und nehmen den Wechsel des Digests in Ihren Aktualisierungsablauf auf. Warum ein fester
+Digest die bessere Wahl ist, steht unter [Aktualisieren](/docs/betrieb/aktualisieren).
 </Aside>
 
 ## Welche Ports gehören nach aussen

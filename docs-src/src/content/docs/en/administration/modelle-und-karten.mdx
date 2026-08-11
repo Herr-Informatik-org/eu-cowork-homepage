@@ -84,7 +84,7 @@ On the same page sits the card **"Provider-Routing (OpenRouter)"** (provider rou
 - **"Keine Datennutzung durch Provider"** (no data use by providers) sets `data_collection: deny`, so only providers without prompt storage and without training.
 - **"Provider einschränken (Allowlist)"** (restrict providers, allowlist) activates the list below it. The button **"Nur EU-Provider auswählen"** (select EU providers only) sets it in one step to the providers with a registered office or data center in the EU, the EEA and Switzerland.
 
-<Aside type="caution" title="Two honest limitations, which are also stated in the panel">
+<Aside type="caution" title="Two limitations, which are also stated in the panel">
 First: the information on registered office and data center comes from OpenRouter, and **the registered office of a provider is no guarantee of the place of processing**. Treat "EU only" as a sensible restriction, not as an assurance.
 
 Second: **models without a matching provider will return an error afterwards.** If you set the list narrowly, check every card that runs through this endpoint. A known case is the combination of quantization `fp8` and "EU only": for GLM no provider is then left, because the only EU provider serves `fp4`. In that case OpenRouter answers that no endpoint was found.

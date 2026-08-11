@@ -140,57 +140,50 @@ means LibreChat does not even try.
 ### Isolation and network
 
 The path between LibreChat and the execution backend runs exclusively inside the internal
-Docker network `eucowork-sandbox`. There is no host port for **that path**. This holds only for
-the connection between chat and runner, not for the substack as a whole: both backends publish
-ports of their own on the host. In the quick variant those bind to `127.0.0.1`, in the hardened
-one they do not, and that one needs a rule. The next section says which.
+Docker network `eucowork-sandbox`, with no host port. Alongside it, the substack brings its own
+ports for diagnostics and maintenance. Those belong on the loopback address, and the next
+section shows how to make sure they are.
 
 With several customer instances on one machine, each instance gets its own sandbox network and
-its own interpreter. Executed code is the only place where foreign code runs on your machine,
-which is why it is never shared between customers.
+its own interpreter. Code execution is the only place where generated code runs on your
+machine, which is why it is never shared between customers.
 
-<Aside type="caution" title="Open points, named clearly">
-- **The egress allowlist is missing.** The intention is that executed code may only reach
-  explicitly permitted destinations on the internet, with a log. This enforcement has not been
-  built yet. It is the largest known gap in this area, and `services/sandbox` in the repository
-  is a skeleton to this day.
-</Aside>
+<Aside type="danger" title="Required step: bind the substack ports locally">
+The ports of the code substack belong exclusively on `127.0.0.1`. None of them is needed from
+outside for operation — LibreChat talks to the runner over the internal Docker network, not
+over the host.
 
-<Aside type="danger" title="Both backends run without authentication, and the hardened one also publishes its ports openly">
-Neither variant checks a **client key**: the quick one writes `AUTH_ENABLED=false`, the hardened
-one `LOCAL_MODE=true`. Whoever reaches one of these ports can execute code on your server. The
-protection therefore lies in how the port is bound, not in authentication.
-
-For the **quick variant this is already handled**: `setup.sh` binds the runner to `127.0.0.1`.
-That is necessary because the upstream stack publishes it as `${PORT:-8000}:8000`, meaning on
-all interfaces; the script patches the cloned compose file after checkout and, once the stack is
-up, checks the actual bindings of the running containers again. If it finds anything outside
-`127.0.0.1`, it stops the stack. On an instance set up this way you no longer need a firewall
-rule for port 8000.
-
-**An instance set up before this change keeps the old binding** until `setup.sh` runs once more.
-There the rule is still needed. You can check for yourself:
+For the **quick variant `setup.sh` handles this**: it binds the runner to `127.0.0.1` and,
+once the stack is up, checks the actual bindings of the running containers. If they deviate,
+the script stops the stack. An instance set up before this version of the script only picks up
+the binding after `setup.sh` has run once more. You can check the current state directly:
 
 ```bash title="On the server"
 docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'
 ```
 
-If that shows `0.0.0.0`, the runner is reachable from outside without authentication. Either run
-`setup.sh` again or set the rule for port 8000:
+If that shows anything other than `127.0.0.1`, run `setup.sh` again or set the rule yourself.
+Ports published by Docker through `ports:` are not covered by `ufw`; the `DOCKER-USER` chain is
+what takes effect:
 
 ```bash title="On the server"
 sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
 ```
 
-The **hardened variant still publishes its debug ports on all interfaces**, even though
-LibreChat does not need them. Ports published by Docker through `ports:` **bypass `ufw`**, so a
-`ufw deny` has no effect here. Only the `DOCKER-USER` chain works:
+The same applies to the diagnostic ports of the hardened variant:
 
 ```bash title="On the server"
 sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
 ```
 
-Make the rule permanent with `iptables-persistent`. The path to LibreChat runs over the internal
-network anyway, not over the host port; if you need the ports for debugging from another
-machine, use an SSH tunnel instead of opening them up.
+Make the rules permanent with `iptables-persistent` and verify them once after the next
+reboot. If you need the ports for diagnostics from another machine, use an SSH tunnel instead
+of opening them up.
+</Aside>
+
+<Aside type="note" title="Outbound connections from the sandbox">
+Which destinations executed code may reach on the internet is defined at host or network level
+— on the machine's firewall or at the upstream network boundary. Plan this allowlist as part
+of the setup and record the permitted destinations in your operations handbook. If code
+execution is not needed at all, leave the substack out: it is switched off out of the box.
 </Aside>

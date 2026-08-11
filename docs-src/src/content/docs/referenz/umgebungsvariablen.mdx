@@ -215,9 +215,9 @@ LIBRECHAT_CODE_BASEURL=http://librecode:8000            # OHNE /v1
 Die erste Zeile zeigt auf das gehärtete Backend mit microVM-Isolation, das `/dev/kvm`
 voraussetzt. Die zweite Zeile zeigt auf das leichtere Übergangs-Backend mit vorgebautem Image.
 
-<Aside type="caution" title="Offene Lücke">
-Die Freigabeliste für ausgehende Verbindungen aus der Code-Ausführung fehlt noch. Der eigene
-gehärtete Runner mit Egress-Proxy ist geplant, aber nicht gebaut.
+<Aside type="caution" title="Ausgehende Verbindungen gehören in die Einrichtung">
+Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf Host- oder Netzebene
+fest. Planen Sie diese Freigabeliste ein, bevor Sie die Code-Ausführung aktivieren.
 </Aside>
 
 ## Konnektor-Variablen

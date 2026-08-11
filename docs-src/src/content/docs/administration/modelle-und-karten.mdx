@@ -84,7 +84,7 @@ Auf derselben Seite liegt die Karte **Provider-Routing (OpenRouter)**. Sie besch
 - **Keine Datennutzung durch Provider** setzt `data_collection: deny`, also nur Anbieter ohne Prompt-Speicherung und ohne Training.
 - **Provider einschränken (Allowlist)** aktiviert die Liste darunter. Der Knopf **Nur EU-Provider auswählen** setzt sie in einem Schritt auf die Anbieter mit Sitz oder Rechenzentrum in EU, EWR und Schweiz.
 
-<Aside type="caution" title="Zwei ehrliche Einschränkungen, die auch im Panel stehen">
+<Aside type="caution" title="Zwei Einschränkungen, die auch im Panel stehen">
 Erstens: die Angaben zu Sitz und Rechenzentrum stammen von OpenRouter, und **der Sitz eines Anbieters ist keine Garantie für den Verarbeitungsort**. Behandeln Sie „Nur EU" als sinnvolle Einschränkung, nicht als Zusicherung.
 
 Zweitens: **Modelle ohne passenden Anbieter liefern danach einen Fehler.** Wenn Sie die Liste eng setzen, prüfen Sie jede Karte, die über diesen Endpoint läuft. Ein bekannter Fall ist die Kombination aus Quantisierung `fp8` und „Nur EU": für GLM bleibt dann kein Anbieter übrig, weil der einzige EU-Anbieter `fp4` liefert. OpenRouter antwortet in dem Fall damit, dass kein Endpoint gefunden wurde.

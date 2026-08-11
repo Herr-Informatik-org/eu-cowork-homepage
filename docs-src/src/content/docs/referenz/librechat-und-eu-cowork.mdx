@@ -57,10 +57,11 @@ abarbeiten.
 | **Installationspaket** | Compose-Stack, Server-Vorbereitung, Installer, Backup und Umzug, Caddy, SearXNG, Branding | `distribution/` |
 | **Konfigurationsprofile** | Kunden-Template gegenüber einer Instanz mit Konnektoren, dazu die Compose-Profile für Dateisuche, Konnektoren und TLS | `distribution/` |
 
-<Aside type="note" title="Noch nicht gebaut">
-Der eigene gehärtete Sandbox-Runner mit Egress-Proxy und Freigabeliste ist geplant, aber nicht
-fertig. Für die Code-Ausführung stehen zwei fremde Backends bereit. Das ist die grösste
-bekannte Lücke.
+<Aside type="note" title="Code-Ausführung">
+Für die Code-Ausführung bindet EU Cowork AI zwei etablierte Backends ein, statt einen eigenen
+Runner mitzuliefern — wahlweise eine gehärtete Variante mit microVM-Isolation oder eine
+leichtere Übergangsvariante. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen
+Sie auf Host- oder Netzebene fest.
 </Aside>
 
 ## Warum der Fork dünn bleibt

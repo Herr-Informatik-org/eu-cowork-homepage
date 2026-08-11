@@ -60,15 +60,14 @@ is how much text a model can read in one request. A document of several hundred 
 context, crowds out the rest of the conversation and makes the answer worse. File search exists
 for collections like that.
 
-<Aside type="caution" title="There is no OCR">
-Scanned documents are **not** read. A PDF consisting only of images, for example a scanned
-contract or a photographed receipt, delivers no text. The colleague then sees an empty page and
-can say nothing about it. This applies in the web chat exactly as it does in the
-[Outlook add-in](/docs/en/funktionen/outlook-add-in). A text recognition backend is not part of
-the shipped state.
+<Aside type="caution" title="Scanned documents need a text layer">
+Text recognition is not part of the delivery. A PDF consisting only of images, for example a
+scanned contract or a photographed receipt, contains no readable text. This applies in the web
+chat exactly as it does in the [Outlook add-in](/docs/en/funktionen/outlook-add-in).
 
-Workaround: convert the document into a text PDF beforehand with a tool of your choice, or copy
-the text out and paste it into the chat.
+The usual route: convert the document into a searchable text PDF beforehand with the tool of
+your choice — many scanners and document management systems do this anyway — or copy the text
+out and paste it into the chat.
 </Aside>
 
 ## File search across a document collection
@@ -82,11 +81,10 @@ The advantage shows with many long documents: a handful of manuals, a collection
 project archive. Instead of "read these 400 pages" it becomes "find the three passages that
 answer my question".
 
-<Aside type="caution" title="Switched off in the customer template">
-As shipped, `interface.fileSearch: false`. The reason is an honest one: file search needs an
-additional backend and a provider for the embeddings. If the switch were on without both
-running, your team would have a button that grabs at nothing. How to switch both on is
-explained below.
+<Aside type="note" title="Switched off as shipped">
+As shipped, `interface.fileSearch: false`, because file search requires an additional backend
+and a provider for the embeddings. That way only what actually works is visible after
+installation. How to switch both on is explained below.
 </Aside>
 
 ## Full text search across your own chats
@@ -168,8 +166,9 @@ server), **"Avatar-Limit (MB)"** (avatar limit) and the **"Endpoint-Limits (JSON
 limits) with the fields `fileLimit`, `fileSizeLimit`, `totalSizeLimit` and
 `supportedMimeTypes`.
 
-One sensible intervention is to lower the upper limit per file considerably. 512 MB is
-unrealistically high for a chat tool, and an accidentally uploaded video only costs storage.
+One sensible intervention during setup is to lower the upper limit per file to a value that is
+realistic for your daily work — for pure document work 25 to 50 MB is usually enough. That
+keeps accidentally uploaded videos and archives out of storage.
 
 ### What happens when an account is deleted
 

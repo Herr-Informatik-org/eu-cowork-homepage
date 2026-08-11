@@ -131,13 +131,32 @@ Domain und Ports der aktuellen Maschine enthält. Die Version aus dem Archiv lan
    docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
    ```
 
-7. **Prüfen und umschalten.** Anmeldung am Chat und am Panel, alte Konversationen sichtbar,
-   Nutzerliste vollständig. Danach den DNS-Eintrag auf die neue Maschine umhängen und die
-   Zertifikatsausstellung im Log von Caddy kontrollieren.
+7. **Probelauf auf der neuen Maschine.** Noch bevor die Domain umgehängt wird: am Chat und am
+   Panel anmelden, alte Konversationen und Nutzerliste prüfen. Erreichbar ist die Instanz zu
+   diesem Zeitpunkt über die IP-Adresse beziehungsweise einen Eintrag in Ihrer lokalen
+   `hosts`-Datei.
 
-8. **Nachzügler holen.** Zwischen dem ersten Abzug und dem Umschalten entstehen noch Daten.
-   Auf dem alten Server `docker compose stop api admin`, dann ein zweites Backup ziehen und
-   auf dem neuen Server einspielen.
+8. **Nachzügler holen — vor der Umschaltung.** Zwischen dem ersten Abzug und dem Umschalten
+   entstehen auf dem alten Server noch Daten. Frieren Sie ihn deshalb **zuerst** ein, ziehen
+   Sie ein zweites Backup und spielen Sie es auf der neuen Maschine ein:
+
+   ```bash title="Alter Server"
+   docker compose stop api admin
+   ./backup.sh backup
+   ```
+
+   ```bash title="Neuer Server"
+   ./backup.sh restore ~/eucowork-<zeitstempel-2>.tar.gz
+   docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
+   ```
+
+   Die Reihenfolge ist wichtig: Der Restore ersetzt den Datenbestand der neuen Maschine
+   vollständig. Alles, was dort nach dem Restore entsteht, muss also auch danach entstehen —
+   deshalb kommt die Umschaltung erst im nächsten Schritt.
+
+9. **DNS umhängen und kontrollieren.** Jetzt den DNS-Eintrag auf die neue Maschine setzen und
+   die Zertifikatsausstellung im Log von Caddy kontrollieren. Den alten Stack noch einige
+   Tage gestoppt stehen lassen, bis der Umzug bestätigt ist.
 
 </Steps>
 

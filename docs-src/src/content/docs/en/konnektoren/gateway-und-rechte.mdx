@@ -20,7 +20,7 @@ For a tool like a weather lookup that does not matter. For an ERP it does: "acco
 
 - **Permission check before the call.** On every tool call the rule is checked first. If access is denied, the connector is never contacted at all. The person making the request gets a plain text message in the chat that points them at the admin. The chat carries on normally, there is no crash.
 - **Filtered tool list.** When the chat layer asks which tools a connector offers, the gateway answers per person. For someone without a grant the list is empty, so the connector simply looks empty rather than blocked.
-- **A log of every call.** Every decision is written down immutably, with time, connector, tool, person, role, decision, and reason. There is deliberately no automatic deletion period on these entries.
+- **A log of every call.** Every decision is written down immutably, with time, connector, tool, person, role, decision, and reason. How long these entries are kept is defined in your own deletion policy, see [Data protection and retention](/docs/en/administration/datenschutz-und-aufbewahrung).
 - **Fail closed.** If the rule cannot be read, for example because the database is stuck, access is denied rather than allowed. If a request arrives without an identity, it is denied as well.
 - **Identity headers are stripped.** The chat layer sends the person's identifier along as HTTP headers so that the gateway can decide. Before the request moves on, the gateway strips those headers out again. The connector never learns them.
 - **No credentials of its own.** The gateway holds no key for the connectors itself. Credentials stay where they belong: in the chat configuration as a variable reference, or in the connector itself.
@@ -42,10 +42,10 @@ Exactly one decision chain applies per connector. It is evaluated from top to bo
 
 In the admin panel this chain appears as a legend above the cards: **"Es gewinnt: Benutzer › Rolle › Gruppe › Standard"** (the winner is: user › role › group › default).
 
-<Aside type="danger" title="Without a rule the gateway lets everyone through">
-If **no rule document** exists for a connector, the gateway treats it as allowed. A freshly created connector is therefore visible to every person who may use MCP at all.
+<Aside type="danger" title="Required step: set the server default before granting access">
+The first thing to do after creating a connector is the default: **set "Server-Standard" (server default) to denied, then deliberately grant access to the roles, groups and people who need the connector.**
 
-This is built that way on purpose, so that a configuration mistake does not paralyze the whole chat. For you it means: **set "Server-Standard" (server default) to denied immediately after creating the connector, and only then grant access deliberately.** Otherwise, in the window between creation and grant, every person sees everything that sits behind this connector.
+That way it is defined from the first second who can see behind the connector, and access is a deliberate decision rather than a side effect. Put this step on your acceptance checklist.
 </Aside>
 
 ## The additional tool level
@@ -54,8 +54,8 @@ Above the connector level there is a second, finer level for individual tools. I
 
 One rule is absolute here: **a denied connector beats any tool level grant.** So you cannot use the tool level to partially reopen a blocked connector.
 
-<Aside type="note" title="Status of the tool level">
-The gateway enforces tool rules, and existing rules are preserved when you save. The admin panel currently has **no** form for maintaining these rules, it was deliberately removed again because control at connector level is enough in day to day work. So plan your connectors in a way that makes the connector level sufficient: better two narrow connectors, each with its own service account, than one with many tools, half of which would have to be blocked. [Connector patterns](/docs/en/konnektoren/muster) shows what that looks like.
+<Aside type="tip" title="Cut your connectors so that the connector level is enough">
+The gateway enforces tool rules, and existing rules are preserved when you save. In day to day work, control at connector level carries most cases — and it is the more robust boundary. So plan your connectors accordingly: better two narrow connectors, each with its own service account, than one with many tools, half of which would have to be blocked. [Connector patterns](/docs/en/konnektoren/muster) shows what that looks like.
 </Aside>
 
 ## Effective times, and why a restart is needed

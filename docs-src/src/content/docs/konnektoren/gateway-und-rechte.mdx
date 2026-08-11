@@ -20,7 +20,7 @@ Für ein Werkzeug wie eine Wetterabfrage ist das egal. Für ein ERP ist es das n
 
 - **Rechteprüfung vor dem Aufruf.** Bei jedem Werkzeug-Aufruf wird zuerst die Regel geprüft. Ist der Zugriff verweigert, wird der Konnektor gar nicht erst kontaktiert. Die anfragende Person bekommt eine Klartext-Meldung im Chat, die auf den Admin verweist. Der Chat läuft normal weiter, es gibt keinen Absturz.
 - **Gefilterte Werkzeugliste.** Fragt die Chat-Schicht ab, welche Werkzeuge ein Konnektor anbietet, antwortet das Gateway personenbezogen. Für jemanden ohne Freigabe ist die Liste leer, der Konnektor wirkt also schlicht leer statt gesperrt.
-- **Protokoll jedes Aufrufs.** Jede Entscheidung wird unveränderlich mitgeschrieben, mit Zeit, Konnektor, Werkzeug, Person, Rolle, Entscheid und Begründung. Es gibt bewusst keine automatische Löschfrist auf diesen Einträgen.
+- **Protokoll jedes Aufrufs.** Jede Entscheidung wird unveränderlich mitgeschrieben, mit Zeit, Konnektor, Werkzeug, Person, Rolle, Entscheid und Begründung. Wie lange diese Einträge aufbewahrt werden, legen Sie in Ihrem Löschkonzept fest, siehe [Datenschutz und Aufbewahrung](/docs/administration/datenschutz-und-aufbewahrung).
 - **Fail-closed.** Lässt sich die Regel nicht lesen, etwa weil die Datenbank klemmt, wird verweigert statt erlaubt. Kommt eine Anfrage ohne Identität an, wird ebenfalls verweigert.
 - **Identitäts-Header werden entfernt.** Die Chat-Schicht schickt die Kennung der Person als HTTP-Header mit, damit das Gateway entscheiden kann. Bevor die Anfrage weiterläuft, streicht das Gateway diese Header wieder heraus. Der Konnektor erfährt sie nicht.
 - **Keine eigenen Zugangsdaten.** Das Gateway hält selbst keinen Schlüssel für die Konnektoren. Zugangsdaten bleiben dort, wo sie hingehören: in der Chat-Konfiguration als Variablenreferenz oder im Konnektor selbst.
@@ -42,10 +42,10 @@ Pro Konnektor gilt genau eine Entscheidungskette. Sie wird von oben nach unten g
 
 Im Admin-Panel steht diese Kette als Legende über den Karten: **Es gewinnt: Benutzer › Rolle › Gruppe › Standard**.
 
-<Aside type="danger" title="Ohne Regel lässt das Gateway durch">
-Existiert für einen Konnektor **kein Regeldokument**, behandelt das Gateway ihn als erlaubt. Ein frisch angelegter Konnektor ist also für jede Person sichtbar, die überhaupt MCP benutzen darf.
+<Aside type="danger" title="Pflichtschritt: Server-Standard vor der Freigabe setzen">
+Der erste Handgriff nach dem Anlegen eines Konnektors gehört dem Standard: **Setzen Sie den Server-Standard auf „verweigert" und geben Sie danach gezielt die Rollen, Gruppen und Personen frei, die den Konnektor brauchen.**
 
-Das ist bewusst so gebaut, damit ein Konfigurationsfehler nicht den ganzen Chat lahmlegt. Für Sie heisst es aber: **Setzen Sie direkt nach dem Anlegen den Server-Standard auf „verweigert" und geben Sie danach gezielt frei.** Sonst sieht in dem Zeitfenster zwischen Anlegen und Freigabe jede Person alles, was hinter diesem Konnektor liegt.
+So ist von der ersten Sekunde an definiert, wer hinter den Konnektor sieht, und die Freigabe ist eine bewusste Entscheidung statt eines Nebeneffekts. Nehmen Sie diesen Schritt in Ihre Abnahmeliste auf.
 </Aside>
 
 ## Die zusätzliche Werkzeug-Ebene
@@ -54,8 +54,8 @@ Das ist bewusst so gebaut, damit ein Konfigurationsfehler nicht den ganzen Chat 
 
 Eine Regel ist dabei absolut: **Ein verweigerter Konnektor schlägt jede Werkzeug-Erlaubnis.** Sie können also nicht über die Werkzeug-Ebene einen gesperrten Konnektor teilweise wieder öffnen.
 
-<Aside type="note" title="Stand der Werkzeug-Ebene">
-Das Gateway setzt Werkzeug-Regeln durch, und vorhandene Regeln bleiben beim Speichern erhalten. Eine Maske zum Pflegen dieser Regeln hat das Admin-Panel derzeit **nicht**, sie wurde bewusst wieder entfernt, weil die Steuerung auf Konnektor-Ebene im Alltag ausreicht. Planen Sie Ihre Konnektoren deshalb so, dass die Konnektor-Ebene genügt: lieber zwei schmale Konnektoren mit je eigenem Dienstkonto als einer mit vielen Werkzeugen, von denen die Hälfte gesperrt sein müsste. Wie das aussieht, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
+<Aside type="tip" title="Schneiden Sie Konnektoren so, dass die Konnektor-Ebene genügt">
+Das Gateway setzt Werkzeug-Regeln durch, und vorhandene Regeln bleiben beim Speichern erhalten. Im Alltag trägt die Steuerung auf Konnektor-Ebene den grössten Teil der Fälle — und sie ist die robustere Grenze. Planen Sie Ihre Konnektoren deshalb entsprechend: lieber zwei schmale Konnektoren mit je eigenem Dienstkonto als einer mit vielen Werkzeugen, von denen die Hälfte gesperrt sein müsste. Wie das aussieht, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
 </Aside>
 
 ## Wirkzeiten, und warum ein Neustart nötig ist

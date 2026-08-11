@@ -103,15 +103,30 @@ etwa eine YAML-Datei, die nicht mehr zum Schema passt.
 
 ## Rollback
 
+Ein Rollback setzt den **gesamten Arbeitsbaum** auf den vorigen Stand zurück, nicht einzelne
+Dateien. Der Grund: Das Chat-Image kommt als Digest aus der `docker-compose.yml`, die eigenen
+Dienste werden dagegen beim Installieren aus dem Quellstand gebaut. Nur zusammen ergeben
+beide wieder die Kombination, die vorher lief.
+
 ```bash title="Auf dem Server"
-git checkout <voriger-commit> -- distribution/docker-compose.yml
+git stash                       # eigene Änderungen an versionierten Dateien sichern
+git checkout <voriger-commit>   # Stand vor dem Update, gesamter Arbeitsbaum
 ./install.sh --migrate --profiles production,internal,microsoft,filesearch
+```
+
+Die `.env` ist nicht versioniert und bleibt dabei unangetastet. Haben Sie Werte direkt in
+versionierten Dateien geändert, holt `git stash pop` sie zurück; besser ist, solche Werte von
+vornherein über die `.env` zu setzen, damit ein Rollback sie gar nicht erst berührt.
+
+Nur wenn auch Daten betroffen sind, kommt der Restore dazu. Er ist zerstörend und ersetzt den
+Datenbestand durch den Stand aus dem Archiv:
+
+```bash title="Auf dem Server"
 ./backup.sh restore backups/<archiv-vor-dem-update>.tar.gz
 ```
 
-Die ersten beiden Zeilen drehen Programmstand und Image zurück. Die dritte Zeile brauchen Sie
-nur, wenn auch Daten betroffen sind. Sie ist zerstörend und ersetzt die Datenbank durch den
-Stand aus dem Archiv, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+Siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). Prüfen Sie den Rollback einmal auf
+einer Testinstanz, bevor Sie ihn im Ernstfall zum ersten Mal brauchen.
 
 ## Weiter
 

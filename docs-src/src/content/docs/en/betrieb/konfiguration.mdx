@@ -181,9 +181,9 @@ docker compose restart api
 
 ## Domain lock
 
-Self registration is open out of the box. The actual access protection is not
-`ALLOW_REGISTRATION`, but the list of allowed email domains. Without it, anyone with the
-registration link can create an account.
+The domain lock is the first step after installation and belongs in place **before** the
+instance is reachable under its domain. What matters is not `ALLOW_REGISTRATION` but the list
+of allowed email domains: it decides who can create an account in the first place.
 
 ```yaml title="distribution/librechat.yaml"
 registration:

@@ -102,15 +102,30 @@ example a YAML file that no longer matches the schema.
 
 ## Rollback
 
+A rollback returns the **entire working tree** to the previous state, not individual files. The
+reason: the chat image comes as a digest from `docker-compose.yml`, while the own services are
+built from the source state during installation. Only together do the two produce the
+combination that ran before.
+
 ```bash title="On the server"
-git checkout <voriger-commit> -- distribution/docker-compose.yml
+git stash                       # set aside your own changes to versioned files
+git checkout <previous-commit>  # state before the update, entire working tree
 ./install.sh --migrate --profiles production,internal,microsoft,filesearch
+```
+
+The `.env` is not versioned and stays untouched. If you changed values directly in versioned
+files, `git stash pop` brings them back; better still is to set such values through the `.env`
+in the first place, so that a rollback never touches them.
+
+Only if data is affected as well does the restore come on top. It is destructive and replaces
+the data with the state from the archive:
+
+```bash title="On the server"
 ./backup.sh restore backups/<archiv-vor-dem-update>.tar.gz
 ```
 
-The first two lines roll back the program version and the image. You only need the third line if
-data is affected too. It is destructive and replaces the database with the state from the
-archive, see [Backup and migration](/docs/en/betrieb/backup-und-umzug).
+See [Backup and migration](/docs/en/betrieb/backup-und-umzug). Rehearse the rollback once on a
+test instance before you need it for real.
 
 ## Next
 

@@ -24,6 +24,15 @@ You sign in with your **existing LibreChat admin account**, so with the same ema
 The panel keeps no user database of its own. It checks the sign-in against LibreChat and then continues to work with the same token. If an account is blocked in LibreChat or its role withdrawn, that takes effect here immediately as well.
 </Aside>
 
+<Aside type="caution" title="Recommended: protect administrator access further">
+Because the panel uses the same accounts as the chat, the stricter requirements apply to administrator accounts. Two measures belong in every production setup:
+
+- Enable **two-factor sign-in for every account with the `ADMIN` role**.
+- **Restrict access to `admin.<your-domain>` to known networks**, for example to your VPN or an IP allowlist in the upstream reverse proxy. The panel is used by few people in day to day work, so restricting it costs nothing.
+
+Put both on your acceptance checklist and verify them actively once the instance is set up.
+</Aside>
+
 ## The navigation
 
 The sidebar is divided into four groups: **"Analyse"** (analysis), **"Verwaltung"** (administration), **"Finanzen"** (finance) and **"System"** (system).

@@ -24,6 +24,15 @@ Sie melden sich mit Ihrem **bestehenden LibreChat-Admin-Konto** an, also mit der
 Das Panel führt keine eigene Nutzerdatenbank. Es prüft die Anmeldung gegen LibreChat und arbeitet danach mit demselben Token weiter. Wird ein Konto in LibreChat gesperrt oder die Rolle entzogen, wirkt das sofort auch hier.
 </Aside>
 
+<Aside type="caution" title="Empfohlen: Administratorzugänge zusätzlich absichern">
+Weil das Panel dieselben Konten benutzt wie der Chat, gelten für Administratorkonten die schärferen Anforderungen. Zwei Massnahmen gehören in jede produktive Einrichtung:
+
+- **Zwei-Faktor-Anmeldung für alle Konten mit der Rolle `ADMIN`** aktivieren.
+- **Den Zugang zu `admin.<ihre-domain.ch>` auf bekannte Netze begrenzen**, etwa auf Ihr VPN oder eine IP-Freigabeliste im vorgelagerten Reverse-Proxy. Das Panel wird im Alltag von wenigen Personen gebraucht, eine Einschränkung kostet also nichts.
+
+Nehmen Sie beides in Ihre Abnahmeliste auf und prüfen Sie es nach dem Aufsetzen einmal aktiv nach.
+</Aside>
+
 ## Die Navigation
 
 Die Seitenleiste ist in vier Gruppen unterteilt: **Analyse**, **Verwaltung**, **Finanzen** und **System**.

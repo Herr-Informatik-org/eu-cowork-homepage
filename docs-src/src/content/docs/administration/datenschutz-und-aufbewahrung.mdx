@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-Diese Seite sagt möglichst genau, welche Daten wie lange bleiben, wie Sie eine Auskunft erteilen oder eine Löschung durchführen und was die Installation nach aussen sendet. Sie enthält bewusst auch das, was nicht vorhanden ist.
+Diese Seite sagt möglichst genau, welche Daten wie lange bleiben, wie Sie eine Auskunft erteilen oder eine Löschung durchführen und was die Installation nach aussen sendet. Sie ist als Grundlage für Ihr eigenes Löschkonzept gedacht.
 
 ## Die Aufbewahrungsfrist
 
@@ -16,7 +16,7 @@ Unter **Einstellungen → Aufbewahrung** steht die Karte **Aufbewahrung (Retenti
 | Eigenschaft | Wert |
 | --- | --- |
 | Zulässiger Bereich | 1 bis 3650 Tage |
-| Feld leer | Aufbewahrung ist aus, es wird nichts automatisch gelöscht |
+| Feld leer | Es wird nichts automatisch gelöscht. Setzen Sie die Frist bei der Einrichtung passend zu Ihrem Löschkonzept |
 | Massgeblich | die letzte Änderung an der Konversation, nicht ihr Anlagedatum |
 | Wann gelöscht wird | in einem täglichen Lauf |
 
@@ -75,8 +75,8 @@ Zwei Dinge verlassen den Stack zwangsläufig, und die sollten Sie kennen und int
 
 **Web-Suchanfragen gehen an externe Suchmaschinen.** Die Suche läuft über das selbst gehostete SearXNG im Stack. SearXNG ist ein Metasucher, es leitet die Suchanfrage an externe Suchmaschinen weiter, allerdings **ohne die Identität der suchenden Person**. Die Anfragen selbst verlassen also den Stack.
 
-<Aside type="caution" title="Sagen Sie es genau">
-Die ehrliche Formulierung lautet: Speicherung und Inferenz lassen sich in der EU beziehungsweise der Schweiz halten. Bei der Web-Suche verlässt der Suchtext das Haus, nur eben ohne Nutzerbezug. Die Aussage „bei der Web-Suche bleibt alles in der EU" wäre falsch, und sie fällt einem beim ersten kritischen Nachfragen auf die Füsse.
+<Aside type="note" title="Formulierung für Ihre Datenschutzhinweise">
+Sauber formuliert lautet die Aussage: Speicherung und Inferenz lassen sich in der EU beziehungsweise der Schweiz halten; bei der Web-Suche verlässt der Suchtext die Instanz, und zwar ohne Nutzerbezug. Wer diese Unterscheidung in Datenschutzhinweisen und Schulungen wörtlich übernimmt, ist auch bei kritischen Nachfragen auf der sicheren Seite.
 </Aside>
 
 ## Kennzeichnung von Anbietern ausserhalb der EU
@@ -85,10 +85,10 @@ Anbieter, die nicht EU-resident sind, werden im Panel und im Chat als solche gek
 
 Beachten Sie ausserdem, dass die Herkunftsangaben im **Provider-Routing** vom Anbieter stammen und der Sitz eines Anbieters keine Garantie für den Verarbeitungsort ist. Mehr dazu unter [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
 
-## Was es nicht gibt
+## Abgrenzung
 
-**Kein SCIM.** Es gibt keine automatische Bereitstellung und keine automatische Deaktivierung von Konten aus dem Identity Provider heraus. Konten entstehen beim ersten Login über OIDC, und die Deprovisionierung läuft über den Identity Provider: wer dort deaktiviert ist, kommt nicht mehr durch die Anmeldung und damit an keine Daten. Für den vollständigen Rückbau eines Kontos samt Daten nutzen Sie den Lösch-Dialog im Panel.
+**Bereitstellung ohne SCIM.** Konten entstehen beim ersten Login über OIDC. Die Deprovisionierung läuft über Ihren Identity Provider: Wer dort deaktiviert ist, kommt nicht mehr durch die Anmeldung und damit an keine Daten. Für den vollständigen Rückbau eines Kontos samt Daten nutzen Sie den Lösch-Dialog im Panel.
 
-**Keine automatische Abrechnung.** Belege ja, Zahlungsanbindung nein. Details unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).
+**Belege statt Zahlungsanbindung.** Der Verbrauch wird vollständig erfasst und als CSV und PDF ausgegeben; die Zahlung selbst wickeln Sie in Ihrem eigenen System ab. Details unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).
 
-**Der gehärtete Sandbox-Runner mit Egress-Allowlist ist noch nicht fertig.** Für die Code-Ausführung läuft derzeit ein Übergangs-Backend. Das ist die grösste bekannte offene Stelle, und sie wird hier bewusst genannt statt verschwiegen.
+**Ausgehende Verbindungen der Code-Ausführung** regeln Sie auf Host- oder Netzebene, nicht in der Anwendung. Im Auslieferungszustand ist die Code-Ausführung ausgeschaltet.

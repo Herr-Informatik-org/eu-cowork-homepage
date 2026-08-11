@@ -105,7 +105,7 @@ beim Inferenz-Anbieter. Standard ist **EuRouter** unter `https://api.eurouter.ai
 wird in der EU verarbeitet. **OpenRouter** ist optional zuschaltbar und **nicht** EU-resident.
 Zwei der vier ausgelieferten Modellkarten sind deshalb sichtbar als Nicht-EU gekennzeichnet.
 
-<Aside type="caution" title="Web-Suche ehrlich betrachtet">
+<Aside type="note" title="Web-Suche und Datenresidenz">
 SearXNG läuft in Ihrem Stack, leitet die Suchanfrage aber an externe Suchmaschinen weiter,
 ohne die Identität des Nutzers mitzuschicken. Die Aussage „alles bleibt in der EU" gilt für
 Speicherung und Inferenz, nicht für die Web-Suche.
@@ -114,18 +114,19 @@ Speicherung und Inferenz, nicht für die Web-Suche.
 Eine produktiv genutzte Instanz liegt beispielsweise in der Schweiz. Wo Ihre Instanz liegt,
 entscheiden Sie mit der Wahl des Servers.
 
-## Was noch nicht fertig ist
+## Umfang und Abgrenzung
 
-Diese Punkte sind offen. Sie stehen hier, damit Sie nicht davon ausgehen, dass sie da sind.
+Damit Sie den Funktionsumfang sauber gegen Ihre Anforderungen halten können, hier die
+Bereiche, die nicht im Lieferumfang stehen oder bei der Einrichtung eine Entscheidung
+verlangen.
 
-| Offener Punkt | Stand |
+| Bereich | Stand |
 |---|---|
-| Gehärteter Sandbox-Runner mit Egress-Proxy und Domain-Allowlist | grösste bekannte Lücke. Für die Code-Ausführung stehen zwei Backends bereit, die Freigabeliste für ausgehende Verbindungen fehlt |
-| Web-Suche im Kunden-Template | der Scraper fehlt, deshalb hängt LibreChat das Such-Werkzeug nicht ans Modell. Der Knopf ist sichtbar, löst aber nichts aus, bis ein Scraper konfiguriert ist |
-| SCIM-Bereitstellung | nicht vorhanden. Konten entstehen beim ersten Login über OIDC, das Entziehen läuft über den Identity Provider |
-| Automatische Abrechnung | Belege als CSV und PDF gibt es, eine Zahlungsanbindung nicht |
-| Vorgebaute Sidecar-Images | die vier eigenen Dienste werden heute auf dem Zielserver aus Quelle gebaut |
-| OCR, Bildgenerierung, Sprachein- und -ausgabe | nicht enthalten. Gescannte PDF-Dateien werden nicht gelesen |
+| Web-Suche | Die Suchmaschine läuft im Stack. Den Scraper wählen Sie nach Ihren Anforderungen an die Datenresidenz und hinterlegen ihn bei der Einrichtung |
+| Ausgehende Verbindungen der Code-Ausführung | werden auf Host- oder Netzebene freigegeben, nicht in der Anwendung. Im Auslieferungszustand ist die Code-Ausführung aus |
+| Benutzer-Bereitstellung über SCIM | nicht enthalten. Konten entstehen beim ersten Login über OIDC, das Entziehen läuft über den Identity Provider |
+| Automatische Abrechnung | Belege als CSV und PDF sind enthalten, eine Zahlungsanbindung nicht |
+| OCR, Bildgenerierung, Sprachein- und -ausgabe | nicht enthalten. Gescannte PDF-Dateien werden nicht als Text gelesen |
 
 ## Weiter
 
