@@ -178,7 +178,15 @@
   ::selection{ background:var(--c-ice-300); color:var(--c-ink); }
 
   /* ---------- Typo-Skala: Tracking und Leading sind grössenabhängig ---------- */
-  .euc-h1{ font-family:var(--f-display); font-weight:400; font-size:clamp(40px,6.2vw,72px); line-height:1.08; letter-spacing:-.022em; color:var(--c-ink); margin:0; text-wrap:balance; }
+  /* 56px statt 72px, und der Mittelwert laeuft mit dem Fenster mit statt bei
+     jeder Desktopbreite an die Obergrenze zu stossen. Der Grund steht im Satz
+     selbst: die Ueberschrift hat drei feste Zeilen, die laengste („für Ihr
+     Unternehmen.") misst bei 56px rund 540px, und die Textspalte ist zwischen
+     1024 und 1440px 500 bis 600px breit. Bei 72px brach diese Zeile ein
+     viertes Mal um. Wer die Ueberschrift aendert, muss die laengste Zeile neu
+     messen; text-wrap:balance faengt das nicht auf, weil die Umbrueche im
+     Markup stehen. */
+  .euc-h1{ font-family:var(--f-display); font-weight:400; font-size:clamp(34px,4.4vw,56px); line-height:1.1; letter-spacing:-.021em; color:var(--c-ink); margin:0; text-wrap:balance; }
   .euc-h2{ font-family:var(--f-display); font-weight:400; font-size:clamp(30px,4.2vw,50px); line-height:1.10; letter-spacing:-.019em; color:var(--c-ink); margin:0; text-wrap:balance; }
   .euc-h2-deep{ color:var(--c-on-deep); }
   .euc-lead{ font-family:var(--f-body); font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-.005em; color:var(--c-body); margin:var(--s-4) 0 0; max-width:48ch; text-wrap:pretty; }
@@ -192,44 +200,53 @@
      Eyebrow steht deshalb NICHT mehr über dem Titel — oberhalb las er sich als
      Kleingedrucktes vor der Schlagzeile und nahm ihr den Auftakt. */
   .euc-hero-sub{ font-family:var(--f-body); font-size:clamp(17px,1.55vw,21px); line-height:1.5; letter-spacing:-.005em; color:var(--c-body); margin:clamp(22px,2.6vw,32px) 0 0; max-width:38ch; text-wrap:pretty; }
-  /* 236px ist das Mass der Vorlage; darunter skaliert er mit, damit er auf dem
-     Telefon nicht die halbe Spalte einnimmt. */
-  .euc-hero-rule{ width:clamp(150px,19vw,236px); height:2px; border-radius:2px; background:linear-gradient(90deg, var(--c-eu-700), rgba(18,50,107,0)); margin:clamp(28px,3.2vw,40px) 0 0; }
-  .euc-hero-tags{ display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:clamp(18px,2vw,26px) 0 0;
-    font-family:var(--f-mono); font-size:clamp(11.5px,1.05vw,14px); letter-spacing:.04em; color:var(--c-eu-700); }
-  /* Der Trenner ist ein Pseudo-Element und kein Zeichen im Text: so liest ihn
-     kein Screenreader vor. Er hängt am VORANGEHENDEN Eintrag, nicht am
-     folgenden — sonst begänne die zweite Zeile auf dem Telefon mit einem
-     einsamen Punkt. */
-  .euc-hero-tags > span{ display:inline-flex; align-items:center; white-space:nowrap; }
-  .euc-hero-tags > span:not(:last-child)::after{ content:'·'; margin-left:9px; color:rgba(18,50,107,.42); }
+  /* ---------- Hero: genau ein Bildschirm ----------
+     100svh statt 100vh: auf dem Telefon waechst und schrumpft die Adressleiste,
+     und 100vh rechnet immer mit der grossen Fassung. Die Sektion waere dort
+     hoeher als der sichtbare Bereich, und ausgerechnet die Naht zur naechsten
+     Sektion laege unter der Leiste. svh nimmt die kleine Fassung, also die, die
+     immer da ist. 100vh steht als Rueckfall fuer aeltere Browser davor.
+     min-height, nicht height: wenn Text und Globus untereinander stehen,
+     darf die Sektion wachsen statt ihren Inhalt abzuschneiden. */
+  .euc-hero{ min-height:100vh; min-height:100svh; display:flex; align-items:center; }
 
-  /* ---------- Marker-Auszeichnung ----------
-     Technik der Vorlage: ein Hintergrundbild auf einem INLINE-Element, gesetzt
-     über background-position/-size. Das ist der einzige Weg, der die Höhe an
-     die Schriftmetrik koppelt statt an eine Zeilenhöhe — deshalb sitzt der
-     Streifen bei 40px wie bei 72px gleich, und `box-decoration-break:clone`
-     hielte ihn auch über einen Umbruch hinweg vollständig.
-     Statt des Rechtecks der Vorlage liegt hier ein SVG: wellige Kanten, weiche
-     Enden und eine leichte Schräglage, die IM PFAD steckt. Der Text bleibt
-     dadurch exakt waagrecht — ein gedrehter Titel läse sich als Satzfehler.
-     Weil Wort und Schriftgrad immer im selben Verhältnis stehen, bleibt der
-     gerenderte Winkel in jeder Breite bei rund 1.4 Grad.
-     84 % / 86 % sind an Inters Metrik gemessen, nicht geschätzt: die Inline-
-     Box misst 1.225 em, die Grundlinie liegt bei 0.976 em, die Versalhöhe
-     beginnt bei 0.249 em. Daraus deckt der Streifen von 4 px über der
-     Versalhöhe bis knapp unter die Unterlänge. Die Vorlagenwerte (94 % / 58 %)
-     stammten von Space Grotesk und liefen unter Inter oben aus dem Wort
-     heraus — der Streifen schnitt in die Zeile darüber. Wer die Titelschrift
-     wechselt, muss diese zwei Zahlen neu messen. */
-  .euc-mark{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%20viewBox='0 0 200 40'%20preserveAspectRatio='none'%3E%3Cpath d='M2.2 4C40 0.8 118 1.6 197.4 1.2c2.2 7.6 1.8 28.4 0.4 35.2C140 40 58 38.8 3.4 39c-2.2-7.4-2.4-27.8-1.2-35Z' fill='rgba(244,197,66,0.42)'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:0 86%; background-size:100% 84%;
-    box-decoration-break:clone; -webkit-box-decoration-break:clone;
+  /* ---------- Partikel-Globus ----------
+     Der Canvas zeichnet auf durchsichtigem Grund, darunter liegt der Verlauf
+     der Seite: der Globus schwebt dadurch im Grund, statt auf einer eigenen
+     Flaeche zu sitzen. `crosshair` ist das einzige Versprechen, dass hier
+     etwas auf den Zeiger reagiert; ohne Zeiger nehmen wir es zurueck.
+     `touch-action:none` verhindert, dass eine Wischgeste auf dem Globus die
+     Seite scrollt, waehrend die Partikel ihr folgen. */
+  /* 4:3, das Seitenverhaeltnis der Vorlage. Nicht Zierde, sondern Bedingung:
+     die Kugel ist im Bild bereits angeschnitten (ihr Mittelpunkt liegt bei
+     0.573/0.806 der Bildmasse, ihr Radius bei 0.563 der Bildbreite, der Kreis
+     reicht also ueber den unteren und rechten Bildrand hinaus). Wer die
+     Flaeche anders zuschneidet, schneidet den sichtbaren Kugelrand oben links
+     weg, und dann bleibt ein Rechteck aus Punkten statt einer Kugel. */
+  .euc-pg{ position:relative; width:100%; aspect-ratio:4 / 3; overflow:hidden; cursor:crosshair; }
+  @supports not (aspect-ratio:1 / 1){ .euc-pg{ height:clamp(300px,44svh,460px); } }
+  .euc-pg canvas{ display:block; width:100%; height:100%; touch-action:none; }
+  /* Ab der Breite, ab der Text und Kugel nebeneinander stehen, laeuft die
+     Kugel ueber den rechten Seitenrand hinaus. Das ist keine Zierde: das Bild
+     schneidet die Kugel rechts gerade ab, und eine gerade Kante mitten auf der
+     Flaeche verraet den Ausschnitt. Am Fensterrand faellt sie mit dem Rand
+     zusammen und ist keine Kante mehr. `overflow:hidden` an der Sektion
+     beschneidet den Ueberstand. */
+  @media (min-width:901px){
+    /* Bis an den Fensterrand, nicht bis an den Seitenrand: 50 % bezieht sich
+       auf die Zeile (hoechstens --w-max), 50vw auf das Fenster. Die Differenz
+       ist genau der Weg vom Seitenrand zum Fensterrand, in jeder Breite ohne
+       zweite Zahl. Der Ueberstand wird von der Sektion beschnitten. */
+    .euc-pg{ margin-right:calc(50% - 50vw); }
   }
-  @media (prefers-contrast:more){
-    .euc-mark{ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%20viewBox='0 0 200 40'%20preserveAspectRatio='none'%3E%3Cpath d='M2.2 4C40 0.8 118 1.6 197.4 1.2c2.2 7.6 1.8 28.4 0.4 35.2C140 40 58 38.8 3.4 39c-2.2-7.4-2.4-27.8-1.2-35Z' fill='rgba(244,197,66,0.62)'/%3E%3C/svg%3E"); }
+  /* Auf dem Telefon steht die Kugel unter dem Text und hat keine Nachbarin,
+     also darf sie nach BEIDEN Seiten bis an den Rand. Der gerade Schnitt des
+     Bildes liegt damit auch hier ausserhalb des Fensters. */
+  @media (max-width:900px){
+    .euc-pg{ cursor:default; margin-left:calc(var(--gutter) * -1); margin-right:calc(var(--gutter) * -1); width:auto; align-self:stretch; }
   }
+  @media (hover:none){ .euc-pg{ cursor:default; } }
+
 
   /* ---------- Materialkarte: kein 1px-Rahmen mehr, sondern Kante + Schatten ---------- */
   .euc-card{ position:relative; border-radius:var(--r-l); background:var(--c-surface); box-shadow:var(--sh-2), var(--edge); transition:transform var(--d-hover) var(--ease-out), box-shadow var(--d-hover) var(--ease-out); }
@@ -500,9 +517,7 @@
   @media (max-width:860px){ .euc-mock-row{ gap:9px; padding:11px 10px; } .euc-mock-bar{ padding:9px 10px; } }
   @keyframes euc-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
   @keyframes euc-caret{ 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
-  @keyframes euc-hero2-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
   @keyframes euc-hero2-shimmer{ from { background-position:150% center; } to { background-position:-50% center; } }
-  .euc-hero2-shimmer{ background:linear-gradient(90deg,#8A96A2 40%,#0B1E33 50%,#8A96A2 60%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:euc-hero2-shimmer 1.6s linear infinite; }
   /* Attrappen werden verkleinert, nicht beschnitten: die Seitenleiste bleibt in
      jeder Breite sichtbar, die Bühne skaliert (Muster .euc-mob-stage). Das
      Rechnen übernimmt _fitStages, weil der Massstab stufenlos sein muss.
@@ -1386,196 +1401,38 @@
            Seite, und der Verlauf sah aus, als finge er unten neu an. -->
       <div class="euc-veil euc-veil-top" aria-hidden="true"></div>
 
-    <section data-screen-label="Hero" ref="{{ hero2Ref }}" style="position:relative; overflow:hidden; padding:clamp(122px,15vw,172px) var(--gutter) var(--sec-y);">
+    <!-- Der Wellen-Trenner darunter traegt durch seine negativen Aussenabstaende
+         die Hoehe null: er ueberlappt Hero und Folgesektion, statt Platz zu
+         nehmen. Deshalb reicht `min-height:100svh` an dieser Sektion, damit die
+         naechste Sektion GENAU an der Bildschirmkante beginnt, und die Welle
+         liegt trotzdem sichtbar auf der Naht. -->
+    <section class="euc-hero" data-screen-label="Hero" ref="{{ pgRef }}" style="position:relative; overflow:hidden; padding:clamp(104px,12vw,140px) var(--gutter) clamp(88px,10vw,132px);">
 
-          <div style="position:relative; z-index:2; max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
-            <!-- 540px statt 490: in einer Flex-Zeile ist die Basis zugleich die
-                 schmalste Breite, die die Spalte je bekommt. Bei 490 fiel die
-                 Copy-Spalte zwischen 1150 und 1245px auf 497–514px, und die H1
-                 brach dort dreizeilig („Bleibt" / „in Europa."). Mit 540 klappt
-                 die Zeile in diesem Band sauber untereinander statt zu quetschen;
-                 die Attrappe zieht mit (510), damit die Aufteilung am Desktop
-                 unverändert bleibt. -->
-            <div style="flex:1 1 540px; max-width:620px;" data-reveal>
-              <!-- Der Umbruch steht fest im Markup statt dem Zufall der Spaltenbreite
-                   überlassen: „Bleibt in Europa." ist der Satz, der die Marke trägt,
-                   und er muss in jeder Breite zusammen auf einer Zeile stehen. -->
-              <h1 class="euc-h1">{{ t.hero2.h1a }}<br>{{ t.hero2.h1b }} <span class="euc-mark">{{ t.hero2.h1mark }}</span>{{ t.hero2.h1end }}</h1>
+          <div style="position:relative; z-index:2; width:100%; max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(28px,4vw,56px);">
+            <!-- 520px Basis, 640px Deckel: die Ueberschrift steht in drei festen
+                 Zeilen, und die laengste („für Ihr Unternehmen.") misst bei 56px
+                 rund 540px. Unter 560px Spaltenbreite bricht sie ein viertes Mal
+                 um, darum die Basis nicht weiter senken. -->
+            <div style="flex:1 1 520px; max-width:640px;" data-reveal>
+              <!-- Alle drei Umbrueche stehen fest im Markup statt dem Zufall der
+                   Spaltenbreite ueberlassen. Der Satz besteht aus drei Sinn-
+                   einheiten, und ein Umbruch nach „für Ihr" oder nach „Bleibt"
+                   liest sich als Fehler, nicht als Gestaltung. -->
+              <h1 class="euc-h1">{{ t.hero2.h1a }}<br>{{ t.hero2.h1b }}<br>{{ t.hero2.h1c }}</h1>
               <p class="euc-hero-sub">{{ t.hero2.sub }}</p>
-              <div class="euc-hero-rule" aria-hidden="true"></div>
-              <p class="euc-hero-tags"><sc-for list="{{ t.hero2.tags }}" as="tag" hint-placeholder-count="3"><span>{{ tag }}</span></sc-for></p>
               <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(28px,3.2vw,38px);">
                 <a class="euc-btn-press" href="/warteliste" style="display:inline-flex; align-items:center; min-height:44px; font-family:var(--f-body); font-size:15px; font-weight:600; letter-spacing:-.006em; text-decoration:none; color:var(--c-on-deep); background:var(--c-deep); padding:0 22px; border-radius:var(--r-s); box-shadow:var(--sh-2); transition:transform var(--d-press) var(--ease-out), background var(--d-hover) ease;" style-hover="background:#123456;">{{ t.hero2.ctaPrimary }}</a>
                 <a class="euc-btn-press" href="{{ github }}" style="display:inline-flex; align-items:center; min-height:44px; font-family:var(--f-body); font-size:15px; font-weight:500; text-decoration:none; color:var(--c-ink); background:var(--mat-chip); -webkit-backdrop-filter:saturate(160%) blur(14px); backdrop-filter:saturate(160%) blur(14px); padding:0 22px; border:1px solid rgba(11,30,51,.13); border-radius:var(--r-s); transition:transform var(--d-press) var(--ease-out), border-color var(--d-hover) ease, background var(--d-hover) ease;" style-hover="border-color:rgba(11,30,51,.34); background:#fff;">{{ t.hero2.ctaSecondary }}</a>
               </div>
-              <!-- Pfeil als Inline-SVG wie bei jedem anderen Weiterführungs-Link
-                   der Seite. Als Zeichen (U+2192) lag er ausserhalb der
-                   unicode-range aller selbst gehosteten Schnitte und kam aus
-                   einer Systemschrift: andere Strichstärke, andere Höhe. -->
-              <a href="/warteliste" style="display:inline-flex; align-items:center; gap:8px; min-height:44px; margin-top:10px; font-family:var(--f-body); font-size:14px; font-weight:500; color:var(--c-body-soft); text-decoration:none; transition:color .15s ease;" style-hover="color:var(--c-eu-700);">
-                <span>{{ t.hero2.enterprise }}</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              </a>
             </div>
 
-            <div class="euc-fit" data-fit data-fit-w="560" style="flex:1 1 510px; min-width:0;">
-              <div class="euc-fit-in">
-              <div data-reveal data-reveal-delay="120" style="position:relative; border-radius:var(--r-2xl); background:var(--c-surface); box-shadow:var(--sh-4), var(--edge); overflow:hidden;">
-
-                <div style="display:flex; align-items:center; gap:10px; padding:11px 14px; border-bottom:1px solid var(--c-line-soft); background:#FBFCFD;">
-                  <span style="width:9px; height:9px; flex:0 0 auto; border-radius:50%; background:#E0E4E9;"></span>
-                  <span style="width:9px; height:9px; flex:0 0 auto; border-radius:50%; background:#E0E4E9;"></span>
-                  <span style="width:9px; height:9px; flex:0 0 auto; border-radius:50%; background:#E0E4E9;"></span>
-                  <span style="display:inline-flex; align-items:center; gap:6px; margin:0 auto; padding:4px 12px; border:1px solid #E8ECF0; border-radius:99px; background:#fff;">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9AA5B1" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#8A96A2;">{{ t.hero2.mock.url }}</span>
-                  </span>
-                  <span style="width:42px; flex:0 0 auto;"></span>
-                </div>
-    
-                <div class="euc-hero2-body" style="position:relative; display:flex; align-items:stretch; min-height:392px; overflow:hidden;">
-    
-                  <div class="euc-hero2-side" style="width:124px; flex:0 0 auto; border-right:1px solid #EEF1F4; background:#FBFCFD; padding:11px 9px; display:flex; flex-direction:column; gap:3px;">
-                    <div style="display:flex; align-items:center; gap:6px; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; color:#0B1E33; padding:6px 8px; border:1px solid #E2E7EC; border-radius:8px; background:#fff;">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0B1E33" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto;"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                      <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.newChat }}</span>
-                    </div>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.09em; text-transform:uppercase; color:#B3BCC6; margin:12px 0 3px 5px;">{{ t.hero2.mock.today }}</div>
-                    <div style="font-family:'Inter',sans-serif; font-size:10.5px; color:#0B1E33; background:#EAF3F7; border-radius:6px; padding:5px 7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.hist1 }}</div>
-                    <div style="font-family:'Inter',sans-serif; font-size:10.5px; color:#66727F; border-radius:6px; padding:5px 7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.hist2 }}</div>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.09em; text-transform:uppercase; color:#B3BCC6; margin:12px 0 3px 5px;">{{ t.hero2.mock.earlier }}</div>
-                    <div style="font-family:'Inter',sans-serif; font-size:10.5px; color:#66727F; border-radius:6px; padding:5px 7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.hist3 }}</div>
-                    <div style="font-family:'Inter',sans-serif; font-size:10.5px; color:#66727F; border-radius:6px; padding:5px 7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.hist4 }}</div>
-                    <div style="margin-top:auto; display:flex; align-items:center; gap:7px; padding-top:10px; border-top:1px solid var(--c-line-soft);">
-                      <span style="width:20px; height:20px; flex:0 0 auto; border-radius:50%; background:linear-gradient(135deg,#A5D8E6,#0B1E33);"></span>
-                      <span style="font-family:'Inter',sans-serif; font-size:10.5px; color:#5A6472; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.person }}</span>
-                    </div>
-                  </div>
-    
-                  <div class="euc-hero2-chat" style="flex:1 1 auto; min-width:0; display:flex; flex-direction:column; background:#fff; margin-right:{{ hero2ChatMr }}; transition:margin-right .55s cubic-bezier(.32,.72,0,1);">
-                    <div style="display:flex; align-items:center; gap:8px; padding:9px 12px; border-bottom:1px solid var(--c-line-soft); background:#fff;">
-                      <span style="display:inline-flex; align-items:center; gap:7px; padding:4px 9px 4px 8px; border:1px solid #E8ECF0; border-radius:99px; background:#FBFCFD;">
-                        <span style="position:relative; display:inline-flex; width:7px; height:7px; flex:0 0 auto;"><span style="position:absolute; inset:0; border-radius:50%; background:#7DBBA0; opacity:.5; animation:euc-hero2-pulse 2.4s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#3D4855; white-space:nowrap;">{{ t.hero2.mock.model }}</span>
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9AA5B1" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto;"><path d="m6 9 6 6 6-6"></path></svg>
-                      </span>
-                      <span style="margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.09em; text-transform:uppercase; color:#B3BCC6; white-space:nowrap; opacity:{{ hero2BadgeOp }}; transition:opacity .3s ease;">{{ t.hero2.mock.badge }}</span>
-                    </div>
-    
-                    <div style="flex:1 1 auto; min-height:0; overflow:hidden; padding:14px 14px 0;">
-                      <div style="display:flex; justify-content:flex-end; overflow:hidden; max-height:{{ hero2User.maxH }}; opacity:{{ hero2User.op }}; transform:{{ hero2User.tr }}; transition:max-height .5s var(--ease-out), opacity .4s ease, transform .45s cubic-bezier(.32,.72,0,1);">
-                        <span style="max-width:84%; background:#0B1E33; color:#F2F7FA; font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.55; padding:9px 12px; border-radius:12px 12px 3px 12px;">{{ t.hero2.mock.user }}</span>
-                      </div>
-    
-                      <div style="display:flex; align-items:flex-start; gap:9px; overflow:hidden; max-height:{{ hero2Asst.maxH }}; opacity:{{ hero2Asst.op }}; margin-top:{{ hero2Asst.mt }}; transition:max-height .55s var(--ease-out), opacity .4s ease, margin-top .5s ease;">
-                        <span style="width:21px; height:21px; flex:0 0 auto; border-radius:7px; background:#0B1E33; display:inline-flex; align-items:center; justify-content:center; margin-top:1px;">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A5D8E6" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg>
-                        </span>
-                        <div style="flex:1 1 auto; min-width:0;">
-                          <div style="overflow:hidden; max-height:{{ hero2Think.maxH }}; opacity:{{ hero2Think.op }}; transition:max-height .45s var(--ease-out), opacity .3s ease;">
-                            <span class="euc-hero2-shimmer" style="font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.6;">{{ t.hero2.mock.thinking }}</span>
-                          </div>
-    
-                          <div style="overflow:hidden; max-height:{{ hero2Chips.maxH }}; opacity:{{ hero2Chips.op }}; margin-top:{{ hero2Chips.mt }}; transition:max-height .5s var(--ease-out), opacity .35s ease, margin-top .45s ease;">
-                            <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                              <span style="display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#3E6E86; border:1px solid #D6EDF5; background:#F1F9FC; border-radius:6px; padding:3px 8px; white-space:nowrap; opacity:{{ hero2Chip1.op }}; transform:{{ hero2Chip1.tr }}; transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1);">
-                                <span style="width:5px; height:5px; flex:0 0 auto; border-radius:50%; background:{{ hero2Chip1.dot }}; transition:background .4s ease;"></span>{{ t.hero2.mock.tool1 }}
-                              </span>
-                              <span style="display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#3E6E86; border:1px solid #D6EDF5; background:#F1F9FC; border-radius:6px; padding:3px 8px; white-space:nowrap; opacity:{{ hero2Chip2.op }}; transform:{{ hero2Chip2.tr }}; transition:opacity .3s ease, transform .3s cubic-bezier(.32,.72,0,1);">
-                                <span style="width:5px; height:5px; flex:0 0 auto; border-radius:50%; background:{{ hero2Chip2.dot }}; transition:background .4s ease;"></span>{{ t.hero2.mock.tool2 }}
-                              </span>
-                            </div>
-                          </div>
-    
-                          <div style="overflow:hidden; max-height:{{ hero2File.maxH }}; opacity:{{ hero2File.op }}; transform:{{ hero2File.tr }}; margin-top:{{ hero2File.mt }}; transition:max-height .5s var(--ease-out), opacity .35s ease, transform .4s cubic-bezier(.32,.72,0,1), margin-top .45s ease;">
-                            <div style="border:1px solid #E2E7EC; border-radius:9px; background:#fff; padding:8px 10px;">
-                              <div style="display:flex; align-items:center; gap:7px;">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3E6E86" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></svg>
-                                <span style="flex:1 1 auto; min-width:0; font-family:'JetBrains Mono',monospace; font-size:10px; color:#1E2A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.file }}</span>
-                                <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:{{ hero2FileColor }}; white-space:nowrap; transition:color .35s ease;">{{ hero2FileStatus }}</span>
-                              </div>
-                              <div style="margin-top:8px; height:3px; border-radius:99px; background:#EDF1F4; overflow:hidden;">
-                                <div style="height:100%; width:{{ hero2Prog }}; border-radius:99px; background:linear-gradient(90deg,#A5D8E6,#5BA783); transition:width 1s cubic-bezier(.4,0,.2,1);"></div>
-                              </div>
-                            </div>
-                          </div>
-    
-                          <div style="overflow:hidden; max-height:{{ hero2Answer.maxH }}; opacity:{{ hero2Answer.op }}; transform:{{ hero2Answer.tr }}; margin-top:{{ hero2Answer.mt }}; transition:max-height .5s var(--ease-out), opacity .4s ease, transform .45s cubic-bezier(.32,.72,0,1), margin-top .45s ease;">
-                            <div style="font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.6; color:#2C3742;">{{ t.hero2.mock.answer }}</div>
-                          </div>
-    
-                          <div style="overflow:hidden; max-height:{{ hero2Src.maxH }}; opacity:{{ hero2Src.op }}; margin-top:{{ hero2Src.mt }}; transition:max-height .5s var(--ease-out), opacity .4s ease, margin-top .45s ease;">
-                            <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#3E6E86; border:1px solid #D6EDF5; background:#F1F9FC; border-radius:6px; padding:3px 8px; white-space:nowrap;">{{ t.hero2.mock.src1 }}</span>
-                              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#66727F; border:1px solid #E7ECF0; background:#FBFCFD; border-radius:6px; padding:3px 8px; white-space:nowrap;">{{ t.hero2.mock.src2 }}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-    
-                    <div style="padding:10px 12px 12px;">
-                      <div style="display:flex; align-items:center; gap:6px; border:1px solid #E5E9ED; border-radius:11px; padding:7px 6px 7px 9px; background:#fff; box-shadow:var(--sh-1);">
-                        <span style="flex:1 1 auto; min-width:0; font-family:var(--f-body); font-size:11.5px; color:#A8B2BC; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.input }}</span>
-                        <span style="width:25px; height:25px; flex:0 0 auto; border-radius:7px; background:#0B1E33; display:inline-flex; align-items:center; justify-content:center;">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F7FAFC" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-    
-                  <div class="euc-hero2-panel" style="position:absolute; z-index:2; top:0; right:0; bottom:0; width:clamp(186px,35%,232px); display:flex; flex-direction:column; background:#FBFCFD; border-left:1px solid #E7ECF0; box-shadow:-18px 0 36px -24px rgba(11,30,51,.40); transform:{{ hero2PanelTr }}; opacity:{{ hero2PanelOp }}; transition:transform .55s cubic-bezier(.32,.72,0,1), opacity .4s ease;">
-                    <div style="display:flex; align-items:center; gap:8px; padding:10px 11px; border-bottom:1px solid var(--c-line-soft); background:#fff;">
-                      <span style="width:26px; height:26px; flex:0 0 auto; border-radius:7px; background:#0B1E33; display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:9px; color:#A5D8E6;">XLS</span>
-                      <span style="flex:1 1 auto; min-width:0;">
-                        <span style="display:block; font-family:'Inter',sans-serif; font-size:10.5px; font-weight:600; color:#0B1E33; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.file }}</span>
-                        <span style="display:block; font-family:'JetBrains Mono',monospace; font-size:9px; color:#9AA5B1; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.src2 }}</span>
-                      </span>
-                      <span title="{{ t.hero2.mock.download }}" style="width:24px; height:24px; flex:0 0 auto; border:1px solid #E2E7EC; border-radius:7px; background:#fff; display:inline-flex; align-items:center; justify-content:center; transition:background .18s ease, border-color .18s ease;" style-hover="background:#F1F9FC; border-color:#B9DEEB;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3E6E86" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                      </span>
-                    </div>
-    
-                    <div style="margin:11px 11px 0; border:1px solid #E7ECF0; border-radius:8px; overflow:hidden; background:#fff;">
-                      <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr .8fr; background:#0B1E33;">
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:#8AA0B6; padding:6px 6px; white-space:nowrap; overflow:hidden;">{{ t.hero2.mock.th1 }}</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:#8AA0B6; padding:6px 6px; text-align:right; white-space:nowrap; overflow:hidden;">{{ t.hero2.mock.th2 }}</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:#8AA0B6; padding:6px 6px; text-align:right; white-space:nowrap; overflow:hidden;">{{ t.hero2.mock.th3 }}</span>
-                        <span style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:#8AA0B6; padding:6px 6px; text-align:right; white-space:nowrap; overflow:hidden;">{{ t.hero2.mock.th4 }}</span>
-                      </div>
-                      <sc-for list="{{ hero2Rows }}" as="r" hint-placeholder-count="4">
-                        <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr .8fr; background:{{ r.bg }}; border-top:1px solid var(--c-line-soft);">
-                          <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:{{ r.fc }}; font-weight:{{ r.fw }}; padding:7px 6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.c }}</span>
-                          <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:{{ r.fc }}; font-weight:{{ r.fw }}; padding:7px 6px; text-align:right; white-space:nowrap; overflow:hidden;">{{ r.a }}</span>
-                          <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:{{ r.fc }}; font-weight:{{ r.fw }}; padding:7px 6px; text-align:right; white-space:nowrap; overflow:hidden;">{{ r.b }}</span>
-                          <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:{{ r.fc }}; font-weight:{{ r.fw }}; padding:7px 6px; text-align:right; white-space:nowrap; overflow:hidden;">{{ r.m }}</span>
-                        </div>
-                      </sc-for>
-                    </div>
-    
-                    <div style="margin:14px 11px 0;">
-                      <div style="font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.08em; text-transform:uppercase; color:#B3BCC6;">{{ t.hero2.mock.chart }}</div>
-                      <div style="margin-top:9px; display:flex; align-items:flex-end; gap:5px; height:58px;">
-                        <sc-for list="{{ hero2Bars }}" as="b" hint-placeholder-count="3">
-                          <div style="flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:stretch; justify-content:flex-end; height:100%;">
-                            <span style="display:block; width:100%; height:{{ b.h }}; background:{{ b.bg }}; border-radius:4px 4px 0 0; transition:height .65s cubic-bezier(.32,.72,0,1); transition-delay:{{ b.d }};"></span>
-                          </div>
-                        </sc-for>
-                      </div>
-                      <div style="margin-top:6px; display:flex; gap:5px;">
-                        <sc-for list="{{ hero2Bars }}" as="b" hint-placeholder-count="3">
-                          <span style="flex:1 1 0; min-width:0; font-family:'JetBrains Mono',monospace; font-size:8px; color:#9AA5B1; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ b.l }}</span>
-                        </sc-for>
-                      </div>
-                    </div>
-    
-                    <div style="margin-top:auto; padding:9px 11px; border-top:1px solid var(--c-line-soft); font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:.05em; color:#B3BCC6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.hero2.mock.sheet }}</div>
-                  </div>
-    
-                </div>
-              </div>
-              </div>
-            </div>
+            <!-- Der Partikel-Globus. Der Canvas wird in _pgInit erzeugt und
+                 nicht hier gesetzt: die Laufzeit haengt ihn ohnehin nur an,
+                 und so liegt die gesamte Zeichenlogik an einer Stelle.
+                 aria-hidden, weil das Bild nichts sagt, was der Text nicht
+                 schon sagt; ein zweites „Europa" fuer den Vorleser waere
+                 Laerm, kein Gewinn. -->
+            <div class="euc-pg" data-reveal data-reveal-delay="120" style="flex:1 1 460px; min-width:0;" aria-hidden="true"></div>
           </div>
         </section>
 
@@ -3311,7 +3168,7 @@ this.capAccRef = React.createRef();
     this._capT = 0;           /* Absichtsfrist beim Überfahren */
     this._capTimer = 0;
     this._capAcc = null;
-this.hero2Ref = React.createRef();
+this.pgRef = React.createRef();
     this.globeRef = React.createRef();
     /* Kamera. An der Bibliothek kalibriert, nicht aus der Matrix geraten:
        die mittlere Länge L steht bei phi = 270 Grad minus L, die mittlere
@@ -3369,7 +3226,7 @@ this.mobRef = React.createRef();
     this._termShow = 'git clone https://github.com/herr-informatik/eu-cowork.git \\\n  && cd eu-cowork/distribution && ./install.sh';
     this._termOut = ['✓ Docker Engine + Compose v2 geprüft','✓ Secrets erzeugt · .env geschrieben','✓ Images geladen · Stack gestartet','✓ Auto-TLS aktiv · Telemetrie aus','→ https://chat.ihre-firma.ch · ~60 s'];
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
-    this.state = { lang: initLang, hero2Phase: 0, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
+    this.state = { lang: initLang, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
     /* `lang` am <html> mitziehen. Ohne das steht auf der englischen Fassung
        weiterhin lang="de": Screenreader sprechen englischen Text mit deutscher
        Aussprache, Browser bieten eine Übersetzung an, die niemand braucht, und
@@ -3544,72 +3401,19 @@ this.mobRef = React.createRef();
 ,
 hero2: {
         de: {
-          /* Vier Teile statt einem Satz: nur so lässt sich „Europa" auszeichnen,
-             ohne HTML durch die Übersetzung zu schleusen. */
-          h1a: 'Ihr KI-Kollege.', h1b: 'Bleibt in', h1mark: 'Europa', h1end: '.',
-          tags: ['100 % europäisch', 'Open Source', 'MIT-Lizenz'],
+          /* Drei Teile statt einem Satz, damit die Umbrueche im Markup stehen
+             und nicht in der Spaltenbreite: jede Sprache bestimmt selbst, wo
+             ihr Satz bricht, ohne HTML durch die Uebersetzung zu schleusen. */
+          h1a: 'Die KI-Plattform', h1b: 'für Ihr Unternehmen.', h1c: 'Bleibt in Europa.',
           sub: 'Open Source, 100 % europäisch betrieben: auf Ihrer oder unserer Schweizer Infrastruktur. Alle Top-Modelle, EU-verarbeitet.',
           ctaPrimary: 'Auf die Warteliste',
           ctaSecondary: 'Self-host for free',
-          enterprise: 'Enterprise? Sprechen Sie mit uns',
-          mock: {
-            url:'chat.eu-cowork.ch', badge:'EU-verarbeitet', model:'EU Cowork AI Auto', newChat:'Neuer Chat',
-            today:'Heute', earlier:'Letzte Woche',
-            hist1:'Monatsauswertung Juli', hist2:'Angebot Meier AG', hist3:'Protokoll Teamsitzung', hist4:'Vertragsordner SharePoint',
-            person:'Anna Keller',
-            user:'Erstelle die Monatsauswertung Juli als Excel aus dem ERP.',
-            thinking:'Liest ERP-Daten …', tool1:'erp', tool2:'berechnet Kennzahlen',
-            file:'Monatsauswertung_Juli.xlsx', fileCreating:'wird erstellt …', fileReady:'bereit',
-            answer:'Fertig. Umsatz, Kosten und Marge je Bereich.',
-            src1:'quelle: erp/monatsdaten', src2:'24 KB · Excel',
-            input:'Nachricht an EU Cowork AI …', download:'Download',
-            th1:'Bereich', th2:'Umsatz', th3:'Kosten', th4:'Marge',
-            chart:'Umsatz je Bereich', sheet:'Vorschau · Blatt 1 von 3',
-            rows:[
-              { c:'Vertrieb', a:'84 200', b:'61 400', m:'27%' },
-              { c:'Technik', a:'52 900', b:'38 100', m:'28%' },
-              { c:'Support', a:'31 450', b:'24 800', m:'21%' },
-              { c:'Total', a:'168 550', b:'124 300', m:'26%' }
-            ],
-            bars:[
-              { l:'Vertrieb', h:'56px', bg:'#A5D8E6', d:'0ms' },
-              { l:'Technik', h:'35px', bg:'#BFE3EE', d:'90ms' },
-              { l:'Support', h:'21px', bg:'#D6EDF5', d:'180ms' }
-            ]
-          }
         },
         en: {
-          h1a: 'Your AI coworker.', h1b: 'Stays in', h1mark: 'Europe', h1end: '.',
-          tags: ['100 % European', 'Open Source', 'MIT licence'],
+          h1a: 'The AI platform', h1b: 'for your company.', h1c: 'Stays in Europe.',
           sub: 'Open source, operated 100 % in Europe: on your infrastructure or ours in Switzerland. All top models, EU-processed.',
           ctaPrimary: 'Join the waitlist',
           ctaSecondary: 'Self-host for free',
-          enterprise: 'Enterprise? Talk to us',
-          mock: {
-            url:'chat.eu-cowork.ch', badge:'EU-verarbeitet', model:'EU Cowork AI Auto', newChat:'Neuer Chat',
-            today:'Heute', earlier:'Letzte Woche',
-            hist1:'Monatsauswertung Juli', hist2:'Angebot Meier AG', hist3:'Protokoll Teamsitzung', hist4:'Vertragsordner SharePoint',
-            person:'Anna Keller',
-            user:'Erstelle die Monatsauswertung Juli als Excel aus dem ERP.',
-            thinking:'Liest ERP-Daten …', tool1:'erp', tool2:'berechnet Kennzahlen',
-            file:'Monatsauswertung_Juli.xlsx', fileCreating:'wird erstellt …', fileReady:'bereit',
-            answer:'Fertig. Umsatz, Kosten und Marge je Bereich.',
-            src1:'quelle: erp/monatsdaten', src2:'24 KB · Excel',
-            input:'Nachricht an EU Cowork AI …', download:'Download',
-            th1:'Bereich', th2:'Umsatz', th3:'Kosten', th4:'Marge',
-            chart:'Umsatz je Bereich', sheet:'Vorschau · Blatt 1 von 3',
-            rows:[
-              { c:'Vertrieb', a:'84 200', b:'61 400', m:'27%' },
-              { c:'Technik', a:'52 900', b:'38 100', m:'28%' },
-              { c:'Support', a:'31 450', b:'24 800', m:'21%' },
-              { c:'Total', a:'168 550', b:'124 300', m:'26%' }
-            ],
-            bars:[
-              { l:'Vertrieb', h:'56px', bg:'#A5D8E6', d:'0ms' },
-              { l:'Technik', h:'35px', bg:'#BFE3EE', d:'90ms' },
-              { l:'Support', h:'21px', bg:'#D6EDF5', d:'180ms' }
-            ]
-          }
         }
       },
 mob: {
@@ -3938,7 +3742,7 @@ sov: {
     this._initReveal();
     this._startTerminal();
 this._capInit();
-this._hero2Init();
+this._pgInit();
 this._mobInit();
     this._olkInit();
     this._wsInit();
@@ -4330,8 +4134,7 @@ this._mobInit();
     if (this._railClick) this._deepQ('[data-rail-dir]').forEach(b=>b.removeEventListener('click', this._railClick));
     (this._revealTidy||[]).forEach(f=>{ try{ f(); }catch(e){} });
 this._capDestroy();
-clearTimeout(this._hero2Timer);
-    if (this._hero2Io) this._hero2Io.disconnect();
+this._pgDestroy();
 clearTimeout(this._mobTimer);
     if (this._mobIo) this._mobIo.disconnect();
     this._olkStop();
@@ -4411,29 +4214,273 @@ clearTimeout(this._mobTimer);
     } else { els.forEach(reveal); }
     this._revealSafety = setTimeout(()=>els.forEach(reveal), 2400);
   }
-_hero2Init(){
-    if (this._reduced()){ this.setState({ hero2Phase: 7 }); return; }
-    const delays = [780, 900, 820, 700, 900, 1250, 900, 4500];
-    const start = () => {
-      if (this._hero2On) return;
-      this._hero2On = true;
-      const tick = () => {
-        const p = this.state.hero2Phase || 0;
-        if (p >= 7) return;                    /* Endzustand ist die Aussage: kein Rücksprung */
-        const n = p + 1;
-        this.setState({ hero2Phase: n });
-        if (n >= 7) return;
-        this._hero2Timer = setTimeout(tick, delays[n] || 900);
-      };
-      this._hero2Timer = setTimeout(tick, 620);
+  /* ---------------------------------------------------------------------
+     Partikel-Globus. Ein Bild wird abgetastet, jeder abgetastete Bildpunkt
+     wird ein Partikel mit eigener Ruhelage und eigener Farbe, und der Zeiger
+     stoert sie aus dieser Lage. Eine Feder zieht sie zurueck. Das Bild bleibt
+     also immer dasselbe, es zerfaellt nur dort, wo jemand hinfaehrt.
+
+     Warum ein Bild und keine berechnete Geometrie: die Kugel traegt Licht,
+     Schattenwurf und eine erkennbare Kueste. Beides in Code nachzubauen waere
+     viel Arbeit fuer ein schlechteres Ergebnis, und die Partikel brauchen vom
+     Bild ohnehin nur die Farbe je Punkt.
+
+     Drei Dinge kommen gegenueber der Vorlage hinzu, alle aus demselben Grund:
+     eine Schleife, die 60-mal je Sekunde Zehntausende Rechtecke zeichnet, darf
+     nur laufen, wenn sie jemand sieht. Sie haelt an, sobald die Hero aus dem
+     Bild scrollt, sie haelt an, wenn der Tab in den Hintergrund geht, und bei
+     reduzierter Bewegung zeichnet sie ein einziges Mal und hoert auf. Ohne das
+     laeuft auf einem Notebook der Luefter, waehrend der Besucher zehn
+     Bildschirme weiter unten die Preise liest.
+     --------------------------------------------------------------------- */
+  _pgInit(){
+    const host = this.pgRef.current;
+    if (!host) return;
+    const box = host.querySelector('.euc-pg');
+    if (!box) return;
+
+    const cv = document.createElement('canvas');
+    cv.setAttribute('aria-hidden', 'true');
+    box.appendChild(cv);
+    const ctx = cv.getContext('2d', { alpha: true });
+    if (!ctx){ box.removeChild(cv); return; }
+
+    this._pgBox = box; this._pgCv = cv; this._pgCtx = ctx;
+    this._pgW = 0; this._pgH = 0;
+    this._pgParticles = [];
+    this._pgPointer = { x:-1000, y:-1000, s:0 };
+    this._pgTarget  = { x:-1000, y:-1000, s:0 };
+
+    const img = new Image();
+    this._pgImg = img;
+
+    /* Die Abtastung ist der teuerste Schritt und passiert nur bei Groessen-
+       aenderung. Der Schritt waechst mit der Flaeche: auf einer schmalen
+       Spalte reichen weniger Partikel, und auf dem Telefon ist jeder
+       gesparte Punkt spuerbar. */
+    const sample = () => {
+      if (!img.complete || !img.naturalWidth || this._pgW === 0) return;
+      const w = this._pgW, h = this._pgH;
+
+      const sc = document.createElement('canvas');
+      const sw = Math.min(720, Math.max(420, Math.round(w * 1.12)));
+      const sh = Math.round(sw * (img.naturalHeight / img.naturalWidth));
+      sc.width = sw; sc.height = sh;
+      const sctx = sc.getContext('2d', { willReadFrequently: true });
+      if (!sctx) return;
+      sctx.drawImage(img, 0, 0, sw, sh);
+      const data = sctx.getImageData(0, 0, sw, sh).data;
+
+      const next = [];
+      /* Der Abstand folgt der Zielzahl, nicht der Fensterbreite. Jeder Punkt
+         ist ein Rechteck je Bild, und 60 Bilder je Sekunde verzeihen keine
+         beliebige Menge: bei fester Schrittweite standen auf einem breiten
+         Bildschirm ueber 30'000 Punkte, allein 10 ms Zeichnen je Bild. Rund
+         20'000 sind der Punkt, an dem die Wolke dicht wirkt und ein
+         Mittelklasse-Notebook noch Luft hat. Der Faktor 0.8 ist der Anteil der
+         Abtastflaeche, der innerhalb der Kugel liegt. */
+      const step = Math.max(3, Math.round(Math.sqrt(sw * sh * 0.8 / 20000)));
+      /* Einpassen, nicht fuellen. Die Vorlage hat gefuellt, weil ihre Flaeche
+         die ganze Seitenbreite hatte; in einer halben Spalte schneidet Fuellen
+         den sichtbaren Kugelrand oben links weg, und uebrig bleibt ein
+         Rechteck aus Punkten. */
+      const scale = Math.min(w / sw, h / sh);
+      const spacing = step * scale;
+      const offX = (w - sw * scale) / 2;
+      const offY = (h - sh * scale) / 2;
+      /* Mitte und Radius der Kugel IM BILD, gemessen und nicht geschaetzt:
+         Kreisausgleich ueber 124 Randpunkte der Vorlage ergibt 0.573/0.806 der
+         Bildmasse und 0.563 der Bildbreite. Der Kreis reicht damit ueber den
+         unteren und rechten Bildrand hinaus, die Kugel ist im Bild also schon
+         angeschnitten. Alles ausserhalb faellt weg, sonst zeichnet der helle
+         Bildhintergrund die Ecke oben links als Wolke mit. Wer das Bild
+         austauscht, muss diese drei Zahlen neu messen. */
+      const gx = sw * 0.5733, gy = sh * 0.8058, gr = sw * 0.5627;
+
+      for (let sy = 0; sy < sh; sy += step){
+        for (let sx = 0; sx < sw; sx += step){
+          const dx = sx - gx, dy = sy - gy;
+          const dist = Math.hypot(dx, dy);
+          if (dist > gr) continue;
+
+          const i = (sy * sw + sx) * 4;
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+
+          /* Zwei Blenden, nicht eine. Die erste weicht den Kugelrand auf, die
+             zweite den unteren Bildrand: dort schneidet das Bild die Kugel
+             gerade ab, und ohne Blende endet die Punktwolke mit einer Linie,
+             die es in der Natur nicht gibt. Der rechte Schnitt braucht keine
+             Blende, er liegt ausserhalb des Fensters. */
+          const fade = Math.min(1, (gr - dist) / 34, (sh - sy) / (sh * 0.22));
+          const x = offX + sx * scale, y = offY + sy * scale;
+          next.push({
+            x, y, ox:x, oy:y, vx:0, vy:0,
+            /* Die Punktgroesse haengt am ABSTAND der Punkte, nicht an der
+               Skalierung des Bildes. Bei der Vorlage war das dasselbe, weil
+               sie fuellte; beim Einpassen wird die Skalierung kleiner, und
+               mit ihr waeren die Punkte auf ein Drittel ihres Abstands
+               geschrumpft. Uebrig blieb ein blasser Schleier statt einer
+               Kugel. Rund zwei Drittel des Abstands deckt die Flaeche, ohne
+               dass die Punkte zu einem geschlossenen Bild zusammenlaufen. */
+            size: Math.max(1, spacing * (0.58 + Math.random() * 0.24)),
+            alpha: fade * (0.82 + Math.random() * 0.18),
+            color: 'rgb(' + r + ',' + g + ',' + b + ')',
+            phase: Math.random() * Math.PI * 2,
+            scatter: 0.68 + Math.random() * 0.72
+          });
+        }
+      }
+      this._pgParticles = next;
+      /* Zum Nachsehen in den Entwicklerwerkzeugen: wer die Zielzahl oben
+         aendert, sieht hier sofort, was dabei herauskommt. */
+      cv.dataset.punkte = String(next.length);
+      /* Immer einmal zeichnen, nicht nur wenn eine Schleife laeuft. Die
+         Schleife haengt an Sichtbarkeit, Bewegungseinstellung und Blickfeld;
+         das Bild haengt an keiner dieser Bedingungen. Wer die Seite in einem
+         Hintergrundtab oeffnet oder Bewegung reduziert hat, soll die Kugel
+         trotzdem sehen, sobald sie berechnet ist. */
+      this._pgDraw(0);
     };
-    const el = this.hero2Ref.current;
-    if (el && 'IntersectionObserver' in window){
-      this._hero2Io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if (e.isIntersecting){ start(); if (this._hero2Io) this._hero2Io.disconnect(); } });
-      }, { threshold:0.15 });
-      this._hero2Io.observe(el);
-    } else { start(); }
+    this._pgSample = sample;
+
+    const resize = () => {
+      const rect = box.getBoundingClientRect();
+      this._pgW = Math.max(1, rect.width);
+      this._pgH = Math.max(1, rect.height);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+      cv.width  = Math.round(this._pgW * dpr);
+      cv.height = Math.round(this._pgH * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      sample();
+    };
+    this._pgResize = resize;
+
+    /* Zeiger nur dort, wo es einen gibt. Auf dem Telefon liefert eine
+       Beruehrung ein pointermove ohne pointerleave, und die Wolke bliebe
+       nach dem ersten Tippen fuer immer aufgerissen. */
+    if (window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+      this._pgMove = (e) => {
+        const r = cv.getBoundingClientRect();
+        this._pgTarget = { x: e.clientX - r.left, y: e.clientY - r.top, s: 1 };
+      };
+      this._pgLeave = () => { this._pgTarget.s = 0; };
+      cv.addEventListener('pointermove', this._pgMove);
+      cv.addEventListener('pointerleave', this._pgLeave);
+      cv.addEventListener('pointercancel', this._pgLeave);
+    }
+
+    this._pgLoad = () => { sample(); };
+    img.addEventListener('load', this._pgLoad);
+    img.src = '/globe-europe.jpg';
+
+    if ('ResizeObserver' in window){
+      this._pgRo = new ResizeObserver(() => resize());
+      this._pgRo.observe(box);
+    } else {
+      this._pgWinResize = () => resize();
+      window.addEventListener('resize', this._pgWinResize);
+    }
+    resize();
+
+    /* Sichtbarkeit entscheidet ueber die Schleife, nicht ueber das Bild:
+       ausserhalb des Blickfelds steht die letzte Zeichnung weiter da, es
+       rechnet nur niemand mehr daran. */
+    this._pgVis = () => this._pgSync();
+    document.addEventListener('visibilitychange', this._pgVis);
+    if ('IntersectionObserver' in window){
+      this._pgIo = new IntersectionObserver((es) => {
+        es.forEach(e => { this._pgSeen = e.isIntersecting; });
+        this._pgSync();
+      }, { threshold: 0 });
+      this._pgIo.observe(box);
+    } else { this._pgSeen = true; this._pgSync(); }
+  }
+
+  _pgSync(){
+    if (this._reduced()){ this._pgStop(); return; }
+    if (this._pgSeen && !document.hidden) this._pgStart();
+    else this._pgStop();
+  }
+
+  _pgStart(){
+    if (this._pgRaf || !this._pgCtx) return;
+    const loop = (ts) => { this._pgRaf = requestAnimationFrame(loop); this._pgDraw(ts); };
+    this._pgRaf = requestAnimationFrame(loop);
+  }
+
+  _pgStop(){
+    if (!this._pgRaf) return;
+    cancelAnimationFrame(this._pgRaf);
+    this._pgRaf = 0;
+  }
+
+  _pgDraw(ts){
+    const ctx = this._pgCtx;
+    if (!ctx) return;
+    const w = this._pgW, h = this._pgH;
+    ctx.clearRect(0, 0, w, h);
+
+    const t = ts * 0.001;
+    const p = this._pgPointer, tgt = this._pgTarget;
+    p.x += (tgt.x - p.x) * 0.24;
+    p.y += (tgt.y - p.y) * 0.24;
+    p.s += (tgt.s - p.s) * 0.2;
+
+    const radius = Math.min(w, h) * 0.16;
+    const motion = this._reduced() ? 0 : 1;
+
+    const list = this._pgParticles;
+    for (let i = 0; i < list.length; i++){
+      const q = list[i];
+      let fx = 0, fy = 0;
+      const cdx = q.x - p.x, cdy = q.y - p.y;
+      const cd = Math.hypot(cdx, cdy);
+
+      if (cd < radius && p.s > 0.001 && motion){
+        const f = Math.pow(1 - cd / radius, 1.65) * p.s;
+        const ang = Math.atan2(cdy, cdx);
+        /* Der radiale Anteil allein risse ein sauberes rundes Loch. Die
+           Turbulenz gibt jedem Punkt eine eigene Richtung, dadurch mischen
+           sich die Partikel, statt eine Blase zu bilden. */
+        const turb = q.phase * 2.73 + Math.sin(t * 3.4 + q.phase * 1.81) * 1.9 + ang * 0.22;
+        fx += Math.cos(ang) * f * 2.1 + Math.cos(turb) * f * 7.6 * q.scatter + Math.sin(t * 7.1 + q.phase * 4.7) * f * 1.25;
+        fy += Math.sin(ang) * f * 2.1 + Math.sin(turb) * f * 7.6 * q.scatter + Math.cos(t * 6.3 + q.phase * 3.9) * f * 1.25;
+      }
+
+      const ix = Math.sin(t * 0.62 + q.phase) * 0.018 * motion;
+      const iy = Math.cos(t * 0.57 + q.phase) * 0.014 * motion;
+      q.vx = (q.vx + (q.ox + ix - q.x) * 0.14 + fx) * 0.66;
+      q.vy = (q.vy + (q.oy + iy - q.y) * 0.14 + fy) * 0.66;
+      q.x += q.vx; q.y += q.vy;
+
+      const sp = Math.min(1, Math.hypot(q.vx, q.vy) / 5);
+      ctx.globalAlpha = Math.min(1, q.alpha + sp * 0.22);
+      ctx.fillStyle = q.color;
+      const s = q.size * (1 + sp * 0.12);
+      ctx.fillRect(q.x, q.y, s, s);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  _pgDestroy(){
+    this._pgStop();
+    if (this._pgIo){ this._pgIo.disconnect(); this._pgIo = null; }
+    if (this._pgRo){ this._pgRo.disconnect(); this._pgRo = null; }
+    if (this._pgWinResize){ window.removeEventListener('resize', this._pgWinResize); this._pgWinResize = null; }
+    if (this._pgVis){ document.removeEventListener('visibilitychange', this._pgVis); this._pgVis = null; }
+    if (this._pgImg && this._pgLoad){ this._pgImg.removeEventListener('load', this._pgLoad); this._pgLoad = null; }
+    const cv = this._pgCv;
+    if (cv){
+      if (this._pgMove){
+        cv.removeEventListener('pointermove', this._pgMove);
+        cv.removeEventListener('pointerleave', this._pgLeave);
+        cv.removeEventListener('pointercancel', this._pgLeave);
+        this._pgMove = this._pgLeave = null;
+      }
+      if (cv.parentNode) cv.parentNode.removeChild(cv);
+    }
+    this._pgCv = this._pgCtx = this._pgBox = this._pgImg = null;
+    this._pgParticles = [];
   }
 _mobInit(){
     const el = this.mobRef.current;
@@ -4745,31 +4792,8 @@ _mobInit(){
     vm.storeNoteCls = this.state.storeNote ? ' is-on' : '';
     if (t.selfhost) vm.copyBtnLabel = this.state.copied ? t.selfhost.copied : t.selfhost.copyLabel;
     if (t.faq){ const open = this.state.faqOpen; vm.faqItems = t.faq.items.map((it,i)=>({ q:it.q, a:it.a, open:i===open, sign:i===open?'\u2212':'+', maxH:i===open?'260px':'0px', op:i===open?'1':'0', pad:i===open?'2px 0 20px':'0 0 0', toggle:()=>this.setState({ faqOpen: this.state.faqOpen===i?-1:i }) })); }
-vm.hero2Ref = this.hero2Ref;
+    vm.pgRef = this.pgRef;
     vm.globeRef = this.globeRef;
-    {
-      const hp = this.state.hero2Phase || 0;
-      const hm = (t.hero2 && t.hero2.mock) || {};
-      const hv = (on, mh, mt) => ({ maxH: on ? mh : '0px', op: on ? '1' : '0', tr: on ? 'none' : 'translateY(8px)', mt: on ? (mt || '0px') : '0px' });
-      vm.hero2User = hv(hp >= 1, '160px');
-      vm.hero2Asst = hv(hp >= 2, '340px', '11px');
-      vm.hero2Think = hv(hp >= 2 && hp < 7, '30px');
-      vm.hero2Chips = hv(hp >= 3 && hp < 7, '70px', '9px');
-      vm.hero2Chip1 = { op: hp >= 3 ? '1' : '0', tr: hp >= 3 ? 'none' : 'scale(.92)', dot: hp >= 4 ? '#5BA783' : '#A5D8E6' };
-      vm.hero2Chip2 = { op: hp >= 4 ? '1' : '0', tr: hp >= 4 ? 'none' : 'scale(.92)', dot: hp >= 5 ? '#5BA783' : '#A5D8E6' };
-      vm.hero2File = hv(hp >= 5, '80px', '10px');
-      vm.hero2Prog = hp >= 6 ? '100%' : (hp >= 5 ? '46%' : '5%');
-      vm.hero2FileStatus = hp >= 6 ? (hm.fileReady || '') : (hm.fileCreating || '');
-      vm.hero2FileColor = hp >= 6 ? '#2E7D5B' : '#8A96A2';
-      vm.hero2Answer = hv(hp >= 7, '90px', '10px');
-      vm.hero2Src = hv(hp >= 7, '64px', '8px');
-      vm.hero2PanelTr = hp >= 6 ? 'translateX(0)' : 'translateX(103%)';
-      vm.hero2PanelOp = hp >= 6 ? '1' : '0';
-      vm.hero2ChatMr = hp >= 6 ? 'clamp(186px,35%,232px)' : '0px';
-      vm.hero2BadgeOp = hp >= 6 ? '0' : '1';
-      vm.hero2Rows = (hm.rows || []).map((r, i) => ({ c:r.c, a:r.a, b:r.b, m:r.m, bg: i === 3 ? '#F1F9FC' : '#FFFFFF', fw: i === 3 ? '600' : '400', fc: i === 3 ? '#0B1E33' : '#47535F' }));
-      vm.hero2Bars = (hm.bars || []).map(b => ({ l:b.l, bg:b.bg, d:b.d, h: hp >= 6 ? b.h : '0px' }));
-    }
 const mobP = this.state.mobPhase || 0;
     vm.mobRef = this.mobRef;
     vm.mobShowUser = mobP >= 1;
