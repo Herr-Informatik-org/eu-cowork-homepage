@@ -85,7 +85,8 @@ sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 !
 ```
 
 The interim interpreter (port 8000) does not need this: its `setup.sh` binds it to `127.0.0.1`
-and verifies the binding after startup.
+and verifies the binding after startup. On an instance set up before that change this only holds
+once `setup.sh` has run again; until then the rule for port 8000 is still needed.
 </Aside>
 
 ## The Docker networks

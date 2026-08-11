@@ -165,11 +165,21 @@ For the **quick variant this is already handled**: `setup.sh` binds the runner t
 That is necessary because the upstream stack publishes it as `${PORT:-8000}:8000`, meaning on
 all interfaces; the script patches the cloned compose file after checkout and, once the stack is
 up, checks the actual bindings of the running containers again. If it finds anything outside
-`127.0.0.1`, it stops the stack. You no longer need a firewall rule for port 8000. You can check
-for yourself:
+`127.0.0.1`, it stops the stack. On an instance set up this way you no longer need a firewall
+rule for port 8000.
+
+**An instance set up before this change keeps the old binding** until `setup.sh` runs once more —
+there the rule is still needed. You can check for yourself:
 
 ```bash title="On the server"
 docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'
+```
+
+If that shows `0.0.0.0`, the runner is reachable from outside without authentication. Either run
+`setup.sh` again or set the rule for port 8000:
+
+```bash title="On the server"
+sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
 ```
 
 The **hardened variant still publishes its debug ports on all interfaces**, even though

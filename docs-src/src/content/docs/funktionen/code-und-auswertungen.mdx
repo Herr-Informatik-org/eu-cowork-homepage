@@ -166,11 +166,21 @@ Bei der **schnellen Variante ist das erledigt**: `setup.sh` bindet den Runner an
 Nötig ist das, weil der Upstream-Stack ihn als `${PORT:-8000}:8000` veröffentlicht, also auf
 allen Schnittstellen; das Skript patcht den geklonten Compose-Stand nach dem Auschecken und
 prüft nach dem Start noch einmal die tatsächliche Bindung der laufenden Container. Findet es
-etwas ausserhalb `127.0.0.1`, stoppt es den Stack. Eine Firewall-Regel für Port 8000 brauchen
-Sie nicht mehr. Nachsehen können Sie selbst:
+etwas ausserhalb `127.0.0.1`, stoppt es den Stack. Bei einer so eingerichteten Instanz brauchen
+Sie für Port 8000 keine Firewall-Regel mehr.
+
+**Eine Instanz, die vor dieser Änderung aufgesetzt wurde, behält die alte Bindung**, bis
+`setup.sh` einmal neu läuft — dort ist die Regel weiter nötig. Nachsehen können Sie selbst:
 
 ```bash title="Auf dem Server"
 docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'
+```
+
+Steht dort `0.0.0.0`, ist der Runner ohne Anmeldung von aussen erreichbar. Dann entweder
+`setup.sh` erneut laufen lassen oder die Regel für Port 8000 setzen:
+
+```bash title="Auf dem Server"
+sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
 ```
 
 Die **gehärtete Variante veröffentlicht ihre Debug-Ports weiterhin auf allen Schnittstellen**,
