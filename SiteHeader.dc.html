@@ -22,6 +22,102 @@
      Regel und in jedem inline-style — ein Schriftwechsel war damit eine
      Suchen-und-Ersetzen-Aktion quer durch die Datei. */
   :root{ --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif; }
+
+  /* ======================================================================
+     GEMEINSAME BEDIENELEMENTE (Design-System „European Precision")
+
+     Warum hier und nicht in Landing.dc.html: diese Kopfleiste ist das
+     EINZIGE Bauteil, das jede Laufzeit-Seite importiert. Wer die Knöpfe in
+     Landing definiert, hat sie auf der Warteliste und in den Rechtstexten
+     nicht; wer sie in beide schreibt, pflegt sie zweimal. Die statischen
+     Seiten (faq, vergleich, …) laden diese Datei nicht und bekommen dieselben
+     Regeln aus assets/content.css — die drei Häuser tragen bewusst identische
+     Namen, sonst driften sie wieder auseinander.
+
+     Regeln, die für alle Varianten gelten: 4px Radius, kein Verlauf, kein
+     Schein, kein grosser Schatten, keine Vergrösserung beim Überfahren. Die
+     Tiefe kommt aus der Kante. Beschriftungen in normaler Schreibweise;
+     Versalien in Monospace bleiben technischen Etiketten vorbehalten.
+     ====================================================================== */
+  :root{
+    --r-control:4px; --r-icon:6px; --r-frame:8px; --r-card:12px; --r-status:999px;
+    --c-hairline:#DDE4EA; --c-hairline-strong:#C6D0DA;
+    --c-deep:#0B1E33; --c-ink:#0B1E33; --c-eu-700:#12326B; --c-body-soft:#5A6472;
+    --ease-out:cubic-bezier(.23,1,.32,1);
+  }
+
+  .euc-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:44px; padding:0 18px; box-sizing:border-box;
+    font-family:var(--f-display); font-size:14.5px; font-weight:500;
+    letter-spacing:-.004em; line-height:1; white-space:nowrap;
+    text-decoration:none; cursor:pointer;
+    border:1px solid transparent; border-radius:var(--r-control); background:none;
+    transition:background 180ms var(--ease-out), border-color 180ms var(--ease-out), color 180ms var(--ease-out);
+  }
+  /* Der globale Fokusring setzt einen eigenen Radius auf das Element. Ohne
+     diese Zeile wechselt ein Knopf beim Tabben von 4px auf 6px. */
+  .euc-btn:focus-visible, .euc-ibtn:focus-visible{ border-radius:var(--r-control); }
+  .euc-ibtn:focus-visible{ border-radius:var(--r-icon); }
+  /* Druck ist ein Versatz, keine Skalierung: ein Knopf, der beim Klicken
+     schrumpft, verschiebt seine Nachbarn optisch mit. */
+  .euc-btn:active, .euc-ibtn:active{ transform:translateY(1px); }
+
+  .euc-btn.is-primary{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); font-weight:600; }
+  .euc-btn.is-secondary{ color:var(--c-ink); background:#FFFFFF; border-color:var(--c-hairline-strong); }
+  .euc-btn.is-ghost{ color:var(--c-ink); background:transparent; border-color:transparent;
+    border-radius:var(--r-icon); min-height:36px; padding:0 12px; font-size:13.5px; }
+
+  /* Höhen nach Ort: Navigation 44, Hero 52, kompakte Aktionen 38. */
+  .euc-btn.is-nav{ min-height:44px; }
+  .euc-btn.is-hero{ min-height:52px; padding:0 22px; font-size:15px; }
+  .euc-btn.is-compact{ min-height:38px; padding:0 14px; font-size:13.5px; }
+
+  @media (hover:hover) and (pointer:fine){
+    .euc-btn.is-primary:hover{ background:#15304C; border-color:#15304C; }
+    .euc-btn.is-secondary:hover{ border-color:#9FB0C0; }
+    .euc-btn.is-ghost:hover{ background:rgba(11,30,51,.05); }
+  }
+
+  /* Quadratischer Symbolschalter, 42px. Für Pfeile und andere Aktionen ohne
+     Beschriftung; er braucht deshalb immer ein aria-label. */
+  .euc-ibtn{
+    width:42px; height:42px; flex:0 0 auto; padding:0; box-sizing:border-box;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    color:var(--c-ink); background:#FFFFFF;
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-icon);
+    transition:background 180ms var(--ease-out), border-color 180ms var(--ease-out), opacity 180ms var(--ease-out);
+  }
+  .euc-ibtn[disabled]{ opacity:.34; cursor:default; pointer-events:none; }
+  @media (hover:hover) and (pointer:fine){ .euc-ibtn:hover{ border-color:#9FB0C0; } }
+
+  /* Textlink mit Pfeil: kein Behälter, keine Fläche. Der Pfeil bewegt sich
+     beim Überfahren um 3px, mehr wäre eine Animation und keine Antwort. */
+  .euc-link{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--f-display); font-size:14.5px; font-weight:500;
+    color:var(--c-eu-700); text-decoration:none; }
+  .euc-link svg{ flex:0 0 auto; transition:transform 180ms var(--ease-out); }
+  @media (hover:hover) and (pointer:fine){
+    .euc-link:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
+    .euc-link:hover svg{ transform:translateX(3px); }
+  }
+
+  /* Statusabzeichen. AUSSCHLIESSLICH für echte Zustände („Bald verfügbar",
+     „Beta", „Aktiv"). Die runde Form ist hier reserviert und darf gerade
+     deshalb an keinem gewöhnlichen Knopf mehr vorkommen. */
+  .euc-status{
+    display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 10px;
+    font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--c-body-soft); background:#FFFFFF;
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-status); }
+
+  @media (prefers-reduced-motion: reduce){
+    .euc-btn, .euc-ibtn, .euc-link svg{ transition-duration:1ms; }
+    .euc-btn:active, .euc-ibtn:active{ transform:none; }
+    .euc-link:hover svg{ transform:none; }
+  }
   /* ---- Design v2, Kopfleiste -------------------------------------------
      Tokens identisch zu assets/content.css. Die Darstellung liegt bewusst
      in Klassen und nicht in inline-styles: nur so greifen :hover, :active
@@ -71,17 +167,14 @@
   .euc-hd.is-on-dark .euc-hd-nav a{ color:#F7FAFC; }
   .euc-hd.is-on-dark .euc-hd-nav a.is-active{ color:#A5D8E6; font-weight:600; }
   /* Der Primärknopf ist auf hellem Grund Navy; auf Navy wäre er unsichtbar.
-     Er tauscht mit dem Sekundären die Rolle: hell auf dunkel. */
-  .euc-hd.is-on-dark .euc-hd-btn{
-    color:#0B1E33; background:#F7FAFC;
-    box-shadow:0 1px 2px rgba(0,0,0,.18), 0 8px 20px -12px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.6);
-  }
+     Er tauscht mit dem Sekundären die Rolle: hell auf dunkel. Geändert hat
+     sich nur das Mittel — Kante statt Schatten, Radius aus dem Token. */
+  .euc-hd.is-on-dark .euc-btn.is-primary{
+    color:#0B1E33; background:#F7FAFC; border-color:#F7FAFC; }
   /* Deckend statt transluzent: über der bereits transluzenten Leiste darf
      keine zweite Milchglasfläche liegen. */
-  .euc-hd.is-on-dark .euc-hd-btn2{
-    color:#F7FAFC; background:#12326B;
-    box-shadow:0 1px 2px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.10), inset 0 0 0 1px rgba(165,216,230,.22);
-  }
+  .euc-hd.is-on-dark .euc-btn.is-secondary{
+    color:#F7FAFC; background:#12326B; border-color:rgba(165,216,230,.34); }
   .euc-hd.is-on-dark .euc-hd-burger span{ background:#F7FAFC; }
   .euc-hd.is-on-dark .euc-hd-burger:active{ background-color:rgba(255,255,255,.10); }
   .euc-hd.is-on-dark :focus-visible{ outline-color:#A5D8E6; }
@@ -153,29 +246,14 @@
     .euc-hd-cta .euc-hd-btn2{ display:none; }
   }
 
-  .euc-hd-btn, .euc-hd-btn2{
-    display:inline-flex; align-items:center; justify-content:center;
-    min-height:44px; border-radius:10px; border:0; cursor:pointer;
-    text-decoration:none; white-space:nowrap;
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
-    transition:transform 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
-               background 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
-               color 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1)),
-               box-shadow 200ms var(--hd-ease, cubic-bezier(.23,1,.32,1));
-  }
-  .euc-hd-btn{
-    font-size:14px; font-weight:600; color:#F7FAFC; background:#0B1E33; padding:11px 18px;
-    box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
-               inset 0 1px 0 rgba(255,255,255,.10);
-  }
-  /* Deckend, nicht transluzent: über der bereits transluzenten Leiste
-     dürfen keine zwei hellen Milchglasflächen stapeln. */
-  .euc-hd-btn2{
-    font-size:14px; font-weight:500; color:#0B1E33; background:#FFFFFF; padding:11px 16px;
-    box-shadow:0 1px 2px rgba(11,30,51,.05),
-               inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
-  }
-  .euc-hd-btn:active, .euc-hd-btn2:active{ transform:scale(.97); }
+  /* Die beiden Schaltflächen der Leiste tragen jetzt die gemeinsame Basis
+     (.euc-btn.is-primary / .is-secondary, Höhe .is-nav). `euc-hd-btn2` bleibt
+     als reiner Positionshaken stehen, weil die Regel oben bei 1160px genau
+     diese eine Schaltfläche ausblendet. Eigene Farben, Radien und Schatten
+     hat die Leiste damit keine mehr: sie hatte 10px Radius und einen
+     Schlagschatten, die Hero 10px und einen anderen, die statischen Seiten
+     einen dritten Satz. Genau daran war zu sehen, dass es kein System war. */
+  .euc-hd-btn2{ font-weight:500; }
 
   .euc-hd-burger{
     margin-left:auto; display:flex; flex-direction:column;
@@ -220,17 +298,10 @@
     text-decoration:none; color:#0B1E33; border-bottom:1px solid #E7ECF0;
   }
   .euc-hd-sheet nav a:active{ color:#12326B; }
+  /* Im Blatt stehen dieselben zwei Knöpfe, nur über die volle Breite und in
+     der Hero-Höhe: es ist der Hauptweg der Seite auf dem Telefon. */
   .euc-hd-sheet-cta{ display:flex; flex-direction:column; gap:12px; margin-top:30px; }
-  .euc-hd-sheet-cta a{
-    display:inline-flex; align-items:center; justify-content:center;
-    min-height:52px; padding:14px; border-radius:10px;
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
-    font-size:15px; text-decoration:none;
-    transition:transform 140ms cubic-bezier(.23,1,.32,1);
-  }
-  .euc-hd-sheet-cta a:active{ transform:scale(.985); }
-  .euc-hd-sheet-cta .euc-hd-btn{ font-size:15px; font-weight:600; }
-  .euc-hd-sheet-cta .euc-hd-btn2{ font-size:15px; font-weight:500; }
+  .euc-hd-sheet-cta .euc-btn{ width:100%; }
 
   .euc-hd :focus-visible{ outline:2px solid #12326B; outline-offset:3px; border-radius:6px; }
   .euc-hd-sheet :focus-visible{ outline:2px solid #12326B; outline-offset:3px; border-radius:6px; }
@@ -239,22 +310,15 @@
   @media (hover:hover) and (pointer:fine){
     /* Basis ist schon Tinte, also kippt Hover in die Marke statt nachzudunkeln. */
     .euc-hd-nav a:hover{ color:#12326B; }
-    .euc-hd-btn:hover{
-      background:#123456; transform:translateY(-2px);
-      box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
-                 0 24px 48px -28px rgba(11,30,51,.22), inset 0 1px 0 rgba(255,255,255,.10);
-    }
-    .euc-hd-btn2:hover{
-      transform:translateY(-2px);
-      box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
-                 inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
-    }
+    /* Die Knöpfe bringen ihren Hover aus der gemeinsamen Basis mit: nur ein
+       Farbwechsel, keine Bewegung und kein wachsender Schatten. Hier steht
+       deshalb nur noch, was die Leiste zusätzlich braucht. */
     .euc-hd-burger:hover{ background:rgba(11,30,51,.05); }
     .euc-hd-sheet nav a:hover{ color:#12326B; }
     /* Auf dunklem Grund kehren sich beide Knöpfe um, also auch ihr Hover. */
     .euc-hd.is-on-dark .euc-hd-nav a:hover{ color:#A5D8E6; }
-    .euc-hd.is-on-dark .euc-hd-btn:hover{ background:#FFFFFF; color:#0B1E33; }
-    .euc-hd.is-on-dark .euc-hd-btn2:hover{ background:#1B437F; color:#F7FAFC; }
+    .euc-hd.is-on-dark .euc-btn.is-primary:hover{ background:#FFFFFF; border-color:#FFFFFF; color:#0B1E33; }
+    .euc-hd.is-on-dark .euc-btn.is-secondary:hover{ background:#1B437F; border-color:rgba(165,216,230,.5); color:#F7FAFC; }
     .euc-hd.is-on-dark .euc-hd-burger:hover{ background:rgba(255,255,255,.10); }
   }
 
@@ -272,7 +336,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
-    .euc-hd-btn:hover, .euc-hd-btn2:hover{ transform:none; }
+    .euc-btn:hover{ transform:none; }
     /* Sanfter statt null: reine Opazität bleibt, die Verschiebung fällt weg.
        .euc-hd-sheet (0-1-0) schlägt den *-Selektor auch unter !important. */
     .euc-hd-sheet{ transition:opacity 150ms linear !important; transform:none !important; }
@@ -300,8 +364,8 @@
     </nav>
 
     <div class="euc-hd-cta">
-      <a href="{{ secondaryHref }}" class="euc-hd-btn2">{{ secondaryLabel }}</a>
-      <a href="{{ primaryHref }}" class="euc-hd-btn">{{ primaryLabel }}</a>
+      <a href="{{ secondaryHref }}" class="euc-btn is-secondary is-nav euc-hd-btn2">{{ secondaryLabel }}</a>
+      <a href="{{ primaryHref }}" class="euc-btn is-primary is-nav">{{ primaryLabel }}</a>
     </div>
   </sc-if>
 
@@ -325,8 +389,8 @@
         </sc-for>
       </nav>
       <div class="euc-hd-sheet-cta">
-        <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" class="euc-hd-btn">{{ primaryLabel }}</a>
-        <a href="{{ secondaryHref }}" onClick="{{ closeMenu }}" class="euc-hd-btn2">{{ secondaryLabel }}</a>
+        <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" class="euc-btn is-primary is-hero">{{ primaryLabel }}</a>
+        <a href="{{ secondaryHref }}" onClick="{{ closeMenu }}" class="euc-btn is-secondary is-hero">{{ secondaryLabel }}</a>
       </div>
     </div>
   </sc-if>

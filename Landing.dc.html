@@ -152,6 +152,35 @@
     /* Radius wächst mit der Fläche */
     --r-xs:8px; --r-s:10px; --r-m:14px; --r-l:20px; --r-xl:24px; --r-2xl:32px; --r-full:999px;
 
+    /* ---- European Precision: Radien nach ROLLE, nicht nach Fläche --------
+       Die Skala darüber ordnet den Radius der Grösse zu, deshalb wurde eine
+       Karte runder als ein Knopf und ein Fenster runder als eine Karte. Diese
+       fünf ordnen ihn der AUFGABE zu: Bedienelement, Symbolschalter, Produkt-
+       fenster, Karte, Status. Über 12px geht für normale Bauteile nichts mehr,
+       und drei ineinander liegende Rundungen können sich nicht mehr
+       widersprechen, weil aussen immer 12 und innen immer 8 steht.
+       Die alte Skala bleibt, bis die restlichen Sektionen migriert sind. */
+    --r-control:4px;      /* Knopf, Eingabefeld */
+    --r-icon:6px;         /* quadratischer Symbolschalter */
+    --r-frame:8px;        /* Produktfenster in einer Karte */
+    --r-card:12px;        /* Karte, Sektionsrahmen */
+    --r-status:999px;     /* NUR echte Statuswerte */
+
+    /* Eine Haarlinie statt Materialkante plus Schatten. Kühl und hell, damit
+       sie auf warmweissem Grund als Kante liest und nicht als grauer Strich. */
+    --c-hairline:#DDE4EA;
+    --c-hairline-strong:#C6D0DA;
+    --bd:1px solid var(--c-hairline);
+    --bd-strong:1px solid var(--c-hairline-strong);
+
+    /* Flächen: eine warme, fast weisse Stufe zwischen Grund und Weiss. */
+    --c-surface-warm:#FAF9F6;
+
+    /* Schatten der neuen Bauteile. Höchstens EINE weiche Stufe; die Tiefe
+       kommt jetzt aus der Kante, nicht aus einer Wolke unter dem Element. */
+    --sh-flat:0 1px 2px rgba(11,30,51,.04);
+    --sh-soft:0 1px 2px rgba(11,30,51,.04), 0 8px 18px -12px rgba(11,30,51,.13);
+
     /* Material: mehrstufig und in Navy getönt, nie neutralschwarz */
     --sh-1:0 1px 2px rgba(11,30,51,.05);
     --sh-2:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18);
@@ -344,20 +373,32 @@
     margin-bottom:-30px;
     scrollbar-width:none; -ms-overflow-style:none; }
   .euc-rail::-webkit-scrollbar{ display:none; }
-  .euc-tile{ position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-xl); scroll-snap-align:start;
-    min-height:430px; padding:28px 28px 0; display:flex; flex-direction:column; box-shadow:var(--sh-3);
-    transition:transform 280ms var(--ease-out), box-shadow 280ms var(--ease-out); }
-  /* Materialkante als eigene Ebene, damit sie über dem Verlauf liegt */
-  .euc-tile::after{ content:''; position:absolute; inset:0; z-index:3; pointer-events:none; border-radius:inherit; box-shadow:var(--edge); }
+  /* European Precision: 12px aussen, eine Haarlinie, ein schwacher Schatten.
+     Vorher 24px Radius und ein dreistufiger Schatten — zusammen mit dem
+     14px-Produktfenster darin ergab das drei verschiedene Rundungen auf
+     engstem Raum. Jetzt gilt aussen 12, innen 8, und nichts dazwischen. */
+  .euc-tile{ position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-card); scroll-snap-align:start;
+    min-height:430px; padding:28px 28px 0; display:flex; flex-direction:column; box-shadow:var(--sh-soft);
+    transition:border-color 200ms var(--ease-out), transform 200ms var(--ease-out); }
+  /* Die Kante liegt als eigene Ebene ueber dem Verlauf, sonst verschluckt ihn
+     der Verlauf an den Raendern. Haarlinie statt Materialkante: eine echte
+     1px-Kontur liest sich praeziser als ein aufgehellter Rand. */
+  .euc-tile::after{ content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
+    border-radius:inherit; box-shadow:inset 0 0 0 1px var(--c-hairline); }
   /* Lese-Schirm der Kachel. Gemessen: ohne ihn fällt der Kartentext auf der
      gesättigtsten Verlaufsstelle auf 2.9:1 (glacier/lilac) bzw. 3.5:1 (europa).
      Der Verlauf bleibt unten, wo die Attrappe schwebt, in voller Sättigung. */
   .euc-tile::before{ content:''; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
-    background:linear-gradient(180deg, rgba(255,255,255,.64) 0%, rgba(255,255,255,.54) 32%, rgba(255,255,255,.16) 62%, rgba(255,255,255,0) 82%); }
+    background:linear-gradient(180deg, rgba(255,255,255,.72) 0%, rgba(255,255,255,.62) 32%, rgba(255,255,255,.22) 62%, rgba(255,255,255,0) 82%); }
+  /* Der Verlauf bleibt als Markenelement, wird aber leiser: etwas weniger
+     Saettigung und ein Hauch heller. Zwei Zahlen statt eines Eingriffs in den
+     Shader, damit der Rueckfall ohne WebGL denselben Weg geht. */
+  .euc-tile .euc-sg{ filter:saturate(.84) brightness(1.03); }
   .euc-t-deep::before{ background:linear-gradient(180deg, rgba(11,30,51,.70) 0%, rgba(11,30,51,.58) 32%, rgba(11,30,51,.18) 62%, rgba(11,30,51,0) 82%); }
+  /* Kein Anheben und kein wachsender Schatten mehr. Die Karten sind nicht
+     klickbar; eine Bewegung waere ein Versprechen, das niemand einloest. */
   @media (hover:hover) and (pointer:fine){
-    .euc-tile:hover{ transform:translateY(-6px); box-shadow:var(--sh-4); }
-    .euc-tile:hover .euc-shot{ transform:translateY(-4px); }
+    .euc-tile:hover::after{ box-shadow:inset 0 0 0 1px var(--c-hairline-strong); }
   }
   .euc-tile-in{ position:relative; z-index:2; }
   .euc-tile-k{ font-family:var(--f-mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; margin:0 0 12px; }
@@ -384,11 +425,13 @@
      Textblock die Kachelhöhe (praktisch immer min-height), die Attrappe füllt
      die Restfläche, und ihr Inhalt ist länger als diese Fläche: der Schnitt
      fällt dadurch in echten Inhalt statt in Weiss. */
-  .euc-shot{ position:relative; z-index:2; flex:1 1 0; min-height:0; margin:24px -34px -1px 8px; border-radius:var(--r-m) var(--r-m) 0 0; overflow:hidden;
+  /* Produktfenster: 8px, und zwar nur oben, weil es unten aus der Karte
+     laeuft. Der schwebende Schatten ist weg, die Kontur traegt jetzt allein. */
+  .euc-shot{ position:relative; z-index:2; flex:1 1 0; min-height:0; margin:24px -34px -1px 8px;
+    border-radius:var(--r-frame) var(--r-frame) 0 0; overflow:hidden;
     background:var(--c-surface);
-    border:1px solid rgba(11,30,51,.10); border-bottom:0;
-    box-shadow:0 -1px 0 rgba(255,255,255,.55) inset, var(--sh-float);
-    transition:transform 320ms var(--ease-out); }
+    border:1px solid var(--c-hairline); border-bottom:0;
+    box-shadow:var(--sh-flat); }
   .euc-shot-center{ margin-left:14px; margin-right:14px; }
   /* Echte Panel-Aufnahme statt Attrappe. Absolut im Rahmen statt im Fluss:
      die Kachelhöhe hängt damit nicht am Bild, es gibt beim Nachladen keinen
@@ -472,18 +515,16 @@
      eine Rinnenbreite nach innen (siehe Kommentar bei .euc-rail). */
   .euc-rail-foot{ display:flex; align-items:center; gap:var(--s-5); max-width:calc(var(--w-max) + var(--gutter) * 2); margin:0 auto; padding-inline:var(--gutter); }
   .euc-rail-prog{ flex:0 1 220px; min-width:96px; }
-  .euc-rail-prog .track{ height:3px; border-radius:99px; background:rgba(11,30,51,.10); overflow:hidden; }
-  .euc-rail-prog .thumb{ height:100%; width:100%; border-radius:99px; background:rgba(11,30,51,.42); transform-origin:left center; transition:transform 120ms linear; }
+  /* Flach bleibt flach. Der laufende Strich ist dunkler als die Spur und
+     einen Punkt hoeher, damit er ohne Farbe als der aktive liest. */
+  .euc-rail-prog .track{ height:4px; border-radius:99px; background:rgba(11,30,51,.09); overflow:hidden; }
+  .euc-rail-prog .thumb{ height:100%; width:100%; border-radius:99px; background:var(--c-deep); opacity:.72; transform-origin:left center; transition:transform 120ms linear; }
   .euc-rail-nav{ display:flex; gap:10px; margin-left:auto; flex:0 0 auto; }
-  .euc-rail-btn{ width:46px; height:46px; border-radius:50%; flex:0 0 auto; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
-    border:1px solid rgba(11,30,51,.14); background:var(--mat-chip); color:var(--c-ink);
-    -webkit-backdrop-filter:saturate(160%) blur(14px); backdrop-filter:saturate(160%) blur(14px);
-    box-shadow:var(--sh-1); transition:transform 160ms var(--ease-out), border-color 160ms ease, opacity 200ms ease, background 160ms ease; }
-  .euc-rail-btn:active{ transform:scale(.94); }
-  .euc-rail-btn[disabled]{ opacity:.32; cursor:default; pointer-events:none; }
-  @media (hover:hover) and (pointer:fine){
-    .euc-rail-btn:hover{ border-color:rgba(11,30,51,.34); background:#fff; }
-  }
+  /* Die Pfeile sind jetzt der gemeinsame Symbolschalter (.euc-ibtn, 42px,
+     6px Radius, siehe SiteHeader.dc.html). Runde 46px-Knoepfe mit Milchglas
+     waren das einzige Bauteil der Seite mit voller Rundung; die ist ab jetzt
+     dem Statusabzeichen vorbehalten. `euc-rail-btn` bleibt als Haken fuer
+     die Regel bei reduzierter Bewegung stehen. */
   @media (max-width:860px){
     .euc-rail{ grid-auto-columns:min(78vw,330px); gap:var(--s-3); }
     .euc-tile{ min-height:400px; padding:24px 24px 0; }
@@ -728,9 +769,14 @@
      Seite: zwei Kacheln direkt hintereinander mit derselben Komposition
      lesen sich als Dopplung, nicht als System. Gleich ist der Anschnitt,
      verschieden ist die Seite. */
+  /* European Precision: 12px statt bis zu 38px, eine Haarlinie statt
+     Materialkante, ein schwacher Schatten statt dreier Stufen. `overflow`
+     bleibt, weil die Buehne rechts ueber negative Raender in den Innenabstand
+     laeuft und ihre Ecken damit gratis auf dem Rahmenradius sitzen. */
   .euc-cap-shell{ --cap-pad-x:clamp(24px,3.4vw,50px); --cap-pad-y:clamp(24px,3.4vw,50px);
     position:relative; overflow:hidden; max-width:var(--w-max); margin:0 auto;
-    border-radius:clamp(20px,2.8vw,38px); background:var(--c-surface); box-shadow:var(--sh-3), var(--edge);
+    border-radius:var(--r-card); background:var(--c-surface);
+    border:var(--bd); box-shadow:var(--sh-soft);
     padding:var(--cap-pad-y) var(--cap-pad-x); }
   .euc-cap-in{ position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(26px,3.2vw,44px); }
   /* Die Textspalte hat ihr Mass (486px = rund 46 Zeichen), sie wächst nicht
@@ -814,8 +860,15 @@
      Pixel darüber wäre Luft im Rahmen, die die Attrappe nach links zöge, weil
      _fitStages ihren Massstab an der Oberkante links verankert. */
   .euc-cap-glass .euc-fit{ max-width:600px; margin-inline:auto; }
-  .euc-cap-win{ position:relative; z-index:2; border-radius:14px; background:var(--c-surface); overflow:hidden;
-    box-shadow:0 1px 2px rgba(11,30,51,.08), 0 4px 10px -4px rgba(11,30,51,.14), 0 26px 52px -22px rgba(11,30,51,.40); }
+  /* Der gelbe Verlauf bleibt das Erkennungszeichen dieser Sektion, wird aber
+     ruhiger: weniger Saettigung, etwas heller. Damit tritt das Fenster davor
+     hervor, statt mit dem Grund um Aufmerksamkeit zu ringen. */
+  .euc-cap-glass .euc-sg{ filter:saturate(.80) brightness(1.05); }
+  /* Produktfenster: 8px und eine feine Kontur. Der dreistufige Schatten (bis
+     52px Radius, 40 % Deckkraft) liess das Fenster ueber der Flaeche schweben;
+     im neuen System traegt die Kante, nicht die Wolke. */
+  .euc-cap-win{ position:relative; z-index:2; border-radius:var(--r-frame); background:var(--c-surface); overflow:hidden;
+    border:1px solid rgba(11,30,51,.10); box-shadow:var(--sh-flat); }
   .euc-cap-chrome{ display:flex; align-items:center; gap:9px; padding:10px 13px;
     border-bottom:1px solid var(--c-line-soft); background:#FBFCFD; }
   .euc-cap-mark{ flex:0 0 auto; display:inline-flex; color:var(--c-eu-500); }
@@ -1017,7 +1070,9 @@
     .euc-cap-glass::after{ box-shadow:inset 0 1px 0 rgba(11,30,51,.07); }
   }
   @media (max-width:560px){
-    .euc-cap-shell{ --cap-pad-x:16px; --cap-pad-y:22px; border-radius:18px; }
+    /* Innenabstand wird schmaler, der Radius bleibt: er ist im neuen System
+       eine Eigenschaft des Bauteils und keine der Bildschirmbreite. */
+    .euc-cap-shell{ --cap-pad-x:16px; --cap-pad-y:22px; }
     .euc-cap-glass{ padding:20px 12px; border-radius:14px 14px 0 0; }
     .euc-cap-head{ padding:14px 8px 14px 15px; gap:11px; }
     .euc-cap-t{ font-size:15.5px; }
@@ -1421,8 +1476,8 @@
               <h1 class="euc-h1">{{ t.hero2.h1a }}<br>{{ t.hero2.h1b }}<br>{{ t.hero2.h1c }}</h1>
               <p class="euc-hero-sub">{{ t.hero2.sub }}</p>
               <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(28px,3.2vw,38px);">
-                <a class="euc-btn-press" href="/warteliste" style="display:inline-flex; align-items:center; min-height:44px; font-family:var(--f-body); font-size:15px; font-weight:600; letter-spacing:-.006em; text-decoration:none; color:var(--c-on-deep); background:var(--c-deep); padding:0 22px; border-radius:var(--r-s); box-shadow:var(--sh-2); transition:transform var(--d-press) var(--ease-out), background var(--d-hover) ease;" style-hover="background:#123456;">{{ t.hero2.ctaPrimary }}</a>
-                <a class="euc-btn-press" href="{{ github }}" style="display:inline-flex; align-items:center; min-height:44px; font-family:var(--f-body); font-size:15px; font-weight:500; text-decoration:none; color:var(--c-ink); background:var(--mat-chip); -webkit-backdrop-filter:saturate(160%) blur(14px); backdrop-filter:saturate(160%) blur(14px); padding:0 22px; border:1px solid rgba(11,30,51,.13); border-radius:var(--r-s); transition:transform var(--d-press) var(--ease-out), border-color var(--d-hover) ease, background var(--d-hover) ease;" style-hover="border-color:rgba(11,30,51,.34); background:#fff;">{{ t.hero2.ctaSecondary }}</a>
+                <a class="euc-btn is-primary is-hero" href="/warteliste">{{ t.hero2.ctaPrimary }}</a>
+                <a class="euc-btn is-secondary is-hero" href="{{ github }}">{{ t.hero2.ctaSecondary }}</a>
               </div>
             </div>
 
@@ -1507,99 +1562,6 @@
       </svg>
     </div>
 
-    <!-- =====================================================================
-         Enterprise und Open Source. Die wichtigste Aussage der Seite und
-         deshalb die einzige Sektion mit einer Doppel-Überschrift. Bewusst
-         OHNE Ablauf: die frühere Task-Demo hat erzählt, was der Hero direkt
-         darüber bereits zeigt, und eine zweite Erklärung derselben Sache
-         schwächt beide. Hier steht nur Substanz, in zwei gleich schweren
-         Hälften auf EINER Bühne — die Komposition ist die Aussage.
-         ===================================================================== -->
-    <section id="open-source" data-screen-label="Enterprise &amp; Open Source" style="position:relative; z-index:1; scroll-margin-top:90px; padding:var(--sec-y) var(--gutter);">
-      <div style="max-width:var(--w-max); margin:0 auto;">
-        <div data-reveal style="max-width:700px;">
-          <h2 class="euc-h2">{{ t.os.h2a }}<br>{{ t.os.h2b }}</h2>
-          <p class="euc-lead">{{ t.os.sub }}</p>
-        </div>
-
-        <div class="euc-stage euc-os-stage" data-reveal data-reveal-delay="100">
-
-          <div class="euc-os-half">
-            <div class="euc-os-k">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path></svg>
-              <span>{{ t.os.aK }}</span>
-            </div>
-            <p class="euc-os-claim">{{ t.os.aClaim }}</p>
-            <ul class="euc-os-list">
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a1t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a1d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a2t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a2d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a3t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a3d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"></circle><path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path><path d="M7 6h1v4"></path><path d="m16.71 13.88.7.71-2.82 2.82"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a4t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a4d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><path d="M2 12h20"></path><path d="M6 16h.01"></path><path d="M10 16h.01"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a5t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a5d }}</span></span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="euc-os-half">
-            <div class="euc-os-k">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
-              <span>{{ t.os.bK }}</span>
-            </div>
-            <p class="euc-os-claim">{{ t.os.bClaim }}</p>
-            <ul class="euc-os-list">
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b1t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b1d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b2t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b2d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b3t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b3d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b4t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b4d }}</span></span>
-              </li>
-              <li class="euc-os-item">
-                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"></path><path d="M12 19h8"></path></svg></span>
-                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b5t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b5d }}</span></span>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        <div class="euc-os-foot" data-reveal data-reveal-delay="60">
-          <div class="euc-os-links">
-            <a href="/vergleich" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
-              <span>{{ t.os.link1 }}</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
-            <a href="/self-hosting" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
-              <span>{{ t.os.link2 }}</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
     </div>
 
     <!-- Kein border-top mehr: der Rahmen darueber blendet bereits auf diese
@@ -1756,10 +1718,10 @@
       <div class="euc-rail-foot">
         <div class="euc-rail-prog" aria-hidden="true"><div class="track"><div class="thumb" data-rail-thumb></div></div></div>
         <div class="euc-rail-nav">
-          <button type="button" class="euc-rail-btn" data-rail-dir="-1" aria-label="{{ t.features.railPrev }}">
+          <button type="button" class="euc-ibtn euc-rail-btn" data-rail-dir="-1" aria-label="{{ t.features.railPrev }}">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
           </button>
-          <button type="button" class="euc-rail-btn" data-rail-dir="1" aria-label="{{ t.features.railNext }}">
+          <button type="button" class="euc-ibtn euc-rail-btn" data-rail-dir="1" aria-label="{{ t.features.railNext }}">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
           </button>
         </div>
@@ -1849,11 +1811,11 @@
             </div>
 
             <div class="euc-cap-links">
-              <a href="/governance" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
+              <a href="/governance" class="euc-link">
                 <span>{{ t.cap.link1 }}</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </a>
-              <a href="/integrationen" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
+              <a href="/integrationen" class="euc-link">
                 <span>{{ t.cap.link2 }}</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </a>
@@ -2064,6 +2026,100 @@
                             <span class="euc-cap-pill is-mute"><i></i>{{ t.cap.m5.soon }}</span>
                           </div>
                         </div>
+
+    <!-- =====================================================================
+         Enterprise und Open Source. Die wichtigste Aussage der Seite und
+         deshalb die einzige Sektion mit einer Doppel-Überschrift. Bewusst
+         OHNE Ablauf: die frühere Task-Demo hat erzählt, was der Hero direkt
+         darüber bereits zeigt, und eine zweite Erklärung derselben Sache
+         schwächt beide. Hier steht nur Substanz, in zwei gleich schweren
+         Hälften auf EINER Bühne — die Komposition ist die Aussage.
+         ===================================================================== -->
+    <section id="open-source" data-screen-label="Enterprise &amp; Open Source" style="position:relative; z-index:1; scroll-margin-top:90px; padding:var(--sec-y) var(--gutter);">
+      <div style="max-width:var(--w-max); margin:0 auto;">
+        <div data-reveal style="max-width:700px;">
+          <h2 class="euc-h2">{{ t.os.h2a }}<br>{{ t.os.h2b }}</h2>
+          <p class="euc-lead">{{ t.os.sub }}</p>
+        </div>
+
+        <div class="euc-stage euc-os-stage" data-reveal data-reveal-delay="100">
+
+          <div class="euc-os-half">
+            <div class="euc-os-k">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path></svg>
+              <span>{{ t.os.aK }}</span>
+            </div>
+            <p class="euc-os-claim">{{ t.os.aClaim }}</p>
+            <ul class="euc-os-list">
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a1t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a1d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a2t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a2d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a3t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a3d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"></circle><path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path><path d="M7 6h1v4"></path><path d="m16.71 13.88.7.71-2.82 2.82"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a4t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a4d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><path d="M2 12h20"></path><path d="M6 16h.01"></path><path d="M10 16h.01"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.a5t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.a5d }}</span></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="euc-os-half">
+            <div class="euc-os-k">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
+              <span>{{ t.os.bK }}</span>
+            </div>
+            <p class="euc-os-claim">{{ t.os.bClaim }}</p>
+            <ul class="euc-os-list">
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b1t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b1d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b2t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b2d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b3t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b3d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b4t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b4d }}</span></span>
+              </li>
+              <li class="euc-os-item">
+                <span class="euc-os-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"></path><path d="M12 19h8"></path></svg></span>
+                <span style="min-width:0;"><span class="euc-os-t" style="display:block;">{{ t.os.b5t }}</span><span class="euc-os-d" style="display:block;">{{ t.os.b5d }}</span></span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="euc-os-foot" data-reveal data-reveal-delay="60">
+          <div class="euc-os-links">
+            <a href="/vergleich" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
+              <span>{{ t.os.link1 }}</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+            <a href="/self-hosting" class="euc-sov-cta" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--f-body); font-size:15px; font-weight:600; text-decoration:none;">
+              <span>{{ t.os.link2 }}</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
                         <!-- Der Ausschnitt zeigt, was „daneben" heisst: links die
                              Mailspalte, rechts der Bereich mit dem Entwurf. -->
@@ -3308,7 +3364,7 @@ this.mobRef = React.createRef();
       features: {
         de: {
           h2:'Ein Werkzeug. Der ganze Arbeitstag.',
-          sub:'Sechs Bausteine, die zusammen einen KI-Kollegen ergeben.',
+          sub:'Sechs Aufgaben aus einem normalen Arbeitstag. Alle an einem Ort.',
           railLabel:'Funktionen, horizontal scrollbar', railPrev:'Vorherige Kachel', railNext:'Nächste Kachel',
           k1:'Modelle', k2:'Websuche', k3:'Dateien', k4:'Agenten', k5:'Rechte', k6:'Memory',
           t1:'Alle Modelle', d1:'100+ Top-Modelle über einen Zugang, EU-verarbeitet.',
@@ -3322,7 +3378,7 @@ this.mobRef = React.createRef();
         },
         en: {
           h2:'One tool. The whole working day.',
-          sub:'Six building blocks that add up to a coworker.',
+          sub:'Six tasks from an ordinary working day. All in one place.',
           railLabel:'Features, horizontally scrollable', railPrev:'Previous tile', railNext:'Next tile',
           k1:'Models', k2:'Web search', k3:'Files', k4:'Agents', k5:'Permissions', k6:'Memory',
           t1:'All models', d1:'100+ top models through one access point, EU-processed.',
