@@ -302,7 +302,19 @@
   /* ---------- Slider-Kachel-Reihe ---------- */
   .euc-rail-wrap{ margin-top:clamp(32px,4vw,52px); }
   /* padding-block ist Pflicht: overflow-x:auto zwingt overflow-y auf auto und
-     schneidet sonst Hover-Lift und Schlagschatten oben und unten ab. */
+     schneidet sonst Hover-Lift und Schlagschatten oben und unten ab.
+     Die 34px unten reichten NICHT. Gerechnet hatte ich mit der nominellen
+     Reichweite der untersten Schattenlage (0 24px 48px -28px → 24-28+24 =
+     20px), gemalt wird aber die Gauss-Fahne, und die laeuft rund dreimal so
+     weit. Ergebnis war eine schnurgerade Kante quer unter allen Kacheln.
+     64px fangen die Fahne; damit die Kacheln deswegen nicht weiter von der
+     Fortschrittsleiste abruecken, nimmt der negative Aussenabstand den
+     Zuwachs wieder heraus — der sichtbare Abstand bleibt bei 34px, nur der
+     Malbereich waechst. Der Streifen ragt dadurch 30px in die Fusszeile
+     hinein; das ist unkritisch, weil dort nur Schatten liegt, die
+     Schaltflaechen im Baum spaeter kommen (also oben liegen) und ein
+     senkrechtes Mausrad ueber einem reinen x-Scroller ohnehin an die Seite
+     durchreicht. */
   /* Dieselbe Formel wie die Kopfleiste (`.euc-hd`) und wie sie sich für jede
      andere Sektion aus `padding:… var(--gutter)` plus zentrierter --w-max-Spur
      ergibt: max(Rinne, halber Überhang) — NICHT Summe. Mit der Summe stand die
@@ -311,7 +323,8 @@
   .euc-rail{ --rail-pad:max(var(--gutter), calc((100% - var(--w-max))/2));
     display:grid; grid-auto-flow:column; grid-auto-columns:clamp(300px,32vw,404px); gap:var(--s-5);
     overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x mandatory;
-    scroll-padding-inline:var(--rail-pad); padding-inline:var(--rail-pad); padding-block:12px 34px;
+    scroll-padding-inline:var(--rail-pad); padding-inline:var(--rail-pad); padding-block:12px 64px;
+    margin-bottom:-30px;
     scrollbar-width:none; -ms-overflow-style:none; }
   .euc-rail::-webkit-scrollbar{ display:none; }
   .euc-tile{ position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-xl); scroll-snap-align:start;
