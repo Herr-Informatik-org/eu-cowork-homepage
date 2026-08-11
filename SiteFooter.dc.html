@@ -30,39 +30,8 @@
     --ft-edge:inset 0 1px 0 rgba(165,216,230,.14), inset 0 0 0 1px rgba(165,216,230,.14);
     background:#0B1E33; color:#F7FAFC;
     padding:clamp(64px,8vw,104px) clamp(20px,5vw,80px) 32px;
-    position:relative; isolation:isolate; overflow:hidden;
   }
-  .euc-ft-inner{ position:relative; z-index:1; max-width:1200px; margin:0 auto; }
-
-  /* ---------- Alpen im Fuss: Halbton-Silhouette ----------
-     Zwei Kaemme statt einer Linie, weil Tiefe erst durch Staffelung
-     entsteht: der hintere traegt kleinere, blassere Punkte, der vordere
-     den beherrschenden Gipfel. Die Punkte liegen versetzt (zwei Kreise je
-     Kachel, diagonal) — ein gerades Raster liest sich als Fliegengitter,
-     ein versetztes als Halbton.
-     Der viewBox ist 1600x300 flach gehalten, NICHT weil die Berge so
-     aussehen, sondern wegen der Punktgroesse: bei `slice` skaliert alles
-     mit max(Breite/1600, Hoehe/300), und mit einem hoeheren viewBox
-     schrumpfen die Punkte auf schmalen Geraeten unter ein Pixel und
-     verwaschen zu Nebel.
-     Zwei Masken uebereinander, weil SVG-Masken addieren statt zu
-     multiplizieren: die aeussere blendet die Seiten aus, die innere laesst
-     das Massiv nach unten ins Navy zerfallen — dort steht das
-     Kleingedruckte und braucht ruhigen Grund. */
-  .euc-ft-alps{ position:absolute; left:0; right:0; bottom:0; z-index:0;
-    height:clamp(168px,18vw,268px); pointer-events:none; }
-  .euc-ft-alps svg{ display:block; width:100%; height:100%; }
-  /* Auf schmalen Geraeten arbeitet `slice` gegen uns: je hoeher das Band, desto
-     staerker der Zoom, desto weniger Kamm ist zu sehen — und der Hauptgipfel,
-     also die dichteste Stelle des Rasters, landet ausgerechnet hinter dem
-     Kleingedruckten. Flacheres Band zeigt mehr Gebirge bei kleinerem Massstab
-     und schiebt den Gipfel unter die letzte Textzeile — dort darf das Raster
-     dann auch seine volle Staerke haben. */
-  @media (max-width:700px){
-    .euc-ft-alps{ height:132px; }
-  }
-  /* Bei erhoehtem Kontrastbedarf hat Zierde hinter Text nichts verloren. */
-  @media (prefers-contrast:more){ .euc-ft-alps{ display:none; } }
+  .euc-ft-inner{ max-width:1200px; margin:0 auto; }
   .euc-ft-top{ display:flex; flex-wrap:wrap; gap:64px 56px; justify-content:space-between; }
 
   .euc-ft-brandcol{ flex:1 1 300px; max-width:360px; }
@@ -156,70 +125,6 @@
 </style>
 </helmet>
 <footer class="euc-ft" data-hd-dark>
-
-  <!-- Alpen-Silhouette als Halbton. Reine Zierde, deshalb aria-hidden und
-       ohne Zeigerereignisse. Die Kaemme sind von Hand gesetzt, nicht
-       generiert: gleichmaessig verteilte Zacken lesen sich als Saegeblatt.
-       Ein beherrschender Gipfel bei x=566 mit langer linker und steiler
-       rechter Flanke, ein zweites Massiv bei x=1042, dazwischen und
-       daneben Schultern und Vorgipfel unterschiedlicher Hoehe. -->
-  <div class="euc-ft-alps" aria-hidden="true">
-    <svg viewBox="0 0 1600 300" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- Versetztes Punktraster: zwei Kreise diagonal je Kachel. -->
-        <pattern id="euc-alps-far" width="6" height="6" patternUnits="userSpaceOnUse">
-          <circle cx="1.5" cy="1.5" r="0.8" fill="#A5D8E6"></circle>
-          <circle cx="4.5" cy="4.5" r="0.8" fill="#A5D8E6"></circle>
-        </pattern>
-        <pattern id="euc-alps-near" width="6" height="6" patternUnits="userSpaceOnUse">
-          <circle cx="1.5" cy="1.5" r="1.05" fill="#A5D8E6"></circle>
-          <circle cx="4.5" cy="4.5" r="1.05" fill="#A5D8E6"></circle>
-        </pattern>
-
-        <radialGradient id="euc-alps-glow">
-          <stop offset="0%" stop-color="#A5D8E6" stop-opacity="0.15"></stop>
-          <stop offset="100%" stop-color="#A5D8E6" stop-opacity="0"></stop>
-        </radialGradient>
-
-        <linearGradient id="euc-alps-vg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#fff" stop-opacity="1"></stop>
-          <stop offset="58%" stop-color="#fff" stop-opacity="1"></stop>
-          <stop offset="84%" stop-color="#fff" stop-opacity="0.34"></stop>
-          <stop offset="99%" stop-color="#fff" stop-opacity="0"></stop>
-        </linearGradient>
-        <linearGradient id="euc-alps-hg" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#fff" stop-opacity="0"></stop>
-          <stop offset="9%" stop-color="#fff" stop-opacity="1"></stop>
-          <stop offset="91%" stop-color="#fff" stop-opacity="1"></stop>
-          <stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
-        </linearGradient>
-        <mask id="euc-alps-mv"><rect width="1600" height="300" fill="url(#euc-alps-vg)"></rect></mask>
-        <mask id="euc-alps-mh"><rect width="1600" height="300" fill="url(#euc-alps-hg)"></rect></mask>
-
-        <!-- Hinterer Kamm: flacher, gleichmaessiger, tritt zurueck. -->
-        <clipPath id="euc-alps-cfar">
-          <path d="M -20 258 L 110 226 L 230 254 L 350 206 L 460 248 L 580 222 L 690 186 L 800 232 L 910 204 L 1020 246 L 1130 198 L 1250 234 L 1370 192 L 1490 230 L 1620 206 L 1620 320 L -20 320 Z"></path>
-        </clipPath>
-        <!-- Vorderer Kamm mit dem beherrschenden Gipfel. -->
-        <clipPath id="euc-alps-cnear">
-          <path d="M -20 270 L 140 264 L 270 268 L 372 254 L 452 234 L 508 196 L 546 140 L 578 108 L 612 158 L 652 146 L 700 190 L 762 224 L 848 244 L 950 252 L 1046 236 L 1112 206 L 1172 168 L 1226 200 L 1292 224 L 1382 242 L 1492 234 L 1620 250 L 1620 320 L -20 320 Z"></path>
-        </clipPath>
-      </defs>
-
-      <g mask="url(#euc-alps-mh)">
-        <g mask="url(#euc-alps-mv)">
-          <ellipse cx="600" cy="208" rx="420" ry="130" fill="url(#euc-alps-glow)"></ellipse>
-          <g clip-path="url(#euc-alps-cfar)" opacity="0.36">
-            <rect width="1600" height="300" fill="url(#euc-alps-far)"></rect>
-          </g>
-          <g clip-path="url(#euc-alps-cnear)" opacity="0.60">
-            <rect width="1600" height="300" fill="url(#euc-alps-near)"></rect>
-          </g>
-        </g>
-      </g>
-    </svg>
-  </div>
-
   <div class="euc-ft-inner">
     <div class="euc-ft-top">
 
