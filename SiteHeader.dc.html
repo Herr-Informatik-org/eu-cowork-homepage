@@ -41,11 +41,17 @@
     display:flex; align-items:center; gap:24px;
     min-height:68px;
     padding:12px max(clamp(20px,5vw,80px), calc((100% - var(--hd-max)) / 2));
-    background:rgba(250,250,247,.72);
+    /* Am Seitenanfang traegt die Leiste NICHTS: kein Ton, kein Milchglas.
+       Der Hero soll ungeteilt bis unter die Wortmarke laufen; ein Band quer
+       darueber halbiert das erste Bild, das ein Besucher sieht. Material
+       entsteht erst, wenn Inhalt darunter durchzieht — dann braucht der Text
+       der Leiste einen Grund, und dann ist das Milchglas Funktion statt
+       Zierde. */
+    background:transparent;
     border-bottom:0;
     transition:background 200ms var(--hd-ease);
   }
-  .euc-hd.is-scrolled{ background:rgba(250,250,247,.86); }
+  .euc-hd.is-scrolled{ background:rgba(250,250,247,.82); }
 
   /* ---- Leiste über tiefen Sektionen -------------------------------------
      Über den Navy-Blöcken (Mobile App, Self-Host, Roadmap, Schluss-CTA,
@@ -54,14 +60,16 @@
      dunkel getönt. Der Zustand kommt aus demselben Mechanismus wie
      .is-scrolled (ein Zustandsbit, eine Klasse), gespeist von einem
      IntersectionObserver auf einem 68px hohen Band am oberen Rand. */
-  .euc-hd.is-on-dark{ background:rgba(11,30,51,.60); }
-  .euc-hd.is-on-dark.is-scrolled{ background:rgba(11,30,51,.74); }
+  .euc-hd.is-on-dark{ background:transparent; }
+  .euc-hd.is-on-dark.is-scrolled{ background:rgba(11,30,51,.72); }
   .euc-hd.is-on-dark::after{ background:linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,0)); }
   .euc-hd.is-on-dark .euc-hd-word{ color:#F7FAFC; }
   .euc-hd.is-on-dark .euc-hd-ai{ color:#A5D8E6; }
   .euc-hd.is-on-dark .euc-hd-brand svg path{ stroke:#F7FAFC; }
-  .euc-hd.is-on-dark .euc-hd-nav a{ color:#C4D0DD; }
-  .euc-hd.is-on-dark .euc-hd-nav a.is-active{ color:#A5D8E6; }
+  /* Spiegelbild der hellen Seite: dort Tinte statt Grau, hier fast Weiss
+     statt Blaugrau. Dieselbe Begruendung, umgedrehtes Vorzeichen. */
+  .euc-hd.is-on-dark .euc-hd-nav a{ color:#F7FAFC; }
+  .euc-hd.is-on-dark .euc-hd-nav a.is-active{ color:#A5D8E6; font-weight:600; }
   /* Der Primärknopf ist auf hellem Grund Navy; auf Navy wäre er unsichtbar.
      Er tauscht mit dem Sekundären die Rolle: hell auf dunkel. */
   .euc-hd.is-on-dark .euc-hd-btn{
@@ -84,7 +92,13 @@
     content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
     backdrop-filter:blur(20px) saturate(180%);
     -webkit-backdrop-filter:blur(20px) saturate(180%);
+    /* Ueber die DECKKRAFT ein- und ausblenden, nicht ueber den Filter selbst:
+       backdrop-filter laesst sich nicht nach `none` animieren, der Sprung
+       waere hart. Deckkraft 0 blendet die gefilterte Flaeche vollstaendig
+       aus — am Seitenanfang liegt also wirklich nichts ueber dem Hero. */
+    opacity:0; transition:opacity 220ms var(--hd-ease);
   }
+  .euc-hd.is-scrolled::before{ opacity:1; }
 
   /* Scroll-Edge statt 1px-Hairline: 24px weicher Verlauf unter der Leiste,
      sichtbar erst ab scrollY > 8. */
@@ -115,10 +129,17 @@
     display:inline-flex; align-items:center; min-height:44px;
     font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     font-size:14.5px; font-weight:500; letter-spacing:0;
-    text-decoration:none; color:#5A6472; white-space:nowrap;
+    /* Tinte statt Grau. Grau liest sich auf einer transluzenten Leiste als
+       „inaktiv"; die Navigationspunkte sind aber das Geruest der Seite und
+       stehen auf gleicher Stufe wie die Wortmarke. */
+    text-decoration:none; color:#0B1E33; white-space:nowrap;
     transition:color 150ms ease;
   }
-  .euc-hd-nav a.is-active{ color:#12326B; }
+  /* Der aktive Punkt kann sich nicht mehr allein ueber Tinte-vs-Grau
+     abheben — er traegt jetzt Europa-Blau UND ein halbes Gewicht mehr.
+     Ohne den Gewichtssprung sieht ein ueberfahrener Nachbar genauso aus
+     wie die Seite, auf der man steht. */
+  .euc-hd-nav a.is-active{ color:#12326B; font-weight:600; }
 
   .euc-hd-cta{ display:flex; align-items:center; gap:14px; flex:0 0 auto; }
 
@@ -216,7 +237,8 @@
 
   /* Bewegung nur für echte Zeigegeräte, keine Information hängt an Hover. */
   @media (hover:hover) and (pointer:fine){
-    .euc-hd-nav a:hover{ color:#0B1E33; }
+    /* Basis ist schon Tinte, also kippt Hover in die Marke statt nachzudunkeln. */
+    .euc-hd-nav a:hover{ color:#12326B; }
     .euc-hd-btn:hover{
       background:#123456; transform:translateY(-2px);
       box-shadow:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18),
@@ -230,7 +252,7 @@
     .euc-hd-burger:hover{ background:rgba(11,30,51,.05); }
     .euc-hd-sheet nav a:hover{ color:#12326B; }
     /* Auf dunklem Grund kehren sich beide Knöpfe um, also auch ihr Hover. */
-    .euc-hd.is-on-dark .euc-hd-nav a:hover{ color:#F7FAFC; }
+    .euc-hd.is-on-dark .euc-hd-nav a:hover{ color:#A5D8E6; }
     .euc-hd.is-on-dark .euc-hd-btn:hover{ background:#FFFFFF; color:#0B1E33; }
     .euc-hd.is-on-dark .euc-hd-btn2:hover{ background:#1B437F; color:#F7FAFC; }
     .euc-hd.is-on-dark .euc-hd-burger:hover{ background:rgba(255,255,255,.10); }

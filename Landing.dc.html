@@ -82,7 +82,7 @@
   <h3>Werden meine Daten fürs Training verwendet?</h3>
   <p>Nein. No-Training, Telemetrie standardmässig aus.</p>
   <h3>Ist das wirklich Open Source?</h3>
-  <p>Ja, MIT-Lizenz (dünner Fork von LibreChat). Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang.</p>
+  <p>Der Quellcode erscheint unter MIT-Lizenz — veröffentlicht ist er noch nicht, bis dahin läuft die Sicherheitshärtung. Danach gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT.</p>
   <h3>Welche Modelle sind verfügbar?</h3>
   <p>Über 100 Modelle über EuRouter, inklusive der grossen Modelle von Anthropic und OpenAI.</p>
   <h3>Kann ich mein ERP anbinden?</h3>
@@ -1913,7 +1913,7 @@
          Kapitel und Aufnahmen stehen ausgeschrieben statt als Schleife über
          eine Liste: jedes trägt ein eigenes Zeichen und einen eigenen Aufbau,
          und eine Schleife müsste beides als Markup durchreichen. -->
-    <section id="konnektoren" data-screen-label="Enterprise-Kapitel" style="background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
+    <section id="konnektoren" data-screen-label="Enterprise-Kapitel" style="background:var(--c-bg-cool); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
       <div class="euc-cap-shell">
         <div class="euc-cap-in">
 
@@ -2246,7 +2246,7 @@
       </div>
     </section>
 
-    <section id="outlook-addin" data-screen-label="Outlook-Add-in" style="position:relative; background:var(--c-bg-cool); border-top:1px solid var(--c-line-soft); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
+    <section id="outlook-addin" data-screen-label="Outlook-Add-in" style="position:relative; background:var(--c-bg-cool); padding:var(--sec-y) var(--gutter); scroll-margin-top:90px;">
 
           <!-- Die ganze Sektion liegt auf EINER Kachel. Der Verlauf oben rechts
                gehört in die Kachel und läuft zu ihrer Kante aus, deshalb sitzt
@@ -2876,8 +2876,22 @@
       <div style="max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
         <div style="flex:1 1 400px; min-width:0;" data-reveal>
           <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.020em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
-          <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.02em; color:#A5D8E6; margin-top:14px;">{{ t.selfhost.tagline }}</div>
-          <p style="font-family:'Inter',sans-serif; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:#C4D0DD; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.selfhost.sub }}</p>
+          <p style="font-family:'Inter',sans-serif; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:#C4D0DD; margin:18px 0 0; max-width:460px; text-wrap:pretty;">{{ t.selfhost.sub }}</p>
+
+          <!-- Stand der Veröffentlichung. Steht VOR dem Befehl und nicht
+               darunter: wer den Befehl liest, soll vorher wissen, dass das
+               Repository heute noch geschlossen ist. Offenes Schloss als
+               Zeichen — geschlossen wäre die falsche Aussage, es geht um
+               etwas, das aufgeht, nicht um etwas Verriegeltes. -->
+          <div style="display:flex; gap:13px; margin-top:24px; max-width:470px; padding:15px 17px; border-radius:13px; background:rgba(165,216,230,.07); box-shadow:inset 0 0 0 1px rgba(165,216,230,.18);">
+            <span style="flex:0 0 auto; margin-top:2px; color:#F4C542;" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+            </span>
+            <div style="min-width:0;">
+              <div style="font-family:var(--f-display); font-size:14.5px; font-weight:500; letter-spacing:-.007em; color:#F7FAFC;">{{ t.selfhost.statusT }}</div>
+              <p style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.58; color:#A9BACB; margin:5px 0 0; text-wrap:pretty;">{{ t.selfhost.statusD }}</p>
+            </div>
+          </div>
 
           <div style="display:flex; align-items:center; gap:12px; margin-top:28px; background:#0A1A2C; border:1px solid rgba(165,216,230,.22); border-radius:10px; padding:11px 12px 11px 15px;">
             <span style="color:#5FA98A; font-family:'JetBrains Mono',monospace; font-size:13px; flex:0 0 auto;">$</span>
@@ -2912,7 +2926,10 @@
               <span style="margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6E8398;">{{ t.selfhost.title }}</span>
             </div>
             <div style="padding:20px 20px 26px; min-height:210px; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.85;">
-              <div style="color:#D6EDF5; word-break:break-all;"><span style="color:#5FA98A;">$ </span>{{ termTyped }}<span style="display:inline-block; width:8px; height:15px; vertical-align:-2px; background:#A5D8E6; margin-left:2px; opacity:{{ termCaretOp }}; animation:{{ termCaret }};"></span></div>
+              <!-- pre-wrap, damit der gesetzte Umbruch nach dem Fortsetzungs-
+                   zeichen stehen bleibt und die zwei fuehrenden Leerzeichen der
+                   zweiten Zeile erhalten bleiben. -->
+              <div style="color:#D6EDF5; white-space:pre-wrap; overflow-wrap:anywhere;"><span style="color:#5FA98A;">$ </span>{{ termTyped }}<span style="display:inline-block; width:8px; height:15px; vertical-align:-2px; background:#A5D8E6; margin-left:2px; opacity:{{ termCaretOp }}; animation:{{ termCaret }};"></span></div>
               <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px;">
                 <sc-for list="{{ termLines }}" as="ln" hint-placeholder-count="0">
                   <div style="color:{{ ln.color }};">{{ ln.text }}</div>
@@ -3331,8 +3348,22 @@ this.mobRef = React.createRef();
     this._olkResize = null;
     this._olkStarted = false;
     this._olkStep = 0;
-    this._termCmd = 'cd distribution && ./install.sh --profiles production';
-    this._termOut = ['✓ Pulling images …','✓ Auto-TLS · SearXNG ready','✓ Telemetry off by default','→ https://localhost  ·  ~60s'];
+    /* Befehl und Ausgabe stammen aus dem echten Runbook (docs/server-
+       installation.md) und einem echten Lauf auf unserem Server, nicht aus der
+       Fantasie — deshalb der vollständige Einzeiler statt eines hübschen
+       Kürzels: klonen, hineinwechseln, installieren. Was fehlt, fehlt mit
+       Absicht: Rechnernamen, Kundennamen und Container-Anzahl. Die Anzahl
+       haengt am gewaehlten Profil, eine gedruckte Zahl waere fuer die Haelfte
+       der Installationen falsch. */
+    this._termCmd = 'git clone https://github.com/herr-informatik/eu-cowork.git && cd eu-cowork/distribution && ./install.sh';
+    /* Fuer die Anzeige im Terminal mit Fortsetzungszeichen umgebrochen. Ohne
+       das bricht der Satz an der naechstbesten Stelle um — und das ist der
+       Bindestrich in „eu-cowork", eine voellig regulaere Umbruchstelle, die
+       hier aber wie ein Tippfehler aussieht. Kein Umbruch-Modus verhindert
+       das; nur ein gewaehlter Umbruch tut es. Der Knopf kopiert weiterhin die
+       Einzeiler-Fassung oben. */
+    this._termShow = 'git clone https://github.com/herr-informatik/eu-cowork.git \\\n  && cd eu-cowork/distribution && ./install.sh';
+    this._termOut = ['✓ Docker Engine + Compose v2 geprüft','✓ Secrets erzeugt · .env geschrieben','✓ Images geladen · Stack gestartet','✓ Auto-TLS aktiv · Telemetrie aus','→ https://chat.ihre-firma.ch · ~60 s'];
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     this.state = { lang: initLang, hero2Phase: 0, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
     /* `lang` am <html> mitziehen. Ohne das steht auf der englischen Fassung
@@ -3444,19 +3475,27 @@ this.mobRef = React.createRef();
         }
       }
       ,
+      /* Der Quellcode ist noch nicht öffentlich. Diese Sektion sagt das
+         ausdrücklich, statt es zu umschiffen: ein Befehl, der heute ins Leere
+         liefe, ohne Hinweis daneben, wäre eine Behauptung. Deshalb steht der
+         Stand als eigener Kasten unter der Überschrift, und die Marke trägt
+         „MIT-Lizenz folgt“. Sobald das Repository offen ist, fallen statusT
+         und statusD weg und `mit` verliert den Zusatz — sonst nichts. */
       selfhost: {
         de: {
           h2:'One command. 60 seconds.',
-          tagline:'Raw power. No surprises.',
-          sub:'Komplett self-hostbar ab 1 User. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang.',
-          copyLabel:'Kopieren', copied:'Kopiert', stars:'40\u2019000+', starsLabel:'Stars · LibreChat', mit:'MIT-Lizenz', cta:'Zum Selbstbetrieb', title:'zsh · eu-cowork',
+          sub:'Ein Befehl, ein Server, der ganze Stack. Self-Hosting bleibt dauerhaft gratis, ab einer einzelnen Person: kein Seat-Limit, kein Branding-Zwang.',
+          statusT:'Noch nicht veröffentlicht',
+          statusD:'Der Quellcode erscheint unter MIT-Lizenz. Bis dahin läuft die Sicherheitshärtung — wir geben das Repository erst frei, wenn wir es ohne Vorbehalt weiterreichen würden. Wer auf der Warteliste steht, hört von uns.',
+          copyLabel:'Kopieren', copied:'Kopiert', stars:'40\u2019000+', starsLabel:'Stars · LibreChat', mit:'MIT-Lizenz folgt', cta:'Zum Selbstbetrieb', title:'zsh · eu-cowork',
           moreLink:'Installation, Stack und Systemanforderungen'
         },
         en: {
           h2:'One command. 60 seconds.',
-          tagline:'Raw power. No surprises.',
-          sub:'Fully self-hostable from 1 user. MIT license, no seat limit, no forced branding.',
-          copyLabel:'Copy', copied:'Copied', stars:'40,000+', starsLabel:'stars · LibreChat', mit:'MIT license', cta:'Self-hosting guide', title:'zsh · eu-cowork',
+          sub:'One command, one server, the whole stack. Self-hosting stays free for good, from a single person: no seat limit, no forced branding.',
+          statusT:'Not published yet',
+          statusD:'The source will be released under the MIT license. Until then we are hardening it — the repository opens once we would hand it on without reservation. Everyone on the waitlist will hear from us.',
+          copyLabel:'Copy', copied:'Copied', stars:'40,000+', starsLabel:'stars · LibreChat', mit:'MIT license to follow', cta:'Self-hosting guide', title:'zsh · eu-cowork',
           moreLink:'Installation, stack and system requirements'
         }
       }
@@ -3467,7 +3506,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'Wo werden meine Daten verarbeitet?', a:'Betrieb in der Schweiz (Green Lupfig), Inferenz EU-verarbeitet über EuRouter. Selbst gehostet bleiben Daten vollständig auf Ihrer Infrastruktur.' },
             { q:'Werden meine Daten fürs Training verwendet?', a:'Nein. No-Training, Telemetrie standardmässig aus.' },
-            { q:'Ist das wirklich Open Source?', a:'Ja, MIT-Lizenz (dünner Fork von LibreChat). Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang.' },
+            { q:'Ist das wirklich Open Source?', a:'Der Quellcode erscheint unter MIT-Lizenz — veröffentlicht ist er noch nicht, bis dahin läuft die Sicherheitshärtung. Danach gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT.' },
             { q:'Welche Modelle sind verfügbar?', a:'Über 100 Modelle über EuRouter, inklusive der grossen Modelle von Anthropic und OpenAI.' },
             { q:'Kann ich mein ERP anbinden?', a:'Ja, über das MCP-Gateway mit granularem RBAC und per-Call-Audit.' },
             { q:'Gibt es eine App?', a:'Heute eine installierbare PWA; native iOS/Android-App in Planung.' },
@@ -3485,7 +3524,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'Where is my data processed?', a:'Operated in Switzerland (Green Lupfig), inference EU-processed via EuRouter. Self-hosted, data stays entirely on your infrastructure.' },
             { q:'Is my data used for training?', a:'No. No-training, telemetry off by default.' },
-            { q:'Is this really open source?', a:'Yes, MIT license (a thin fork of LibreChat). Self-hosting is free from 1 user, no seat limit, no forced branding.' },
+            { q:'Is this really open source?', a:'The source will be released under the MIT license — it is not public yet, we are hardening it first. After that: self-hosting free from 1 user, no seat limit, no forced branding. The base it builds on, LibreChat, is MIT today.' },
             { q:'Which models are available?', a:'Over 100 models via EuRouter, including the large models from Anthropic and OpenAI.' },
             { q:'Can I connect my ERP?', a:'Yes, via the MCP gateway with granular RBAC and per-call audit.' },
             { q:'Is there an app?', a:'Today an installable PWA; native iOS/Android app planned.' },
@@ -4313,14 +4352,17 @@ clearTimeout(this._mobTimer);
      der Endzustand IST die Aussage (fertige Datei, gesetzte Rechte, laufender
      Stack), eine Schleife nimmt sie sofort wieder zurück. */
   _startTerminal(){
-    const cmd = this._termCmd, out = this._termOut;
+    const cmd = this._termShow, out = this._termOut;
     if (this._reduced()){ this.setState({ termTyped: cmd, termLines: out, termDone:true }); return; }
     let ci = 0, li = 0, phase = 'type';
     const step = () => {
       if (phase === 'type'){
         ci++; this.setState({ termTyped: cmd.slice(0, ci) });
         if (ci >= cmd.length){ phase = 'out'; this._termTimer = setTimeout(step, 700); return; }
-        this._termTimer = setTimeout(step, 32);
+        /* 22 statt 32 ms: der Befehl ist mit dem Klon-Teil fast doppelt so
+           lang geworden, bei alter Geschwindigkeit tippt er über drei
+           Sekunden und der Blick wandert weg, bevor die Ausgabe kommt. */
+        this._termTimer = setTimeout(step, 22);
       } else {
         li++; this.setState({ termLines: out.slice(0, li) });
         if (li >= out.length){ this.setState({ termDone:true }); return; }
@@ -4953,7 +4995,7 @@ vm.BRAND = this.BRAND;
           "name": "Ist das wirklich Open Source?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ja, MIT-Lizenz (dünner Fork von LibreChat). Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang."
+            "text": "Der Quellcode erscheint unter MIT-Lizenz — veröffentlicht ist er noch nicht, bis dahin läuft die Sicherheitshärtung. Danach gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT."
           }
         },
         {
