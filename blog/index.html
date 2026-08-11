@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Blog | EU Cowork AI</title>
+<meta name="description" content="Notizen zur Entwicklung von EU Cowork AI: Entscheidungen, Messwerte und was wir beim Betrieb einer selbst gehosteten KI-Plattform gelernt haben.">
+<link rel="canonical" href="https://eucowork.ai/blog">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/blog">
+<meta property="og:title" content="Blog | EU Cowork AI">
+<meta property="og:description" content="Notizen zur Entwicklung von EU Cowork AI: Entscheidungen, Messwerte und Erfahrungen aus dem Betrieb.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog | EU Cowork AI">
+<meta name="twitter:description" content="Notizen zur Entwicklung von EU Cowork AI.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ==================== HEADER (unverändert übernehmen) ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/docs">Docs</a>
+    <a href="/blog" aria-current="page">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <a class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
+    <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/docs">Docs</a>
+      <a href="/blog">Blog</a>
+      <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+      <a class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/">Start</a></li>
+        <li><span aria-current="page">Blog</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow">Notizen aus der Entwicklung</p>
+
+    <h1>Blog</h1>
+
+    <p class="euc-lead">Hier schreiben wir auf, was wir beim Bauen und Betreiben einer selbst gehosteten KI-Plattform lernen: Entscheidungen und ihre Gründe, gemessene Werte statt Schätzungen, und die Stellen, an denen es nicht so lief wie geplant.</p>
+  </section>
+
+  <!-- ==================== LEERER ZUSTAND ==================== -->
+  <div class="euc-wrap">
+    <section class="euc-section">
+      <p><strong>Noch keine Beiträge.</strong> Der erste Artikel entsteht gerade. Bis dahin steht das meiste, was wir wissen, bereits in der Dokumentation, samt Messwerten und den offenen Punkten.</p>
+
+      <p>Was hier künftig steht:</p>
+
+      <div class="euc-cards">
+        <div class="euc-card">
+          <h3>Entscheidungen mit Begründung</h3>
+          <p>Warum wir auf LibreChat aufsetzen, warum das Rechte-Gateway eine eigene Schicht ist und warum die Mandantengrenze der Compose-Stack ist und nicht die virtuelle Maschine.</p>
+        </div>
+        <div class="euc-card">
+          <h3>Zahlen aus dem Betrieb</h3>
+          <p>Was eine Instanz wirklich an Arbeitsspeicher braucht, was ein Werkzeug-Katalog an Kontext kostet und wohin die Token tatsächlich gehen.</p>
+        </div>
+        <div class="euc-card">
+          <h3>Was schiefging</h3>
+          <p>Fehlerbilder, die uns Zeit gekostet haben, und was man tun muss, damit sie einem selbst erspart bleiben.</p>
+        </div>
+      </div>
+
+      <p>Bis der erste Beitrag steht: die <a class="euc-textlink" href="/docs">Dokumentation</a> beantwortet die meisten technischen Fragen bereits. Über die <a class="euc-textlink" href="/warteliste">Warteliste</a> melden wir uns, sobald es Neues gibt.</p>
+
+      <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+        <p class="euc-weiter-titel">Weiter</p>
+        <ul>
+          <li><a href="/docs">Die vollständige Dokumentation, auf Deutsch und Englisch</a></li>
+          <li><a href="/docs/erste-schritte/systemanforderungen">Was eine Instanz an Arbeitsspeicher und Platz braucht, mit gemessenen Werten</a></li>
+          <li><a href="/docs/konnektoren/muster">Wie eine Firma eigene Systeme anbindet, in drei Bauformen</a></li>
+        </ul>
+      </nav>
+    </section>
+  </div>
+
+</main>
+
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t">Überall betreibbar</div>
+              <div class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t">DSGVO-konform</div>
+              <div class="euc-badge-s">EU-Verarbeitung</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot"><i></i><b></b></span>
+          <span>Betriebsbereit</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Produkt</p>
+          <nav>
+            <a href="/#funktionen">Funktionen</a>
+            <a href="/#souveraenitaet">Souveränität</a>
+            <a href="/self-hosting">Self-Host</a>
+            <a href="/integrationen">Integrationen</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Wissen</p>
+          <nav>
+            <a href="/faq">FAQ</a>
+            <a href="/docs">Docs</a>
+            <a href="/blog">Blog</a>
+            <a href="/vergleich">Vergleich</a>
+            <a href="/governance">Governance</a>
+            <a href="/vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Trust</p>
+          <nav>
+            <a href="/sicherheit">Security &amp; Trust</a>
+            <a href="/avv">AVV</a>
+            <a href="/sicherheit#toms">TOMs</a>
+            <a href="/subprozessoren">Subprozessoren</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Rechtliches</p>
+          <nav>
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+            <a href="/agb">AGB</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
+      <span class="euc-built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== JSON-LD: WebPage + BreadcrumbList ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://eucowork.ai/blog#blog",
+      "url": "https://eucowork.ai/blog",
+      "name": "EU Cowork AI Blog",
+      "description": "Notizen zur Entwicklung und zum Betrieb von EU Cowork AI.",
+      "inLanguage": "de-CH",
+      "publisher": { "@type": "Organization", "name": "EU Cowork AI", "url": "https://eucowork.ai" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://eucowork.ai/blog" }
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

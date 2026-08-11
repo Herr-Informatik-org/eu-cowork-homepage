@@ -332,7 +332,7 @@
   </sc-if>
 </header>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:88},&quot;activeNav&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;features&quot;,&quot;sovereignty&quot;,&quot;selfhost&quot;,&quot;security&quot;,&quot;faq&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onLanding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:88},&quot;activeNav&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;docs&quot;,&quot;blog&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onLanding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   constructor(props){
     super(props);
@@ -415,24 +415,20 @@ class Component extends DCLogic {
   renderVals(){
     const lang = this.state.lang || 'de';
     const onLanding = this.props.onLanding === true;
-    const base = onLanding ? '' : '/';
     const active = this.props.activeNav || 'home';
     const T = {
-      de: { funktionen:'Funktionen', governance:'Governance', souveraenitaet:'Souveränität', selfhost:'Self-Host', faq:'FAQ', docs:'Docs',
+      de: { docs:'Docs', blog:'Blog',
             primary:'Auf die Warteliste', secondary:'Self-host for free' },
-      en: { funktionen:'Features', governance:'Governance', souveraenitaet:'Sovereignty', selfhost:'Self-Host', faq:'FAQ', docs:'Docs',
+      en: { docs:'Docs', blog:'Blog',
             primary:'Join the waitlist', secondary:'Self-host for free' }
     }[lang];
-    /* „Governance" zeigt auf die eigene Seite, nicht auf einen Anker: der
-       Abschnitt auf der Startseite ist entfallen, der Inhalt lebt vollständig
-       unter /governance. */
+    /* Schlanke Hauptnavigation: alles Erklärende liegt auf der Startseite
+       selbst, in der Doku oder im Blog. Die übrigen Seiten (Governance,
+       Vergleich, FAQ, Self-Host ...) bleiben bestehen und sind über die
+       Fussleiste erreichbar. */
     const nav = [
-      { key:'features',    label:T.funktionen,     href: base + '#funktionen' },
-      { key:'governance',  label:T.governance,     href: '/governance' },
-      { key:'sovereignty', label:T.souveraenitaet, href: base + '#souveraenitaet' },
-      { key:'selfhost',    label:T.selfhost,       href: base + '#self-host' },
-      { key:'faq',         label:T.faq,            href: '/faq' },
-      { key:'docs',        label:T.docs,           href: '/docs' }
+      { key:'docs',        label:T.docs,           href: '/docs' },
+      { key:'blog',        label:T.blog,           href: '/blog' }
     ].map(n => ({ ...n, cls: n.key === active ? 'is-active' : '' }));
     const isDe = lang === 'de';
     return {
