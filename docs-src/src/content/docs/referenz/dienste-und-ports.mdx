@@ -77,12 +77,15 @@ iptables-Regeln in der Kette `DOCKER-USER` schreibt. Ein auf `0.0.0.0` gebundene
 ist trotz aktiver Firewall von aussen erreichbar. Der Schutz liegt in der Bindung an
 `127.0.0.1`, nicht in der Firewall-Regel.
 
-Wo eine Regel wirklich nötig ist, etwa bei den Debug-Ports der Code-Interpreter-Substacks,
-muss sie in dieselbe Kette:
+Wo eine Regel wirklich nötig ist, etwa bei den Debug-Ports des gehärteten
+Code-Interpreter-Substacks, muss sie in dieselbe Kette:
 
 ```bash
-sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
+sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
 ```
+
+Der Interim-Interpreter (Port 8000) braucht das nicht: sein `setup.sh` bindet ihn an
+`127.0.0.1` und prüft die Bindung nach dem Start nach.
 </Aside>
 
 ## Die Docker-Netze

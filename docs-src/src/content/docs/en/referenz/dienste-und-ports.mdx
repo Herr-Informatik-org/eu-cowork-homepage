@@ -77,12 +77,15 @@ rules into the `DOCKER-USER` chain. A container bound to `0.0.0.0` is reachable 
 outside despite an active firewall. The protection lies in binding to `127.0.0.1`, not in the
 firewall rule.
 
-Where a rule really is needed, for example for the debug ports of the code interpreter
-substacks, it has to go into the same chain:
+Where a rule really is needed, for example for the debug ports of the hardened code interpreter
+substack, it has to go into the same chain:
 
 ```bash
-sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
+sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
 ```
+
+The interim interpreter (port 8000) does not need this: its `setup.sh` binds it to `127.0.0.1`
+and verifies the binding after startup.
 </Aside>
 
 ## The Docker networks

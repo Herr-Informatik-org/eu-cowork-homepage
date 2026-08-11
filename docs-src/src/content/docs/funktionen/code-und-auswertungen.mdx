@@ -142,8 +142,9 @@ Leer bedeutet: LibreChat versucht es gar nicht erst.
 Der Weg zwischen LibreChat und dem Ausführungs-Backend läuft ausschliesslich im internen
 Docker-Netz `eucowork-sandbox`. Für **diesen Weg** gibt es keinen Host-Port. Das gilt aber nur
 für die Verbindung zwischen Chat und Runner, nicht für den Substack als Ganzes: beide Backends
-veröffentlichen daneben eigene Ports auf dem Host, und genau die brauchen eine Regel. Der
-nächste Abschnitt sagt, welche.
+veröffentlichen daneben eigene Ports auf dem Host. Bei der schnellen Variante binden die
+`127.0.0.1`, bei der gehärteten nicht — für die braucht es eine Regel. Der nächste Abschnitt
+sagt, welche.
 
 Bei mehreren Kundeninstanzen auf einer Maschine bekommt jede Instanz ihr eigenes
 Sandbox-Netz und einen eigenen Interpreter. Ausgeführter Code ist die einzige Stelle, an der
@@ -156,24 +157,31 @@ fremder Code auf Ihrer Maschine läuft, deshalb wird sie nie zwischen Kunden get
   Repository ist bis heute ein Gerüst.
 </Aside>
 
-<Aside type="danger" title="Beide Backends veröffentlichen Ports auf dem Host, die schnelle Variante ohne jede Anmeldung">
-Die schnelle Variante prüft **keinen Client-Schlüssel**: `setup.sh` schreibt
-`AUTH_ENABLED=false` in die Konfiguration. Zugleich veröffentlicht ihr Compose-Stack den Runner
-mit `${PORT:-8000}:8000`, also auf **allen** Schnittstellen des Hosts. Redis und die Ablage sind
-dort korrekt an `127.0.0.1` gebunden, der Runner nicht. Wer diesen Port erreicht, kann Code auf
-Ihrem Server ausführen. Die gehärtete Variante veröffentlicht ebenfalls Debug-Ports, die
-LibreChat nicht braucht.
+<Aside type="danger" title="Beide Backends laufen ohne Anmeldung, die gehärtete Variante veröffentlicht ihre Ports zusätzlich offen">
+Beide Varianten prüfen **keinen Client-Schlüssel**: die schnelle schreibt `AUTH_ENABLED=false`,
+die gehärtete `LOCAL_MODE=true`. Wer einen dieser Ports erreicht, kann Code auf Ihrem Server
+ausführen. Der Schutz liegt deshalb in der Bindung des Ports, nicht in der Anmeldung.
 
-Der Zugriff muss deshalb auf der Firewall-Ebene gesperrt werden. Von Docker über `ports:`
-veröffentlichte Ports **umgehen `ufw`**, ein `ufw deny` wirkt hier also nicht. Wirksam ist nur
-die Kette `DOCKER-USER`:
+Bei der **schnellen Variante ist das erledigt**: `setup.sh` bindet den Runner an `127.0.0.1`.
+Nötig ist das, weil der Upstream-Stack ihn als `${PORT:-8000}:8000` veröffentlicht, also auf
+allen Schnittstellen; das Skript patcht den geklonten Compose-Stand nach dem Auschecken und
+prüft nach dem Start noch einmal die tatsächliche Bindung der laufenden Container. Findet es
+etwas ausserhalb `127.0.0.1`, stoppt es den Stack. Eine Firewall-Regel für Port 8000 brauchen
+Sie nicht mehr. Nachsehen können Sie selbst:
 
 ```bash title="Auf dem Server"
-sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
+docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'
+```
+
+Die **gehärtete Variante veröffentlicht ihre Debug-Ports weiterhin auf allen Schnittstellen**,
+obwohl LibreChat sie nicht braucht. Von Docker über `ports:` veröffentlichte Ports **umgehen
+`ufw`**, ein `ufw deny` wirkt hier also nicht. Wirksam ist nur die Kette `DOCKER-USER`:
+
+```bash title="Auf dem Server"
 sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
 ```
 
-Machen Sie die Regeln mit `iptables-persistent` dauerhaft, oder stellen Sie, sauberer, im
-Compose des jeweiligen Substacks die Port-Bindung auf `127.0.0.1:` um. Der Weg zu LibreChat
-läuft ohnehin über das interne Netz und nicht über den Host-Port.
+Machen Sie die Regel mit `iptables-persistent` dauerhaft. Der Weg zu LibreChat läuft ohnehin
+über das interne Netz und nicht über den Host-Port; wer die Ports zum Debuggen von einem
+anderen Rechner braucht, nimmt einen SSH-Tunnel statt einer Freigabe.
 </Aside>
