@@ -199,6 +199,98 @@
     --ease-drawer:cubic-bezier(.32,.72,0,1);
     --d-press:140ms; --d-hover:200ms; --d-panel:320ms; --d-reveal:480ms; --d-stagger:60ms;
   }
+  /* ======================================================================
+     GEMEINSAME BEDIENELEMENTE (Design-System „European Precision")
+
+     Wortgleich zu SiteHeader.dc.html und assets/content.css. Die Wiederholung
+     ist Absicht und keine Nachlaessigkeit: die dc-Laufzeit bindet die Stile
+     einer Komponente an deren eigenen Baum, deshalb reichen die Regeln aus
+     der Kopfleiste NICHT bis in die Sektionen dieser Seite. Genau daran ist
+     der erste Anlauf gescheitert — die Knoepfe der Leiste sassen richtig, die
+     der Hero blieben unformatiert. Wer eine Variante aendert, aendert sie in
+     allen drei Dateien.
+     ====================================================================== */
+  .euc-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:44px; padding:0 18px; box-sizing:border-box;
+    font-family:var(--f-display); font-size:14.5px; font-weight:500;
+    letter-spacing:-.004em; line-height:1; white-space:nowrap;
+    text-decoration:none; cursor:pointer;
+    border:1px solid transparent; border-radius:var(--r-control); background:none;
+    transition:background 180ms var(--ease-out), border-color 180ms var(--ease-out), color 180ms var(--ease-out);
+  }
+  /* Der globale Fokusring setzt einen eigenen Radius auf das Element. Ohne
+     diese Zeile wechselt ein Knopf beim Tabben von 4px auf 6px. */
+  .euc-btn:focus-visible, .euc-ibtn:focus-visible{ border-radius:var(--r-control); }
+  .euc-ibtn:focus-visible{ border-radius:var(--r-icon); }
+  /* Druck ist ein Versatz, keine Skalierung: ein Knopf, der beim Klicken
+     schrumpft, verschiebt seine Nachbarn optisch mit. */
+  .euc-btn:active, .euc-ibtn:active{ transform:translateY(1px); }
+
+  .euc-btn.is-primary{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); font-weight:600; }
+  .euc-btn.is-secondary{ color:var(--c-ink); background:#FFFFFF; border-color:var(--c-hairline-strong); }
+  .euc-btn.is-ghost{ color:var(--c-ink); background:transparent; border-color:transparent;
+    border-radius:var(--r-icon); min-height:36px; padding:0 12px; font-size:13.5px; }
+
+  /* Höhen nach Ort: Navigation 44, Hero 52, kompakte Aktionen 38. */
+  .euc-btn.is-nav{ min-height:44px; }
+  .euc-btn.is-hero{ min-height:52px; padding:0 22px; font-size:15px; }
+  .euc-btn.is-compact{ min-height:38px; padding:0 14px; font-size:13.5px; }
+
+  @media (hover:hover) and (pointer:fine){
+    .euc-btn.is-primary:hover{ background:#15304C; border-color:#15304C; }
+    .euc-btn.is-secondary:hover{ border-color:#9FB0C0; }
+    .euc-btn.is-ghost:hover{ background:rgba(11,30,51,.05); }
+  }
+
+  /* Quadratischer Symbolschalter, 42px. Für Pfeile und andere Aktionen ohne
+     Beschriftung; er braucht deshalb immer ein aria-label. */
+  .euc-ibtn{
+    width:42px; height:42px; flex:0 0 auto; padding:0; box-sizing:border-box;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    color:var(--c-ink); background:#FFFFFF;
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-icon);
+    transition:background 180ms var(--ease-out), border-color 180ms var(--ease-out), opacity 180ms var(--ease-out);
+  }
+  .euc-ibtn[disabled]{ opacity:.34; cursor:default; pointer-events:none; }
+  @media (hover:hover) and (pointer:fine){ .euc-ibtn:hover{ border-color:#9FB0C0; } }
+
+  /* Textlink mit Pfeil: kein Behälter, keine Fläche. Der Pfeil bewegt sich
+     beim Überfahren um 3px, mehr wäre eine Animation und keine Antwort. */
+  .euc-link{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--f-display); font-size:14.5px; font-weight:500;
+    color:var(--c-eu-700); text-decoration:none; }
+  .euc-link svg{ flex:0 0 auto; transition:transform 180ms var(--ease-out); }
+  @media (hover:hover) and (pointer:fine){
+    .euc-link:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
+    .euc-link:hover svg{ transform:translateX(3px); }
+  }
+
+  /* Statusabzeichen. AUSSCHLIESSLICH für echte Zustände („Bald verfügbar",
+     „Beta", „Aktiv"). Die runde Form ist hier reserviert und darf gerade
+     deshalb an keinem gewöhnlichen Knopf mehr vorkommen. */
+  .euc-status{
+    display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 10px;
+    font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--c-body-soft); background:#FFFFFF;
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-status); }
+  /* Auf den Navy-Sektionen dreht sich das Vorzeichen um, die Form bleibt. */
+  .euc-status.is-deep{ color:#C4D0DD; background:transparent; border-color:rgba(165,216,230,.30); }
+  /* Sekundaerknopf auf dunklem Grund: helle Flaeche, damit er nicht als
+     Umriss im Nichts steht. */
+  .euc-btn.is-secondary.is-deep{ color:#0B1E33; background:var(--c-bg-cool,#F5F8FA); border-color:var(--c-bg-cool,#F5F8FA); }
+  @media (hover:hover) and (pointer:fine){
+    .euc-btn.is-secondary.is-deep:hover{ background:#FFFFFF; border-color:#FFFFFF; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .euc-btn, .euc-ibtn, .euc-link svg{ transition-duration:1ms; }
+    .euc-btn:active, .euc-ibtn:active{ transform:none; }
+    .euc-link:hover svg{ transform:none; }
+  }
+
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{ margin:0; background:var(--c-bg); color:#111111; font-family:var(--f-body); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
@@ -2900,13 +2992,9 @@
         <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(36px,5.6vw,66px); line-height:1.08; letter-spacing:-0.021em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.finalcta.h2 }}</h2>
         <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.4vw,19px); line-height:1.6; color:#C4D0DD; margin:18px auto 0; max-width:480px; text-wrap:balance;">{{ t.finalcta.sub }}</p>
         <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:34px;">
-          <a href="/warteliste" class="euc-btn-press" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none; color:#0B1E33; background:var(--c-bg-cool); padding:15px 22px; border-radius:10px; transition:transform var(--d-press) var(--ease-out);">{{ t.finalcta.primary }}</a>
-          <a href="/self-hosting" class="euc-btn-press" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-decoration:none; color:#F7FAFC; background:transparent; padding:15px 22px; border:1px solid rgba(165,216,230,.4); border-radius:10px; transition:border-color .15s ease, background .15s ease, transform var(--d-press) var(--ease-out);" style-hover="border-color:#A5D8E6; background:rgba(165,216,230,.08);">{{ t.finalcta.secondary }}</a>
+          <a href="/warteliste" class="euc-btn is-secondary is-deep is-hero">{{ t.finalcta.primary }}</a>
+          <a href="/self-hosting" class="euc-btn is-hero" style="color:#F7FAFC; border-color:rgba(165,216,230,.34);">{{ t.finalcta.secondary }}</a>
         </div>
-        <a href="/warteliste" style="display:inline-flex; align-items:center; gap:8px; min-height:44px; margin-top:10px; font-family:var(--f-body); font-size:14px; font-weight:500; color:#9FB6C9; text-decoration:none; transition:color .15s ease;" style-hover="color:#F7FAFC;">
-          <span>{{ t.finalcta.enterprise }}</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-        </a>
       </div>
     </section>
 
@@ -3458,8 +3546,8 @@ this.mobRef = React.createRef();
         }
       },
       finalcta: {
-        de: { h2:'Ihr KI-Kollege wartet.', sub:'In der Schweiz gehostet oder selbst betrieben. In Minuten startklar.', primary:'Auf die Warteliste', secondary:'Self-host for free', enterprise:'Enterprise? Sprechen Sie mit uns' },
-        en: { h2:'Your AI coworker is waiting.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Join the waitlist', secondary:'Self-host for free', enterprise:'Enterprise? Talk to us' }
+        de: { h2:'Bereit, wenn Sie es sind.', sub:'In der Schweiz gehostet oder selbst betrieben. In Minuten startklar.', primary:'Auf die Warteliste', secondary:'Self-host for free' },
+        en: { h2:'Ready when you are.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Join the waitlist', secondary:'Self-host for free' }
       }
 ,
 hero2: {
