@@ -279,7 +279,8 @@
 
   /* ---------- Materialkarte: kein 1px-Rahmen mehr, sondern Kante + Schatten ---------- */
   .euc-card{ position:relative; border-radius:var(--r-l); background:var(--c-surface); box-shadow:var(--sh-2), var(--edge); transition:transform var(--d-hover) var(--ease-out), box-shadow var(--d-hover) var(--ease-out); }
-  .euc-stage{ position:relative; border-radius:var(--r-2xl); background:var(--c-surface); box-shadow:var(--sh-3), var(--edge); overflow:hidden; }
+  .euc-stage{ position:relative; border-radius:var(--r-card); background:var(--c-surface);
+    border:var(--bd); box-shadow:var(--sh-soft); overflow:hidden; }
   @media (hover:hover) and (pointer:fine){
     .euc-card:hover{ transform:translateY(-3px); box-shadow:var(--sh-3), var(--edge); }
   }
@@ -1119,7 +1120,8 @@
      und ein negativer Rand kann nur zurücknehmen, was er kennt. */
   .euc-olk-shell{ --olk-pad-x:clamp(24px,3.6vw,54px); --olk-pad-y:clamp(24px,3.6vw,54px);
     position:relative; overflow:hidden; max-width:var(--w-max); margin:0 auto;
-    border-radius:clamp(20px,2.8vw,38px); background:var(--c-surface); box-shadow:var(--sh-3), var(--edge);
+    border-radius:var(--r-card); background:var(--c-surface);
+    border:var(--bd); box-shadow:var(--sh-soft);
     padding:var(--olk-pad-y) var(--olk-pad-x); }
   .euc-olk-shell-in{ position:relative; z-index:1; display:flex; flex-wrap:wrap; align-items:center; gap:clamp(28px,4.2vw,52px); }
   .euc-olk-copy{ flex:1 1 360px; min-width:0; max-width:462px; }
@@ -1162,10 +1164,14 @@
      nicht: der Verlauf wandert, und unter dem Knopf steht mal Eisblau, mal das
      dunklere Band. Die Materialpille der Seite gibt ihm seinen eigenen Grund. */
   .euc-olk-replay{ position:relative; z-index:5; display:flex; justify-content:flex-end; margin-top:var(--s-2); }
-  .euc-olk-replay .euc-replay{ padding:0 15px; border-radius:var(--r-full); color:var(--c-eu-700);
-    background:var(--mat-chip); -webkit-backdrop-filter:saturate(160%) blur(14px); backdrop-filter:saturate(160%) blur(14px);
-    box-shadow:inset 0 0 0 1px rgba(11,30,51,.10); }
-  .euc-olk-win{ position:relative; z-index:2; border-radius:14px; background:var(--c-surface); box-shadow:0 2px 6px rgba(11,30,51,.10), 0 18px 40px -20px rgba(11,30,51,.34); overflow:hidden; }
+  /* Ghost statt Pille: „Nochmal abspielen" ist eine kleine Nebenaktion, und
+     die volle Rundung ist im neuen System dem Statusabzeichen vorbehalten. */
+  .euc-olk-replay .euc-replay{ min-height:36px; padding:0 12px; border-radius:var(--r-icon);
+    color:var(--c-ink); background:transparent; border:1px solid var(--c-hairline); }
+  @media (hover:hover) and (pointer:fine){
+    .euc-olk-replay .euc-replay.is-on:hover{ background:rgba(11,30,51,.05); }
+  }
+  .euc-olk-win{ position:relative; z-index:2; border-radius:var(--r-frame); background:var(--c-surface); border:1px solid rgba(11,30,51,.10); box-shadow:var(--sh-flat); overflow:hidden; }
   .euc-olk-chrome{ display:flex; align-items:center; gap:7px; padding:9px 13px; border-bottom:1px solid var(--c-line-soft); background:#FBFCFD; }
   .euc-olk-dot{ width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
   .euc-olk-chrome-t{ margin-left:8px; font-family:var(--f-mono); font-size:10px; color:var(--c-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -1305,7 +1311,8 @@
   }
   /* Unter 560px darf die Kachel nicht erdrücken: kleinerer Radius, weniger Innenabstand. */
   @media (max-width:560px){
-    .euc-olk-shell{ --olk-pad-x:16px; --olk-pad-y:20px; border-radius:18px; }
+    /* Der Radius ist eine Eigenschaft des Bauteils, nicht der Bildschirmbreite. */
+    .euc-olk-shell{ --olk-pad-x:16px; --olk-pad-y:20px; }
     .euc-olk-glass{ padding:12px; border-radius:14px 14px 0 0; }
   }
 
@@ -2027,6 +2034,49 @@
                           </div>
                         </div>
 
+                        <!-- Der Ausschnitt zeigt, was „daneben" heisst: links die
+                             Mailspalte, rechts der Bereich mit dem Entwurf. -->
+                        <div class="euc-cap-shot">
+                          <div class="euc-cap-shoth">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                            <span>{{ t.cap.m5.shot }}</span>
+                            <span class="euc-cap-shotpill">{{ t.cap.m5.pane }}</span>
+                          </div>
+                          <div class="euc-cap-shotb">
+                            <div class="euc-cap-shotl">
+                              <span class="euc-cap-bar" style="display:block; width:74%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:92%;"></span>
+                              <span class="euc-cap-bar is-a" style="display:block; width:58%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:84%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:66%;"></span>
+                            </div>
+                            <div class="euc-cap-shotr">
+                              <span class="euc-cap-shotk">{{ t.cap.m5.draft }}</span>
+                              <span class="euc-cap-bar is-a" style="display:block; width:88%;"></span>
+                              <span class="euc-cap-bar is-gold" style="display:block; width:52%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:96%;"></span>
+                              <span class="euc-cap-bar" style="display:block; width:70%;"></span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="euc-cap-foot">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v4"></path><path d="M9 3H5a2 2 0 0 0-2 2v4"></path><path d="M15 21h4a2 2 0 0 0 2-2v-4"></path><path d="M9 21H5a2 2 0 0 1-2-2v-4"></path></svg>
+                          <span>{{ t.cap.m5.foot }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- =====================================================================
          Enterprise und Open Source. Die wichtigste Aussage der Seite und
          deshalb die einzige Sektion mit einer Doppel-Überschrift. Bewusst
@@ -2117,49 +2167,6 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
             </a>
           </div>
-        </div>
-      </div>
-    </section>
-
-                        <!-- Der Ausschnitt zeigt, was „daneben" heisst: links die
-                             Mailspalte, rechts der Bereich mit dem Entwurf. -->
-                        <div class="euc-cap-shot">
-                          <div class="euc-cap-shoth">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                            <span>{{ t.cap.m5.shot }}</span>
-                            <span class="euc-cap-shotpill">{{ t.cap.m5.pane }}</span>
-                          </div>
-                          <div class="euc-cap-shotb">
-                            <div class="euc-cap-shotl">
-                              <span class="euc-cap-bar" style="display:block; width:74%;"></span>
-                              <span class="euc-cap-bar" style="display:block; width:92%;"></span>
-                              <span class="euc-cap-bar is-a" style="display:block; width:58%;"></span>
-                              <span class="euc-cap-bar" style="display:block; width:84%;"></span>
-                              <span class="euc-cap-bar" style="display:block; width:66%;"></span>
-                            </div>
-                            <div class="euc-cap-shotr">
-                              <span class="euc-cap-shotk">{{ t.cap.m5.draft }}</span>
-                              <span class="euc-cap-bar is-a" style="display:block; width:88%;"></span>
-                              <span class="euc-cap-bar is-gold" style="display:block; width:52%;"></span>
-                              <span class="euc-cap-bar" style="display:block; width:96%;"></span>
-                              <span class="euc-cap-bar" style="display:block; width:70%;"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="euc-cap-foot">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v4"></path><path d="M9 3H5a2 2 0 0 0-2 2v4"></path><path d="M15 21h4a2 2 0 0 0 2-2v-4"></path><path d="M9 21H5a2 2 0 0 1-2-2v-4"></path></svg>
-                          <span>{{ t.cap.m5.foot }}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div></div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
@@ -2452,9 +2459,9 @@
           <div style="position:relative; z-index:2; max-width:var(--w-max); margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:clamp(40px,6vw,80px);">
     
             <div style="flex:1 1 420px; min-width:0; max-width:560px;" data-reveal>
-              <span style="display:inline-flex; align-items:center; gap:8px; padding:5px 12px 5px 10px; border:1px solid rgba(244,197,66,.34); background:rgba(244,197,66,.12); border-radius:99px;">
+              <span class="euc-status is-deep">
                 <span style="position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#F4C542; opacity:.5; animation:euc-pulse 2.4s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#F4C542;"></span></span>
-                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#F4C542;">{{ t.mob.badge }}</span>
+                <span>{{ t.mob.badge }}</span>
               </span>
     
               <h2 class="euc-h2 euc-h2-deep" style="margin-top:18px;">{{ t.mob.h2 }}</h2>
@@ -2800,7 +2807,7 @@
                Repository heute noch geschlossen ist. Offenes Schloss als
                Zeichen — geschlossen wäre die falsche Aussage, es geht um
                etwas, das aufgeht, nicht um etwas Verriegeltes. -->
-          <div style="display:flex; gap:13px; margin-top:24px; max-width:470px; padding:15px 17px; border-radius:13px; background:rgba(165,216,230,.07); box-shadow:inset 0 0 0 1px rgba(165,216,230,.18);">
+          <div style="display:flex; gap:13px; margin-top:24px; max-width:470px; padding:15px 17px; border-radius:var(--r-card); background:rgba(165,216,230,.07); box-shadow:inset 0 0 0 1px rgba(165,216,230,.18);">
             <span style="flex:0 0 auto; margin-top:2px; color:#F4C542;" aria-hidden="true">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
             </span>
@@ -2817,7 +2824,7 @@
           </div>
 
           <div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; margin-top:26px;">
-            <a href="{{ github }}" class="euc-btn-press" style="font-family:'Inter',sans-serif; font-size:15px; font-weight:600; text-decoration:none; color:#0B1E33; background:var(--c-bg-cool); padding:13px 20px; border-radius:10px; transition:transform var(--d-press) var(--ease-out);">{{ t.selfhost.cta }}</a>
+            <a href="{{ github }}" class="euc-btn is-secondary is-deep is-hero">{{ t.selfhost.cta }}</a>
             <div style="display:flex; align-items:center; gap:9px;">
               <span style="color:#F4C542; font-size:16px;">★</span>
               <div>
@@ -2825,7 +2832,7 @@
                 <div style="font-family:'Inter',sans-serif; font-size:11.5px; color:#8AA0B6; margin-top:3px;">{{ t.selfhost.starsLabel }}</div>
               </div>
             </div>
-            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#C4D0DD; border:1px solid rgba(165,216,230,.3); border-radius:99px; padding:5px 11px;">{{ t.selfhost.mit }}</span>
+            <span class="euc-status is-deep">{{ t.selfhost.mit }}</span>
           </div>
 
           <a href="/self-hosting" style="display:inline-flex; align-items:center; min-height:44px; gap:8px; margin-top:16px; font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-decoration:none; color:#A5D8E6; transition:color .15s ease;" style-hover="color:#D6EDF5;">
@@ -2835,7 +2842,7 @@
         </div>
 
         <div style="flex:1 1 460px; min-width:0;" data-reveal data-reveal-delay="120">
-          <div style="border-radius:var(--r-l); background:#07131F; box-shadow:var(--sh-deep), var(--edge-deep); overflow:hidden;">
+          <div style="border-radius:var(--r-frame); background:#07131F; box-shadow:var(--edge-deep); overflow:hidden;">
             <div style="display:flex; align-items:center; gap:8px; padding:11px 14px; border-bottom:1px solid rgba(165,216,230,.12);">
               <span style="width:11px; height:11px; border-radius:50%; background:#E5695B;"></span>
               <span style="width:11px; height:11px; border-radius:50%; background:#F4C542;"></span>

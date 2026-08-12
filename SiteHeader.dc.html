@@ -112,6 +112,14 @@
     font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
     color:var(--c-body-soft); background:#FFFFFF;
     border:1px solid var(--c-hairline-strong); border-radius:var(--r-status); }
+  /* Auf den Navy-Sektionen dreht sich das Vorzeichen um, die Form bleibt. */
+  .euc-status.is-deep{ color:#C4D0DD; background:transparent; border-color:rgba(165,216,230,.30); }
+  /* Sekundaerknopf auf dunklem Grund: helle Flaeche, damit er nicht als
+     Umriss im Nichts steht. */
+  .euc-btn.is-secondary.is-deep{ color:#0B1E33; background:var(--c-bg-cool,#F5F8FA); border-color:var(--c-bg-cool,#F5F8FA); }
+  @media (hover:hover) and (pointer:fine){
+    .euc-btn.is-secondary.is-deep:hover{ background:#FFFFFF; border-color:#FFFFFF; }
+  }
 
   @media (prefers-reduced-motion: reduce){
     .euc-btn, .euc-ibtn, .euc-link svg{ transition-duration:1ms; }
