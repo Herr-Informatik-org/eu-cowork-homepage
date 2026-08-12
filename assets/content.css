@@ -118,6 +118,17 @@
   --r-xs:8px; --r-s:10px; --r-m:14px; --r-l:20px;
   --r-xl:24px; --r-2xl:32px; --r-full:999px;
 
+  /* --- European Precision: Radien nach ROLLE statt nach Fläche ---
+     Wortgleich zu Landing.dc.html und SiteHeader.dc.html. Über 12px geht für
+     normale Bauteile nichts mehr, die volle Rundung bleibt dem Status
+     vorbehalten. Die alte Skala steht, bis nichts mehr auf sie zeigt. --- */
+  --r-control:4px; --r-icon:6px; --r-frame:8px; --r-card:12px; --r-status:999px;
+  --c-hairline:#DDE4EA; --c-hairline-strong:#C6D0DA;
+  --bd:1px solid var(--c-hairline);
+  --c-surface-warm:#FAF9F6;
+  --sh-flat:0 1px 2px rgba(11,30,51,.04);
+  --sh-soft:0 1px 2px rgba(11,30,51,.04), 0 8px 18px -12px rgba(11,30,51,.13);
+
   /* --- Schatten, in Navy getönt, nie neutralschwarz --- */
   --sh-1:0 1px 2px rgba(11,30,51,.05);
   --sh-2:0 1px 2px rgba(11,30,51,.05),
@@ -339,50 +350,99 @@ img { height: auto; }
 
 .euc-header-cta { display: flex; align-items: center; gap: 14px; flex: 0 0 auto; }
 
-.euc-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  font-family: var(--f-body);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--c-on-deep);
-  background: var(--c-deep);
-  padding: 11px 18px;
-  border-radius: var(--r-s);
-  white-space: nowrap;
-  box-shadow: var(--sh-2), inset 0 1px 0 rgba(255,255,255,.10);
-  transition: transform var(--d-hover) var(--ease-out),
-              background var(--d-hover) var(--ease-out),
-              box-shadow var(--d-hover) var(--ease-out);
-}
-.euc-btn-primary:active { transform: scale(.97); }
+/* ======================================================================
+   GEMEINSAME BEDIENELEMENTE (Design-System „European Precision")
 
+   Wortgleich zu Landing.dc.html und SiteHeader.dc.html. Die statischen
+   Seiten laden keine dieser beiden Dateien, deshalb steht der Satz hier ein
+   drittes Mal. Die alten Namen .euc-btn-primary und .euc-btn-secondary
+   bleiben als Aliasse stehen: sie sind im Markup aller sieben Seiten, und
+   ein Umbenennen wäre eine Änderung an sieben Dateien ohne Gewinn.
+   ====================================================================== */
+.euc-btn,
+.euc-btn-primary,
 .euc-btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-height: 44px;
+  padding: 0 18px;
+  box-sizing: border-box;
   font-family: var(--f-body);
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 500;
-  text-decoration: none;
-  color: var(--c-ink);
-  background: var(--mat-chip);
-  padding: 11px 16px;
-  border: 0;
-  border-radius: var(--r-s);
+  letter-spacing: -.004em;
+  line-height: 1;
   white-space: nowrap;
-  box-shadow: var(--sh-1), var(--edge);
-  transition: transform var(--d-hover) var(--ease-out),
-              box-shadow var(--d-hover) var(--ease-out);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  background: none;
+  transition: background 180ms var(--ease-out),
+              border-color 180ms var(--ease-out),
+              color 180ms var(--ease-out);
 }
-.euc-btn-secondary:active { transform: scale(.97); }
-/* In der bereits transluzenten Leiste deckend: nie zwei helle
-   Milchglasflächen stapeln. */
-.euc-header .euc-btn-secondary { background: var(--c-surface); }
+.euc-btn:focus-visible,
+.euc-btn-primary:focus-visible,
+.euc-btn-secondary:focus-visible { border-radius: var(--r-control); }
+/* Druck ist ein Versatz, keine Skalierung: ein Knopf, der beim Klicken
+   schrumpft, verschiebt seine Nachbarn optisch mit. */
+.euc-btn:active,
+.euc-btn-primary:active,
+.euc-btn-secondary:active { transform: translateY(1px); }
+
+.euc-btn.is-primary,
+.euc-btn-primary { color: #F7FAFC; background: var(--c-deep); border-color: var(--c-deep); font-weight: 600; }
+.euc-btn.is-secondary,
+.euc-btn-secondary { color: var(--c-ink); background: #FFFFFF; border-color: var(--c-hairline-strong); }
+.euc-btn.is-ghost { color: var(--c-ink); background: transparent; border-color: transparent;
+  border-radius: var(--r-icon); min-height: 36px; padding: 0 12px; font-size: 13.5px; }
+
+/* Höhen nach Ort: Navigation 44, Hero 52, kompakte Aktionen 38. */
+.euc-btn.is-nav { min-height: 44px; }
+.euc-btn.is-hero { min-height: 52px; padding: 0 22px; font-size: 15px; }
+.euc-btn.is-compact { min-height: 38px; padding: 0 14px; font-size: 13.5px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .euc-btn.is-primary:hover, .euc-btn-primary:hover { background: #15304C; border-color: #15304C; }
+  .euc-btn.is-secondary:hover, .euc-btn-secondary:hover { border-color: #9FB0C0; }
+  .euc-btn.is-ghost:hover { background: rgba(11,30,51,.05); }
+}
+
+/* Quadratischer Symbolschalter, 42px. Er braucht immer ein aria-label. */
+.euc-ibtn {
+  width: 42px; height: 42px; flex: 0 0 auto; padding: 0; box-sizing: border-box;
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  color: var(--c-ink); background: #FFFFFF;
+  border: 1px solid var(--c-hairline-strong); border-radius: var(--r-icon);
+  transition: background 180ms var(--ease-out), border-color 180ms var(--ease-out);
+}
+.euc-ibtn:focus-visible { border-radius: var(--r-icon); }
+.euc-ibtn[disabled] { opacity: .34; cursor: default; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .euc-ibtn:hover { border-color: #9FB0C0; } }
+
+/* Textlink mit Pfeil: kein Behälter, keine Fläche. */
+.euc-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-body); font-size: 14.5px; font-weight: 500;
+  color: var(--c-eu-700); text-decoration: none;
+}
+.euc-link svg { flex: 0 0 auto; transition: transform 180ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .euc-link:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .euc-link:hover svg { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .euc-btn, .euc-btn-primary, .euc-btn-secondary, .euc-ibtn, .euc-link svg { transition-duration: 1ms; }
+  .euc-btn:active, .euc-btn-primary:active, .euc-btn-secondary:active, .euc-ibtn:active { transform: none; }
+  .euc-link:hover svg { transform: none; }
+}
+
+
+/* Der Sekundärknopf ist ohnehin deckend weiss; die frühere Ausnahme für die
+   transluzente Leiste braucht es nicht mehr. */
 
 /* Mobiles Menü: reines CSS über <details>, kein JavaScript */
 .euc-mob { display: none; margin-left: auto; position: relative; }
@@ -418,8 +478,8 @@ img { height: auto; }
   min-width: 244px;
   background: var(--c-bg);
   border: 0;
-  border-radius: var(--r-m);
-  box-shadow: var(--sh-4), var(--edge);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-soft);
   padding: var(--s-2);
   display: flex;
   flex-direction: column;
@@ -691,8 +751,9 @@ small, .euc-small {
 .kurz-gesagt {
   background: var(--c-ice-100);
   border: 0;
-  border-radius: var(--r-l);
-  box-shadow: var(--sh-2), var(--edge);
+  border-radius: var(--r-card);
+  border: var(--bd);
+  box-shadow: var(--sh-flat);
   padding: clamp(22px, 3vw, 30px);
   margin: 0 0 clamp(32px, 4vw, 44px);
 }
@@ -726,8 +787,9 @@ small, .euc-small {
 .toc {
   border: 0;
   background: var(--c-surface);
-  border-radius: var(--r-l);
-  box-shadow: var(--sh-2), var(--edge);
+  border-radius: var(--r-card);
+  border: var(--bd);
+  box-shadow: var(--sh-flat);
   padding: clamp(18px, 2.5vw, 26px);
   margin: 0 0 clamp(32px, 4vw, 44px);
 }
@@ -784,7 +846,7 @@ small, .euc-small {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border: 0;
-  border-radius: var(--r-l);
+  border-radius: var(--r-card);
   background:
     linear-gradient(90deg, var(--c-surface) 40%, rgba(255,255,255,0)) 0 0 / 26px 100% no-repeat local,
     linear-gradient(270deg, var(--c-surface) 40%, rgba(255,255,255,0)) 100% 0 / 26px 100% no-repeat local,
@@ -876,8 +938,9 @@ small, .euc-small {
   position: relative;
   border: 0;
   background: var(--c-surface);
-  border-radius: var(--r-l);
-  box-shadow: var(--sh-2), var(--edge);
+  border-radius: var(--r-card);
+  border: var(--bd);
+  box-shadow: var(--sh-soft);
   padding: 22px;
   margin: 0 0 var(--s-4);
   transition: transform var(--d-hover) var(--ease-out),
@@ -955,8 +1018,8 @@ pre {
   margin: 0 0 var(--s-6);
   padding: 20px 22px;
   background: var(--c-deep);
-  border-radius: var(--r-m);
-  box-shadow: var(--sh-3);
+  border-radius: var(--r-frame);
+  box-shadow: none;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -983,7 +1046,7 @@ pre code {
   isolation: isolate;
   overflow: hidden;
   color: var(--c-on-deep);
-  border-radius: var(--r-2xl);
+  border-radius: var(--r-card);
   padding: clamp(32px, 4.5vw, 52px);
   margin: clamp(48px, 6vw, 72px) 0 0;
   background-color: var(--c-deep);
@@ -1322,7 +1385,7 @@ pre code {
   .euc-footer-top { gap: var(--s-7); }
   .euc-footer-cols { gap: var(--s-6) var(--s-7); }
   .euc-footer-col { min-width: 132px; }
-  .cta-box { border-radius: var(--r-xl); }
+  /* Radius ist eine Eigenschaft des Bauteils, nicht der Bildschirmbreite. */
   .table-wrap > table { font-size: 14.5px; }
   .table-wrap th, .table-wrap td { padding: 12px 14px; }
 }
