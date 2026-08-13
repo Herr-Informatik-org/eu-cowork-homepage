@@ -4348,13 +4348,11 @@ clearTimeout(this._mobTimer);
             size: Math.max(1, spacing * (0.58 + Math.random() * 0.24)),
             alpha: fade * (0.82 + Math.random() * 0.18),
             color: 'rgb(' + r + ',' + g + ',' + b + ')',
-            /* Wie stark dieser Punkt sich im Wirbel mitdreht. Alle drehen in
-               dieselbe Richtung — ein Gegenlauf saehe nach Rauschen aus, nicht
-               nach Stroemung —, aber unterschiedlich schnell. Aus dem
-               Unterschied entsteht die Scherung, und die IST das Durchmischen:
-               Nachbarn gleiten aneinander vorbei, statt als Block zu kippen. */
-            spin: 0.55 + Math.random() * 0.9,
-            scatter: 0.68 + Math.random() * 0.72
+            /* EINE Zufallszahl je Punkt, die drei Dinge zugleich traegt:
+               seine Richtung im Gewimmel, seine Wurfweite und sein Flackern.
+               Dass es dieselbe Zahl ist, macht den Punkt zu einem Charakter
+               statt zu drei unabhaengigen Rauschquellen. */
+            rnd: Math.random()
           });
         }
       }
@@ -4384,6 +4382,13 @@ clearTimeout(this._mobTimer);
       }
       this._pgGrid = { cell, cols, rows, buckets };
       this._pgMaxSize = maxSize;
+      /* Die Wurfweite haengt am ABSTAND der Punkte, nicht an der Bildgroesse:
+         das Gewimmel soll ein paar Zellen weit reichen, damit sich Nachbarn
+         mischen — auf einer dichteren Wolke also entsprechend weniger Pixel.
+         Die Vorlage rechnet genauso (ihr uScatterPx ist Streuung mal Raster)
+         und landet bei 7.8 px; mit unserem Raster kommt hier fast dasselbe
+         heraus. */
+      this._pgScatter = spacing * 2.0;
 
       /* Immer einmal zeichnen, nicht nur wenn eine Schleife laeuft. Die
          Schleife haengt an Sichtbarkeit, Bewegungseinstellung und Blickfeld;
@@ -4463,7 +4468,7 @@ clearTimeout(this._mobTimer);
 
   _pgStart(){
     if (this._pgRaf || !this._pgCtx) return;
-    const loop = () => { this._pgRaf = requestAnimationFrame(loop); this._pgDraw(); };
+    const loop = (ts) => { this._pgRaf = requestAnimationFrame(loop); this._pgDraw(ts); };
     this._pgRaf = requestAnimationFrame(loop);
   }
 
@@ -4506,7 +4511,7 @@ clearTimeout(this._mobTimer);
        als feiner Sprung genau dort, wo die aufgeraeumte Flaeche endet. */
     const real = this._pgCtx;
     this._pgCtx = sc;
-    this._pgPaint(0, 0, this._pgW, this._pgH, { x:-1e6, y:-1e6, s:0 }, 1);
+    this._pgPaint(0, 0, this._pgW, this._pgH, { x:-1e6, y:-1e6, s:0 }, 1, 0);
     this._pgCtx = real;
   }
 
@@ -4527,47 +4532,53 @@ clearTimeout(this._mobTimer);
     this._pgWasActive = false;
   }
 
-  /* Wo ein Punkt liegt, ist eine REINE FUNKTION der Zeigerposition — kein
-     Zustand, keine Feder, keine Geschwindigkeit, kein Zeitglied.
+  /* Der Ort eines Punktes ist eine reine Funktion aus Zeigerposition UND
+     Zeit — kein Federsystem, keine Geschwindigkeit, nichts, was nachschwingt.
 
-     Das ist der eigentliche Umbau, und er beantwortet beide Beobachtungen an
-     der Vorlage auf einmal:
+     Damit stimmen drei Dinge auf einmal:
 
-     - „wenig verzoegert": ohne Feder gibt es nichts, das erst einschwingen
-       oder ausschwingen muesste. Die Verformung sitzt am Zeiger, im selben
-       Bild. Frueher lief der Punkt seinem Ziel hinterher; jetzt IST er dort.
-     - „fluessig": benachbarte Punkte bekommen nahezu dieselbe Verformung,
-       die Wolke verzieht sich also wie ein Tuch statt wie 12'000 einzelne
-       Federn mit eigener Phase. Aus derselben Eigenschaft folgt, dass
-       ausserhalb des Feldes NICHTS in Bewegung ist — und nur deshalb kann
-       unten die Teilflaeche gezeichnet werden statt des ganzen Bildes.
+     - „wenig verzoegert": ohne Feder muss nichts erst ein- oder ausschwingen.
+       Die Verformung sitzt am Zeiger, im selben Bild.
+     - „fluessig": Nachbarpunkte bekommen fast dieselbe Verformung, die Wolke
+       verzieht sich wie ein Tuch statt wie 18'000 einzelne Federn.
+     - „durchgehend in Bewegung": die RICHTUNG, in die ein Punkt geworfen
+       wird, dreht sich mit der Zeit weiter. Der Zeiger darf stillstehen, das
+       Gewimmel laeuft trotzdem.
 
-     Gewirbelt statt gestossen: der Punkt wird um den Zeiger GEDREHT, nicht
-     von ihm weggeschoben. Der Drehwinkel faellt nach aussen auf null ab,
-     innen dreht es also weiter als aussen — diese Scherung ist der Wirbel.
-     Dazu eine kleine radiale Oeffnung, damit die Dichte aufgeht und der
-     Wirbel sichtbar wird, statt nur die Farben zu verrutschen. */
-  _pgDraw(){
+     Das dritte war der Fehler der letzten Fassung: dort haing die Auslenkung
+     nur am Ort, also erstarrte das Bild, sobald die Maus stehenblieb.
+
+     Gewimmel statt Stoss: jeder Punkt hat seine EIGENE Richtung (aus seiner
+     Zufallszahl), nicht die vom Zeiger weg zeigende. Deshalb reisst an der
+     Zeigerspitze kein Loch auf — die Dichte bleibt erhalten, die Punkte
+     tauschen nur die Plaetze. Genau das ist das Durchmischen.
+
+     Die Zahlen stammen aus dem Hero-Shader von aion.xyz, auf unser Raster
+     umgerechnet: Einflussradius 0.30 der kuerzeren Seite (dort 0.30 der
+     Hoehe), Wurfweite das Doppelte des Punktabstands (dort 7.8 px bei
+     vergleichbarem Raster), Richtungsdrift 4 rad/s, Groessenflackern 1.4,
+     Glaettung 0.2 fuer den Ort und 0.12 fuer die Staerke. */
+  _pgDraw(ts){
     const ctx = this._pgCtx;
     if (!ctx) return;
     const w = this._pgW, h = this._pgH;
 
     /* Ort folgt schnell, Staerke schwillt langsam — das ist der Trick, mit
        dem die Vorlage ruhig UND unmittelbar wirkt. Beides zu verlangsamen
-       (der Fehler der letzten Fassung) liest sich als Traegheit; nur die
+       (der Fehler einer frueheren Fassung) liest sich als Traegheit; nur die
        Staerke zu verlangsamen liest sich als Anmut. */
     const p = this._pgPointer, tgt = this._pgTarget;
-    p.x += (tgt.x - p.x) * 0.18;
-    p.y += (tgt.y - p.y) * 0.18;
-    p.s += (tgt.s - p.s) * 0.08;
+    p.x += (tgt.x - p.x) * 0.2;
+    p.y += (tgt.y - p.y) * 0.2;
+    p.s += (tgt.s - p.s) * 0.12;
     if (this._reduced()) p.s = 0;
 
-    const radius = Math.min(w, h) * 0.18;
-    /* Weiter als bis an den Feldrand kommt kein Punkt: die Drehung erhaelt
-       den Abstand zum Zeiger, und die radiale Oeffnung verschwindet genau
-       dort, wo der Abstand am groessten ist. Der Rand des Punktes und ein
-       Pixel Sicherheit kommen dazu. */
-    const reach = radius + this._pgMaxSize + 1;
+    const radius = Math.min(w, h) * 0.30;
+    /* Wurfweite mal 1.5, weil die Zufallszahl bis 1 geht und mit (0.5 + rnd)
+       eingeht; Punktgroesse mal 1.7, weil das Flackern so weit aufblasen
+       kann. Beides muss drin sein, sonst raeumt die Flaeche einen Punkt nur
+       halb weg, der ueber ihren Rand hinausragt. */
+    const reach = radius + (this._pgScatter || 0) * 1.5 + this._pgMaxSize * 1.7 + 1;
 
     const aktiv = p.s > 0.002;
     /* Weder jetzt noch im Bild davor ein Feld: es steht bereits alles
@@ -4613,7 +4624,7 @@ clearTimeout(this._mobTimer);
     ctx.clip();
     ctx.clearRect(px0, py0, px1 - px0, py1 - py0);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    this._pgPaint(x0, y0, x1, y1, p, radius);
+    this._pgPaint(x0, y0, x1, y1, p, radius, ts || 0);
     ctx.restore();
   }
 
@@ -4621,7 +4632,7 @@ clearTimeout(this._mobTimer);
      Getrennt von _pgDraw, weil das die einzige Stelle ist, an der die
      Wirbel-Formel steht: so laesst sie sich fuer eine Pruefung ueber die
      GANZE Flaeche aufrufen und Bild fuer Bild gegen die Teilflaeche halten. */
-  _pgPaint(x0, y0, x1, y1, p, radius){
+  _pgPaint(x0, y0, x1, y1, p, radius, tMs){
     const ctx = this._pgCtx, gr = this._pgGrid;
     if (!ctx || !gr) return;
     /* Der Zellbereich wird um eine Punktbreite groesser genommen als die
@@ -4635,6 +4646,13 @@ clearTimeout(this._mobTimer);
     const c0 = Math.max(0, ((x0 - m) / gr.cell) | 0), c1 = Math.min(gr.cols - 1, ((x1 + m) / gr.cell) | 0);
     const r0 = Math.max(0, ((y0 - m) / gr.cell) | 0), r1 = Math.min(gr.rows - 1, ((y1 + m) / gr.cell) | 0);
     const rad2 = radius * radius, s = p.s;
+    /* Die Richtung dreht sich mit der Zeit: 4 rad/s, also eine volle Drehung
+       in gut anderthalb Sekunden. Bei einer Wurfweite von wenigen Pixeln
+       laeuft der Punkt damit auf einer winzigen Kreisbahn — zu klein, um als
+       Kreisen gelesen zu werden, gross genug, damit die Wolke unter dem
+       stehenden Zeiger nie erstarrt. */
+    const drift = tMs * 0.004;
+    const wurf = this._pgScatter || 0;
     for (let ry = r0; ry <= r1; ry++){
       for (let cx = c0; cx <= c1; cx++){
         const bucket = gr.buckets[ry * gr.cols + cx];
@@ -4643,25 +4661,26 @@ clearTimeout(this._mobTimer);
           const q = bucket[i];
           const dx = q.ox - p.x, dy = q.oy - p.y;
           const dd = dx * dx + dy * dy;
-          let a = q.alpha, sz = q.size;
+          let sz = q.size;
           if (dd < rad2 && s > 0.002){
             const dist = Math.sqrt(dd);
             const u = 1 - dist / radius;
-            /* Smoothstep: an beiden Enden flach. Am Feldrand setzt die
-               Drehung nicht ein, sie taucht auf. */
-            const amt = u * u * (3 - 2 * u) * s;
-            const th = amt * 0.95 * q.spin;
-            const co = Math.cos(th), si = Math.sin(th);
-            const g = 1 + amt * 0.18 * q.scatter;
-            q.x = p.x + (dx * co - dy * si) * g;
-            q.y = p.y + (dx * si + dy * co) * g;
-            /* Ein Hauch mehr Licht und Groesse dort, wo der Wirbel greift.
-               Haengt an der Feldstaerke, nicht an der Geschwindigkeit —
-               sonst flackerte es beim Bewegen der Maus. */
-            a = Math.min(1, q.alpha * (1 + amt * 0.30));
-            sz = q.size * (1 + amt * 0.14);
+            /* Smoothstep, dann quadriert: an beiden Enden flach, und der
+               Wurf setzt zur Mitte hin sanft ein. Am Feldrand bewegt sich
+               praktisch nichts — dadurch gibt es keinen Ring, an dem
+               Bewegtes auf Stehendes trifft. */
+            const fall = u * u * (3 - 2 * u);
+            const mag = fall * fall * s * wurf * (0.5 + q.rnd);
+            const ang = q.rnd * 6.283185307 + drift;
+            q.x = q.ox + Math.cos(ang) * mag;
+            q.y = q.oy + Math.sin(ang) * mag;
+            /* Groessenflackern statt Helligkeitsschub: die Vorlage laesst die
+               Punkte im Feld atmen, und weil das Vorzeichen an der Zufalls-
+               zahl haengt, werden die einen groesser, waehrend die anderen
+               kleiner werden. Das Bild bleibt dadurch insgesamt gleich hell. */
+            sz = q.size * (1 + (q.rnd - 0.5) * fall * s * 1.4);
           } else { q.x = q.ox; q.y = q.oy; }
-          ctx.globalAlpha = a;
+          ctx.globalAlpha = q.alpha;
           ctx.fillStyle = q.color;
           ctx.fillRect(q.x, q.y, sz, sz);
         }
