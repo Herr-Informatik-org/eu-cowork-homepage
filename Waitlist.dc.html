@@ -29,7 +29,6 @@
 <noscript>
   <h1>Frühen Zugang zu EU Cowork AI sichern.</h1>
   <p>Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.</p>
-  <p>Beta-Zugang · Direkter Austausch · Jederzeit abmeldbar</p>
   <p>Die ersten Einladungen werden schrittweise verschickt.</p>
   <p>Die Anmeldung braucht JavaScript; bitte aktivieren Sie es oder schreiben Sie an info@herr-informatik.ch.</p>
   <ul>
@@ -61,7 +60,7 @@
      und :active (Inline-Stile schlagen jede Regel). --------------------- */
   :root{
     --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
-    --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+    --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
     --c-bg:#FBFAF6; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
@@ -90,36 +89,11 @@
 
   #top{ min-height:100vh; min-height:100svh; display:flex; flex-direction:column; }
 
-  /* ---- Kopfzeile: Marke links, Rückweg rechts. Kein Schatten. ---------- */
-  .wl-hd{
-    flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
-    gap:16px; min-height:66px; padding:0 clamp(16px,5vw,44px);
-    border-bottom:1px solid rgba(11,30,51,.07); background:var(--c-bg);
-  }
-  .wl-brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
-  .wl-brand-word{ font-size:17px; font-weight:600; letter-spacing:-.010em; color:var(--c-ink); white-space:nowrap; }
-  .wl-brand-ai{ color:var(--c-eu-500); }
-  .wl-hd-right{ display:flex; align-items:center; gap:6px; }
-  /* Die Sprachumschaltung bleibt: ohne sie gäbe es auf dieser Seite keinen
-     Weg zur englischen Fassung, und die Seite ist zweisprachig gepflegt. */
-  .wl-lang{ display:inline-flex; align-items:center; padding:2px; border:var(--bd); border-radius:var(--r-control); background:var(--c-surface); }
-  .wl-lang button{
-    min-height:26px; padding:0 8px; border:0; border-radius:2px; cursor:pointer;
-    font-family:var(--f-mono); font-size:11px; letter-spacing:.06em;
-    background:transparent; color:var(--c-body-soft); transition:background .15s ease, color .15s ease;
-  }
-  .wl-lang button.is-on{ background:var(--c-deep); color:#F7FAFC; }
-  .wl-back{
-    display:inline-flex; align-items:center; gap:7px; min-height:36px; padding:0 10px;
-    font-size:14px; font-weight:500; color:var(--c-ink); text-decoration:none;
-    white-space:nowrap; border-radius:var(--r-control); transition:color .15s ease;
-  }
-  .wl-back svg{ flex:0 0 auto; }
-
   /* ---- Bühne und Kachel ------------------------------------------------ */
+  /* 68 px Kopfhoehe plus Luft: die Leiste liegt fest ueber der Seite. */
   .wl-main{
     flex:1 1 auto; display:flex; align-items:center;
-    padding:clamp(24px,4vw,56px) 0;
+    padding:calc(68px + clamp(24px,3.5vw,48px)) 0 clamp(40px,5vw,72px);
   }
   .wl-tile{
     position:relative; isolation:isolate; overflow:hidden;
@@ -179,28 +153,16 @@
 
   /* ---- Linke Spalte ---------------------------------------------------- */
   .wl-msg{ max-width:430px; }
-  .wl-eyebrow{
-    font-family:var(--f-mono); font-size:11.5px; letter-spacing:.13em;
-    text-transform:uppercase; color:#8A6A22;
-  }
   .wl-h1{
     font-family:var(--f-display); font-weight:400;
     font-size:clamp(34px,4.6vw,58px); line-height:1.07; letter-spacing:-.024em;
-    color:var(--c-ink); margin:18px 0 0;
+    color:var(--c-ink); margin:0;
   }
   .wl-sub{
     font-size:clamp(15.5px,1.2vw,17px); line-height:1.58; letter-spacing:-.004em;
     color:#3D4B59; margin:20px 0 0;
   }
-  /* Der Trenner hängt am CSS, nicht am Text: so steht er mittig zwischen
-     zwei Einträgen und fällt nach dem letzten und am Zeilenumbruch weg. */
-  .wl-meta{
-    display:flex; flex-wrap:wrap; align-items:center; gap:8px;
-    margin-top:26px; font-family:var(--f-mono); font-size:12px;
-    letter-spacing:.04em; color:#6A5626;
-  }
-  .wl-meta span:not(:last-child)::after{ content:'·'; margin-left:8px; color:rgba(106,86,38,.45); }
-  .wl-hint{ margin:16px 0 0; font-size:13px; line-height:1.5; color:#7A6535; }
+  .wl-hint{ margin:22px 0 0; font-size:13px; line-height:1.5; color:#7A6535; }
 
   /* ---- Rechte Formularkarte ------------------------------------------- */
   .wl-cardcol{ display:flex; justify-content:flex-end; }
@@ -211,12 +173,16 @@
     padding:clamp(26px,2.6vw,36px);
   }
   .wl-row + .wl-row{ margin-top:18px; }
+  /* Mono-Label wortgleich zu `.euc-eyebrow` in assets/content.css:
+     11,5 px, Strichstaerke 500, Sperrung .13em. Vorher standen hier
+     10,5 px in 400 mit .09em — dieselbe Familie, aber sichtbar leichter
+     und enger als jedes andere Mono-Label der Seite. */
   .wl-label{
-    display:flex; align-items:baseline; gap:7px; margin-bottom:8px;
-    font-family:var(--f-mono); font-size:10.5px; letter-spacing:.09em;
-    text-transform:uppercase; color:var(--c-body-soft);
+    display:flex; align-items:baseline; gap:7px; margin-bottom:9px;
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--c-eu-500);
   }
-  .wl-opt{ font-family:var(--f-mono); font-size:10px; letter-spacing:.06em; color:var(--c-muted); text-transform:none; }
+  .wl-opt{ font-family:var(--f-mono); font-size:10.5px; font-weight:400; letter-spacing:.06em; color:var(--c-muted); text-transform:none; }
   .wl-req{ color:var(--c-danger); }
 
   .wl-field{
@@ -270,7 +236,7 @@
 
   /* ---- Erfolg: dieselbe Karte, anderer Inhalt. ------------------------- */
   .wl-done-k{
-    font-family:var(--f-mono); font-size:11px; letter-spacing:.13em;
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500; letter-spacing:.13em;
     text-transform:uppercase; color:var(--c-eu-500);
   }
   .wl-done-t{
@@ -293,24 +259,11 @@
   .wl-select{ cursor:pointer; height:48px; }
   .wl-textarea{ height:auto; min-height:78px; line-height:1.5; padding:12px 13px; resize:vertical; }
 
-  /* ---- Fuss: eine Zeile. ---------------------------------------------- */
-  .wl-ft{
-    flex:0 0 auto; border-top:1px solid rgba(11,30,51,.07);
-    display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px;
-    padding:18px clamp(16px,5vw,44px);
-    font-size:13px; letter-spacing:.006em; color:var(--c-body-soft);
-  }
-  .wl-ft a{ color:var(--c-body-soft); text-decoration:none; }
-
   @media (hover:hover) and (pointer:fine){
     a:hover{ color:var(--c-ink); }
-    .wl-back:hover{ color:var(--c-eu-700); }
-    .wl-lang button:hover{ color:var(--c-ink); }
-    .wl-lang button.is-on:hover{ color:#F7FAFC; }
     .wl-field:hover{ border-color:#B4BFCB; }
     .wl-seg-btn:hover{ border-color:var(--c-eu-700); }
     .wl-submit:hover{ background:#123456; border-color:#123456; }
-    .wl-ft a:hover{ color:var(--c-ink); }
     .wl-done-a:hover{ color:var(--c-ink); }
   }
 
@@ -323,7 +276,7 @@
 
   /* ---- Unter 860 px: eine Spalte, dieselbe Kachel. -------------------- */
   @media (max-width:860px){
-    .wl-main{ padding:16px 0; align-items:flex-start; }
+    .wl-main{ padding:calc(68px + 16px) 0 28px; align-items:flex-start; }
     .wl-tile{
       width:calc(100% - 32px); min-height:0; grid-template-columns:1fr;
       padding:24px; border-radius:10px; gap:28px; align-items:start;
@@ -335,10 +288,6 @@
   }
   @media (max-width:520px){
     .wl-seg{ display:grid; grid-template-columns:1fr; }
-    .wl-hd{ padding:0 16px; gap:10px; }
-    .wl-hd-right{ gap:2px; }
-    .wl-brand-word{ font-size:15.5px; }
-    .wl-back{ font-size:13px; gap:6px; padding:0 4px; }
   }
 
   /* Ohne Bewegungswunsch bleibt der Verlauf stehen — er ist dann ein Bild,
@@ -353,22 +302,7 @@
 </helmet>
 <div id="top">
 
-  <header class="wl-hd">
-    <a href="/" class="wl-brand">
-      <svg width="24" height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-        <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
-        <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
-      </svg>
-      <span class="wl-brand-word">EU Cowork <span class="wl-brand-ai">AI</span></span>
-    </a>
-    <div class="wl-hd-right">
-      <div class="wl-lang">
-        <button onClick="{{ toDe }}" type="button" class="{{ deCls }}">DE</button>
-        <button onClick="{{ toEn }}" type="button" class="{{ enCls }}">EN</button>
-      </div>
-      <a href="/" class="wl-back">{{ t.back }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
-    </div>
-  </header>
+  <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
 
   <main class="wl-main">
     <!-- Eine Kachel, zwei Spalten: links die Botschaft, rechts das Formular.
@@ -380,14 +314,8 @@
 
       <div class="wl-col">
         <div class="wl-msg">
-          <div class="wl-eyebrow">{{ t.eyebrow }}</div>
           <h1 class="wl-h1">{{ t.h1 }}</h1>
           <p class="wl-sub">{{ t.sub }}</p>
-          <div class="wl-meta">
-            <sc-for list="{{ t.meta }}" as="m" hint-placeholder-count="3">
-              <span>{{ m }}</span>
-            </sc-for>
-          </div>
           <p class="wl-hint">{{ t.hint }}</p>
         </div>
       </div>
@@ -487,11 +415,7 @@
     </div>
   </main>
 
-  <footer class="wl-ft">
-    <span>{{ t.rights }}</span>
-    <a href="/datenschutz">{{ t.privacy }}</a>
-    <a href="/impressum">{{ t.imprint }}</a>
-  </footer>
+  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
@@ -508,13 +432,9 @@ class Component extends DCLogic {
     this._t0 = Date.now();
     this.C = {
       de: {
-        eyebrow:'// Early Access',
         h1:'Frühen Zugang zu EU Cowork AI sichern.',
         sub:'Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.',
-        meta:['Beta-Zugang','Direkter Austausch','Jederzeit abmeldbar'],
         hint:'Die ersten Einladungen werden schrittweise verschickt.',
-        back:'Zur Startseite',
-        rights:'© 2026 EU Cowork AI', privacy:'Datenschutz', imprint:'Impressum',
         labels:{
           email:'Geschäftliche E-Mail-Adresse', emailPh:'name@firma.ch',
           company:'Unternehmen', companyPh:'Firmenname', optional:'optional',
@@ -540,13 +460,9 @@ class Component extends DCLogic {
         }
       },
       en: {
-        eyebrow:'// Early Access',
         h1:'Get early access to EU Cowork AI.',
         sub:'Try the European AI platform before launch and send feedback straight to our product team.',
-        meta:['Beta access','Direct feedback','Unsubscribe anytime'],
         hint:'The first invitations go out in batches.',
-        back:'Back to home',
-        rights:'© 2026 EU Cowork AI', privacy:'Privacy', imprint:'Imprint',
         labels:{
           email:'Work email address', emailPh:'name@company.com',
           company:'Company', companyPh:'Company name', optional:'optional',
@@ -585,10 +501,6 @@ class Component extends DCLogic {
   }
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
   _copy(){ return this.C[this.state.lang] || this.C.de; }
-  setLang(l){
-    try { localStorage.setItem('eucowork_lang', l); } catch(e){}
-    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
-  }
   setInterest(v){ this.setState({ interest: this.state.interest===v ? '' : v }); }
   /* Pfeiltasten wechseln UND waehlen — so verlangt es die ARIA-Vorgabe fuer
      eine Radiogruppe. Der Fokus wandert dabei mit, deshalb das Nachfassen im
@@ -634,7 +546,6 @@ class Component extends DCLogic {
   }
   renderVals(){
     const c = this._copy();
-    const isDe = this.state.lang !== 'en';
     // Genau EIN Knopf der Gruppe liegt in der Tab-Reihenfolge: der gewaehlte,
     // sonst der erste. Innerhalb wird mit den Pfeiltasten gewechselt.
     const sel = c.interestOptions.findIndex(o => o.value === this.state.interest);
@@ -661,8 +572,6 @@ class Component extends DCLogic {
       eEmail:this.state.eEmail,
       emailCls: this.state.eEmail ? 'is-err' : '',
       emailInvalid: this.state.eEmail ? 'true' : 'false',
-      deCls: isDe ? 'is-on' : '', enCls: !isDe ? 'is-on' : '',
-      toDe:()=>this.setLang('de'), toEn:()=>this.setLang('en'),
       onSubmit:()=>this.submit(), onOpenAsk:()=>this.setState({ ask:'open' }),
       onSaveAsk:()=>this.saveAsk(), onReset:()=>this.reset()
     };
