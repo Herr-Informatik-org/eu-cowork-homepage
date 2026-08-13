@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en" data-euc-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">Self-host an open-source AI platform | EU Cowork AI</title>
+<meta name="description" content="Self-host EU Cowork AI: one Docker Compose stack on an Ubuntu VM, two scripts, around 0.7 GB RAM at idle, MIT license without seat limits and without Kubernetes.">
+<link rel="canonical" href="https://eucowork.ai/en/self-hosting">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/self-hosting">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/self-hosting">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/self-hosting">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/self-hosting">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/self-hosting">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/self-hosting">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://eucowork.ai/en/self-hosting">
+<meta property="og:title" content="Self-host an open-source AI platform | EU Cowork AI">
+<meta property="og:description" content="Docker Compose stack on an Ubuntu VM, two scripts, around 0.7 GB RAM at idle. MIT license: no seat limit, no forced branding, no feature gating.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Self-host an open-source AI platform | EU Cowork AI">
+<meta name="twitter:description" content="One Compose stack, two scripts, MIT license. No Kubernetes, no GPU in the app tier, no account with us.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Skip to content</a>
+
+<!-- ==================== HEADER (unverändert übernommen) ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/en">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/en/preise" data-i18n="chrome.nav.pricing">Pricing</a>
+    <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/en/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/en/self-hosting" aria-current="page" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+    <a class="euc-btn-primary" href="/en/warteliste" data-i18n="chrome.cta.waitlist">Join the waitlist</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/en/preise" data-i18n="chrome.nav.pricing">Pricing</a>
+      <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/en/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/en/warteliste" data-i18n="chrome.cta.waitlist">Join the waitlist</a>
+      <a class="euc-btn-secondary" href="/en/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/en" data-i18n="chrome.crumb.home">Home</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">Self-hosting</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow" data-i18n="hero.eyebrow">Self-hosting</p>
+
+    <h1 data-i18n="hero.h1">Self-host EU Cowork AI</h1>
+
+    <p class="euc-lead" data-i18n="hero.lead">EU Cowork AI runs as a Docker Compose stack on a single Ubuntu machine. Two scripts bring the stack up, the software is MIT-licensed, and you need neither Kubernetes nor a GPU nor an account with us.</p>
+  </section>
+
+  <div class="euc-wrap">
+
+    <!-- ==================== KURZ GESAGT ==================== -->
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.title">In short</p>
+      <ul>
+        <li data-i18n="kurz.li1">EU Cowork AI is operated as a Docker Compose stack on an Ubuntu machine, without Kubernetes and without a GPU in the app tier.</li>
+        <li data-i18n="kurz.li2">The base stack uses around 0.7 GB of RAM when idle. Budget 1.5 to 2 GB per instance including a dedicated code sandbox.</li>
+        <li data-i18n="kurz.li3">Two scripts are enough: <code>setup-server.sh</code> prepares the Ubuntu server, <code>install.sh</code> generates the secrets and starts the stack.</li>
+        <li data-i18n="kurz.li4">For 1 to 15 users, three to five instances share one VM with 4 vCPU, 16 GB RAM and an 80 GB disk.</li>
+        <li data-i18n="kurz.li5">In concrete terms, the MIT licence means: no seat limit, no mandatory branding, no feature gating, open source code. Self-hosting is free.</li>
+      </ul>
+    </div>
+
+    <!-- ==================== INHALTSVERZEICHNIS ==================== -->
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.title">On this page</p>
+      <ol>
+        <li><a href="#voraussetzungen" data-i18n="toc.i1">What you need</a></li>
+        <li><a href="#installation" data-i18n="toc.i2">Installation in three steps</a></li>
+        <li><a href="#stack" data-i18n="toc.i3">Which services make up the stack</a></li>
+        <li><a href="#betriebsmodelle" data-i18n="toc.i4">Three operating models, one architecture</a></li>
+        <li><a href="#updates" data-i18n="toc.i5">How updates work and what matters in operation</a></li>
+        <li><a href="#sicherung" data-i18n="toc.i6">One script for backup, restore and migration</a></li>
+        <li><a href="#lizenz" data-i18n="toc.i7">Licence: what MIT means in practice</a></li>
+        <li><a href="#fragen" data-i18n="toc.i8">Frequently asked questions about self-hosting</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== 1 · VORAUSSETZUNGEN ==================== -->
+    <section class="euc-section">
+      <h2 id="voraussetzungen" data-i18n="vor.h2">What you need</h2>
+      <p data-i18n="vor.p1">For EU Cowork AI you need an Ubuntu machine with Docker Engine and Compose v2, a DNS record pointing to it and an API key for your model gateway. The stack runs entirely on this single host, because the computing load of the language models sits with the inference provider.</p>
+
+      <h3 data-i18n="vor.h3a">Server and system requirements</h3>
+      <p data-i18n="vor.pa">The minimum is 2 vCPU, 4 GB RAM, a 40 GB disk and Ubuntu 22.04 LTS. For production use we recommend 4 vCPU, 16 GB RAM and a 200 GB disk on Ubuntu 24.04 LTS; the breakdown by team size is in the table below. The hardened code sandbox additionally requires nested virtualisation.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption data-i18n="vor.cap1">Memory footprint when idle, measured on the running stack, as at August 2026.</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="vor.t1th1">Service</th>
+              <th scope="col" data-i18n="vor.t1th2">RAM when idle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row" data-i18n="vor.t1r1">Chat application (LibreChat)</th><td>374 MB</td></tr>
+            <tr><th scope="row" data-i18n="vor.t1r2">Database (MongoDB)</th><td>102 MB</td></tr>
+            <tr><th scope="row" data-i18n="vor.t1r3">Web search (SearXNG)</th><td>65 MB</td></tr>
+            <tr><th scope="row" data-i18n="vor.t1r4">MCP gateway</th><td>33 MB</td></tr>
+            <tr><th scope="row" data-i18n="vor.t1r5">Search index (Meilisearch)</th><td>29 MB</td></tr>
+            <tr><th scope="row" data-i18n="vor.t1r6">Base stack in total</th><td data-i18n="vor.t1r6v">around 0.7 GB</td></tr>
+            <tr><th scope="row" data-i18n="vor.t1r7">Code sandbox in addition</th><td data-i18n="vor.t1r7v">around 0.5 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-i18n="vor.p2">Under load, practically only the memory of the chat application grows, while CPU utilisation stays close to zero. The images take up around 5 to 6 GB once and are shared between instances on the same machine. After that it is mainly the uploads that grow: the first limit in operation is disk space.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption data-i18n="vor.cap2">Rule of thumb for sizing, derived from the measurements above.</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="vor.t2th1">Team size</th>
+              <th scope="col" data-i18n="vor.t2th2">Recommendation</th>
+              <th scope="col" data-i18n="vor.t2th3">VM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" data-i18n="vor.t2r1c1">1 to 15 users</th>
+              <td data-i18n="vor.t2r1c2">three to five instances on one VM</td>
+              <td data-i18n="vor.t2r1c3">4 vCPU, 16 GB RAM, 80 GB</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="vor.t2r2c1">15 to 50 users</th>
+              <td data-i18n="vor.t2r2c2">dedicated VM</td>
+              <td data-i18n="vor.t2r2c3">4 vCPU, 8 to 16 GB RAM, 100 GB</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="vor.t2r3c1">more than 50 users or a regulated industry</th>
+              <td data-i18n="vor.t2r3c2">dedicated VM, dedicated host if required</td>
+              <td data-i18n="vor.t2r3c3">8 vCPU, 32 GB RAM, from 200 GB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 data-i18n="vor.h3b">What you do not need</h3>
+      <ul>
+        <li data-i18n="vor.li1"><strong>No Kubernetes.</strong> Docker Compose is the supported architecture; a Helm chart is not included.</li>
+        <li data-i18n="vor.li2"><strong>No GPU for the app tier.</strong> GPU hardware is only needed by those who also want to run language models locally.</li>
+        <li data-i18n="vor.li3"><strong>No account with us.</strong> The installation runs without registration, without a licence key and without a licence server.</li>
+        <li data-i18n="vor.li4"><strong>No hyperscaler and no managed database.</strong> Any Ubuntu VM will do; database and search index run in the same stack.</li>
+      </ul>
+    </section>
+
+    <!-- ==================== 2 · INSTALLATION ==================== -->
+    <section class="euc-section">
+      <h2 id="installation" data-i18n="inst.h2">Installation in three steps</h2>
+      <p data-i18n="inst.p1">Installing EU Cowork AI consists of two scripts and one entry in the <code>.env</code>. On a machine where Docker is already running, the first step is not needed.</p>
+
+      <h3 data-i18n="inst.h3a">Step 1: prepare the server</h3>
+      <p data-i18n="inst.pa">The release repository will be published at launch. Anyone who wants to test today can request access via the <a class="euc-textlink" href="/en/warteliste">waitlist</a>. The commands show what the installation looks like afterwards: clone the repository, change into the <code>distribution</code> directory, run the preparation script.</p>
+      <pre><code>cd distribution
+./setup-server.sh</code></pre>
+      <p data-i18n="inst.pa2">The script is idempotent and installs Docker Engine including Compose v2 from the official Docker source, because the Ubuntu package <code>docker.io</code> does not ship Compose v2. It also sets up log rotation, firewall rules for ports 22, 80 and 443, swap, time zone and automatic security updates. Then log in again once.</p>
+
+      <h3 data-i18n="inst.h3b">Step 2: install the stack</h3>
+      <pre><code>./install.sh --profiles production</code></pre>
+      <p data-i18n="inst.pb">The installer checks Docker and Compose v2, creates the <code>.env</code> from the template, generates all secrets, sets up data directories and the sandbox network, pulls the images and starts the stack. The <code>production</code> profile includes the reverse proxy, which obtains the TLS certificate automatically.</p>
+
+      <h3 data-i18n="inst.h3c">Step 3: enter model access</h3>
+      <pre><code># .env
+EUROUTER_API_KEY=&lt;euer-api-key&gt;
+
+docker compose up -d</code></pre>
+      <p data-i18n="inst.pc">Without a key the stack still starts, but the chat reports a missing API key. Access is freely selectable, because EU Cowork AI talks to any OpenAI-compatible gateway. EuRouter provides more than 100 models with EU processing under a single access point; alternatively you enter your own endpoint.</p>
+    </section>
+
+    <!-- ==================== 3 · STACK ==================== -->
+    <section class="euc-section">
+      <h2 id="stack" data-i18n="stack.h2">Which services make up the stack</h2>
+      <p data-i18n="stack.p1">The stack consists of one <code>docker-compose.yml</code>; several services sit behind optional profiles and only start when you switch them on. Every service is a well-known open source project and can be inspected, replaced or switched off individually.</p>
+
+      <p data-i18n="stack.p2"><strong>The chat application</strong> is based on LibreChat under the MIT licence and provides the interface, accounts, conversations, file uploads and the model connection. EU Cowork AI keeps this part close to upstream so that the project’s security updates remain adoptable.</p>
+
+      <p data-i18n="stack.p3"><strong>MongoDB</strong> stores conversations, accounts, roles and settings, as a container in the same stack and on your disk. There is no external database service to which content could flow away.</p>
+
+      <p data-i18n="stack.p4"><strong>Meilisearch</strong> provides full-text search across your own conversations. The index is local and can be rebuilt; Meilisearch telemetry is disabled out of the box.</p>
+
+      <p data-i18n="stack.p5"><strong>The RAG API with pgvector</strong> is optional and is added through the <code>filesearch</code> profile. The RAG API embeds files that users upload into the chat and returns the relevant passages to the model when it answers.</p>
+
+      <p data-i18n="stack.p6"><strong>The MCP gateway</strong> sits between the chat application and every connected system and decides per tool call whether it is permitted. Evaluation follows this order: individual user, role, group, server default. Every call is logged, and if the check fails, access is denied.</p>
+
+      <p data-i18n="stack.p7"><strong>The admin panel</strong> is the interface for users, roles, groups, access rules, audit log and budget. It is part of the stack, listens locally only and is reachable from outside exclusively through the reverse proxy.</p>
+
+      <p data-i18n="stack.p8"><strong>The code sandbox</strong> executes the code generated by the model, turning a request into a real file you can download. It is placed alongside as its own Compose stack and connected via a dedicated Docker network. Two backends are available: a lightweight one as the default and a hardened one based on a microVM, which requires nested virtualisation on the host. An egress proxy with an allow list is in progress.</p>
+
+      <p data-i18n="stack.p9"><strong>SearXNG</strong> provides web search from your own stack, without an account at a search service. To be honest about it: SearXNG passes the search terms on to external search engines, without disclosing the user’s identity. Conversations and files do not leave the machine.</p>
+
+      <p data-i18n="stack.p10"><strong>Caddy</strong> terminates TLS, obtains the certificates automatically as soon as the DNS record points to the machine, and is the only service on ports 80 and 443. Variants are included for operation behind a WAF or with an internal certificate authority.</p>
+    </section>
+
+    <!-- ==================== 4 · BETRIEBSMODELLE ==================== -->
+    <section class="euc-section">
+      <h2 id="betriebsmodelle" data-i18n="betr.h2">Three operating models, one architecture</h2>
+      <p data-i18n="betr.p1">There are three operating models and only one architecture: self-operated, in your cloud, optionally through your IT service provider, or managed by us. The stack is the same in all three cases. The only differences are who holds root, who manages the keys and who runs updates and backups.</p>
+
+      <h3 data-i18n="betr.h3a">Self-operated</h3>
+      <p data-i18n="betr.pa">You run the machine, hold root, manage your keys and handle updates and backups yourself. The software costs nothing; a support subscription is optional. This model is the benchmark: what an external administrator can bring up in two commands also carries the other models.</p>
+
+      <h3 data-i18n="betr.h3b">In your cloud</h3>
+      <p data-i18n="betr.pb">EU Cowork AI runs on any Ubuntu VM, in your own data centre just as well as at a Swiss or European cloud provider. There is no tie to a hyperscaler. IT service providers hosting for their customers use the same architecture: one stack per customer.</p>
+
+      <h3 data-i18n="betr.h3c">Managed by us</h3>
+      <p data-i18n="betr.pc">We take care of installation, updates, backups and monitoring and operate the instance in ISO 27001-certified data centres run by Green in Lupfig, Switzerland. The certificates are held by Green, not by EU Cowork AI; an ISO 27001 certification of EU Cowork AI itself is in progress.</p>
+
+      <h3 data-i18n="betr.h3d">Several instances on one machine</h3>
+      <p data-i18n="betr.pd1">The tenant boundary is the Compose stack, not the VM: each instance has its own database, its own search index, its own uploads, its own secrets, its own Docker network and its own code sandbox. For small teams, three to five instances may therefore share the same VM.</p>
+      <p data-i18n="betr.pd2">What may be shared are the Docker images and a common reverse proxy. What is never shared are database, uploads, secrets, sandbox network and the model provider’s key: a shared key makes consumption per tenant impossible to attribute, and a shared sandbox network removes the separation exactly where third-party code runs.</p>
+    </section>
+
+    <!-- ==================== 5 · UPDATES ==================== -->
+    <section class="euc-section">
+      <h2 id="updates" data-i18n="upd.h2">How updates work and what matters in operation</h2>
+      <p data-i18n="upd.p1">Updates are reproducible because the application image is pinned to a digest rather than to a moving tag, and the remaining services run on fixed versions. A release of EU Cowork AI is therefore a tested combination of application image and services, and two instances on the same machine may run different versions.</p>
+
+      <pre><code>git pull
+./backup.sh backup
+./install.sh --migrate</code></pre>
+
+      <p data-i18n="upd.p2">The <code>--migrate</code> option leaves the <code>.env</code> untouched and rebuilds the in-house services. A backup belongs before every update, followed by a short functional test. Rolling back is done via the previous version of the Compose file.</p>
+
+      <p data-i18n="upd.p3">Two things matter in day-to-day operation: the log rotation that <code>setup-server.sh</code> sets up, and disk space with an alert from 70 per cent utilisation. Recurring questions about operation, updates and backups are answered in the <a class="euc-textlink" href="/en/faq">frequently asked questions</a>.</p>
+    </section>
+
+    <!-- ==================== 6 · SICHERUNG ==================== -->
+    <section class="euc-section">
+      <h2 id="sicherung" data-i18n="sich.h2">One script for backup, restore and migration</h2>
+      <p data-i18n="sich.p1">A single script covers backup, restore and server migration: <code>backup.sh</code> creates an archive from the database dump, the <code>.env</code> and uploaded files, and restores it as well. A migration is therefore a backup on the old server, copying the archive, and a restore on the new one.</p>
+
+      <pre><code>./backup.sh backup            # Archiv erzeugen
+./backup.sh list              # vorhandene Archive
+./backup.sh restore &lt;archiv&gt;  # ersetzt die Datenbank, fragt vorher nach</code></pre>
+
+      <p data-i18n="sich.p2">The archive contains secrets and conversations and is stored with restrictive file permissions. It never belongs in a repository and never unencrypted in someone else’s cloud. The search index is not backed up, because it can be rebuilt from the database.</p>
+
+      <p data-i18n="sich.p3">The most expensive mistake during a migration is to have the encryption keys regenerated instead of carrying them over from the old <code>.env</code>. All credentials stored in the database then become unreadable. With carried-over values, the migration remains a maintenance window of 15 to 30 minutes.</p>
+
+      <p data-i18n="sich.p4">Two rules from practice: mirror the backup target off the machine and test the restore once.</p>
+    </section>
+
+    <!-- ==================== 7 · LIZENZ ==================== -->
+    <section class="euc-section">
+      <h2 id="lizenz" data-i18n="liz.h2">Licence: what MIT means in practice</h2>
+      <p data-i18n="liz.p1">EU Cowork AI is released under the MIT licence, as is the underlying chat application LibreChat. Self-hosting is free, from a single user and without registering with us. What that means in detail, and why it is the decisive difference in the <a class="euc-textlink" href="/en/vergleich">comparison with other platforms</a>:</p>
+
+      <ul>
+        <li data-i18n="liz.li1"><strong>No seat limit.</strong> Whether 3 or 300 people work on the instance makes no difference to the licence.</li>
+        <li data-i18n="liz.li2"><strong>No mandatory branding.</strong> Name, logo and colours are configuration, including for commercial use.</li>
+        <li data-i18n="liz.li3"><strong>No feature gating.</strong> Permission management, audit log, budgets and system connections all come from the same open source.</li>
+        <li data-i18n="liz.li4"><strong>Open source code.</strong> The LibreChat base is publicly viewable today; stack, scripts and services will be published under MIT at launch and will then be viewable, forkable and verifiable instead of resting on a promise.</li>
+      </ul>
+
+      <p data-i18n="liz.p2">Commercially, we sustain the model through operation and support, not through licences. That is why the path from managed operation back to self-hosting is open as well: the same architecture, the same archive.</p>
+    </section>
+
+    <!-- ==================== 8 · FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Frequently asked questions about self-hosting</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">What does it cost to self-host EU Cowork AI?</h3>
+          <p data-i18n="faq.a1">The software costs nothing. EU Cowork AI is released under the MIT licence, without a seat limit and without a licence key, and self-hosting is free from a single user. Costs arise outside the software: for the machine, for access to the model provider and for operation.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">Do I need a GPU for EU Cowork AI?</h3>
+          <p data-i18n="faq.a2">No. No GPU is needed for the app tier. The computing load of the language models sits with the inference provider, and CPU utilisation of the stack is close to zero in normal operation. GPU hardware is only needed by those who also want to run language models locally on their own machine.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">How many users can one instance support?</h3>
+          <p data-i18n="faq.a3">For 1 to 15 users, three to five instances share one VM with 4 vCPU, 16 GB RAM and an 80 GB disk. From 15 to 50 users, an instance gets its own VM with 4 vCPU and 8 to 16 GB RAM. Above that, the VM grows accordingly.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">Does EU Cowork AI run on Kubernetes?</h3>
+          <p data-i18n="faq.a4">The supported architecture is Docker Compose on an Ubuntu machine; a Helm chart is not included. At this scale, Kubernetes would be additional operational effort, since the base stack uses around 0.7 GB of RAM when idle. The Compose file still works well as a template.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">May I fork EU Cowork AI and roll it out under my own name?</h3>
+          <p data-i18n="faq.a5">Yes. The MIT licence permits use, modification, distribution and commercial deployment, including under your own name and your own logo. There is no branding clause and no user count above which additional conditions apply. All you have to carry over is the licence text and the copyright notice.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">Can I switch between self-hosting and managed operation later on?</h3>
+          <p data-i18n="faq.a6">Yes, in both directions. Both models use the same architecture, which is why the switch is a migration: create an archive, copy it to the new machine, restore it there. Conversations, accounts, settings and uploads are preserved, provided the encryption keys are carried over.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Prefer to start managed?</h2>
+      <p data-i18n="cta.p">If you would rather not operate the stack yourself: we take care of installation, updates, backups and monitoring on Swiss infrastructure. The managed offering is being built up, and access runs through the waitlist.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="/en/warteliste" data-i18n="cta.btn1">Join the waitlist</a>
+        <a class="euc-btn-secondary" href="/en/sicherheit" data-i18n="cta.btn2">Security and data protection</a>
+      </div>
+    </section>
+
+    <!-- ==================== WEITERFÜHREND ==================== -->
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.title">Next</p>
+      <ul>
+        <li><a href="/en/governance" data-i18n="weiter.li1">How permissions, budgets and audit logs are controlled in operation</a></li>
+        <li><a href="/en/integrationen" data-i18n="weiter.li2">Which systems can be connected via MCP</a></li>
+        <li><a href="/en/faq" data-i18n="weiter.li3">Frequently asked questions about operation, updates, permissions and licence</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="geprueft">Last reviewed: <time datetime="2026-08">August 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER (unverändert übernommen) ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Your AI coworker. Stays in Europe.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Deployable anywhere</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managed, own cloud or on-prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">GDPR-compliant</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">EU processing</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/en/sicherheit" data-i18n="chrome.footer.more">More about security</a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Swiss instance</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Product</p>
+          <nav aria-label="Produkt">
+            <a href="/en/#funktionen" data-i18n="chrome.footer.link.features">Features</a>
+            <a href="/en/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Sovereignty</a>
+            <a href="/en/preise" data-i18n="chrome.footer.link.pricing">Pricing</a>
+            <a href="/en/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/en/integrationen" data-i18n="chrome.footer.link.integrations">Integrations</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.know">Knowledge</p>
+          <nav aria-label="Wissen">
+            <a href="/en/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs" data-i18n="chrome.footer.link.docs">Docs</a>
+            <a href="/en/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/en/vergleich" data-i18n="chrome.footer.link.comparison">Comparison</a>
+            <a href="/en/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/en/vision" data-i18n="chrome.footer.link.vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/en/sicherheit" data-i18n="chrome.footer.link.security">Security & Trust</a>
+            <a href="/en/avv" data-i18n="chrome.footer.link.avv">DPA</a>
+            <a href="/en/sicherheit#toms" data-i18n="chrome.footer.link.toms">TOMs</a>
+            <a href="/en/subprozessoren" data-i18n="chrome.footer.link.subs">Subprocessors</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Legal</p>
+          <nav aria-label="Rechtliches">
+            <a href="/en/impressum" data-i18n="chrome.footer.link.imprint">Imprint</a>
+            <a href="/en/datenschutz" data-i18n="chrome.footer.link.privacy">Privacy</a>
+            <a href="/en/agb" data-i18n="chrome.footer.link.terms">Terms (GTC)</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI. Name is a working title.</span>
+      <span class="euc-built" data-i18n="chrome.footer.built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== JSON-LD: WebPage + BreadcrumbList ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/self-hosting#webpage",
+  "url": "https://eucowork.ai/self-hosting",
+  "name": "EU Cowork AI selbst hosten",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@id": "https://eucowork.ai/#website"
+  },
+  "about": {
+    "@id": "https://eucowork.ai/#software"
+  },
+  "description": "EU Cowork AI selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Start",
+        "item": "https://eucowork.ai/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Self-Hosting",
+        "item": "https://eucowork.ai/self-hosting"
+      }
+    ]
+  },
+  "abstract": "EU Cowork AI läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine, ohne Kubernetes und ohne GPU im App-Tier. Die Installation besteht aus zwei Skripten: setup-server.sh bereitet den Ubuntu-Server vor, install.sh erzeugt die Secrets und startet den Stack; danach wird der API-Schlüssel des Modell-Gateways eingetragen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM, pro Instanz sind 1,5 bis 2 GB RAM inklusive Code-Sandbox zu budgetieren. Zum Stack gehören die Chat-Anwendung auf LibreChat-Basis, MongoDB, Meilisearch, die optionale RAG-API mit pgvector, das MCP-Gateway, das Admin-Panel, die daneben laufende Code-Sandbox, die SearXNG-Websuche und Caddy mit automatischem TLS. Es gibt drei Betriebsmodelle bei einer einzigen Bauform: selbst betrieben, in der eigenen Cloud oder von uns betreut. Das Anwendungs-Image ist auf einen Digest gepinnt, Backup, Restore und Serverumzug laufen über ein Skript, und die MIT-Lizenz bedeutet kein Seat-Limit, kein Branding-Zwang und kein Feature-Gating.",
+  "publisher": {
+    "@id": "https://eucowork.ai/#organization"
+  },
+  "dateModified": "2026-08-05"
+}
+</script>
+
+<!-- ==================== JSON-LD: FAQPage ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://eucowork.ai/self-hosting#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was kostet es, EU Cowork AI selbst zu hosten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Software kostet nichts. EU Cowork AI steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich eine GPU für EU Cowork AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Für den App-Tier ist keine GPU nötig. Die Rechenlast der Sprachmodelle liegt beim Inferenz-Anbieter, die CPU-Auslastung des Stacks ist im Normalbetrieb nahe null. GPU-Hardware braucht nur, wer Sprachmodelle zusätzlich lokal auf der eigenen Maschine ausführen will."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie viele Nutzer trägt eine Instanz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Für 1 bis 15 Nutzer teilen sich drei bis fünf Instanzen eine VM mit 4 vCPU, 16 GB RAM und 80 GB Platte. Von 15 bis 50 Nutzern bekommt eine Instanz eine eigene VM mit 4 vCPU und 8 bis 16 GB RAM. Darüber wird die VM entsprechend grösser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Läuft EU Cowork AI auf Kubernetes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die unterstützte Bauform ist Docker Compose auf einer Ubuntu-Maschine, ein Helm-Chart wird nicht mitgeliefert. Für diese Grössenordnung wäre Kubernetes zusätzlicher Betriebsaufwand, denn der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM. Als Vorlage taugt die Compose-Datei trotzdem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Darf ich EU Cowork AI forken und unter eigenem Namen ausrollen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die MIT-Lizenz erlaubt Nutzung, Änderung, Weitergabe und den kommerziellen Einsatz, auch unter eigenem Namen und eigenem Logo. Es gibt keine Branding-Klausel und keine Nutzerzahl, ab der zusätzliche Bedingungen greifen. Mitzuführen sind lediglich Lizenztext und Urheberrechtsvermerk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich später zwischen Selbstbetrieb und betreutem Betrieb wechseln?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, in beide Richtungen. Beide Modelle nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug: Archiv erzeugen, auf die neue Maschine kopieren, dort zurückspielen. Konversationen, Konten, Einstellungen und Uploads bleiben erhalten, sofern die Verschlüsselungs-Schlüssel übernommen werden."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/self-hosting",
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@id": "https://eucowork.ai/self-hosting#webpage"
+  }
+}
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    "meta.title": "Self-host an open-source AI platform | EU Cowork AI",
+    "crumb.current": "Self-hosting",
+    "hero.eyebrow": "Self-hosting",
+    "hero.h1": "Self-host EU Cowork AI",
+    "hero.lead": "EU Cowork AI runs as a Docker Compose stack on a single Ubuntu machine. Two scripts bring the stack up, the software is MIT-licensed, and you need neither Kubernetes nor a GPU nor an account with us.",
+    "kurz.title": "In short",
+    "kurz.li1": "EU Cowork AI is operated as a Docker Compose stack on an Ubuntu machine, without Kubernetes and without a GPU in the app tier.",
+    "kurz.li2": "The base stack uses around 0.7 GB of RAM when idle. Budget 1.5 to 2 GB per instance including a dedicated code sandbox.",
+    "kurz.li3": "Two scripts are enough: <code>setup-server.sh</code> prepares the Ubuntu server, <code>install.sh</code> generates the secrets and starts the stack.",
+    "kurz.li4": "For 1 to 15 users, three to five instances share one VM with 4 vCPU, 16 GB RAM and an 80 GB disk.",
+    "kurz.li5": "In concrete terms, the MIT licence means: no seat limit, no mandatory branding, no feature gating, open source code. Self-hosting is free.",
+    "toc.title": "On this page",
+    "toc.i1": "What you need",
+    "toc.i2": "Installation in three steps",
+    "toc.i3": "Which services make up the stack",
+    "toc.i4": "Three operating models, one architecture",
+    "toc.i5": "How updates work and what matters in operation",
+    "toc.i6": "One script for backup, restore and migration",
+    "toc.i7": "Licence: what MIT means in practice",
+    "toc.i8": "Frequently asked questions about self-hosting",
+    "vor.h2": "What you need",
+    "vor.p1": "For EU Cowork AI you need an Ubuntu machine with Docker Engine and Compose v2, a DNS record pointing to it and an API key for your model gateway. The stack runs entirely on this single host, because the computing load of the language models sits with the inference provider.",
+    "vor.h3a": "Server and system requirements",
+    "vor.pa": "The minimum is 2 vCPU, 4 GB RAM, a 40 GB disk and Ubuntu 22.04 LTS. For production use we recommend 4 vCPU, 16 GB RAM and a 200 GB disk on Ubuntu 24.04 LTS; the breakdown by team size is in the table below. The hardened code sandbox additionally requires nested virtualisation.",
+    "vor.cap1": "Memory footprint when idle, measured on the running stack, as at August 2026.",
+    "vor.t1th1": "Service",
+    "vor.t1th2": "RAM when idle",
+    "vor.t1r1": "Chat application (LibreChat)",
+    "vor.t1r2": "Database (MongoDB)",
+    "vor.t1r3": "Web search (SearXNG)",
+    "vor.t1r4": "MCP gateway",
+    "vor.t1r5": "Search index (Meilisearch)",
+    "vor.t1r6": "Base stack in total",
+    "vor.t1r6v": "around 0.7 GB",
+    "vor.t1r7": "Code sandbox in addition",
+    "vor.t1r7v": "around 0.5 GB",
+    "vor.p2": "Under load, practically only the memory of the chat application grows, while CPU utilisation stays close to zero. The images take up around 5 to 6 GB once and are shared between instances on the same machine. After that it is mainly the uploads that grow: the first limit in operation is disk space.",
+    "vor.cap2": "Rule of thumb for sizing, derived from the measurements above.",
+    "vor.t2th1": "Team size",
+    "vor.t2th2": "Recommendation",
+    "vor.t2th3": "VM",
+    "vor.t2r1c1": "1 to 15 users",
+    "vor.t2r1c2": "three to five instances on one VM",
+    "vor.t2r1c3": "4 vCPU, 16 GB RAM, 80 GB",
+    "vor.t2r2c1": "15 to 50 users",
+    "vor.t2r2c2": "dedicated VM",
+    "vor.t2r2c3": "4 vCPU, 8 to 16 GB RAM, 100 GB",
+    "vor.t2r3c1": "more than 50 users or a regulated industry",
+    "vor.t2r3c2": "dedicated VM, dedicated host if required",
+    "vor.t2r3c3": "8 vCPU, 32 GB RAM, from 200 GB",
+    "vor.h3b": "What you do not need",
+    "vor.li1": "<strong>No Kubernetes.</strong> Docker Compose is the supported architecture; a Helm chart is not included.",
+    "vor.li2": "<strong>No GPU for the app tier.</strong> GPU hardware is only needed by those who also want to run language models locally.",
+    "vor.li3": "<strong>No account with us.</strong> The installation runs without registration, without a licence key and without a licence server.",
+    "vor.li4": "<strong>No hyperscaler and no managed database.</strong> Any Ubuntu VM will do; database and search index run in the same stack.",
+    "inst.h2": "Installation in three steps",
+    "inst.p1": "Installing EU Cowork AI consists of two scripts and one entry in the <code>.env</code>. On a machine where Docker is already running, the first step is not needed.",
+    "inst.h3a": "Step 1: prepare the server",
+    "inst.pa": "The release repository will be published at launch. Anyone who wants to test today can request access via the <a class=\"euc-textlink\" href=\"/warteliste\">waitlist</a>. The commands show what the installation looks like afterwards: clone the repository, change into the <code>distribution</code> directory, run the preparation script.",
+    "inst.pa2": "The script is idempotent and installs Docker Engine including Compose v2 from the official Docker source, because the Ubuntu package <code>docker.io</code> does not ship Compose v2. It also sets up log rotation, firewall rules for ports 22, 80 and 443, swap, time zone and automatic security updates. Then log in again once.",
+    "inst.h3b": "Step 2: install the stack",
+    "inst.pb": "The installer checks Docker and Compose v2, creates the <code>.env</code> from the template, generates all secrets, sets up data directories and the sandbox network, pulls the images and starts the stack. The <code>production</code> profile includes the reverse proxy, which obtains the TLS certificate automatically.",
+    "inst.h3c": "Step 3: enter model access",
+    "inst.pc": "Without a key the stack still starts, but the chat reports a missing API key. Access is freely selectable, because EU Cowork AI talks to any OpenAI-compatible gateway. EuRouter provides more than 100 models with EU processing under a single access point; alternatively you enter your own endpoint.",
+    "stack.h2": "Which services make up the stack",
+    "stack.p1": "The stack consists of one <code>docker-compose.yml</code>; several services sit behind optional profiles and only start when you switch them on. Every service is a well-known open source project and can be inspected, replaced or switched off individually.",
+    "stack.p2": "<strong>The chat application</strong> is based on LibreChat under the MIT licence and provides the interface, accounts, conversations, file uploads and the model connection. EU Cowork AI keeps this part close to upstream so that the project’s security updates remain adoptable.",
+    "stack.p3": "<strong>MongoDB</strong> stores conversations, accounts, roles and settings, as a container in the same stack and on your disk. There is no external database service to which content could flow away.",
+    "stack.p4": "<strong>Meilisearch</strong> provides full-text search across your own conversations. The index is local and can be rebuilt; Meilisearch telemetry is disabled out of the box.",
+    "stack.p5": "<strong>The RAG API with pgvector</strong> is optional and is added through the <code>filesearch</code> profile. The RAG API embeds files that users upload into the chat and returns the relevant passages to the model when it answers.",
+    "stack.p6": "<strong>The MCP gateway</strong> sits between the chat application and every connected system and decides per tool call whether it is permitted. Evaluation follows this order: individual user, role, group, server default. Every call is logged, and if the check fails, access is denied.",
+    "stack.p7": "<strong>The admin panel</strong> is the interface for users, roles, groups, access rules, audit log and budget. It is part of the stack, listens locally only and is reachable from outside exclusively through the reverse proxy.",
+    "stack.p8": "<strong>The code sandbox</strong> executes the code generated by the model, turning a request into a real file you can download. It is placed alongside as its own Compose stack and connected via a dedicated Docker network. Two backends are available: a lightweight one as the default and a hardened one based on a microVM, which requires nested virtualisation on the host. An egress proxy with an allow list is in progress.",
+    "stack.p9": "<strong>SearXNG</strong> provides web search from your own stack, without an account at a search service. To be honest about it: SearXNG passes the search terms on to external search engines, without disclosing the user’s identity. Conversations and files do not leave the machine.",
+    "stack.p10": "<strong>Caddy</strong> terminates TLS, obtains the certificates automatically as soon as the DNS record points to the machine, and is the only service on ports 80 and 443. Variants are included for operation behind a WAF or with an internal certificate authority.",
+    "betr.h2": "Three operating models, one architecture",
+    "betr.p1": "There are three operating models and only one architecture: self-operated, in your cloud, optionally through your IT service provider, or managed by us. The stack is the same in all three cases. The only differences are who holds root, who manages the keys and who runs updates and backups.",
+    "betr.h3a": "Self-operated",
+    "betr.pa": "You run the machine, hold root, manage your keys and handle updates and backups yourself. The software costs nothing; a support subscription is optional. This model is the benchmark: what an external administrator can bring up in two commands also carries the other models.",
+    "betr.h3b": "In your cloud",
+    "betr.pb": "EU Cowork AI runs on any Ubuntu VM, in your own data centre just as well as at a Swiss or European cloud provider. There is no tie to a hyperscaler. IT service providers hosting for their customers use the same architecture: one stack per customer.",
+    "betr.h3c": "Managed by us",
+    "betr.pc": "We take care of installation, updates, backups and monitoring and operate the instance in ISO 27001-certified data centres run by Green in Lupfig, Switzerland. The certificates are held by Green, not by EU Cowork AI; an ISO 27001 certification of EU Cowork AI itself is in progress.",
+    "betr.h3d": "Several instances on one machine",
+    "betr.pd1": "The tenant boundary is the Compose stack, not the VM: each instance has its own database, its own search index, its own uploads, its own secrets, its own Docker network and its own code sandbox. For small teams, three to five instances may therefore share the same VM.",
+    "betr.pd2": "What may be shared are the Docker images and a common reverse proxy. What is never shared are database, uploads, secrets, sandbox network and the model provider’s key: a shared key makes consumption per tenant impossible to attribute, and a shared sandbox network removes the separation exactly where third-party code runs.",
+    "upd.h2": "How updates work and what matters in operation",
+    "upd.p1": "Updates are reproducible because the application image is pinned to a digest rather than to a moving tag, and the remaining services run on fixed versions. A release of EU Cowork AI is therefore a tested combination of application image and services, and two instances on the same machine may run different versions.",
+    "upd.p2": "The <code>--migrate</code> option leaves the <code>.env</code> untouched and rebuilds the in-house services. A backup belongs before every update, followed by a short functional test. Rolling back is done via the previous version of the Compose file.",
+    "upd.p3": "Two things matter in day-to-day operation: the log rotation that <code>setup-server.sh</code> sets up, and disk space with an alert from 70 per cent utilisation. Recurring questions about operation, updates and backups are answered in the <a class=\"euc-textlink\" href=\"/faq\">frequently asked questions</a>.",
+    "sich.h2": "One script for backup, restore and migration",
+    "sich.p1": "A single script covers backup, restore and server migration: <code>backup.sh</code> creates an archive from the database dump, the <code>.env</code> and uploaded files, and restores it as well. A migration is therefore a backup on the old server, copying the archive, and a restore on the new one.",
+    "sich.p2": "The archive contains secrets and conversations and is stored with restrictive file permissions. It never belongs in a repository and never unencrypted in someone else’s cloud. The search index is not backed up, because it can be rebuilt from the database.",
+    "sich.p3": "The most expensive mistake during a migration is to have the encryption keys regenerated instead of carrying them over from the old <code>.env</code>. All credentials stored in the database then become unreadable. With carried-over values, the migration remains a maintenance window of 15 to 30 minutes.",
+    "sich.p4": "Two rules from practice: mirror the backup target off the machine and test the restore once.",
+    "liz.h2": "Licence: what MIT means in practice",
+    "liz.p1": "EU Cowork AI is released under the MIT licence, as is the underlying chat application LibreChat. Self-hosting is free, from a single user and without registering with us. What that means in detail, and why it is the decisive difference in the <a class=\"euc-textlink\" href=\"/vergleich\">comparison with other platforms</a>:",
+    "liz.li1": "<strong>No seat limit.</strong> Whether 3 or 300 people work on the instance makes no difference to the licence.",
+    "liz.li2": "<strong>No mandatory branding.</strong> Name, logo and colours are configuration, including for commercial use.",
+    "liz.li3": "<strong>No feature gating.</strong> Permission management, audit log, budgets and system connections all come from the same open source.",
+    "liz.li4": "<strong>Open source code.</strong> The LibreChat base is publicly viewable today; stack, scripts and services will be published under MIT at launch and will then be viewable, forkable and verifiable instead of resting on a promise.",
+    "liz.p2": "Commercially, we sustain the model through operation and support, not through licences. That is why the path from managed operation back to self-hosting is open as well: the same architecture, the same archive.",
+    "faq.h2": "Frequently asked questions about self-hosting",
+    "faq.q1": "What does it cost to self-host EU Cowork AI?",
+    "faq.a1": "The software costs nothing. EU Cowork AI is released under the MIT licence, without a seat limit and without a licence key, and self-hosting is free from a single user. Costs arise outside the software: for the machine, for access to the model provider and for operation.",
+    "faq.q2": "Do I need a GPU for EU Cowork AI?",
+    "faq.a2": "No. No GPU is needed for the app tier. The computing load of the language models sits with the inference provider, and CPU utilisation of the stack is close to zero in normal operation. GPU hardware is only needed by those who also want to run language models locally on their own machine.",
+    "faq.q3": "How many users can one instance support?",
+    "faq.a3": "For 1 to 15 users, three to five instances share one VM with 4 vCPU, 16 GB RAM and an 80 GB disk. From 15 to 50 users, an instance gets its own VM with 4 vCPU and 8 to 16 GB RAM. Above that, the VM grows accordingly.",
+    "faq.q4": "Does EU Cowork AI run on Kubernetes?",
+    "faq.a4": "The supported architecture is Docker Compose on an Ubuntu machine; a Helm chart is not included. At this scale, Kubernetes would be additional operational effort, since the base stack uses around 0.7 GB of RAM when idle. The Compose file still works well as a template.",
+    "faq.q5": "May I fork EU Cowork AI and roll it out under my own name?",
+    "faq.a5": "Yes. The MIT licence permits use, modification, distribution and commercial deployment, including under your own name and your own logo. There is no branding clause and no user count above which additional conditions apply. All you have to carry over is the licence text and the copyright notice.",
+    "faq.q6": "Can I switch between self-hosting and managed operation later on?",
+    "faq.a6": "Yes, in both directions. Both models use the same architecture, which is why the switch is a migration: create an archive, copy it to the new machine, restore it there. Conversations, accounts, settings and uploads are preserved, provided the encryption keys are carried over.",
+    "cta.h2": "Prefer to start managed?",
+    "cta.p": "If you would rather not operate the stack yourself: we take care of installation, updates, backups and monitoring on Swiss infrastructure. The managed offering is being built up, and access runs through the waitlist.",
+    "cta.btn1": "Join the waitlist",
+    "cta.btn2": "Security and data protection",
+    "weiter.title": "Next",
+    "weiter.li1": "How permissions, budgets and audit logs are controlled in operation",
+    "weiter.li2": "Which systems can be connected via MCP",
+    "weiter.li3": "Frequently asked questions about operation, updates, permissions and licence",
+    "geprueft": "Last reviewed: <time datetime=\"2026-08\">August 2026</time>"
+  },
+  fr: {
+    "meta.title": "Héberger soi-même une plateforme d’IA open source | EU Cowork AI",
+    "crumb.current": "Auto-hébergement",
+    "hero.eyebrow": "Auto-hébergement",
+    "hero.h1": "Héberger EU Cowork AI vous-même",
+    "hero.lead": "EU Cowork AI fonctionne comme un stack Docker Compose sur une seule machine Ubuntu. Deux scripts démarrent le stack, le logiciel est sous licence MIT, et vous n’avez besoin ni de Kubernetes, ni d’un GPU, ni d’un compte chez nous.",
+    "kurz.title": "En bref",
+    "kurz.li1": "EU Cowork AI s’exploite comme un stack Docker Compose sur une machine Ubuntu, sans Kubernetes et sans GPU dans la couche applicative.",
+    "kurz.li2": "Le stack de base occupe environ 0,7 Go de RAM au repos. Prévoyez 1,5 à 2 Go par instance, bac à sable de code compris.",
+    "kurz.li3": "Deux scripts suffisent : <code>setup-server.sh</code> prépare le serveur Ubuntu, <code>install.sh</code> génère les secrets et démarre le stack.",
+    "kurz.li4": "Pour 1 à 15 utilisateurs, trois à cinq instances se partagent une VM dotée de 4 vCPU, 16 Go de RAM et 80 Go de disque.",
+    "kurz.li5": "Concrètement, la licence MIT signifie : aucune limite de sièges, aucune obligation de marque, aucun verrouillage de fonctionnalités, code source ouvert. L’auto-hébergement est gratuit.",
+    "toc.title": "Sur cette page",
+    "toc.i1": "Ce dont vous avez besoin",
+    "toc.i2": "Installation en trois étapes",
+    "toc.i3": "Les services qui composent le stack",
+    "toc.i4": "Trois modèles d’exploitation, une seule architecture",
+    "toc.i5": "Comment se déroulent les mises à jour et ce qui compte en exploitation",
+    "toc.i6": "Un script pour la sauvegarde, la restauration et la migration",
+    "toc.i7": "Licence : ce que MIT signifie concrètement",
+    "toc.i8": "Questions fréquentes sur l’auto-hébergement",
+    "vor.h2": "Ce dont vous avez besoin",
+    "vor.p1": "Pour EU Cowork AI, il vous faut une machine Ubuntu avec Docker Engine et Compose v2, un enregistrement DNS pointant dessus et une clé API de votre passerelle de modèles. Le stack tourne intégralement sur cet unique hôte, car la charge de calcul des modèles de langage repose sur le fournisseur d’inférence.",
+    "vor.h3a": "Serveur et prérequis système",
+    "vor.pa": "Le minimum est de 2 vCPU, 4 Go de RAM, 40 Go de disque et Ubuntu 22.04 LTS. Pour la production, nous recommandons 4 vCPU, 16 Go de RAM et 200 Go de disque sur Ubuntu 24.04 LTS ; la répartition selon la taille de l’équipe figure dans le tableau ci-dessous. Le bac à sable de code durci exige en plus la virtualisation imbriquée.",
+    "vor.cap1": "Empreinte mémoire au repos, mesurée sur le stack en fonctionnement, état août 2026.",
+    "vor.t1th1": "Service",
+    "vor.t1th2": "RAM au repos",
+    "vor.t1r1": "Application de chat (LibreChat)",
+    "vor.t1r2": "Base de données (MongoDB)",
+    "vor.t1r3": "Recherche web (SearXNG)",
+    "vor.t1r4": "Passerelle MCP",
+    "vor.t1r5": "Index de recherche (Meilisearch)",
+    "vor.t1r6": "Stack de base au total",
+    "vor.t1r6v": "environ 0,7 Go",
+    "vor.t1r7": "Bac à sable de code en plus",
+    "vor.t1r7v": "environ 0,5 Go",
+    "vor.p2": "Sous charge, seule la mémoire de l’application de chat augmente réellement, l’utilisation du processeur restant proche de zéro. Les images occupent environ 5 à 6 Go une seule fois et sont partagées entre les instances d’une même machine. Ensuite, ce sont surtout les téléversements qui croissent : la première limite en exploitation est l’espace disque.",
+    "vor.cap2": "Règle empirique de dimensionnement, déduite des mesures ci-dessus.",
+    "vor.t2th1": "Taille de l’équipe",
+    "vor.t2th2": "Recommandation",
+    "vor.t2th3": "VM",
+    "vor.t2r1c1": "1 à 15 utilisateurs",
+    "vor.t2r1c2": "trois à cinq instances sur une VM",
+    "vor.t2r1c3": "4 vCPU, 16 Go de RAM, 80 Go",
+    "vor.t2r2c1": "15 à 50 utilisateurs",
+    "vor.t2r2c2": "VM dédiée",
+    "vor.t2r2c3": "4 vCPU, 8 à 16 Go de RAM, 100 Go",
+    "vor.t2r3c1": "plus de 50 utilisateurs ou secteur réglementé",
+    "vor.t2r3c2": "VM dédiée, hôte dédié si nécessaire",
+    "vor.t2r3c3": "8 vCPU, 32 Go de RAM, à partir de 200 Go",
+    "vor.h3b": "Ce dont vous n’avez pas besoin",
+    "vor.li1": "<strong>Pas de Kubernetes.</strong> Docker Compose est l’architecture prise en charge, aucun chart Helm n’est fourni.",
+    "vor.li2": "<strong>Pas de GPU pour la couche applicative.</strong> Le matériel GPU n’est nécessaire que si vous souhaitez exécuter en plus des modèles de langage en local.",
+    "vor.li3": "<strong>Pas de compte chez nous.</strong> L’installation se déroule sans inscription, sans clé de licence et sans serveur de licences.",
+    "vor.li4": "<strong>Pas d’hyperscaler ni de base de données managée.</strong> Toute VM Ubuntu suffit, la base de données et l’index de recherche tournent dans le même stack.",
+    "inst.h2": "Installation en trois étapes",
+    "inst.p1": "L’installation d’EU Cowork AI se résume à deux scripts et à une entrée dans le fichier <code>.env</code>. Sur une machine où Docker tourne déjà, la première étape est superflue.",
+    "inst.h3a": "Étape 1 : préparer le serveur",
+    "inst.pa": "Le dépôt de release sera publié au lancement. Si vous souhaitez tester dès aujourd’hui, demandez l’accès via la <a class=\"euc-textlink\" href=\"/warteliste\">liste d’attente</a>. Les commandes montrent à quoi ressemble ensuite l’installation : cloner le dépôt, se placer dans le répertoire <code>distribution</code>, lancer le script de préparation.",
+    "inst.pa2": "Le script est idempotent et installe Docker Engine ainsi que Compose v2 depuis la source officielle de Docker, car le paquet Ubuntu <code>docker.io</code> ne fournit pas Compose v2. S’y ajoutent la rotation des journaux, des règles de pare-feu pour les ports 22, 80 et 443, le swap, le fuseau horaire et les mises à jour de sécurité automatiques. Reconnectez-vous ensuite une fois.",
+    "inst.h3b": "Étape 2 : installer le stack",
+    "inst.pb": "L’installateur vérifie Docker et Compose v2, crée le fichier <code>.env</code> à partir du modèle, génère tous les secrets, crée les répertoires de données et le réseau du bac à sable, télécharge les images et démarre le stack. Le profil <code>production</code> inclut le reverse proxy, qui obtient automatiquement le certificat TLS.",
+    "inst.h3c": "Étape 3 : renseigner l’accès aux modèles",
+    "inst.pc": "Sans clé, le stack démarre, mais le chat signale une clé API manquante. L’accès est libre, car EU Cowork AI dialogue avec toute passerelle compatible OpenAI. Via EuRouter, plus de 100 modèles avec traitement dans l’UE sont disponibles sous un seul accès ; vous pouvez sinon renseigner votre propre point de terminaison.",
+    "stack.h2": "Les services qui composent le stack",
+    "stack.p1": "Le stack repose sur un fichier <code>docker-compose.yml</code> ; plusieurs services se trouvent derrière des profils optionnels et ne démarrent que si vous les activez. Chaque service est un projet open source reconnu et peut être inspecté, remplacé ou désactivé individuellement.",
+    "stack.p2": "<strong>L’application de chat</strong> repose sur LibreChat sous licence MIT et fournit l’interface, les comptes, les conversations, les téléversements de fichiers et la connexion aux modèles. EU Cowork AI maintient cette partie proche de l’amont, afin que les mises à jour de sécurité du projet restent reprenables.",
+    "stack.p3": "<strong>MongoDB</strong> stocke les conversations, les comptes, les rôles et les paramètres, sous forme de conteneur dans le même stack et sur votre disque. Il n’existe aucun service de base de données externe vers lequel des contenus pourraient s’échapper.",
+    "stack.p4": "<strong>Meilisearch</strong> assure la recherche plein texte dans vos propres conversations. L’index est local et peut être reconstruit ; la télémétrie de Meilisearch est désactivée d’usine.",
+    "stack.p5": "<strong>L’API RAG avec pgvector</strong> est optionnelle et s’ajoute via le profil <code>filesearch</code>. L’API RAG indexe par embeddings les fichiers que les utilisateurs téléversent dans le chat et restitue au modèle les passages pertinents lorsqu’il répond.",
+    "stack.p6": "<strong>La passerelle MCP</strong> se place entre l’application de chat et chaque système connecté et décide, pour chaque appel d’outil, s’il est autorisé. L’évaluation se fait dans cet ordre : utilisateur individuel, rôle, groupe, réglage par défaut du serveur. Chaque appel est journalisé et, si la vérification échoue, l’accès est refusé.",
+    "stack.p7": "<strong>Le panneau d’administration</strong> est l’interface pour les utilisateurs, les rôles, les groupes, les règles d’accès, le journal d’audit et le budget. Il fait partie du stack, n’écoute qu’en local et n’est accessible depuis l’extérieur que via le reverse proxy.",
+    "stack.p8": "<strong>Le bac à sable de code</strong> exécute le code généré par le modèle, afin qu’une demande produise un véritable fichier téléchargeable. Il est déployé à côté comme stack Compose distinct et raccordé via un réseau Docker dédié. Deux backends sont proposés : un backend léger par défaut et un backend durci basé sur une microVM, qui exige la virtualisation imbriquée sur l’hôte. Un proxy de sortie avec liste d’autorisation est en cours.",
+    "stack.p9": "<strong>SearXNG</strong> assure la recherche web depuis votre propre stack, sans compte auprès d’un service de recherche. En toute transparence : SearXNG transmet les termes de recherche à des moteurs externes, sans communiquer l’identité de l’utilisateur. Les conversations et les fichiers ne quittent pas la machine.",
+    "stack.p10": "<strong>Caddy</strong> termine le TLS, obtient automatiquement les certificats dès que l’enregistrement DNS pointe vers la machine, et constitue le seul service sur les ports 80 et 443. Des variantes sont fournies pour une exploitation derrière un WAF ou avec une autorité de certification interne.",
+    "betr.h2": "Trois modèles d’exploitation, une seule architecture",
+    "betr.p1": "Il existe trois modèles d’exploitation et une seule architecture : exploité par vous, dans votre cloud, au besoin par votre prestataire informatique, ou géré par nous. Le stack est identique dans les trois cas. Seuls diffèrent celui qui détient le root, celui qui gère les clés et celui qui assure les mises à jour et les sauvegardes.",
+    "betr.h3a": "Exploité par vous",
+    "betr.pa": "Vous exploitez la machine, détenez le root, gérez vos clés et assurez vous-même mises à jour et sauvegardes. Le logiciel ne coûte rien, un abonnement de support est optionnel. Ce modèle sert d’étalon : ce qu’un administrateur externe peut mettre en route en deux commandes soutient aussi les autres modèles.",
+    "betr.h3b": "Dans votre cloud",
+    "betr.pb": "EU Cowork AI tourne sur n’importe quelle VM Ubuntu, dans votre propre centre de données comme chez un fournisseur cloud suisse ou européen. Il n’existe aucune dépendance à un hyperscaler. Un prestataire informatique qui héberge pour ses clients utilise la même architecture : un stack par client.",
+    "betr.h3c": "Géré par nous",
+    "betr.pc": "Nous prenons en charge l’installation, les mises à jour, les sauvegardes et la supervision et exploitons l’instance dans des centres de données certifiés ISO 27001 de Green à Lupfig, en Suisse. Les certificats sont détenus par Green, et non par EU Cowork AI ; la certification ISO 27001 propre à EU Cowork AI est en cours.",
+    "betr.h3d": "Plusieurs instances sur une machine",
+    "betr.pd1": "La frontière entre clients est le stack Compose, pas la VM : chaque instance dispose de sa propre base de données, de son propre index de recherche, de ses propres téléversements, de ses propres secrets, de son propre réseau Docker et de son propre bac à sable de code. Pour de petites équipes, trois à cinq instances peuvent donc partager la même VM.",
+    "betr.pd2": "Peuvent être partagés les images Docker et un reverse proxy commun. Ne sont jamais partagés la base de données, les téléversements, les secrets, le réseau du bac à sable et la clé du fournisseur de modèles : une clé partagée rend la consommation par client impossible à attribuer, et un réseau de bac à sable partagé supprime la séparation là précisément où s’exécute du code tiers.",
+    "upd.h2": "Comment se déroulent les mises à jour et ce qui compte en exploitation",
+    "upd.p1": "Les mises à jour sont reproductibles, car l’image applicative est figée sur un digest plutôt que sur un tag mobile et les autres services tournent sur des versions fixes. Une release d’EU Cowork AI est donc une combinaison testée d’image applicative et de services, et deux instances sur la même machine peuvent tourner sur des versions différentes.",
+    "upd.p2": "L’option <code>--migrate</code> laisse le fichier <code>.env</code> intact et reconstruit les services maison. Une sauvegarde s’impose avant chaque mise à jour, suivie d’un bref test fonctionnel. Le retour en arrière passe par la version précédente du fichier Compose.",
+    "upd.p3": "En exploitation courante, deux points sont importants : la rotation des journaux mise en place par <code>setup-server.sh</code> et l’espace disque, avec une alerte à partir de 70 pour cent d’occupation. Les questions récurrentes sur l’exploitation, les mises à jour et la sauvegarde trouvent leur réponse dans les <a class=\"euc-textlink\" href=\"/faq\">questions fréquentes</a>.",
+    "sich.h2": "Un script pour la sauvegarde, la restauration et la migration",
+    "sich.p1": "Un seul script couvre la sauvegarde, la restauration et la migration de serveur : <code>backup.sh</code> crée une archive à partir du dump de la base de données, du fichier <code>.env</code> et des fichiers téléversés, et la restaure également. Une migration se résume donc à une sauvegarde sur l’ancien serveur, à la copie de l’archive et à une restauration sur le nouveau.",
+    "sich.p2": "L’archive contient des secrets et des conversations et est stockée avec des droits de fichier restrictifs. Elle n’a jamais sa place dans un dépôt ni, non chiffrée, dans un cloud tiers. L’index de recherche n’est pas sauvegardé, car il peut être reconstruit à partir de la base de données.",
+    "sich.p3": "L’erreur la plus coûteuse lors d’une migration consiste à laisser régénérer les clés de chiffrement au lieu de les reprendre depuis l’ancien fichier <code>.env</code>. Tous les identifiants stockés dans la base de données deviennent alors illisibles. Avec des valeurs reprises, la migration reste une fenêtre de maintenance de 15 à 30 minutes.",
+    "sich.p4": "Deux règles issues de l’exploitation : répliquer la cible de sauvegarde en dehors de la machine et tester la restauration au moins une fois.",
+    "liz.h2": "Licence : ce que MIT signifie concrètement",
+    "liz.p1": "EU Cowork AI est sous licence MIT, tout comme l’application de chat sous-jacente LibreChat. L’auto-hébergement est gratuit, dès un utilisateur et sans inscription chez nous. Ce que cela signifie en détail, et pourquoi c’est la différence décisive dans la <a class=\"euc-textlink\" href=\"/vergleich\">comparaison avec d’autres plateformes</a> :",
+    "liz.li1": "<strong>Aucune limite de sièges.</strong> Que 3 ou 300 personnes travaillent sur l’instance ne change rien à la licence.",
+    "liz.li2": "<strong>Aucune obligation de marque.</strong> Nom, logo et couleurs relèvent de la configuration, y compris pour un usage commercial.",
+    "liz.li3": "<strong>Aucun verrouillage de fonctionnalités.</strong> Gestion des droits, journal d’audit, budgets et connexions aux systèmes proviennent de la même source ouverte.",
+    "liz.li4": "<strong>Code source ouvert.</strong> La base LibreChat est déjà consultable publiquement ; le stack, les scripts et les services paraîtront sous licence MIT au lancement et seront alors consultables, forkables et vérifiables, au lieu de reposer sur une promesse.",
+    "liz.p2": "Sur le plan commercial, nous soutenons le modèle par l’exploitation et l’accompagnement, non par les licences. C’est pourquoi le chemin de retour de l’exploitation gérée vers l’auto-hébergement est également ouvert : même architecture, même archive.",
+    "faq.h2": "Questions fréquentes sur l’auto-hébergement",
+    "faq.q1": "Combien coûte l’auto-hébergement d’EU Cowork AI ?",
+    "faq.a1": "Le logiciel ne coûte rien. EU Cowork AI est sous licence MIT, sans limite de sièges et sans clé de licence, et l’auto-hébergement est gratuit dès un utilisateur. Les coûts naissent en dehors du logiciel : pour la machine, pour l’accès au fournisseur de modèles et pour l’exploitation.",
+    "faq.q2": "Ai-je besoin d’un GPU pour EU Cowork AI ?",
+    "faq.a2": "Non. Aucun GPU n’est nécessaire pour la couche applicative. La charge de calcul des modèles de langage repose sur le fournisseur d’inférence, et l’utilisation du processeur par le stack est proche de zéro en fonctionnement normal. Le matériel GPU n’est nécessaire que si vous souhaitez exécuter en plus des modèles de langage en local sur votre propre machine.",
+    "faq.q3": "Combien d’utilisateurs une instance peut-elle supporter ?",
+    "faq.a3": "Pour 1 à 15 utilisateurs, trois à cinq instances se partagent une VM dotée de 4 vCPU, 16 Go de RAM et 80 Go de disque. De 15 à 50 utilisateurs, une instance dispose de sa propre VM avec 4 vCPU et 8 à 16 Go de RAM. Au-delà, la VM grandit en conséquence.",
+    "faq.q4": "EU Cowork AI fonctionne-t-il sur Kubernetes ?",
+    "faq.a4": "L’architecture prise en charge est Docker Compose sur une machine Ubuntu, aucun chart Helm n’est fourni. À cette échelle, Kubernetes représenterait une charge d’exploitation supplémentaire, car le stack de base occupe environ 0,7 Go de RAM au repos. Le fichier Compose reste néanmoins utilisable comme modèle.",
+    "faq.q5": "Puis-je forker EU Cowork AI et le déployer sous mon propre nom ?",
+    "faq.a5": "Oui. La licence MIT autorise l’utilisation, la modification, la redistribution et l’usage commercial, y compris sous votre propre nom et votre propre logo. Il n’existe aucune clause de marque ni de seuil d’utilisateurs à partir duquel des conditions supplémentaires s’appliquent. Seuls le texte de licence et la mention de droit d’auteur doivent être conservés.",
+    "faq.q6": "Puis-je passer plus tard de l’auto-hébergement à l’exploitation gérée, ou l’inverse ?",
+    "faq.a6": "Oui, dans les deux sens. Les deux modèles utilisent la même architecture ; le changement se ramène donc à une migration : créer une archive, la copier sur la nouvelle machine, l’y restaurer. Conversations, comptes, paramètres et téléversements sont conservés, à condition de reprendre les clés de chiffrement.",
+    "cta.h2": "Vous préférez démarrer en mode géré ?",
+    "cta.p": "Si vous ne souhaitez pas exploiter le stack vous-même : nous prenons en charge l’installation, les mises à jour, la sauvegarde et la supervision sur une infrastructure suisse. L’offre gérée est en cours de constitution et l’accès passe par la liste d’attente.",
+    "cta.btn1": "Rejoindre la liste d’attente",
+    "cta.btn2": "Sécurité et protection des données",
+    "weiter.title": "Poursuivre",
+    "weiter.li1": "Comment les droits, les budgets et les journaux d’audit sont pilotés en exploitation",
+    "weiter.li2": "Quels systèmes peuvent être connectés via MCP",
+    "weiter.li3": "Questions fréquentes sur l’exploitation, les mises à jour, les droits et la licence",
+    "geprueft": "Dernière vérification : <time datetime=\"2026-08\">août 2026</time>"
+  },
+  it: {
+    "meta.title": "Ospitare in proprio una piattaforma IA open source | EU Cowork AI",
+    "crumb.current": "Self-hosting",
+    "hero.eyebrow": "Self-hosting",
+    "hero.h1": "Ospitare EU Cowork AI in proprio",
+    "hero.lead": "EU Cowork AI funziona come stack Docker Compose su un’unica macchina Ubuntu. Due script avviano lo stack, il software è rilasciato con licenza MIT e non Le servono né Kubernetes, né una GPU, né un account presso di noi.",
+    "kurz.title": "In breve",
+    "kurz.li1": "EU Cowork AI viene eseguito come stack Docker Compose su una macchina Ubuntu, senza Kubernetes e senza GPU nel livello applicativo.",
+    "kurz.li2": "Lo stack di base occupa a riposo circa 0,7 GB di RAM. Preveda da 1,5 a 2 GB per istanza, inclusa la sandbox di codice dedicata.",
+    "kurz.li3": "Bastano due script: <code>setup-server.sh</code> prepara il server Ubuntu, <code>install.sh</code> genera i secret e avvia lo stack.",
+    "kurz.li4": "Per 1-15 utenti, da tre a cinque istanze condividono una VM con 4 vCPU, 16 GB di RAM e 80 GB di disco.",
+    "kurz.li5": "In concreto la licenza MIT significa: nessun limite di postazioni, nessun obbligo di branding, nessun feature gating, codice sorgente aperto. Il self-hosting è gratuito.",
+    "toc.title": "In questa pagina",
+    "toc.i1": "Che cosa Le serve",
+    "toc.i2": "Installazione in tre passaggi",
+    "toc.i3": "Da quali servizi è composto lo stack",
+    "toc.i4": "Tre modelli operativi, un’unica architettura",
+    "toc.i5": "Come funzionano gli aggiornamenti e che cosa conta nell’esercizio",
+    "toc.i6": "Un solo script per backup, ripristino e migrazione",
+    "toc.i7": "Licenza: che cosa significa MIT in concreto",
+    "toc.i8": "Domande frequenti sull’esercizio autonomo",
+    "vor.h2": "Che cosa Le serve",
+    "vor.p1": "Per EU Cowork AI servono una macchina Ubuntu con Docker Engine e Compose v2, un record DNS che punti ad essa e una chiave API del Suo gateway di modelli. Lo stack gira interamente su questo unico host, poiché il carico di calcolo dei modelli linguistici è a carico del fornitore di inferenza.",
+    "vor.h3a": "Server e requisiti di sistema",
+    "vor.pa": "Il minimo è 2 vCPU, 4 GB di RAM, 40 GB di disco e Ubuntu 22.04 LTS. Per l’esercizio produttivo si raccomandano 4 vCPU, 16 GB di RAM e 200 GB di disco su Ubuntu 24.04 LTS; la ripartizione per dimensione del team è riportata nella tabella sottostante. La sandbox di codice rinforzata richiede inoltre la virtualizzazione annidata.",
+    "vor.cap1": "Occupazione di memoria a riposo, misurata sullo stack in esecuzione, stato agosto 2026.",
+    "vor.t1th1": "Servizio",
+    "vor.t1th2": "RAM a riposo",
+    "vor.t1r1": "Applicazione di chat (LibreChat)",
+    "vor.t1r2": "Banca dati (MongoDB)",
+    "vor.t1r3": "Ricerca web (SearXNG)",
+    "vor.t1r4": "Gateway MCP",
+    "vor.t1r5": "Indice di ricerca (Meilisearch)",
+    "vor.t1r6": "Stack di base complessivo",
+    "vor.t1r6v": "circa 0,7 GB",
+    "vor.t1r7": "Sandbox di codice in aggiunta",
+    "vor.t1r7v": "circa 0,5 GB",
+    "vor.p2": "Sotto carico cresce praticamente soltanto la memoria dell’applicazione di chat, mentre l’utilizzo della CPU resta prossimo allo zero. Le immagini occupano una tantum circa 5-6 GB e vengono condivise tra le istanze sulla stessa macchina. In seguito crescono soprattutto i file caricati: il primo limite nell’esercizio è lo spazio su disco.",
+    "vor.cap2": "Regola empirica per il dimensionamento, ricavata dai valori misurati sopra.",
+    "vor.t2th1": "Dimensione del team",
+    "vor.t2th2": "Raccomandazione",
+    "vor.t2th3": "VM",
+    "vor.t2r1c1": "1-15 utenti",
+    "vor.t2r1c2": "da tre a cinque istanze su una VM",
+    "vor.t2r1c3": "4 vCPU, 16 GB di RAM, 80 GB",
+    "vor.t2r2c1": "15-50 utenti",
+    "vor.t2r2c2": "VM dedicata",
+    "vor.t2r2c3": "4 vCPU, 8-16 GB di RAM, 100 GB",
+    "vor.t2r3c1": "oltre 50 utenti o settore regolamentato",
+    "vor.t2r3c2": "VM dedicata, all’occorrenza host dedicato",
+    "vor.t2r3c3": "8 vCPU, 32 GB di RAM, da 200 GB",
+    "vor.h3b": "Che cosa non Le serve",
+    "vor.li1": "<strong>Nessun Kubernetes.</strong> Docker Compose è l’architettura supportata, non viene fornito alcun chart Helm.",
+    "vor.li2": "<strong>Nessuna GPU per il livello applicativo.</strong> L’hardware GPU serve solo a chi desidera eseguire in aggiunta modelli linguistici in locale.",
+    "vor.li3": "<strong>Nessun account presso di noi.</strong> L’installazione avviene senza registrazione, senza chiave di licenza e senza server di licenze.",
+    "vor.li4": "<strong>Nessun hyperscaler e nessuna banca dati gestita.</strong> È sufficiente una qualsiasi VM Ubuntu; banca dati e indice di ricerca girano nello stesso stack.",
+    "inst.h2": "Installazione in tre passaggi",
+    "inst.p1": "L’installazione di EU Cowork AI consiste in due script e in una voce nel file <code>.env</code>. Su una macchina in cui Docker è già in esecuzione, il primo passaggio non è necessario.",
+    "inst.h3a": "Passo 1: preparare il server",
+    "inst.pa": "Il repository di rilascio verrà pubblicato con il lancio. Chi desidera provarlo già oggi richiede l’accesso tramite la <a class=\"euc-textlink\" href=\"/warteliste\">lista d’attesa</a>. I comandi mostrano come si presenta poi l’installazione: clonare il repository, passare alla directory <code>distribution</code>, avviare lo script di preparazione.",
+    "inst.pa2": "Lo script è idempotente e installa Docker Engine con Compose v2 dalla fonte ufficiale di Docker, poiché il pacchetto Ubuntu <code>docker.io</code> non include Compose v2. Si aggiungono la rotazione dei log, le regole di firewall per le porte 22, 80 e 443, lo swap, il fuso orario e gli aggiornamenti di sicurezza automatici. Al termine occorre effettuare nuovamente il login.",
+    "inst.h3b": "Passo 2: installare lo stack",
+    "inst.pb": "L’installer verifica Docker e Compose v2, crea il file <code>.env</code> dal modello, genera tutti i secret, predispone le directory dati e la rete della sandbox, scarica le immagini e avvia lo stack. Il profilo <code>production</code> include il reverse proxy, che ottiene automaticamente il certificato TLS.",
+    "inst.h3c": "Passo 3: inserire l’accesso ai modelli",
+    "inst.pc": "Senza chiave lo stack si avvia comunque, ma la chat segnala una chiave API mancante. L’accesso è liberamente selezionabile, poiché EU Cowork AI dialoga con qualsiasi gateway compatibile con OpenAI. Tramite EuRouter sono disponibili oltre 100 modelli con elaborazione nell’UE sotto un unico accesso; in alternativa può indicare il Suo endpoint.",
+    "stack.h2": "Da quali servizi è composto lo stack",
+    "stack.p1": "Lo stack si basa su un file <code>docker-compose.yml</code>; diversi servizi sono collocati dietro profili opzionali e si avviano solo se li attiva. Ogni servizio è un progetto open source noto e può essere ispezionato, sostituito o disattivato singolarmente.",
+    "stack.p2": "<strong>L’applicazione di chat</strong> si basa su LibreChat con licenza MIT e fornisce interfaccia, account, conversazioni, caricamento di file e collegamento ai modelli. EU Cowork AI mantiene questa parte vicina all’upstream, affinché gli aggiornamenti di sicurezza del progetto restino recepibili.",
+    "stack.p3": "<strong>MongoDB</strong> memorizza conversazioni, account, ruoli e impostazioni, come container nello stesso stack e sul Suo disco. Non esiste alcun servizio di banca dati esterno verso cui i contenuti potrebbero defluire.",
+    "stack.p4": "<strong>Meilisearch</strong> fornisce la ricerca full text sulle proprie conversazioni. L’indice risiede in locale e può essere ricostruito; la telemetria di Meilisearch è disattivata di fabbrica.",
+    "stack.p5": "<strong>L’API RAG con pgvector</strong> è opzionale e si aggiunge tramite il profilo <code>filesearch</code>. L’API RAG genera gli embedding dei file che gli utenti caricano nella chat e restituisce al modello i passaggi pertinenti durante la risposta.",
+    "stack.p6": "<strong>Il gateway MCP</strong> si colloca tra l’applicazione di chat e ogni sistema collegato e decide per ogni chiamata di strumento se sia consentita. La valutazione avviene in quest’ordine: singolo utente, ruolo, gruppo, impostazione predefinita del server. Ogni chiamata viene registrata e, se la verifica non riesce, l’accesso viene negato.",
+    "stack.p7": "<strong>Il pannello di amministrazione</strong> è l’interfaccia per utenti, ruoli, gruppi, regole di accesso, log di audit e budget. Fa parte dello stack, resta in ascolto solo in locale ed è raggiungibile dall’esterno esclusivamente tramite il reverse proxy.",
+    "stack.p8": "<strong>La sandbox di codice</strong> esegue il codice generato dal modello, così che da una richiesta nasca un vero file scaricabile. Viene affiancata come stack Compose separato e collegata tramite una rete Docker dedicata. Sono disponibili due backend: uno leggero come impostazione predefinita e uno rinforzato basato su una microVM, che richiede la virtualizzazione annidata sull’host. Un proxy di uscita con lista di autorizzazione è in corso di realizzazione.",
+    "stack.p9": "<strong>SearXNG</strong> fornisce la ricerca web dal Suo stack, senza account presso un servizio di ricerca. Detto con franchezza: SearXNG inoltra i termini di ricerca a motori di ricerca esterni, senza trasmettere l’identità dell’utente. Conversazioni e file non lasciano la macchina.",
+    "stack.p10": "<strong>Caddy</strong> termina il TLS, ottiene automaticamente i certificati non appena il record DNS punta alla macchina ed è l’unico servizio sulle porte 80 e 443. Per l’esercizio dietro un WAF o con un’autorità di certificazione interna sono incluse apposite varianti.",
+    "betr.h2": "Tre modelli operativi, un’unica architettura",
+    "betr.p1": "Esistono tre modelli operativi e una sola architettura: gestito da Lei, nel Suo cloud, eventualmente tramite il Suo fornitore IT, oppure gestito da noi. In tutti e tre i casi lo stack è il medesimo. Cambia soltanto chi detiene il root, chi amministra le chiavi e chi esegue aggiornamenti e backup.",
+    "betr.h3a": "Gestito da Lei",
+    "betr.pa": "Lei gestisce la macchina, detiene il root, amministra le Sue chiavi ed esegue autonomamente aggiornamenti e backup. Il software non costa nulla, un abbonamento di supporto è facoltativo. Questo modello è il metro di misura: ciò che un amministratore esterno riesce ad avviare con due comandi sostiene anche gli altri modelli.",
+    "betr.h3b": "Nel Suo cloud",
+    "betr.pb": "EU Cowork AI gira su qualsiasi VM Ubuntu, nel proprio centro di calcolo così come presso un fornitore cloud svizzero o europeo. Non esiste alcun vincolo a un hyperscaler. Chi come fornitore IT ospita per i propri clienti utilizza la stessa architettura: uno stack per cliente.",
+    "betr.h3c": "Gestito da noi",
+    "betr.pc": "Ci occupiamo di installazione, aggiornamenti, backup e monitoraggio e gestiamo l’istanza in centri di calcolo certificati ISO 27001 di Green a Lupfig, in Svizzera. I certificati sono di Green, non di EU Cowork AI; la certificazione ISO 27001 propria di EU Cowork AI è in corso.",
+    "betr.h3d": "Più istanze su una macchina",
+    "betr.pd1": "Il confine tra i clienti è lo stack Compose, non la VM: ogni istanza dispone di banca dati propria, indice di ricerca proprio, file caricati propri, secret propri, rete Docker propria e sandbox di codice propria. Per i team piccoli, da tre a cinque istanze possono quindi condividere la stessa VM.",
+    "betr.pd2": "Possono essere condivisi le immagini Docker e un reverse proxy comune. Non vanno mai condivisi banca dati, file caricati, secret, rete della sandbox e chiave del fornitore di modelli: una chiave condivisa rende impossibile attribuire il consumo per cliente, e una rete della sandbox condivisa annulla la separazione proprio dove viene eseguito codice altrui.",
+    "upd.h2": "Come funzionano gli aggiornamenti e che cosa conta nell’esercizio",
+    "upd.p1": "Gli aggiornamenti sono riproducibili, perché l’immagine applicativa è fissata su un digest anziché su un tag mobile e gli altri servizi girano su versioni fisse. Un rilascio di EU Cowork AI è quindi una combinazione testata di immagine applicativa e servizi, e due istanze sulla stessa macchina possono usare versioni diverse.",
+    "upd.p2": "L’opzione <code>--migrate</code> lascia intatto il file <code>.env</code> e ricostruisce i servizi propri. Prima di ogni aggiornamento serve un backup, subito dopo un breve test funzionale. Il ritorno alla versione precedente avviene tramite lo stato precedente del file Compose.",
+    "upd.p3": "Nell’esercizio corrente contano due aspetti: la rotazione dei log configurata da <code>setup-server.sh</code> e lo spazio su disco, con un allarme a partire dal 70 per cento di occupazione. Le domande ricorrenti su esercizio, aggiornamenti e salvataggio dei dati trovano risposta nelle <a class=\"euc-textlink\" href=\"/faq\">domande frequenti</a>.",
+    "sich.h2": "Un solo script per backup, ripristino e migrazione",
+    "sich.p1": "Un unico script copre backup, ripristino e migrazione del server: <code>backup.sh</code> crea un archivio a partire dal dump della banca dati, dal file <code>.env</code> e dai file caricati, e provvede anche al ripristino. Una migrazione si riduce quindi a un backup sul vecchio server, alla copia dell’archivio e al ripristino su quello nuovo.",
+    "sich.p2": "L’archivio contiene secret e conversazioni e viene salvato con permessi restrittivi. Non deve mai finire in un repository né, non cifrato, in un cloud di terzi. L’indice di ricerca non viene incluso nel backup, perché può essere ricostruito dalla banca dati.",
+    "sich.p3": "L’errore più costoso durante una migrazione consiste nel far rigenerare le chiavi di cifratura invece di riprenderle dal vecchio file <code>.env</code>. Tutte le credenziali salvate nella banca dati diventano allora illeggibili. Con i valori ripresi, la migrazione resta una finestra di manutenzione di 15-30 minuti.",
+    "sich.p4": "Due regole tratte dall’esercizio: replicare la destinazione del backup al di fuori della macchina e testare almeno una volta il ripristino.",
+    "liz.h2": "Licenza: che cosa significa MIT in concreto",
+    "liz.p1": "EU Cowork AI è rilasciato con licenza MIT, così come l’applicazione di chat sottostante LibreChat. Il self-hosting è gratuito, già a partire da un utente e senza registrazione presso di noi. Che cosa significhi nel dettaglio, e perché sia la differenza decisiva nel <a class=\"euc-textlink\" href=\"/vergleich\">confronto con altre piattaforme</a>:",
+    "liz.li1": "<strong>Nessun limite di postazioni.</strong> Che sull’istanza lavorino 3 o 300 persone non cambia nulla ai fini della licenza.",
+    "liz.li2": "<strong>Nessun obbligo di branding.</strong> Nome, logo e colori sono configurazione, anche per l’impiego commerciale.",
+    "liz.li3": "<strong>Nessun feature gating.</strong> Gestione dei diritti, log di audit, budget e collegamenti ai sistemi provengono dalla stessa sorgente aperta.",
+    "liz.li4": "<strong>Codice sorgente aperto.</strong> La base LibreChat è già oggi consultabile pubblicamente; stack, script e servizi saranno pubblicati con licenza MIT al lancio e saranno allora consultabili, forkabili e verificabili, anziché basarsi su una promessa.",
+    "liz.p2": "Sul piano commerciale sosteniamo il modello con l’esercizio e l’assistenza, non con le licenze. Per questo è aperta anche la via di ritorno dall’esercizio gestito a quello autonomo: stessa architettura, stesso archivio.",
+    "faq.h2": "Domande frequenti sull’esercizio autonomo",
+    "faq.q1": "Quanto costa ospitare EU Cowork AI in proprio?",
+    "faq.a1": "Il software non costa nulla. EU Cowork AI è rilasciato con licenza MIT, senza limite di postazioni e senza chiave di licenza, e il self-hosting è gratuito già a partire da un utente. I costi nascono al di fuori del software: per la macchina, per l’accesso al fornitore di modelli e per l’esercizio.",
+    "faq.q2": "Serve una GPU per EU Cowork AI?",
+    "faq.a2": "No. Per il livello applicativo non è necessaria alcuna GPU. Il carico di calcolo dei modelli linguistici è a carico del fornitore di inferenza e l’utilizzo della CPU dello stack è prossimo allo zero nell’esercizio normale. L’hardware GPU serve solo a chi desidera eseguire in aggiunta modelli linguistici in locale sulla propria macchina.",
+    "faq.q3": "Quanti utenti sostiene un’istanza?",
+    "faq.a3": "Per 1-15 utenti, da tre a cinque istanze condividono una VM con 4 vCPU, 16 GB di RAM e 80 GB di disco. Da 15 a 50 utenti, un’istanza riceve una VM dedicata con 4 vCPU e 8-16 GB di RAM. Oltre tale soglia la VM cresce di conseguenza.",
+    "faq.q4": "EU Cowork AI gira su Kubernetes?",
+    "faq.a4": "L’architettura supportata è Docker Compose su una macchina Ubuntu, non viene fornito alcun chart Helm. Per questo ordine di grandezza Kubernetes comporterebbe un onere operativo aggiuntivo, poiché lo stack di base occupa a riposo circa 0,7 GB di RAM. Il file Compose resta comunque utilizzabile come modello.",
+    "faq.q5": "Posso fare il fork di EU Cowork AI e distribuirlo con un nome proprio?",
+    "faq.a5": "Sì. La licenza MIT consente utilizzo, modifica, distribuzione e impiego commerciale, anche con nome e logo propri. Non esiste alcuna clausola di branding né una soglia di utenti oltre la quale valgano condizioni aggiuntive. Vanno riportati soltanto il testo della licenza e la nota di copyright.",
+    "faq.q6": "Posso passare in seguito dall’esercizio autonomo a quello gestito?",
+    "faq.a6": "Sì, in entrambe le direzioni. Entrambi i modelli utilizzano la stessa architettura, perciò il passaggio è una migrazione: creare un archivio, copiarlo sulla nuova macchina e ripristinarlo lì. Conversazioni, account, impostazioni e file caricati restano intatti, a condizione che le chiavi di cifratura vengano riprese.",
+    "cta.h2": "Preferisce partire con la gestione affidata a noi?",
+    "cta.p": "Se non desidera gestire lo stack in proprio: ci occupiamo di installazione, aggiornamenti, backup e monitoraggio su infrastruttura svizzera. L’offerta gestita è in fase di costruzione e l’accesso passa dalla lista d’attesa.",
+    "cta.btn1": "Iscriviti alla lista d’attesa",
+    "cta.btn2": "Sicurezza e protezione dei dati",
+    "weiter.title": "Continua",
+    "weiter.li1": "Come vengono governati diritti, budget e log di audit nell’esercizio",
+    "weiter.li2": "Quali sistemi si possono collegare tramite MCP",
+    "weiter.li3": "Domande frequenti su esercizio, aggiornamenti, diritti e licenza",
+    "geprueft": "Ultima verifica: <time datetime=\"2026-08\">agosto 2026</time>"
+  },
+  es: {
+    "meta.title": "Alojar por su cuenta una plataforma de IA de código abierto | EU Cowork AI",
+    "crumb.current": "Autoalojamiento",
+    "hero.eyebrow": "Autoalojamiento",
+    "hero.h1": "Aloje EU Cowork AI por su cuenta",
+    "hero.lead": "EU Cowork AI funciona como stack de Docker Compose en una única máquina Ubuntu. Dos scripts levantan el stack, el software está bajo licencia MIT y usted no necesita ni Kubernetes, ni una GPU, ni una cuenta con nosotros.",
+    "kurz.title": "En resumen",
+    "kurz.li1": "EU Cowork AI se opera como stack de Docker Compose en una máquina Ubuntu, sin Kubernetes y sin GPU en la capa de aplicación.",
+    "kurz.li2": "El stack base ocupa en reposo unos 0,7 GB de RAM. Presupueste de 1,5 a 2 GB por instancia, incluido un entorno aislado de código propio.",
+    "kurz.li3": "Bastan dos scripts: <code>setup-server.sh</code> prepara el servidor Ubuntu, <code>install.sh</code> genera los secretos e inicia el stack.",
+    "kurz.li4": "Para 1 a 15 usuarios, de tres a cinco instancias comparten una VM con 4 vCPU, 16 GB de RAM y 80 GB de disco.",
+    "kurz.li5": "En concreto, la licencia MIT significa: sin límite de puestos, sin marca obligatoria, sin restricción de funciones, código fuente abierto. El autoalojamiento es gratuito.",
+    "toc.title": "En esta página",
+    "toc.i1": "Qué necesita",
+    "toc.i2": "Instalación en tres pasos",
+    "toc.i3": "De qué servicios se compone el stack",
+    "toc.i4": "Tres modelos de operación, una sola arquitectura",
+    "toc.i5": "Cómo funcionan las actualizaciones y qué cuenta en la operación",
+    "toc.i6": "Un script para copia de seguridad, restauración y traslado",
+    "toc.i7": "Licencia: qué significa MIT en la práctica",
+    "toc.i8": "Preguntas frecuentes sobre el autoalojamiento",
+    "vor.h2": "Qué necesita",
+    "vor.p1": "Para EU Cowork AI necesita una máquina Ubuntu con Docker Engine y Compose v2, un registro DNS que apunte a ella y una clave API de su pasarela de modelos. El stack funciona por completo en este único host, ya que la carga de cálculo de los modelos de lenguaje recae en el proveedor de inferencia.",
+    "vor.h3a": "Servidor y requisitos del sistema",
+    "vor.pa": "El mínimo son 2 vCPU, 4 GB de RAM, 40 GB de disco y Ubuntu 22.04 LTS. Para el uso productivo se recomiendan 4 vCPU, 16 GB de RAM y 200 GB de disco en Ubuntu 24.04 LTS; el reparto según el tamaño del equipo figura en la tabla siguiente. El entorno aislado de código reforzado requiere además virtualización anidada.",
+    "vor.cap1": "Consumo de memoria en reposo, medido sobre el stack en funcionamiento, estado agosto de 2026.",
+    "vor.t1th1": "Servicio",
+    "vor.t1th2": "RAM en reposo",
+    "vor.t1r1": "Aplicación de chat (LibreChat)",
+    "vor.t1r2": "Base de datos (MongoDB)",
+    "vor.t1r3": "Búsqueda web (SearXNG)",
+    "vor.t1r4": "Pasarela MCP",
+    "vor.t1r5": "Índice de búsqueda (Meilisearch)",
+    "vor.t1r6": "Stack base en total",
+    "vor.t1r6v": "unos 0,7 GB",
+    "vor.t1r7": "Entorno aislado de código adicional",
+    "vor.t1r7v": "unos 0,5 GB",
+    "vor.p2": "Bajo carga crece prácticamente solo la memoria de la aplicación de chat, mientras que el uso de CPU se mantiene cercano a cero. Las imágenes ocupan una sola vez entre 5 y 6 GB y se comparten entre instancias de la misma máquina. Después crecen sobre todo los archivos subidos: el primer límite en la operación es el espacio en disco.",
+    "vor.cap2": "Regla práctica para el dimensionamiento, derivada de los valores medidos arriba.",
+    "vor.t2th1": "Tamaño del equipo",
+    "vor.t2th2": "Recomendación",
+    "vor.t2th3": "VM",
+    "vor.t2r1c1": "1 a 15 usuarios",
+    "vor.t2r1c2": "de tres a cinco instancias en una VM",
+    "vor.t2r1c3": "4 vCPU, 16 GB de RAM, 80 GB",
+    "vor.t2r2c1": "15 a 50 usuarios",
+    "vor.t2r2c2": "VM propia",
+    "vor.t2r2c3": "4 vCPU, 8 a 16 GB de RAM, 100 GB",
+    "vor.t2r3c1": "más de 50 usuarios o sector regulado",
+    "vor.t2r3c2": "VM propia y, si hace falta, host propio",
+    "vor.t2r3c3": "8 vCPU, 32 GB de RAM, a partir de 200 GB",
+    "vor.h3b": "Qué no necesita",
+    "vor.li1": "<strong>Nada de Kubernetes.</strong> Docker Compose es la arquitectura soportada; no se incluye ningún chart de Helm.",
+    "vor.li2": "<strong>Ninguna GPU para la capa de aplicación.</strong> Solo necesita hardware GPU quien además quiera ejecutar modelos de lenguaje en local.",
+    "vor.li3": "<strong>Ninguna cuenta con nosotros.</strong> La instalación se realiza sin registro, sin clave de licencia y sin servidor de licencias.",
+    "vor.li4": "<strong>Ningún hyperscaler ni base de datos gestionada.</strong> Basta cualquier VM Ubuntu; base de datos e índice de búsqueda funcionan en el mismo stack.",
+    "inst.h2": "Instalación en tres pasos",
+    "inst.p1": "La instalación de EU Cowork AI consta de dos scripts y una entrada en el archivo <code>.env</code>. En una máquina en la que Docker ya está en marcha, el primer paso no es necesario.",
+    "inst.h3a": "Paso 1: preparar el servidor",
+    "inst.pa": "El repositorio de publicación se difundirá con el lanzamiento. Quien quiera probarlo ya hoy solicita el acceso a través de la <a class=\"euc-textlink\" href=\"/warteliste\">lista de espera</a>. Los comandos muestran cómo es la instalación después: clonar el repositorio, cambiar al directorio <code>distribution</code> y ejecutar el script de preparación.",
+    "inst.pa2": "El script es idempotente e instala Docker Engine junto con Compose v2 desde la fuente oficial de Docker, ya que el paquete de Ubuntu <code>docker.io</code> no incluye Compose v2. A ello se suman la rotación de registros, reglas de cortafuegos para los puertos 22, 80 y 443, swap, zona horaria y actualizaciones de seguridad automáticas. Después hay que volver a iniciar sesión una vez.",
+    "inst.h3b": "Paso 2: instalar el stack",
+    "inst.pb": "El instalador comprueba Docker y Compose v2, crea el archivo <code>.env</code> a partir de la plantilla, genera todos los secretos, crea los directorios de datos y la red del entorno aislado, descarga las imágenes e inicia el stack. El perfil <code>production</code> incluye el proxy inverso, que obtiene automáticamente el certificado TLS.",
+    "inst.h3c": "Paso 3: registrar el acceso al modelo",
+    "inst.pc": "Sin clave el stack arranca igualmente, pero el chat informa de que falta una clave API. El acceso es de libre elección, porque EU Cowork AI se comunica con cualquier pasarela compatible con OpenAI. A través de EuRouter hay más de 100 modelos con procesamiento en la UE bajo un único acceso; como alternativa, usted registra su propio endpoint.",
+    "stack.h2": "De qué servicios se compone el stack",
+    "stack.p1": "El stack se basa en un archivo <code>docker-compose.yml</code>; varios servicios están detrás de perfiles opcionales y solo arrancan si usted los activa. Cada servicio es un proyecto de código abierto conocido y puede inspeccionarse, sustituirse o desactivarse por separado.",
+    "stack.p2": "<strong>La aplicación de chat</strong> se basa en LibreChat bajo licencia MIT y aporta la interfaz, las cuentas, las conversaciones, la subida de archivos y la conexión con los modelos. EU Cowork AI mantiene esta parte cerca del upstream para que las actualizaciones de seguridad del proyecto sigan siendo adoptables.",
+    "stack.p3": "<strong>MongoDB</strong> almacena conversaciones, cuentas, roles y ajustes, como contenedor dentro del mismo stack y en su disco. No existe ningún servicio de base de datos externo hacia el que pudieran fluir contenidos.",
+    "stack.p4": "<strong>Meilisearch</strong> proporciona la búsqueda de texto completo en las propias conversaciones. El índice se encuentra en local y puede reconstruirse; la telemetría de Meilisearch viene desactivada de fábrica.",
+    "stack.p5": "<strong>La API de RAG con pgvector</strong> es opcional y se añade mediante el perfil <code>filesearch</code>. La API de RAG genera los embeddings de los archivos que los usuarios suben al chat y devuelve al modelo los pasajes pertinentes al responder.",
+    "stack.p6": "<strong>La pasarela MCP</strong> se sitúa entre la aplicación de chat y cada sistema conectado y decide en cada llamada a una herramienta si está permitida. La evaluación sigue este orden: usuario individual, rol, grupo, valor predeterminado del servidor. Cada llamada queda registrada y, si falla la comprobación, el acceso se deniega.",
+    "stack.p7": "<strong>El panel de administración</strong> es la interfaz para usuarios, roles, grupos, reglas de acceso, registro de auditoría y presupuesto. Forma parte del stack, escucha solo en local y desde el exterior únicamente es accesible a través del proxy inverso.",
+    "stack.p8": "<strong>El entorno aislado de código</strong> ejecuta el código generado por el modelo, de modo que una solicitud se convierta en un archivo real descargable. Se despliega al lado como stack de Compose propio y se conecta mediante una red Docker propia. Hay dos backends a elegir: uno ligero como opción predeterminada y otro reforzado basado en una microVM, que requiere virtualización anidada en el host. Un proxy de salida con lista de autorización está en curso.",
+    "stack.p9": "<strong>SearXNG</strong> proporciona la búsqueda web desde su propio stack, sin cuenta en ningún servicio de búsqueda. Dicho con franqueza: SearXNG transmite los términos de búsqueda a buscadores externos, sin comunicar la identidad del usuario. Las conversaciones y los archivos no salen de la máquina.",
+    "stack.p10": "<strong>Caddy</strong> termina el TLS, obtiene los certificados automáticamente en cuanto el registro DNS apunta a la máquina y es el único servicio en los puertos 80 y 443. Para la operación detrás de un WAF o con una autoridad de certificación interna se incluyen variantes.",
+    "betr.h2": "Tres modelos de operación, una sola arquitectura",
+    "betr.p1": "Hay tres modelos de operación y una única arquitectura: operado por usted, en su nube, opcionalmente a través de su proveedor de TI, o gestionado por nosotros. El stack es el mismo en los tres casos. Solo cambia quién tiene root, quién administra las claves y quién ejecuta actualizaciones y copias de seguridad.",
+    "betr.h3a": "Operado por usted",
+    "betr.pa": "Usted opera la máquina, mantiene root, administra sus claves y realiza por su cuenta actualizaciones y copias de seguridad. El software no cuesta nada; una suscripción de soporte es opcional. Este modelo es la referencia: lo que un administrador externo consigue levantar con dos comandos sostiene también los demás modelos.",
+    "betr.h3b": "En su nube",
+    "betr.pb": "EU Cowork AI funciona en cualquier VM Ubuntu, tanto en el propio centro de datos como en un proveedor de nube suizo o europeo. No existe vinculación con ningún hyperscaler. Quien aloja como proveedor de TI para sus clientes utiliza la misma arquitectura: un stack por cliente.",
+    "betr.h3c": "Gestionado por nosotros",
+    "betr.pc": "Nos encargamos de la instalación, las actualizaciones, las copias de seguridad y la supervisión, y operamos la instancia en centros de datos certificados según ISO 27001 de Green en Lupfig, Suiza. Los certificados corresponden a Green, no a EU Cowork AI; la certificación ISO 27001 propia de EU Cowork AI está en curso.",
+    "betr.h3d": "Varias instancias en una máquina",
+    "betr.pd1": "El límite entre inquilinos es el stack de Compose, no la VM: cada instancia tiene su propia base de datos, su propio índice de búsqueda, sus propios archivos subidos, sus propios secretos, su propia red Docker y su propio entorno aislado de código. Por eso, para equipos pequeños, de tres a cinco instancias pueden compartir la misma VM.",
+    "betr.pd2": "Pueden compartirse las imágenes de Docker y un proxy inverso común. Nunca se comparten la base de datos, los archivos subidos, los secretos, la red del entorno aislado y la clave del proveedor de modelos: una clave compartida hace imposible atribuir el consumo por inquilino, y una red de entorno aislado compartida elimina la separación justo donde se ejecuta código ajeno.",
+    "upd.h2": "Cómo funcionan las actualizaciones y qué cuenta en la operación",
+    "upd.p1": "Las actualizaciones son reproducibles porque la imagen de la aplicación está fijada a un digest en lugar de a una etiqueta móvil y los demás servicios funcionan con versiones fijas. Una publicación de EU Cowork AI es, por tanto, una combinación probada de imagen de aplicación y servicios, y dos instancias en la misma máquina pueden funcionar con versiones distintas.",
+    "upd.p2": "La opción <code>--migrate</code> deja intacto el archivo <code>.env</code> y reconstruye los servicios propios. Antes de cada actualización corresponde una copia de seguridad y, después, una breve prueba funcional. La vuelta atrás se realiza mediante la versión anterior del archivo Compose.",
+    "upd.p3": "En la operación diaria hay dos aspectos importantes: la rotación de registros que configura <code>setup-server.sh</code> y el espacio en disco, con una alerta a partir del 70 por ciento de ocupación. Las preguntas recurrentes sobre operación, actualizaciones y copias de seguridad se responden en las <a class=\"euc-textlink\" href=\"/faq\">preguntas frecuentes</a>.",
+    "sich.h2": "Un script para copia de seguridad, restauración y traslado",
+    "sich.p1": "Un único script cubre la copia de seguridad, la restauración y el traslado de servidor: <code>backup.sh</code> genera un archivo comprimido a partir del volcado de la base de datos, del archivo <code>.env</code> y de los archivos subidos, y también lo restaura. Un traslado consiste, pues, en una copia de seguridad en el servidor antiguo, la copia del archivo y la restauración en el nuevo.",
+    "sich.p2": "El archivo contiene secretos y conversaciones y se guarda con permisos de archivo restrictivos. Nunca debe acabar en un repositorio ni, sin cifrar, en una nube ajena. El índice de búsqueda no se incluye en la copia, porque puede reconstruirse a partir de la base de datos.",
+    "sich.p3": "El error más caro en un traslado es dejar que se regeneren las claves de cifrado en lugar de tomarlas del antiguo archivo <code>.env</code>. Después, todas las credenciales almacenadas en la base de datos resultan ilegibles. Con los valores heredados, el traslado sigue siendo una ventana de mantenimiento de 15 a 30 minutos.",
+    "sich.p4": "Dos reglas de la práctica: replicar el destino de la copia de seguridad fuera de la máquina y probar la restauración al menos una vez.",
+    "liz.h2": "Licencia: qué significa MIT en la práctica",
+    "liz.p1": "EU Cowork AI se publica bajo licencia MIT, al igual que la aplicación de chat subyacente LibreChat. El autoalojamiento es gratuito, desde un solo usuario y sin registrarse con nosotros. Qué significa esto en detalle y por qué es la diferencia decisiva en la <a class=\"euc-textlink\" href=\"/vergleich\">comparación con otras plataformas</a>:",
+    "liz.li1": "<strong>Sin límite de puestos.</strong> Que trabajen 3 o 300 personas en la instancia no cambia nada en la licencia.",
+    "liz.li2": "<strong>Sin marca obligatoria.</strong> Nombre, logotipo y colores son configuración, también para el uso comercial.",
+    "liz.li3": "<strong>Sin restricción de funciones.</strong> Gestión de permisos, registro de auditoría, presupuestos y conexiones a sistemas proceden de la misma fuente abierta.",
+    "liz.li4": "<strong>Código fuente abierto.</strong> La base LibreChat ya es hoy de consulta pública; stack, scripts y servicios se publicarán bajo licencia MIT con el lanzamiento y entonces podrán consultarse, bifurcarse y verificarse, en lugar de descansar sobre una promesa.",
+    "liz.p2": "Comercialmente sostenemos el modelo con la operación y el acompañamiento, no con las licencias. Por eso también está abierto el camino de vuelta del funcionamiento gestionado al autoalojado: la misma arquitectura, el mismo archivo.",
+    "faq.h2": "Preguntas frecuentes sobre el autoalojamiento",
+    "faq.q1": "¿Cuánto cuesta alojar EU Cowork AI por cuenta propia?",
+    "faq.a1": "El software no cuesta nada. EU Cowork AI se publica bajo licencia MIT, sin límite de puestos y sin clave de licencia, y el autoalojamiento es gratuito desde un solo usuario. Los costes surgen fuera del software: por la máquina, por el acceso al proveedor de modelos y por la operación.",
+    "faq.q2": "¿Necesito una GPU para EU Cowork AI?",
+    "faq.a2": "No. Para la capa de aplicación no se necesita ninguna GPU. La carga de cálculo de los modelos de lenguaje recae en el proveedor de inferencia y el uso de CPU del stack es cercano a cero en funcionamiento normal. Solo necesita hardware GPU quien además quiera ejecutar modelos de lenguaje en local en su propia máquina.",
+    "faq.q3": "¿Cuántos usuarios soporta una instancia?",
+    "faq.a3": "Para 1 a 15 usuarios, de tres a cinco instancias comparten una VM con 4 vCPU, 16 GB de RAM y 80 GB de disco. De 15 a 50 usuarios, una instancia recibe su propia VM con 4 vCPU y de 8 a 16 GB de RAM. Por encima de eso, la VM crece en consecuencia.",
+    "faq.q4": "¿Funciona EU Cowork AI en Kubernetes?",
+    "faq.a4": "La arquitectura soportada es Docker Compose en una máquina Ubuntu; no se incluye ningún chart de Helm. Para este orden de magnitud, Kubernetes supondría un esfuerzo operativo adicional, ya que el stack base ocupa en reposo unos 0,7 GB de RAM. Aun así, el archivo de Compose sirve como plantilla.",
+    "faq.q5": "¿Puedo bifurcar EU Cowork AI y desplegarlo con nombre propio?",
+    "faq.a5": "Sí. La licencia MIT permite el uso, la modificación, la redistribución y el empleo comercial, también con nombre propio y logotipo propio. No existe ninguna cláusula de marca ni un número de usuarios a partir del cual se apliquen condiciones adicionales. Solo hay que conservar el texto de la licencia y la nota de derechos de autor.",
+    "faq.q6": "¿Puedo cambiar más adelante entre autoalojamiento y funcionamiento gestionado?",
+    "faq.a6": "Sí, en ambos sentidos. Ambos modelos utilizan la misma arquitectura, por lo que el cambio es un traslado: generar un archivo, copiarlo a la nueva máquina y restaurarlo allí. Conversaciones, cuentas, ajustes y archivos subidos se conservan, siempre que se hereden las claves de cifrado.",
+    "cta.h2": "¿Prefiere empezar con el servicio gestionado?",
+    "cta.p": "Si no desea operar el stack usted mismo: nos encargamos de la instalación, las actualizaciones, las copias de seguridad y la supervisión en infraestructura suiza. La oferta gestionada está en construcción y el acceso se gestiona a través de la lista de espera.",
+    "cta.btn1": "Únase a la lista de espera",
+    "cta.btn2": "Seguridad y protección de datos",
+    "weiter.title": "Continuar",
+    "weiter.li1": "Cómo se gobiernan los permisos, los presupuestos y los registros de auditoría en la operación",
+    "weiter.li2": "Qué sistemas pueden conectarse mediante MCP",
+    "weiter.li3": "Preguntas frecuentes sobre operación, actualizaciones, permisos y licencia",
+    "geprueft": "Última revisión: <time datetime=\"2026-08\">agosto de 2026</time>"
+  }
+};
+</script>
+
+</body>
+</html>

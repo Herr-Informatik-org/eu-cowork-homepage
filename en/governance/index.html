@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en" data-euc-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">Governance: permissions, budgets, audit | EU Cowork AI</title>
+<meta name="description" content="Who may use which tool, who sees which data, what does it cost? Tool-level permissions, an audit entry per call, a monthly budget with a soft cap.">
+<link rel="canonical" href="https://eucowork.ai/en/governance">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/governance">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/governance">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/governance">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/governance">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/governance">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/governance">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://eucowork.ai/en/governance">
+<meta property="og:title" content="Governance: permissions, budgets, audit | EU Cowork AI">
+<meta property="og:description" content="Permissions down to individual tools, an audit log covering every call, a shared monthly budget with a soft cap. Roles and groups locally or from Entra ID.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Governance: permissions, budgets, audit | EU Cowork AI">
+<meta name="twitter:description" content="Tool-level permissions, an audit entry per call, a monthly budget with a soft cap.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Skip to content</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/en">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/en/preise" data-i18n="chrome.nav.pricing">Pricing</a>
+    <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/en/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/en/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+    <a class="euc-btn-primary" href="/en/warteliste" data-i18n="chrome.cta.waitlist">Join the waitlist</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/en/preise" data-i18n="chrome.nav.pricing">Pricing</a>
+      <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/en/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/en/warteliste" data-i18n="chrome.cta.waitlist">Join the waitlist</a>
+      <a class="euc-btn-secondary" href="/en/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/en" data-i18n="chrome.crumb.home">Home</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">Governance</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow" data-i18n="hero.eyebrow">Governance</p>
+
+    <h1 data-i18n="hero.h1">Governance: who may do what, and what it costs</h1>
+
+    <p class="euc-lead" data-i18n="hero.lead">In EU Cowork AI it is not the model that decides whether an access is allowed, but a chain of rules that is checked before every tool call. Permissions reach down to individual tools, every call is logged, and consumption is visible before it turns into an invoice.</p>
+  </section>
+
+  <div class="euc-wrap">
+
+    <!-- ==================== KURZ GESAGT ==================== -->
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.title">In brief</p>
+      <ul>
+        <li data-i18n="kurz.item1">Access to connected systems is decided by the MCP gateway ahead of the model, not by the model itself.</li>
+        <li data-i18n="kurz.item2">Permissions reach down to individual tools: allow reading invoices, deny reading payroll data, within the same connected system.</li>
+        <li data-i18n="kurz.item3">The permission check follows the order individual user, role, group, server default. The first matching rule wins.</li>
+        <li data-i18n="kurz.item4">Every tool call through the gateway, every admin action and every sign-in is logged and can be exported as CSV.</li>
+        <li data-i18n="kurz.item5">Consumption is reported per person, group and model in tokens and euros and charged against a shared monthly budget.</li>
+      </ul>
+    </div>
+
+    <!-- ==================== INHALTSVERZEICHNIS ==================== -->
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.title">On this page</p>
+      <ol>
+        <li><a href="#warum" data-i18n="toc.item1">Why an AI platform needs its own permission management</a></li>
+        <li><a href="#benutzer" data-i18n="toc.item2">Where users, roles and groups come from</a></li>
+        <li><a href="#werkzeugebene" data-i18n="toc.item3">Permissions down to tool level</a></li>
+        <li><a href="#audit" data-i18n="toc.item4">Audit: every access traceable</a></li>
+        <li><a href="#kosten" data-i18n="toc.item5">Making costs visible and capping them</a></li>
+        <li><a href="#agenten" data-i18n="toc.item6">Approving agents instead of banning them</a></li>
+        <li><a href="#fragen" data-i18n="toc.item7">Frequently asked questions</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== ABSCHNITT 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="warum" data-i18n="sec1.h2">Why an AI platform needs its own permission management</h2>
+      <p data-i18n="sec1.p1">An AI platform needs its own permission management because a chat window without rules passes every question on to every connected system. Once the AI is connected to a company system, the question is no longer whether someone may chat, but which records the AI may read on that person’s behalf.</p>
+
+      <h3 data-i18n="sec1.h3">A ban only displaces usage, it does not end it</h3>
+      <p data-i18n="sec1.p2">Anyone without an approved route takes the next best one. A ban shifts usage into private accounts with public providers, where neither contract nor log nor right to erasure applies. Company data then ends up in a service that nobody in your organisation administers and whose processing you cannot document.</p>
+
+      <p data-i18n="sec1.p3">The countermeasure that works is an approved route that is better than the private one. But it has to make four things controllable, otherwise you are merely shifting the risk inwards:</p>
+
+      <ul>
+        <li data-i18n="sec1.li1">Which people may use the platform at all, and through which sign-in.</li>
+        <li data-i18n="sec1.li2">Which connected systems and which individual tools are open to a person.</li>
+        <li data-i18n="sec1.li3">What actually happened, verifiable and exportable.</li>
+        <li data-i18n="sec1.li4">What operation costs, itemised and cappable, before the invoice arrives.</li>
+      </ul>
+
+      <p data-i18n="sec1.p4">These four control points are exactly the areas of the EU Cowork AI admin panel: user management, access rules, audit and consumption.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="benutzer" data-i18n="sec2.h2">Where users, roles and groups come from</h2>
+      <p data-i18n="sec2.p1">You maintain users, roles and groups in the admin panel or take them from Entra ID. A role bundles functional permissions, that is, what someone may do in the interface. A group bundles people for access and budget rules. The two can be combined independently.</p>
+
+      <div class="chips">
+        <span class="chip" data-i18n="sec2.chip1">Local accounts</span>
+        <span class="chip" data-i18n="sec2.chip2">Entra ID via OIDC, configurable per instance</span>
+        <span class="chip chip-neutral" data-i18n="sec2.chip3">SCIM planned</span>
+      </div>
+
+      <h3 data-i18n="sec2.h3a">Local users and connection to Entra ID</h3>
+      <p data-i18n="sec2.p2">Without an identity provider, EU Cowork AI works with local accounts: invitation by link, with the invited person setting their own password. Sign-in via Entra ID or another OIDC provider is supported by the platform and set up for your instance. Once it is in place, everyone signs in via OIDC, the account is created on first sign-in, and the group and role claims from the sign-in token are mapped onto your groups in EU Cowork AI.</p>
+
+      <p data-i18n="sec2.p3">Revocation therefore happens at the front door: anyone deactivated in Entra ID can no longer get in and thereby loses all access, including to the connected systems. Automatic provisioning and deprovisioning of accounts via SCIM is planned, but not available today.</p>
+
+      <h3 data-i18n="sec2.h3b">What a role defines, and what a group defines</h3>
+      <p data-i18n="sec2.p4">A role governs functional permissions in the platform, for example whether someone may build agents, use web search or open the admin panel. A group governs which data and tools someone reaches and which budget their consumption is charged to.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption data-i18n="sec2.tab.caption">The three levels of user management and what you use them for.</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="sec2.tab.th1">Level</th>
+              <th scope="col" data-i18n="sec2.tab.th2">Governs</th>
+              <th scope="col" data-i18n="sec2.tab.th3">Typical example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" data-i18n="sec2.tab.r1c1">User</th>
+              <td data-i18n="sec2.tab.r1c2">Individual exception, stronger than any general rule</td>
+              <td data-i18n="sec2.tab.r1c3">One person additionally gets access to a tool</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="sec2.tab.r2c1">Role</th>
+              <td data-i18n="sec2.tab.r2c2">Functional permissions in the interface</td>
+              <td data-i18n="sec2.tab.r2c3">Only a privileged role may create agents</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="sec2.tab.r3c1">Group</th>
+              <td data-i18n="sec2.tab.r3c2">Access to systems, tools and budget</td>
+              <td data-i18n="sec2.tab.r3c3">The Accounting group sees the invoice tools</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 data-i18n="sec2.h3c">Invitation, assignment, deactivation</h3>
+      <p data-i18n="sec2.p5">An invitation goes out by email or link and can already carry the target group with it. Membership is applied as soon as the invited person has completed registration. That way nobody starts in a permission-less limbo, and you do not have to add anything after each registration.</p>
+
+      <p data-i18n="sec2.p6">There are two ways to end access. Blocking keeps the account but refuses sign-in. Deleting removes the account, conversations and search index entries; a data export for the person concerned is possible beforehand, so that both access requests and erasure requests are served.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="werkzeugebene" data-i18n="sec3.h2">Permissions down to tool level</h2>
+      <p data-i18n="sec3.p1">Tool calls run through the MCP gateway, a component between the chat and the connected system. For the requesting person, the gateway checks whether the server and the specific tool are allowed, records the decision and forwards the call only if it is approved. Blocked tools do not appear in the user’s tool list; after a permission change this takes effect with a short delay. The actual barrier is the check on every single call.</p>
+
+      <p data-i18n="sec3.p2">Systems are connected via MCP, the open standard for tool access by AI models. The gateway sits in front of it so that approval is decided centrally per person, role and group instead of being scattered across the connected system. Which systems can be connected and which ones are prepared is described on the <a class="euc-textlink" href="/en/integrationen">Integrations</a> page; permissions without tools are moot.</p>
+
+      <h3 data-i18n="sec3.h3a">The example: reading invoices yes, reading payroll no</h3>
+      <p data-i18n="sec3.p3">A connected ERP does not offer the AI a single door, but many individual tools: search invoices, read customer data, read payroll data, write records. <span class="euc-marker">The Accounting group is granted the invoice tools, while the payroll tools remain reserved for HR.</span> Same server, different tools, decided separately.</p>
+
+      <p data-i18n="sec3.p4">Beneath that lies a second boundary. If EU Cowork AI signs in to your ERP with the identity of the respective person, that system’s own access rules remain decisive: anyone who may only see certain records there sees no more through the AI either. If the connection runs through a shared service account, the gateway is the only enforcement point, and the tool selection then has to be cut correspondingly tight.</p>
+
+      <p data-i18n="sec3.p5">Permissions inside a tool, that is on individual fields or rows, are not enforced by EU Cowork AI itself. That is the job of the connected system’s permission management. A tool with a broad range of functions should therefore either not be released at all or only to a group that is allowed to see the data anyway.</p>
+
+      <h3 data-i18n="sec3.h3b">The rule chain: user before role before group before default</h3>
+      <p data-i18n="sec3.p6">Permissions are evaluated in a fixed order: individual user, then role, then group, then the server default. The first matching rule decides, and no further search follows. Every decision is therefore explainable, and a one-off approval needs no special role. The fact that permissions apply per individual tool is the distinguishing feature in the <a class="euc-textlink" href="/en/vergleich">comparison with other platforms</a>.</p>
+
+      <div class="table-wrap">
+        <table>
+          <caption data-i18n="sec3.tab.caption">Order of the permission check in the gateway. The first match wins.</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="sec3.tab.th1">Order</th>
+              <th scope="col" data-i18n="sec3.tab.th2">Rule</th>
+              <th scope="col" data-i18n="sec3.tab.th3">What it is intended for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" data-i18n="sec3.tab.r1c1">1. User</th>
+              <td data-i18n="sec3.tab.r1c2">Exception for a single person</td>
+              <td data-i18n="sec3.tab.r1c3">Time-limited approval without softening the group rule</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="sec3.tab.r2c1">2. Role</th>
+              <td data-i18n="sec3.tab.r2c2">Applies to all accounts with this role</td>
+              <td data-i18n="sec3.tab.r2c3">Baseline set-up according to function in the company</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="sec3.tab.r3c1">3. Group</th>
+              <td data-i18n="sec3.tab.r3c2">Applies to all members of the group</td>
+              <td data-i18n="sec3.tab.r3c3">Department or project scope, also from Entra ID</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="sec3.tab.r4c1">4. Server default</th>
+              <td data-i18n="sec3.tab.r4c2">Default for all remaining requests</td>
+              <td data-i18n="sec3.tab.r4c3">Basic stance per connected system, ideally deny</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 data-i18n="sec3.h3c">What happens when no rule applies</h3>
+      <p data-i18n="sec3.p7">If no user, role or group rule applies, the default of the respective server decides. Set this default to deny immediately after connecting a system and then release individual groups deliberately. That way a freshly connected system cannot accidentally let anyone see more than intended.</p>
+
+      <p data-i18n="sec3.p8">If the permission check itself fails, for example because the rule database is unreachable, the gateway denies the call instead of letting it through. A malfunction therefore leads to an error message in the chat, not to open access. A read-only switch per server that blocks all writing tools at once is planned.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 4 ==================== -->
+    <section class="euc-section">
+      <h2 id="audit" data-i18n="sec4.h2">Audit: every access traceable</h2>
+      <p data-i18n="sec4.p1">Every tool call through the gateway is recorded with time, person, target system, tool and decision, including denied ones. In addition, the platform keeps a continuously chained log of admin actions, sign-ins and permission changes. Both logs reside in your own instance and can be exported as CSV.</p>
+
+      <h3 data-i18n="sec4.h3a">What is logged</h3>
+      <ul>
+        <li data-i18n="sec4.li1">Tool calls to connected systems, with the decision taken, allowed or denied.</li>
+        <li data-i18n="sec4.li2">Sign-ins to the platform and to the admin panel.</li>
+        <li data-i18n="sec4.li3">Changes to roles, groups, permissions and access rules.</li>
+        <li data-i18n="sec4.li4">Changes to the configuration of the instance.</li>
+        <li data-i18n="sec4.li5">Creating, inviting, blocking and deleting accounts.</li>
+      </ul>
+
+      <p data-i18n="sec4.p2">The audit log is a record of access, not a transcript of conversations. It answers who called which tool on which system and when. The conversations themselves are stored separately in your instance’s database and are subject to the configured retention period.</p>
+
+      <h3 data-i18n="sec4.h3b">How long it is kept and where it can be exported</h3>
+      <p data-i18n="sec4.p3">The logs stay in your instance, in your database. When you self-host, they never leave your infrastructure. The export is CSV, filtered by period and person, and can therefore be handed straight to an audit, to the legal department or to an audit tool.</p>
+
+      <p data-i18n="sec4.p4">The log of admin actions is chained: every entry carries a checksum over the preceding one, and a built-in check reports when the chain no longer adds up. Removing individual entries after the fact is thus noticed. For conversations the retention period is configurable; expired content is removed together with its search index.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 5 ==================== -->
+    <section class="euc-section">
+      <h2 id="kosten" data-i18n="sec5.h2">Making costs visible and capping them</h2>
+      <p data-i18n="sec5.p1">Consumption is recorded per person, group, model and day and reported both in tokens and in euros. A shared monthly budget caps the total for the whole organisation; an optional monthly limit per person caps individual accounts. Once a budget is used up, a soft block takes effect.</p>
+
+      <h3 data-i18n="sec5.h3a">Consumption per person, group and model</h3>
+      <p data-i18n="sec5.p2">The admin panel shows consumption in euros, broken down by person, by model and by day, along with the individual requests including model and timestamp. Amounts and breakdowns are visible to administrators; end users only get a note in the chat when the budget is exhausted. This takes cost pressure out of everyday work while keeping the figures visible where they belong.</p>
+
+      <p data-i18n="sec5.p3">Prices are stored per model so that the evaluation is not based on an approximation. This matters more than it sounds: for the same conversation, a frugal model and a very large one differ by a multiple in cost. A curated model selection is therefore part of cost control, not just a question of usability.</p>
+
+      <h3 data-i18n="sec5.h3b">A shared monthly budget instead of individual limits</h3>
+      <p data-i18n="sec5.p4">The monthly budget applies to the organisation as a whole, not per head. The reason is practical: consumption is never distributed evenly. Heavy users would get stuck on a rigid individual limit while other people’s allowances expire unused. A shared pot balances that out without anyone having to readjust limits.</p>
+
+      <p data-i18n="sec5.p5">For outliers there is also an optional monthly limit per person. It is switched off until you set it and is enforced strictly in the same reconciliation run as the overall budget. Typical use: a single account that sends automated requests should not drain the shared pot on its own.</p>
+
+      <h3 data-i18n="sec5.h3c">A soft block instead of a silent overrun</h3>
+      <p data-i18n="sec5.p6">Once the budget is used up, the soft block takes effect: the next request is refused, with a note in the chat instead of silently continuing to bill. A response already in progress is still completed. The admin can raise the budget at any time, after which operation resumes immediately. Without such an increase, no additional charge arises.</p>
+
+      <p data-i18n="sec5.p7">The reconciliation between recorded consumption and budget runs every minute, and the advance estimate of a request does not know its exact length. A single response can therefore still run slightly over the limit. This is a soft block that prevents runaway costs, not a second-by-second advance reservation.</p>
+    </section>
+
+    <!-- ==================== ABSCHNITT 6 ==================== -->
+    <section class="euc-section">
+      <h2 id="agenten" data-i18n="sec6.h2">Approving agents instead of banning them</h2>
+      <p data-i18n="sec6.p1">Agents and skills are released in a curated way, neither allowed across the board nor banned across the board. Ordinary accounts use the agents assigned to them and never see the agent builder. A privileged role creates and shares agents, and the admin releases skills per person.</p>
+
+      <p data-i18n="sec6.p2">The reason lies in the permissions: an agent comes with a fixed set of instructions and a set of tools. If everyone could build and share their own agents, a second, uncontrolled distribution channel would appear alongside your rule chain. The gateway’s permission check would still apply to every call, but the overview of who works with what would be lost.</p>
+
+      <p data-i18n="sec6.p3">In practice this results in a few well-maintained agents per group instead of many half-finished ones: one for drafting quotes, one for evaluations from the ERP, one for internal knowledge search.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Frequently asked questions</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">How do we stop employees from entering company data into public AI tools?</h3>
+          <p data-i18n="faq.a1">By offering an approved route that is more convenient than the private detour. EU Cowork AI gives you your own instance with your accounts, your systems and your log. A mere ban only shifts usage into private accounts that you can neither inspect nor switch off.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">Can the AI see payroll data if we connect our ERP?</h3>
+          <p data-i18n="faq.a2">Only if you release the corresponding tool. The connection consists of individual tools, and each of them is released or denied separately. Reading invoices can be allowed while reading payroll data remains blocked for the same person. In addition, your ERP’s access rules continue to apply.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">How do we control which employee may see which data?</h3>
+          <p data-i18n="faq.a3">Through groups and per-tool rules. You create groups or take them from Entra ID and release to each group the tools it needs. The check runs in the order individual user, role, group, server default, with the first matching rule deciding.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">How do we cap AI costs per employee?</h3>
+          <p data-i18n="faq.a4">Through a shared monthly budget for the organisation and an optional monthly limit per person. Consumption is reported per person, group and model in tokens and euros. Once a budget is exhausted, the next request is refused instead of quietly continuing. The admin can raise it at any time.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">What evidence do we get for an audit?</h3>
+          <p data-i18n="faq.a5">A log of all tool calls with time, person, target system, tool and decision, plus a chained log of admin actions, sign-ins and permission changes. Both can be exported as CSV and stay in your instance. Whether that satisfies your specific documentation obligation is something to clarify with your legal advisers.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">Do we need Entra ID for governance to work?</h3>
+          <p data-i18n="faq.a6">No. Roles, groups and rules work fully with local accounts that you create by invitation. Sign-in via Entra ID is supported and set up per instance; it saves you duplicate maintenance because accounts are created on first sign-in and group claims are taken from the sign-in token. Automatic provisioning via SCIM is planned.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Settle governance before the rollout</h2>
+      <p data-i18n="cta.p">Join the waitlist. You get access to the managed Swiss instance first, and we set up permissions, logging and budget together with you before the first department starts.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="/en/warteliste" data-i18n="cta.btn1">Join the waitlist</a>
+        <a class="euc-btn-secondary" href="/en/self-hosting" data-i18n="cta.btn2">Self-host</a>
+      </div>
+    </section>
+
+    <!-- ==================== WEITERFÜHREND ==================== -->
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.title">Next</p>
+      <ul>
+        <li><a href="/en/integrationen" data-i18n="weiter.item1">Which systems can be connected and how MCP works</a></li>
+        <li><a href="/en/sicherheit" data-i18n="weiter.item2">Where your data resides and what does not happen to it</a></li>
+        <li><a href="/en/faq" data-i18n="weiter.item3">Frequently asked questions about data, operation and licensing</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="meta.checked">Last reviewed: <time datetime="2026-08">August 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Your AI coworker. Stays in Europe.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Deployable anywhere</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managed, own cloud or on-prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">GDPR-compliant</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">EU processing</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/en/sicherheit" data-i18n="chrome.footer.more">More about security</a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Swiss instance</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Product</p>
+          <nav aria-label="Produkt">
+            <a href="/en/#funktionen" data-i18n="chrome.footer.link.features">Features</a>
+            <a href="/en/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Sovereignty</a>
+            <a href="/en/preise" data-i18n="chrome.footer.link.pricing">Pricing</a>
+            <a href="/en/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/en/integrationen" data-i18n="chrome.footer.link.integrations">Integrations</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.know">Knowledge</p>
+          <nav aria-label="Wissen">
+            <a href="/en/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs" data-i18n="chrome.footer.link.docs">Docs</a>
+            <a href="/en/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/en/vergleich" data-i18n="chrome.footer.link.comparison">Comparison</a>
+            <a href="/en/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/en/vision" data-i18n="chrome.footer.link.vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/en/sicherheit" data-i18n="chrome.footer.link.security">Security & Trust</a>
+            <a href="/en/avv" data-i18n="chrome.footer.link.avv">DPA</a>
+            <a href="/en/sicherheit#toms" data-i18n="chrome.footer.link.toms">TOMs</a>
+            <a href="/en/subprozessoren" data-i18n="chrome.footer.link.subs">Subprocessors</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Legal</p>
+          <nav aria-label="Rechtliches">
+            <a href="/en/impressum" data-i18n="chrome.footer.link.imprint">Imprint</a>
+            <a href="/en/datenschutz" data-i18n="chrome.footer.link.privacy">Privacy</a>
+            <a href="/en/agb" data-i18n="chrome.footer.link.terms">Terms (GTC)</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI. Name is a working title.</span>
+      <span class="euc-built" data-i18n="chrome.footer.built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== JSON-LD: WebPage + BreadcrumbList ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/governance#webpage",
+  "url": "https://eucowork.ai/governance",
+  "name": "Governance: wer darf was, und was kostet es",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@id": "https://eucowork.ai/#website"
+  },
+  "about": {
+    "@id": "https://eucowork.ai/#software"
+  },
+  "description": "Wer darf welches Werkzeug nutzen, wer sieht welche Daten, was kostet es? Rechte bis auf Werkzeugebene, Audit pro Aufruf, Monatsbudget mit weicher Sperre.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Start",
+        "item": "https://eucowork.ai/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Governance",
+        "item": "https://eucowork.ai/governance"
+      }
+    ]
+  },
+  "abstract": "In EU Cowork AI entscheidet eine Regelkette vor dem Modell, ob ein Zugriff auf ein angebundenes System erlaubt ist. Rechte reichen bis auf einzelne Werkzeuge: Rechnungen lesen kann erlaubt sein, während Löhne lesen für dieselbe Person gesperrt bleibt. Die Auswertung folgt der Reihenfolge einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers, wobei die erste passende Regel entscheidet. Jeder Tool-Aufruf über das Gateway, jede Admin-Aktion und jede Anmeldung wird protokolliert und ist als CSV exportierbar. Der Verbrauch wird pro Person, Gruppe und Modell in Token und Euro ausgewiesen und gegen ein gemeinsames Monatsbudget verrechnet, mit weicher Sperre statt stiller Überschreitung. Nutzer, Rollen und Gruppen werden lokal gepflegt oder über OIDC aus Entra ID übernommen; die OIDC-Anmeldung wird pro Instanz eingerichtet.",
+  "publisher": {
+    "@id": "https://eucowork.ai/#organization"
+  },
+  "dateModified": "2026-08-05"
+}
+</script>
+
+<!-- ==================== JSON-LD: FAQPage ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://eucowork.ai/governance#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie verhindern wir, dass Mitarbeiter Firmendaten in öffentliche KI-Tools eingeben?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Indem ihr einen freigegebenen Weg anbietet, der bequemer ist als der private Umweg. EU Cowork AI gibt euch dafür eine eigene Instanz mit euren Konten, euren Systemen und eurem Protokoll. Ein reines Verbot verlagert die Nutzung nur in private Konten, die ihr weder einsehen noch abschalten könnt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann die KI Lohndaten sehen, wenn wir unser ERP anbinden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nur wenn ihr das entsprechende Werkzeug freigebt. Die Anbindung besteht aus einzelnen Werkzeugen, und jedes davon wird getrennt freigegeben oder verweigert. Rechnungen lesen kann erlaubt sein, während Löhne lesen für dieselbe Person gesperrt bleibt. Zusätzlich gelten die Zugriffsregeln eures ERP weiter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie steuern wir, welcher Mitarbeiter welche Daten sehen darf?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Über Gruppen und Regeln pro Werkzeug. Ihr legt Gruppen an oder übernehmt sie aus Entra ID und gebt jeder Gruppe die Werkzeuge frei, die sie braucht. Die Prüfung erfolgt in der Reihenfolge einzelner Nutzer, Rolle, Gruppe, Voreinstellung des Servers, wobei die erste passende Regel entscheidet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie begrenzen wir die KI-Kosten pro Mitarbeiter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Über ein gemeinsames Monatsbudget für die Organisation und ein optionales Monatslimit pro Person. Der Verbrauch wird pro Person, Gruppe und Modell in Token und Euro ausgewiesen. Ist ein Budget erschöpft, wird die nächste Anfrage abgelehnt, statt still weiterzulaufen. Der Admin kann jederzeit anheben."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche Nachweise bekommen wir für ein Audit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein Protokoll aller Tool-Aufrufe mit Zeitpunkt, Person, Zielsystem, Werkzeug und Entscheidung, dazu ein verkettetes Protokoll über Admin-Aktionen, Anmeldungen und Rechteänderungen. Beides ist als CSV exportierbar und bleibt in eurer Instanz. Ob das für eure konkrete Nachweispflicht genügt, klärt ihr mit eurer Rechtsberatung."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauchen wir Entra ID, damit Governance funktioniert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Rollen, Gruppen und Regeln funktionieren vollständig mit lokalen Konten, die ihr per Einladung anlegt. Die Anmeldung über Entra ID wird unterstützt und pro Instanz eingerichtet; sie spart euch die doppelte Pflege, weil Konten bei der ersten Anmeldung entstehen und Gruppenangaben aus dem Anmelde-Token übernommen werden. Automatisches Provisionieren über SCIM ist geplant."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/governance",
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@id": "https://eucowork.ai/governance#webpage"
+  }
+}
+</script>
+
+<script>window.EUC_I18N = {
+  "en": {
+    "crumb.current": "Governance",
+    "cta.btn1": "Join the waitlist",
+    "cta.btn2": "Self-host",
+    "cta.h2": "Settle governance before the rollout",
+    "cta.p": "Join the waitlist. You get access to the managed Swiss instance first, and we set up permissions, logging and budget together with you before the first department starts.",
+    "faq.a1": "By offering an approved route that is more convenient than the private detour. EU Cowork AI gives you your own instance with your accounts, your systems and your log. A mere ban only shifts usage into private accounts that you can neither inspect nor switch off.",
+    "faq.a2": "Only if you release the corresponding tool. The connection consists of individual tools, and each of them is released or denied separately. Reading invoices can be allowed while reading payroll data remains blocked for the same person. In addition, your ERP’s access rules continue to apply.",
+    "faq.a3": "Through groups and per-tool rules. You create groups or take them from Entra ID and release to each group the tools it needs. The check runs in the order individual user, role, group, server default, with the first matching rule deciding.",
+    "faq.a4": "Through a shared monthly budget for the organisation and an optional monthly limit per person. Consumption is reported per person, group and model in tokens and euros. Once a budget is exhausted, the next request is refused instead of quietly continuing. The admin can raise it at any time.",
+    "faq.a5": "A log of all tool calls with time, person, target system, tool and decision, plus a chained log of admin actions, sign-ins and permission changes. Both can be exported as CSV and stay in your instance. Whether that satisfies your specific documentation obligation is something to clarify with your legal advisers.",
+    "faq.a6": "No. Roles, groups and rules work fully with local accounts that you create by invitation. Sign-in via Entra ID is supported and set up per instance; it saves you duplicate maintenance because accounts are created on first sign-in and group claims are taken from the sign-in token. Automatic provisioning via SCIM is planned.",
+    "faq.h2": "Frequently asked questions",
+    "faq.q1": "How do we stop employees from entering company data into public AI tools?",
+    "faq.q2": "Can the AI see payroll data if we connect our ERP?",
+    "faq.q3": "How do we control which employee may see which data?",
+    "faq.q4": "How do we cap AI costs per employee?",
+    "faq.q5": "What evidence do we get for an audit?",
+    "faq.q6": "Do we need Entra ID for governance to work?",
+    "hero.eyebrow": "Governance",
+    "hero.h1": "Governance: who may do what, and what it costs",
+    "hero.lead": "In EU Cowork AI it is not the model that decides whether an access is allowed, but a chain of rules that is checked before every tool call. Permissions reach down to individual tools, every call is logged, and consumption is visible before it turns into an invoice.",
+    "kurz.item1": "Access to connected systems is decided by the MCP gateway ahead of the model, not by the model itself.",
+    "kurz.item2": "Permissions reach down to individual tools: allow reading invoices, deny reading payroll data, within the same connected system.",
+    "kurz.item3": "The permission check follows the order individual user, role, group, server default. The first matching rule wins.",
+    "kurz.item4": "Every tool call through the gateway, every admin action and every sign-in is logged and can be exported as CSV.",
+    "kurz.item5": "Consumption is reported per person, group and model in tokens and euros and charged against a shared monthly budget.",
+    "kurz.title": "In brief",
+    "meta.checked": "Last reviewed: <time datetime=\"2026-08\">August 2026</time>",
+    "meta.title": "Governance: permissions, budgets, audit | EU Cowork AI",
+    "sec1.h2": "Why an AI platform needs its own permission management",
+    "sec1.h3": "A ban only displaces usage, it does not end it",
+    "sec1.li1": "Which people may use the platform at all, and through which sign-in.",
+    "sec1.li2": "Which connected systems and which individual tools are open to a person.",
+    "sec1.li3": "What actually happened, verifiable and exportable.",
+    "sec1.li4": "What operation costs, itemised and cappable, before the invoice arrives.",
+    "sec1.p1": "An AI platform needs its own permission management because a chat window without rules passes every question on to every connected system. Once the AI is connected to a company system, the question is no longer whether someone may chat, but which records the AI may read on that person’s behalf.",
+    "sec1.p2": "Anyone without an approved route takes the next best one. A ban shifts usage into private accounts with public providers, where neither contract nor log nor right to erasure applies. Company data then ends up in a service that nobody in your organisation administers and whose processing you cannot document.",
+    "sec1.p3": "The countermeasure that works is an approved route that is better than the private one. But it has to make four things controllable, otherwise you are merely shifting the risk inwards:",
+    "sec1.p4": "These four control points are exactly the areas of the EU Cowork AI admin panel: user management, access rules, audit and consumption.",
+    "sec2.chip1": "Local accounts",
+    "sec2.chip2": "Entra ID via OIDC, configurable per instance",
+    "sec2.chip3": "SCIM planned",
+    "sec2.h2": "Where users, roles and groups come from",
+    "sec2.h3a": "Local users and connection to Entra ID",
+    "sec2.h3b": "What a role defines, and what a group defines",
+    "sec2.h3c": "Invitation, assignment, deactivation",
+    "sec2.p1": "You maintain users, roles and groups in the admin panel or take them from Entra ID. A role bundles functional permissions, that is, what someone may do in the interface. A group bundles people for access and budget rules. The two can be combined independently.",
+    "sec2.p2": "Without an identity provider, EU Cowork AI works with local accounts: invitation by link, with the invited person setting their own password. Sign-in via Entra ID or another OIDC provider is supported by the platform and set up for your instance. Once it is in place, everyone signs in via OIDC, the account is created on first sign-in, and the group and role claims from the sign-in token are mapped onto your groups in EU Cowork AI.",
+    "sec2.p3": "Revocation therefore happens at the front door: anyone deactivated in Entra ID can no longer get in and thereby loses all access, including to the connected systems. Automatic provisioning and deprovisioning of accounts via SCIM is planned, but not available today.",
+    "sec2.p4": "A role governs functional permissions in the platform, for example whether someone may build agents, use web search or open the admin panel. A group governs which data and tools someone reaches and which budget their consumption is charged to.",
+    "sec2.p5": "An invitation goes out by email or link and can already carry the target group with it. Membership is applied as soon as the invited person has completed registration. That way nobody starts in a permission-less limbo, and you do not have to add anything after each registration.",
+    "sec2.p6": "There are two ways to end access. Blocking keeps the account but refuses sign-in. Deleting removes the account, conversations and search index entries; a data export for the person concerned is possible beforehand, so that both access requests and erasure requests are served.",
+    "sec2.tab.caption": "The three levels of user management and what you use them for.",
+    "sec2.tab.r1c1": "User",
+    "sec2.tab.r1c2": "Individual exception, stronger than any general rule",
+    "sec2.tab.r1c3": "One person additionally gets access to a tool",
+    "sec2.tab.r2c1": "Role",
+    "sec2.tab.r2c2": "Functional permissions in the interface",
+    "sec2.tab.r2c3": "Only a privileged role may create agents",
+    "sec2.tab.r3c1": "Group",
+    "sec2.tab.r3c2": "Access to systems, tools and budget",
+    "sec2.tab.r3c3": "The Accounting group sees the invoice tools",
+    "sec2.tab.th1": "Level",
+    "sec2.tab.th2": "Governs",
+    "sec2.tab.th3": "Typical example",
+    "sec3.h2": "Permissions down to tool level",
+    "sec3.h3a": "The example: reading invoices yes, reading payroll no",
+    "sec3.h3b": "The rule chain: user before role before group before default",
+    "sec3.h3c": "What happens when no rule applies",
+    "sec3.p1": "Tool calls run through the MCP gateway, a component between the chat and the connected system. For the requesting person, the gateway checks whether the server and the specific tool are allowed, records the decision and forwards the call only if it is approved. Blocked tools do not appear in the user’s tool list; after a permission change this takes effect with a short delay. The actual barrier is the check on every single call.",
+    "sec3.p2": "Systems are connected via MCP, the open standard for tool access by AI models. The gateway sits in front of it so that approval is decided centrally per person, role and group instead of being scattered across the connected system. Which systems can be connected and which ones are prepared is described on the <a class=\"euc-textlink\" href=\"/integrationen\">Integrations</a> page; permissions without tools are moot.",
+    "sec3.p3": "A connected ERP does not offer the AI a single door, but many individual tools: search invoices, read customer data, read payroll data, write records. <span class=\"euc-marker\">The Accounting group is granted the invoice tools, while the payroll tools remain reserved for HR.</span> Same server, different tools, decided separately.",
+    "sec3.p4": "Beneath that lies a second boundary. If EU Cowork AI signs in to your ERP with the identity of the respective person, that system’s own access rules remain decisive: anyone who may only see certain records there sees no more through the AI either. If the connection runs through a shared service account, the gateway is the only enforcement point, and the tool selection then has to be cut correspondingly tight.",
+    "sec3.p5": "Permissions inside a tool, that is on individual fields or rows, are not enforced by EU Cowork AI itself. That is the job of the connected system’s permission management. A tool with a broad range of functions should therefore either not be released at all or only to a group that is allowed to see the data anyway.",
+    "sec3.p6": "Permissions are evaluated in a fixed order: individual user, then role, then group, then the server default. The first matching rule decides, and no further search follows. Every decision is therefore explainable, and a one-off approval needs no special role. The fact that permissions apply per individual tool is the distinguishing feature in the <a class=\"euc-textlink\" href=\"/vergleich\">comparison with other platforms</a>.",
+    "sec3.p7": "If no user, role or group rule applies, the default of the respective server decides. Set this default to deny immediately after connecting a system and then release individual groups deliberately. That way a freshly connected system cannot accidentally let anyone see more than intended.",
+    "sec3.p8": "If the permission check itself fails, for example because the rule database is unreachable, the gateway denies the call instead of letting it through. A malfunction therefore leads to an error message in the chat, not to open access. A read-only switch per server that blocks all writing tools at once is planned.",
+    "sec3.tab.caption": "Order of the permission check in the gateway. The first match wins.",
+    "sec3.tab.r1c1": "1. User",
+    "sec3.tab.r1c2": "Exception for a single person",
+    "sec3.tab.r1c3": "Time-limited approval without softening the group rule",
+    "sec3.tab.r2c1": "2. Role",
+    "sec3.tab.r2c2": "Applies to all accounts with this role",
+    "sec3.tab.r2c3": "Baseline set-up according to function in the company",
+    "sec3.tab.r3c1": "3. Group",
+    "sec3.tab.r3c2": "Applies to all members of the group",
+    "sec3.tab.r3c3": "Department or project scope, also from Entra ID",
+    "sec3.tab.r4c1": "4. Server default",
+    "sec3.tab.r4c2": "Default for all remaining requests",
+    "sec3.tab.r4c3": "Basic stance per connected system, ideally deny",
+    "sec3.tab.th1": "Order",
+    "sec3.tab.th2": "Rule",
+    "sec3.tab.th3": "What it is intended for",
+    "sec4.h2": "Audit: every access traceable",
+    "sec4.h3a": "What is logged",
+    "sec4.h3b": "How long it is kept and where it can be exported",
+    "sec4.li1": "Tool calls to connected systems, with the decision taken, allowed or denied.",
+    "sec4.li2": "Sign-ins to the platform and to the admin panel.",
+    "sec4.li3": "Changes to roles, groups, permissions and access rules.",
+    "sec4.li4": "Changes to the configuration of the instance.",
+    "sec4.li5": "Creating, inviting, blocking and deleting accounts.",
+    "sec4.p1": "Every tool call through the gateway is recorded with time, person, target system, tool and decision, including denied ones. In addition, the platform keeps a continuously chained log of admin actions, sign-ins and permission changes. Both logs reside in your own instance and can be exported as CSV.",
+    "sec4.p2": "The audit log is a record of access, not a transcript of conversations. It answers who called which tool on which system and when. The conversations themselves are stored separately in your instance’s database and are subject to the configured retention period.",
+    "sec4.p3": "The logs stay in your instance, in your database. When you self-host, they never leave your infrastructure. The export is CSV, filtered by period and person, and can therefore be handed straight to an audit, to the legal department or to an audit tool.",
+    "sec4.p4": "The log of admin actions is chained: every entry carries a checksum over the preceding one, and a built-in check reports when the chain no longer adds up. Removing individual entries after the fact is thus noticed. For conversations the retention period is configurable; expired content is removed together with its search index.",
+    "sec5.h2": "Making costs visible and capping them",
+    "sec5.h3a": "Consumption per person, group and model",
+    "sec5.h3b": "A shared monthly budget instead of individual limits",
+    "sec5.h3c": "A soft block instead of a silent overrun",
+    "sec5.p1": "Consumption is recorded per person, group, model and day and reported both in tokens and in euros. A shared monthly budget caps the total for the whole organisation; an optional monthly limit per person caps individual accounts. Once a budget is used up, a soft block takes effect.",
+    "sec5.p2": "The admin panel shows consumption in euros, broken down by person, by model and by day, along with the individual requests including model and timestamp. Amounts and breakdowns are visible to administrators; end users only get a note in the chat when the budget is exhausted. This takes cost pressure out of everyday work while keeping the figures visible where they belong.",
+    "sec5.p3": "Prices are stored per model so that the evaluation is not based on an approximation. This matters more than it sounds: for the same conversation, a frugal model and a very large one differ by a multiple in cost. A curated model selection is therefore part of cost control, not just a question of usability.",
+    "sec5.p4": "The monthly budget applies to the organisation as a whole, not per head. The reason is practical: consumption is never distributed evenly. Heavy users would get stuck on a rigid individual limit while other people’s allowances expire unused. A shared pot balances that out without anyone having to readjust limits.",
+    "sec5.p5": "For outliers there is also an optional monthly limit per person. It is switched off until you set it and is enforced strictly in the same reconciliation run as the overall budget. Typical use: a single account that sends automated requests should not drain the shared pot on its own.",
+    "sec5.p6": "Once the budget is used up, the soft block takes effect: the next request is refused, with a note in the chat instead of silently continuing to bill. A response already in progress is still completed. The admin can raise the budget at any time, after which operation resumes immediately. Without such an increase, no additional charge arises.",
+    "sec5.p7": "The reconciliation between recorded consumption and budget runs every minute, and the advance estimate of a request does not know its exact length. A single response can therefore still run slightly over the limit. This is a soft block that prevents runaway costs, not a second-by-second advance reservation.",
+    "sec6.h2": "Approving agents instead of banning them",
+    "sec6.p1": "Agents and skills are released in a curated way, neither allowed across the board nor banned across the board. Ordinary accounts use the agents assigned to them and never see the agent builder. A privileged role creates and shares agents, and the admin releases skills per person.",
+    "sec6.p2": "The reason lies in the permissions: an agent comes with a fixed set of instructions and a set of tools. If everyone could build and share their own agents, a second, uncontrolled distribution channel would appear alongside your rule chain. The gateway’s permission check would still apply to every call, but the overview of who works with what would be lost.",
+    "sec6.p3": "In practice this results in a few well-maintained agents per group instead of many half-finished ones: one for drafting quotes, one for evaluations from the ERP, one for internal knowledge search.",
+    "toc.item1": "Why an AI platform needs its own permission management",
+    "toc.item2": "Where users, roles and groups come from",
+    "toc.item3": "Permissions down to tool level",
+    "toc.item4": "Audit: every access traceable",
+    "toc.item5": "Making costs visible and capping them",
+    "toc.item6": "Approving agents instead of banning them",
+    "toc.item7": "Frequently asked questions",
+    "toc.title": "On this page",
+    "weiter.item1": "Which systems can be connected and how MCP works",
+    "weiter.item2": "Where your data resides and what does not happen to it",
+    "weiter.item3": "Frequently asked questions about data, operation and licensing",
+    "weiter.title": "Next"
+  },
+  "fr": {
+    "crumb.current": "Gouvernance",
+    "cta.btn1": "Rejoindre la liste d’attente",
+    "cta.btn2": "Héberger soi-même",
+    "cta.h2": "Clarifier la gouvernance avant le déploiement",
+    "cta.p": "Inscrivez-vous sur la liste d’attente. Vous accédez en premier à l’instance suisse gérée, et nous configurons avec vous les droits, le journal et le budget avant le démarrage du premier service.",
+    "faq.a1": "En proposant une voie autorisée plus pratique que le détour privé. EU Cowork AI vous donne pour cela une instance dédiée avec vos comptes, vos systèmes et votre journal. Une simple interdiction ne fait que déplacer l’usage vers des comptes privés que vous ne pouvez ni consulter ni désactiver.",
+    "faq.a2": "Uniquement si vous autorisez l’outil correspondant. La connexion se compose d’outils individuels, et chacun est autorisé ou refusé séparément. La lecture des factures peut être autorisée tandis que la lecture des salaires reste bloquée pour la même personne. En outre, les règles d’accès de votre ERP continuent de s’appliquer.",
+    "faq.a3": "Via des groupes et des règles par outil. Vous créez des groupes ou les reprenez depuis Entra ID et autorisez à chaque groupe les outils dont il a besoin. Le contrôle s’effectue dans l’ordre utilisateur individuel, rôle, groupe, réglage par défaut du serveur, la première règle correspondante décidant.",
+    "faq.a4": "Via un budget mensuel commun pour l’organisation et une limite mensuelle facultative par personne. La consommation est indiquée par personne, groupe et modèle, en tokens et en euros. Lorsqu’un budget est épuisé, la requête suivante est refusée au lieu de se poursuivre en silence. L’administrateur peut le relever à tout moment.",
+    "faq.a5": "Un journal de tous les appels d’outils avec l’horodatage, la personne, le système cible, l’outil et la décision, ainsi qu’un journal chaîné des actions d’administration, des connexions et des modifications de droits. Les deux sont exportables en CSV et restent dans votre instance. Il vous appartient de vérifier avec votre conseil juridique si cela suffit à votre obligation de preuve concrète.",
+    "faq.a6": "Non. Les rôles, groupes et règles fonctionnent entièrement avec des comptes locaux créés par invitation. La connexion via Entra ID est prise en charge et configurée par instance ; elle vous évite une double maintenance, car les comptes sont créés à la première connexion et les informations de groupe sont reprises du jeton d’authentification. Le provisionnement automatique via SCIM est prévu.",
+    "faq.h2": "Questions fréquentes",
+    "faq.q1": "Comment empêcher les collaborateurs de saisir des données d’entreprise dans des outils d’IA publics ?",
+    "faq.q2": "L’IA peut-elle voir les données salariales si nous connectons notre ERP ?",
+    "faq.q3": "Comment déterminer quel collaborateur peut voir quelles données ?",
+    "faq.q4": "Comment plafonner les coûts d’IA par collaborateur ?",
+    "faq.q5": "Quelles preuves obtenons-nous pour un audit ?",
+    "faq.q6": "Avons-nous besoin d’Entra ID pour que la gouvernance fonctionne ?",
+    "hero.eyebrow": "Gouvernance",
+    "hero.h1": "Gouvernance : qui a le droit de faire quoi, et à quel coût",
+    "hero.lead": "Dans EU Cowork AI, ce n’est pas le modèle qui décide si un accès est autorisé, mais une chaîne de règles vérifiée avant chaque appel d’outil. Les droits vont jusqu’à l’outil individuel, chaque appel est journalisé et la consommation est visible avant de devenir une facture.",
+    "kurz.item1": "L’accès aux systèmes connectés est décidé par la passerelle MCP en amont du modèle, et non par le modèle lui-même.",
+    "kurz.item2": "Les droits vont jusqu’à l’outil individuel : autoriser la lecture des factures, refuser la lecture des salaires, dans le même système connecté.",
+    "kurz.item3": "Le contrôle des droits suit l’ordre suivant : utilisateur individuel, rôle, groupe, réglage par défaut du serveur. La première règle correspondante l’emporte.",
+    "kurz.item4": "Chaque appel d’outil via la passerelle, chaque action d’administration et chaque connexion est journalisé et exportable en CSV.",
+    "kurz.item5": "La consommation est indiquée par personne, groupe et modèle, en tokens et en euros, et imputée sur un budget mensuel commun.",
+    "kurz.title": "En bref",
+    "meta.checked": "Dernière vérification : <time datetime=\"2026-08\">août 2026</time>",
+    "meta.title": "Gouvernance : droits, budgets, audit | EU Cowork AI",
+    "sec1.h2": "Pourquoi une plateforme d’IA a besoin de sa propre gestion des droits",
+    "sec1.h3": "Une interdiction ne fait que déplacer l’usage, elle n’y met pas fin",
+    "sec1.li1": "Quelles personnes peuvent utiliser la plateforme, et via quelle authentification.",
+    "sec1.li2": "Quels systèmes connectés et quels outils individuels sont accessibles à une personne.",
+    "sec1.li3": "Ce qui s’est réellement passé, de manière prouvable et exportable.",
+    "sec1.li4": "Ce que coûte l’exploitation, détaillé et plafonnable, avant l’arrivée de la facture.",
+    "sec1.p1": "Une plateforme d’IA a besoin de sa propre gestion des droits, car une fenêtre de chat sans règles transmet chaque question à chaque système connecté. Dès que l’IA est reliée à un système d’entreprise, la question n’est plus de savoir si quelqu’un peut discuter, mais quelles données l’IA peut lire pour le compte de cette personne.",
+    "sec1.p2": "Sans voie autorisée, chacun prend la suivante. Une interdiction déplace l’usage vers des comptes privés chez des fournisseurs publics, où ni contrat, ni journal, ni droit à l’effacement ne s’appliquent. Les données de l’entreprise se retrouvent alors dans un service que personne chez vous n’administre et dont vous ne pouvez pas justifier le traitement.",
+    "sec1.p3": "La contre-mesure qui fonctionne est une voie autorisée meilleure que la voie privée. Elle doit toutefois rendre quatre choses contrôlables, sinon vous ne faites que déplacer le risque vers l’intérieur :",
+    "sec1.p4": "Ces quatre points de contrôle constituent précisément les rubriques du panneau d’administration d’EU Cowork AI : gestion des utilisateurs, règles d’accès, audit et consommation.",
+    "sec2.chip1": "Comptes locaux",
+    "sec2.chip2": "Entra ID via OIDC, configurable par instance",
+    "sec2.chip3": "SCIM prévu",
+    "sec2.h2": "D’où viennent les utilisateurs, les rôles et les groupes",
+    "sec2.h3a": "Utilisateurs locaux et connexion à Entra ID",
+    "sec2.h3b": "Ce que définit un rôle, ce que définit un groupe",
+    "sec2.h3c": "Invitation, attribution, désactivation",
+    "sec2.p1": "Vous gérez les utilisateurs, les rôles et les groupes dans le panneau d’administration ou vous les reprenez depuis Entra ID. Un rôle regroupe des droits fonctionnels, c’est-à-dire ce que quelqu’un peut faire dans l’interface. Un groupe regroupe des personnes pour les règles d’accès et de budget. Les deux se combinent indépendamment.",
+    "sec2.p2": "Sans fournisseur d’identité, EU Cowork AI fonctionne avec des comptes locaux : invitation par lien, mot de passe défini par la personne invitée. La connexion via Entra ID ou un autre fournisseur OIDC est prise en charge par la plateforme et configurée pour votre instance. Une fois en place, chaque personne se connecte via OIDC, le compte est créé à la première connexion et les informations de groupe et de rôle issues du jeton d’authentification sont mises en correspondance avec vos groupes dans EU Cowork AI.",
+    "sec2.p3": "Le retrait des droits se joue donc à la porte d’entrée : une personne désactivée dans Entra ID n’entre plus et perd ainsi tout accès, y compris aux systèmes connectés. Le provisionnement et le déprovisionnement automatiques des comptes via SCIM sont prévus, mais pas encore disponibles aujourd’hui.",
+    "sec2.p4": "Un rôle régit les droits fonctionnels dans la plateforme, par exemple la possibilité de créer des agents, d’utiliser la recherche web ou d’ouvrir le panneau d’administration. Un groupe régit les données et outils accessibles ainsi que le budget sur lequel la consommation est imputée.",
+    "sec2.p5": "Une invitation part par e-mail ou par lien et peut déjà indiquer le groupe cible. L’appartenance est appliquée dès que la personne invitée a terminé son inscription. Personne ne démarre donc dans un état intermédiaire sans droits, et vous n’avez rien à compléter après chaque inscription.",
+    "sec2.p6": "Il existe deux façons de mettre fin à l’accès. Le blocage conserve le compte mais refuse la connexion. La suppression retire le compte, les conversations et les entrées de l’index de recherche ; un export des données pour la personne concernée reste possible au préalable, afin de répondre aussi bien aux demandes d’accès qu’aux demandes d’effacement.",
+    "sec2.tab.caption": "Les trois niveaux de la gestion des utilisateurs et leur usage.",
+    "sec2.tab.r1c1": "Utilisateur",
+    "sec2.tab.r1c2": "Exception individuelle, prioritaire sur toute règle générale",
+    "sec2.tab.r1c3": "Une personne obtient en plus l’accès à un outil",
+    "sec2.tab.r2c1": "Rôle",
+    "sec2.tab.r2c2": "Droits fonctionnels dans l’interface",
+    "sec2.tab.r2c3": "Seul un rôle privilégié peut créer des agents",
+    "sec2.tab.r3c1": "Groupe",
+    "sec2.tab.r3c2": "Accès aux systèmes, aux outils et au budget",
+    "sec2.tab.r3c3": "Le groupe Comptabilité voit les outils de facturation",
+    "sec2.tab.th1": "Niveau",
+    "sec2.tab.th2": "Régit",
+    "sec2.tab.th3": "Exemple typique",
+    "sec3.h2": "Des droits jusqu’au niveau de l’outil",
+    "sec3.h3a": "L’exemple : lire les factures oui, lire les salaires non",
+    "sec3.h3b": "La chaîne de règles : utilisateur avant rôle avant groupe avant valeur par défaut",
+    "sec3.h3c": "Que se passe-t-il si aucune règle ne s’applique",
+    "sec3.p1": "Les appels d’outils passent par la passerelle MCP, un composant situé entre le chat et le système connecté. Pour la personne à l’origine de la demande, la passerelle vérifie si le serveur et l’outil concret sont autorisés, consigne la décision et ne transmet l’appel qu’en cas d’autorisation. Les outils bloqués n’apparaissent pas dans la liste d’outils de l’utilisateur ; après une modification des droits, cela prend effet avec un léger décalage. Le véritable verrou est le contrôle effectué à chaque appel.",
+    "sec3.p2": "Les systèmes sont connectés via MCP, le standard ouvert pour l’accès aux outils par les modèles d’IA. La passerelle se place en amont afin que l’autorisation soit décidée de façon centrale par personne, rôle et groupe, et non dispersée dans le système connecté. Les systèmes connectables et ceux déjà préparés figurent sur la page <a class=\"euc-textlink\" href=\"/integrationen\">Intégrations</a> ; des droits sans outils n’ont pas d’objet.",
+    "sec3.p3": "Un ERP connecté n’offre pas à l’IA un accès unique, mais de nombreux outils individuels : rechercher des factures, lire les données clients, lire les données salariales, écrire des enregistrements. <span class=\"euc-marker\">Le groupe Comptabilité reçoit les outils de facturation, les outils salariaux restent réservés aux ressources humaines.</span> Même serveur, outils différents, décisions distinctes.",
+    "sec3.p4": "En dessous se trouve une seconde limite. Si EU Cowork AI se connecte à votre ERP avec l’identité de la personne concernée, les règles d’accès de cet ERP restent déterminantes : celui qui n’y voit que certains enregistrements n’en voit pas davantage via l’IA. Si la connexion passe par un compte de service commun, la passerelle est le seul point d’application, et la sélection des outils doit alors être découpée de façon restrictive.",
+    "sec3.p5": "Les droits à l’intérieur d’un outil, c’est-à-dire sur des champs ou des lignes, ne sont pas appliqués par EU Cowork AI. C’est la gestion des droits du système connecté qui s’en charge. Un outil au périmètre fonctionnel large ne doit donc pas être autorisé du tout, ou seulement à un groupe qui a de toute façon le droit de voir ces données.",
+    "sec3.p6": "Les droits sont évalués dans un ordre fixe : utilisateur individuel, puis rôle, puis groupe, puis réglage par défaut du serveur. La première règle correspondante décide, la recherche s’arrête là. Chaque décision est donc explicable et une autorisation ponctuelle ne nécessite aucun rôle spécial. Le fait que les droits s’appliquent par outil individuel constitue l’élément différenciant dans le <a class=\"euc-textlink\" href=\"/vergleich\">comparatif avec d’autres plateformes</a>.",
+    "sec3.p7": "Si aucune règle d’utilisateur, de rôle ou de groupe ne s’applique, c’est le réglage par défaut du serveur concerné qui décide. Réglez ce paramètre sur « refuser » juste après la connexion d’un système, puis autorisez de façon ciblée certains groupes. Ainsi, un système fraîchement connecté ne peut pas laisser voir par mégarde plus que prévu.",
+    "sec3.p8": "Si le contrôle des droits lui-même tombe en panne, par exemple parce que la base de règles est injoignable, la passerelle refuse l’appel au lieu de le laisser passer. Une panne se traduit donc par un message d’erreur dans le chat, et non par un accès ouvert. Un interrupteur « lecture seule » par serveur, bloquant globalement les outils d’écriture, est prévu.",
+    "sec3.tab.caption": "Ordre du contrôle des droits dans la passerelle. La première correspondance l’emporte.",
+    "sec3.tab.r1c1": "1. Utilisateur",
+    "sec3.tab.r1c2": "Exception pour une seule personne",
+    "sec3.tab.r1c3": "Autorisation temporaire sans assouplir la règle de groupe",
+    "sec3.tab.r2c1": "2. Rôle",
+    "sec3.tab.r2c2": "S’applique à tous les comptes ayant ce rôle",
+    "sec3.tab.r2c3": "Équipement de base selon la fonction dans l’entreprise",
+    "sec3.tab.r3c1": "3. Groupe",
+    "sec3.tab.r3c2": "S’applique à tous les membres du groupe",
+    "sec3.tab.r3c3": "Découpage par département ou par projet, également depuis Entra ID",
+    "sec3.tab.r4c1": "4. Valeur par défaut du serveur",
+    "sec3.tab.r4c2": "Réglage par défaut pour toutes les autres demandes",
+    "sec3.tab.r4c3": "Position de base par système connecté, de préférence refuser",
+    "sec3.tab.th1": "Ordre",
+    "sec3.tab.th2": "Règle",
+    "sec3.tab.th3": "À quoi elle sert",
+    "sec4.h2": "Audit : chaque accès traçable",
+    "sec4.h3a": "Ce qui est journalisé",
+    "sec4.h3b": "Durée de conservation et destinations d’export",
+    "sec4.li1": "Les appels d’outils vers les systèmes connectés, avec la décision prise, autorisée ou refusée.",
+    "sec4.li2": "Les connexions à la plateforme et au panneau d’administration.",
+    "sec4.li3": "Les modifications des rôles, groupes, droits et règles d’accès.",
+    "sec4.li4": "Les modifications de la configuration de l’instance.",
+    "sec4.li5": "La création, l’invitation, le blocage et la suppression de comptes.",
+    "sec4.p1": "Chaque appel d’outil via la passerelle est consigné avec l’horodatage, la personne, le système cible, l’outil et la décision, y compris les appels refusés. La plateforme tient en outre un journal chaîné en continu des actions d’administration, des connexions et des modifications de droits. Les deux journaux résident dans votre propre instance et sont exportables en CSV.",
+    "sec4.p2": "Le journal d’audit est une preuve d’accès, pas un enregistrement des conversations. Il indique qui a appelé quel outil, sur quel système et quand. Les conversations elles-mêmes sont stockées séparément dans la base de données de votre instance et sont soumises à la durée de conservation configurée.",
+    "sec4.p3": "Les journaux restent dans votre instance, dans votre base de données. En auto-hébergement, ils ne quittent pas votre infrastructure. L’export se fait en CSV, filtré par période et par personne, et peut donc être remis directement à une révision, au service juridique ou à un outil d’audit.",
+    "sec4.p4": "Le journal des actions d’administration est chaîné : chaque entrée porte une somme de contrôle de l’entrée précédente, et une vérification intégrée signale si la chaîne ne se referme plus. La suppression a posteriori d’entrées est donc détectée. Pour les conversations, la durée de conservation est paramétrable ; les contenus expirés sont supprimés avec leur index de recherche.",
+    "sec5.h2": "Rendre les coûts visibles et les plafonner",
+    "sec5.h3a": "Consommation par personne, groupe et modèle",
+    "sec5.h3b": "Un budget mensuel commun plutôt que des limites individuelles",
+    "sec5.h3c": "Un blocage souple plutôt qu’un dépassement silencieux",
+    "sec5.p1": "La consommation est enregistrée par personne, groupe, modèle et jour, et indiquée à la fois en tokens et en euros. Un budget mensuel commun plafonne le total pour toute l’organisation, une limite mensuelle facultative par personne plafonne les comptes individuels. Lorsqu’un budget est épuisé, un blocage souple (soft block) s’applique.",
+    "sec5.p2": "Le panneau d’administration affiche la consommation en euros, ventilée par personne, par modèle et par jour, ainsi que les requêtes individuelles avec le modèle et l’horodatage. Les montants et la ventilation sont visibles par l’administration ; les utilisateurs finaux reçoivent seulement un message dans le chat lorsque le budget est épuisé. Cela retire la pression des coûts du quotidien tout en gardant les chiffres visibles là où ils doivent l’être.",
+    "sec5.p3": "Les prix sont enregistrés par modèle afin que l’analyse ne repose pas sur une approximation. C’est plus important qu’il n’y paraît : pour un même déroulement de conversation, l’écart de coût entre un modèle économe et un très grand modèle se compte en multiples. Une sélection de modèles organisée fait donc partie du contrôle des coûts, et pas seulement de l’ergonomie.",
+    "sec5.p4": "Le budget mensuel s’applique à l’organisation dans son ensemble, et non par tête. La raison est pratique : la consommation ne se répartit jamais uniformément. Les personnes qui utilisent intensivement la plateforme buteraient sur une limite individuelle rigide, tandis que le quota d’autres personnes expirerait sans être utilisé. Un pot commun compense cela sans que personne ait à réajuster des limites.",
+    "sec5.p5": "Pour les cas extrêmes, il existe en plus une limite mensuelle facultative par personne. Elle est désactivée tant que vous ne la définissez pas et elle est appliquée strictement lors du même rapprochement que le budget global. Usage typique : un compte unique qui envoie des requêtes automatisées ne doit pas vider à lui seul le pot commun.",
+    "sec5.p6": "Lorsque le budget est épuisé, le blocage souple s’applique : la requête suivante est refusée, avec un message dans le chat plutôt qu’une facturation silencieuse. Une réponse en cours est menée à son terme. L’administrateur peut relever le budget à tout moment, après quoi l’exploitation reprend immédiatement. Sans ce relèvement, aucun supplément n’est facturé.",
+    "sec5.p7": "Le rapprochement entre la consommation enregistrée et le budget s’effectue chaque minute, et l’estimation préalable d’une requête n’en connaît pas la longueur exacte. Une réponse isolée peut donc dépasser légèrement la limite. Il s’agit d’un blocage souple qui empêche une explosion des coûts, et non d’une réservation préalable à la seconde près.",
+    "sec6.h2": "Autoriser les agents au lieu de les interdire",
+    "sec6.p1": "Les agents et les skills sont autorisés de manière encadrée, ni permis ni interdits en bloc. Les comptes ordinaires utilisent les agents qui leur sont attribués et ne voient pas l’atelier de création d’agents. Un rôle privilégié crée et partage les agents, et l’administrateur autorise les skills personne par personne.",
+    "sec6.p2": "La raison tient aux droits : un agent embarque une consigne fixe et un jeu d’outils. Si chacun pouvait créer et partager ses propres agents, un second canal de diffusion incontrôlé s’ajouterait à votre chaîne de droits. Le contrôle des droits à la passerelle continuerait certes de s’appliquer à chaque appel, mais la vue d’ensemble de qui travaille avec quoi serait perdue.",
+    "sec6.p3": "En pratique, cela donne quelques agents bien entretenus par groupe plutôt que de nombreux agents à moitié finis : un pour l’établissement des offres, un pour les analyses issues de l’ERP, un pour la recherche de connaissances internes.",
+    "toc.item1": "Pourquoi une plateforme d’IA a besoin de sa propre gestion des droits",
+    "toc.item2": "D’où viennent les utilisateurs, les rôles et les groupes",
+    "toc.item3": "Des droits jusqu’au niveau de l’outil",
+    "toc.item4": "Audit : chaque accès traçable",
+    "toc.item5": "Rendre les coûts visibles et les plafonner",
+    "toc.item6": "Autoriser les agents au lieu de les interdire",
+    "toc.item7": "Questions fréquentes",
+    "toc.title": "Sur cette page",
+    "weiter.item1": "Quels systèmes peuvent être connectés et comment fonctionne MCP",
+    "weiter.item2": "Où résident vos données et ce qui ne leur arrive pas",
+    "weiter.item3": "Questions fréquentes sur les données, l’exploitation et la licence",
+    "weiter.title": "Pour aller plus loin"
+  },
+  "it": {
+    "crumb.current": "Governance",
+    "cta.btn1": "Iscriviti alla lista d’attesa",
+    "cta.btn2": "Ospitare in proprio",
+    "cta.h2": "Chiarire la governance prima del rollout",
+    "cta.p": "Iscriviti alla lista d’attesa. Ottiene per primo l’accesso all’istanza svizzera gestita e configuriamo insieme a Lei diritti, registro e budget prima che parta il primo reparto.",
+    "faq.a1": "Offrendo una via autorizzata più comoda della scorciatoia privata. EU Cowork AI Le mette a disposizione un’istanza dedicata con i Suoi account, i Suoi sistemi e il Suo registro. Un semplice divieto sposta l’uso solo su account privati che non può né consultare né disattivare.",
+    "faq.a2": "Solo se abilita il relativo strumento. Il collegamento è composto da singoli strumenti e ognuno viene abilitato o negato separatamente. La lettura delle fatture può essere consentita mentre quella dei dati salariali resta bloccata per la stessa persona. Inoltre continuano a valere le regole di accesso del Suo ERP.",
+    "faq.a3": "Tramite gruppi e regole per singolo strumento. Crea i gruppi oppure li importa da Entra ID e abilita a ogni gruppo gli strumenti che gli servono. La verifica avviene nell’ordine singolo utente, ruolo, gruppo, impostazione predefinita del server, e decide la prima regola corrispondente.",
+    "faq.a4": "Con un budget mensile comune per l’organizzazione e un limite mensile facoltativo per persona. Il consumo è indicato per persona, gruppo e modello, in token e in euro. Quando un budget è esaurito, la richiesta successiva viene rifiutata invece di proseguire in silenzio. L’amministratore può aumentarlo in qualsiasi momento.",
+    "faq.a5": "Un registro di tutte le chiamate agli strumenti con data e ora, persona, sistema di destinazione, strumento e decisione, oltre a un registro concatenato di azioni amministrative, accessi e modifiche dei diritti. Entrambi sono esportabili in CSV e restano nella Sua istanza. Se ciò sia sufficiente per il Suo obbligo di prova specifico va chiarito con la Sua consulenza legale.",
+    "faq.a6": "No. Ruoli, gruppi e regole funzionano pienamente con account locali creati tramite invito. L’accesso tramite Entra ID è supportato e viene configurato per istanza; Le risparmia la doppia manutenzione, perché gli account nascono al primo accesso e le informazioni di gruppo vengono riprese dal token di accesso. Il provisioning automatico tramite SCIM è previsto.",
+    "faq.h2": "Domande frequenti",
+    "faq.q1": "Come evitiamo che i collaboratori inseriscano dati aziendali in strumenti di IA pubblici?",
+    "faq.q2": "L’IA può vedere i dati salariali se colleghiamo il nostro ERP?",
+    "faq.q3": "Come stabiliamo quale collaboratore può vedere quali dati?",
+    "faq.q4": "Come limitiamo i costi dell’IA per collaboratore?",
+    "faq.q5": "Quali evidenze otteniamo per un audit?",
+    "faq.q6": "Serve Entra ID perché la governance funzioni?",
+    "hero.eyebrow": "Governance",
+    "hero.h1": "Governance: chi può fare che cosa e quanto costa",
+    "hero.lead": "In EU Cowork AI non è il modello a decidere se un accesso è consentito, ma una catena di regole verificata prima di ogni chiamata a uno strumento. I diritti arrivano fino al singolo strumento, ogni chiamata viene registrata e il consumo è visibile prima di diventare una fattura.",
+    "kurz.item1": "L’accesso ai sistemi collegati è deciso dal gateway MCP prima del modello, non dal modello stesso.",
+    "kurz.item2": "I diritti arrivano fino al singolo strumento: consentire la lettura delle fatture, negare quella dei dati salariali, nello stesso sistema collegato.",
+    "kurz.item3": "La verifica dei diritti segue l’ordine: singolo utente, ruolo, gruppo, impostazione predefinita del server. Vince la prima regola corrispondente.",
+    "kurz.item4": "Ogni chiamata a uno strumento tramite il gateway, ogni azione amministrativa e ogni accesso vengono registrati e sono esportabili in CSV.",
+    "kurz.item5": "Il consumo è indicato per persona, gruppo e modello, in token e in euro, e viene imputato a un budget mensile comune.",
+    "kurz.title": "In breve",
+    "meta.checked": "Ultima verifica: <time datetime=\"2026-08\">agosto 2026</time>",
+    "meta.title": "Governance: diritti, budget, audit | EU Cowork AI",
+    "sec1.h2": "Perché una piattaforma di IA ha bisogno di una propria gestione dei diritti",
+    "sec1.h3": "Un divieto sposta soltanto l’uso, non lo elimina",
+    "sec1.li1": "Quali persone possono utilizzare la piattaforma e tramite quale accesso.",
+    "sec1.li2": "Quali sistemi collegati e quali singoli strumenti sono accessibili a una persona.",
+    "sec1.li3": "Che cosa è successo davvero, in modo dimostrabile ed esportabile.",
+    "sec1.li4": "Quanto costa l’esercizio, in modo dettagliato e limitabile, prima che arrivi la fattura.",
+    "sec1.p1": "Una piattaforma di IA ha bisogno di una propria gestione dei diritti, perché una finestra di chat senza regole inoltra ogni domanda a ogni sistema collegato. Non appena l’IA è collegata a un sistema aziendale, la domanda non è più se qualcuno possa chattare, ma quali dati l’IA possa leggere per conto di quella persona.",
+    "sec1.p2": "Chi non ha una via autorizzata prende la prima alternativa. Un divieto sposta l’uso su account privati presso fornitori pubblici, dove non valgono né contratto, né registro, né diritto alla cancellazione. I dati aziendali finiscono così in un servizio che nessuno nella Sua organizzazione amministra e del cui trattamento non può dare prova.",
+    "sec1.p3": "La contromisura che funziona è una via autorizzata migliore di quella privata. Deve però rendere controllabili quattro aspetti, altrimenti il rischio viene soltanto spostato all’interno:",
+    "sec1.p4": "Proprio questi quattro punti di controllo costituiscono le aree del pannello di amministrazione di EU Cowork AI: gestione utenti, regole di accesso, audit e consumo.",
+    "sec2.chip1": "Account locali",
+    "sec2.chip2": "Entra ID tramite OIDC, configurabile per istanza",
+    "sec2.chip3": "SCIM previsto",
+    "sec2.h2": "Da dove arrivano utenti, ruoli e gruppi",
+    "sec2.h3a": "Utenti locali e collegamento a Entra ID",
+    "sec2.h3b": "Che cosa stabilisce un ruolo e che cosa un gruppo",
+    "sec2.h3c": "Invito, assegnazione, disattivazione",
+    "sec2.p1": "Utenti, ruoli e gruppi si gestiscono nel pannello di amministrazione oppure si importano da Entra ID. Un ruolo raggruppa i diritti funzionali, cioè ciò che una persona può fare nell’interfaccia. Un gruppo raggruppa le persone per le regole di accesso e di budget. I due livelli sono combinabili in modo indipendente.",
+    "sec2.p2": "Senza un provider di identità, EU Cowork AI lavora con account locali: invito tramite link, password impostata dalla persona invitata. L’accesso tramite Entra ID o un altro provider OIDC è supportato dalla piattaforma e viene configurato per la Sua istanza. Una volta attivo, ogni persona accede tramite OIDC, l’account viene creato al primo accesso e le informazioni di gruppo e ruolo contenute nel token di accesso vengono mappate sui Suoi gruppi in EU Cowork AI.",
+    "sec2.p3": "La revoca avviene quindi alla porta d’ingresso: chi è disattivato in Entra ID non entra più e perde così ogni accesso, anche ai sistemi collegati. Il provisioning e il deprovisioning automatici degli account tramite SCIM sono previsti, ma oggi non ancora disponibili.",
+    "sec2.p4": "Un ruolo governa i diritti funzionali nella piattaforma, per esempio se una persona può creare agenti, usare la ricerca web o aprire il pannello di amministrazione. Un gruppo governa a quali dati e strumenti si accede e su quale budget viene imputato il consumo.",
+    "sec2.p5": "L’invito viene inviato per e-mail o tramite link e può già indicare il gruppo di destinazione. L’appartenenza viene applicata non appena la persona invitata ha completato la registrazione. Così nessuno parte in uno stato intermedio senza diritti e non deve integrare nulla dopo ogni registrazione.",
+    "sec2.p6": "Per terminare l’accesso ci sono due strade. Il blocco mantiene l’account ma nega l’accesso. L’eliminazione rimuove account, conversazioni e voci dell’indice di ricerca; prima è possibile un export dei dati per la persona interessata, così da soddisfare sia le richieste di accesso sia quelle di cancellazione.",
+    "sec2.tab.caption": "I tre livelli della gestione utenti e a che cosa servono.",
+    "sec2.tab.r1c1": "Utente",
+    "sec2.tab.r1c2": "Eccezione individuale, prevale su ogni regola generale",
+    "sec2.tab.r1c3": "Una persona ottiene in più l’accesso a uno strumento",
+    "sec2.tab.r2c1": "Ruolo",
+    "sec2.tab.r2c2": "Diritti funzionali nell’interfaccia",
+    "sec2.tab.r2c3": "Solo un ruolo privilegiato può creare agenti",
+    "sec2.tab.r3c1": "Gruppo",
+    "sec2.tab.r3c2": "Accesso a sistemi, strumenti e budget",
+    "sec2.tab.r3c3": "Il gruppo Contabilità vede gli strumenti per le fatture",
+    "sec2.tab.th1": "Livello",
+    "sec2.tab.th2": "Governa",
+    "sec2.tab.th3": "Esempio tipico",
+    "sec3.h2": "Diritti fino al livello del singolo strumento",
+    "sec3.h3a": "L’esempio: leggere le fatture sì, leggere i salari no",
+    "sec3.h3b": "La catena di regole: utente prima del ruolo, del gruppo e del valore predefinito",
+    "sec3.h3c": "Che cosa succede se nessuna regola si applica",
+    "sec3.p1": "Le chiamate agli strumenti passano dal gateway MCP, un componente tra la chat e il sistema collegato. Per la persona che effettua la richiesta, il gateway verifica se il server e lo specifico strumento sono consentiti, registra la decisione e inoltra la chiamata solo in caso di autorizzazione. Gli strumenti bloccati non compaiono nell’elenco degli strumenti dell’utente; dopo una modifica dei diritti ciò ha effetto con un breve ritardo. Il vero blocco è la verifica a ogni singola chiamata.",
+    "sec3.p2": "I sistemi vengono collegati tramite MCP, lo standard aperto per l’accesso agli strumenti da parte dei modelli di IA. Il gateway si colloca a monte, così l’autorizzazione viene decisa centralmente per persona, ruolo e gruppo e non resta dispersa nel sistema collegato. Quali sistemi si possono collegare e quali sono già pronti è indicato nella pagina <a class=\"euc-textlink\" href=\"/integrationen\">Integrazioni</a>; diritti senza strumenti non hanno oggetto.",
+    "sec3.p3": "Un ERP collegato non offre all’IA un unico accesso, ma molti strumenti distinti: cercare fatture, leggere dati dei clienti, leggere dati salariali, scrivere record. <span class=\"euc-marker\">Al gruppo Contabilità vengono abilitati gli strumenti per le fatture, mentre quelli salariali restano riservati alle risorse umane.</span> Stesso server, strumenti diversi, decisioni separate.",
+    "sec3.p4": "Al di sotto c’è un secondo confine. Se EU Cowork AI accede al Suo ERP con l’identità della singola persona, restano determinanti le regole di accesso dell’ERP: chi lì può vedere solo determinati record non vede di più nemmeno tramite l’IA. Se il collegamento avviene con un account di servizio comune, il gateway è l’unico punto di applicazione e la selezione degli strumenti va quindi ritagliata in modo restrittivo.",
+    "sec3.p5": "I diritti all’interno di uno strumento, cioè su singoli campi o righe, non sono applicati da EU Cowork AI. Se ne occupa la gestione dei diritti del sistema collegato. Uno strumento con un ambito funzionale ampio va quindi o non abilitato affatto oppure abilitato solo a un gruppo che può comunque vedere quei dati.",
+    "sec3.p6": "I diritti vengono valutati in un ordine fisso: singolo utente, poi ruolo, poi gruppo, infine impostazione predefinita del server. Decide la prima regola corrispondente e la ricerca si ferma lì. Ogni decisione è quindi spiegabile e una singola abilitazione non richiede un ruolo speciale. Il fatto che i diritti valgano per singolo strumento è l’elemento distintivo nel <a class=\"euc-textlink\" href=\"/vergleich\">confronto con altre piattaforme</a>.",
+    "sec3.p7": "Se non si applica alcuna regola di utente, ruolo o gruppo, decide l’impostazione predefinita del server. Imposti questo valore su «nega» subito dopo aver collegato un sistema e abiliti poi in modo mirato i singoli gruppi. In questo modo un sistema appena collegato non può far vedere per errore più di quanto previsto.",
+    "sec3.p8": "Se la verifica dei diritti stessa non funziona, per esempio perché il database delle regole non è raggiungibile, il gateway nega la chiamata invece di lasciarla passare. Un guasto porta quindi a un messaggio di errore nella chat, non a un accesso libero. È previsto un interruttore di sola lettura per server che blocca in blocco gli strumenti di scrittura.",
+    "sec3.tab.caption": "Ordine della verifica dei diritti nel gateway. Vince la prima corrispondenza.",
+    "sec3.tab.r1c1": "1. Utente",
+    "sec3.tab.r1c2": "Eccezione per una singola persona",
+    "sec3.tab.r1c3": "Abilitazione temporanea senza indebolire la regola di gruppo",
+    "sec3.tab.r2c1": "2. Ruolo",
+    "sec3.tab.r2c2": "Vale per tutti gli account con questo ruolo",
+    "sec3.tab.r2c3": "Dotazione di base in base alla funzione in azienda",
+    "sec3.tab.r3c1": "3. Gruppo",
+    "sec3.tab.r3c2": "Vale per tutti i membri del gruppo",
+    "sec3.tab.r3c3": "Taglio per reparto o progetto, anche da Entra ID",
+    "sec3.tab.r4c1": "4. Impostazione predefinita del server",
+    "sec3.tab.r4c2": "Impostazione predefinita per tutte le altre richieste",
+    "sec3.tab.r4c3": "Impostazione di base per ogni sistema collegato, preferibilmente negare",
+    "sec3.tab.th1": "Ordine",
+    "sec3.tab.th2": "Regola",
+    "sec3.tab.th3": "A che cosa serve",
+    "sec4.h2": "Audit: ogni accesso tracciabile",
+    "sec4.h3a": "Che cosa viene registrato",
+    "sec4.h3b": "Per quanto tempo e dove si può esportare",
+    "sec4.li1": "Le chiamate agli strumenti dei sistemi collegati, con la decisione presa, consentita o negata.",
+    "sec4.li2": "Gli accessi alla piattaforma e al pannello di amministrazione.",
+    "sec4.li3": "Le modifiche a ruoli, gruppi, diritti e regole di accesso.",
+    "sec4.li4": "Le modifiche alla configurazione dell’istanza.",
+    "sec4.li5": "La creazione, l’invito, il blocco e l’eliminazione di account.",
+    "sec4.p1": "Ogni chiamata a uno strumento tramite il gateway viene registrata con data e ora, persona, sistema di destinazione, strumento e decisione, comprese quelle negate. La piattaforma tiene inoltre un registro concatenato in modo continuo di azioni amministrative, accessi e modifiche dei diritti. Entrambi i registri risiedono nella Sua istanza e sono esportabili in CSV.",
+    "sec4.p2": "L’audit log è una prova degli accessi, non una trascrizione delle conversazioni. Indica chi ha chiamato quale strumento su quale sistema e quando. Le conversazioni stesse sono archiviate separatamente nel database della Sua istanza e sono soggette al periodo di conservazione impostato.",
+    "sec4.p3": "I registri restano nella Sua istanza, nel Suo database. In self-hosting non lasciano la Sua infrastruttura. L’export avviene in CSV, filtrato per periodo e persona, ed è quindi consegnabile direttamente a una revisione, all’ufficio legale o a uno strumento di audit.",
+    "sec4.p4": "Il registro delle azioni amministrative è concatenato: ogni voce porta un checksum della voce precedente e un controllo integrato segnala quando la catena non torna più. L’eliminazione successiva di singole voci viene quindi rilevata. Per le conversazioni il periodo di conservazione è configurabile; i contenuti scaduti vengono rimossi insieme all’indice di ricerca.",
+    "sec5.h2": "Rendere visibili i costi e limitarli",
+    "sec5.h3a": "Consumo per persona, gruppo e modello",
+    "sec5.h3b": "Budget mensile comune invece di limiti individuali",
+    "sec5.h3c": "Blocco morbido invece di sforamento silenzioso",
+    "sec5.p1": "Il consumo viene rilevato per persona, gruppo, modello e giorno e indicato sia in token sia in euro. Un budget mensile comune limita il totale per l’intera organizzazione, un limite mensile facoltativo per persona limita i singoli account. Quando un budget è esaurito, interviene un blocco morbido (soft block).",
+    "sec5.p2": "Il pannello di amministrazione mostra il consumo in euro, suddiviso per persona, per modello e per giorno, insieme alle singole richieste con modello e orario. Importi e suddivisione sono visibili all’amministrazione; gli utenti finali ricevono nella chat solo un avviso quando il budget è esaurito. Così la pressione sui costi esce dal lavoro quotidiano e i numeri restano visibili dove devono esserlo.",
+    "sec5.p3": "I prezzi sono registrati per modello, così l’analisi non si basa su un valore approssimativo. È più importante di quanto sembri: a parità di conversazione, tra un modello parsimonioso e uno molto grande il costo differisce di diverse volte. Una selezione curata dei modelli fa quindi parte del controllo dei costi, non è solo una questione di usabilità.",
+    "sec5.p4": "Il budget mensile vale per l’organizzazione nel suo insieme, non pro capite. Il motivo è pratico: il consumo non si distribuisce mai in modo uniforme. Chi usa intensamente la piattaforma resterebbe bloccato da un limite individuale rigido, mentre per altri il contingente scadrebbe inutilizzato. Un fondo comune compensa questo squilibrio senza che nessuno debba ritoccare i limiti.",
+    "sec5.p5": "Per i casi anomali esiste inoltre un limite mensile facoltativo per persona. È disattivato finché non lo imposta e viene applicato in modo rigido nello stesso confronto del budget complessivo. Uso tipico: un singolo account che invia richieste automatizzate non deve svuotare da solo il fondo comune.",
+    "sec5.p6": "Quando il budget è esaurito, interviene il blocco morbido: la richiesta successiva viene rifiutata, con un avviso nella chat invece di un addebito silenzioso. Una risposta già in corso viene comunque completata. L’amministratore può aumentare il budget in qualsiasi momento e l’attività riprende subito. Senza questo aumento non nasce alcun conguaglio.",
+    "sec5.p7": "Il confronto tra consumo rilevato e budget avviene ogni minuto e la stima preliminare di una richiesta non ne conosce la lunghezza esatta. Una singola risposta può quindi superare di poco il limite. Si tratta di un blocco morbido che impedisce l’esplosione dei costi, non di una prenotazione anticipata al secondo.",
+    "sec6.h2": "Abilitare gli agenti invece di vietarli",
+    "sec6.p1": "Agenti e skill vengono abilitati in modo curato, non consentiti né vietati in blocco. Gli account normali usano gli agenti loro assegnati e non vedono affatto il generatore di agenti. Un ruolo privilegiato crea e condivide gli agenti, mentre le skill vengono abilitate dall’amministratore persona per persona.",
+    "sec6.p2": "Il motivo sta nei diritti: un agente porta con sé istruzioni fisse e un insieme di strumenti. Se tutti potessero creare e condividere agenti propri, accanto alla Sua catena dei diritti nascerebbe un secondo canale di distribuzione incontrollato. La verifica dei diritti al gateway continuerebbe a valere per ogni chiamata, ma si perderebbe la visione d’insieme su chi lavora con che cosa.",
+    "sec6.p3": "In pratica questo produce pochi agenti ben curati per gruppo invece di molti a metà: uno per la creazione delle offerte, uno per le analisi dall’ERP, uno per la ricerca interna delle informazioni.",
+    "toc.item1": "Perché una piattaforma di IA ha bisogno di una propria gestione dei diritti",
+    "toc.item2": "Da dove arrivano utenti, ruoli e gruppi",
+    "toc.item3": "Diritti fino al livello del singolo strumento",
+    "toc.item4": "Audit: ogni accesso tracciabile",
+    "toc.item5": "Rendere visibili i costi e limitarli",
+    "toc.item6": "Abilitare gli agenti invece di vietarli",
+    "toc.item7": "Domande frequenti",
+    "toc.title": "In questa pagina",
+    "weiter.item1": "Quali sistemi si possono collegare e come funziona MCP",
+    "weiter.item2": "Dove risiedono i Suoi dati e che cosa non succede loro",
+    "weiter.item3": "Domande frequenti su dati, esercizio e licenza",
+    "weiter.title": "Continua"
+  },
+  "es": {
+    "crumb.current": "Gobernanza",
+    "cta.btn1": "Únase a la lista de espera",
+    "cta.btn2": "Alojar por cuenta propia",
+    "cta.h2": "Aclarar la gobernanza antes del despliegue",
+    "cta.p": "Apúntese a la lista de espera. Obtendrá primero el acceso a la instancia suiza gestionada y configuraremos con usted los permisos, el registro y el presupuesto antes de que empiece el primer departamento.",
+    "faq.a1": "Ofreciendo una vía autorizada más cómoda que el rodeo privado. EU Cowork AI le da para ello una instancia propia con sus cuentas, sus sistemas y su registro. Una simple prohibición solo traslada el uso a cuentas privadas que usted no puede consultar ni desactivar.",
+    "faq.a2": "Solo si habilita la herramienta correspondiente. La conexión se compone de herramientas individuales y cada una se habilita o se deniega por separado. Leer facturas puede estar permitido mientras que leer nóminas sigue bloqueado para la misma persona. Además, siguen aplicándose las reglas de acceso de su ERP.",
+    "faq.a3": "Mediante grupos y reglas por herramienta. Usted crea grupos o los toma de Entra ID y habilita a cada grupo las herramientas que necesita. La comprobación se realiza en el orden usuario individual, rol, grupo y valor predeterminado del servidor, y decide la primera regla que coincide.",
+    "faq.a4": "Mediante un presupuesto mensual común para la organización y un límite mensual opcional por persona. El consumo se indica por persona, grupo y modelo, en tokens y euros. Cuando un presupuesto se agota, la siguiente solicitud se rechaza en lugar de continuar en silencio. El administrador puede aumentarlo en cualquier momento.",
+    "faq.a5": "Un registro de todas las llamadas a herramientas con la hora, la persona, el sistema de destino, la herramienta y la decisión, además de un registro encadenado de acciones de administración, inicios de sesión y cambios de permisos. Ambos se pueden exportar como CSV y permanecen en su instancia. Si eso basta para su obligación concreta de acreditación es algo que debe aclarar con su asesoría jurídica.",
+    "faq.a6": "No. Los roles, los grupos y las reglas funcionan por completo con cuentas locales creadas por invitación. El inicio de sesión mediante Entra ID es compatible y se configura por instancia; le ahorra el mantenimiento doble, porque las cuentas se crean en el primer acceso y los datos de grupo se toman del token de inicio de sesión. El aprovisionamiento automático mediante SCIM está previsto.",
+    "faq.h2": "Preguntas frecuentes",
+    "faq.q1": "¿Cómo evitamos que los empleados introduzcan datos de la empresa en herramientas de IA públicas?",
+    "faq.q2": "¿Puede la IA ver los datos salariales si conectamos nuestro ERP?",
+    "faq.q3": "¿Cómo controlamos qué empleado puede ver qué datos?",
+    "faq.q4": "¿Cómo limitamos los costes de IA por empleado?",
+    "faq.q5": "¿Qué pruebas obtenemos para una auditoría?",
+    "faq.q6": "¿Necesitamos Entra ID para que funcione la gobernanza?",
+    "hero.eyebrow": "Gobernanza",
+    "hero.h1": "Gobernanza: quién puede hacer qué y cuánto cuesta",
+    "hero.lead": "En EU Cowork AI no es el modelo el que decide si un acceso está permitido, sino una cadena de reglas que se comprueba antes de cada llamada a una herramienta. Los permisos llegan hasta la herramienta individual, cada llamada queda registrada y el consumo es visible antes de convertirse en factura.",
+    "kurz.item1": "El acceso a los sistemas conectados lo decide la pasarela MCP antes del modelo, no el modelo mismo.",
+    "kurz.item2": "Los permisos llegan hasta la herramienta individual: permitir la lectura de facturas y denegar la de las nóminas, en el mismo sistema conectado.",
+    "kurz.item3": "La comprobación de permisos sigue el orden usuario individual, rol, grupo y valor predeterminado del servidor. Gana la primera regla que coincide.",
+    "kurz.item4": "Cada llamada a una herramienta a través de la pasarela, cada acción de administración y cada inicio de sesión queda registrada y se puede exportar como CSV.",
+    "kurz.item5": "El consumo se indica por persona, grupo y modelo, en tokens y euros, y se imputa a un presupuesto mensual común.",
+    "kurz.title": "En resumen",
+    "meta.checked": "Última revisión: <time datetime=\"2026-08\">agosto de 2026</time>",
+    "meta.title": "Gobernanza: permisos, presupuestos, auditoría | EU Cowork AI",
+    "sec1.h2": "Por qué una plataforma de IA necesita su propia gestión de permisos",
+    "sec1.h3": "Una prohibición solo desplaza el uso, no lo termina",
+    "sec1.li1": "Qué personas pueden usar la plataforma y mediante qué inicio de sesión.",
+    "sec1.li2": "Qué sistemas conectados y qué herramientas individuales están disponibles para una persona.",
+    "sec1.li3": "Qué ha ocurrido realmente, de forma demostrable y exportable.",
+    "sec1.li4": "Cuánto cuesta la operación, desglosado y limitable, antes de que llegue la factura.",
+    "sec1.p1": "Una plataforma de IA necesita su propia gestión de permisos, porque una ventana de chat sin reglas traslada cada pregunta a cada sistema conectado. En cuanto la IA está conectada a un sistema de la empresa, la pregunta ya no es si alguien puede chatear, sino qué registros puede leer la IA en nombre de esa persona.",
+    "sec1.p2": "Quien no tiene una vía autorizada toma la siguiente mejor. Una prohibición traslada el uso a cuentas privadas de proveedores públicos, donde no rigen ni contrato, ni registro, ni derecho de supresión. Los datos de la empresa acaban entonces en un servicio que nadie de su organización administra y cuyo tratamiento no puede acreditar.",
+    "sec1.p3": "La contramedida que funciona es una vía autorizada mejor que la privada. Pero debe hacer controlables cuatro cosas; de lo contrario, solo se traslada el riesgo hacia dentro:",
+    "sec1.p4": "Precisamente estos cuatro puntos de control forman las áreas del panel de administración de EU Cowork AI: gestión de usuarios, reglas de acceso, auditoría y consumo.",
+    "sec2.chip1": "Cuentas locales",
+    "sec2.chip2": "Entra ID mediante OIDC, configurable por instancia",
+    "sec2.chip3": "SCIM previsto",
+    "sec2.h2": "De dónde vienen los usuarios, los roles y los grupos",
+    "sec2.h3a": "Usuarios locales y conexión con Entra ID",
+    "sec2.h3b": "Qué define un rol y qué define un grupo",
+    "sec2.h3c": "Invitación, asignación, desactivación",
+    "sec2.p1": "Los usuarios, los roles y los grupos se gestionan en el panel de administración o se toman de Entra ID. Un rol agrupa permisos funcionales, es decir, lo que alguien puede hacer en la interfaz. Un grupo agrupa personas para las reglas de acceso y de presupuesto. Ambos se combinan de forma independiente.",
+    "sec2.p2": "Sin proveedor de identidad, EU Cowork AI funciona con cuentas locales: invitación por enlace y contraseña definida por la persona invitada. El inicio de sesión mediante Entra ID u otro proveedor OIDC es compatible con la plataforma y se configura para su instancia. Una vez configurado, cada persona inicia sesión mediante OIDC, la cuenta se crea en el primer acceso y los datos de grupo y rol del token de inicio de sesión se asignan a sus grupos en EU Cowork AI.",
+    "sec2.p3": "La retirada de acceso ocurre así en la puerta de entrada: quien esté desactivado en Entra ID ya no entra y pierde con ello todo acceso, también a los sistemas conectados. El aprovisionamiento y desaprovisionamiento automáticos de cuentas mediante SCIM están previstos, pero hoy todavía no están disponibles.",
+    "sec2.p4": "Un rol controla los permisos funcionales en la plataforma, por ejemplo si alguien puede crear agentes, usar la búsqueda web o abrir el panel de administración. Un grupo controla a qué datos y herramientas se accede y a qué presupuesto se imputa el consumo.",
+    "sec2.p5": "Una invitación se envía por correo o enlace y puede incluir ya el grupo de destino. La pertenencia se aplica en cuanto la persona invitada completa el registro. Así nadie empieza en un estado intermedio sin permisos y usted no tiene que añadir nada después de cada registro.",
+    "sec2.p6": "Hay dos formas de finalizar el acceso. El bloqueo mantiene la cuenta pero deniega el inicio de sesión. La eliminación borra la cuenta, las conversaciones y las entradas del índice de búsqueda; antes es posible una exportación de datos para la persona afectada, de modo que se atiendan tanto las solicitudes de acceso como las de supresión.",
+    "sec2.tab.caption": "Los tres niveles de la gestión de usuarios y para qué se utilizan.",
+    "sec2.tab.r1c1": "Usuario",
+    "sec2.tab.r1c2": "Excepción individual, prevalece sobre cualquier regla general",
+    "sec2.tab.r1c3": "Una persona obtiene además acceso a una herramienta",
+    "sec2.tab.r2c1": "Rol",
+    "sec2.tab.r2c2": "Permisos funcionales en la interfaz",
+    "sec2.tab.r2c3": "Solo un rol con privilegios puede crear agentes",
+    "sec2.tab.r3c1": "Grupo",
+    "sec2.tab.r3c2": "Acceso a sistemas, herramientas y presupuesto",
+    "sec2.tab.r3c3": "El grupo de Contabilidad ve las herramientas de facturación",
+    "sec2.tab.th1": "Nivel",
+    "sec2.tab.th2": "Controla",
+    "sec2.tab.th3": "Ejemplo típico",
+    "sec3.h2": "Permisos hasta el nivel de herramienta",
+    "sec3.h3a": "El ejemplo: leer facturas sí, leer nóminas no",
+    "sec3.h3b": "La cadena de reglas: usuario antes que rol, que grupo y que valor predeterminado",
+    "sec3.h3c": "Qué ocurre cuando no se aplica ninguna regla",
+    "sec3.p1": "Las llamadas a herramientas pasan por la pasarela MCP, un componente situado entre el chat y el sistema conectado. Para la persona que hace la solicitud, la pasarela comprueba si el servidor y la herramienta concreta están permitidos, registra la decisión y solo transmite la llamada si hay autorización. Las herramientas bloqueadas no aparecen en la lista de herramientas del usuario; tras un cambio de permisos, esto surte efecto con un breve retardo. El verdadero cerrojo es la comprobación en cada llamada.",
+    "sec3.p2": "Los sistemas se conectan mediante MCP, el estándar abierto para el acceso a herramientas por parte de modelos de IA. La pasarela se sitúa delante para que la autorización se decida de forma centralizada por persona, rol y grupo, y no quede dispersa en el sistema conectado. Qué sistemas se pueden conectar y cuáles están preparados figura en la página <a class=\"euc-textlink\" href=\"/integrationen\">Integraciones</a>; los permisos sin herramientas carecen de objeto.",
+    "sec3.p3": "Un ERP conectado no ofrece a la IA un único acceso, sino muchas herramientas individuales: buscar facturas, leer datos de clientes, leer datos salariales, escribir registros. <span class=\"euc-marker\">Al grupo de Contabilidad se le habilitan las herramientas de facturación, mientras que las de nóminas quedan reservadas a Recursos Humanos.</span> Mismo servidor, herramientas distintas, decisiones separadas.",
+    "sec3.p4": "Debajo hay un segundo límite. Si EU Cowork AI inicia sesión en su ERP con la identidad de cada persona, siguen siendo decisivas las reglas de acceso de ese ERP: quien allí solo puede ver determinados registros tampoco ve más a través de la IA. Si la conexión funciona con una cuenta de servicio compartida, la pasarela es el único punto de aplicación y la selección de herramientas debe recortarse en consecuencia.",
+    "sec3.p5": "Los permisos dentro de una herramienta, es decir, sobre campos o filas concretos, no los aplica EU Cowork AI. De ello se encarga la gestión de permisos del sistema conectado. Por eso, una herramienta con un alcance funcional amplio no debe habilitarse en absoluto o solo a un grupo que de todos modos puede ver esos datos.",
+    "sec3.p6": "Los permisos se evalúan en un orden fijo: usuario individual, luego rol, luego grupo y por último el valor predeterminado del servidor. Decide la primera regla que coincide y la búsqueda se detiene ahí. Así, cada decisión es explicable y una autorización puntual no necesita un rol especial. Que los permisos se apliquen por herramienta individual es el rasgo diferenciador en la <a class=\"euc-textlink\" href=\"/vergleich\">comparativa con otras plataformas</a>.",
+    "sec3.p7": "Si no se aplica ninguna regla de usuario, rol o grupo, decide el valor predeterminado del servidor correspondiente. Configure ese valor como «denegar» justo después de conectar un sistema y habilite después grupos concretos. Así, un sistema recién conectado no puede mostrar por descuido más de lo previsto.",
+    "sec3.p8": "Si falla la propia comprobación de permisos, por ejemplo porque la base de datos de reglas no es accesible, la pasarela deniega la llamada en lugar de dejarla pasar. Una avería produce, por tanto, un mensaje de error en el chat y no un acceso abierto. Está previsto un interruptor de solo lectura por servidor que bloquee de forma general las herramientas de escritura.",
+    "sec3.tab.caption": "Orden de la comprobación de permisos en la pasarela. Gana la primera coincidencia.",
+    "sec3.tab.r1c1": "1. Usuario",
+    "sec3.tab.r1c2": "Excepción para una sola persona",
+    "sec3.tab.r1c3": "Autorización temporal sin debilitar la regla de grupo",
+    "sec3.tab.r2c1": "2. Rol",
+    "sec3.tab.r2c2": "Se aplica a todas las cuentas con este rol",
+    "sec3.tab.r2c3": "Dotación básica según la función en la empresa",
+    "sec3.tab.r3c1": "3. Grupo",
+    "sec3.tab.r3c2": "Se aplica a todos los miembros del grupo",
+    "sec3.tab.r3c3": "Recorte por departamento o proyecto, también desde Entra ID",
+    "sec3.tab.r4c1": "4. Valor predeterminado del servidor",
+    "sec3.tab.r4c2": "Valor predeterminado para el resto de solicitudes",
+    "sec3.tab.r4c3": "Postura básica por sistema conectado, preferiblemente denegar",
+    "sec3.tab.th1": "Orden",
+    "sec3.tab.th2": "Regla",
+    "sec3.tab.th3": "Para qué sirve",
+    "sec4.h2": "Auditoría: cada acceso trazable",
+    "sec4.h3a": "Qué se registra",
+    "sec4.h3b": "Cuánto se conserva y adónde se puede exportar",
+    "sec4.li1": "Las llamadas a herramientas de sistemas conectados, con la decisión tomada, permitida o denegada.",
+    "sec4.li2": "Los inicios de sesión en la plataforma y en el panel de administración.",
+    "sec4.li3": "Los cambios en roles, grupos, permisos y reglas de acceso.",
+    "sec4.li4": "Los cambios en la configuración de la instancia.",
+    "sec4.li5": "La creación, invitación, bloqueo y eliminación de cuentas.",
+    "sec4.p1": "Cada llamada a una herramienta a través de la pasarela se registra con la hora, la persona, el sistema de destino, la herramienta y la decisión, también las denegadas. Además, la plataforma lleva un registro encadenado de forma continua de las acciones de administración, los inicios de sesión y los cambios de permisos. Ambos registros residen en su propia instancia y se pueden exportar como CSV.",
+    "sec4.p2": "El registro de auditoría es una prueba de acceso, no una transcripción de las conversaciones. Responde a quién llamó a qué herramienta, en qué sistema y cuándo. Las conversaciones se guardan aparte, en la base de datos de su instancia, y están sujetas al periodo de conservación configurado.",
+    "sec4.p3": "Los registros permanecen en su instancia, en su base de datos. En autoalojamiento no salen de su infraestructura. La exportación se realiza en CSV, filtrada por periodo y persona, y puede entregarse directamente a una revisión, al departamento jurídico o a una herramienta de auditoría.",
+    "sec4.p4": "El registro de acciones de administración está encadenado: cada entrada lleva una suma de comprobación de la anterior y una verificación integrada avisa cuando la cadena deja de cuadrar. Así se detecta la eliminación posterior de entradas concretas. Para las conversaciones, el periodo de conservación es configurable; los contenidos vencidos se eliminan junto con el índice de búsqueda.",
+    "sec5.h2": "Hacer visibles los costes y limitarlos",
+    "sec5.h3a": "Consumo por persona, grupo y modelo",
+    "sec5.h3b": "Presupuesto mensual común en lugar de límites individuales",
+    "sec5.h3c": "Bloqueo blando en lugar de un exceso silencioso",
+    "sec5.p1": "El consumo se registra por persona, grupo, modelo y día, y se indica tanto en tokens como en euros. Un presupuesto mensual común limita el total de toda la organización; un límite mensual opcional por persona limita las cuentas individuales. Cuando un presupuesto se agota, entra en vigor un bloqueo blando (soft block).",
+    "sec5.p2": "El panel de administración muestra el consumo en euros, desglosado por persona, por modelo y por día, junto con las solicitudes individuales con modelo y hora. Los importes y el desglose los ve la administración; los usuarios finales solo reciben un aviso en el chat cuando el presupuesto está agotado. Así se saca la presión de los costes del trabajo diario y las cifras siguen visibles donde corresponde.",
+    "sec5.p3": "Los precios se registran por modelo para que el análisis no se base en una aproximación. Esto importa más de lo que parece: con la misma conversación, entre un modelo económico y uno muy grande el coste se multiplica. Por eso, una selección curada de modelos forma parte del control de costes y no es solo una cuestión de usabilidad.",
+    "sec5.p4": "El presupuesto mensual se aplica a la organización en su conjunto, no por persona. La razón es práctica: el consumo nunca se reparte de forma uniforme. Quien usa la plataforma de forma intensiva se quedaría atascado en un límite individual rígido, mientras que a otros les caducaría el cupo sin usar. Un fondo común compensa eso sin que nadie tenga que reajustar límites.",
+    "sec5.p5": "Para los casos atípicos existe además un límite mensual opcional por persona. Está desactivado mientras usted no lo configure y se aplica de forma estricta en la misma comprobación que el presupuesto global. Uso típico: una sola cuenta que envía solicitudes automatizadas no debe vaciar por sí sola el fondo común.",
+    "sec5.p6": "Cuando el presupuesto se agota, entra en vigor el bloqueo blando: la siguiente solicitud se rechaza, con un aviso en el chat en lugar de seguir facturando en silencio. Una respuesta en curso se termina igualmente. El administrador puede aumentar el presupuesto en cualquier momento y el servicio continúa de inmediato. Sin ese aumento no se genera ningún cargo adicional.",
+    "sec5.p7": "La comparación entre el consumo registrado y el presupuesto se ejecuta cada minuto, y la estimación previa de una solicitud no conoce su longitud exacta. Por eso, una respuesta concreta puede superar ligeramente el límite. Se trata de un bloqueo blando que evita una explosión de costes, no de una reserva previa al segundo.",
+    "sec6.h2": "Autorizar agentes en lugar de prohibirlos",
+    "sec6.p1": "Los agentes y las skills se habilitan de forma curada, ni se permiten ni se prohíben en bloque. Las cuentas normales usan los agentes que se les han asignado y no ven el constructor de agentes. Un rol con privilegios crea y comparte agentes, y el administrador habilita las skills persona por persona.",
+    "sec6.p2": "El motivo está en los permisos: un agente incorpora unas instrucciones fijas y un conjunto de herramientas. Si cualquiera pudiera crear y compartir sus propios agentes, junto a su cadena de permisos surgiría un segundo canal de distribución sin control. La comprobación de permisos en la pasarela seguiría aplicándose en cada llamada, pero se perdería la visión de conjunto sobre quién trabaja con qué.",
+    "sec6.p3": "En la práctica, esto da como resultado unos pocos agentes bien mantenidos por grupo en lugar de muchos a medias: uno para elaborar ofertas, uno para análisis del ERP y uno para la búsqueda de conocimiento interno.",
+    "toc.item1": "Por qué una plataforma de IA necesita su propia gestión de permisos",
+    "toc.item2": "De dónde vienen los usuarios, los roles y los grupos",
+    "toc.item3": "Permisos hasta el nivel de herramienta",
+    "toc.item4": "Auditoría: cada acceso trazable",
+    "toc.item5": "Hacer visibles los costes y limitarlos",
+    "toc.item6": "Autorizar agentes en lugar de prohibirlos",
+    "toc.item7": "Preguntas frecuentes",
+    "toc.title": "En esta página",
+    "weiter.item1": "Qué sistemas se pueden conectar y cómo funciona MCP",
+    "weiter.item2": "Dónde residen sus datos y qué no ocurre con ellos",
+    "weiter.item3": "Preguntas frecuentes sobre datos, operación y licencia",
+    "weiter.title": "Continuar"
+  }
+};</script>
+
+</body>
+</html>

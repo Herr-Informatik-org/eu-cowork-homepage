@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="it" data-euc-lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ottenere l'accesso anticipato | EU Cowork AI</title>
+<meta name="description" content="EU Cowork AI è in costruzione. Inserisca la sua e-mail aziendale e provi la piattaforma di IA sovrana prima del lancio. Niente spam, disiscrizione libera.">
+<link rel="canonical" href="https://eucowork.ai/it/warteliste">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/warteliste">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/warteliste">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/warteliste">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/warteliste">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/warteliste">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/warteliste">
+<!-- i18n:hreflang:end -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="it_IT">
+<meta property="og:url" content="https://eucowork.ai/it/warteliste">
+<meta property="og:title" content="Ottenere l'accesso anticipato | EU Cowork AI">
+<meta property="og:description" content="EU Cowork AI è in costruzione. Provi la piattaforma di IA europea prima del lancio pubblico.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ottenere l'accesso anticipato | EU Cowork AI">
+<meta name="twitter:description" content="EU Cowork AI è in costruzione. Provi la piattaforma di IA europea prima del lancio pubblico.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<script src="/support.js"></script>
+</head>
+<body>
+<noscript>
+  <h1>Ottenere l'accesso anticipato | EU Cowork AI</h1>
+  <p>EU Cowork AI è in costruzione. Inserisca la sua e-mail aziendale e provi la piattaforma di IA sovrana prima del lancio. Niente spam, disiscrizione libera.</p>
+</noscript>
+<x-dc>
+<helmet>
+<style>
+  /* Schriften selbst gehostet, keine Anfrage an Google Fonts (D8).
+     Identischer Satz wie in assets/content.css. */
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500-latin.woff2') format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-600-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/jetbrains-mono-400-latin.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
+</style>
+<style>
+  /* ---- Warteliste, "European Precision" ---------------------------------
+     Die Seite hat genau EINE Aufgabe: eine E-Mail-Adresse entgegennehmen.
+     Sie besteht deshalb aus genau EINER Kachel — links die Botschaft, rechts
+     das Formular, beides auf demselben warmen Verlauf. Kopf und Fuss sind
+     absichtlich winzig; diese Seite importiert SiteHeader/SiteFooter nicht.
+
+     Tokens wortgleich zu assets/content.css und SiteHeader. Zustände liegen
+     in Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
+     und :active (Inline-Stile schlagen jede Regel). --------------------- */
+  :root{
+    --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+    --c-bg:#FBFAF6; --c-surface:#FFFFFF; --c-deep:#0B1E33;
+    --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
+    --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
+    --c-danger:#B4472F;
+    --c-hairline:#DDE4EA; --c-hairline-strong:#C6D0DA;
+    --bd:1px solid var(--c-hairline);
+    --r-control:4px;   /* Knopf, Eingabefeld, Segment */
+    --r-frame:8px;     /* Formularkarte */
+    --r-tile:12px;     /* die grosse Kachel */
+    --sh-flat:0 1px 2px rgba(11,30,51,.04);
+    --sh-soft:0 1px 2px rgba(11,30,51,.04), 0 8px 18px -12px rgba(11,30,51,.13);
+    --wl-ease:cubic-bezier(.23,1,.32,1);
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--c-bg); color:var(--c-body);
+    font-family:var(--f-display);
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  a{ color:var(--c-eu-700); text-underline-offset:2px; transition:color .15s ease; }
+  ::selection{ background:var(--c-ice-300); color:var(--c-deep); }
+  input::placeholder{ color:var(--c-muted); }
+  h1{ text-wrap:balance; overflow-wrap:break-word; }
+  p{ text-wrap:pretty; }
+  :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:var(--r-control); }
+
+  #top{ min-height:100vh; min-height:100svh; display:flex; flex-direction:column; }
+
+  /* ---- Bühne und Kachel ------------------------------------------------ */
+  /* 68 px Kopfhoehe plus Luft: die Leiste liegt fest ueber der Seite. */
+  .wl-main{
+    flex:1 1 auto; display:flex; align-items:center;
+    padding:calc(68px + clamp(24px,3.5vw,48px)) 0 clamp(40px,5vw,72px);
+  }
+  /* Kante, Ecken und Schatten wortgleich zu `.euc-tile` der Startseite
+     („Ein Werkzeug. Der ganze Arbeitstag."): aussen 12 px Radius, innen 8 px
+     an der Formularkarte, nichts dazwischen. */
+  .wl-tile{
+    position:relative; isolation:isolate; overflow:hidden;
+    width:min(1240px, calc(100vw - 80px)); min-height:620px; margin:0 auto;
+    border-radius:var(--r-tile); box-shadow:var(--sh-soft);
+    display:grid; grid-template-columns:44% 56%; align-items:center;
+    gap:clamp(32px,4vw,56px); padding:clamp(56px,5vw,72px);
+  }
+  /* Die Kante liegt als eigene Ebene ÜBER dem Verlauf — genau wie auf der
+     Startseite. Läge sie an der Kachel selbst, verschluckt der Verlauf sie
+     an den Rändern. Absolut positioniert, also kein Rasterfeld. */
+  .wl-tile::after{
+    content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
+    border-radius:inherit; box-shadow:inset 0 0 0 1px var(--c-hairline);
+  }
+
+  /* ---- Warmer Verlauf ---------------------------------------------------
+     Vier weiche Lichtflächen über einer Creme-Grundfläche, jede mit eigener
+     Dauer und eigenem Weg. Bewegt wird ausschliesslich `transform`, damit
+     nichts neu berechnet werden muss; die Flächen sind radiale Verläufe und
+     kein `filter: blur()`, weil ein Weichzeichner über 1240 px jede Bildrate
+     kostet. Der kühle Anteil ist bewusst klein und liegt unten links, damit
+     er die warme Grundstimmung stützt statt sie zu kippen. */
+  .wl-sg{
+    position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+    background:linear-gradient(134deg, #FDFAF3 0%, #FBF4E5 46%, #F7EAD3 100%);
+  }
+  .wl-sg i{ position:absolute; display:block; will-change:transform; }
+  .wl-sg .a{
+    width:78%; height:118%; left:-14%; top:-32%;
+    background:radial-gradient(closest-side, rgba(237,203,134,.82) 0%, rgba(237,203,134,0) 100%);
+    animation:wl-a 21s var(--wl-ease) infinite alternate;
+  }
+  .wl-sg .b{
+    width:86%; height:126%; right:-20%; bottom:-40%;
+    background:radial-gradient(closest-side, rgba(242,208,170,.78) 0%, rgba(242,208,170,0) 100%);
+    animation:wl-b 25s var(--wl-ease) infinite alternate;
+  }
+  .wl-sg .c{
+    width:46%; height:64%; left:6%; bottom:-18%;
+    background:radial-gradient(closest-side, rgba(165,216,230,.44) 0%, rgba(165,216,230,0) 100%);
+    animation:wl-c 23s var(--wl-ease) infinite alternate;
+  }
+  .wl-sg .d{
+    width:64%; height:82%; left:26%; top:-16%;
+    background:radial-gradient(closest-side, rgba(255,253,247,.92) 0%, rgba(255,253,247,0) 100%);
+    animation:wl-d 18s var(--wl-ease) infinite alternate;
+  }
+  @keyframes wl-a{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(7%,5%,0) scale(1.10); } }
+  @keyframes wl-b{ from{ transform:translate3d(0,0,0) scale(1.06); } to{ transform:translate3d(-8%,-6%,0) scale(1); } }
+  @keyframes wl-c{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(11%,-9%,0) scale(1.14); } }
+  @keyframes wl-d{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(-6%,7%,0) scale(1.08); } }
+  /* Korn gegen Streifenbildung, dasselbe Muster wie auf der Startseite. */
+  .wl-grain{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    opacity:.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wl-col{ position:relative; z-index:1; min-width:0; }
+
+  /* ---- Linke Spalte ---------------------------------------------------- */
+  .wl-msg{ max-width:430px; }
+  .wl-h1{
+    font-family:var(--f-display); font-weight:400;
+    font-size:clamp(34px,4.6vw,58px); line-height:1.07; letter-spacing:-.024em;
+    color:var(--c-ink); margin:0;
+  }
+  .wl-sub{
+    font-size:clamp(15.5px,1.2vw,17px); line-height:1.58; letter-spacing:-.004em;
+    color:#3D4B59; margin:20px 0 0;
+  }
+  .wl-hint{ margin:22px 0 0; font-size:13px; line-height:1.5; color:#7A6535; }
+
+  /* ---- Rechte Formularkarte ------------------------------------------- */
+  .wl-cardcol{ display:flex; justify-content:flex-end; }
+  .wl-card{
+    width:100%; max-width:500px;
+    background:#FFFEFC; border:1px solid var(--c-hairline-strong);
+    border-radius:var(--r-frame); box-shadow:var(--sh-flat);
+    padding:clamp(26px,2.6vw,36px);
+  }
+  .wl-row + .wl-row{ margin-top:18px; }
+  /* Mono-Label wortgleich zu `.euc-eyebrow` in assets/content.css:
+     11,5 px, Strichstaerke 500, Sperrung .13em. Vorher standen hier
+     10,5 px in 400 mit .09em — dieselbe Familie, aber sichtbar leichter
+     und enger als jedes andere Mono-Label der Seite. */
+  .wl-label{
+    display:flex; align-items:baseline; gap:7px; margin-bottom:9px;
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--c-eu-500);
+  }
+  .wl-opt{ font-family:var(--f-mono); font-size:10.5px; font-weight:400; letter-spacing:.06em; color:var(--c-muted); text-transform:none; }
+  .wl-req{ color:var(--c-danger); }
+
+  .wl-field{
+    width:100%; height:48px;
+    font-family:var(--f-display); font-size:15px; color:var(--c-ink);
+    background:var(--c-surface); border:1px solid var(--c-hairline-strong);
+    border-radius:var(--r-control); padding:0 13px; outline:none;
+    transition:border-color 150ms ease, box-shadow 150ms ease;
+  }
+  .wl-field:focus, .wl-field:focus-visible{
+    border-color:var(--c-eu-700); box-shadow:0 0 0 3px rgba(18,50,107,.12); outline:none;
+  }
+  .wl-field.is-err{ border-color:var(--c-danger); }
+
+  /* Fangfeld: display:none nimmt ihn zugleich aus Tab-Reihenfolge und
+     Autofill. Er ist die einzige Bot-Abwehr, die sichtbar Platz kosten
+     würde — deshalb steht er hier und nicht auf dem Bildschirm. */
+  .wl-hp{ display:none; }
+
+  /* Segmente: gleiche Kante wie jedes andere Bedienelement, keine Pille. */
+  .wl-seg{ display:flex; flex-wrap:wrap; gap:8px; }
+  .wl-seg-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    min-height:40px; padding:0 13px; cursor:pointer;
+    font-family:var(--f-display); font-size:14px; font-weight:500;
+    color:#33404D; background:var(--c-surface);
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-control);
+    transition:border-color 150ms ease, background 150ms ease, color 150ms ease;
+  }
+  .wl-seg-mark{
+    width:7px; height:7px; flex:0 0 auto; background:currentColor;
+    opacity:0; transition:opacity 150ms ease;
+  }
+  .wl-seg-btn.is-on{ color:var(--c-eu-700); background:#EAF1FA; border-color:var(--c-eu-700); }
+  .wl-seg-btn.is-on .wl-seg-mark{ opacity:1; }
+
+  .wl-submit{
+    width:100%; margin-top:24px; height:52px;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--f-display); font-size:15px; font-weight:600;
+    color:#F7FAFC; background:var(--c-deep);
+    border:1px solid var(--c-deep); border-radius:var(--r-control);
+    padding:0 18px; cursor:pointer;
+    transition:background 150ms ease, border-color 150ms ease;
+  }
+  .wl-note{
+    font-size:12.5px; line-height:1.55; letter-spacing:.006em;
+    color:var(--c-body-soft); margin-top:14px;
+  }
+  .wl-err{ font-size:12.5px; line-height:1.45; color:var(--c-danger); margin-top:7px; }
+  /* Derselbe Fehlerton, aber ÜBER dem Formular: der Hinweis nach einem
+     abgelaufenen Bestätigungslink gehört keinem Feld, sondern der ganzen
+     Karte. Nur der Abstand unterscheidet ihn. */
+  .wl-err.is-top{ margin:0 0 18px; }
+  /* Während der Absendung ist der Knopf nicht bedienbar — das muss man sehen
+     und nicht nur ertasten. Der Zeiger bleibt neutral, damit nichts eine
+     Wirkung verspricht, die es gerade nicht gibt. */
+  .wl-submit:disabled{ opacity:.62; cursor:default; }
+
+  /* ---- Erfolg: dieselbe Karte, anderer Inhalt. ------------------------- */
+  .wl-done-k{
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--c-eu-500);
+  }
+  .wl-done-t{
+    font-family:var(--f-display); font-size:clamp(24px,2.6vw,30px); font-weight:400;
+    letter-spacing:-.020em; color:var(--c-ink); margin-top:14px;
+  }
+  .wl-done-b{ font-size:15px; line-height:1.6; color:#556170; margin:12px 0 0; }
+  .wl-done-a{
+    display:inline-flex; align-items:center; gap:8px; margin-top:22px;
+    font-size:14.5px; font-weight:500; color:var(--c-eu-700); text-decoration:none;
+  }
+  .wl-done-hr{ height:1px; background:var(--c-hairline); margin:24px 0 18px; }
+  .wl-ask{ font-size:13.5px; line-height:1.55; color:var(--c-body-soft); margin:0; }
+  .wl-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-top:12px; }
+  .wl-link{
+    background:none; border:0; padding:0; cursor:pointer;
+    font-family:var(--f-display); font-size:13.5px; color:var(--c-eu-700);
+    text-decoration:underline; text-underline-offset:2px;
+  }
+  .wl-select{ cursor:pointer; height:48px; }
+  .wl-textarea{ height:auto; min-height:78px; line-height:1.5; padding:12px 13px; resize:vertical; }
+
+  @media (hover:hover) and (pointer:fine){
+    a:hover{ color:var(--c-ink); }
+    .wl-field:hover{ border-color:#B4BFCB; }
+    .wl-seg-btn:hover{ border-color:var(--c-eu-700); }
+    .wl-submit:not(:disabled):hover{ background:#123456; border-color:#123456; }
+    .wl-done-a:hover{ color:var(--c-ink); }
+  }
+
+  /* Der Formular→Erfolg-Wechsel ist der einzige emotional aufgeladene
+     Moment der Seite — hier liegt das ganze Bewegungsbudget. sc-if hängt
+     den Knoten neu ein, damit greift @starting-style. */
+  .wl-done{ opacity:1; transform:none;
+    transition:opacity 300ms var(--wl-ease), transform 380ms var(--wl-ease); }
+  @starting-style{ .wl-done{ opacity:0; transform:translateY(8px); } }
+
+  /* ---- Unter 860 px: eine Spalte, dieselbe Kachel. -------------------- */
+  @media (max-width:860px){
+    .wl-main{ padding:calc(68px + 16px) 0 28px; align-items:flex-start; }
+    .wl-tile{
+      width:calc(100% - 32px); min-height:0; grid-template-columns:1fr;
+      padding:24px; gap:28px; align-items:start;
+    }
+    .wl-msg{ max-width:none; }
+    .wl-h1{ font-size:clamp(29px,7.4vw,36px); letter-spacing:-.018em; }
+    .wl-cardcol{ justify-content:stretch; }
+    .wl-card{ max-width:none; }
+  }
+  @media (max-width:520px){
+    .wl-seg{ display:grid; grid-template-columns:1fr; }
+  }
+
+  /* Ohne Bewegungswunsch bleibt der Verlauf stehen — er ist dann ein Bild,
+     kein Vorgang. Die Flächen behalten ihre Ausgangslage. */
+  @media (prefers-reduced-motion: reduce){
+    .wl-sg i{ animation:none !important; }
+    *{ transition-duration:.001ms !important; }
+    .wl-done{ transition:opacity 200ms linear !important; transform:none !important; }
+    @starting-style{ .wl-done{ opacity:0; transform:none; } }
+  }
+</style>
+</helmet>
+<div id="top">
+
+  <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
+
+  <main class="wl-main">
+    <!-- Eine Kachel, zwei Spalten: links die Botschaft, rechts das Formular.
+         Der Verlauf liegt UNTER beiden, damit die Seite als ein Gegenstand
+         gelesen wird und nicht als Text neben einem Kasten. -->
+    <div class="wl-tile">
+      <div class="wl-sg" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>
+      <div class="wl-grain" aria-hidden="true"></div>
+
+      <div class="wl-col">
+        <div class="wl-msg">
+          <h1 class="wl-h1">{{ t.h1 }}</h1>
+          <p class="wl-sub">{{ t.sub }}</p>
+          <p class="wl-hint">{{ t.hint }}</p>
+        </div>
+      </div>
+
+      <div class="wl-col wl-cardcol">
+        <div class="wl-card">
+
+          <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <!-- Rückkehr von einem toten Bestätigungslink: der Hinweis steht
+                   vor dem Formular, weil er erklärt, warum hier überhaupt
+                   wieder ein leeres Formular steht. -->
+              <sc-if value="{{ eLink }}" hint-placeholder-val="{{ false }}">
+                <div class="wl-err is-top" role="alert">{{ eLink }}</div>
+              </sc-if>
+
+              <div class="wl-row">
+                <label for="wl-email" class="wl-label">{{ t.labels.email }}<span class="wl-req">*</span></label>
+                <input id="wl-email" type="email" inputmode="email" autocomplete="email"
+                       value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}"
+                       aria-invalid="{{ emailInvalid }}" aria-describedby="wl-email-err"
+                       class="wl-field {{ emailCls }}">
+                <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div id="wl-email-err" class="wl-err" role="alert">{{ eEmail }}</div></sc-if>
+              </div>
+
+              <div class="wl-row">
+                <label for="wl-company" class="wl-label">{{ t.labels.company }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                <input id="wl-company" type="text" autocomplete="organization"
+                       value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" class="wl-field">
+              </div>
+
+              <!-- Die Teamgrösse steht hier und nicht mehr im Nachfassen: sie
+                   ist ein Klick aus einer Liste, kostet also praktisch nichts,
+                   und ordnet den Eintrag sofort ein. Freiwillig bleibt sie. -->
+              <div class="wl-row">
+                <label for="wl-users" class="wl-label">{{ t.labels.users }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                <select id="wl-users" value="{{ users }}" onChange="{{ onUsers }}" class="wl-field wl-select">
+                  <option value="">{{ t.labels.usersPh }}</option>
+                  <sc-for list="{{ t.userOptions }}" as="u" hint-placeholder-count="5">
+                    <option value="{{ u }}">{{ u }}</option>
+                  </sc-for>
+                </select>
+              </div>
+
+              <div class="wl-row">
+                <div id="wl-interest-lbl" class="wl-label">{{ t.labels.interest }}<span class="wl-opt">{{ t.labels.optional }}</span></div>
+                <!-- Rollende Tab-Marke: die Gruppe hat EINEN Halt in der
+                     Tab-Reihenfolge, innerhalb wird mit den Pfeiltasten
+                     gewechselt. Das ist das Verhalten, das eine Radiogruppe
+                     laut ARIA haben muss. -->
+                <div role="radiogroup" aria-labelledby="wl-interest-lbl" class="wl-seg">
+                  <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
+                    <button id="{{ c.id }}" onClick="{{ c.onClick }}" onKeyDown="{{ c.onKey }}" type="button"
+                            role="radio" aria-checked="{{ c.on }}" tabindex="{{ c.tab }}" class="wl-seg-btn {{ c.cls }}">
+                      <span class="wl-seg-mark" aria-hidden="true"></span>{{ c.label }}
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+
+              <input value="{{ hp }}" onChange="{{ onHp }}" type="text" class="wl-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+              <button onClick="{{ onSubmit }}" type="button" class="wl-submit"
+                      disabled="{{ busy }}" aria-busy="{{ busyAttr }}">{{ submitLabel }}</button>
+              <!-- Alles, was nicht an einem Feld liegt (Sperre, Serverfehler,
+                   keine Verbindung), landet unter dem Knopf — dort, wo der
+                   Blick nach dem Klick ohnehin steht. -->
+              <sc-if value="{{ eForm }}" hint-placeholder-val="{{ false }}">
+                <div class="wl-err" role="alert">{{ eForm }}</div>
+              </sc-if>
+              <div class="wl-note">{{ t.labels.note }} <a href="/datenschutz">{{ t.labels.noteLink }}</a></div>
+            </div>
+          </sc-if>
+
+          <!-- Zwischenstand: eingetragen, aber noch nicht bestätigt. Hier wird
+               nichts gefragt — die einzige sinnvolle nächste Handlung liegt im
+               Postfach, alles andere lenkt davon ab. -->
+          <sc-if value="{{ isPending }}" hint-placeholder-val="{{ false }}">
+            <div class="wl-done">
+              <div class="wl-done-k">{{ t.pending.eyebrow }}</div>
+              <div class="wl-done-t">{{ t.pending.title }}</div>
+              <p class="wl-done-b">{{ pendingBody }}</p>
+              <p class="wl-done-b">{{ t.pending.spam }}</p>
+              <a href="/" class="wl-done-a">{{ t.success.home }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+
+              <div class="wl-done-hr"></div>
+
+              <!-- Tippfehler in der Adresse sind der wahrscheinlichste Grund,
+                   warum die Mail nicht ankommt: der Rückweg gehört hierher. -->
+              <div class="wl-actions">
+                <button onClick="{{ onReset }}" type="button" class="wl-link">{{ t.success.again }}</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isConfirmed }}" hint-placeholder-val="{{ false }}">
+            <div class="wl-done">
+              <div class="wl-done-k">{{ t.success.eyebrow }}</div>
+              <div class="wl-done-t">{{ t.success.title }}</div>
+              <p class="wl-done-b">{{ t.success.body }}</p>
+              <a href="/" class="wl-done-a">{{ t.success.home }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+
+              <div class="wl-done-hr"></div>
+
+              <!-- Qualifizierung erst NACH der bestätigten Anmeldung, und
+                   freiwillig: der Anwendungsfall hat die Anmeldung vorher
+                   teurer gemacht, als er wert war. Die Teamgrösse steht jetzt
+                   im Hauptformular, hier bleibt die eine offene Frage. -->
+              <sc-if value="{{ askClosed }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <p class="wl-ask">{{ t.success.ask }}</p>
+                  <div class="wl-actions">
+                    <button onClick="{{ onOpenAsk }}" type="button" class="wl-link">{{ t.success.askBtn }}</button>
+                    <button onClick="{{ onReset }}" type="button" class="wl-link">{{ t.success.again }}</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ askOpen }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div class="wl-row">
+                    <label for="wl-usecase" class="wl-label">{{ t.labels.usecase }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                    <textarea id="wl-usecase" rows="3" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" class="wl-field wl-textarea"></textarea>
+                  </div>
+                  <button onClick="{{ onSaveAsk }}" type="button" class="wl-submit">{{ t.success.askSubmit }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ askDone }}" hint-placeholder-val="{{ false }}">
+                <p class="wl-ask">{{ t.success.askThanks }}</p>
+              </sc-if>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+/* Freemail-Domains, gegen die schon im Browser geprüft wird. Die Liste ist
+   absichtlich kurz: sie soll die zehn Adressen abfangen, die ein Mensch aus
+   Gewohnheit einträgt, und ihm die Wartezeit auf die Serverantwort ersparen.
+   Verbindlich prüft die API — sie kennt die vollständige Liste. */
+const FREEMAIL = [
+  'gmail.com','googlemail.com',
+  'outlook.com','outlook.de','hotmail.com','hotmail.de','hotmail.ch',
+  'live.com','live.de','yahoo.com','yahoo.de',
+  'gmx.ch','gmx.de','gmx.net','gmx.at','web.de',
+  'bluewin.ch','sunrise.ch',
+  'icloud.com','me.com','proton.me','protonmail.com',
+  't-online.de','aol.com','mail.ru'
+];
+
+/* Die fünf Sprachen der Seite. Dieselbe Liste kennt /assets/i18n.js; hier
+   steht sie, damit an die API nur ein Code geht, den sie auch annimmt —
+   ein fremder Wert aus dem Speicher fällt still auf Deutsch zurück. */
+const LANGS = ['de','en','fr','it','es'];
+
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    const initLang = (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de';
+    // `view` ist der einzige Zustandsschalter der Karte: Formular, „bitte
+    // bestätigen" oder bestätigt. Frühere Fassungen hatten dafür ein
+    // Ja/Nein-Bit — mit dem Double-Opt-in sind es drei Zustände.
+    // `challenge` ist das beim Aufbau geholte Kurzzeit-Token des Servers; es
+    // geht beim Absenden unverändert zurück. Früher stand hier eine eigene
+    // Zeitfalle im Browser — die entscheidet jetzt der Server, denn eine Regel
+    // im Quelltext liest ein Bot mit und geht ihr aus dem Weg.
+    this.state = { lang: initLang, email:'', company:'', interest:'', hp:'',
+      users:'', usecase:'', view:'form', ask:'closed', busy:false,
+      challenge:'', eEmail:'', eForm:'', eLink:'' };
+    this._onLang = (e)=>this.setState({ lang:e.detail });
+    this.C = {
+      de: {
+        h1:'Frühen Zugang zu EU Cowork AI sichern.',
+        sub:'Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.',
+        hint:'Die ersten Einladungen werden schrittweise verschickt.',
+        labels:{
+          email:'Geschäftliche E-Mail-Adresse', emailPh:'name@firma.ch',
+          company:'Unternehmen', companyPh:'Firmenname', optional:'optional',
+          interest:'Interesse',
+          users:'Teamgrösse', usersPh:'Bitte wählen …',
+          usecase:'Wofür möchten Sie EU Cowork AI einsetzen?', usecasePh:'Ein, zwei Sätze genügen',
+          submit:'Frühen Zugang anfragen', sending:'Wird gesendet …',
+          note:'Kein Spam. Wir informieren Sie nur über Beta-Zugang und Veröffentlichung. Jederzeit abmeldbar.',
+          noteLink:'Datenschutzerklärung'
+        },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        interestOptions:[{label:'Gehostet in der Schweiz',value:'hosted'},{label:'Self-Hosting',value:'selfhost'},{label:'Beides',value:'both'}],
+        errors:{
+          email:'Bitte eine gültige E-Mail-Adresse angeben.',
+          freemail:'Bitte verwenden Sie Ihre geschäftliche E-Mail-Adresse.',
+          expired:'Die Seite war zu lange geöffnet. Bitte laden Sie sie neu.',
+          general:'Das hat gerade nicht geklappt. Bitte versuchen Sie es in ein paar Minuten erneut.',
+          link:'Der Bestätigungslink ist ungültig oder abgelaufen. Bitte tragen Sie sich erneut ein.'
+        },
+        pending:{
+          eyebrow:'// Fast geschafft',
+          title:'Bitte bestätigen Sie Ihre E-Mail-Adresse.',
+          // {email} wird in renderVals eingesetzt: die Adresse steht im
+          // Zustand, nicht in der Übersetzung.
+          body:'Wir haben Ihnen soeben eine E-Mail an {email} geschickt. Klicken Sie auf den Bestätigungslink, um Ihren Platz auf der Liste zu sichern. Der Link ist 48 Stunden gültig.',
+          spam:'Keine E-Mail erhalten? Bitte sehen Sie auch im Spam-Ordner nach.'
+        },
+        success:{
+          eyebrow:'// Eintrag bestätigt',
+          title:'Vielen Dank — Sie stehen auf der Liste.',
+          body:'Wir melden uns, sobald wir Ihnen frühen Zugang zu EU Cowork AI anbieten können.',
+          ask:'Möchten Sie uns bereits etwas zu Ihrem Unternehmen erzählen?',
+          askBtn:'Eine kurze Frage beantworten',
+          askSubmit:'Angaben senden',
+          askThanks:'Danke, das hilft uns bei der Priorisierung.',
+          home:'Zur Startseite', again:'Andere E-Mail eintragen'
+        }
+      },
+      en: {
+        h1:'Get early access to EU Cowork AI.',
+        sub:'Try the European AI platform before launch and send feedback straight to our product team.',
+        hint:'The first invitations go out in batches.',
+        labels:{
+          email:'Work email address', emailPh:'name@company.com',
+          company:'Company', companyPh:'Company name', optional:'optional',
+          interest:'Interested in',
+          users:'Team size', usersPh:'Please choose …',
+          usecase:'What would you use EU Cowork AI for?', usecasePh:'A sentence or two is enough',
+          submit:'Request early access', sending:'Sending …',
+          note:'No spam. We only write about beta access and launch. Unsubscribe anytime.',
+          noteLink:'Privacy policy'
+        },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        interestOptions:[{label:'Hosted in Switzerland',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Both',value:'both'}],
+        errors:{
+          email:'Please enter a valid email address.',
+          freemail:'Please use your work email address.',
+          expired:'This page has been open for too long. Please reload it.',
+          general:'That did not work just now. Please try again in a few minutes.',
+          link:'This confirmation link is invalid or has expired. Please sign up again.'
+        },
+        pending:{
+          eyebrow:'// Almost there',
+          title:'Please confirm your email address.',
+          body:'We have just sent an email to {email}. Click the confirmation link to secure your place on the list. The link is valid for 48 hours.',
+          spam:'Nothing in your inbox? Please check your spam folder as well.'
+        },
+        success:{
+          eyebrow:'// Signup confirmed',
+          title:'Thank you — you are on the list.',
+          body:'We will get in touch as soon as we can offer you early access to EU Cowork AI.',
+          ask:'Would you like to tell us a little about your company already?',
+          askBtn:'Answer one short question',
+          askSubmit:'Send details',
+          askThanks:'Thanks, that helps us prioritise.',
+          home:'Back to home', again:'Use a different email'
+        }
+      },
+      fr: {
+        h1:'Obtenez un accès anticipé à EU Cowork AI.',
+        sub:'Testez la plateforme d’IA européenne avant son lancement et transmettez vos retours directement à notre équipe produit.',
+        hint:'Les premières invitations partent par vagues.',
+        labels:{
+          email:'Adresse e-mail professionnelle', emailPh:'nom@entreprise.com',
+          company:'Entreprise', companyPh:'Nom de l’entreprise', optional:'facultatif',
+          interest:'Intérêt',
+          users:'Taille de l’équipe', usersPh:'Veuillez choisir …',
+          usecase:'Pour quels usages souhaitez-vous utiliser EU Cowork AI ?', usecasePh:'Une ou deux phrases suffisent',
+          submit:'Demander un accès anticipé', sending:'Envoi en cours …',
+          note:'Pas de spam. Nous vous écrivons uniquement au sujet de l’accès bêta et du lancement. Désinscription à tout moment.',
+          noteLink:'Politique de confidentialité'
+        },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        interestOptions:[{label:'Hébergé en Suisse',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Les deux',value:'both'}],
+        errors:{
+          email:'Veuillez indiquer une adresse e-mail valide.',
+          freemail:'Veuillez utiliser votre adresse e-mail professionnelle.',
+          expired:'Cette page est restée ouverte trop longtemps. Veuillez la recharger.',
+          general:'Cela n’a pas fonctionné à l’instant. Veuillez réessayer dans quelques minutes.',
+          link:'Ce lien de confirmation est invalide ou a expiré. Veuillez vous inscrire à nouveau.'
+        },
+        pending:{
+          eyebrow:'// Presque terminé',
+          title:'Veuillez confirmer votre adresse e-mail.',
+          body:'Nous venons de vous envoyer un e-mail à {email}. Cliquez sur le lien de confirmation pour réserver votre place sur la liste. Le lien est valable 48 heures.',
+          spam:'Rien dans votre boîte de réception ? Veuillez également regarder dans vos spams.'
+        },
+        success:{
+          eyebrow:'// Inscription confirmée',
+          title:'Merci — vous êtes sur la liste.',
+          body:'Nous vous contacterons dès que nous pourrons vous proposer un accès anticipé à EU Cowork AI.',
+          ask:'Souhaitez-vous déjà nous en dire un peu plus sur votre entreprise ?',
+          askBtn:'Répondre à une courte question',
+          askSubmit:'Envoyer les informations',
+          askThanks:'Merci, cela nous aide à définir nos priorités.',
+          home:'Retour à l’accueil', again:'Utiliser une autre adresse e-mail'
+        }
+      },
+      it: {
+        h1:'Ottenga l’accesso anticipato a EU Cowork AI.',
+        sub:'Provi la piattaforma di IA europea prima del lancio e invii il Suo riscontro direttamente al nostro team di prodotto.',
+        hint:'I primi inviti vengono spediti a gruppi.',
+        labels:{
+          email:'Indirizzo e-mail aziendale', emailPh:'nome@azienda.com',
+          company:'Azienda', companyPh:'Nome dell’azienda', optional:'facoltativo',
+          interest:'Interesse',
+          users:'Dimensione del team', usersPh:'Selezioni …',
+          usecase:'Per che cosa desidera utilizzare EU Cowork AI?', usecasePh:'Bastano una o due frasi',
+          submit:'Richiedi accesso anticipato', sending:'Invio in corso …',
+          note:'Niente spam. Scriviamo solo in merito all’accesso beta e al lancio. Disiscrizione in qualsiasi momento.',
+          noteLink:'Informativa sulla privacy'
+        },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        interestOptions:[{label:'Ospitato in Svizzera',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Entrambi',value:'both'}],
+        errors:{
+          email:'Inserisca un indirizzo e-mail valido.',
+          freemail:'Utilizzi il Suo indirizzo e-mail aziendale.',
+          expired:'Questa pagina è rimasta aperta troppo a lungo. La ricarichi.',
+          general:'Al momento non ha funzionato. Riprovi tra qualche minuto.',
+          link:'Questo link di conferma non è valido o è scaduto. Si registri di nuovo.'
+        },
+        pending:{
+          eyebrow:'// Quasi fatto',
+          title:'La preghiamo di confermare il Suo indirizzo e-mail.',
+          body:'Le abbiamo appena inviato un’e-mail a {email}. Clicchi sul link di conferma per assicurarsi il Suo posto nella lista. Il link è valido 48 ore.',
+          spam:'Non ha ricevuto nessuna e-mail? Controlli anche la cartella spam.'
+        },
+        success:{
+          eyebrow:'// Iscrizione confermata',
+          title:'Grazie — è nella lista.',
+          body:'La contatteremo non appena potremo offrirLe l’accesso anticipato a EU Cowork AI.',
+          ask:'Desidera già dirci qualcosa sulla Sua azienda?',
+          askBtn:'Rispondere a una breve domanda',
+          askSubmit:'Invia i dati',
+          askThanks:'Grazie, ci aiuta a definire le priorità.',
+          home:'Alla pagina iniziale', again:'Usare un altro indirizzo e-mail'
+        }
+      },
+      es: {
+        h1:'Obtenga acceso anticipado a EU Cowork AI.',
+        sub:'Pruebe la plataforma de IA europea antes del lanzamiento y envíe sus comentarios directamente a nuestro equipo de producto.',
+        hint:'Las primeras invitaciones se envían por tandas.',
+        labels:{
+          email:'Dirección de correo electrónico profesional', emailPh:'nombre@empresa.com',
+          company:'Empresa', companyPh:'Nombre de la empresa', optional:'opcional',
+          interest:'Interés',
+          users:'Tamaño del equipo', usersPh:'Elija una opción …',
+          usecase:'¿Para qué desea utilizar EU Cowork AI?', usecasePh:'Bastan una o dos frases',
+          submit:'Solicitar acceso anticipado', sending:'Enviando …',
+          note:'Sin spam. Solo le escribimos sobre el acceso beta y el lanzamiento. Puede darse de baja en cualquier momento.',
+          noteLink:'Política de privacidad'
+        },
+        userOptions:['1','2–10','11–50','51–200','200+'],
+        interestOptions:[{label:'Alojado en Suiza',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Ambos',value:'both'}],
+        errors:{
+          email:'Introduzca una dirección de correo electrónico válida.',
+          freemail:'Utilice su dirección de correo electrónico profesional.',
+          expired:'Esta página ha estado abierta demasiado tiempo. Vuelva a cargarla.',
+          general:'Ahora mismo no ha funcionado. Inténtelo de nuevo en unos minutos.',
+          link:'Este enlace de confirmación no es válido o ha caducado. Regístrese de nuevo.'
+        },
+        pending:{
+          eyebrow:'// Casi listo',
+          title:'Confirme su dirección de correo electrónico.',
+          body:'Acabamos de enviarle un correo electrónico a {email}. Haga clic en el enlace de confirmación para asegurar su lugar en la lista. El enlace es válido durante 48 horas.',
+          spam:'¿No ha recibido nada? Consulte también su carpeta de spam.'
+        },
+        success:{
+          eyebrow:'// Registro confirmado',
+          title:'Gracias — está en la lista.',
+          body:'Nos pondremos en contacto en cuanto podamos ofrecerle acceso anticipado a EU Cowork AI.',
+          ask:'¿Desea contarnos ya algo sobre su empresa?',
+          askBtn:'Responder una breve pregunta',
+          askSubmit:'Enviar los datos',
+          askThanks:'Gracias, nos ayuda a priorizar.',
+          home:'A la página de inicio', again:'Usar otro correo electrónico'
+        }
+      }
+    };
+  }
+  componentDidMount(){
+    window.addEventListener('eucowork:langchange', this._onLang);
+    // Das Token wird sofort geholt, nicht erst beim Klick: so wartet niemand
+    // beim Absenden auf zwei Anfragen nacheinander.
+    this._loadChallenge();
+    // Reihenfolge zählt: erst der gespeicherte Eintrag (er trägt die Adresse
+    // und die Nachfass-Antwort), dann der Bestätigungslink — der darf den
+    // gespeicherten Zustand überschreiben, nicht umgekehrt.
+    const rec = this._read();
+    const confirm = this._query('confirm');
+
+    if (confirm === 'ok'){
+      // Der Server hat bestätigt. Auch ohne gespeicherten Eintrag (anderer
+      // Browser, geleerter Speicher) ist das der bestätigte Zustand — die
+      // Karte zeigt dann nur keine Adresse an, was hier niemand braucht.
+      const next = Object.assign({}, rec || {}, { state:'confirmed' });
+      this._write(next);
+      this._apply(next, 'confirmed');
+    } else if (confirm === 'invalid'){
+      // Toter oder abgelaufener Link: zurück ans Formular. Ein noch
+      // unbestätigter Eintrag wird verworfen, sonst stünde nach dem nächsten
+      // Neuladen wieder „bitte bestätigen" da, obwohl genau das misslang.
+      if (rec && rec.state !== 'confirmed') this._forget();
+      this.setState({ view:'form', eLink:this._copy().errors.link });
+    } else if (rec){
+      this._apply(rec, rec.state === 'pending' ? 'pending' : 'confirmed');
+    }
+
+    if (confirm) this._stripQuery('confirm');
+  }
+  /* Das kurzlebige Token des Servers. Es ist kein Sicherheitsmerkmal, das der
+     Browser hüten müsste, sondern der Beleg dafür, dass diese Anmeldung aus
+     einer wirklich geladenen Seite kommt — deshalb genügt der einfache Weg
+     ohne Wiederholung. Scheitert der Abruf (offline, 404, kaputte Antwort),
+     bleibt der Wert leer; abgeschickt wird trotzdem, und der Server lehnt
+     sauber ab. Ein eigener Hinweis wäre hier falsch: gegen einen fehlenden
+     Abruf kann der Mensch vor dem Formular nichts unternehmen. */
+  _loadChallenge(){
+    fetch('/api/challenge', { headers:{ 'Accept':'application/json' } })
+      .then(res => res.ok ? res.json() : null)
+      .then(d => this.setState({ challenge: (d && d.c) || '' }))
+      .catch(() => this.setState({ challenge:'' }));
+  }
+  /* ---- Speicher und Adresszeile ---------------------------------------- */
+  _read(){
+    try {
+      const raw = localStorage.getItem('eucowork_waitlist');
+      if (!raw) return null;
+      const r = JSON.parse(raw);
+      if (!r || typeof r !== 'object') return null;
+      // Einträge aus der Zeit vor dem Double-Opt-in kennen kein `state`. Sie
+      // galten mit dem Absenden als erledigt und werden deshalb als bestätigt
+      // weitergeführt — sonst hinge ein Bestand an Leuten in einem Zustand
+      // fest, für den es nie eine Mail gab.
+      if (!r.state) r.state = 'confirmed';
+      return r;
+    } catch(e){ return null; }
+  }
+  _write(rec){ try { localStorage.setItem('eucowork_waitlist', JSON.stringify(rec)); } catch(e){} }
+  _forget(){ try { localStorage.removeItem('eucowork_waitlist'); } catch(e){} }
+  /** Gespeicherten Eintrag in den Anzeigezustand übernehmen. */
+  _apply(r, view){
+    this.setState({ view:view, busy:false, eEmail:'', eForm:'',
+      email:r.email||'', company:r.company||'', interest:r.interest||'',
+      users:r.users||'', usecase:r.usecase||'',
+      ask: r.qualified ? 'done' : 'closed' });
+  }
+  _query(key){
+    try { return new URLSearchParams(window.location.search).get(key) || ''; } catch(e){ return ''; }
+  }
+  /* Der Bestätigungsparameter hat seine Arbeit getan. Bliebe er in der
+     Adresszeile, zeigte ein Neuladen oder ein Lesezeichen dieselbe Meldung
+     erneut an. replaceState statt pushState: es ist kein eigener Schritt in
+     der Sitzungsgeschichte. */
+  _stripQuery(key){
+    try {
+      const u = new URL(window.location.href);
+      u.searchParams.delete(key);
+      const q = u.searchParams.toString();
+      window.history.replaceState({}, '', u.pathname + (q ? '?' + q : '') + u.hash);
+    } catch(e){}
+  }
+  componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
+  _copy(){ return this.C[this.state.lang] || this.C.de; }
+  setInterest(v){ this.setState({ interest: this.state.interest===v ? '' : v }); }
+  /* Pfeiltasten wechseln UND waehlen — so verlangt es die ARIA-Vorgabe fuer
+     eine Radiogruppe. Der Fokus wandert dabei mit, deshalb das Nachfassen im
+     naechsten Takt: vorher hat die Neuzeichnung den Knopf noch nicht ersetzt. */
+  segKey(i, e){
+    const opts = this._copy().interestOptions, n = opts.length;
+    const k = e && e.key; let j = -1;
+    if (k === 'ArrowRight' || k === 'ArrowDown') j = (i + 1) % n;
+    else if (k === 'ArrowLeft' || k === 'ArrowUp') j = (i - 1 + n) % n;
+    else if (k === 'Home') j = 0;
+    else if (k === 'End') j = n - 1;
+    else return;
+    if (e.preventDefault) e.preventDefault();
+    this.setState({ interest: opts[j].value });
+    setTimeout(() => { const el = document.getElementById('wl-seg-' + j); if (el) el.focus(); }, 0);
+  }
+  /* Eine Eingabe ins E-Mail-Feld räumt beide Fehlerzeilen weg: die am Feld und
+     die allgemeine unter dem Knopf. Beide gehören zum selben Versuch. */
+  setField(key, e){ var v = (e && e.target) ? e.target.value : ''; var p = {}; p[key] = v; if(key==='email'){ p.eEmail=''; p.eForm=''; p.eLink=''; } this.setState(p); }
+  validEmail(x){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x); }
+  /* Domain-Vergleich statt Textsuche: „gmail.com" darf nicht in
+     „nichtgmail.com" treffen. Subdomains (mail.gmx.ch) zählen mit, deshalb
+     zusätzlich der Vergleich auf den Punkt davor. */
+  isFreemail(x){
+    const dom = String(x || '').split('@').pop().trim().toLowerCase();
+    if (!dom) return false;
+    return FREEMAIL.some(d => dom === d || dom.endsWith('.' + d));
+  }
+  _store(extra){
+    const rec = Object.assign({
+      email:(this.state.email||'').trim(), company:(this.state.company||'').trim(),
+      interest:this.state.interest, users:this.state.users, usecase:(this.state.usecase||'').trim(),
+      state:'pending', ts:new Date().toISOString()
+    }, extra || {});
+    this._write(rec);
+    return rec;
+  }
+  submit(){
+    if (this.state.busy) return;   // zweiter Klick auf denselben Vorgang
+    const c = this._copy();
+    const email = (this.state.email || '').trim();
+    // Client prüft nur, was ohne Server entscheidbar ist: Schreibweise und
+    // Freemail. Fangfeld und Token gehen ungewertet mit — würde der Browser
+    // darüber urteilen, könnte ein Bot die Regel aus dem Quelltext ablesen und
+    // umgehen. Die Entscheidung liegt allein beim Server.
+    if (!this.validEmail(email)){ this.setState({ eEmail:c.errors.email, eForm:'' }); return; }
+    if (this.isFreemail(email)){ this.setState({ eEmail:c.errors.freemail, eForm:'' }); return; }
+
+    this.setState({ busy:true, eEmail:'', eForm:'', eLink:'' });
+    const body = {
+      email: email,
+      company: (this.state.company || '').trim(),
+      interest: this.state.interest || '',
+      teamSize: this.state.users || '',
+      lang: LANGS.indexOf(this.state.lang) >= 0 ? this.state.lang : 'de',
+      hp: this.state.hp || '',
+      challenge: this.state.challenge || ''
+    };
+    fetch('/api/waitlist', {
+      method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body)
+    })
+      // Auch 4xx/5xx kommen hier an; `ok` allein reicht nicht, weil der
+      // Fehlerkennzeichner erst im Rumpf steht. Ein leerer oder kaputter Rumpf
+      // darf den Ablauf nicht sprengen, deshalb der Auffang um json().
+      .then(res => res.json().catch(() => ({})).then(data => ({ status:res.status, data:data || {} })))
+      .then(r => this._onAnswer(r.status, r.data))
+      .catch(() => this.setState({ busy:false, eForm:this._copy().errors.general }));
+  }
+  /* Antwortbehandlung getrennt, damit submit() den Ablauf zeigt und nicht die
+     Fallunterscheidung. Unterschieden wird nur, was eine andere Handlung nach
+     sich zieht: die zwei Feldfehler (Adresse ändern) und das abgelaufene Token
+     (Seite neu laden). Sperre, Serverfehler und Ausfall sind für den Menschen
+     dieselbe Lage: jetzt nicht, später nochmal. */
+  _onAnswer(status, data){
+    const c = this._copy();
+    if (status === 200 && data.ok === true){
+      this._store({ state:'pending', qualified:false });
+      this.setState({ view:'pending', busy:false, eEmail:'', eForm:'' });
+      try { window.scrollTo({ top:0, behavior:'smooth' }); } catch(e){ window.scrollTo(0,0); }
+      return;
+    }
+    if (status === 400 && data.error === 'free_email'){ this.setState({ busy:false, eEmail:c.errors.freemail }); return; }
+    if (status === 400 && data.error === 'invalid_email'){ this.setState({ busy:false, eEmail:c.errors.email }); return; }
+    // Das Token ist verfallen — die Eingaben sind in Ordnung, nur die Seite ist
+    // zu alt. Der Hinweis steht deshalb unter dem Knopf und nicht am Feld.
+    if (status === 400 && data.error === 'expired'){ this.setState({ busy:false, eForm:c.errors.expired }); return; }
+    this.setState({ busy:false, eForm:c.errors.general });
+  }
+  /* Die Nachfass-Antwort bleibt im Browser: sie ist eine Notiz für den
+     nächsten Besuch, kein Datensatz für die Warteliste. */
+  saveAsk(){
+    const rec = this._read() || {};
+    this._write(Object.assign({}, rec, {
+      usecase:(this.state.usecase||'').trim(), qualified:true,
+      state: rec.state || 'confirmed'
+    }));
+    this.setState({ ask:'done' });
+  }
+  reset(){
+    this._forget();
+    // Wer hier landet, hatte die Seite meist lange offen: ein frisches Token
+    // erspart dem zweiten Anlauf die Meldung „zu lange geöffnet".
+    this._loadChallenge();
+    this.setState({ view:'form', ask:'closed', busy:false, email:'', company:'', interest:'',
+      users:'', usecase:'', eEmail:'', eForm:'', eLink:'' });
+  }
+  renderVals(){
+    const c = this._copy();
+    // Genau EIN Knopf der Gruppe liegt in der Tab-Reihenfolge: der gewaehlte,
+    // sonst der erste. Innerhalb wird mit den Pfeiltasten gewechselt.
+    const sel = c.interestOptions.findIndex(o => o.value === this.state.interest);
+    const tabIdx = sel < 0 ? 0 : sel;
+    const interestChips = c.interestOptions.map((o, i) => {
+      const on = this.state.interest === o.value;
+      return { label:o.label, value:o.value, id:'wl-seg-' + i,
+        on: on ? 'true' : 'false', cls: on ? 'is-on' : '', tab: i === tabIdx ? '0' : '-1',
+        onClick:()=>this.setInterest(o.value), onKey:(e)=>this.segKey(i, e) };
+    });
+    const confirmed = this.state.view === 'confirmed';
+    return {
+      t: c,
+      interestChips,
+      showForm:    this.state.view === 'form',
+      isPending:   this.state.view === 'pending',
+      isConfirmed: confirmed,
+      // Die Adresse gehört in den Satz, nicht in die Übersetzungstabelle.
+      pendingBody: c.pending.body.replace('{email}', (this.state.email || '').trim()),
+      askClosed: confirmed && this.state.ask === 'closed',
+      askOpen:   confirmed && this.state.ask === 'open',
+      askDone:   confirmed && this.state.ask === 'done',
+      email:this.state.email, company:this.state.company, hp:this.state.hp,
+      users:this.state.users, usecase:this.state.usecase,
+      onEmail:(e)=>this.setField('email',e), onCompany:(e)=>this.setField('company',e),
+      onHp:(e)=>this.setField('hp',e),
+      onUsers:(e)=>this.setField('users',e), onUsecase:(e)=>this.setField('usecase',e),
+      eEmail:this.state.eEmail, eForm:this.state.eForm, eLink:this.state.eLink,
+      emailCls: this.state.eEmail ? 'is-err' : '',
+      emailInvalid: this.state.eEmail ? 'true' : 'false',
+      busy: this.state.busy,
+      busyAttr: this.state.busy ? 'true' : 'false',
+      submitLabel: this.state.busy ? c.labels.sending : c.labels.submit,
+      onSubmit:()=>this.submit(), onOpenAsk:()=>this.setState({ ask:'open' }),
+      onSaveAsk:()=>this.saveAsk(), onReset:()=>this.reset()
+    };
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/warteliste#webpage",
+  "url": "https://eucowork.ai/warteliste",
+  "name": "Frühen Zugang zu EU Cowork AI sichern",
+  "inLanguage": "it",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "EU Cowork AI ist im Aufbau. Wer sich einträgt, testet die europäische KI-Plattform vor der Veröffentlichung und gibt Rückmeldung direkt an das Produktteam. Die Anmeldung verlangt nur die geschäftliche E-Mail-Adresse; Unternehmen und das Interesse an Hosting in der Schweiz, Self-Hosting oder beidem sind freiwillig. Kein Spam, jederzeit abmeldbar; die ersten Einladungen werden schrittweise verschickt.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Früher Zugang", "item": "https://eucowork.ai/warteliste" }
+    ]
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es" data-euc-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precios: autoalojar o servicio gestionado | EU Cowork AI</title>
+<meta name="description" content="Un software, dos formas de operarlo: autoalojamiento gratuito tras publicar el código fuente y servicio gestionado en Suiza por 14 € por persona y mes.">
+<link rel="canonical" href="https://eucowork.ai/es/preise">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/preise">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/preise">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/preise">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/preise">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/preise">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/preise">
+<!-- i18n:hreflang:end -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="https://eucowork.ai/es/preise">
+<meta property="og:title" content="Precios: autoalojar o servicio gestionado | EU Cowork AI">
+<meta property="og:description" content="Un software, dos formas de operarlo. Siempre recibe todas las funciones y solo decide quién se encarga de la operación.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Precios: autoalojar o servicio gestionado | EU Cowork AI">
+<meta name="twitter:description" content="Un software, dos formas de operarlo. Las funciones son completas en ambas variantes.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Das gemeinsame Blatt der Website: Tokens, Schrift, Knoepfe, Textlinks,
+     Schlusskasten. Dadurch gilt hier dasselbe System wie auf allen
+     Inhaltsseiten, und Kopf- und Fussleiste kommen als echte Bauteile. -->
+<link rel="stylesheet" href="/assets/content.css">
+<script src="/assets/i18n.js"></script>
+<script src="/support.js"></script>
+</head>
+<body>
+<noscript>
+  <h1>Precios: autoalojar o servicio gestionado | EU Cowork AI</h1>
+  <p>Un software, dos formas de operarlo: autoalojamiento gratuito tras publicar el código fuente y servicio gestionado en Suiza por 14 € por persona y mes.</p>
+</noscript>
+<x-dc>
+<helmet>
+<style>
+  /* ==========================================================================
+     Preise: nur der Vergleichsrahmen, der Verlauf der Managed-Spalte und das
+     Aufklappen der Fragen. Alles Weitere — Raster, Schrift, Knoepfe,
+     Textlinks, Schlusskasten — kommt aus assets/content.css, Kopf und Fuss
+     als Bauteile. Kein zweites Knopf-, Karten- oder Icon-System.
+     ========================================================================== */
+
+  /* Die Kopfleiste liegt fest ueber der Seite (68 px). */
+  .pr-main { padding: calc(68px + clamp(28px, 3.5vw, 52px)) 0 clamp(56px, 7vw, 96px); }
+
+  /* ---------- Hero ---------- */
+  .pr-hero { padding: 0 0 clamp(30px, 3.6vw, 44px); }
+  .pr-hero h1 {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: clamp(32px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -.022em;
+    color: var(--c-ink); margin: 0; text-wrap: balance;
+  }
+  .pr-hero p {
+    font-size: clamp(16px, 1.3vw, 18px); line-height: 1.58; letter-spacing: -.004em;
+    color: var(--c-body); margin: 20px 0 0; max-width: 700px;
+  }
+
+  /* ---------- Ein Rahmen, zwei Wege ---------- */
+  .pr-frame { border: var(--bd); border-radius: var(--r-card); background: var(--c-surface); overflow: hidden; }
+  .pr-cols { display: grid; grid-template-columns: 1fr; }
+  /* Die Trennlinie ist eine Kante der zweiten Spalte, kein eigenes Element:
+     so wechselt sie beim Umbruch von senkrecht auf waagrecht. */
+  .pr-col + .pr-col { border-top: var(--bd); }
+  @media (min-width: 860px) {
+    .pr-cols { grid-template-columns: 1fr 1fr; }
+    .pr-col + .pr-col { border-top: 0; border-left: var(--bd); }
+  }
+  .pr-col {
+    position: relative; isolation: isolate;
+    padding: clamp(26px, 3vw, 38px); min-width: 0;
+    display: flex; flex-direction: column;
+  }
+  .pr-col > * { position: relative; z-index: 1; }
+
+  /* ---------- Verlauf, nur hinter dem betreuten Weg ----------
+     Ein Verlauf, nicht zwei: er markiert den Weg, den wir anbieten, und
+     laesst die Selbstbetriebs-Spalte ruhig. Eisblau statt warm — der warme
+     Verlauf ist inzwischen das Zeichen der Warteliste, und Eisblau ist die
+     Farbe, die auf der Startseite fuer den Schweizer Betrieb steht.
+     Reine CSS-Flaechen, kein WebGL: hier bewegt sich nur `transform`, und
+     der Zuschnitt der Kachel greift zuverlaessig. */
+  .pr-sg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .pr-sg i { position: absolute; display: block; will-change: transform; }
+  .pr-sg .a {
+    width: 76%; height: 108%; right: -12%; top: -34%;
+    background: radial-gradient(closest-side, rgba(165,216,230,.72) 0%, rgba(165,216,230,0) 100%);
+    animation: pr-a 22s cubic-bezier(.23,1,.32,1) infinite alternate;
+  }
+  .pr-sg .b {
+    width: 84%; height: 116%; left: -18%; bottom: -38%;
+    background: radial-gradient(closest-side, rgba(63,124,201,.30) 0%, rgba(63,124,201,0) 100%);
+    animation: pr-b 26s cubic-bezier(.23,1,.32,1) infinite alternate;
+  }
+  .pr-sg .c {
+    width: 52%; height: 68%; left: 22%; top: 6%;
+    background: radial-gradient(closest-side, rgba(255,255,255,.72) 0%, rgba(255,255,255,0) 100%);
+    animation: pr-c 19s cubic-bezier(.23,1,.32,1) infinite alternate;
+  }
+  @keyframes pr-a { from { transform: translate3d(0,0,0) scale(1); }    to { transform: translate3d(-7%,6%,0) scale(1.10); } }
+  @keyframes pr-b { from { transform: translate3d(0,0,0) scale(1.06); } to { transform: translate3d(8%,-7%,0) scale(1); } }
+  @keyframes pr-c { from { transform: translate3d(0,0,0) scale(1); }    to { transform: translate3d(5%,8%,0) scale(1.09); } }
+  /* Lese-Schirm: der Verlauf bleibt sichtbar, der Text steht trotzdem auf
+     ruhigem Grund. Ohne ihn faellt der Kontrast der grauen Zeilen zu tief. */
+  .pr-sg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.46) 0%, rgba(255,255,255,.60) 46%, rgba(255,255,255,.78) 100%);
+  }
+
+  .pr-col h2 {
+    font-family: var(--f-display); font-weight: 500;
+    font-size: 21px; line-height: 1.24; letter-spacing: -.012em;
+    color: var(--c-ink); margin: 0;
+  }
+  .pr-lede { font-size: 14.5px; line-height: 1.55; color: var(--c-body-soft); margin: 10px 0 0; max-width: 42ch; }
+
+  /* ---------- Preis: Zahl gross, Einheit klein daneben ---------- */
+  .pr-price { display: flex; align-items: baseline; gap: 6px; margin: var(--s-6) 0 0; }
+  .pr-amount {
+    font-family: var(--f-display); font-weight: 600;
+    font-size: 40px; line-height: 1; letter-spacing: -.028em;
+    color: var(--c-ink); font-variant-numeric: tabular-nums;
+  }
+  .pr-per { font-size: 15px; font-weight: 500; color: var(--c-body-soft); }
+  .pr-sub { font-size: 13.5px; line-height: 1.45; color: var(--c-body-soft); margin: 8px 0 0; }
+  .pr-status {
+    display: inline-flex; align-items: center; align-self: flex-start;
+    margin-top: 12px; padding: 3px 9px; border-radius: var(--r-status);
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em;
+    color: #6B4E02; background: rgba(244, 197, 66, .18);
+  }
+  .pr-cta { margin: var(--s-5) 0 var(--s-6); }
+  .pr-cta .euc-btn-primary, .pr-cta .euc-btn-secondary { width: 100%; }
+
+  /* ---------- Inhalt: Zeilen tragen die Aussage, keine Haken ---------- */
+  .pr-rows { margin: auto 0 0; padding: var(--s-5) 0 0; border-top: var(--bd); }
+  .pr-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); padding: 9px 0; }
+  .pr-row + .pr-row { border-top: 1px solid var(--c-line-soft); }
+  .pr-row dt {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--c-muted); margin: 0; flex: 0 0 auto;
+  }
+  .pr-row dd { font-size: 14px; line-height: 1.45; color: var(--c-body); margin: 0; text-align: right; }
+  .pr-row.is-full dd { color: var(--c-ink); font-weight: 500; }
+  /* Die Zeile, die vorher direkt unter dem Preis stand: sie gehoert zum
+     Inhalt, nicht zur Zahl. */
+  .pr-rows-note { font-size: 13px; line-height: 1.55; color: var(--c-body-soft); margin: var(--s-4) 0 0; }
+
+  /* ---------- Immer enthalten ---------- */
+  .pr-band { margin: clamp(40px, 5vw, 64px) 0 0; padding: clamp(24px, 3vw, 34px); border-radius: var(--r-frame); background: var(--c-ice-100); }
+  .pr-band h2 {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: clamp(22px, 2.6vw, 27px); line-height: 1.18; letter-spacing: -.016em;
+    color: var(--c-ink); margin: 0;
+  }
+  .pr-band p { margin: 12px 0 0; font-size: 15px; line-height: 1.6; color: var(--c-body); max-width: 68ch; }
+  .pr-links { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); margin: var(--s-5) 0 0; }
+
+  /* ---------- Support ---------- */
+  .pr-h2 {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: clamp(22px, 2.6vw, 27px); line-height: 1.18; letter-spacing: -.016em;
+    color: var(--c-ink); margin: clamp(40px, 5vw, 64px) 0 var(--s-5);
+  }
+  .pr-sup { border: var(--bd); border-radius: var(--r-card); overflow: hidden; }
+  .pr-sup-cols { display: grid; grid-template-columns: 1fr; }
+  .pr-sup-col + .pr-sup-col { border-top: var(--bd); }
+  @media (min-width: 700px) {
+    .pr-sup-cols { grid-template-columns: 1fr 1fr; }
+    .pr-sup-col + .pr-sup-col { border-top: 0; border-left: var(--bd); }
+  }
+  .pr-sup-col { padding: clamp(22px, 2.6vw, 30px); min-width: 0; }
+  .pr-sup-col h3 {
+    font-family: var(--f-display); font-weight: 500; font-size: 17px;
+    line-height: 1.3; letter-spacing: -.010em; color: var(--c-ink); margin: 0;
+  }
+  .pr-sup-col p.pr-sup-price {
+    font-family: var(--f-display); font-size: 24px; font-weight: 600;
+    letter-spacing: -.020em; color: var(--c-ink); margin: 12px 0 0;
+  }
+  .pr-sup-col p { font-size: 14px; line-height: 1.55; color: var(--c-body-soft); margin: 8px 0 0; max-width: 38ch; }
+  .pr-sup-act { margin-top: var(--s-4); }
+
+  /* ---------- Fragen: <details> wie das Menue der Seite, ohne Skript ---------- */
+  .pr-faq { margin: clamp(40px, 5vw, 64px) 0 0; }
+  .pr-q { border-top: 1px solid var(--c-line-soft); }
+  .pr-q:last-of-type { border-bottom: 1px solid var(--c-line-soft); }
+  .pr-q > summary {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+    padding: 18px 0; cursor: pointer; list-style: none;
+    font-family: var(--f-display); font-weight: 500; font-size: 17px;
+    line-height: 1.32; letter-spacing: -.010em; color: var(--c-ink);
+  }
+  .pr-q > summary::-webkit-details-marker { display: none; }
+  .pr-q > summary::marker { content: ''; }
+  .pr-q > summary:focus-visible { outline: 2px solid var(--c-eu-700); outline-offset: 3px; border-radius: var(--r-control); }
+  .pr-chev { flex: 0 0 auto; color: var(--c-eu-500); transition: transform .2s ease; }
+  .pr-q[open] .pr-chev { transform: rotate(180deg); }
+  .pr-q p { margin: 0 0 18px; font-size: 15px; line-height: 1.62; color: var(--c-body); max-width: 66ch; }
+  @media (hover: hover) and (pointer: fine) { .pr-q > summary:hover { color: var(--c-eu-700); } }
+  @supports selector(::details-content) {
+    .pr-q::details-content {
+      block-size: 0; overflow: hidden;
+      transition: block-size .26s ease, content-visibility .26s allow-discrete;
+      transition-behavior: allow-discrete;
+    }
+    .pr-q[open]::details-content { block-size: auto; }
+  }
+
+  /* Ohne die „Weiter"-Liste der uebrigen Seiten traegt der Schlusskasten den
+     Abstand zum Fuss selbst. */
+  .pr-main .cta-box { margin-bottom: 0; }
+
+  /* Ohne Bewegungswunsch steht der Verlauf still — er ist dann ein Bild. */
+  @media (prefers-reduced-motion: reduce) {
+    .pr-sg i { animation: none !important; }
+    .pr-chev { transition: none; }
+    @supports selector(::details-content) { .pr-q::details-content { transition: none; } }
+  }
+</style>
+</helmet>
+<div id="top">
+
+  <dc-import name="SiteHeader" active-nav="pricing" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
+
+  <main class="euc-main pr-main" id="inhalt">
+    <div class="euc-wrap-wide">
+
+      <!-- ==================== HERO ==================== -->
+      <section class="pr-hero">
+        <h1>{{ t.heroH1a }}<br>{{ t.heroH1b }}</h1>
+        <p>{{ t.heroLede }}</p>
+      </section>
+
+      <!-- ==================== VERGLEICH ==================== -->
+      <div class="pr-frame">
+        <div class="pr-cols">
+
+          <!-- Selbst betreiben -->
+          <div class="pr-col">
+            <h2>{{ t.selfTitle }}</h2>
+            <p class="pr-lede">{{ t.selfLede }}</p>
+
+            <div class="pr-price">
+              <span class="pr-amount">{{ t.selfAmount }}</span>
+              <span class="pr-per">{{ t.perMonth }}</span>
+            </div>
+            <p class="pr-sub">{{ t.selfSub }}</p>
+            <span class="pr-status">{{ t.selfStatus }}</span>
+
+            <div class="pr-cta">
+              <a class="euc-btn-secondary" href="/warteliste">{{ t.selfCta }}</a>
+            </div>
+
+            <dl class="pr-rows">
+              <div class="pr-row is-full"><dt>{{ t.rowScope }}</dt><dd>{{ t.selfScope }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowOps }}</dt><dd>{{ t.selfOps }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowUpdates }}</dt><dd>{{ t.selfUpdates }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowUsage }}</dt><dd>{{ t.selfUsage }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowKeys }}</dt><dd>{{ t.selfKeys }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowSwitch }}</dt><dd>{{ t.selfSwitch }}</dd></div>
+            </dl>
+            <p class="pr-rows-note">{{ t.selfNote }}</p>
+          </div>
+
+          <!-- Betreiben lassen -->
+          <div class="pr-col">
+            <div class="pr-sg" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+
+            <h2>{{ t.mgdTitle }}</h2>
+            <p class="pr-lede">{{ t.mgdLede }}</p>
+
+            <div class="pr-price">
+              <span class="pr-amount">{{ t.mgdAmount }}</span>
+              <span class="pr-per">{{ t.perMonth }}</span>
+            </div>
+            <p class="pr-sub">{{ t.mgdSub }}</p>
+
+            <div class="pr-cta">
+              <a class="euc-btn-primary" href="/warteliste">{{ t.mgdCta }}</a>
+            </div>
+
+            <dl class="pr-rows">
+              <div class="pr-row is-full"><dt>{{ t.rowScope }}</dt><dd>{{ t.mgdScope }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowOps }}</dt><dd>{{ t.mgdOps }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowUpdates }}</dt><dd>{{ t.mgdUpdates }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowUsage }}</dt><dd>{{ t.mgdUsage }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowKeys }}</dt><dd>{{ t.mgdKeys }}</dd></div>
+              <div class="pr-row"><dt>{{ t.rowSwitch }}</dt><dd>{{ t.mgdSwitch }}</dd></div>
+            </dl>
+            <p class="pr-rows-note">{{ t.mgdNote }}</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==================== IMMER ENTHALTEN ==================== -->
+      <section class="pr-band">
+        <h2>{{ t.bandTitle }}</h2>
+        <p>{{ t.bandText }}</p>
+        <div class="pr-links">
+          <a class="euc-textlink" href="/#funktionen">{{ t.linkFeatures }}</a>
+          <a class="euc-textlink" href="/governance">{{ t.linkGovernance }}</a>
+          <a class="euc-textlink" href="/integrationen">{{ t.linkIntegrations }}</a>
+          <a class="euc-textlink" href="/self-hosting">{{ t.linkSelfhosting }}</a>
+          <a class="euc-textlink" href="/docs">{{ t.linkDocs }}</a>
+        </div>
+      </section>
+
+      <!-- ==================== SUPPORT ==================== -->
+      <h2 class="pr-h2">{{ t.supTitle }}</h2>
+      <div class="pr-sup">
+        <div class="pr-sup-cols">
+          <div class="pr-sup-col">
+            <h3>{{ t.sup1Title }}</h3>
+            <p class="pr-sup-price">{{ t.sup1Price }}</p>
+            <p>{{ t.sup1Text }}</p>
+            <div class="pr-sup-act"><a class="euc-textlink" href="/docs">{{ t.sup1Link }}</a></div>
+          </div>
+          <div class="pr-sup-col">
+            <h3>{{ t.sup2Title }}</h3>
+            <p class="pr-sup-price">{{ t.sup2Price }}</p>
+            <p>{{ t.sup2Text }}</p>
+            <div class="pr-sup-act"><a class="euc-btn-secondary" href="/warteliste">{{ t.sup2Cta }}</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== FRAGEN ==================== -->
+      <section class="pr-faq">
+        <h2 class="pr-h2" style="margin-top:0;">{{ t.faqTitle }}</h2>
+
+        <details class="pr-q">
+          <summary>{{ t.faq1q }}<span class="pr-chev" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+          <p>{{ t.faq1a }} <a class="euc-link" href="/self-hosting">{{ t.faq1link }}</a>{{ t.faq1b }}</p>
+        </details>
+
+        <details class="pr-q">
+          <summary>{{ t.faq2q }}<span class="pr-chev" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+          <p>{{ t.faq2a }}</p>
+        </details>
+
+        <details class="pr-q">
+          <summary>{{ t.faq3q }}<span class="pr-chev" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+          <p>{{ t.faq3a }} <a class="euc-link" href="/governance">{{ t.faq3link }}</a>{{ t.faq3b }}</p>
+        </details>
+
+        <details class="pr-q">
+          <summary>{{ t.faq4q }}<span class="pr-chev" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+          <p>{{ t.faq4a }} <a class="euc-link" href="/docs/betrieb/backup-und-umzug">{{ t.faq4link }}</a>{{ t.faq4b }}</p>
+        </details>
+      </section>
+
+      <!-- ==================== SCHLUSS ==================== -->
+      <div class="cta-box">
+        <h2>{{ t.ctaTitle }}</h2>
+        <div class="cta-actions">
+          <a class="euc-btn-primary" href="/warteliste">{{ t.ctaPrimary }}</a>
+          <a class="euc-btn-secondary" href="/self-hosting">{{ t.ctaSecondary }}</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  /* Die Seite traegt keinen eigenen Zustand ausser der Sprache: alle Texte
+     liegen in this.C, das Template bindet nur. Sie ist eine dc-Seite, weil
+     nur so Kopf- und Fussleiste als ECHTE Bauteile eingebunden werden
+     koennen — dieselben wie auf der Startseite. */
+  constructor(props){
+    super(props);
+    this.state = { lang: (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de' };
+    this._onLang = (e)=>this.setState({ lang:e.detail });
+    this.C = {
+      de: {
+        heroH1a:'Eine Software.', heroH1b:'Zwei Betriebswege.',
+        heroLede:'Sie erhalten immer den vollständigen Funktionsumfang. Sie entscheiden nur, wer den Betrieb übernimmt.',
+
+        selfTitle:'Selbst betreiben',
+        selfLede:'Die Software läuft auf Ihrer Infrastruktur. Datenbank, Schlüssel und Betrieb bleiben vollständig bei Ihnen.',
+        selfAmount:'0 €', perMonth:'/Mt.',
+        selfSub:'Softwarekosten, dauerhaft',
+        selfStatus:'Nach Veröffentlichung des Quellcodes',
+        selfCta:'Veröffentlichung vormerken',
+
+        rowScope:'Funktionsumfang', rowOps:'Betrieb', rowUpdates:'Updates und Backups',
+        rowUsage:'Modellverbrauch', rowKeys:'Datenbank und Schlüssel', rowSwitch:'Wechsel',
+
+        selfScope:'vollständig', selfOps:'durch Ihre IT', selfUpdates:'durch Ihre IT',
+        selfUsage:'direkt beim Anbieter', selfKeys:'bei Ihnen', selfSwitch:'zum betreuten Betrieb möglich',
+        selfNote:'Server und Modellverbrauch rechnen Sie direkt mit den jeweiligen Anbietern ab.',
+
+        mgdTitle:'Betreiben lassen',
+        mgdLede:'Dieselbe Software auf einer eigenen Schweizer Instanz. Betrieb, Updates, Backups und Überwachung übernehmen wir.',
+        mgdAmount:'14 €', mgdSub:'pro Person',
+        mgdCta:'Managed-Betrieb anfragen',
+
+        mgdScope:'vollständig', mgdOps:'durch EU Cowork AI', mgdUpdates:'enthalten',
+        mgdUsage:'Guthaben inklusive', mgdKeys:'eigene Schweizer Instanz', mgdSwitch:'zum Selbstbetrieb möglich',
+        mgdNote:'Inklusive 8 € Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.',
+
+        bandTitle:'Keine abgespeckte Version.',
+        bandText:'Beide Wege enthalten denselben vollständigen Funktionsumfang: Modelle und Websuche, Dateien und Agenten, Rollen und Gruppen, Audit-Protokoll, zentrale Budgets, Unternehmenslogin und Integrationen. Es gibt keine zweite Ausgabe, kein Seat-Limit und keine Funktion hinter einer Schranke — auch nicht im Selbstbetrieb.',
+        linkFeatures:'Funktionen →', linkGovernance:'Governance →', linkIntegrations:'Integrationen →',
+        linkSelfhosting:'Self-Hosting →', linkDocs:'Dokumentation →',
+
+        supTitle:'Support für den Selbstbetrieb',
+        sup1Title:'Dokumentation und öffentliche Kanäle', sup1Price:'0 €',
+        sup1Text:'Für Teams, die Installation und Betrieb selbst übernehmen.',
+        sup1Link:'Zur Dokumentation →',
+        sup2Title:'Persönlicher Support', sup2Price:'Auf Anfrage',
+        sup2Text:'Feste Reaktionszeiten und eine benannte Ansprechperson für Ihre Installation.',
+        sup2Cta:'Gespräch anfragen',
+
+        faqTitle:'Häufige Fragen',
+        faq1q:'Welche Kosten entstehen beim Selbstbetrieb?',
+        faq1a:'Für die Software selbst nichts. Kosten entstehen ausserhalb: der Server, auf dem der Stack läuft, und der Modellverbrauch, den Sie direkt mit Ihrem Anbieter abrechnen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB Arbeitsspeicher, eine gemeinsame VM trägt mehrere Instanzen. Die gemessenen Werte und die Dimensionierung stehen unter',
+        faq1link:'Self-Hosting', faq1b:'.',
+        faq2q:'Was ist im betreuten Betrieb enthalten?',
+        faq2a:'Eine eigene Instanz in einem ISO-27001-zertifizierten Rechenzentrum in der Schweiz, dazu Betrieb, Updates, Sicherungen und Überwachung. Enthalten ist ausserdem ein monatliches Modellguthaben, das der ganzen Organisation gemeinsam zur Verfügung steht statt pro Kopf gedeckelt zu sein. Ist es aufgebraucht, wird gesperrt statt still weitergerechnet.',
+        faq3q:'Ist der Funktionsumfang identisch?',
+        faq3a:'Ja, vollständig. Es gibt keine zweite Ausgabe mit zusätzlichen Funktionen, kein Seat-Limit und keinen Branding-Zwang. Rechteverwaltung bis auf Werkzeug-Ebene, Audit-Protokoll, zentrale Budgets und Unternehmenslogin gehören in beiden Betriebswegen zum Umfang. Was das im Einzelnen bedeutet, steht unter',
+        faq3link:'Governance', faq3b:'.',
+        faq4q:'Kann ich später zwischen den Betriebsarten wechseln?',
+        faq4a:'Ja, in beide Richtungen. Beide Wege nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug und keine Neueinführung: Konversationen, Konten, Einstellungen und Uploads kommen mit. Der Ablauf steht unter',
+        faq4link:'Backup und Umzug', faq4b:'.',
+
+        ctaTitle:'Welcher Betriebsweg passt zu Ihrem Unternehmen?',
+        ctaPrimary:'Managed-Betrieb anfragen', ctaSecondary:'Self-Hosting ansehen'
+      },
+      en: {
+        heroH1a:'One software.', heroH1b:'Two ways to run it.',
+        heroLede:'You always get the complete feature set. You only decide who runs it.',
+
+        selfTitle:'Run it yourself',
+        selfLede:'The software runs on your infrastructure. Database, keys and operations stay entirely with you.',
+        selfAmount:'€0', perMonth:'/mo.',
+        selfSub:'software cost, permanent',
+        selfStatus:'After the source code is published',
+        selfCta:'Register for the release',
+
+        rowScope:'Feature set', rowOps:'Operations', rowUpdates:'Updates and backups',
+        rowUsage:'Model usage', rowKeys:'Database and keys', rowSwitch:'Switching',
+
+        selfScope:'complete', selfOps:'by your IT team', selfUpdates:'by your IT team',
+        selfUsage:'directly with the provider', selfKeys:'with you', selfSwitch:'to managed operation possible',
+        selfNote:'You settle servers and model usage directly with the respective providers.',
+
+        mgdTitle:'Let us run it',
+        mgdLede:'The same software on your own Swiss instance. We take care of operations, updates, backups and monitoring.',
+        mgdAmount:'€14', mgdSub:'per person',
+        mgdCta:'Request managed operation',
+
+        mgdScope:'complete', mgdOps:'by EU Cowork AI', mgdUpdates:'included',
+        mgdUsage:'credit included', mgdKeys:'dedicated Swiss instance', mgdSwitch:'to self-hosting possible',
+        mgdNote:'Includes €8 of model credit per person, shared in your organisation’s pool.',
+
+        bandTitle:'No stripped-down edition.',
+        bandText:'Both paths include the same complete feature set: models and web search, files and agents, roles and groups, audit log, central budgets, enterprise login and integrations. There is no second edition, no seat limit and no feature behind a gate — not even when you run it yourself.',
+        linkFeatures:'Features →', linkGovernance:'Governance →', linkIntegrations:'Integrations →',
+        linkSelfhosting:'Self-hosting →', linkDocs:'Documentation →',
+
+        supTitle:'Support for self-hosting',
+        sup1Title:'Documentation and public channels', sup1Price:'€0',
+        sup1Text:'For teams that handle installation and operations themselves.',
+        sup1Link:'To the documentation →',
+        sup2Title:'Personal support', sup2Price:'On request',
+        sup2Text:'Committed response times and a named contact person for your installation.',
+        sup2Cta:'Request a call',
+
+        faqTitle:'Frequently asked questions',
+        faq1q:'What does self-hosting cost?',
+        faq1a:'Nothing for the software itself. Costs arise outside of it: the server the stack runs on, and the model usage you settle directly with your provider. At idle, the base stack uses around 0.7 GB of memory, and a shared VM carries several instances. The measured figures and the sizing guidance are documented under',
+        faq1link:'Self-hosting', faq1b:'.',
+        faq2q:'What is included in managed operation?',
+        faq2a:'A dedicated instance in an ISO 27001-certified data centre in Switzerland, plus operations, updates, backups and monitoring. It also includes a monthly model credit available to the entire organisation as a shared pool rather than capped per head. Once it is used up, access is blocked rather than quietly billed on.',
+        faq3q:'Is the feature set identical?',
+        faq3a:'Yes, entirely. There is no second edition with additional features, no seat limit and no forced branding. Permission management down to tool level, audit log, central budgets and enterprise login are part of the scope in both operating models. What that means in detail is documented under',
+        faq3link:'Governance', faq3b:'.',
+        faq4q:'Can I switch between the operating models later?',
+        faq4a:'Yes, in both directions. Both paths use the same architecture, so switching is a migration rather than a new rollout: conversations, accounts, settings and uploads come along. The procedure is documented under',
+        faq4link:'Backup and migration', faq4b:'.',
+
+        ctaTitle:'Which operating model suits your company?',
+        ctaPrimary:'Request managed operation', ctaSecondary:'View self-hosting'
+      },
+      fr: {
+        heroH1a:'Un seul logiciel.', heroH1b:'Deux modes d’exploitation.',
+        heroLede:'Vous disposez toujours de l’ensemble des fonctionnalités. Vous décidez uniquement qui en assure l’exploitation.',
+
+        selfTitle:'Exploiter vous-même',
+        selfLede:'Le logiciel s’exécute sur votre infrastructure. La base de données, les clés et l’exploitation restent entièrement chez vous.',
+        selfAmount:'0 €', perMonth:'/mois',
+        selfSub:'coût du logiciel, définitif',
+        selfStatus:'Après la publication du code source',
+        selfCta:'Être informé de la publication',
+
+        rowScope:'Fonctionnalités', rowOps:'Exploitation', rowUpdates:'Mises à jour et sauvegardes',
+        rowUsage:'Consommation des modèles', rowKeys:'Base de données et clés', rowSwitch:'Changement',
+
+        selfScope:'complètes', selfOps:'par votre service informatique', selfUpdates:'par votre service informatique',
+        selfUsage:'directement auprès du fournisseur', selfKeys:'chez vous', selfSwitch:'possible vers l’exploitation gérée',
+        selfNote:'Vous réglez le serveur et la consommation des modèles directement auprès des fournisseurs concernés.',
+
+        mgdTitle:'Faire exploiter',
+        mgdLede:'Le même logiciel sur votre propre instance suisse. Nous assurons l’exploitation, les mises à jour, les sauvegardes et la surveillance.',
+        mgdAmount:'14 €', mgdSub:'par personne',
+        mgdCta:'Demander l’exploitation gérée',
+
+        mgdScope:'complètes', mgdOps:'par EU Cowork AI', mgdUpdates:'incluses',
+        mgdUsage:'crédit inclus', mgdKeys:'instance suisse dédiée', mgdSwitch:'possible vers l’auto-hébergement',
+        mgdNote:'Crédit de modèles de 8 € par personne inclus, mutualisé dans le pool de votre organisation.',
+
+        bandTitle:'Aucune version allégée.',
+        bandText:'Les deux modes comprennent les mêmes fonctionnalités complètes : modèles et recherche web, fichiers et agents, rôles et groupes, journal d’audit, budgets centralisés, authentification d’entreprise et intégrations. Il n’existe pas de seconde édition, pas de limite de sièges et aucune fonction derrière une barrière — pas même en auto-hébergement.',
+        linkFeatures:'Fonctionnalités →', linkGovernance:'Gouvernance →', linkIntegrations:'Intégrations →',
+        linkSelfhosting:'Auto-hébergement →', linkDocs:'Documentation →',
+
+        supTitle:'Assistance pour l’auto-hébergement',
+        sup1Title:'Documentation et canaux publics', sup1Price:'0 €',
+        sup1Text:'Pour les équipes qui assurent elles-mêmes l’installation et l’exploitation.',
+        sup1Link:'Vers la documentation →',
+        sup2Title:'Assistance personnalisée', sup2Price:'Sur demande',
+        sup2Text:'Des délais de réaction garantis et un interlocuteur désigné pour votre installation.',
+        sup2Cta:'Demander un entretien',
+
+        faqTitle:'Questions fréquentes',
+        faq1q:'Quels coûts l’auto-hébergement entraîne-t-il ?',
+        faq1a:'Aucun pour le logiciel lui-même. Les coûts se situent à l’extérieur : le serveur sur lequel tourne la pile logicielle et la consommation des modèles, que vous réglez directement auprès de votre fournisseur. Au repos, la pile de base occupe environ 0,7 Go de mémoire vive et une VM partagée héberge plusieurs instances. Les valeurs mesurées et le dimensionnement figurent sous',
+        faq1link:'Auto-hébergement', faq1b:'.',
+        faq2q:'Que comprend l’exploitation gérée ?',
+        faq2a:'Une instance dédiée dans un centre de données certifié ISO 27001 en Suisse, ainsi que l’exploitation, les mises à jour, les sauvegardes et la surveillance. S’y ajoute un crédit de modèles mensuel mis à la disposition de toute l’organisation en commun, au lieu d’être plafonné par personne. Une fois épuisé, l’accès est bloqué plutôt que facturé en silence.',
+        faq3q:'Les fonctionnalités sont-elles identiques ?',
+        faq3a:'Oui, entièrement. Il n’existe pas de seconde édition dotée de fonctions supplémentaires, pas de limite de sièges ni de marque imposée. La gestion des droits jusqu’au niveau des outils, le journal d’audit, les budgets centralisés et l’authentification d’entreprise font partie des deux modes d’exploitation. Le détail figure sous',
+        faq3link:'Gouvernance', faq3b:'.',
+        faq4q:'Puis-je changer de mode d’exploitation par la suite ?',
+        faq4a:'Oui, dans les deux sens. Les deux modes reposent sur la même architecture : le changement est donc une migration et non un nouveau déploiement, et les conversations, les comptes, les réglages et les fichiers importés suivent. La procédure figure sous',
+        faq4link:'Sauvegarde et migration', faq4b:'.',
+
+        ctaTitle:'Quel mode d’exploitation convient à votre entreprise ?',
+        ctaPrimary:'Demander l’exploitation gérée', ctaSecondary:'Découvrir l’auto-hébergement'
+      },
+      it: {
+        heroH1a:'Un solo software.', heroH1b:'Due modalità di esercizio.',
+        heroLede:'Riceve sempre l’intera gamma di funzioni. Decide soltanto chi si occupa dell’esercizio.',
+
+        selfTitle:'Gestione autonoma',
+        selfLede:'Il software viene eseguito sulla Sua infrastruttura. Banca dati, chiavi ed esercizio restano interamente presso di Lei.',
+        selfAmount:'0 €', perMonth:'/mese',
+        selfSub:'costo del software, definitivo',
+        selfStatus:'Dopo la pubblicazione del codice sorgente',
+        selfCta:'Essere informati della pubblicazione',
+
+        rowScope:'Gamma di funzioni', rowOps:'Esercizio', rowUpdates:'Aggiornamenti e backup',
+        rowUsage:'Consumo dei modelli', rowKeys:'Banca dati e chiavi', rowSwitch:'Passaggio',
+
+        selfScope:'completa', selfOps:'a cura del Suo reparto IT', selfUpdates:'a cura del Suo reparto IT',
+        selfUsage:'direttamente presso il fornitore', selfKeys:'presso di Lei', selfSwitch:'possibile verso l’esercizio gestito',
+        selfNote:'Il server e il consumo dei modelli li regola direttamente con i rispettivi fornitori.',
+
+        mgdTitle:'Esercizio gestito',
+        mgdLede:'Lo stesso software su un’istanza svizzera dedicata. Esercizio, aggiornamenti, backup e monitoraggio sono a nostro carico.',
+        mgdAmount:'14 €', mgdSub:'per persona',
+        mgdCta:'Richiedere l’esercizio gestito',
+
+        mgdScope:'completa', mgdOps:'a cura di EU Cowork AI', mgdUpdates:'inclusi',
+        mgdUsage:'credito incluso', mgdKeys:'istanza svizzera dedicata', mgdSwitch:'possibile verso la gestione autonoma',
+        mgdNote:'Incluso un credito modelli di 8 € per persona, condiviso nel pool della Sua organizzazione.',
+
+        bandTitle:'Nessuna versione ridotta.',
+        bandText:'Entrambe le modalità comprendono la stessa gamma completa di funzioni: modelli e ricerca web, file e agenti, ruoli e gruppi, registro di audit, budget centralizzati, login aziendale e integrazioni. Non esiste una seconda edizione, non vi è alcun limite di postazioni e nessuna funzione dietro una barriera — nemmeno nella gestione autonoma.',
+        linkFeatures:'Funzioni →', linkGovernance:'Governance →', linkIntegrations:'Integrazioni →',
+        linkSelfhosting:'Self-hosting →', linkDocs:'Documentazione →',
+
+        supTitle:'Supporto per la gestione autonoma',
+        sup1Title:'Documentazione e canali pubblici', sup1Price:'0 €',
+        sup1Text:'Per i team che si occupano autonomamente di installazione ed esercizio.',
+        sup1Link:'Alla documentazione →',
+        sup2Title:'Supporto personale', sup2Price:'Su richiesta',
+        sup2Text:'Tempi di reazione garantiti e una persona di riferimento designata per la Sua installazione.',
+        sup2Cta:'Richiedere un colloquio',
+
+        faqTitle:'Domande frequenti',
+        faq1q:'Quali costi comporta la gestione autonoma?',
+        faq1a:'Per il software in sé nessuno. I costi sorgono all’esterno: il server su cui gira lo stack e il consumo dei modelli, che regola direttamente con il Suo fornitore. A riposo lo stack di base occupa circa 0,7 GB di memoria e una VM condivisa ospita più istanze. I valori misurati e il dimensionamento sono riportati alla pagina',
+        faq1link:'Self-hosting', faq1b:'.',
+        faq2q:'Che cosa comprende l’esercizio gestito?',
+        faq2a:'Un’istanza dedicata in un centro di calcolo certificato ISO 27001 in Svizzera, oltre a esercizio, aggiornamenti, backup e monitoraggio. È incluso inoltre un credito modelli mensile a disposizione dell’intera organizzazione in comune, anziché limitato pro capite. Una volta esaurito, l’accesso viene bloccato anziché fatturato in silenzio.',
+        faq3q:'La gamma di funzioni è identica?',
+        faq3a:'Sì, del tutto. Non esiste una seconda edizione con funzioni aggiuntive, non vi è alcun limite di postazioni né un marchio imposto. Gestione dei diritti fino al livello dei singoli strumenti, registro di audit, budget centralizzati e login aziendale rientrano in entrambe le modalità di esercizio. Che cosa significhi nel dettaglio è illustrato alla pagina',
+        faq3link:'Governance', faq3b:'.',
+        faq4q:'È possibile passare in seguito da una modalità all’altra?',
+        faq4a:'Sì, in entrambe le direzioni. Le due modalità condividono la stessa architettura, perciò il passaggio è un trasloco e non una nuova introduzione: conversazioni, account, impostazioni e caricamenti seguono. La procedura è descritta alla pagina',
+        faq4link:'Backup e trasloco', faq4b:'.',
+
+        ctaTitle:'Quale modalità di esercizio è adatta alla Sua azienda?',
+        ctaPrimary:'Richiedere l’esercizio gestito', ctaSecondary:'Scoprire il self-hosting'
+      },
+      es: {
+        heroH1a:'Un solo software.', heroH1b:'Dos formas de operarlo.',
+        heroLede:'Usted dispone siempre del conjunto completo de funciones. Solo decide quién se encarga de la operación.',
+
+        selfTitle:'Operar usted mismo',
+        selfLede:'El software se ejecuta en su infraestructura. La base de datos, las claves y la operación permanecen íntegramente en su poder.',
+        selfAmount:'0 €', perMonth:'/mes',
+        selfSub:'coste del software, definitivo',
+        selfStatus:'Tras la publicación del código fuente',
+        selfCta:'Avisarme de la publicación',
+
+        rowScope:'Funciones', rowOps:'Operación', rowUpdates:'Actualizaciones y copias de seguridad',
+        rowUsage:'Consumo de modelos', rowKeys:'Base de datos y claves', rowSwitch:'Cambio',
+
+        selfScope:'completas', selfOps:'a cargo de su equipo de TI', selfUpdates:'a cargo de su equipo de TI',
+        selfUsage:'directamente con el proveedor', selfKeys:'en su poder', selfSwitch:'posible hacia la operación gestionada',
+        selfNote:'El servidor y el consumo de modelos los liquida usted directamente con los proveedores correspondientes.',
+
+        mgdTitle:'Operación gestionada',
+        mgdLede:'El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.',
+        mgdAmount:'14 €', mgdSub:'por persona',
+        mgdCta:'Solicitar operación gestionada',
+
+        mgdScope:'completas', mgdOps:'a cargo de EU Cowork AI', mgdUpdates:'incluidas',
+        mgdUsage:'saldo incluido', mgdKeys:'instancia suiza propia', mgdSwitch:'posible hacia la operación propia',
+        mgdNote:'Incluye un saldo de modelos de 8 € por persona, compartido en el fondo común de su organización.',
+
+        bandTitle:'Ninguna versión recortada.',
+        bandText:'Ambas formas incluyen el mismo conjunto completo de funciones: modelos y búsqueda web, archivos y agentes, roles y grupos, registro de auditoría, presupuestos centralizados, inicio de sesión corporativo e integraciones. No hay una segunda edición, ni límite de puestos, ni funciones tras una barrera, tampoco al operarlo usted mismo.',
+        linkFeatures:'Funciones →', linkGovernance:'Gobernanza →', linkIntegrations:'Integraciones →',
+        linkSelfhosting:'Self-hosting →', linkDocs:'Documentación →',
+
+        supTitle:'Soporte para la operación propia',
+        sup1Title:'Documentación y canales públicos', sup1Price:'0 €',
+        sup1Text:'Para equipos que asumen ellos mismos la instalación y la operación.',
+        sup1Link:'Ir a la documentación →',
+        sup2Title:'Soporte personal', sup2Price:'Bajo petición',
+        sup2Text:'Tiempos de respuesta comprometidos y una persona de contacto designada para su instalación.',
+        sup2Cta:'Solicitar una conversación',
+
+        faqTitle:'Preguntas frecuentes',
+        faq1q:'¿Qué costes conlleva operarlo uno mismo?',
+        faq1a:'Por el software en sí, ninguno. Los costes surgen fuera de él: el servidor en el que se ejecuta la pila y el consumo de modelos, que usted liquida directamente con su proveedor. En reposo, la pila básica ocupa unos 0,7 GB de memoria y una VM compartida alberga varias instancias. Los valores medidos y el dimensionamiento figuran en',
+        faq1link:'Self-hosting', faq1b:'.',
+        faq2q:'¿Qué incluye la operación gestionada?',
+        faq2a:'Una instancia propia en un centro de datos certificado según ISO 27001 en Suiza, además de operación, actualizaciones, copias de seguridad y supervisión. Se incluye asimismo un saldo mensual de modelos a disposición conjunta de toda la organización, en lugar de limitarse por persona. Una vez agotado, el acceso se bloquea en lugar de seguir facturándose en silencio.',
+        faq3q:'¿El conjunto de funciones es idéntico?',
+        faq3a:'Sí, por completo. No hay una segunda edición con funciones adicionales, ni límite de puestos, ni marca impuesta. La gestión de permisos hasta el nivel de cada herramienta, el registro de auditoría, los presupuestos centralizados y el inicio de sesión corporativo forman parte de ambas formas de operación. Lo que ello significa en detalle figura en',
+        faq3link:'Gobernanza', faq3b:'.',
+        faq4q:'¿Puedo cambiar más adelante entre ambas formas de operación?',
+        faq4a:'Sí, en ambos sentidos. Las dos formas emplean la misma arquitectura, de modo que el cambio es una migración y no una nueva implantación: las conversaciones, las cuentas, los ajustes y los archivos subidos se trasladan con usted. El procedimiento figura en',
+        faq4link:'Copia de seguridad y migración', faq4b:'.',
+
+        ctaTitle:'¿Qué forma de operación encaja con su empresa?',
+        ctaPrimary:'Solicitar operación gestionada', ctaSecondary:'Ver el self-hosting'
+      }
+    };
+  }
+  componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
+  componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
+  renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de }; }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/preise#webpage",
+  "url": "https://eucowork.ai/preise",
+  "name": "Preise: selbst betreiben oder betreiben lassen",
+  "inLanguage": "es",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "Eine Software, zwei Betriebswege: Selbstbetrieb nach Veröffentlichung des Quellcodes kostenlos, betreuter Betrieb in der Schweiz für 14 € pro Person und Monat.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Preise", "item": "https://eucowork.ai/preise" }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "EU Cowork AI",
+  "description": "KI-Chatplattform für Unternehmen mit Rechteverwaltung bis auf Werkzeug-Ebene, Audit-Protokoll und europäischer Datenresidenz. Wahlweise selbst betrieben oder als betreute Instanz in der Schweiz. Der Funktionsumfang ist in beiden Varianten vollständig.",
+  "brand": { "@type": "Brand", "name": "EU Cowork AI" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Selbst betreiben",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/PreOrder",
+      "description": "Vollständiger Funktionsumfang ohne Seat-Limit. Der Quellcode wird nach Abschluss der Sicherheitsprüfungen veröffentlicht; Server und Modellverbrauch rechnet der Betreiber direkt mit den jeweiligen Anbietern ab.",
+      "url": "https://eucowork.ai/preise"
+    },
+    {
+      "@type": "Offer",
+      "name": "Betreiben lassen",
+      "price": "14",
+      "priceCurrency": "EUR",
+      "description": "Eigene Instanz in einem ISO-27001-zertifizierten Rechenzentrum in der Schweiz, inklusive Betrieb, Updates, Sicherungen und monatlichem Modellguthaben im Pool der Organisation. Preis pro Person und Monat.",
+      "url": "https://eucowork.ai/preise"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Welche Kosten entstehen beim Selbstbetrieb von EU Cowork AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Für die Software selbst nichts. Kosten entstehen ausserhalb: der Server, auf dem der Stack läuft, und der Modellverbrauch, den der Betreiber direkt mit seinem Anbieter abrechnet. Der Basis-Stack belegt im Leerlauf rund 0,7 GB Arbeitsspeicher, eine gemeinsame VM trägt mehrere Instanzen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist im betreuten Betrieb enthalten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Eine eigene Instanz in einem ISO-27001-zertifizierten Rechenzentrum in der Schweiz, dazu Betrieb, Updates, Sicherungen und Überwachung. Enthalten ist ausserdem ein monatliches Modellguthaben, das der ganzen Organisation gemeinsam zur Verfügung steht. Ist es aufgebraucht, wird gesperrt statt still weitergerechnet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist der Funktionsumfang in beiden Betriebswegen identisch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, vollständig. Es gibt keine zweite Ausgabe mit zusätzlichen Funktionen, kein Seat-Limit und keinen Branding-Zwang. Rechteverwaltung bis auf Werkzeug-Ebene, Audit-Protokoll, zentrale Budgets und Unternehmenslogin gehören in beiden Betriebswegen zum Umfang."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich später zwischen Selbstbetrieb und betreutem Betrieb wechseln?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, in beide Richtungen. Beide Wege nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug und keine Neueinführung: Konversationen, Konten, Einstellungen und Uploads kommen mit."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/preise",
+  "inLanguage": "es",
+  "mainEntityOfPage": { "@id": "https://eucowork.ai/preise#webpage" }
+}
+</script>
+</body>
+</html>

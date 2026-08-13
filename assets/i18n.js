@@ -156,7 +156,7 @@
       'chrome.nav.docs': 'Docs',
       'chrome.nav.blog': 'Blog',
       'chrome.cta.selfhost': 'Self-host for free',
-      'chrome.cta.waitlist': 'Únete a la lista de espera',
+      'chrome.cta.waitlist': 'Únase a la lista de espera',
       'chrome.crumb.home': 'Inicio',
       'chrome.footer.tagline': 'Su colega de IA. Se queda en Europa.',
       'chrome.footer.badge1t': 'Desplegable en cualquier lugar',
@@ -226,23 +226,127 @@
     window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
   }
 
-  var current = stored() || fromBrowser();
-  if (current) {
+  /* ------------------------- Sprache und Adresse -------------------------
+     Jede Sprache hat eine eigene Adresse: Deutsch steht auf den Wurzelpfaden,
+     die uebrigen unter /en, /fr, /it und /es. Erst dadurch kann eine
+     Suchmaschine fuenf Fassungen kennen statt einer. Daraus folgt die Regel
+     dieses Abschnitts: Die Adresse bestimmt die Sprache, nicht der Browser.
+     ----------------------------------------------------------------------- */
+
+  var PREFIX_RE = /^\/(en|fr|it|es)(?=\/|$)/;
+
+  function langFromPath(path) {
+    var m = PREFIX_RE.exec(path || '');
+    return m ? m[1] : 'de';
+  }
+
+  // Der Pfad ohne Sprachpraefix, also die deutsche Adresse derselben Seite.
+  function basePath(path) {
+    var p = String(path || '/').replace(PREFIX_RE, '');
+    return p === '' ? '/' : p;
+  }
+
+  function urlForLang(l, path) {
+    var base = basePath(path);
+    if (l === 'de') return base;
+    return base === '/' ? '/' + l : '/' + l + base;
+  }
+
+  /* Suchmaschinen duerfen nie umgeleitet werden: sie sollen genau die Sprache
+     sehen, die sie angefragt haben. Sonst landet die franzoesische Fassung
+     unter der deutschen Adresse im Index, oder die deutsche Startseite
+     verschwindet daraus. */
+  function isCrawler() {
+    return /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|quora link preview|showyoubot|outbrain|pinterest|vkshare|w3c_validator|whatsapp|telegram|lighthouse|headlesschrome/i
+      .test(navigator.userAgent || '');
+  }
+
+  var urlLang = langFromPath(location.pathname);
+  var current;
+
+  if (urlLang !== 'de') {
+    // Die Adresse ist eindeutig; sie gilt und wird auch fuer den naechsten
+    // Besuch gemerkt.
+    current = urlLang;
     persist(current);
   } else {
-    // Weder gespeichert noch per Browsersprache bestimmbar: vorlaeufig
-    // Englisch, dann fragt der Server das IP-Land ab (keine Freigabe noetig).
-    current = 'en';
-    persist('en');
-    if (typeof fetch === 'function') {
-      fetch('/api/locale').then(function (r) {
-        return r.ok ? r.json() : null;
-      }).then(function (d) {
-        if (d && SUPPORTED.indexOf(d.lang) >= 0 && d.lang !== 'en') setLang(d.lang);
-      }).catch(function () {});
+    var choice = stored();
+    current = 'de';
+    if (!isCrawler()) {
+      if (choice && choice !== 'de') {
+        location.replace(urlForLang(choice, location.pathname) + location.search + location.hash);
+      } else if (!choice) {
+        var guess = fromBrowser();
+        if (guess && guess !== 'de') {
+          persist(guess);
+          location.replace(urlForLang(guess, location.pathname) + location.search + location.hash);
+        } else if (!guess && typeof fetch === 'function') {
+          // Browsersprache passt zu keiner unserer Fassungen: das Land aus der
+          // Anfrage entscheidet. Ohne Freigabe, nur aus der IP-Adresse.
+          fetch('/api/locale').then(function (r) {
+            return r.ok ? r.json() : null;
+          }).then(function (d) {
+            if (d && SUPPORTED.indexOf(d.lang) >= 0 && d.lang !== 'de') {
+              persist(d.lang);
+              location.replace(urlForLang(d.lang, location.pathname) + location.search + location.hash);
+            }
+          }).catch(function () {});
+        }
+      }
     }
   }
   document.documentElement.lang = current;
+
+  /* ------------------------- Verweise nachziehen -------------------------
+     Kopf- und Fussleiste entstehen erst im Browser und kennen nur die
+     deutschen Adressen. Blieben sie so, verwiese die spanische Seite auf die
+     deutsche Preisseite: der Besucher macht einen Umweg ueber die Umleitung,
+     und eine Suchmaschine sieht eine spanische Seite, die nach Deutsch zeigt.
+     Deshalb bekommen alle internen Verweise das Praefix der Seite -- auch die,
+     die spaeter nachgereicht werden.
+     ----------------------------------------------------------------------- */
+
+  var NO_PREFIX = ['/docs', '/assets/', '/fonts/', '/og/', '/api/', '/vendor/'];
+  var ASSET_RE = /\.(png|jpe?g|svg|ico|webp|woff2?|xml|txt|json|css|js)$/i;
+
+  function prefixLinks(root) {
+    if (urlLang === 'de') return;
+    var links = (root || document).querySelectorAll('a[href^="/"]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var href = a.getAttribute('href');
+      if (!href || href.charAt(0) !== '/') continue;
+      if (href === '/' + urlLang || href.indexOf('/' + urlLang + '/') === 0) continue;
+      var bare = href.split('#')[0].split('?')[0];
+      if (ASSET_RE.test(bare)) continue;
+      var skip = false;
+      for (var n = 0; n < NO_PREFIX.length; n++) {
+        if (href === NO_PREFIX[n] || href.indexOf(NO_PREFIX[n]) === 0) { skip = true; break; }
+      }
+      if (skip) continue;
+      a.setAttribute('href', '/' + urlLang + (href === '/' ? '' : href));
+    }
+  }
+
+  if (urlLang !== 'de' && typeof MutationObserver !== 'undefined') {
+    var linkTimer = null;
+    new MutationObserver(function () {
+      clearTimeout(linkTimer);
+      linkTimer = setTimeout(function () { prefixLinks(document); }, 30);
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  /* Ein Sprachwechsel ist ein Seitenwechsel. Die Umschalter in Kopf- und
+     Fussleiste melden ihn nur; hierher gehoert der Sprung auf die passende
+     Adresse. */
+  window.addEventListener('eucowork:langchange', function (e) {
+    var l = e.detail;
+    if (SUPPORTED.indexOf(l) < 0) return;
+    var target = urlForLang(l, location.pathname);
+    if (target !== location.pathname) {
+      location.assign(target + location.search + location.hash);
+    }
+  });
 
   /* --------------------- Anwenden auf statische Seiten --------------------- */
 
@@ -266,6 +370,13 @@
   }
 
   function apply(lang) {
+    // Seiten unter einem Sprachpraefix werden fertig uebersetzt ausgeliefert.
+    // Dort noch einmal zu ersetzen brachte nichts und wuerde die vorhandene
+    // Fassung faelschlich als deutsches Original sichern.
+    if (urlLang !== 'de') {
+      syncSwitchers(lang);
+      return;
+    }
     var els = document.querySelectorAll('[data-i18n]');
     if (!els.length) {
       syncSwitchers(lang);
