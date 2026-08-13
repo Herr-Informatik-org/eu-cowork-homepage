@@ -15,9 +15,17 @@ uploads/
 .vercel
 .env*
 
+# Abhaengigkeiten der Serverless-Functions. package.json und package-lock.json
+# gehoeren ins Repo, der installierte Baum nicht.
+node_modules/
+
 # Doku: die Quelle wird versioniert, die Abhaengigkeiten und Zwischenstaende nicht.
 # Das Bauergebnis unter docs/ wird bewusst mitversioniert, weil die Website ohne
 # Build-Schritt per Vercel-CLI hochgeladen wird und die Doku sonst im Deployment fehlt.
 docs-src/node_modules/
 docs-src/.astro/
 docs-src/dist/
+
+# Werkzeug-Einstellungen der lokalen Entwicklungsumgebung (Dev-Server, Launch-Profile).
+# Gehoeren zur Arbeitsumgebung, nicht zur Website.
+.claude/

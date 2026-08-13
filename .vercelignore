@@ -6,7 +6,15 @@ uploads/
 .env*
 .git/
 
+# Die Abhaengigkeiten der Serverless-Functions installiert Vercel selbst aus
+# package.json/package-lock.json. Ein Mitschicken des lokalen Ordners waere
+# nutzlos und langsam, deshalb bleibt er vom CLI-Upload ausgenommen.
+node_modules/
+
 # Quelle der Doku. Gebaut wird lokal mit "npm run build" in docs-src/, das
 # Ergebnis liegt fertig in docs/ und wird von dort ausgeliefert. Die Quelle
 # selbst gehoert nicht ins Deployment (node_modules allein sind ~200 MB).
 docs-src/
+
+# Lokale Werkzeug-Einstellungen, nicht Teil der Website.
+.claude/
