@@ -330,6 +330,43 @@
     .euc-hd.is-on-dark .euc-hd-burger:hover{ background:rgba(255,255,255,.10); }
   }
 
+  /* ---------- Sprachwahl in der Leiste ---------- */
+  .euc-hd-lang{ position:relative; }
+  .euc-hd-langbtn{
+    display:inline-flex; align-items:center; gap:5px;
+    height:36px; padding:0 11px; border:1px solid #E7ECF0; border-radius:999px;
+    background:transparent; cursor:pointer;
+    font:inherit; font-size:13px; font-weight:600; letter-spacing:.04em; color:#0B1E33;
+  }
+  .euc-hd-langbtn svg{ transition:transform 160ms ease; }
+  .euc-hd-lang.is-open .euc-hd-langbtn svg{ transform:rotate(180deg); }
+  .euc-hd-langmenu{
+    position:absolute; top:calc(100% + 10px); right:0; min-width:150px;
+    background:#FFFFFF; border:1px solid #E7ECF0; border-radius:12px;
+    box-shadow:0 12px 32px rgba(11,30,51,.12); padding:6px; z-index:60;
+  }
+  .euc-hd-langmenu button{
+    display:block; width:100%; text-align:left; padding:8px 10px; border:0;
+    background:transparent; border-radius:8px; cursor:pointer;
+    font:inherit; font-size:14px; color:#0B1E33;
+  }
+  .euc-hd-langmenu button.is-current{ background:#0B1E33; color:#F7FAFC; }
+  /* Auf dunklem Grund traegt der Knopf helle Tinte; das Menue selbst bleibt
+     eine weisse Karte und braucht keine Umkehr. */
+  .euc-hd.is-on-dark .euc-hd-langbtn{ border-color:rgba(255,255,255,.28); color:#F7FAFC; }
+  .euc-hd-sheet-langs{ display:flex; gap:8px; margin-top:30px; }
+  .euc-hd-sheet-langs button{
+    flex:1; height:44px; border:1px solid #E7ECF0; border-radius:10px;
+    background:transparent; font:inherit; font-size:14px; font-weight:600; color:#0B1E33; cursor:pointer;
+  }
+  .euc-hd-sheet-langs button.is-current{ background:#0B1E33; border-color:#0B1E33; color:#F7FAFC; }
+  @media (hover:hover) and (pointer:fine){
+    .euc-hd-langbtn:hover{ border-color:#9FB0C0; }
+    .euc-hd.is-on-dark .euc-hd-langbtn:hover{ border-color:rgba(255,255,255,.5); }
+    .euc-hd-langmenu button:hover{ background:rgba(11,30,51,.06); }
+    .euc-hd-langmenu button.is-current:hover{ background:#0B1E33; }
+  }
+
   /* Milchglas ist Zierde, nicht Voraussetzung: ohne backdrop-filter und bei
      reduzierter Transparenz wird die Leiste deckend. */
   @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
@@ -372,6 +409,18 @@
     </nav>
 
     <div class="euc-hd-cta">
+      <div class="euc-hd-lang {{ langWrapCls }}">
+        <button type="button" onClick="{{ toggleLang }}" aria-label="{{ langAria }}" class="euc-hd-langbtn">{{ langCode }}
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+          <div class="euc-hd-langmenu">
+            <sc-for list="{{ langItems }}" as="l" hint-placeholder-count="5">
+              <button type="button" data-lang="{{ l.id }}" onClick="{{ pickLang }}" class="{{ l.cls }}">{{ l.name }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
       <a href="{{ secondaryHref }}" class="euc-btn is-secondary is-nav euc-hd-btn2">{{ secondaryLabel }}</a>
       <a href="{{ primaryHref }}" class="euc-btn is-primary is-nav">{{ primaryLabel }}</a>
     </div>
@@ -396,6 +445,11 @@
           <a href="{{ item.href }}" onClick="{{ closeMenu }}">{{ item.label }}</a>
         </sc-for>
       </nav>
+      <div class="euc-hd-sheet-langs">
+        <sc-for list="{{ langItems }}" as="l" hint-placeholder-count="5">
+          <button type="button" data-lang="{{ l.id }}" onClick="{{ pickLang }}" class="{{ l.cls }}">{{ l.code }}</button>
+        </sc-for>
+      </div>
       <div class="euc-hd-sheet-cta">
         <a href="{{ primaryHref }}" onClick="{{ closeMenu }}" class="euc-btn is-primary is-hero">{{ primaryLabel }}</a>
         <a href="{{ secondaryHref }}" onClick="{{ closeMenu }}" class="euc-btn is-secondary is-hero">{{ secondaryLabel }}</a>
@@ -415,7 +469,13 @@ class Component extends DCLogic {
     this.headerRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     const initMobile = (typeof window !== 'undefined' && window.innerWidth < 940) || false;
-    this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile, onDark: false };
+    this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile, onDark: false, langOpen: false };
+    // Klick ausserhalb der Leiste klappt das Sprachmenue zu.
+    this._onDocDown = (e) => {
+      if (this.state.langOpen && this.headerRef.current && !this.headerRef.current.contains(e.target)) {
+        this.setState({ langOpen: false });
+      }
+    };
     // Feuert nur beim Überschreiten der Schwelle, nicht bei jedem Scroll-Tick.
     this._onScroll = () => {
       const s = window.scrollY > 8;
@@ -436,6 +496,7 @@ class Component extends DCLogic {
     window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onResize);
     window.addEventListener('eucowork:langchange', this._onLang);
+    document.addEventListener('pointerdown', this._onDocDown);
     this._onScroll();
     this._findDarkSections(0);
   }
@@ -443,6 +504,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('eucowork:langchange', this._onLang);
+    document.removeEventListener('pointerdown', this._onDocDown);
     clearTimeout(this._darkFindT);
     clearTimeout(this._darkResizeT);
     if (this._darkIo) this._darkIo.disconnect();
@@ -488,12 +550,24 @@ class Component extends DCLogic {
     const lang = this.state.lang || 'de';
     const onLanding = this.props.onLanding === true;
     const active = this.props.activeNav || 'home';
-    const T = {
+    const TT = {
       de: { pricing:'Preise', docs:'Docs', blog:'Blog',
-            primary:'Auf die Warteliste', secondary:'Self-host for free' },
+            primary:'Auf die Warteliste', secondary:'Self-host for free',
+            langAria:'Sprache wählen' },
       en: { pricing:'Pricing', docs:'Docs', blog:'Blog',
-            primary:'Join the waitlist', secondary:'Self-host for free' }
-    }[lang];
+            primary:'Join the waitlist', secondary:'Self-host for free',
+            langAria:'Choose language' },
+      fr: { pricing:'Tarifs', docs:'Docs', blog:'Blog',
+            primary:'Rejoindre la liste d’attente', secondary:'Self-host for free',
+            langAria:'Choisir la langue' },
+      it: { pricing:'Prezzi', docs:'Docs', blog:'Blog',
+            primary:'Iscriviti alla lista d’attesa', secondary:'Self-host for free',
+            langAria:'Scegliere la lingua' },
+      es: { pricing:'Precios', docs:'Docs', blog:'Blog',
+            primary:'Únete a la lista de espera', secondary:'Self-host for free',
+            langAria:'Elegir idioma' }
+    };
+    const T = TT[lang] || TT.de;
     /* Schlanke Hauptnavigation: alles Erklärende liegt auf der Startseite
        selbst, in der Doku oder im Blog. Die übrigen Seiten (Governance,
        Vergleich, FAQ, Self-Host ...) bleiben bestehen und sind über die
@@ -503,7 +577,13 @@ class Component extends DCLogic {
       { key:'docs',        label:T.docs,           href: '/docs' },
       { key:'blog',        label:T.blog,           href: '/blog' }
     ].map(n => ({ ...n, cls: n.key === active ? 'is-active' : '' }));
-    const isDe = lang === 'de';
+    const LANGS = [
+      { id:'de', name:'Deutsch' },
+      { id:'en', name:'English' },
+      { id:'fr', name:'Français' },
+      { id:'it', name:'Italiano' },
+      { id:'es', name:'Español' }
+    ];
     return {
       brand: this.BRAND,
       brandMain: this.BRAND_MAIN,
@@ -521,10 +601,20 @@ class Component extends DCLogic {
       secondaryHref: this.SELFHOST,
       toggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }),
       closeMenu: () => this.setState({ menuOpen: false }),
-      toDe: () => this.setLang('de'),
-      toEn: () => this.setLang('en'),
-      deBg: isDe ? '#0B1E33' : 'transparent', deFg: isDe ? '#F7FAFC' : '#5A6472',
-      enBg: !isDe ? '#0B1E33' : 'transparent', enFg: !isDe ? '#F7FAFC' : '#5A6472'
+      langCode: (lang || 'de').toUpperCase(),
+      langOpen: this.state.langOpen,
+      langWrapCls: this.state.langOpen ? 'is-open' : '',
+      langAria: T.langAria,
+      toggleLang: () => this.setState({ langOpen: !this.state.langOpen }),
+      pickLang: (e) => {
+        const c = e.currentTarget.getAttribute('data-lang');
+        this.setLang(c);
+        this.setState({ langOpen: false, menuOpen: false });
+      },
+      langItems: LANGS.map(L => ({
+        id: L.id, code: L.id.toUpperCase(), name: L.name,
+        cls: L.id === lang ? 'is-current' : ''
+      }))
     };
   }
 }

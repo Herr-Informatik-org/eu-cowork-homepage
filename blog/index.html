@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Blog | EU Cowork AI</title>
+<title data-i18n="meta.title">Blog | EU Cowork AI</title>
 <meta name="description" content="Notizen zur Entwicklung von EU Cowork AI: Entscheidungen, Messwerte und was wir beim Betrieb einer selbst gehosteten KI-Plattform gelernt haben.">
 <link rel="canonical" href="https://eucowork.ai/blog">
 
@@ -28,11 +28,12 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
 </head>
 <body>
 
-<a class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Zum Inhalt springen</a>
 
 <!-- ==================== HEADER (unverändert übernehmen) ==================== -->
 <header class="euc-header">
@@ -45,24 +46,26 @@
   </a>
 
   <nav class="euc-nav" aria-label="Hauptnavigation">
-    <a href="/preise">Preise</a>
-    <a href="/docs">Docs</a>
-    <a href="/blog" aria-current="page">Blog</a>
+    <a href="/preise" data-i18n="chrome.nav.pricing">Preise</a>
+    <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/blog" aria-current="page" data-i18n="chrome.nav.blog">Blog</a>
   </nav>
 
   <div class="euc-header-cta">
-    <a class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
-    <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+    <a class="euc-btn-primary" href="/warteliste" data-i18n="chrome.cta.waitlist">Auf die Warteliste</a>
   </div>
 
   <details class="euc-mob">
     <summary aria-label="Menü"><span></span><span></span><span></span></summary>
     <div class="euc-mob-panel">
-      <a href="/preise">Preise</a>
-      <a href="/docs">Docs</a>
-      <a href="/blog">Blog</a>
-      <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
-      <a class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
+      <a href="/preise" data-i18n="chrome.nav.pricing">Preise</a>
+      <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/warteliste" data-i18n="chrome.cta.waitlist">Auf die Warteliste</a>
+      <a class="euc-btn-secondary" href="/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
     </div>
   </details>
 </header>
@@ -73,51 +76,51 @@
   <div class="euc-wrap">
     <nav class="euc-breadcrumb" aria-label="Brotkrumen">
       <ol>
-        <li><a href="/">Start</a></li>
-        <li><span aria-current="page">Blog</span></li>
+        <li><a href="/" data-i18n="chrome.crumb.home">Start</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">Blog</span></li>
       </ol>
     </nav>
   </div>
 
   <!-- ==================== HERO ==================== -->
   <section class="euc-wrap euc-hero">
-    <p class="euc-eyebrow">Notizen aus der Entwicklung</p>
+    <p class="euc-eyebrow" data-i18n="hero.eyebrow">Notizen aus der Entwicklung</p>
 
-    <h1>Blog</h1>
+    <h1 data-i18n="hero.h1">Blog</h1>
 
-    <p class="euc-lead">Hier schreiben wir auf, was wir beim Bauen und Betreiben einer selbst gehosteten KI-Plattform lernen: Entscheidungen und ihre Gründe, gemessene Werte statt Schätzungen, und die Stellen, an denen es nicht so lief wie geplant.</p>
+    <p class="euc-lead" data-i18n="hero.lead">Hier schreiben wir auf, was wir beim Bauen und Betreiben einer selbst gehosteten KI-Plattform lernen: Entscheidungen und ihre Gründe, gemessene Werte statt Schätzungen, und die Stellen, an denen es nicht so lief wie geplant.</p>
   </section>
 
   <!-- ==================== LEERER ZUSTAND ==================== -->
   <div class="euc-wrap">
     <section class="euc-section">
-      <p><strong>Noch keine Beiträge.</strong> Der erste Artikel entsteht gerade. Bis dahin steht das meiste, was wir wissen, bereits in der Dokumentation, samt Messwerten und den offenen Punkten.</p>
+      <p data-i18n="empty.intro"><strong>Noch keine Beiträge.</strong> Der erste Artikel entsteht gerade. Bis dahin steht das meiste, was wir wissen, bereits in der Dokumentation, samt Messwerten und den offenen Punkten.</p>
 
-      <p>Was hier künftig steht:</p>
+      <p data-i18n="empty.next">Was hier künftig steht:</p>
 
       <div class="euc-cards">
         <div class="euc-card">
-          <h3>Entscheidungen mit Begründung</h3>
-          <p>Warum wir auf LibreChat aufsetzen, warum das Rechte-Gateway eine eigene Schicht ist und warum die Mandantengrenze der Compose-Stack ist und nicht die virtuelle Maschine.</p>
+          <h3 data-i18n="card1.t">Entscheidungen mit Begründung</h3>
+          <p data-i18n="card1.p">Warum wir auf LibreChat aufsetzen, warum das Rechte-Gateway eine eigene Schicht ist und warum die Mandantengrenze der Compose-Stack ist und nicht die virtuelle Maschine.</p>
         </div>
         <div class="euc-card">
-          <h3>Zahlen aus dem Betrieb</h3>
-          <p>Was eine Instanz wirklich an Arbeitsspeicher braucht, was ein Werkzeug-Katalog an Kontext kostet und wohin die Token tatsächlich gehen.</p>
+          <h3 data-i18n="card2.t">Zahlen aus dem Betrieb</h3>
+          <p data-i18n="card2.p">Was eine Instanz wirklich an Arbeitsspeicher braucht, was ein Werkzeug-Katalog an Kontext kostet und wohin die Token tatsächlich gehen.</p>
         </div>
         <div class="euc-card">
-          <h3>Was schiefging</h3>
-          <p>Fehlerbilder, die uns Zeit gekostet haben, und was man tun muss, damit sie einem selbst erspart bleiben.</p>
+          <h3 data-i18n="card3.t">Was schiefging</h3>
+          <p data-i18n="card3.p">Fehlerbilder, die uns Zeit gekostet haben, und was man tun muss, damit sie einem selbst erspart bleiben.</p>
         </div>
       </div>
 
-      <p>Bis der erste Beitrag steht: die <a class="euc-textlink" href="/docs">Dokumentation</a> beantwortet die meisten technischen Fragen bereits. Über die <a class="euc-textlink" href="/warteliste">Warteliste</a> melden wir uns, sobald es Neues gibt.</p>
+      <p data-i18n="empty.outro">Bis der erste Beitrag steht: die <a class="euc-textlink" href="/docs">Dokumentation</a> beantwortet die meisten technischen Fragen bereits. Über die <a class="euc-textlink" href="/warteliste">Warteliste</a> melden wir uns, sobald es Neues gibt.</p>
 
       <nav class="euc-weiter" aria-label="Weiterführende Seiten">
-        <p class="euc-weiter-titel">Weiter</p>
+        <p class="euc-weiter-titel" data-i18n="weiter.titel">Weiter</p>
         <ul>
-          <li><a href="/docs">Die vollständige Dokumentation, auf Deutsch und Englisch</a></li>
-          <li><a href="/docs/erste-schritte/systemanforderungen">Was eine Instanz an Arbeitsspeicher und Platz braucht, mit gemessenen Werten</a></li>
-          <li><a href="/docs/konnektoren/muster">Wie eine Firma eigene Systeme anbindet, in drei Bauformen</a></li>
+          <li><a href="/docs" data-i18n="weiter.l1">Die vollständige Dokumentation, auf Deutsch und Englisch</a></li>
+          <li><a href="/docs/erste-schritte/systemanforderungen" data-i18n="weiter.l2">Was eine Instanz an Arbeitsspeicher und Platz braucht, mit gemessenen Werten</a></li>
+          <li><a href="/docs/konnektoren/muster" data-i18n="weiter.l3">Wie eine Firma eigene Systeme anbindet, in drei Bauformen</a></li>
         </ul>
       </nav>
     </section>
@@ -137,7 +140,7 @@
           </svg>
           <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
         </div>
-        <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
 
         <div class="euc-badges">
           <div class="euc-badge">
@@ -150,23 +153,23 @@
               </svg>
             </span>
             <div>
-              <div class="euc-badge-t">Überall betreibbar</div>
-              <div class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Überall betreibbar</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managed, eigene Cloud oder On-Prem</div>
             </div>
           </div>
           <div class="euc-badge">
             <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
             <div>
-              <div class="euc-badge-t">DSGVO-konform</div>
-              <div class="euc-badge-s">EU-Verarbeitung</div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">DSGVO-konform</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">EU-Verarbeitung</div>
             </div>
           </div>
-          <a class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+          <a class="euc-footer-more" href="/sicherheit" data-i18n="chrome.footer.more">Mehr zur Sicherheit</a>
         </div>
 
         <div class="euc-status">
           <span class="euc-status-dot"><i></i><b></b></span>
-          <span>Betriebsbereit</span>
+          <span data-i18n="chrome.footer.status">Betriebsbereit</span>
           <span class="euc-status-sep">·</span>
           <span class="euc-status-loc">Lupfig</span>
         </div>
@@ -174,41 +177,41 @@
 
       <div class="euc-footer-cols">
         <div class="euc-footer-col">
-          <p class="euc-footer-coltitle">Produkt</p>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Produkt</p>
           <nav>
-            <a href="/#funktionen">Funktionen</a>
-            <a href="/#souveraenitaet">Souveränität</a>
-            <a href="/preise">Preise</a>
-            <a href="/self-hosting">Self-Host</a>
-            <a href="/integrationen">Integrationen</a>
+            <a href="/#funktionen" data-i18n="chrome.footer.link.features">Funktionen</a>
+            <a href="/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Souveränität</a>
+            <a href="/preise" data-i18n="chrome.footer.link.pricing">Preise</a>
+            <a href="/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/integrationen" data-i18n="chrome.footer.link.integrations">Integrationen</a>
           </nav>
         </div>
         <div class="euc-footer-col">
-          <p class="euc-footer-coltitle">Wissen</p>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.know">Wissen</p>
           <nav>
-            <a href="/faq">FAQ</a>
-            <a href="/docs">Docs</a>
-            <a href="/blog">Blog</a>
-            <a href="/vergleich">Vergleich</a>
-            <a href="/governance">Governance</a>
-            <a href="/vision">Vision</a>
+            <a href="/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs" data-i18n="chrome.footer.link.docs">Docs</a>
+            <a href="/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/vergleich" data-i18n="chrome.footer.link.comparison">Vergleich</a>
+            <a href="/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/vision" data-i18n="chrome.footer.link.vision">Vision</a>
           </nav>
         </div>
         <div class="euc-footer-col">
-          <p class="euc-footer-coltitle">Trust</p>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
           <nav>
-            <a href="/sicherheit">Security &amp; Trust</a>
-            <a href="/avv">AVV</a>
-            <a href="/sicherheit#toms">TOMs</a>
-            <a href="/subprozessoren">Subprozessoren</a>
+            <a href="/sicherheit" data-i18n="chrome.footer.link.security">Security &amp; Trust</a>
+            <a href="/avv" data-i18n="chrome.footer.link.avv">AVV</a>
+            <a href="/sicherheit#toms" data-i18n="chrome.footer.link.toms">TOMs</a>
+            <a href="/subprozessoren" data-i18n="chrome.footer.link.subs">Subprozessoren</a>
           </nav>
         </div>
         <div class="euc-footer-col">
-          <p class="euc-footer-coltitle">Rechtliches</p>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Rechtliches</p>
           <nav>
-            <a href="/impressum">Impressum</a>
-            <a href="/datenschutz">Datenschutz</a>
-            <a href="/agb">AGB</a>
+            <a href="/impressum" data-i18n="chrome.footer.link.imprint">Impressum</a>
+            <a href="/datenschutz" data-i18n="chrome.footer.link.privacy">Datenschutz</a>
+            <a href="/agb" data-i18n="chrome.footer.link.terms">AGB</a>
           </nav>
         </div>
       </div>
@@ -217,8 +220,8 @@
     <div class="euc-footer-rule"></div>
 
     <div class="euc-footer-bottom">
-      <span class="euc-rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
-      <span class="euc-built">Built on LibreChat · MIT</span>
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
+      <span class="euc-built" data-i18n="chrome.footer.built">Built on LibreChat · MIT</span>
     </div>
   </div>
 </footer>
@@ -246,6 +249,91 @@
     }
   ]
 }
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    'meta.title': 'Blog | EU Cowork AI',
+    'crumb.current': 'Blog',
+    'hero.eyebrow': 'Notes from development',
+    'hero.h1': 'Blog',
+    'hero.lead': 'This is where we write down what we learn while building and running a self-hosted AI platform: decisions and the reasons behind them, measured figures instead of estimates, and the points where things did not go as planned.',
+    'empty.intro': '<strong>No posts yet.</strong> The first article is being written. Until then, most of what we know is already in the documentation, including measured figures and open issues.',
+    'empty.next': 'What will appear here:',
+    'card1.t': 'Decisions, with reasoning',
+    'card1.p': 'Why we build on LibreChat, why the permission gateway is a layer of its own, and why the tenant boundary is the Compose stack and not the virtual machine.',
+    'card2.t': 'Figures from live operation',
+    'card2.p': 'How much memory an instance really needs, how much context a tool catalogue costs, and where the tokens actually go.',
+    'card3.t': 'What went wrong',
+    'card3.p': 'Failure patterns that cost us time, and what to do so that you are spared them.',
+    'empty.outro': 'Until the first post is published: the <a class="euc-textlink" href="/docs">documentation</a> already answers most technical questions. Via the <a class="euc-textlink" href="/warteliste">waitlist</a> we will get in touch as soon as there is news.',
+    'weiter.titel': 'Next',
+    'weiter.l1': 'The full documentation, in German and English',
+    'weiter.l2': 'How much memory and disk space an instance needs, with measured figures',
+    'weiter.l3': 'How a company connects its own systems, in three architectures'
+  },
+  fr: {
+    'meta.title': 'Blog | EU Cowork AI',
+    'crumb.current': 'Blog',
+    'hero.eyebrow': 'Notes de développement',
+    'hero.h1': 'Blog',
+    'hero.lead': 'Nous consignons ici ce que nous apprenons en concevant et en exploitant une plateforme d’IA auto-hébergée : les décisions et leurs raisons, des valeurs mesurées plutôt que des estimations, et les points où les choses ne se sont pas passées comme prévu.',
+    'empty.intro': '<strong>Aucun article pour l’instant.</strong> Le premier est en cours de rédaction. D’ici là, l’essentiel de ce que nous savons figure déjà dans la documentation, mesures et points ouverts compris.',
+    'empty.next': 'Ce que vous trouverez ici à l’avenir :',
+    'card1.t': 'Des décisions justifiées',
+    'card1.p': 'Pourquoi nous nous appuyons sur LibreChat, pourquoi la passerelle de droits constitue une couche distincte et pourquoi la frontière entre clients est la pile Compose et non la machine virtuelle.',
+    'card2.t': 'Des chiffres issus de l’exploitation',
+    'card2.p': 'Ce qu’une instance consomme réellement en mémoire vive, ce qu’un catalogue d’outils coûte en contexte et où vont réellement les jetons.',
+    'card3.t': 'Ce qui a mal tourné',
+    'card3.p': 'Les incidents qui nous ont coûté du temps, et ce qu’il faut faire pour vous les épargner.',
+    'empty.outro': 'En attendant le premier article : la <a class="euc-textlink" href="/docs">documentation</a> répond déjà à la plupart des questions techniques. Via la <a class="euc-textlink" href="/warteliste">liste d’attente</a>, nous vous informerons dès qu’il y aura du nouveau.',
+    'weiter.titel': 'Pour aller plus loin',
+    'weiter.l1': 'La documentation complète, en allemand et en anglais',
+    'weiter.l2': 'La mémoire vive et l’espace disque nécessaires à une instance, avec des valeurs mesurées',
+    'weiter.l3': 'Comment une entreprise raccorde ses propres systèmes, en trois architectures'
+  },
+  it: {
+    'meta.title': 'Blog | EU Cowork AI',
+    'crumb.current': 'Blog',
+    'hero.eyebrow': 'Note dallo sviluppo',
+    'hero.h1': 'Blog',
+    'hero.lead': 'Qui annotiamo ciò che impariamo costruendo e gestendo una piattaforma di IA self-hosted: le decisioni e le loro ragioni, valori misurati anziché stime e i punti in cui le cose non sono andate come previsto.',
+    'empty.intro': '<strong>Ancora nessun articolo.</strong> Il primo è in preparazione. Fino ad allora, gran parte di ciò che sappiamo si trova già nella documentazione, valori misurati e punti aperti compresi.',
+    'empty.next': 'Che cosa troverà qui in futuro:',
+    'card1.t': 'Decisioni motivate',
+    'card1.p': 'Perché ci basiamo su LibreChat, perché il gateway dei permessi è un livello a sé e perché il confine tra i clienti è lo stack Compose e non la macchina virtuale.',
+    'card2.t': 'Numeri dall’esercizio',
+    'card2.p': 'Quanta memoria richiede davvero un’istanza, quanto costa in contesto un catalogo di strumenti e dove finiscono realmente i token.',
+    'card3.t': 'Che cosa è andato storto',
+    'card3.p': 'Gli errori che ci sono costati tempo e che cosa fare per esserne risparmiati.',
+    'empty.outro': 'Fino al primo articolo: la <a class="euc-textlink" href="/docs">documentazione</a> risponde già alla maggior parte delle domande tecniche. Tramite la <a class="euc-textlink" href="/warteliste">lista d’attesa</a> la informiamo non appena ci sono novità.',
+    'weiter.titel': 'Continua',
+    'weiter.l1': 'La documentazione completa, in tedesco e in inglese',
+    'weiter.l2': 'Quanta memoria e quanto spazio richiede un’istanza, con valori misurati',
+    'weiter.l3': 'Come un’azienda collega i propri sistemi, in tre architetture'
+  },
+  es: {
+    'meta.title': 'Blog | EU Cowork AI',
+    'crumb.current': 'Blog',
+    'hero.eyebrow': 'Notas del desarrollo',
+    'hero.h1': 'Blog',
+    'hero.lead': 'Aquí anotamos lo que aprendemos al construir y operar una plataforma de IA autoalojada: las decisiones y sus motivos, valores medidos en lugar de estimaciones y los puntos en los que las cosas no salieron según lo previsto.',
+    'empty.intro': '<strong>Todavía no hay entradas.</strong> El primer artículo está en preparación. Hasta entonces, la mayor parte de lo que sabemos ya figura en la documentación, incluidos los valores medidos y los puntos abiertos.',
+    'empty.next': 'Lo que encontrará aquí en el futuro:',
+    'card1.t': 'Decisiones justificadas',
+    'card1.p': 'Por qué nos apoyamos en LibreChat, por qué la pasarela de permisos es una capa propia y por qué el límite entre clientes es la pila de Compose y no la máquina virtual.',
+    'card2.t': 'Cifras de la operación',
+    'card2.p': 'Cuánta memoria necesita realmente una instancia, cuánto contexto cuesta un catálogo de herramientas y adónde van realmente los tokens.',
+    'card3.t': 'Lo que salió mal',
+    'card3.p': 'Los fallos que nos costaron tiempo y lo que hay que hacer para ahorrárselos.',
+    'empty.outro': 'Hasta que se publique la primera entrada: la <a class="euc-textlink" href="/docs">documentación</a> ya responde a la mayoría de las preguntas técnicas. A través de la <a class="euc-textlink" href="/warteliste">lista de espera</a> le avisaremos en cuanto haya novedades.',
+    'weiter.titel': 'Continuar',
+    'weiter.l1': 'La documentación completa, en alemán e inglés',
+    'weiter.l2': 'Cuánta memoria y espacio en disco necesita una instancia, con valores medidos',
+    'weiter.l3': 'Cómo una empresa conecta sus propios sistemas, en tres arquitecturas'
+  }
+};
 </script>
 
 </body>

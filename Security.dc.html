@@ -22,6 +22,7 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/assets/i18n.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -193,6 +194,90 @@ class Component extends DCLogic {
         hostingBody:'Operated in ISO 27001-certified data centres by Green (Lupfig AG, Switzerland). The certifications are held by Green. EU Cowork AI’s own ISO 27001 certification is in progress.',
         note:'Note: this page is a self-declaration. Legally binding documents are linked here once finalised.',
         open:'Open →', follows:'To follow'
+      },
+      fr: {
+        eyebrow:'// Trust Center',
+        h1:'Sécurité & confiance',
+        sub:'Auto-déclaration, appuyée par de vrais documents. Chaque affirmation est étayée ou clairement signalée comme en cours.',
+        claimsTitle:'Nos engagements',
+        claims:[
+          { t:'Exploitation en Suisse', d:'Centres de données certifiés ISO 27001 de Green (Lupfig AG, Suisse). Les certificats sont détenus par Green, pas par nous.' },
+          { t:'revDSG & RGPD', d:'Protection des données suisse et européenne, garantie contractuellement.' },
+          { t:'No-training', d:'Vos données n’entraînent aucun modèle.' },
+          { t:'Télémétrie désactivée par défaut', d:'Aucun suivi sans consentement actif.' },
+          { t:'Journaux d’audit', d:'Chaque accès aux outils et aux données est traçable.' },
+          { t:'Licence MIT', d:'Aucune limite de sièges, aucun marquage imposé. Auto-hébergement gratuit dès 1 utilisateur.' }
+        ],
+        docsTitle:'Documents',
+        docsSub:'Contrats et justificatifs à consulter.',
+        docs:[
+          { name:'Contrat de sous-traitance (DPA)', meta:'Contrat · PDF', href:'/avv', pending:false },
+          { name:'Mesures techniques et organisationnelles (MTO)', meta:'Document', href:'#toms', pending:true },
+          { name:'Liste des sous-traitants ultérieurs', meta:'Liste', href:'/subprozessoren', pending:false },
+          { name:'Faits sur l’hébergement — Green, Lupfig AG', meta:'Fiche d’information', href:'#', pending:true },
+          { name:'Déclaration no-training', meta:'Déclaration', href:'#', pending:true },
+          { name:'Concept d’audit et d’accès', meta:'Document', href:'#', pending:true }
+        ],
+        hostingTitle:'Hébergement',
+        hostingBody:'Exploité dans des centres de données certifiés ISO 27001 de Green (Lupfig AG, Suisse). Les certifications sont détenues par Green. La certification ISO 27001 propre à EU Cowork AI est en cours.',
+        note:'Remarque : cette page est une auto-déclaration. Les documents juridiquement contraignants y seront liés dès leur finalisation.',
+        open:'Ouvrir →', follows:'Document à venir'
+      },
+      it: {
+        eyebrow:'// Trust Center',
+        h1:'Sicurezza e fiducia',
+        sub:'Autodichiarazione, con documenti reali alle spalle. Ogni affermazione è documentata o chiaramente indicata come in corso.',
+        claimsTitle:'Le nostre garanzie',
+        claims:[
+          { t:'Esercizio in Svizzera', d:'Centri di calcolo certificati ISO 27001 di Green (Lupfig AG, Svizzera). I certificati sono di Green, non nostri.' },
+          { t:'revDSG e GDPR', d:'Protezione dei dati svizzera ed europea, garantita contrattualmente.' },
+          { t:'No-training', d:'I Suoi dati non addestrano alcun modello.' },
+          { t:'Telemetria disattivata per impostazione predefinita', d:'Nessun tracciamento senza consenso attivo.' },
+          { t:'Log di audit', d:'Ogni accesso a strumenti e dati è tracciabile.' },
+          { t:'Licenza MIT', d:'Nessun limite di postazioni, nessun branding imposto. Self-hosting gratuito da 1 utente.' }
+        ],
+        docsTitle:'Documenti',
+        docsSub:'Contratti e prove da consultare.',
+        docs:[
+          { name:'Accordo sul trattamento dei dati (DPA)', meta:'Contratto · PDF', href:'/avv', pending:false },
+          { name:'Misure tecniche e organizzative (MTO)', meta:'Documento', href:'#toms', pending:true },
+          { name:'Elenco dei sub-responsabili', meta:'Elenco', href:'/subprozessoren', pending:false },
+          { name:'Dati sull’hosting — Green, Lupfig AG', meta:'Scheda informativa', href:'#', pending:true },
+          { name:'Dichiarazione no-training', meta:'Dichiarazione', href:'#', pending:true },
+          { name:'Concetto di audit e accessi', meta:'Documento', href:'#', pending:true }
+        ],
+        hostingTitle:'Hosting',
+        hostingBody:'Gestito in centri di calcolo certificati ISO 27001 di Green (Lupfig AG, Svizzera). Le certificazioni sono di Green. Una certificazione ISO 27001 propria di EU Cowork AI è in preparazione.',
+        note:'Nota: questa pagina è un’autodichiarazione. I documenti giuridicamente vincolanti verranno collegati qui non appena finalizzati.',
+        open:'Apri →', follows:'Documento in arrivo'
+      },
+      es: {
+        eyebrow:'// Trust Center',
+        h1:'Seguridad y confianza',
+        sub:'Autodeclaración, respaldada por documentos reales. Cada afirmación está acreditada o claramente marcada como en curso.',
+        claimsTitle:'Lo que garantizamos',
+        claims:[
+          { t:'Operación en Suiza', d:'Centros de datos certificados ISO 27001 de Green (Lupfig AG, Suiza). Los certificados son de Green, no nuestros.' },
+          { t:'revDSG y RGPD', d:'Protección de datos suiza y europea, garantizada contractualmente.' },
+          { t:'No-training', d:'Sus datos no entrenan ningún modelo.' },
+          { t:'Telemetría desactivada por defecto', d:'Sin seguimiento sin consentimiento activo.' },
+          { t:'Registros de auditoría', d:'Cada acceso a herramientas y datos es trazable.' },
+          { t:'Licencia MIT', d:'Sin límite de puestos, sin marca impuesta. Autoalojamiento gratuito desde 1 usuario.' }
+        ],
+        docsTitle:'Documentos',
+        docsSub:'Contratos y evidencias para consultar.',
+        docs:[
+          { name:'Acuerdo de encargo del tratamiento (DPA)', meta:'Contrato · PDF', href:'/avv', pending:false },
+          { name:'Medidas técnicas y organizativas (MTO)', meta:'Documento', href:'#toms', pending:true },
+          { name:'Lista de subencargados', meta:'Lista', href:'/subprozessoren', pending:false },
+          { name:'Datos de alojamiento — Green, Lupfig AG', meta:'Ficha informativa', href:'#', pending:true },
+          { name:'Declaración de no-training', meta:'Declaración', href:'#', pending:true },
+          { name:'Concepto de auditoría y accesos', meta:'Documento', href:'#', pending:true }
+        ],
+        hostingTitle:'Alojamiento',
+        hostingBody:'Operado en centros de datos certificados ISO 27001 de Green (Lupfig AG, Suiza). Las certificaciones son de Green. Una certificación ISO 27001 propia de EU Cowork AI está en curso.',
+        note:'Nota: esta página es una autodeclaración. Los documentos jurídicamente vinculantes se enlazarán aquí en cuanto estén finalizados.',
+        open:'Abrir →', follows:'Documento pendiente'
       }
     };
   }

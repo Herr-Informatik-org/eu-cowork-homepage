@@ -194,6 +194,9 @@
           <nav>
             <button onClick="{{ toDe }}" type="button" class="{{ deCls }}">Deutsch</button>
             <button onClick="{{ toEn }}" type="button" class="{{ enCls }}">English</button>
+            <button onClick="{{ toFr }}" type="button" class="{{ frCls }}">Français</button>
+            <button onClick="{{ toIt }}" type="button" class="{{ itCls }}">Italiano</button>
+            <button onClick="{{ toEs }}" type="button" class="{{ esCls }}">Español</button>
           </nav>
         </div>
       </div>
@@ -245,8 +248,7 @@ class Component extends DCLogic {
     const lang = this.state.lang || 'de';
     const onLanding = this.props.onLanding === true;
     const base = onLanding ? '' : '/';
-    const isDe = lang === 'de';
-    const S = {
+    const DICT = {
       de: {
         tagline:'Ihr KI-Kollege. Bleibt in Europa.',
         status:'Schweizer Instanz',
@@ -273,9 +275,52 @@ class Component extends DCLogic {
         impressum:'Imprint', datenschutz:'Privacy', agb:'Terms (GTC)',
         badgeDeployTitle:'Deployable anywhere', badgeDeploySub:'Managed, own cloud or on-prem',
         badgeGdprTitle:'GDPR-compliant', badgeGdprSub:'EU deployment',
-        moreSecurity:'More about security', langTitle:'Languages'
+        moreSecurity:'More about security', langTitle:'Language'
+      },
+      fr: {
+        tagline:'Votre collègue IA. Il reste en Europe.',
+        status:'Instance suisse',
+        rights:'© 2026 EU Cowork AI',
+        product:'Produit', trust:'Trust', legal:'Juridique',
+        funktionen:'Fonctionnalités', souver:'Souveraineté', selfhost:'Self-Host',
+        integrationen:'Intégrations', vergleich:'Comparatif', faq:'FAQ', docs:'Documentation', blog:'Blog', vision:'Notre vision',
+        governance:'Governance',
+        security:'Security & Trust', avv:'DPA (sous-traitance)', toms:'Aperçu des MTO', subs:'Sous-traitants ultérieurs',
+        impressum:'Mentions légales', datenschutz:'Confidentialité', agb:'CGV',
+        badgeDeployTitle:'Déployable partout', badgeDeploySub:'Managé, votre cloud ou on-premise',
+        badgeGdprTitle:'Conforme au RGPD', badgeGdprSub:'Traitement dans l’UE',
+        moreSecurity:'En savoir plus sur la sécurité', langTitle:'Langue'
+      },
+      it: {
+        tagline:'Il vostro collega IA. Resta in Europa.',
+        status:'Istanza svizzera',
+        rights:'© 2026 EU Cowork AI',
+        product:'Prodotto', trust:'Trust', legal:'Legale',
+        funktionen:'Funzionalità', souver:'Sovranità', selfhost:'Self-Host',
+        integrationen:'Integrazioni', vergleich:'Confronto', faq:'FAQ', docs:'Documentazione', blog:'Blog', vision:'La nostra visione',
+        governance:'Governance',
+        security:'Security & Trust', avv:'Accordo sul trattamento (DPA)', toms:'Panoramica MTO', subs:'Sub-responsabili',
+        impressum:'Note legali', datenschutz:'Privacy', agb:'Condizioni generali',
+        badgeDeployTitle:'Eseguibile ovunque', badgeDeploySub:'Gestito, cloud proprio o on-premise',
+        badgeGdprTitle:'Conforme al GDPR', badgeGdprSub:'Trattamento nell’UE',
+        moreSecurity:'Maggiori informazioni sulla sicurezza', langTitle:'Lingua'
+      },
+      es: {
+        tagline:'Su colega de IA. Se queda en Europa.',
+        status:'Instancia suiza',
+        rights:'© 2026 EU Cowork AI',
+        product:'Producto', trust:'Trust', legal:'Legal',
+        funktionen:'Funciones', souver:'Soberanía', selfhost:'Self-Host',
+        integrationen:'Integraciones', vergleich:'Comparativa', faq:'FAQ', docs:'Documentación', blog:'Blog', vision:'Nuestra visión',
+        governance:'Governance',
+        security:'Security & Trust', avv:'Acuerdo de encargo (DPA)', toms:'Resumen de MTO', subs:'Subencargados',
+        impressum:'Aviso legal', datenschutz:'Privacidad', agb:'Condiciones generales',
+        badgeDeployTitle:'Desplegable en cualquier lugar', badgeDeploySub:'Gestionado, nube propia u on-premise',
+        badgeGdprTitle:'Conforme al RGPD', badgeGdprSub:'Tratamiento en la UE',
+        moreSecurity:'Más sobre la seguridad', langTitle:'Idioma'
       }
-    }[lang];
+    };
+    const S = DICT[lang] || DICT.de;
     const columns = [
       { title:S.product, links:[
         { label:S.funktionen, href: base + '#funktionen' },
@@ -312,10 +357,15 @@ class Component extends DCLogic {
       badgeDeployTitle: S.badgeDeployTitle, badgeDeploySub: S.badgeDeploySub,
       badgeGdprTitle: S.badgeGdprTitle, badgeGdprSub: S.badgeGdprSub,
       moreSecurity: S.moreSecurity, langTitle: S.langTitle,
-      deCls: isDe ? 'is-current' : '', enCls: !isDe ? 'is-current' : '',
+      deCls: lang === 'de' ? 'is-current' : '', enCls: lang === 'en' ? 'is-current' : '',
+      frCls: lang === 'fr' ? 'is-current' : '', itCls: lang === 'it' ? 'is-current' : '',
+      esCls: lang === 'es' ? 'is-current' : '',
       clockRef: this.clockRef,
       toDe: () => this.setLang('de'),
-      toEn: () => this.setLang('en')
+      toEn: () => this.setLang('en'),
+      toFr: () => this.setLang('fr'),
+      toIt: () => this.setLang('it'),
+      toEs: () => this.setLang('es')
     };
   }
 }

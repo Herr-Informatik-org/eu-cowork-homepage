@@ -23,6 +23,7 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/assets/i18n.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -3323,7 +3324,8 @@ this.mobRef = React.createRef();
        `:lang()`/Silbentrennung greifen auf die falsche Sprache. Nur hier und
        nicht in der geteilten Kopfleiste, weil die Inhaltsseiten einsprachig
        sind und dort nichts umzuschalten ist. */
-    this._setDocLang = (l) => { try { document.documentElement.lang = (l === 'en') ? 'en' : 'de-CH'; } catch(e){} };
+    this._docLang = { de:'de-CH', en:'en', fr:'fr', it:'it', es:'es' };
+    this._setDocLang = (l) => { try { document.documentElement.lang = this._docLang[l] || 'de-CH'; } catch(e){} };
     this._onLang = (e) => { this._setDocLang(e.detail); this.setState({ lang: e.detail }); };
 
     this.C = {
@@ -3355,6 +3357,48 @@ this.mobRef = React.createRef();
           t6:'Proactive memory', d6:'Remembers what matters on its own: auditable, deletable, on your server.',
           shot1:'Admin panel: bar chart of spend per day by model, with a cost table per model.',
           shot5:'Admin panel: MCP access with ERP, knowledge base and document store behind the MCP gateway, with a per-user exception set to “allowed”.'
+        },
+        fr: {
+          h2:'Un seul outil. Toute la journée de travail.',
+          sub:'Six tâches d’une journée de travail ordinaire. Toutes au même endroit.',
+          railLabel:'Fonctionnalités, défilement horizontal', railPrev:'Tuile précédente', railNext:'Tuile suivante',
+          k1:'Modèles', k2:'Recherche web', k3:'Fichiers', k4:'Agents', k5:'Droits', k6:'Mémoire',
+          t1:'Tous les modèles', d1:'Plus de 100 modèles de pointe via un seul accès, traités dans l’UE.',
+          t2:'Recherche web', d2:'Des réponses actuelles avec leurs sources, directement dans le chat.',
+          t3:'Générer des fichiers', d3:'Dites « génère-moi un Excel » et téléchargez le fichier terminé.',
+          t4:'Agents de rôle et skills', d4:'Des collègues IA pour les tâches récurrentes, validés par l’administrateur.',
+          t5:'Intégration ERP avec contrôle des droits', d5:'ERP via la passerelle MCP : « lire les factures oui, les salaires non ». Chaque appel est audité.',
+          t6:'Mémoire proactive', d6:'Retient d’elle-même ce qui compte : auditable, effaçable, sur votre serveur.',
+          shot1:'Panneau d’administration : diagramme à barres de la consommation par jour et par modèle, avec un tableau des coûts par modèle.',
+          shot5:'Panneau d’administration : accès MCP avec l’ERP, la base de connaissances et la gestion documentaire derrière la passerelle MCP, avec une exception par utilisateur réglée sur « autorisé ».'
+        },
+        it: {
+          h2:'Un solo strumento. L’intera giornata di lavoro.',
+          sub:'Sei attività di una normale giornata di lavoro. Tutte in un unico posto.',
+          railLabel:'Funzioni, scorrimento orizzontale', railPrev:'Riquadro precedente', railNext:'Riquadro successivo',
+          k1:'Modelli', k2:'Ricerca web', k3:'File', k4:'Agenti', k5:'Permessi', k6:'Memoria',
+          t1:'Tutti i modelli', d1:'Oltre 100 modelli di punta con un unico accesso, elaborati nell’UE.',
+          t2:'Ricerca web', d2:'Risposte aggiornate con le fonti, direttamente in chat.',
+          t3:'Generare file', d3:'Basta dire «generami un Excel» e scaricare il file pronto.',
+          t4:'Agenti di ruolo e skill', d4:'Colleghi IA per le attività ricorrenti, abilitati dall’amministratore.',
+          t5:'Integrazione ERP con controllo dei permessi', d5:'ERP tramite gateway MCP: «leggere le fatture sì, gli stipendi no». Ogni chiamata è tracciata.',
+          t6:'Memoria proattiva', d6:'Ricorda da sé ciò che conta: verificabile, cancellabile, sul vostro server.',
+          shot1:'Pannello di amministrazione: grafico a barre del consumo giornaliero per modello, con tabella dei costi per modello.',
+          shot5:'Pannello di amministrazione: accesso MCP con ERP, base di conoscenza e archivio documenti dietro il gateway MCP, con un’eccezione per utente impostata su «consentito».'
+        },
+        es: {
+          h2:'Una sola herramienta. Toda la jornada laboral.',
+          sub:'Seis tareas de una jornada de trabajo normal. Todas en un mismo lugar.',
+          railLabel:'Funciones, desplazamiento horizontal', railPrev:'Tarjeta anterior', railNext:'Tarjeta siguiente',
+          k1:'Modelos', k2:'Búsqueda web', k3:'Archivos', k4:'Agentes', k5:'Permisos', k6:'Memoria',
+          t1:'Todos los modelos', d1:'Más de 100 modelos punteros con un único acceso, procesados en la UE.',
+          t2:'Búsqueda web', d2:'Respuestas actuales con sus fuentes, directamente en el chat.',
+          t3:'Generar archivos', d3:'Diga «genérame un Excel» y descargue el archivo terminado.',
+          t4:'Agentes de rol y skills', d4:'Compañeros de IA para tareas recurrentes, habilitados por el administrador.',
+          t5:'Integración con el ERP y control de permisos', d5:'ERP mediante la pasarela MCP: «leer facturas sí, salarios no». Cada llamada queda auditada.',
+          t6:'Memoria proactiva', d6:'Recuerda por sí misma lo importante: auditable, borrable, en su servidor.',
+          shot1:'Panel de administración: gráfico de barras del consumo diario por modelo, con tabla de costes por modelo.',
+          shot5:'Panel de administración: acceso MCP con ERP, base de conocimiento y gestor documental detrás de la pasarela MCP, con una excepción por usuario ajustada a «permitido».'
         }
       }
       ,
@@ -3398,6 +3442,54 @@ this.mobRef = React.createRef();
           o4t:'From a single person',
           o4d:'One command, one server. For one person too, and free for good.',
           moreLink:'Installation, stack and system requirements'
+        },
+        fr: {
+          h2:'One command. 60 seconds.',
+          sub:'Une commande, un serveur, toute la stack. L’auto-hébergement reste gratuit pour toujours, dès une seule personne : aucune limite de sièges, aucun branding imposé.',
+          statusT:'Pas encore publié',
+          statusD:'Le code source paraîtra sous licence MIT. D’ici là, le durcissement de la sécurité est en cours — nous ouvrirons le dépôt seulement lorsque nous le transmettrions sans réserve. Les personnes inscrites sur la liste d’attente seront prévenues.',
+          copyLabel:'Copier', copied:'Copié', stars:'40 000+', starsLabel:'étoiles · LibreChat', mit:'Licence MIT à venir', cta:'Guide d’auto-hébergement', title:'zsh · eu-cowork',
+          o1t:'Basé sur LibreChat',
+          o1d:'Un fork léger de LibreChat, plus de 40 000 étoiles sur GitHub et utilisé dans le monde entier.',
+          o2t:'Aucune limite de sièges',
+          o2d:'Aucun prix par personne, aucun branding imposé, aucune fonction derrière une barrière entreprise.',
+          o3t:'Formats ouverts, votre base de données',
+          o3d:'Une stack Docker standard avec MongoDB et des formats de fichiers ouverts. Qui part emporte tout.',
+          o4t:'Dès une seule personne',
+          o4d:'Une commande, un serveur. Pour une seule personne aussi, et gratuit pour toujours.',
+          moreLink:'Installation, stack et configuration requise'
+        },
+        it: {
+          h2:'One command. 60 seconds.',
+          sub:'Un comando, un server, l’intero stack. Il self-hosting resta gratuito per sempre, già a partire da una sola persona: nessun limite di postazioni, nessun branding imposto.',
+          statusT:'Non ancora pubblicato',
+          statusD:'Il codice sorgente uscirà con licenza MIT. Fino ad allora prosegue l’hardening di sicurezza: apriremo il repository solo quando lo consegneremmo senza riserve. Chi è in lista d’attesa riceverà una nostra comunicazione.',
+          copyLabel:'Copia', copied:'Copiato', stars:'40.000+', starsLabel:'stelle · LibreChat', mit:'Licenza MIT in arrivo', cta:'Guida al self-hosting', title:'zsh · eu-cowork',
+          o1t:'Basato su LibreChat',
+          o1d:'Un fork leggero di LibreChat, oltre 40.000 stelle su GitHub e in uso in tutto il mondo.',
+          o2t:'Nessun limite di postazioni',
+          o2d:'Nessun prezzo a persona, nessun branding imposto, nessuna funzione dietro una barriera enterprise.',
+          o3t:'Formati aperti, il vostro database',
+          o3d:'Uno stack Docker standard con MongoDB e formati di file aperti. Chi se ne va porta via tutto.',
+          o4t:'Già da una sola persona',
+          o4d:'Un comando, un server. Anche per una sola persona, e gratuito per sempre.',
+          moreLink:'Installazione, stack e requisiti di sistema'
+        },
+        es: {
+          h2:'One command. 60 seconds.',
+          sub:'Un comando, un servidor, toda la pila. El autoalojamiento sigue siendo gratuito para siempre, desde una sola persona: sin límite de puestos, sin marca impuesta.',
+          statusT:'Aún no publicado',
+          statusD:'El código fuente se publicará bajo licencia MIT. Hasta entonces continúa el endurecimiento de la seguridad: abriremos el repositorio solo cuando lo entregaríamos sin reservas. Quien esté en la lista de espera tendrá noticias nuestras.',
+          copyLabel:'Copiar', copied:'Copiado', stars:'40.000+', starsLabel:'estrellas · LibreChat', mit:'Licencia MIT en camino', cta:'Guía de autoalojamiento', title:'zsh · eu-cowork',
+          o1t:'Basado en LibreChat',
+          o1d:'Un fork ligero de LibreChat, con más de 40.000 estrellas en GitHub y en uso en todo el mundo.',
+          o2t:'Sin límite de puestos',
+          o2d:'Sin precio por persona, sin marca impuesta, sin funciones tras una barrera enterprise.',
+          o3t:'Formatos abiertos, su base de datos',
+          o3d:'Una pila Docker estándar con MongoDB y formatos de archivo abiertos. Quien se va, se lo lleva todo.',
+          o4t:'Desde una sola persona',
+          o4d:'Un comando, un servidor. También para una sola persona, y gratis para siempre.',
+          moreLink:'Instalación, stack y requisitos del sistema'
         }
       }
       ,
@@ -3432,11 +3524,53 @@ this.mobRef = React.createRef();
             { q:'Is EU Cowork AI available inside Outlook?', a:'Yes, as an add-in in beta: a pane next to the open email that summarises, drafts replies, translates and pulls out tasks. In internal use at our place today, not yet generally available.' }
           ],
           moreLink:'All questions and answers'
+        },
+        fr: {
+          h2:'Questions fréquentes.',
+          items:[
+            { q:'Où mes données sont-elles traitées ?', a:'Exploitation en Suisse (Green Lupfig), inférence traitée dans l’UE via EuRouter. En auto-hébergement, les données restent entièrement sur votre infrastructure.' },
+            { q:'Mes données servent-elles à l’entraînement ?', a:'Non. Aucun entraînement, télémétrie désactivée par défaut.' },
+            { q:'Est-ce vraiment de l’open source ?', a:'Le code source paraîtra sous licence MIT — il n’est pas encore public, le durcissement de la sécurité est en cours. Ensuite : auto-hébergement gratuit dès 1 utilisateur, aucune limite de sièges, aucun branding imposé. La base, LibreChat, est déjà sous licence MIT aujourd’hui.' },
+            { q:'Quels modèles sont disponibles ?', a:'Plus de 100 modèles via EuRouter, y compris les grands modèles d’Anthropic et d’OpenAI.' },
+            { q:'Puis-je connecter mon ERP ?', a:'Oui, via la passerelle MCP avec un RBAC granulaire et un audit par appel.' },
+            { q:'Existe-t-il une application ?', a:'Aujourd’hui une PWA installable ; une application native iOS/Android est prévue.' },
+            { q:'EU Cowork AI est-il disponible directement dans Outlook ?', a:'Oui, sous forme d’add-in en bêta : un volet à côté de l’e-mail ouvert, qui résume, rédige des réponses, traduit et extrait les tâches. Aujourd’hui en usage interne chez nous, pas encore disponible pour tous.' }
+          ],
+          moreLink:'Toutes les questions et réponses'
+        },
+        it: {
+          h2:'Domande frequenti.',
+          items:[
+            { q:'Dove vengono elaborati i miei dati?', a:'Esercizio in Svizzera (Green Lupfig), inferenza elaborata nell’UE tramite EuRouter. In self-hosting i dati restano interamente sulla vostra infrastruttura.' },
+            { q:'I miei dati vengono usati per l’addestramento?', a:'No. Nessun addestramento, telemetria disattivata per impostazione predefinita.' },
+            { q:'È davvero open source?', a:'Il codice sorgente uscirà con licenza MIT — non è ancora pubblico, prima completiamo l’hardening di sicurezza. Poi vale questo: self-hosting gratuito da 1 utente, nessun limite di postazioni, nessun branding imposto. La base, LibreChat, è già oggi sotto licenza MIT.' },
+            { q:'Quali modelli sono disponibili?', a:'Oltre 100 modelli tramite EuRouter, inclusi i grandi modelli di Anthropic e OpenAI.' },
+            { q:'Posso collegare il mio ERP?', a:'Sì, tramite il gateway MCP con RBAC granulare e audit per singola chiamata.' },
+            { q:'Esiste un’app?', a:'Oggi una PWA installabile; è in programma un’app nativa per iOS e Android.' },
+            { q:'EU Cowork AI è disponibile direttamente in Outlook?', a:'Sì, come add-in in beta: un riquadro accanto all’e-mail aperta che riassume, propone risposte, traduce ed estrae le attività. Oggi in uso interno da noi, non ancora disponibile per tutti.' }
+          ],
+          moreLink:'Tutte le domande e le risposte'
+        },
+        es: {
+          h2:'Preguntas frecuentes.',
+          items:[
+            { q:'¿Dónde se procesan mis datos?', a:'Operación en Suiza (Green Lupfig), inferencia procesada en la UE a través de EuRouter. En autoalojamiento, los datos permanecen íntegramente en su infraestructura.' },
+            { q:'¿Se usan mis datos para el entrenamiento?', a:'No. Sin entrenamiento, telemetría desactivada por defecto.' },
+            { q:'¿Es realmente open source?', a:'El código fuente se publicará bajo licencia MIT: todavía no es público, antes completamos el endurecimiento de la seguridad. Después vale esto: autoalojamiento gratuito desde 1 usuario, sin límite de puestos, sin marca impuesta. La base, LibreChat, ya está hoy bajo licencia MIT.' },
+            { q:'¿Qué modelos están disponibles?', a:'Más de 100 modelos a través de EuRouter, incluidos los grandes modelos de Anthropic y OpenAI.' },
+            { q:'¿Puedo conectar mi ERP?', a:'Sí, mediante la pasarela MCP con RBAC granular y auditoría por llamada.' },
+            { q:'¿Existe una aplicación?', a:'Hoy una PWA instalable; hay una app nativa para iOS y Android en planificación.' },
+            { q:'¿EU Cowork AI está disponible directamente en Outlook?', a:'Sí, como complemento en beta: un panel junto al correo abierto que resume, redacta respuestas, traduce y extrae tareas. Hoy en uso interno en nuestra empresa, todavía no disponible de forma general.' }
+          ],
+          moreLink:'Todas las preguntas y respuestas'
         }
       },
       finalcta: {
         de: { h2:'Bereit, wenn Sie es sind.', sub:'In der Schweiz gehostet oder selbst betrieben. In Minuten startklar.', primary:'Auf die Warteliste', secondary:'Self-host for free' },
-        en: { h2:'Ready when you are.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Join the waitlist', secondary:'Self-host for free' }
+        en: { h2:'Ready when you are.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Join the waitlist', secondary:'Self-host for free' },
+        fr: { h2:'Prêt quand vous l’êtes.', sub:'Hébergé en Suisse ou exploité par vos soins. Opérationnel en quelques minutes.', primary:'Rejoindre la liste d’attente', secondary:'Self-host for free' },
+        it: { h2:'Pronti quando lo siete voi.', sub:'Ospitato in Svizzera o gestito da voi. Operativo in pochi minuti.', primary:'Iscriviti alla lista d’attesa', secondary:'Self-host for free' },
+        es: { h2:'Listos cuando usted lo esté.', sub:'Alojado en Suiza o gestionado por usted. Operativo en minutos.', primary:'Únase a la lista de espera', secondary:'Self-host for free' }
       }
 ,
 hero2: {
@@ -3453,6 +3587,24 @@ hero2: {
           h1a: 'The AI platform', h1b: 'for your company.', h1c: 'Stays in Europe.',
           sub: 'Open source, operated 100 % in Europe: on your infrastructure or ours in Switzerland. All top models, EU-processed.',
           ctaPrimary: 'Join the waitlist',
+          ctaSecondary: 'Self-host for free',
+        },
+        fr: {
+          h1a: 'La plateforme IA', h1b: 'pour votre entreprise.', h1c: 'Reste en Europe.',
+          sub: 'Open source, exploitée 100 % en Europe : sur votre infrastructure ou la nôtre en Suisse. Tous les grands modèles, traités dans l’UE.',
+          ctaPrimary: 'Rejoindre la liste d’attente',
+          ctaSecondary: 'Self-host for free',
+        },
+        it: {
+          h1a: 'La piattaforma IA', h1b: 'per la vostra azienda.', h1c: 'Resta in Europa.',
+          sub: 'Open source, gestita al 100 % in Europa: sulla vostra infrastruttura o sulla nostra in Svizzera. Tutti i modelli di punta, elaborati nell’UE.',
+          ctaPrimary: 'Iscriviti alla lista d’attesa',
+          ctaSecondary: 'Self-host for free',
+        },
+        es: {
+          h1a: 'La plataforma de IA', h1b: 'para su empresa.', h1c: 'Se queda en Europa.',
+          sub: 'Open source, operada 100 % en Europa: en su infraestructura o en la nuestra en Suiza. Todos los modelos punteros, procesados en la UE.',
+          ctaPrimary: 'Únase a la lista de espera',
           ctaSecondary: 'Self-host for free',
         }
       },
@@ -3498,6 +3650,69 @@ mob: {
             ansPre:'Erledigt:', ansMark:'3 h', ansPost:'auf Netzwerk-Migration (Muster AG) verbucht.',
             cardTitle:'Diese Woche auf dem Projekt', cardValue:'11.5 h', cardSplit:'Mo 3 h · Mi 4.5 h · Fr 4 h',
             input:'Nachricht an EU Cowork AI' }
+        },
+        fr: {
+          badge:'Bientôt disponible',
+          h2:'EU Cowork AI Mobile. Votre collègue IA en déplacement.',
+          sub:'iOS et Android, même gouvernance, même résidence UE que sur le poste de travail.',
+          b1t:'Notifications push', b1d:'L’agent vous prévient dès qu’une tâche est terminée.',
+          b2t:'Face ID', b2d:'Déverrouillage sans mot de passe, la session reste sur l’appareil.',
+          b3t:'Feuille de partage', b3d:'Transmettez documents et liens depuis n’importe quelle application directement à EU Cowork AI.',
+          applePre:'Télécharger dans l’', appleName:'App Store',
+          googlePre:'Disponible sur', googleName:'Google Play',
+          storeNote:'Ces badges sont des espaces réservés. Nous contacterons toutes les personnes inscrites sur la liste d’attente dès que ce sera prêt.',
+          notify:'Être averti au lancement',
+          replay:'Rejouer',
+          mock:{ time:'9:41', app:'EU Cowork AI', model:'EU Cowork AI Auto',
+            prevUser:'Fasse mir das Protokoll vom Termin bei der Muster AG kurz zusammen.',
+            prevAns:'Drei Punkte: Firewall wird ersetzt, VLAN-Plan kommt bis Freitag, Backup-Test steht noch aus.',
+            user:'Ich war gerade 3 Stunden bei der Muster AG wegen dem Projekt Netzwerk-Migration. Erfasse meine Zeit.',
+            think1:'Denkt nach …', chip:'Mit dem ERP verbunden', think2:'Zeiteintrag wird erstellt …',
+            ansPre:'Erledigt:', ansMark:'3 h', ansPost:'auf Netzwerk-Migration (Muster AG) verbucht.',
+            cardTitle:'Diese Woche auf dem Projekt', cardValue:'11.5 h', cardSplit:'Mo 3 h · Mi 4.5 h · Fr 4 h',
+            input:'Nachricht an EU Cowork AI' }
+        },
+        it: {
+          badge:'Presto disponibile',
+          h2:'EU Cowork AI Mobile. Il vostro collega IA in mobilità.',
+          sub:'iOS e Android, stessa governance, stessa residenza UE del desktop.',
+          b1t:'Notifiche push', b1d:'L’agente si fa vivo non appena un’attività è conclusa.',
+          b2t:'Face ID', b2d:'Sblocco senza password, la sessione resta sul dispositivo.',
+          b3t:'Foglio di condivisione', b3d:'Inviate documenti e link da qualsiasi app direttamente a EU Cowork AI.',
+          applePre:'Scarica su', appleName:'App Store',
+          googlePre:'Disponibile su', googleName:'Google Play',
+          storeNote:'I badge sono segnaposto. Contatteremo chi è in lista d’attesa non appena sarà il momento.',
+          notify:'Ricevi una notifica al lancio',
+          replay:'Riproduci di nuovo',
+          mock:{ time:'9:41', app:'EU Cowork AI', model:'EU Cowork AI Auto',
+            prevUser:'Fasse mir das Protokoll vom Termin bei der Muster AG kurz zusammen.',
+            prevAns:'Drei Punkte: Firewall wird ersetzt, VLAN-Plan kommt bis Freitag, Backup-Test steht noch aus.',
+            user:'Ich war gerade 3 Stunden bei der Muster AG wegen dem Projekt Netzwerk-Migration. Erfasse meine Zeit.',
+            think1:'Denkt nach …', chip:'Mit dem ERP verbunden', think2:'Zeiteintrag wird erstellt …',
+            ansPre:'Erledigt:', ansMark:'3 h', ansPost:'auf Netzwerk-Migration (Muster AG) verbucht.',
+            cardTitle:'Diese Woche auf dem Projekt', cardValue:'11.5 h', cardSplit:'Mo 3 h · Mi 4.5 h · Fr 4 h',
+            input:'Nachricht an EU Cowork AI' }
+        },
+        es: {
+          badge:'Disponible próximamente',
+          h2:'EU Cowork AI Mobile. Su compañero de IA en movimiento.',
+          sub:'iOS y Android, la misma gobernanza y la misma residencia en la UE que en el escritorio.',
+          b1t:'Notificaciones push', b1d:'El agente le avisa en cuanto una tarea está terminada.',
+          b2t:'Face ID', b2d:'Desbloqueo sin contraseña, la sesión permanece en el dispositivo.',
+          b3t:'Hoja para compartir', b3d:'Envíe documentos y enlaces desde cualquier aplicación directamente a EU Cowork AI.',
+          applePre:'Descárgalo en el', appleName:'App Store',
+          googlePre:'Disponible en', googleName:'Google Play',
+          storeNote:'Los distintivos son marcadores de posición. Avisaremos a todas las personas de la lista de espera en cuanto esté listo.',
+          notify:'Recibir aviso en el lanzamiento',
+          replay:'Reproducir de nuevo',
+          mock:{ time:'9:41', app:'EU Cowork AI', model:'EU Cowork AI Auto',
+            prevUser:'Fasse mir das Protokoll vom Termin bei der Muster AG kurz zusammen.',
+            prevAns:'Drei Punkte: Firewall wird ersetzt, VLAN-Plan kommt bis Freitag, Backup-Test steht noch aus.',
+            user:'Ich war gerade 3 Stunden bei der Muster AG wegen dem Projekt Netzwerk-Migration. Erfasse meine Zeit.',
+            think1:'Denkt nach …', chip:'Mit dem ERP verbunden', think2:'Zeiteintrag wird erstellt …',
+            ansPre:'Erledigt:', ansMark:'3 h', ansPost:'auf Netzwerk-Migration (Muster AG) verbucht.',
+            cardTitle:'Diese Woche auf dem Projekt', cardValue:'11.5 h', cardSplit:'Mo 3 h · Mi 4.5 h · Fr 4 h',
+            input:'Nachricht an EU Cowork AI' }
         }
       },
 sov: {
@@ -3522,6 +3737,39 @@ sov: {
           f3:{ t:'No training on your data', d:'Your data never trains a model. Not today, not later.' },
           f4:{ t:'Fully traceable', d:'Every tool and data access is logged and exportable.' },
           cta:'All evidence on the Trust page'
+        },
+        fr: {
+          h2:'Vérifiable en Europe. Pas seulement affirmé.',
+          sub:'Des faits, pas des adjectifs. Chaque point est étayé par une preuve sur la page Trust — qui détaille aussi la télémétrie, la sous-traitance des données et les sous-traitants ultérieurs.',
+          keyMain:'Exploitation : Green, Lupfig AG (CH)',
+          keyEu:'Traitement : centres de données UE',
+          f1:{ t:'Exploitation en Suisse', d:'Centres de données certifiés ISO 27001 de Green (Lupfig AG, Suisse).' },
+          f2:{ t:'Traitement dans l’UE', d:'Les requêtes aux modèles passent par des centres de données de l’UE, garanti contractuellement selon la nLPD et le RGPD.' },
+          f3:{ t:'Aucun entraînement sur vos données', d:'Vos données n’entraînent aucun modèle. Ni aujourd’hui, ni plus tard.' },
+          f4:{ t:'Entièrement traçable', d:'Chaque accès aux outils et aux données est journalisé et exportable.' },
+          cta:'Toutes les preuves sur la page Trust'
+        },
+        it: {
+          h2:'Verificabile in Europa. Non solo dichiarato.',
+          sub:'Fatti, non aggettivi. Ogni punto è documentato con una prova sulla pagina Trust — dove trovate nel dettaglio anche telemetria, trattamento dei dati e subfornitori.',
+          keyMain:'Esercizio: Green, Lupfig AG (CH)',
+          keyEu:'Elaborazione: data center UE',
+          f1:{ t:'Esercizio in Svizzera', d:'Data center certificati ISO 27001 di Green (Lupfig AG, Svizzera).' },
+          f2:{ t:'Elaborazione nell’UE', d:'Le richieste ai modelli passano da data center UE, con garanzia contrattuale secondo la nLPD e il GDPR.' },
+          f3:{ t:'Nessun addestramento sui vostri dati', d:'I vostri dati non addestrano alcun modello. Né oggi né in futuro.' },
+          f4:{ t:'Completamente tracciabile', d:'Ogni accesso a strumenti e dati è registrato ed esportabile.' },
+          cta:'Tutte le prove sulla pagina Trust'
+        },
+        es: {
+          h2:'Verificable en Europa. No solo afirmado.',
+          sub:'Hechos, no adjetivos. Cada punto está respaldado con una prueba en la página Trust, donde también se detallan la telemetría, el tratamiento de datos y los subencargados.',
+          keyMain:'Operación: Green, Lupfig AG (CH)',
+          keyEu:'Tratamiento: centros de datos de la UE',
+          f1:{ t:'Operado en Suiza', d:'Centros de datos certificados ISO 27001 de Green (Lupfig AG, Suiza).' },
+          f2:{ t:'Tratamiento en la UE', d:'Las peticiones a los modelos pasan por centros de datos de la UE, con garantía contractual conforme a la nLPD suiza y el RGPD.' },
+          f3:{ t:'Sin entrenamiento con sus datos', d:'Sus datos no entrenan ningún modelo. Ni hoy ni más adelante.' },
+          f4:{ t:'Totalmente trazable', d:'Cada acceso a herramientas y datos queda registrado y es exportable.' },
+          cta:'Todas las pruebas en la página Trust'
         }
       },
       cap: {
@@ -3683,6 +3931,243 @@ sov: {
             shot:'Terminanfrage Baubegehung Los 3', pane:'EU Cowork AI', draft:'DRAFT · REPLY',
             foot:'One sign-in. The same permissions and the same audit log everywhere.'
           }
+        },
+        fr: {
+          h2:'Conçu pour un usage à l’échelle de l’entreprise.',
+          sub:'EU Cowork AI relie vos systèmes, exécute des tâches avec des accès contrôlés et reste à tout moment vérifiable par votre informatique.',
+          i1:{ t:'Connecter vos systèmes',
+               d:'Reliez ERP, SharePoint, savoir d’entreprise et d’autres outils de façon centralisée à EU Cowork AI. Les connecteurs natifs sont disponibles immédiatement, vos propres systèmes se raccordent via MCP ou une API REST.' },
+          i2:{ t:'Piloter les accès de façon centralisée',
+               d:'Définissez par rôle, groupe ou utilisateur qui peut accéder à quels systèmes et à quelles fonctions. L’accès aux factures peut ainsi être autorisé, tandis que les données salariales sensibles restent bloquées.' },
+          i3:{ t:'Faire du vrai travail',
+               d:'EU Cowork AI ne se contente pas de répondre : il crée des fichiers, analyse les données de l’ERP et prend en charge les tâches récurrentes. Les documents Excel, Word ou PDF terminés sont disponibles directement dans le chat.' },
+          i4:{ t:'Tout tracer',
+               d:'Chaque appel d’outil, chaque action d’administration et chaque connexion est journalisé en continu. Votre informatique voit à tout moment qui a accédé à quelles données et peut exporter les entrées.' },
+          i5:{ t:'S’intégrer au travail existant',
+               d:'Utilisez votre collègue IA là où votre équipe travaille déjà. Dans le chat, juste à côté d’un e-mail Outlook ouvert et, demain, dans d’autres applications — un appui sans changement d’outil ni copier-coller permanents.' },
+          f1t:'OIDC et Entra ID',
+          f1d:'Connexion via votre annuaire existant. Groupes et rôles suivent.',
+          f2t:'Budgets mutualisés',
+          f2d:'Un budget mensuel pour l’organisation au lieu de limites par personne, avec un blocage souple plutôt qu’un dépassement silencieux.',
+          link1:'Gouvernance et journal d’audit',
+          link2:'Toutes les intégrations',
+          who:'Admin',
+          crumbs:[
+            ['Intégrations','Connecteurs'],
+            ['Gouvernance','Contrôle d’accès'],
+            ['Espace de travail','Chat'],
+            ['Gouvernance','Journal d’audit'],
+            ['Paramètres','Surfaces']
+          ],
+          m1:{
+            h:'Connecteurs', count:'4 sur 4 actifs', native:'Natif',
+            r1n:'ERP', r1d:'Clients, factures, projets',
+            r2n:'SharePoint', r2d:'Documents issus de Microsoft 365',
+            r3n:'Savoir d’entreprise', r3d:'Vos documents comme base de connaissances',
+            r4n:'Recherche web', r4d:'Des réponses avec leurs sources',
+            own:'Votre propre système', proto:'MCP · REST', url:'https://mcp.your-company.com/sse', cta:'Connecter',
+            foot:'MCP ou API REST. Chaque raccordement passe par la passerelle.'
+          },
+          m2:{
+            roles:'Rôles', groups:'Groupes', permsFor:'Droits pour la Paie', edit:'Modifier',
+            r:[ ['Admin','5'], ['Finance','12'], ['RH','8'], ['Chefs de projet','6'], ['Lecture seule','15'] ],
+            g:[ ['Comptabilité','6'], ['Paie','4'], ['Contrôle de gestion','3'], ['Projets','7'], ['Ventes','9'] ],
+            p:[
+              ['Lire les factures','Données de base et pièces','autorisé',true],
+              ['Lire les salaires','Données de rémunération et décomptes','bloqué',false],
+              ['Lire SharePoint','Documents et dossiers','autorisé',true],
+              ['Génération de fichiers','Excel, Word, PDF','autorisé',true]
+            ],
+            foot:'Chaque modification est consignée dans le journal d’audit.'
+          },
+          m3:{
+            ask:'Génère-moi le rapport trimestriel T3 sous Excel.',
+            steps:['ERP interrogé · 1 284 postes','Regroupé par centre de coûts','Comparaison annuelle ajoutée','Fichier créé'],
+            say:'Terminé. Chiffre d’affaires, coûts et marge par domaine, plus une vue d’ensemble.',
+            file:'rapport-trimestriel-T3.xlsx', meta:'24 Ko · 4 feuilles · créé dans le bac à sable', dl:'Télécharger',
+            src:'Source : ERP · écritures 07–09/2026', composer:'Message à EU Cowork AI …',
+            foot:'Exécution dans le bac à sable, résultat directement dans le chat.'
+          },
+          m4:{
+            search:'Rechercher par utilisateur, outil ou objet', range:'Dernières 24 h', export:'Exporter',
+            cTime:'Heure', cUser:'Utilisateur', cAct:'Appel', cRes:'Résultat',
+            rows:[
+              ['09:14:02','a.keller','erp.read_invoice · RE-2481','autorisé',true],
+              ['09:13:47','a.keller','erp.read_payroll','bloqué',false],
+              ['09:11:20','m.bauer','sharepoint.search · Projets/2026','autorisé',true],
+              ['09:08:55','admin','policy.update · groupe Finance','enregistré',true],
+              ['09:04:31','l.schulz','files.create · Q3.xlsx','autorisé',true],
+              ['09:02:10','n.krause','auth.login · OIDC Entra ID','ok',true],
+              ['08:58:04','m.bauer','knowledge.search · Manuel','autorisé',true],
+              ['08:55:39','p.thomas','erp.write_order','bloqué',false]
+            ],
+            foot:'Écrit en continu, exportable en CSV ou JSON.'
+          },
+          m5:{
+            t1n:'Chat', t1d:'Dans le navigateur, sur tout appareil', live:'Actif',
+            t2n:'Outlook', t2d:'Un volet à côté de l’e-mail ouvert', beta:'Bêta',
+            t3n:'Autres', t3d:'Excel et d’autres applications suivront', soon:'Prévu',
+            shot:'Terminanfrage Baubegehung Los 3', pane:'EU Cowork AI', draft:'BROUILLON · RÉPONSE',
+            foot:'Une seule connexion. Partout les mêmes droits et le même journal d’audit.'
+          }
+        },
+        it: {
+          h2:'Costruito per l’uso in tutta l’azienda.',
+          sub:'EU Cowork AI collega i vostri sistemi, svolge attività con accessi controllati e resta in ogni momento verificabile dal vostro IT.',
+          i1:{ t:'Collegare i sistemi',
+               d:'Collegate ERP, SharePoint, conoscenza aziendale e altri strumenti in modo centrale a EU Cowork AI. I connettori nativi sono subito disponibili, i sistemi propri si integrano tramite MCP o un’API REST.' },
+          i2:{ t:'Gestire gli accessi in modo centrale',
+               d:'Stabilite per ruolo, gruppo o utente chi può accedere a quali sistemi e funzioni. L’accesso alle fatture può così essere consentito, mentre i dati sensibili sugli stipendi restano bloccati.' },
+          i3:{ t:'Svolgere lavoro reale',
+               d:'EU Cowork AI non si limita a rispondere: crea file, analizza i dati dell’ERP e si occupa delle attività ricorrenti. I documenti Excel, Word o PDF pronti sono disponibili direttamente in chat.' },
+          i4:{ t:'Tracciare tutto',
+               d:'Ogni chiamata di strumento, ogni azione amministrativa e ogni accesso vengono registrati di continuo. Il vostro IT vede in qualsiasi momento chi ha consultato quali dati e può esportare le voci.' },
+          i5:{ t:'Integrarsi nel lavoro esistente',
+               d:'Usate il vostro collega IA dove il team lavora già. In chat, accanto a un’e-mail di Outlook aperta e in futuro anche in altre applicazioni: supporto senza continui cambi di finestra e copia-incolla.' },
+          f1t:'OIDC ed Entra ID',
+          f1d:'Accesso tramite la vostra directory esistente. Gruppi e ruoli arrivano con essa.',
+          f2t:'Budget condivisi',
+          f2d:'Un budget mensile per l’organizzazione invece di limiti a testa, con blocco morbido anziché sforamento silenzioso.',
+          link1:'Governance e log di audit',
+          link2:'Tutte le integrazioni',
+          who:'Admin',
+          crumbs:[
+            ['Integrazioni','Connettori'],
+            ['Governance','Controllo degli accessi'],
+            ['Area di lavoro','Chat'],
+            ['Governance','Log di audit'],
+            ['Impostazioni','Superfici']
+          ],
+          m1:{
+            h:'Connettori', count:'4 di 4 attivi', native:'Nativo',
+            r1n:'ERP', r1d:'Clienti, fatture, progetti',
+            r2n:'SharePoint', r2d:'Documenti da Microsoft 365',
+            r3n:'Conoscenza aziendale', r3d:'I vostri documenti come base di conoscenza',
+            r4n:'Ricerca web', r4d:'Risposte con indicazione delle fonti',
+            own:'Sistema proprio', proto:'MCP · REST', url:'https://mcp.your-company.com/sse', cta:'Collega',
+            foot:'MCP o API REST. Ogni collegamento passa dal gateway.'
+          },
+          m2:{
+            roles:'Ruoli', groups:'Gruppi', permsFor:'Permessi per Buste paga', edit:'Modifica',
+            r:[ ['Admin','5'], ['Finanze','12'], ['HR','8'], ['Responsabili di progetto','6'], ['Sola lettura','15'] ],
+            g:[ ['Contabilità','6'], ['Buste paga','4'], ['Controlling','3'], ['Progetti','7'], ['Vendite','9'] ],
+            p:[
+              ['Leggere le fatture','Dati anagrafici e documenti','consentito',true],
+              ['Leggere gli stipendi','Dati salariali e conteggi','bloccato',false],
+              ['Leggere SharePoint','Documenti e cartelle','consentito',true],
+              ['Generazione di file','Excel, Word, PDF','consentito',true]
+            ],
+            foot:'Ogni modifica viene registrata nel log di audit.'
+          },
+          m3:{
+            ask:'Creami il report trimestrale Q3 in Excel.',
+            steps:['ERP interrogato · 1.284 voci','Raggruppato per centro di costo','Aggiunto il confronto con l’anno precedente','File creato'],
+            say:'Fatto. Ricavi, costi e margine per area, più una panoramica.',
+            file:'report-trimestrale-Q3.xlsx', meta:'24 KB · 4 fogli · creato nella sandbox', dl:'Scarica',
+            src:'Fonte: ERP · registrazioni 07–09/2026', composer:'Messaggio a EU Cowork AI …',
+            foot:'Esecuzione nella sandbox, risultato direttamente in chat.'
+          },
+          m4:{
+            search:'Cerca per utente, strumento o oggetto', range:'Ultime 24 h', export:'Esporta',
+            cTime:'Ora', cUser:'Utente', cAct:'Chiamata', cRes:'Esito',
+            rows:[
+              ['09:14:02','a.keller','erp.read_invoice · RE-2481','consentito',true],
+              ['09:13:47','a.keller','erp.read_payroll','bloccato',false],
+              ['09:11:20','m.bauer','sharepoint.search · Progetti/2026','consentito',true],
+              ['09:08:55','admin','policy.update · gruppo Finanze','salvato',true],
+              ['09:04:31','l.schulz','files.create · Q3.xlsx','consentito',true],
+              ['09:02:10','n.krause','auth.login · OIDC Entra ID','ok',true],
+              ['08:58:04','m.bauer','knowledge.search · Manuale','consentito',true],
+              ['08:55:39','p.thomas','erp.write_order','bloccato',false]
+            ],
+            foot:'Scritto in modo continuo, esportabile in CSV o JSON.'
+          },
+          m5:{
+            t1n:'Chat', t1d:'Nel browser, su qualsiasi dispositivo', live:'Attivo',
+            t2n:'Outlook', t2d:'Un riquadro accanto all’e-mail aperta', beta:'Beta',
+            t3n:'Altre', t3d:'Excel e altre applicazioni seguiranno', soon:'Pianificato',
+            shot:'Terminanfrage Baubegehung Los 3', pane:'EU Cowork AI', draft:'BOZZA · RISPOSTA',
+            foot:'Un unico accesso. Ovunque gli stessi diritti e lo stesso log di audit.'
+          }
+        },
+        es: {
+          h2:'Diseñado para su uso en toda la empresa.',
+          sub:'EU Cowork AI conecta sus sistemas, ejecuta tareas con accesos controlados y sigue siendo verificable por su departamento de TI en todo momento.',
+          i1:{ t:'Conectar sus sistemas',
+               d:'Conecte de forma centralizada el ERP, SharePoint, el conocimiento corporativo y otras herramientas con EU Cowork AI. Los conectores nativos están disponibles de inmediato; sus propios sistemas se integran mediante MCP o una API REST.' },
+          i2:{ t:'Controlar los accesos de forma centralizada',
+               d:'Determine por rol, grupo o usuario quién puede acceder a qué sistemas y funciones. Así, por ejemplo, el acceso a las facturas queda permitido mientras los datos salariales sensibles siguen bloqueados.' },
+          i3:{ t:'Hacer trabajo real',
+               d:'EU Cowork AI no solo responde preguntas: crea archivos, analiza datos del ERP y asume tareas recurrentes. Los documentos Excel, Word o PDF terminados están listos directamente en el chat.' },
+          i4:{ t:'Dejar todo trazado',
+               d:'Cada llamada a una herramienta, cada acción de administración y cada inicio de sesión se registran de forma continua. Su TI ve en todo momento quién accedió a qué datos y puede exportar las entradas.' },
+          i5:{ t:'Integrarse en el trabajo existente',
+               d:'Use a su compañero de IA donde su equipo ya trabaja. En el chat, junto a un correo de Outlook abierto y, en el futuro, también en otras aplicaciones: ayuda sin cambiar de ventana ni copiar y pegar constantemente.' },
+          f1t:'OIDC y Entra ID',
+          f1d:'Inicio de sesión a través de su directorio existente. Los grupos y los roles vienen incluidos.',
+          f2t:'Presupuestos compartidos',
+          f2d:'Un presupuesto mensual para la organización en lugar de límites por persona, con bloqueo suave en vez de un exceso silencioso.',
+          link1:'Gobernanza y registro de auditoría',
+          link2:'Todas las integraciones',
+          who:'Admin',
+          crumbs:[
+            ['Integraciones','Conectores'],
+            ['Gobernanza','Control de acceso'],
+            ['Espacio de trabajo','Chat'],
+            ['Gobernanza','Registro de auditoría'],
+            ['Ajustes','Superficies']
+          ],
+          m1:{
+            h:'Conectores', count:'4 de 4 activos', native:'Nativo',
+            r1n:'ERP', r1d:'Clientes, facturas, proyectos',
+            r2n:'SharePoint', r2d:'Documentos de Microsoft 365',
+            r3n:'Conocimiento corporativo', r3d:'Sus documentos como base de conocimiento',
+            r4n:'Búsqueda web', r4d:'Respuestas con indicación de fuentes',
+            own:'Sistema propio', proto:'MCP · REST', url:'https://mcp.your-company.com/sse', cta:'Conectar',
+            foot:'MCP o API REST. Cada conexión pasa por la pasarela.'
+          },
+          m2:{
+            roles:'Roles', groups:'Grupos', permsFor:'Permisos para Nóminas', edit:'Editar',
+            r:[ ['Admin','5'], ['Finanzas','12'], ['RR. HH.','8'], ['Jefes de proyecto','6'], ['Solo lectura','15'] ],
+            g:[ ['Contabilidad','6'], ['Nóminas','4'], ['Control de gestión','3'], ['Proyectos','7'], ['Ventas','9'] ],
+            p:[
+              ['Leer facturas','Datos maestros y comprobantes','permitido',true],
+              ['Leer nóminas','Datos salariales y liquidaciones','bloqueado',false],
+              ['Leer SharePoint','Documentos y carpetas','permitido',true],
+              ['Generación de archivos','Excel, Word, PDF','permitido',true]
+            ],
+            foot:'Cada cambio queda recogido en el registro de auditoría.'
+          },
+          m3:{
+            ask:'Genérame el informe trimestral del T3 en Excel.',
+            steps:['ERP consultado · 1.284 partidas','Agrupado por centro de coste','Comparación interanual añadida','Archivo creado'],
+            say:'Listo. Ingresos, costes y margen por área, más un resumen.',
+            file:'informe-trimestral-T3.xlsx', meta:'24 KB · 4 hojas · creado en la sandbox', dl:'Descargar',
+            src:'Fuente: ERP · asientos 07–09/2026', composer:'Mensaje a EU Cowork AI …',
+            foot:'Ejecución en la sandbox, resultado directamente en el chat.'
+          },
+          m4:{
+            search:'Buscar por usuario, herramienta u objeto', range:'Últimas 24 h', export:'Exportar',
+            cTime:'Hora', cUser:'Usuario', cAct:'Llamada', cRes:'Resultado',
+            rows:[
+              ['09:14:02','a.keller','erp.read_invoice · RE-2481','permitido',true],
+              ['09:13:47','a.keller','erp.read_payroll','bloqueado',false],
+              ['09:11:20','m.bauer','sharepoint.search · Proyectos/2026','permitido',true],
+              ['09:08:55','admin','policy.update · grupo Finanzas','guardado',true],
+              ['09:04:31','l.schulz','files.create · Q3.xlsx','permitido',true],
+              ['09:02:10','n.krause','auth.login · OIDC Entra ID','ok',true],
+              ['08:58:04','m.bauer','knowledge.search · Manual','permitido',true],
+              ['08:55:39','p.thomas','erp.write_order','bloqueado',false]
+            ],
+            foot:'Escrito de forma continua, exportable como CSV o JSON.'
+          },
+          m5:{
+            t1n:'Chat', t1d:'En el navegador, en cualquier dispositivo', live:'Activo',
+            t2n:'Outlook', t2d:'Un panel junto al correo abierto', beta:'Beta',
+            t3n:'Más', t3d:'Excel y otras aplicaciones vendrán después', soon:'Planificado',
+            shot:'Terminanfrage Baubegehung Los 3', pane:'EU Cowork AI', draft:'BORRADOR · RESPUESTA',
+            foot:'Un solo inicio de sesión. Los mismos permisos y el mismo registro de auditoría en todas partes.'
+          }
         }
       },
       olk: {
@@ -3739,6 +4224,138 @@ sov: {
           link:'Where the Outlook and Excel add-ins stand',
           replay:'Play again',
           /* Mockup-Inhalte bleiben in beiden Sprachen deutsch, wie bei t.hero2.mock. */
+          mock:{
+            win:'Posteingang · Outlook',
+            tab1:'Relevant', tab2:'Sonstige',
+            from:'Meier Bau AG', to:'an Anna Keller', time:'08:12',
+            subject:'Terminanfrage Baubegehung Los 3',
+            pv1a:'Guten Tag Frau Keller',
+            pv1b:'für Los 3 möchten wir die Baubegehung noch im August ansetzen.',
+            n2:'Projektteam', dt2:'Gestern', s2:'Status Update',
+            pv2:'Kurzes Update zum Projektfortschritt und zu offenen Punkten.',
+            n3:'Anna Keller', dt3:'Gestern', s3:'Re: Angebot und nächste Schritte',
+            pv3:'Vielen Dank! Passt so für uns.',
+            n4:'Bauleitung', dt4:'Mi', s4:'Dokumente und Pläne',
+            pv4:'Anbei die aktuellen Pläne und Spezifikationen.',
+            count:'1-50 von 152', unread:'Ungelesen',
+            inserted:'Antwort eingefügt · Entwurf im Antwortfenster',
+            beta:'BETA',
+            leadH:'Wie kann ich helfen?',
+            leadS:'Die geöffnete E-Mail ist als Kontext bereit.',
+            thinking:'Entwurf wird erstellt …',
+            done:'Antwort bereit',
+            doneSub:'Entwurf erstellt auf Basis des E-Mail-Inhalts.',
+            draftLabel:'Entwurf · Antwort',
+            d1:'Guten Tag Herr Meier',
+            d2a:'Für die Baubegehung Los 3 passt uns ', d2m:'Donnerstag, 14. August, 09:30 Uhr', d2b:'.',
+            d3:'Bitte kurz bestätigen, dann reserviere ich das Zeitfenster.',
+            d4:'Freundliche Grüsse',
+            d5:'Anna Keller',
+            src:'Quellen: E-Mail-Verlauf · 3 Anhänge',
+            btnPrep:'Antwort vorbereiten',
+            btnIns:'Als Antwort einfügen',
+            btnDone:'Eingefügt',
+            chip:'Terminanfrage Baubegehung Los 3',
+            composer:'Nachricht an EU Cowork AI …',
+            model:'EU Cowork AI Auto'
+          }
+        },
+        fr: {
+          h2:'Votre collègue IA. Directement dans Outlook.',
+          sub:'L’add-in s’ouvre en volet à côté de l’e-mail ouvert. Contexte, brouillon et tâches naissent là où vous travaillez déjà.',
+          p1t:'L’e-mail comme contexte',     p1d:'Objet, fil de discussion et pièces jointes sont prêts, sans copier-coller.',
+          p2t:'Des réponses dans votre style', p2d:'Le brouillon arrive dans la fenêtre de réponse, vous vérifiez et vous envoyez.',
+          p3t:'Extraire les tâches',        p3d:'To-dos, responsabilités et échéances issus de longs fils de discussion.',
+          link:'État des add-ins pour Outlook et Excel',
+          replay:'Rejouer',
+          mock:{
+            win:'Posteingang · Outlook',
+            tab1:'Relevant', tab2:'Sonstige',
+            from:'Meier Bau AG', to:'an Anna Keller', time:'08:12',
+            subject:'Terminanfrage Baubegehung Los 3',
+            pv1a:'Guten Tag Frau Keller',
+            pv1b:'für Los 3 möchten wir die Baubegehung noch im August ansetzen.',
+            n2:'Projektteam', dt2:'Gestern', s2:'Status Update',
+            pv2:'Kurzes Update zum Projektfortschritt und zu offenen Punkten.',
+            n3:'Anna Keller', dt3:'Gestern', s3:'Re: Angebot und nächste Schritte',
+            pv3:'Vielen Dank! Passt so für uns.',
+            n4:'Bauleitung', dt4:'Mi', s4:'Dokumente und Pläne',
+            pv4:'Anbei die aktuellen Pläne und Spezifikationen.',
+            count:'1-50 von 152', unread:'Ungelesen',
+            inserted:'Antwort eingefügt · Entwurf im Antwortfenster',
+            beta:'BETA',
+            leadH:'Wie kann ich helfen?',
+            leadS:'Die geöffnete E-Mail ist als Kontext bereit.',
+            thinking:'Entwurf wird erstellt …',
+            done:'Antwort bereit',
+            doneSub:'Entwurf erstellt auf Basis des E-Mail-Inhalts.',
+            draftLabel:'Entwurf · Antwort',
+            d1:'Guten Tag Herr Meier',
+            d2a:'Für die Baubegehung Los 3 passt uns ', d2m:'Donnerstag, 14. August, 09:30 Uhr', d2b:'.',
+            d3:'Bitte kurz bestätigen, dann reserviere ich das Zeitfenster.',
+            d4:'Freundliche Grüsse',
+            d5:'Anna Keller',
+            src:'Quellen: E-Mail-Verlauf · 3 Anhänge',
+            btnPrep:'Antwort vorbereiten',
+            btnIns:'Als Antwort einfügen',
+            btnDone:'Eingefügt',
+            chip:'Terminanfrage Baubegehung Los 3',
+            composer:'Nachricht an EU Cowork AI …',
+            model:'EU Cowork AI Auto'
+          }
+        },
+        it: {
+          h2:'Il vostro collega IA. Direttamente in Outlook.',
+          sub:'L’add-in si apre come riquadro accanto all’e-mail aperta. Contesto, bozza e attività nascono dove già lavorate.',
+          p1t:'L’e-mail come contesto',     p1d:'Oggetto, conversazione e allegati sono pronti, senza copiare nulla.',
+          p2t:'Risposte nel vostro stile',  p2d:'La bozza finisce nella finestra di risposta: controllate e inviate.',
+          p3t:'Estrarre le attività',       p3d:'To-do, responsabilità e scadenze da conversazioni lunghe.',
+          link:'Stato degli add-in per Outlook ed Excel',
+          replay:'Riproduci di nuovo',
+          mock:{
+            win:'Posteingang · Outlook',
+            tab1:'Relevant', tab2:'Sonstige',
+            from:'Meier Bau AG', to:'an Anna Keller', time:'08:12',
+            subject:'Terminanfrage Baubegehung Los 3',
+            pv1a:'Guten Tag Frau Keller',
+            pv1b:'für Los 3 möchten wir die Baubegehung noch im August ansetzen.',
+            n2:'Projektteam', dt2:'Gestern', s2:'Status Update',
+            pv2:'Kurzes Update zum Projektfortschritt und zu offenen Punkten.',
+            n3:'Anna Keller', dt3:'Gestern', s3:'Re: Angebot und nächste Schritte',
+            pv3:'Vielen Dank! Passt so für uns.',
+            n4:'Bauleitung', dt4:'Mi', s4:'Dokumente und Pläne',
+            pv4:'Anbei die aktuellen Pläne und Spezifikationen.',
+            count:'1-50 von 152', unread:'Ungelesen',
+            inserted:'Antwort eingefügt · Entwurf im Antwortfenster',
+            beta:'BETA',
+            leadH:'Wie kann ich helfen?',
+            leadS:'Die geöffnete E-Mail ist als Kontext bereit.',
+            thinking:'Entwurf wird erstellt …',
+            done:'Antwort bereit',
+            doneSub:'Entwurf erstellt auf Basis des E-Mail-Inhalts.',
+            draftLabel:'Entwurf · Antwort',
+            d1:'Guten Tag Herr Meier',
+            d2a:'Für die Baubegehung Los 3 passt uns ', d2m:'Donnerstag, 14. August, 09:30 Uhr', d2b:'.',
+            d3:'Bitte kurz bestätigen, dann reserviere ich das Zeitfenster.',
+            d4:'Freundliche Grüsse',
+            d5:'Anna Keller',
+            src:'Quellen: E-Mail-Verlauf · 3 Anhänge',
+            btnPrep:'Antwort vorbereiten',
+            btnIns:'Als Antwort einfügen',
+            btnDone:'Eingefügt',
+            chip:'Terminanfrage Baubegehung Los 3',
+            composer:'Nachricht an EU Cowork AI …',
+            model:'EU Cowork AI Auto'
+          }
+        },
+        es: {
+          h2:'Su compañero de IA. Directamente en Outlook.',
+          sub:'El complemento se abre como un panel junto al correo abierto. El contexto, el borrador y las tareas surgen donde usted ya trabaja.',
+          p1t:'El correo como contexto',    p1d:'Asunto, conversación y adjuntos están listos, sin copiar nada.',
+          p2t:'Respuestas con su propio estilo', p2d:'El borrador llega a la ventana de respuesta; usted revisa y envía.',
+          p3t:'Extraer tareas',             p3d:'Tareas pendientes, responsables y plazos de conversaciones largas.',
+          link:'Estado de los complementos para Outlook y Excel',
+          replay:'Reproducir de nuevo',
           mock:{
             win:'Posteingang · Outlook',
             tab1:'Relevant', tab2:'Sonstige',

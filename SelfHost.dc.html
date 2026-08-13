@@ -22,6 +22,7 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/assets/i18n.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -209,6 +210,72 @@ class Component extends DCLogic {
           { t:'SearXNG', d:'Private web search, self-hosted.' },
           { t:'Telemetry off by default', d:'No tracking unless you deliberately enable it.' },
           { t:'MIT license', d:'No seat limit, no forced branding.' }
+        ]
+      },
+      fr: {
+        eyebrow:'// Self-host',
+        h1:'Hébergez-le vous-même. En 60 secondes.',
+        tagline:'Raw power. No surprises.',
+        sub:'Un stack Compose, TLS automatique, recherche web privée. Licence MIT, aucune limite de sièges, aucun marquage imposé — dès 1 utilisateur.',
+        ctaGithub:'View on GitHub →', ctaDocs:'Vers le stack →',
+        stepsTitle:'Comment ça se passe',
+        steps:[
+          { n:'01', t:'Cloner', d:'Récupérer le dépôt — une seule commande.' },
+          { n:'02', t:'install.sh', d:'Un script. Images, TLS et recherche se configurent tout seuls.' },
+          { n:'03', t:'Ouvrir', d:'https://localhost — prêt en 60 secondes environ.' }
+        ],
+        stackTitle:'Le stack',
+        stackNote:'Docker Compose. Rien d’exotique, tout est vérifiable.',
+        featsTitle:'Inclus',
+        feats:[
+          { t:'Auto-TLS via Caddy', d:'Certificats automatiques, aucune configuration manuelle.' },
+          { t:'SearXNG', d:'Recherche web privée, auto-hébergée.' },
+          { t:'Télémétrie désactivée par défaut', d:'Aucun suivi, sauf si vous l’activez délibérément.' },
+          { t:'Licence MIT', d:'Aucune limite de sièges, aucun marquage imposé.' }
+        ]
+      },
+      it: {
+        eyebrow:'// Self-host',
+        h1:'Self-hosting. In 60 secondi.',
+        tagline:'Raw power. No surprises.',
+        sub:'Uno stack Compose, TLS automatico, ricerca web privata. Licenza MIT, nessun limite di postazioni, nessun branding imposto — da 1 utente.',
+        ctaGithub:'View on GitHub →', ctaDocs:'Allo stack →',
+        stepsTitle:'Come funziona',
+        steps:[
+          { n:'01', t:'Clonare', d:'Scaricare il repository — un solo comando.' },
+          { n:'02', t:'install.sh', d:'Uno script. Immagini, TLS e ricerca si configurano da soli.' },
+          { n:'03', t:'Aprire', d:'https://localhost — pronto in circa 60 secondi.' }
+        ],
+        stackTitle:'Lo stack',
+        stackNote:'Docker Compose. Niente di esotico, tutto verificabile.',
+        featsTitle:'Incluso',
+        feats:[
+          { t:'Auto-TLS via Caddy', d:'Certificati automatici, nessuna configurazione manuale.' },
+          { t:'SearXNG', d:'Ricerca web privata, self-hosted.' },
+          { t:'Telemetria disattivata per impostazione predefinita', d:'Nessun tracciamento, a meno che Lei non lo attivi deliberatamente.' },
+          { t:'Licenza MIT', d:'Nessun limite di postazioni, nessun branding imposto.' }
+        ]
+      },
+      es: {
+        eyebrow:'// Self-host',
+        h1:'Alójelo usted mismo. En 60 segundos.',
+        tagline:'Raw power. No surprises.',
+        sub:'Un stack de Compose, TLS automático, búsqueda web privada. Licencia MIT, sin límite de puestos, sin marca impuesta — desde 1 usuario.',
+        ctaGithub:'View on GitHub →', ctaDocs:'Al stack →',
+        stepsTitle:'Así funciona',
+        steps:[
+          { n:'01', t:'Clonar', d:'Obtener el repositorio — un solo comando.' },
+          { n:'02', t:'install.sh', d:'Un script. Imágenes, TLS y búsqueda se configuran solos.' },
+          { n:'03', t:'Abrir', d:'https://localhost — listo en unos 60 segundos.' }
+        ],
+        stackTitle:'El stack',
+        stackNote:'Docker Compose. Nada exótico, todo verificable.',
+        featsTitle:'Incluido',
+        feats:[
+          { t:'Auto-TLS via Caddy', d:'Certificados automáticos, sin configuración manual.' },
+          { t:'SearXNG', d:'Búsqueda web privada, autoalojada.' },
+          { t:'Telemetría desactivada por defecto', d:'Sin seguimiento, salvo que usted lo active deliberadamente.' },
+          { t:'Licencia MIT', d:'Sin límite de puestos, sin marca impuesta.' }
         ]
       }
     };
