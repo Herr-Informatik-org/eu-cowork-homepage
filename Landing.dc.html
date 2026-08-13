@@ -4383,7 +4383,14 @@ clearTimeout(this._mobTimer);
     if (window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
       this._pgMove = (e) => {
         const r = cv.getBoundingClientRect();
-        this._pgTarget = { x: e.clientX - r.left, y: e.clientY - r.top, s: 1 };
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        /* Beim Eintritt das Feld setzen statt es holen zu lassen. Es laeuft
+           dem Zeiger bewusst nach; stuende es noch am Ort des letzten
+           Verlassens, zoege es beim naechsten Hover als Streifen quer ueber
+           die Kugel. Solange die Staerke bei null liegt, sieht niemand den
+           Sprung — sie schwillt erst danach an. */
+        if (this._pgPointer.s < 0.01){ this._pgPointer.x = x; this._pgPointer.y = y; }
+        this._pgTarget = { x, y, s: 1 };
       };
       this._pgLeave = () => { this._pgTarget.s = 0; };
       cv.addEventListener('pointermove', this._pgMove);
@@ -4443,12 +4450,20 @@ clearTimeout(this._mobTimer);
     ctx.clearRect(0, 0, w, h);
 
     const t = ts * 0.001;
+    /* Der Zeiger fuehrt die Wolke, er zerrt nicht an ihr: das Kraftfeld
+       laeuft dem Mauszeiger nach statt auf ihm zu kleben (0.085 statt 0.24,
+       rund eine Fuenftelsekunde Nachlauf), und die Staerke schwillt in etwa
+       einer halben Sekunde an und wieder ab (0.055 statt 0.2). Dadurch gibt
+       es kein Ein- und Ausschalten mehr, sondern ein Kommen und Gehen. */
     const p = this._pgPointer, tgt = this._pgTarget;
-    p.x += (tgt.x - p.x) * 0.24;
-    p.y += (tgt.y - p.y) * 0.24;
-    p.s += (tgt.s - p.s) * 0.2;
+    p.x += (tgt.x - p.x) * 0.085;
+    p.y += (tgt.y - p.y) * 0.085;
+    p.s += (tgt.s - p.s) * 0.055;
 
-    const radius = Math.min(w, h) * 0.16;
+    /* Breites, weiches Feld statt eines Stupsers: knapp doppelter Radius
+       verteilt dieselbe Bewegung auf viermal so viele Punkte, jeder einzelne
+       bewegt sich also weniger weit. Das ist der Kern des ruhigen Eindrucks. */
+    const radius = Math.min(w, h) * 0.30;
     const motion = this._reduced() ? 0 : 1;
 
     const list = this._pgParticles;
@@ -4459,26 +4474,45 @@ clearTimeout(this._mobTimer);
       const cd = Math.hypot(cdx, cdy);
 
       if (cd < radius && p.s > 0.001 && motion){
-        const f = Math.pow(1 - cd / radius, 1.65) * p.s;
+        /* Smoothstep statt Potenz: die Kurve ist an BEIDEN Enden flach. Am
+           Feldrand setzt die Kraft dadurch nicht ein, sie taucht auf, und in
+           der Mitte gibt es keine Spitze, ueber die der Zeiger huepft. */
+        const u = 1 - cd / radius;
+        const f = u * u * (3 - 2 * u) * p.s;
         const ang = Math.atan2(cdy, cdx);
         /* Der radiale Anteil allein risse ein sauberes rundes Loch. Die
            Turbulenz gibt jedem Punkt eine eigene Richtung, dadurch mischen
-           sich die Partikel, statt eine Blase zu bilden. */
-        const turb = q.phase * 2.73 + Math.sin(t * 3.4 + q.phase * 1.81) * 1.9 + ang * 0.22;
-        fx += Math.cos(ang) * f * 2.1 + Math.cos(turb) * f * 7.6 * q.scatter + Math.sin(t * 7.1 + q.phase * 4.7) * f * 1.25;
-        fy += Math.sin(ang) * f * 2.1 + Math.sin(turb) * f * 7.6 * q.scatter + Math.cos(t * 6.3 + q.phase * 3.9) * f * 1.25;
+           sich die Partikel, statt eine Blase zu bilden.
+           Sie darf aber nicht flackern: 0.55 Hz statt 3.4 Hz laesst die
+           Richtung driften, wo sie vorher zappelte, und der Wert liegt nun
+           unter dem radialen Anteil — die Wolke atmet nach aussen, statt
+           durcheinanderzuwirbeln. Das frueher dritte Glied (7 Hz Zittern)
+           faellt ersatzlos weg; es war die eigentliche Unruhe. */
+        const turb = q.phase * 2.73 + Math.sin(t * 0.55 + q.phase * 1.81) * 0.9 + ang * 0.22;
+        fx += Math.cos(ang) * f * 1.15 + Math.cos(turb) * f * 0.55 * q.scatter;
+        fy += Math.sin(ang) * f * 1.15 + Math.sin(turb) * f * 0.55 * q.scatter;
       }
 
-      const ix = Math.sin(t * 0.62 + q.phase) * 0.018 * motion;
-      const iy = Math.cos(t * 0.57 + q.phase) * 0.014 * motion;
-      q.vx = (q.vx + (q.ox + ix - q.x) * 0.14 + fx) * 0.66;
-      q.vy = (q.vy + (q.oy + iy - q.y) * 0.14 + fy) * 0.66;
+      const ix = Math.sin(t * 0.42 + q.phase) * 0.03 * motion;
+      const iy = Math.cos(t * 0.38 + q.phase) * 0.026 * motion;
+      /* Feder und Daempfung: weicher (0.03 statt 0.14) und deutlich staerker
+         gedaempft (0.70 statt 0.66). Die alte Kombination war mit einem
+         Daempfungsgrad um 0.45 unterdaempft — die Punkte schossen ueber ihren
+         Platz hinaus und schwangen aus, was als Nachzappeln zu sehen war.
+         Jetzt liegt der Grad bei rund 0.85: die Wolke sinkt in gut einer
+         halben Sekunde zurueck und kommt dort an, ohne nachzufedern. */
+      q.vx = (q.vx + (q.ox + ix - q.x) * 0.03 + fx) * 0.70;
+      q.vy = (q.vy + (q.oy + iy - q.y) * 0.03 + fy) * 0.70;
       q.x += q.vx; q.y += q.vy;
 
-      const sp = Math.min(1, Math.hypot(q.vx, q.vy) / 5);
-      ctx.globalAlpha = Math.min(1, q.alpha + sp * 0.22);
+      /* Der Helligkeitsschub haengt an der Geschwindigkeit, und die ist jetzt
+         ein Vielfaches kleiner. Ohne kleineren Teiler bliebe die Wolke stumpf;
+         mit ihm behaelt sie ihr leichtes Aufleuchten, nur eben als Schimmer
+         statt als Blitz. */
+      const sp = Math.min(1, Math.hypot(q.vx, q.vy) / 1.4);
+      ctx.globalAlpha = Math.min(1, q.alpha + sp * 0.16);
       ctx.fillStyle = q.color;
-      const s = q.size * (1 + sp * 0.12);
+      const s = q.size * (1 + sp * 0.08);
       ctx.fillRect(q.x, q.y, s, s);
     }
     ctx.globalAlpha = 1;
