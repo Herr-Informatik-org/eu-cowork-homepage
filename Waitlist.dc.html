@@ -30,6 +30,7 @@
   <h1>Frühen Zugang zu EU Cowork AI sichern.</h1>
   <p>Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.</p>
   <p>Beta-Zugang · Direkter Austausch · Jederzeit abmeldbar</p>
+  <p>Die ersten Einladungen werden schrittweise verschickt.</p>
   <p>Die Anmeldung braucht JavaScript; bitte aktivieren Sie es oder schreiben Sie an info@herr-informatik.ch.</p>
   <ul>
     <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
@@ -51,10 +52,9 @@
 <style>
   /* ---- Warteliste, "European Precision" ---------------------------------
      Die Seite hat genau EINE Aufgabe: eine E-Mail-Adresse entgegennehmen.
-     Alles, was davon ablenkt, ist hier bewusst nicht vorhanden — keine
-     zweite Marketing-Spalte, keine volle Navigation, kein grosser Fuss,
-     keine schwebende Karte. Deshalb bringt diese Seite ihre eigene, kleine
-     Kopf- und Fusszeile mit, statt SiteHeader/SiteFooter zu importieren.
+     Sie besteht deshalb aus genau EINER Kachel — links die Botschaft, rechts
+     das Formular, beides auf demselben warmen Verlauf. Kopf und Fuss sind
+     absichtlich winzig; diese Seite importiert SiteHeader/SiteFooter nicht.
 
      Tokens wortgleich zu assets/content.css und SiteHeader. Zustände liegen
      in Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
@@ -62,17 +62,16 @@
   :root{
     --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
-    --c-bg:#FAFAF7; --c-surface:#FFFFFF; --c-deep:#0B1E33;
+    --c-bg:#FBFAF6; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
     --c-danger:#B4472F;
     --c-hairline:#DDE4EA; --c-hairline-strong:#C6D0DA;
     --bd:1px solid var(--c-hairline);
-    --r-control:4px;   /* Knopf, Eingabefeld */
-    --r-frame:8px;     /* Formular-Rahmen */
-    --r-card:12px;
+    --r-control:4px;   /* Knopf, Eingabefeld, Segment */
+    --r-frame:8px;     /* Formularkarte */
+    --r-tile:12px;     /* die grosse Kachel */
     --sh-flat:0 1px 2px rgba(11,30,51,.04);
-    --sh-soft:0 1px 2px rgba(11,30,51,.04), 0 8px 18px -12px rgba(11,30,51,.13);
     --wl-ease:cubic-bezier(.23,1,.32,1);
   }
   *{ box-sizing:border-box; }
@@ -84,25 +83,25 @@
   }
   a{ color:var(--c-eu-700); text-underline-offset:2px; transition:color .15s ease; }
   ::selection{ background:var(--c-ice-300); color:var(--c-deep); }
-  input::placeholder, textarea::placeholder{ color:var(--c-muted); }
+  input::placeholder{ color:var(--c-muted); }
   h1{ text-wrap:balance; overflow-wrap:break-word; }
   p{ text-wrap:pretty; }
   :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:var(--r-control); }
 
-  /* Die Seite trägt den Fuss unten, auch wenn das Formular kurz ist. */
   #top{ min-height:100vh; min-height:100svh; display:flex; flex-direction:column; }
 
-  /* ---- Kopfzeile: Marke links, Rückweg rechts. Sonst nichts. ----------- */
+  /* ---- Kopfzeile: Marke links, Rückweg rechts. Kein Schatten. ---------- */
   .wl-hd{
     flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
-    gap:16px; min-height:68px; padding:0 clamp(20px,5vw,44px);
-    border-bottom:var(--bd); background:rgba(250,250,247,.86);
-    backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px);
+    gap:16px; min-height:66px; padding:0 clamp(16px,5vw,44px);
+    border-bottom:1px solid rgba(11,30,51,.07); background:var(--c-bg);
   }
   .wl-brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
   .wl-brand-word{ font-size:17px; font-weight:600; letter-spacing:-.010em; color:var(--c-ink); white-space:nowrap; }
   .wl-brand-ai{ color:var(--c-eu-500); }
   .wl-hd-right{ display:flex; align-items:center; gap:6px; }
+  /* Die Sprachumschaltung bleibt: ohne sie gäbe es auf dieser Seite keinen
+     Weg zur englischen Fassung, und die Seite ist zweisprachig gepflegt. */
   .wl-lang{ display:inline-flex; align-items:center; padding:2px; border:var(--bd); border-radius:var(--r-control); background:var(--c-surface); }
   .wl-lang button{
     min-height:26px; padding:0 8px; border:0; border-radius:2px; cursor:pointer;
@@ -117,50 +116,103 @@
   }
   .wl-back svg{ flex:0 0 auto; }
 
-  /* ---- Bühne: ein sehr ruhiger Verlauf, sonst Papierweiss. ------------- */
+  /* ---- Bühne und Kachel ------------------------------------------------ */
   .wl-main{
-    flex:1 1 auto;
-    background:
-      radial-gradient(110% 62% at 50% 0%, rgba(214,237,245,.55) 0%, rgba(214,237,245,0) 62%),
-      var(--c-bg);
-    padding:clamp(48px,7vw,88px) clamp(20px,5vw,44px) clamp(56px,8vw,96px);
+    flex:1 1 auto; display:flex; align-items:center;
+    padding:clamp(24px,4vw,56px) 0;
   }
-  /* Eine Spalte, 560px. Die Breite ist das Versprechen: kurz. */
-  .wl-wrap{ max-width:560px; margin:0 auto; }
+  .wl-tile{
+    position:relative; isolation:isolate; overflow:hidden;
+    width:min(1240px, calc(100vw - 80px)); min-height:620px; margin:0 auto;
+    border-radius:var(--r-tile);
+    /* Eine feine halbtransparente Kontur statt einer Schattenwolke: die
+       Kachel liegt auf dem Papier, sie schwebt nicht darüber. */
+    box-shadow:inset 0 0 0 1px rgba(11,30,51,.08);
+    display:grid; grid-template-columns:44% 56%; align-items:center;
+    gap:clamp(32px,4vw,56px); padding:clamp(56px,5vw,72px);
+  }
 
+  /* ---- Warmer Verlauf ---------------------------------------------------
+     Vier weiche Lichtflächen über einer Creme-Grundfläche, jede mit eigener
+     Dauer und eigenem Weg. Bewegt wird ausschliesslich `transform`, damit
+     nichts neu berechnet werden muss; die Flächen sind radiale Verläufe und
+     kein `filter: blur()`, weil ein Weichzeichner über 1240 px jede Bildrate
+     kostet. Der kühle Anteil ist bewusst klein und liegt unten links, damit
+     er die warme Grundstimmung stützt statt sie zu kippen. */
+  .wl-sg{
+    position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+    background:linear-gradient(134deg, #FDFAF3 0%, #FBF4E5 46%, #F7EAD3 100%);
+  }
+  .wl-sg i{ position:absolute; display:block; will-change:transform; }
+  .wl-sg .a{
+    width:78%; height:118%; left:-14%; top:-32%;
+    background:radial-gradient(closest-side, rgba(237,203,134,.82) 0%, rgba(237,203,134,0) 100%);
+    animation:wl-a 21s var(--wl-ease) infinite alternate;
+  }
+  .wl-sg .b{
+    width:86%; height:126%; right:-20%; bottom:-40%;
+    background:radial-gradient(closest-side, rgba(242,208,170,.78) 0%, rgba(242,208,170,0) 100%);
+    animation:wl-b 25s var(--wl-ease) infinite alternate;
+  }
+  .wl-sg .c{
+    width:46%; height:64%; left:6%; bottom:-18%;
+    background:radial-gradient(closest-side, rgba(165,216,230,.44) 0%, rgba(165,216,230,0) 100%);
+    animation:wl-c 23s var(--wl-ease) infinite alternate;
+  }
+  .wl-sg .d{
+    width:64%; height:82%; left:26%; top:-16%;
+    background:radial-gradient(closest-side, rgba(255,253,247,.92) 0%, rgba(255,253,247,0) 100%);
+    animation:wl-d 18s var(--wl-ease) infinite alternate;
+  }
+  @keyframes wl-a{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(7%,5%,0) scale(1.10); } }
+  @keyframes wl-b{ from{ transform:translate3d(0,0,0) scale(1.06); } to{ transform:translate3d(-8%,-6%,0) scale(1); } }
+  @keyframes wl-c{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(11%,-9%,0) scale(1.14); } }
+  @keyframes wl-d{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(-6%,7%,0) scale(1.08); } }
+  /* Korn gegen Streifenbildung, dasselbe Muster wie auf der Startseite. */
+  .wl-grain{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    opacity:.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wl-col{ position:relative; z-index:1; min-width:0; }
+
+  /* ---- Linke Spalte ---------------------------------------------------- */
+  .wl-msg{ max-width:430px; }
   .wl-eyebrow{
     font-family:var(--f-mono); font-size:11.5px; letter-spacing:.13em;
-    text-transform:uppercase; color:var(--c-eu-500);
+    text-transform:uppercase; color:#8A6A22;
   }
   .wl-h1{
     font-family:var(--f-display); font-weight:400;
-    font-size:clamp(32px,4.4vw,46px); line-height:1.10; letter-spacing:-.021em;
-    color:var(--c-ink); margin:16px 0 0;
+    font-size:clamp(34px,4.6vw,58px); line-height:1.07; letter-spacing:-.024em;
+    color:var(--c-ink); margin:18px 0 0;
   }
   .wl-sub{
-    font-size:clamp(16px,1.3vw,17.5px); line-height:1.58; letter-spacing:-.005em;
-    color:var(--c-body); margin:16px 0 0;
+    font-size:clamp(15.5px,1.2vw,17px); line-height:1.58; letter-spacing:-.004em;
+    color:#3D4B59; margin:20px 0 0;
   }
-  /* Die drei Vorteile als eine schmale Zeile statt als Liste mit Symbolen.
-     Der Trenner haengt am CSS, nicht am Text: so steht er mittig zwischen
-     zwei Eintraegen und faellt nach dem letzten und am Zeilenumbruch weg. */
+  /* Der Trenner hängt am CSS, nicht am Text: so steht er mittig zwischen
+     zwei Einträgen und fällt nach dem letzten und am Zeilenumbruch weg. */
   .wl-meta{
     display:flex; flex-wrap:wrap; align-items:center; gap:8px;
-    margin-top:18px; font-size:13.5px; letter-spacing:.006em; color:var(--c-body-soft);
+    margin-top:26px; font-family:var(--f-mono); font-size:12px;
+    letter-spacing:.04em; color:#6A5626;
   }
-  .wl-meta span:not(:last-child)::after{
-    content:'·'; margin-left:8px; color:var(--c-hairline-strong);
-  }
+  .wl-meta span:not(:last-child)::after{ content:'·'; margin-left:8px; color:rgba(106,86,38,.45); }
+  .wl-hint{ margin:16px 0 0; font-size:13px; line-height:1.5; color:#7A6535; }
 
-  /* ---- Formular: zurückhaltender Rahmen, kein Schwebeeffekt. ---------- */
-  .wl-panel{
-    margin-top:clamp(28px,4vw,38px);
-    background:var(--c-surface); border:var(--bd); border-radius:var(--r-frame);
-    box-shadow:var(--sh-flat); padding:clamp(22px,3.4vw,30px);
+  /* ---- Rechte Formularkarte ------------------------------------------- */
+  .wl-cardcol{ display:flex; justify-content:flex-end; }
+  .wl-card{
+    width:100%; max-width:500px;
+    background:#FFFEFC; border:1px solid var(--c-hairline-strong);
+    border-radius:var(--r-frame); box-shadow:var(--sh-flat);
+    padding:clamp(26px,2.6vw,36px);
   }
   .wl-row + .wl-row{ margin-top:18px; }
   .wl-label{
-    display:flex; align-items:center; gap:7px; margin-bottom:8px;
+    display:flex; align-items:baseline; gap:7px; margin-bottom:8px;
     font-family:var(--f-mono); font-size:10.5px; letter-spacing:.09em;
     text-transform:uppercase; color:var(--c-body-soft);
   }
@@ -168,37 +220,41 @@
   .wl-req{ color:var(--c-danger); }
 
   .wl-field{
-    width:100%; min-height:46px;
+    width:100%; height:48px;
     font-family:var(--f-display); font-size:15px; color:var(--c-ink);
     background:var(--c-surface); border:1px solid var(--c-hairline-strong);
-    border-radius:var(--r-control); padding:12px 13px; outline:none;
+    border-radius:var(--r-control); padding:0 13px; outline:none;
     transition:border-color 150ms ease, box-shadow 150ms ease;
   }
   .wl-field:focus, .wl-field:focus-visible{
-    border-color:var(--c-eu-700); box-shadow:0 0 0 3px rgba(18,50,107,.14); outline:none;
+    border-color:var(--c-eu-700); box-shadow:0 0 0 3px rgba(18,50,107,.12); outline:none;
   }
-  .wl-select{ cursor:pointer; }
-  .wl-textarea{ line-height:1.5; resize:vertical; }
+  .wl-field.is-err{ border-color:var(--c-danger); }
 
-  /* Der Fangfeld-Eingang ist die einzige Bot-Abwehr, die sichtbar Platz
-     kosten würde — deshalb steht er hier und nicht auf dem Bildschirm.
-     display:none nimmt ihn zugleich aus Tab-Reihenfolge und Autofill. */
+  /* Fangfeld: display:none nimmt ihn zugleich aus Tab-Reihenfolge und
+     Autofill. Er ist die einzige Bot-Abwehr, die sichtbar Platz kosten
+     würde — deshalb steht er hier und nicht auf dem Bildschirm. */
   .wl-hp{ display:none; }
 
-  /* Segmentierte Auswahl statt Pillen: gleiche Kante wie jeder Knopf. */
+  /* Segmente: gleiche Kante wie jedes andere Bedienelement, keine Pille. */
   .wl-seg{ display:flex; flex-wrap:wrap; gap:8px; }
   .wl-seg-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    min-height:40px; padding:0 14px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    min-height:40px; padding:0 13px; cursor:pointer;
     font-family:var(--f-display); font-size:14px; font-weight:500;
     color:#33404D; background:var(--c-surface);
     border:1px solid var(--c-hairline-strong); border-radius:var(--r-control);
     transition:border-color 150ms ease, background 150ms ease, color 150ms ease;
   }
-  .wl-seg-btn.is-on{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); }
+  .wl-seg-mark{
+    width:7px; height:7px; flex:0 0 auto; background:currentColor;
+    opacity:0; transition:opacity 150ms ease;
+  }
+  .wl-seg-btn.is-on{ color:var(--c-eu-700); background:#EAF1FA; border-color:var(--c-eu-700); }
+  .wl-seg-btn.is-on .wl-seg-mark{ opacity:1; }
 
   .wl-submit{
-    width:100%; margin-top:22px; min-height:48px;
+    width:100%; margin-top:24px; height:52px;
     display:inline-flex; align-items:center; justify-content:center;
     font-family:var(--f-display); font-size:15px; font-weight:600;
     color:#F7FAFC; background:var(--c-deep);
@@ -208,44 +264,40 @@
   }
   .wl-note{
     font-size:12.5px; line-height:1.55; letter-spacing:.006em;
-    color:var(--c-body-soft); margin-top:13px;
+    color:var(--c-body-soft); margin-top:14px;
   }
   .wl-err{ font-size:12.5px; line-height:1.45; color:var(--c-danger); margin-top:7px; }
 
-  /* ---- Erfolg ---------------------------------------------------------- */
-  .wl-done{ text-align:left; }
-  .wl-done-check{
-    width:44px; height:44px; border-radius:50%;
-    background:#EAF3F7; box-shadow:inset 0 0 0 1px rgba(46,108,134,.18);
-    display:flex; align-items:center; justify-content:center;
+  /* ---- Erfolg: dieselbe Karte, anderer Inhalt. ------------------------- */
+  .wl-done-k{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--c-eu-500);
   }
   .wl-done-t{
-    font-family:var(--f-display); font-size:clamp(22px,2.6vw,26px); font-weight:500;
-    letter-spacing:-.016em; color:var(--c-ink); margin-top:18px;
+    font-family:var(--f-display); font-size:clamp(24px,2.6vw,30px); font-weight:400;
+    letter-spacing:-.020em; color:var(--c-ink); margin-top:14px;
   }
-  .wl-done-b{ font-size:15.5px; line-height:1.6; color:#556170; margin:10px 0 0; }
-  .wl-done-hr{ height:1px; background:var(--c-hairline); margin:24px 0 20px; }
-  .wl-ask{ font-size:14.5px; line-height:1.55; color:var(--c-body); margin:0; }
-  .wl-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-top:14px; }
-  .wl-btn2{
-    display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:0 14px;
-    font-family:var(--f-display); font-size:14px; font-weight:500;
-    color:var(--c-ink); background:var(--c-surface);
-    border:1px solid var(--c-hairline-strong); border-radius:var(--r-control);
-    cursor:pointer; text-decoration:none;
-    transition:border-color 150ms ease, background 150ms ease;
+  .wl-done-b{ font-size:15px; line-height:1.6; color:#556170; margin:12px 0 0; }
+  .wl-done-a{
+    display:inline-flex; align-items:center; gap:8px; margin-top:22px;
+    font-size:14.5px; font-weight:500; color:var(--c-eu-700); text-decoration:none;
   }
+  .wl-done-hr{ height:1px; background:var(--c-hairline); margin:24px 0 18px; }
+  .wl-ask{ font-size:13.5px; line-height:1.55; color:var(--c-body-soft); margin:0; }
+  .wl-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-top:12px; }
   .wl-link{
     background:none; border:0; padding:0; cursor:pointer;
     font-family:var(--f-display); font-size:13.5px; color:var(--c-eu-700);
     text-decoration:underline; text-underline-offset:2px;
   }
+  .wl-select{ cursor:pointer; height:48px; }
+  .wl-textarea{ height:auto; min-height:78px; line-height:1.5; padding:12px 13px; resize:vertical; }
 
   /* ---- Fuss: eine Zeile. ---------------------------------------------- */
   .wl-ft{
-    flex:0 0 auto; border-top:var(--bd);
+    flex:0 0 auto; border-top:1px solid rgba(11,30,51,.07);
     display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px;
-    padding:20px clamp(20px,5vw,44px);
+    padding:18px clamp(16px,5vw,44px);
     font-size:13px; letter-spacing:.006em; color:var(--c-body-soft);
   }
   .wl-ft a{ color:var(--c-body-soft); text-decoration:none; }
@@ -257,43 +309,45 @@
     .wl-lang button.is-on:hover{ color:#F7FAFC; }
     .wl-field:hover{ border-color:#B4BFCB; }
     .wl-seg-btn:hover{ border-color:var(--c-eu-700); }
-    .wl-seg-btn.is-on:hover{ background:#123456; border-color:#123456; }
     .wl-submit:hover{ background:#123456; border-color:#123456; }
-    .wl-btn2:hover{ border-color:var(--c-eu-700); }
     .wl-ft a:hover{ color:var(--c-ink); }
+    .wl-done-a:hover{ color:var(--c-ink); }
   }
 
   /* Der Formular→Erfolg-Wechsel ist der einzige emotional aufgeladene
      Moment der Seite — hier liegt das ganze Bewegungsbudget. sc-if hängt
      den Knoten neu ein, damit greift @starting-style. */
-  .wl-done{
-    opacity:1; transform:none;
-    transition:opacity 300ms var(--wl-ease), transform 380ms var(--wl-ease);
-  }
+  .wl-done{ opacity:1; transform:none;
+    transition:opacity 300ms var(--wl-ease), transform 380ms var(--wl-ease); }
   @starting-style{ .wl-done{ opacity:0; transform:translateY(8px); } }
-  .wl-done-check{
-    opacity:1; transform:none;
-    transition:transform 420ms cubic-bezier(.34,1.56,.64,1) 120ms, opacity 220ms linear 120ms;
-  }
-  @starting-style{ .wl-done-check{ opacity:0; transform:scale(.82); } }
 
+  /* ---- Unter 860 px: eine Spalte, dieselbe Kachel. -------------------- */
+  @media (max-width:860px){
+    .wl-main{ padding:16px 0; align-items:flex-start; }
+    .wl-tile{
+      width:calc(100% - 32px); min-height:0; grid-template-columns:1fr;
+      padding:24px; border-radius:10px; gap:28px; align-items:start;
+    }
+    .wl-msg{ max-width:none; }
+    .wl-h1{ font-size:clamp(29px,7.4vw,36px); letter-spacing:-.018em; }
+    .wl-cardcol{ justify-content:stretch; }
+    .wl-card{ max-width:none; }
+  }
   @media (max-width:520px){
     .wl-seg{ display:grid; grid-template-columns:1fr; }
-    /* Auf dem Telefon muessen Marke, Sprache und Rueckweg in eine Zeile
-       passen — sonst bricht die Kopfzeile zweizeilig um. */
     .wl-hd{ padding:0 16px; gap:10px; }
     .wl-hd-right{ gap:2px; }
     .wl-brand-word{ font-size:15.5px; }
     .wl-back{ font-size:13px; gap:6px; padding:0 4px; }
   }
 
+  /* Ohne Bewegungswunsch bleibt der Verlauf stehen — er ist dann ein Bild,
+     kein Vorgang. Die Flächen behalten ihre Ausgangslage. */
   @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
-    .wl-done, .wl-done-check{ transition:opacity 200ms linear !important; transform:none !important; }
-    @starting-style{
-      .wl-done{ opacity:0; transform:none; }
-      .wl-done-check{ opacity:0; transform:none; }
-    }
+    .wl-sg i{ animation:none !important; }
+    *{ transition-duration:.001ms !important; }
+    .wl-done{ transition:opacity 200ms linear !important; transform:none !important; }
+    @starting-style{ .wl-done{ opacity:0; transform:none; } }
   }
 </style>
 </helmet>
@@ -317,10 +371,15 @@
   </header>
 
   <main class="wl-main">
-    <div class="wl-wrap">
+    <!-- Eine Kachel, zwei Spalten: links die Botschaft, rechts das Formular.
+         Der Verlauf liegt UNTER beiden, damit die Seite als ein Gegenstand
+         gelesen wird und nicht als Text neben einem Kasten. -->
+    <div class="wl-tile">
+      <div class="wl-sg" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>
+      <div class="wl-grain" aria-hidden="true"></div>
 
-      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
-        <div>
+      <div class="wl-col">
+        <div class="wl-msg">
           <div class="wl-eyebrow">{{ t.eyebrow }}</div>
           <h1 class="wl-h1">{{ t.h1 }}</h1>
           <p class="wl-sub">{{ t.sub }}</p>
@@ -329,88 +388,102 @@
               <span>{{ m }}</span>
             </sc-for>
           </div>
-
-          <div class="wl-panel">
-            <div class="wl-row">
-              <label for="wl-email" class="wl-label">{{ t.labels.email }}<span class="wl-req">*</span></label>
-              <input id="wl-email" type="email" inputmode="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}" class="wl-field">
-              <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div class="wl-err">{{ eEmail }}</div></sc-if>
-            </div>
-
-            <div class="wl-row">
-              <label for="wl-company" class="wl-label">{{ t.labels.company }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
-              <input id="wl-company" type="text" value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" class="wl-field">
-            </div>
-
-            <div class="wl-row">
-              <div class="wl-label">{{ t.labels.interest }}<span class="wl-opt">{{ t.labels.optional }}</span></div>
-              <div role="radiogroup" aria-label="{{ t.labels.interest }}" class="wl-seg">
-                <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
-                  <button onClick="{{ c.onClick }}" type="button" role="radio" aria-checked="{{ c.on }}" class="wl-seg-btn {{ c.cls }}">{{ c.label }}</button>
-                </sc-for>
-              </div>
-            </div>
-
-            <input value="{{ hp }}" onChange="{{ onHp }}" type="text" class="wl-hp" aria-hidden="true">
-
-            <button onClick="{{ onSubmit }}" type="button" class="wl-submit">{{ t.labels.submit }}</button>
-            <div class="wl-note">{{ t.labels.note }} <a href="/datenschutz">{{ t.labels.noteLink }}</a></div>
-          </div>
+          <p class="wl-hint">{{ t.hint }}</p>
         </div>
-      </sc-if>
+      </div>
 
-      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
-        <div class="wl-done">
-          <div class="wl-done-check"><svg width="22" height="22" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-          <div class="wl-done-t">{{ t.success.title }}</div>
-          <p class="wl-done-b">{{ t.success.body }}</p>
+      <div class="wl-col wl-cardcol">
+        <div class="wl-card">
 
-          <div class="wl-done-hr"></div>
-
-          <!-- Qualifizierung erst NACH der Anmeldung, und freiwillig: die
-               Nutzerzahl und der Anwendungsfall haben die Anmeldung vorher
-               teurer gemacht, als sie wert waren. -->
-          <sc-if value="{{ askClosed }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
             <div>
-              <p class="wl-ask">{{ t.success.ask }}</p>
-              <div class="wl-actions">
-                <button onClick="{{ onOpenAsk }}" type="button" class="wl-btn2">{{ t.success.askBtn }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-                <a href="/" class="wl-link">{{ t.success.home }}</a>
-                <button onClick="{{ onReset }}" type="button" class="wl-link">{{ t.success.again }}</button>
-              </div>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{ askOpen }}" hint-placeholder-val="{{ false }}">
-            <div class="wl-panel" style="margin-top:0;">
               <div class="wl-row">
-                <label for="wl-users" class="wl-label">{{ t.labels.users }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
-                <select id="wl-users" value="{{ users }}" onChange="{{ onUsers }}" class="wl-field wl-select">
-                  <option value="">{{ t.labels.usersPh }}</option>
-                  <sc-for list="{{ t.userOptions }}" as="u" hint-placeholder-count="5">
-                    <option value="{{ u }}">{{ u }}</option>
+                <label for="wl-email" class="wl-label">{{ t.labels.email }}<span class="wl-req">*</span></label>
+                <input id="wl-email" type="email" inputmode="email" autocomplete="email"
+                       value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}"
+                       aria-invalid="{{ emailInvalid }}" aria-describedby="wl-email-err"
+                       class="wl-field {{ emailCls }}">
+                <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div id="wl-email-err" class="wl-err" role="alert">{{ eEmail }}</div></sc-if>
+              </div>
+
+              <div class="wl-row">
+                <label for="wl-company" class="wl-label">{{ t.labels.company }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                <input id="wl-company" type="text" autocomplete="organization"
+                       value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" class="wl-field">
+              </div>
+
+              <div class="wl-row">
+                <div id="wl-interest-lbl" class="wl-label">{{ t.labels.interest }}<span class="wl-opt">{{ t.labels.optional }}</span></div>
+                <!-- Rollende Tab-Marke: die Gruppe hat EINEN Halt in der
+                     Tab-Reihenfolge, innerhalb wird mit den Pfeiltasten
+                     gewechselt. Das ist das Verhalten, das eine Radiogruppe
+                     laut ARIA haben muss. -->
+                <div role="radiogroup" aria-labelledby="wl-interest-lbl" class="wl-seg">
+                  <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
+                    <button id="{{ c.id }}" onClick="{{ c.onClick }}" onKeyDown="{{ c.onKey }}" type="button"
+                            role="radio" aria-checked="{{ c.on }}" tabindex="{{ c.tab }}" class="wl-seg-btn {{ c.cls }}">
+                      <span class="wl-seg-mark" aria-hidden="true"></span>{{ c.label }}
+                    </button>
                   </sc-for>
-                </select>
+                </div>
               </div>
-              <div class="wl-row">
-                <label for="wl-usecase" class="wl-label">{{ t.labels.usecase }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
-                <textarea id="wl-usecase" rows="3" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" class="wl-field wl-textarea"></textarea>
-              </div>
-              <button onClick="{{ onSaveAsk }}" type="button" class="wl-submit">{{ t.success.askSubmit }}</button>
+
+              <input value="{{ hp }}" onChange="{{ onHp }}" type="text" class="wl-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+              <button onClick="{{ onSubmit }}" type="button" class="wl-submit">{{ t.labels.submit }}</button>
+              <div class="wl-note">{{ t.labels.note }} <a href="/datenschutz">{{ t.labels.noteLink }}</a></div>
             </div>
           </sc-if>
 
-          <sc-if value="{{ askDone }}" hint-placeholder-val="{{ false }}">
-            <div>
-              <p class="wl-ask">{{ t.success.askThanks }}</p>
-              <div class="wl-actions">
-                <a href="/" class="wl-btn2">{{ t.success.home }}</a>
-              </div>
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div class="wl-done">
+              <div class="wl-done-k">{{ t.success.eyebrow }}</div>
+              <div class="wl-done-t">{{ t.success.title }}</div>
+              <p class="wl-done-b">{{ t.success.body }}</p>
+              <a href="/" class="wl-done-a">{{ t.success.home }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+
+              <div class="wl-done-hr"></div>
+
+              <!-- Qualifizierung erst NACH der Anmeldung, und freiwillig: die
+                   Nutzerzahl und der Anwendungsfall haben die Anmeldung vorher
+                   teurer gemacht, als sie wert waren. -->
+              <sc-if value="{{ askClosed }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <p class="wl-ask">{{ t.success.ask }}</p>
+                  <div class="wl-actions">
+                    <button onClick="{{ onOpenAsk }}" type="button" class="wl-link">{{ t.success.askBtn }}</button>
+                    <button onClick="{{ onReset }}" type="button" class="wl-link">{{ t.success.again }}</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ askOpen }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div class="wl-row">
+                    <label for="wl-users" class="wl-label">{{ t.labels.users }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                    <select id="wl-users" value="{{ users }}" onChange="{{ onUsers }}" class="wl-field wl-select">
+                      <option value="">{{ t.labels.usersPh }}</option>
+                      <sc-for list="{{ t.userOptions }}" as="u" hint-placeholder-count="5">
+                        <option value="{{ u }}">{{ u }}</option>
+                      </sc-for>
+                    </select>
+                  </div>
+                  <div class="wl-row">
+                    <label for="wl-usecase" class="wl-label">{{ t.labels.usecase }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                    <textarea id="wl-usecase" rows="3" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" class="wl-field wl-textarea"></textarea>
+                  </div>
+                  <button onClick="{{ onSaveAsk }}" type="button" class="wl-submit">{{ t.success.askSubmit }}</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ askDone }}" hint-placeholder-val="{{ false }}">
+                <p class="wl-ask">{{ t.success.askThanks }}</p>
+              </sc-if>
             </div>
           </sc-if>
+
         </div>
-      </sc-if>
-
+      </div>
     </div>
   </main>
 
@@ -439,6 +512,7 @@ class Component extends DCLogic {
         h1:'Frühen Zugang zu EU Cowork AI sichern.',
         sub:'Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.',
         meta:['Beta-Zugang','Direkter Austausch','Jederzeit abmeldbar'],
+        hint:'Die ersten Einladungen werden schrittweise verschickt.',
         back:'Zur Startseite',
         rights:'© 2026 EU Cowork AI', privacy:'Datenschutz', imprint:'Impressum',
         labels:{
@@ -455,8 +529,9 @@ class Component extends DCLogic {
         interestOptions:[{label:'Schweizer Betrieb',value:'hosted'},{label:'Self-Hosting',value:'selfhost'},{label:'Beides',value:'both'}],
         errors:{ email:'Bitte eine gültige E-Mail-Adresse angeben.' },
         success:{
+          eyebrow:'// Anfrage erhalten',
           title:'Vielen Dank.',
-          body:'Wir melden uns, sobald wir Ihnen Zugang anbieten können. Die ersten Einladungen werden schrittweise verschickt.',
+          body:'Wir melden uns, sobald wir Ihnen frühen Zugang zu EU Cowork AI anbieten können.',
           ask:'Möchten Sie uns bereits etwas zu Ihrem Unternehmen erzählen?',
           askBtn:'Zwei kurze Fragen beantworten',
           askSubmit:'Angaben senden',
@@ -469,6 +544,7 @@ class Component extends DCLogic {
         h1:'Get early access to EU Cowork AI.',
         sub:'Try the European AI platform before launch and send feedback straight to our product team.',
         meta:['Beta access','Direct feedback','Unsubscribe anytime'],
+        hint:'The first invitations go out in batches.',
         back:'Back to home',
         rights:'© 2026 EU Cowork AI', privacy:'Privacy', imprint:'Imprint',
         labels:{
@@ -485,8 +561,9 @@ class Component extends DCLogic {
         interestOptions:[{label:'Swiss hosting',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Both',value:'both'}],
         errors:{ email:'Please enter a valid email address.' },
         success:{
+          eyebrow:'// Request received',
           title:'Thank you.',
-          body:'We will get in touch as soon as we can offer you access. The first invitations go out in batches.',
+          body:'We will get in touch as soon as we can offer you early access to EU Cowork AI.',
           ask:'Would you like to tell us a little about your company already?',
           askBtn:'Answer two short questions',
           askSubmit:'Send details',
@@ -513,6 +590,21 @@ class Component extends DCLogic {
     window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
   }
   setInterest(v){ this.setState({ interest: this.state.interest===v ? '' : v }); }
+  /* Pfeiltasten wechseln UND waehlen — so verlangt es die ARIA-Vorgabe fuer
+     eine Radiogruppe. Der Fokus wandert dabei mit, deshalb das Nachfassen im
+     naechsten Takt: vorher hat die Neuzeichnung den Knopf noch nicht ersetzt. */
+  segKey(i, e){
+    const opts = this._copy().interestOptions, n = opts.length;
+    const k = e && e.key; let j = -1;
+    if (k === 'ArrowRight' || k === 'ArrowDown') j = (i + 1) % n;
+    else if (k === 'ArrowLeft' || k === 'ArrowUp') j = (i - 1 + n) % n;
+    else if (k === 'Home') j = 0;
+    else if (k === 'End') j = n - 1;
+    else return;
+    if (e.preventDefault) e.preventDefault();
+    this.setState({ interest: opts[j].value });
+    setTimeout(() => { const el = document.getElementById('wl-seg-' + j); if (el) el.focus(); }, 0);
+  }
   setField(key, e){ var v = (e && e.target) ? e.target.value : ''; var p = {}; p[key] = v; if(key==='email') p.eEmail=''; this.setState(p); }
   validEmail(x){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x); }
   _store(extra){
@@ -543,9 +635,15 @@ class Component extends DCLogic {
   renderVals(){
     const c = this._copy();
     const isDe = this.state.lang !== 'en';
-    const interestChips = c.interestOptions.map(o => {
+    // Genau EIN Knopf der Gruppe liegt in der Tab-Reihenfolge: der gewaehlte,
+    // sonst der erste. Innerhalb wird mit den Pfeiltasten gewechselt.
+    const sel = c.interestOptions.findIndex(o => o.value === this.state.interest);
+    const tabIdx = sel < 0 ? 0 : sel;
+    const interestChips = c.interestOptions.map((o, i) => {
       const on = this.state.interest === o.value;
-      return { label:o.label, value:o.value, on: on ? 'true' : 'false', cls: on ? 'is-on' : '', onClick:()=>this.setInterest(o.value) };
+      return { label:o.label, value:o.value, id:'wl-seg-' + i,
+        on: on ? 'true' : 'false', cls: on ? 'is-on' : '', tab: i === tabIdx ? '0' : '-1',
+        onClick:()=>this.setInterest(o.value), onKey:(e)=>this.segKey(i, e) };
     });
     return {
       t: c,
@@ -561,6 +659,8 @@ class Component extends DCLogic {
       onHp:(e)=>this.setField('hp',e),
       onUsers:(e)=>this.setField('users',e), onUsecase:(e)=>this.setField('usecase',e),
       eEmail:this.state.eEmail,
+      emailCls: this.state.eEmail ? 'is-err' : '',
+      emailInvalid: this.state.eEmail ? 'true' : 'false',
       deCls: isDe ? 'is-on' : '', enCls: !isDe ? 'is-on' : '',
       toDe:()=>this.setLang('de'), toEn:()=>this.setLang('en'),
       onSubmit:()=>this.submit(), onOpenAsk:()=>this.setState({ ask:'open' }),
