@@ -4270,6 +4270,7 @@ clearTimeout(this._mobTimer);
     this._pgBox = box; this._pgCv = cv; this._pgCtx = ctx;
     this._pgW = 0; this._pgH = 0;
     this._pgParticles = [];
+    this._pgGrid = null; this._pgMaxSize = 0; this._pgWasActive = false;
     this._pgPointer = { x:-1000, y:-1000, s:0 };
     this._pgTarget  = { x:-1000, y:-1000, s:0 };
 
@@ -4336,7 +4337,7 @@ clearTimeout(this._mobTimer);
           const fade = Math.min(1, (gr - dist) / 34, (sh - sy) / (sh * 0.22));
           const x = offX + sx * scale, y = offY + sy * scale;
           next.push({
-            x, y, ox:x, oy:y, vx:0, vy:0,
+            x, y, ox:x, oy:y,
             /* Die Punktgroesse haengt am ABSTAND der Punkte, nicht an der
                Skalierung des Bildes. Bei der Vorlage war das dasselbe, weil
                sie fuellte; beim Einpassen wird die Skalierung kleiner, und
@@ -4347,7 +4348,12 @@ clearTimeout(this._mobTimer);
             size: Math.max(1, spacing * (0.58 + Math.random() * 0.24)),
             alpha: fade * (0.82 + Math.random() * 0.18),
             color: 'rgb(' + r + ',' + g + ',' + b + ')',
-            phase: Math.random() * Math.PI * 2,
+            /* Wie stark dieser Punkt sich im Wirbel mitdreht. Alle drehen in
+               dieselbe Richtung — ein Gegenlauf saehe nach Rauschen aus, nicht
+               nach Stroemung —, aber unterschiedlich schnell. Aus dem
+               Unterschied entsteht die Scherung, und die IST das Durchmischen:
+               Nachbarn gleiten aneinander vorbei, statt als Block zu kippen. */
+            spin: 0.55 + Math.random() * 0.9,
             scatter: 0.68 + Math.random() * 0.72
           });
         }
@@ -4356,12 +4362,35 @@ clearTimeout(this._mobTimer);
       /* Zum Nachsehen in den Entwicklerwerkzeugen: wer die Zielzahl oben
          aendert, sieht hier sofort, was dabei herauskommt. */
       cv.dataset.punkte = String(next.length);
+
+      /* Gitter ueber die Ruhelagen. Gezeichnet wird pro Bild nur noch die
+         Flaeche um den Zeiger (siehe _pgDraw), und dafuer muessen die Punkte
+         DIESER Flaeche in konstanter Zeit auffindbar sein — ohne Index waere
+         die Ersparnis dahin, weil die Suche wieder ueber alle 12'000 liefe.
+         Die Ruhelage aendert sich nie, das Gitter gilt also bis zum naechsten
+         Abtasten. Zellen von 48 px fassen im Schnitt gut ein Dutzend Punkte. */
+      const cell = 48;
+      const cols = Math.max(1, Math.ceil(this._pgW / cell));
+      const rows = Math.max(1, Math.ceil(this._pgH / cell));
+      const buckets = new Array(cols * rows);
+      let maxSize = 0;
+      for (let i = 0; i < next.length; i++){
+        const q = next[i];
+        if (q.size > maxSize) maxSize = q.size;
+        const cx = Math.min(cols - 1, Math.max(0, (q.ox / cell) | 0));
+        const cy = Math.min(rows - 1, Math.max(0, (q.oy / cell) | 0));
+        const k = cy * cols + cx;
+        (buckets[k] || (buckets[k] = [])).push(q);
+      }
+      this._pgGrid = { cell, cols, rows, buckets };
+      this._pgMaxSize = maxSize;
+
       /* Immer einmal zeichnen, nicht nur wenn eine Schleife laeuft. Die
          Schleife haengt an Sichtbarkeit, Bewegungseinstellung und Blickfeld;
          das Bild haengt an keiner dieser Bedingungen. Wer die Seite in einem
          Hintergrundtab oeffnet oder Bewegung reduziert hat, soll die Kugel
          trotzdem sehen, sobald sie berechnet ist. */
-      this._pgDraw(0);
+      this._pgDrawAll();
     };
     this._pgSample = sample;
 
@@ -4370,6 +4399,7 @@ clearTimeout(this._mobTimer);
       this._pgW = Math.max(1, rect.width);
       this._pgH = Math.max(1, rect.height);
       const dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+      this._pgDpr = dpr;
       cv.width  = Math.round(this._pgW * dpr);
       cv.height = Math.round(this._pgH * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -4384,11 +4414,11 @@ clearTimeout(this._mobTimer);
       this._pgMove = (e) => {
         const r = cv.getBoundingClientRect();
         const x = e.clientX - r.left, y = e.clientY - r.top;
-        /* Beim Eintritt das Feld setzen statt es holen zu lassen. Es laeuft
-           dem Zeiger bewusst nach; stuende es noch am Ort des letzten
-           Verlassens, zoege es beim naechsten Hover als Streifen quer ueber
-           die Kugel. Solange die Staerke bei null liegt, sieht niemand den
-           Sprung — sie schwillt erst danach an. */
+        /* Beim Eintritt das Feld setzen statt es holen zu lassen. Stuende es
+           noch am Ort des letzten Verlassens, zoege es beim naechsten Hover
+           als Streifen quer ueber die Kugel — die Staerke schwillt ueber eine
+           halbe Sekunde an, und so lange waere der Weg sichtbar. Solange sie
+           bei null liegt, sieht niemand den Sprung. */
         if (this._pgPointer.s < 0.01){ this._pgPointer.x = x; this._pgPointer.y = y; }
         this._pgTarget = { x, y, s: 1 };
       };
@@ -4433,7 +4463,7 @@ clearTimeout(this._mobTimer);
 
   _pgStart(){
     if (this._pgRaf || !this._pgCtx) return;
-    const loop = (ts) => { this._pgRaf = requestAnimationFrame(loop); this._pgDraw(ts); };
+    const loop = () => { this._pgRaf = requestAnimationFrame(loop); this._pgDraw(); };
     this._pgRaf = requestAnimationFrame(loop);
   }
 
@@ -4443,77 +4473,199 @@ clearTimeout(this._mobTimer);
     this._pgRaf = 0;
   }
 
-  _pgDraw(ts){
+  /* Die ruhende Wolke einmal auf eine eigene Flaeche zeichnen — das
+     Grundbild. Es aendert sich nur beim Abtasten, also bei Groessenaenderung
+     oder wenn das Bild geladen ist.
+
+     Es kostet ein Abbild im Speicher und spart dafuer den teuersten Teil der
+     Schleife: die 18'000 Farbwechsel je Bild. `fillStyle` nimmt eine
+     ZEICHENKETTE, die der Browser jedes Mal neu zerlegt — das ist der Posten,
+     der die Bildrate frisst, nicht die Rechnerei am Wirbel. */
+  _pgBuildStatic(){
+    const cv = this._pgCv;
+    if (!cv) return;
+    const st = this._pgStatic || (this._pgStatic = document.createElement('canvas'));
+    st.width = cv.width; st.height = cv.height;
+    const sc = st.getContext('2d');
+    if (!sc) { this._pgStatic = null; return; }
+    const dpr = this._pgDpr || 1;
+    /* Ausdruecklich leeren, nicht auf das Setzen von width/height vertrauen.
+       Ist der Wert derselbe wie zuvor — der Normalfall, denn das Grundbild
+       wird nach jedem Abtasten neu gebaut, meist bei gleicher Groesse —, so
+       raeumt der Browser die Flaeche nicht auf. Der zweite Aufbau malte sonst
+       auf den ersten, und die Wolke wurde bei jedem Mal deckender. */
+    sc.setTransform(1, 0, 0, 1, 0, 0);
+    sc.clearRect(0, 0, st.width, st.height);
+    sc.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* Gezeichnet wird ueber _pgPaint mit abgeschalteter Feldstaerke, also
+       durch DIESELBE Schleife in DERSELBEN Reihenfolge wie im laufenden
+       Betrieb. Eine eigene Schleife ueber die Punktliste taete dasselbe —
+       aber in anderer Reihenfolge, und bei einander ueberlappenden
+       halbdurchsichtigen Quadraten haengt das Ergebnis an der Reihenfolge.
+       Der Unterschied waere winzig (eine Stufe Deckkraft), aber er saesse
+       als feiner Sprung genau dort, wo die aufgeraeumte Flaeche endet. */
+    const real = this._pgCtx;
+    this._pgCtx = sc;
+    this._pgPaint(0, 0, this._pgW, this._pgH, { x:-1e6, y:-1e6, s:0 }, 1);
+    this._pgCtx = real;
+  }
+
+  /* Das Grundbild in einem Zug aufs sichtbare Feld legen. */
+  _pgBlit(){
+    const ctx = this._pgCtx, st = this._pgStatic;
+    if (!ctx || !st) return;
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = 'copy';
+    ctx.drawImage(st, 0, 0);
+    ctx.restore();
+  }
+
+  _pgDrawAll(){
+    this._pgBuildStatic();
+    this._pgBlit();
+    this._pgWasActive = false;
+  }
+
+  /* Wo ein Punkt liegt, ist eine REINE FUNKTION der Zeigerposition — kein
+     Zustand, keine Feder, keine Geschwindigkeit, kein Zeitglied.
+
+     Das ist der eigentliche Umbau, und er beantwortet beide Beobachtungen an
+     der Vorlage auf einmal:
+
+     - „wenig verzoegert": ohne Feder gibt es nichts, das erst einschwingen
+       oder ausschwingen muesste. Die Verformung sitzt am Zeiger, im selben
+       Bild. Frueher lief der Punkt seinem Ziel hinterher; jetzt IST er dort.
+     - „fluessig": benachbarte Punkte bekommen nahezu dieselbe Verformung,
+       die Wolke verzieht sich also wie ein Tuch statt wie 12'000 einzelne
+       Federn mit eigener Phase. Aus derselben Eigenschaft folgt, dass
+       ausserhalb des Feldes NICHTS in Bewegung ist — und nur deshalb kann
+       unten die Teilflaeche gezeichnet werden statt des ganzen Bildes.
+
+     Gewirbelt statt gestossen: der Punkt wird um den Zeiger GEDREHT, nicht
+     von ihm weggeschoben. Der Drehwinkel faellt nach aussen auf null ab,
+     innen dreht es also weiter als aussen — diese Scherung ist der Wirbel.
+     Dazu eine kleine radiale Oeffnung, damit die Dichte aufgeht und der
+     Wirbel sichtbar wird, statt nur die Farben zu verrutschen. */
+  _pgDraw(){
     const ctx = this._pgCtx;
     if (!ctx) return;
     const w = this._pgW, h = this._pgH;
-    ctx.clearRect(0, 0, w, h);
 
-    const t = ts * 0.001;
-    /* Der Zeiger fuehrt die Wolke, er zerrt nicht an ihr: das Kraftfeld
-       laeuft dem Mauszeiger nach statt auf ihm zu kleben (0.085 statt 0.24,
-       rund eine Fuenftelsekunde Nachlauf), und die Staerke schwillt in etwa
-       einer halben Sekunde an und wieder ab (0.055 statt 0.2). Dadurch gibt
-       es kein Ein- und Ausschalten mehr, sondern ein Kommen und Gehen. */
+    /* Ort folgt schnell, Staerke schwillt langsam — das ist der Trick, mit
+       dem die Vorlage ruhig UND unmittelbar wirkt. Beides zu verlangsamen
+       (der Fehler der letzten Fassung) liest sich als Traegheit; nur die
+       Staerke zu verlangsamen liest sich als Anmut. */
     const p = this._pgPointer, tgt = this._pgTarget;
-    p.x += (tgt.x - p.x) * 0.085;
-    p.y += (tgt.y - p.y) * 0.085;
-    p.s += (tgt.s - p.s) * 0.055;
+    p.x += (tgt.x - p.x) * 0.18;
+    p.y += (tgt.y - p.y) * 0.18;
+    p.s += (tgt.s - p.s) * 0.08;
+    if (this._reduced()) p.s = 0;
 
-    /* Breites, weiches Feld statt eines Stupsers: knapp doppelter Radius
-       verteilt dieselbe Bewegung auf viermal so viele Punkte, jeder einzelne
-       bewegt sich also weniger weit. Das ist der Kern des ruhigen Eindrucks. */
-    const radius = Math.min(w, h) * 0.30;
-    const motion = this._reduced() ? 0 : 1;
+    const radius = Math.min(w, h) * 0.18;
+    /* Weiter als bis an den Feldrand kommt kein Punkt: die Drehung erhaelt
+       den Abstand zum Zeiger, und die radiale Oeffnung verschwindet genau
+       dort, wo der Abstand am groessten ist. Der Rand des Punktes und ein
+       Pixel Sicherheit kommen dazu. */
+    const reach = radius + this._pgMaxSize + 1;
 
-    const list = this._pgParticles;
-    for (let i = 0; i < list.length; i++){
-      const q = list[i];
-      let fx = 0, fy = 0;
-      const cdx = q.x - p.x, cdy = q.y - p.y;
-      const cd = Math.hypot(cdx, cdy);
+    const aktiv = p.s > 0.002;
+    /* Weder jetzt noch im Bild davor ein Feld: es steht bereits alles
+       richtig da. Das ist der Normalfall, solange niemand auf der Kugel ist
+       — die Schleife laeuft dann buchstaeblich leer. */
+    if (!aktiv && !this._pgWasActive) return;
+    this._pgWasActive = aktiv;
 
-      if (cd < radius && p.s > 0.001 && motion){
-        /* Smoothstep statt Potenz: die Kurve ist an BEIDEN Enden flach. Am
-           Feldrand setzt die Kraft dadurch nicht ein, sie taucht auf, und in
-           der Mitte gibt es keine Spitze, ueber die der Zeiger huepft. */
-        const u = 1 - cd / radius;
-        const f = u * u * (3 - 2 * u) * p.s;
-        const ang = Math.atan2(cdy, cdx);
-        /* Der radiale Anteil allein risse ein sauberes rundes Loch. Die
-           Turbulenz gibt jedem Punkt eine eigene Richtung, dadurch mischen
-           sich die Partikel, statt eine Blase zu bilden.
-           Sie darf aber nicht flackern: 0.55 Hz statt 3.4 Hz laesst die
-           Richtung driften, wo sie vorher zappelte, und der Wert liegt nun
-           unter dem radialen Anteil — die Wolke atmet nach aussen, statt
-           durcheinanderzuwirbeln. Das frueher dritte Glied (7 Hz Zittern)
-           faellt ersatzlos weg; es war die eigentliche Unruhe. */
-        const turb = q.phase * 2.73 + Math.sin(t * 0.55 + q.phase * 1.81) * 0.9 + ang * 0.22;
-        fx += Math.cos(ang) * f * 1.15 + Math.cos(turb) * f * 0.55 * q.scatter;
-        fy += Math.sin(ang) * f * 1.15 + Math.sin(turb) * f * 0.55 * q.scatter;
+    /* JEDES Bild beginnt mit dem frischen Grundbild. Das ist der Kern der
+       Sache und nicht bloss Bequemlichkeit: wuerde stattdessen nur die
+       Flaeche um den Zeiger aufgeraeumt und der Rest stehen gelassen, dann
+       bliebe jede noch so kleine Ungenauigkeit an der Loeschkante liegen und
+       SUMMIERTE sich, waehrend der Zeiger wandert — messbar als feines
+       Streifenmuster quer durch die Wolke. So kann kein Fehler aelter werden
+       als ein Bild. Der Preis ist ein Bildkopieren je Bild, und das erledigt
+       die Grafikeinheit. */
+    this._pgBlit();
+    if (!aktiv) return;
+
+    const d = { x0: p.x - reach, y0: p.y - reach, x1: p.x + reach, y1: p.y + reach };
+    /* Die Flaeche wird in GERAETEPIXELN ganzzahlig gemacht, nicht in CSS-
+       Pixeln. Der Geraetefaktor ist krumm (auf diesem Schirm 1.6): eine in
+       CSS-Pixeln glatte Kante liegt dann mitten in einem Geraetepixel, und
+       Loeschen wie Beschneiden erwischen ihn nur zur Haelfte. Uebrig bleibt
+       je Bild eine halb geloeschte Naht — beim Wandern des Zeigers ein
+       feines Streifenmuster quer durch die Wolke. Auf ganzen Geraetepixeln
+       ist die Deckung exakt 0 oder 1, damit verschwindet der Effekt. */
+    const dpr = this._pgDpr || 1;
+    const cw = this._pgCv.width, ch = this._pgCv.height;
+    const px0 = Math.max(0, Math.floor(d.x0 * dpr)), py0 = Math.max(0, Math.floor(d.y0 * dpr));
+    const px1 = Math.min(cw, Math.ceil(d.x1 * dpr)), py1 = Math.min(ch, Math.ceil(d.y1 * dpr));
+    if (px1 <= px0 || py1 <= py0) return;
+    const x0 = px0 / dpr, y0 = py0 / dpr, x1 = px1 / dpr, y1 = py1 / dpr;
+
+    /* Der Beschnitt ist nicht Zierde, sondern noetig: ein Punkt am Rand der
+       Flaeche wurde nur zur Haelfte geloescht, und ohne Beschnitt malte die
+       zweite Haelfte ein zweites Mal ueber die stehengebliebene — bei
+       Teildeckkraft waere die Naht als dunkle Kante zu sehen. */
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.beginPath();
+    ctx.rect(px0, py0, px1 - px0, py1 - py0);
+    ctx.clip();
+    ctx.clearRect(px0, py0, px1 - px0, py1 - py0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this._pgPaint(x0, y0, x1, y1, p, radius);
+    ctx.restore();
+  }
+
+  /* Zeichnet alle Punkte, deren Ruhelage in die angegebene Flaeche faellt.
+     Getrennt von _pgDraw, weil das die einzige Stelle ist, an der die
+     Wirbel-Formel steht: so laesst sie sich fuer eine Pruefung ueber die
+     GANZE Flaeche aufrufen und Bild fuer Bild gegen die Teilflaeche halten. */
+  _pgPaint(x0, y0, x1, y1, p, radius){
+    const ctx = this._pgCtx, gr = this._pgGrid;
+    if (!ctx || !gr) return;
+    /* Der Zellbereich wird um eine Punktbreite groesser genommen als die
+       geloeschte Flaeche. Faellt deren Kante naemlich genau auf eine
+       Zellgrenze, so liegt ein Punkt einen Hauch dahinter zwar in der
+       NACHBARzelle — sein Quadrat ragt aber in die geloeschte Flaeche
+       hinein. Ohne diesen Rand bliebe dort ein angeknabberter Punkt
+       zurueck. Gezeichnet wird ohnehin unter Beschnitt, die Zugabe kostet
+       also nur ein paar Punkte, nie ein falsches Pixel. */
+    const m = this._pgMaxSize + 1;
+    const c0 = Math.max(0, ((x0 - m) / gr.cell) | 0), c1 = Math.min(gr.cols - 1, ((x1 + m) / gr.cell) | 0);
+    const r0 = Math.max(0, ((y0 - m) / gr.cell) | 0), r1 = Math.min(gr.rows - 1, ((y1 + m) / gr.cell) | 0);
+    const rad2 = radius * radius, s = p.s;
+    for (let ry = r0; ry <= r1; ry++){
+      for (let cx = c0; cx <= c1; cx++){
+        const bucket = gr.buckets[ry * gr.cols + cx];
+        if (!bucket) continue;
+        for (let i = 0; i < bucket.length; i++){
+          const q = bucket[i];
+          const dx = q.ox - p.x, dy = q.oy - p.y;
+          const dd = dx * dx + dy * dy;
+          let a = q.alpha, sz = q.size;
+          if (dd < rad2 && s > 0.002){
+            const dist = Math.sqrt(dd);
+            const u = 1 - dist / radius;
+            /* Smoothstep: an beiden Enden flach. Am Feldrand setzt die
+               Drehung nicht ein, sie taucht auf. */
+            const amt = u * u * (3 - 2 * u) * s;
+            const th = amt * 0.95 * q.spin;
+            const co = Math.cos(th), si = Math.sin(th);
+            const g = 1 + amt * 0.18 * q.scatter;
+            q.x = p.x + (dx * co - dy * si) * g;
+            q.y = p.y + (dx * si + dy * co) * g;
+            /* Ein Hauch mehr Licht und Groesse dort, wo der Wirbel greift.
+               Haengt an der Feldstaerke, nicht an der Geschwindigkeit —
+               sonst flackerte es beim Bewegen der Maus. */
+            a = Math.min(1, q.alpha * (1 + amt * 0.30));
+            sz = q.size * (1 + amt * 0.14);
+          } else { q.x = q.ox; q.y = q.oy; }
+          ctx.globalAlpha = a;
+          ctx.fillStyle = q.color;
+          ctx.fillRect(q.x, q.y, sz, sz);
+        }
       }
-
-      const ix = Math.sin(t * 0.42 + q.phase) * 0.03 * motion;
-      const iy = Math.cos(t * 0.38 + q.phase) * 0.026 * motion;
-      /* Feder und Daempfung: weicher (0.03 statt 0.14) und deutlich staerker
-         gedaempft (0.70 statt 0.66). Die alte Kombination war mit einem
-         Daempfungsgrad um 0.45 unterdaempft — die Punkte schossen ueber ihren
-         Platz hinaus und schwangen aus, was als Nachzappeln zu sehen war.
-         Jetzt liegt der Grad bei rund 0.85: die Wolke sinkt in gut einer
-         halben Sekunde zurueck und kommt dort an, ohne nachzufedern. */
-      q.vx = (q.vx + (q.ox + ix - q.x) * 0.03 + fx) * 0.70;
-      q.vy = (q.vy + (q.oy + iy - q.y) * 0.03 + fy) * 0.70;
-      q.x += q.vx; q.y += q.vy;
-
-      /* Der Helligkeitsschub haengt an der Geschwindigkeit, und die ist jetzt
-         ein Vielfaches kleiner. Ohne kleineren Teiler bliebe die Wolke stumpf;
-         mit ihm behaelt sie ihr leichtes Aufleuchten, nur eben als Schimmer
-         statt als Blitz. */
-      const sp = Math.min(1, Math.hypot(q.vx, q.vy) / 1.4);
-      ctx.globalAlpha = Math.min(1, q.alpha + sp * 0.16);
-      ctx.fillStyle = q.color;
-      const s = q.size * (1 + sp * 0.08);
-      ctx.fillRect(q.x, q.y, s, s);
     }
     ctx.globalAlpha = 1;
   }
@@ -4537,6 +4689,9 @@ clearTimeout(this._mobTimer);
     }
     this._pgCv = this._pgCtx = this._pgBox = this._pgImg = null;
     this._pgParticles = [];
+    /* Das Gitter haelt Verweise auf alle Punkte — ohne dieses Loesen bliebe
+       die ganze Wolke am Leben, obwohl die Liste geleert ist. */
+    this._pgGrid = null; this._pgStatic = null;
   }
 _mobInit(){
     const el = this.mobRef.current;
