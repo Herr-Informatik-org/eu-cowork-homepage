@@ -626,17 +626,9 @@
   }
   .euc-replay:active{ transform:scale(.97); }
 
-  /* Die Befehlszeile ist ein Scroll-Container ohne sichtbare Leiste: bei 1280px
-     fehlen 30px, bei 375px 205px. Ohne Kante endete der Befehl mitten im Wort
-     („--profiles produc"). Die weiche Auslaufkante sagt „hier geht es weiter";
-     passt der Befehl, liegt sie über leerer Fläche und ist unsichtbar. */
-  .euc-cmd{ -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 24px), rgba(0,0,0,0));
-            mask-image:linear-gradient(90deg, #000 calc(100% - 24px), rgba(0,0,0,0)); }
-
   /* ---------- Tabelle ---------- */
   @media (max-width:860px){ .euc-mock-row{ gap:9px; padding:11px 10px; } .euc-mock-bar{ padding:9px 10px; } }
   @keyframes euc-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
-  @keyframes euc-caret{ 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
   @keyframes euc-hero2-shimmer{ from { background-position:150% center; } to { background-position:-50% center; } }
   /* Attrappen werden verkleinert, nicht beschnitten: die Seitenleiste bleibt in
      jeder Breite sichtbar, die Bühne skaliert (Muster .euc-mob-stage). Das
@@ -819,6 +811,37 @@
     font-size:15px; line-height:1.3; letter-spacing:-.007em; color:#F7FAFC; }
   .euc-sh-factd{ display:block; margin-top:6px; font-family:var(--f-body); font-size:13px;
     line-height:1.55; color:#A9BACB; text-wrap:pretty; }
+
+  /* ---------- Installations-Karten (dunkel) ----------
+     Zwei Karten statt Terminal-Attrappe. Der Ablauf sind zwei Befehle, und
+     genau die sollen kopierbar sein; die Attrappe zeigte stattdessen eine
+     Laufzeit, die niemand zusichern muss. Die Karte traegt eine eingelegte
+     Kante statt eines Rahmens, damit sie auf dem dunklen Grund nicht
+     schwerer wirkt als die Faktenleiste darunter. */
+  .euc-inst{ display:grid; grid-template-columns:1fr; gap:var(--s-5);
+    margin-top:clamp(28px,3.4vw,40px); }
+  @media (min-width:880px){ .euc-inst{ grid-template-columns:1fr 1fr; gap:var(--s-6); } }
+  .euc-inst-card{ min-width:0; padding:clamp(20px,2.2vw,26px); border-radius:var(--r-card);
+    background:rgba(165,216,230,.045); box-shadow:inset 0 0 0 1px rgba(165,216,230,.16); }
+  .euc-inst-t{ margin:0; font-family:var(--f-display); font-weight:500; font-size:17px;
+    line-height:1.3; letter-spacing:-.008em; color:#F7FAFC; }
+  .euc-inst-d{ margin:8px 0 0; font-family:var(--f-body); font-size:13.5px; line-height:1.58;
+    color:#A9BACB; text-wrap:pretty; }
+  .euc-inst-row{ display:flex; align-items:center; gap:10px; margin-top:18px;
+    padding:6px 6px 6px 13px; border-radius:10px; background:#07131F;
+    box-shadow:inset 0 0 0 1px rgba(165,216,230,.14); }
+  .euc-inst-sign{ flex:0 0 auto; font-family:var(--f-mono); font-size:12.5px; color:#5FA98A; }
+  /* Umbrechen statt seitlich scrollen: die Klon-Adresse ist laenger als die
+     Karte, und in der abgeschnittenen Fassung fehlt ausgerechnet der Name der
+     Organisation. Ein waagerechter Scrollbalken in einer Karte findet ohnehin
+     kaum jemand. */
+  .euc-inst-cmd{ flex:1; min-width:0; font-family:var(--f-mono); font-size:12.5px;
+    line-height:1.55; color:#D6EDF5; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .euc-inst-copy{ flex:0 0 auto; cursor:pointer; min-height:44px; padding:0 12px; border:0;
+    border-radius:var(--r-xs); background:transparent; color:#8AA0B6;
+    font-family:var(--f-mono); font-size:11.5px;
+    transition:color .15s ease, background .15s ease; }
+  .euc-inst-copy:hover{ color:#F7FAFC; background:rgba(165,216,230,.10); }
 
   /* ---------- Wellen-Trenner zwischen Hero und Enterprise-Sektion ----------
      Die Hoehe steht als Token, weil drei Werte sie brauchen: die Bauhoehe und
@@ -2814,72 +2837,55 @@
 
     <section id="self-host" data-hd-dark data-screen-label="Self-host (dark)" style="scroll-margin-top:90px; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
       <div style="max-width:var(--w-max); margin:0 auto;">
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:clamp(40px,6vw,72px);">
-        <div style="flex:1 1 400px; min-width:0;" data-reveal>
-          <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.020em; color:#F7FAFC; margin:0 0 0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
-          <p style="font-family:'Inter',sans-serif; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:#C4D0DD; margin:18px 0 0; max-width:460px; text-wrap:pretty;">{{ t.selfhost.sub }}</p>
+      <div style="max-width:760px;" data-reveal>
+        <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.020em; color:#F7FAFC; margin:0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
+        <p style="font-family:'Inter',sans-serif; font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:#C4D0DD; margin:18px 0 0; text-wrap:pretty;">{{ t.selfhost.sub }}</p>
 
-          <!-- Stand der Veröffentlichung. Steht VOR dem Befehl und nicht
-               darunter: wer den Befehl liest, soll vorher wissen, dass das
-               Repository heute noch geschlossen ist. Offenes Schloss als
-               Zeichen — geschlossen wäre die falsche Aussage, es geht um
-               etwas, das aufgeht, nicht um etwas Verriegeltes. -->
-          <div style="display:flex; gap:13px; margin-top:24px; max-width:470px; padding:15px 17px; border-radius:var(--r-card); background:rgba(165,216,230,.07); box-shadow:inset 0 0 0 1px rgba(165,216,230,.18);">
-            <span style="flex:0 0 auto; margin-top:2px; color:#F4C542;" aria-hidden="true">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
-            </span>
-            <div style="min-width:0;">
-              <div style="font-family:var(--f-display); font-size:14.5px; font-weight:500; letter-spacing:-.007em; color:#F7FAFC;">{{ t.selfhost.statusT }}</div>
-              <p style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.58; color:#A9BACB; margin:5px 0 0; text-wrap:pretty;">{{ t.selfhost.statusD }}</p>
-            </div>
-          </div>
-
-          <div style="display:flex; align-items:center; gap:12px; margin-top:28px; background:#0A1A2C; border:1px solid rgba(165,216,230,.22); border-radius:10px; padding:11px 12px 11px 15px;">
-            <span style="color:#5FA98A; font-family:'JetBrains Mono',monospace; font-size:13px; flex:0 0 auto;">$</span>
-            <span class="euc-cmd" style="flex:1; min-width:0; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#D6EDF5; overflow-x:auto; white-space:nowrap;">{{ cmd }}</span>
-            <button onClick="{{ copyCmd }}" class="euc-btn-press" style="flex:0 0 auto; cursor:pointer; font-family:var(--f-mono); font-size:11.5px; color:var(--c-ink); background:var(--c-ice-300); border:0; border-radius:var(--r-xs); min-height:44px; padding:0 13px; transition:opacity .15s ease, transform var(--d-press) var(--ease-out);" style-hover="opacity:.85;">{{ copyBtnLabel }}</button>
-          </div>
-
-          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; margin-top:26px;">
-            <a href="{{ github }}" class="euc-btn is-secondary is-deep is-hero">{{ t.selfhost.cta }}</a>
-            <div style="display:flex; align-items:center; gap:9px;">
-              <span style="color:#F4C542; font-size:16px;">★</span>
-              <div>
-                <div style="font-family:'JetBrains Mono',monospace; font-size:16px; font-weight:600; color:#F7FAFC; line-height:1;">{{ t.selfhost.stars }}</div>
-                <div style="font-family:'Inter',sans-serif; font-size:11.5px; color:#8AA0B6; margin-top:3px;">{{ t.selfhost.starsLabel }}</div>
-              </div>
-            </div>
-            <span class="euc-status is-deep">{{ t.selfhost.mit }}</span>
-          </div>
-
-          <a href="/self-hosting" style="display:inline-flex; align-items:center; min-height:44px; gap:8px; margin-top:16px; font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-decoration:none; color:#A5D8E6; transition:color .15s ease;" style-hover="color:#D6EDF5;">
-            <span>{{ t.selfhost.moreLink }}</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-          </a>
-        </div>
-
-        <div style="flex:1 1 460px; min-width:0;" data-reveal data-reveal-delay="120">
-          <div style="border-radius:var(--r-frame); background:#07131F; box-shadow:var(--edge-deep); overflow:hidden;">
-            <div style="display:flex; align-items:center; gap:8px; padding:11px 14px; border-bottom:1px solid rgba(165,216,230,.12);">
-              <span style="width:11px; height:11px; border-radius:50%; background:#E5695B;"></span>
-              <span style="width:11px; height:11px; border-radius:50%; background:#F4C542;"></span>
-              <span style="width:11px; height:11px; border-radius:50%; background:#5FA98A;"></span>
-              <span style="margin:0 auto; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6E8398;">{{ t.selfhost.title }}</span>
-            </div>
-            <div style="padding:20px 20px 26px; min-height:210px; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.85;">
-              <!-- pre-wrap, damit der gesetzte Umbruch nach dem Fortsetzungs-
-                   zeichen stehen bleibt und die zwei fuehrenden Leerzeichen der
-                   zweiten Zeile erhalten bleiben. -->
-              <div style="color:#D6EDF5; white-space:pre-wrap; overflow-wrap:anywhere;"><span style="color:#5FA98A;">$ </span>{{ termTyped }}<span style="display:inline-block; width:8px; height:15px; vertical-align:-2px; background:#A5D8E6; margin-left:2px; opacity:{{ termCaretOp }}; animation:{{ termCaret }};"></span></div>
-              <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px;">
-                <sc-for list="{{ termLines }}" as="ln" hint-placeholder-count="0">
-                  <div style="color:{{ ln.color }};">{{ ln.text }}</div>
-                </sc-for>
-              </div>
-            </div>
+        <!-- Stand der Veröffentlichung. Steht VOR den Befehlen und nicht
+             darunter: wer den Befehl liest, soll vorher wissen, dass das
+             Repository heute noch geschlossen ist. Offenes Schloss als
+             Zeichen — geschlossen wäre die falsche Aussage, es geht um
+             etwas, das aufgeht, nicht um etwas Verriegeltes. -->
+        <div style="display:flex; gap:13px; margin-top:26px; padding:15px 17px; border-radius:var(--r-card); background:rgba(165,216,230,.07); box-shadow:inset 0 0 0 1px rgba(165,216,230,.18);">
+          <span style="flex:0 0 auto; margin-top:2px; color:#F4C542;" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+          </span>
+          <div style="min-width:0;">
+            <div style="font-family:var(--f-display); font-size:14.5px; font-weight:500; letter-spacing:-.007em; color:#F7FAFC;">{{ t.selfhost.statusT }}</div>
+            <p style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.58; color:#A9BACB; margin:5px 0 0; text-wrap:pretty;">{{ t.selfhost.statusD }}</p>
           </div>
         </div>
       </div>
+
+      <!-- Zwei Karten, ein Befehl je Karte. Der Ablauf ist genau das: klonen,
+           dann installieren. Frueher stand hier eine getippte Terminal-
+           Attrappe; sie zeigte dieselbe Zeile nochmal und dazu eine Laufzeit,
+           die von Server und Leitung abhaengt. -->
+      <div class="euc-inst" data-reveal data-reveal-delay="80">
+        <div class="euc-inst-card">
+          <h3 class="euc-inst-t">{{ t.selfhost.c1t }}</h3>
+          <p class="euc-inst-d">{{ t.selfhost.c1d }}</p>
+          <div class="euc-inst-row">
+            <span class="euc-inst-sign" aria-hidden="true">$</span>
+            <code class="euc-inst-cmd">{{ cmd1 }}</code>
+            <button onClick="{{ copy1 }}" class="euc-inst-copy euc-btn-press" aria-label="{{ t.selfhost.copyA1 }}">{{ copyLabel1 }}</button>
+          </div>
+        </div>
+        <div class="euc-inst-card">
+          <h3 class="euc-inst-t">{{ t.selfhost.c2t }}</h3>
+          <p class="euc-inst-d">{{ t.selfhost.c2d }}</p>
+          <div class="euc-inst-row">
+            <span class="euc-inst-sign" aria-hidden="true">$</span>
+            <code class="euc-inst-cmd">{{ cmd2 }}</code>
+            <button onClick="{{ copy2 }}" class="euc-inst-copy euc-btn-press" aria-label="{{ t.selfhost.copyA2 }}">{{ copyLabel2 }}</button>
+          </div>
+        </div>
+      </div>
+
+      <a href="/self-hosting" data-reveal data-reveal-delay="120" style="display:inline-flex; align-items:center; min-height:44px; gap:8px; margin-top:22px; font-family:'Inter',sans-serif; font-size:15px; font-weight:500; text-decoration:none; color:#A5D8E6; transition:color .15s ease;" style-hover="color:#D6EDF5;">
+        <span>{{ t.selfhost.moreLink }}</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </a>
 
       <!-- Die offene Basis. Stand vorher in einer eigenen Sektion und
            wiederholte dort, was hier ohnehin das Thema ist: eigener Betrieb.
@@ -3313,24 +3319,20 @@ this.mobRef = React.createRef();
     this._olkResize = null;
     this._olkStarted = false;
     this._olkStep = 0;
-    /* Befehl und Ausgabe stammen aus dem echten Runbook (docs/server-
-       installation.md) und einem echten Lauf auf unserem Server, nicht aus der
-       Fantasie — deshalb der vollständige Einzeiler statt eines hübschen
-       Kürzels: klonen, hineinwechseln, installieren. Was fehlt, fehlt mit
-       Absicht: Rechnernamen, Kundennamen und Container-Anzahl. Die Anzahl
-       haengt am gewaehlten Profil, eine gedruckte Zahl waere fuer die Haelfte
-       der Installationen falsch. */
-    this._termCmd = 'git clone https://github.com/herr-informatik/eu-cowork.git && cd eu-cowork/distribution && ./install.sh';
-    /* Fuer die Anzeige im Terminal mit Fortsetzungszeichen umgebrochen. Ohne
-       das bricht der Satz an der naechstbesten Stelle um — und das ist der
-       Bindestrich in „eu-cowork", eine voellig regulaere Umbruchstelle, die
-       hier aber wie ein Tippfehler aussieht. Kein Umbruch-Modus verhindert
-       das; nur ein gewaehlter Umbruch tut es. Der Knopf kopiert weiterhin die
-       Einzeiler-Fassung oben. */
-    this._termShow = 'git clone https://github.com/herr-informatik/eu-cowork.git \\\n  && cd eu-cowork/distribution && ./install.sh';
-    this._termOut = ['✓ Docker Engine + Compose v2 geprüft','✓ Secrets erzeugt · .env geschrieben','✓ Images geladen · Stack gestartet','✓ Auto-TLS aktiv · Telemetrie aus','→ https://chat.ihre-firma.ch · ~60 s'];
+    /* Die beiden Befehle stammen aus dem echten Runbook (Schnellstart in der
+       Doku), nicht aus der Fantasie: klonen, hineinwechseln, installieren.
+       Getrennt statt als Einzeiler, weil es zwei Schritte SIND — dazwischen
+       liegt auf einem frischen Server setup-server.sh und eine neue Sitzung
+       wegen der Gruppe `docker`. Was fehlt, fehlt mit Absicht: Rechnernamen,
+       Kundennamen und Container-Anzahl. Die Anzahl haengt am gewaehlten
+       Profil, eine gedruckte Zahl waere fuer die Haelfte der Installationen
+       falsch. */
+    this._cmd1 = 'git clone https://github.com/Herr-Informatik-org/eu-cowork.git';
+    this._cmd2 = 'cd eu-cowork/distribution && ./install.sh';
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
-    this.state = { lang: initLang, mobPhase: 0, olkPhase: 0, termTyped:'', termLines:[], copied:false, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
+    /* copied traegt die Nummer der Karte (0 = keine), damit die Rueckmeldung
+       an dem Knopf steht, den man gedrueckt hat. */
+    this.state = { lang: initLang, mobPhase: 0, olkPhase: 0, copied:0, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
     /* `lang` am <html> mitziehen. Ohne das steht auf der englischen Fassung
        weiterhin lang="de": Screenreader sprechen englischen Text mit deutscher
        Aussprache, Browser bieten eine Übersetzung an, die niemand braucht, und
@@ -3380,11 +3382,16 @@ this.mobRef = React.createRef();
          und statusD weg und `mit` verliert den Zusatz — sonst nichts. */
       selfhost: {
         de: {
-          h2:'One command. 60 seconds.',
-          sub:'Ein Befehl, ein Server, der ganze Stack. Self-Hosting bleibt dauerhaft gratis, ab einer einzelnen Person: kein Seat-Limit, kein Branding-Zwang.',
+          h2:'Auf dem eigenen Server installieren',
+          sub:'Der ganze Stack liegt in einem Repository: Chat, Admin-Panel, Konnektoren und Suche. Self-Hosting bleibt dauerhaft gratis, ab einer einzelnen Person, ohne Seat-Limit und ohne Branding-Zwang.',
           statusT:'Noch nicht veröffentlicht',
           statusD:'Der Quellcode erscheint unter MIT-Lizenz. Bis dahin läuft die Sicherheitshärtung — wir geben das Repository erst frei, wenn wir es ohne Vorbehalt weiterreichen würden. Wer auf der Warteliste steht, hört von uns.',
-          copyLabel:'Kopieren', copied:'Kopiert', stars:'40\u2019000+', starsLabel:'Stars · LibreChat', mit:'MIT-Lizenz folgt', cta:'Zum Selbstbetrieb', title:'zsh · eu-cowork',
+          c1t:'Repository klonen',
+          c1d:'Ein Klon, alle Dienste. Ein gewöhnlicher Docker-Compose-Stack, nichts Exotisches.',
+          c2t:'Installieren und starten',
+          c2d:'Der Installer erzeugt die Geheimnisse, holt die Images und startet den Stack mit Auto-TLS. Einen frischen Ubuntu-Server richtet setup-server.sh davor ein.',
+          copyLabel:'Kopieren', copied:'Kopiert',
+          copyA1:'Befehl zum Klonen kopieren', copyA2:'Befehl zum Installieren kopieren',
           o1t:'Basis LibreChat',
           o1d:'Ein dünner Fork von LibreChat, über 40’000 Sterne auf GitHub und weltweit im Einsatz.',
           o2t:'Kein Seat-Limit',
@@ -3396,11 +3403,16 @@ this.mobRef = React.createRef();
           moreLink:'Installation, Stack und Systemanforderungen'
         },
         en: {
-          h2:'One command. 60 seconds.',
-          sub:'One command, one server, the whole stack. Self-hosting stays free for good, from a single person: no seat limit, no forced branding.',
+          h2:'Install it on your own server',
+          sub:'The whole stack lives in one repository: chat, admin panel, connectors and search. Self-hosting stays free for good, from a single person, with no seat limit and no forced branding.',
           statusT:'Not published yet',
           statusD:'The source will be released under the MIT license. Until then we are hardening it — the repository opens once we would hand it on without reservation. Everyone on the waitlist will hear from us.',
-          copyLabel:'Copy', copied:'Copied', stars:'40,000+', starsLabel:'stars · LibreChat', mit:'MIT license to follow', cta:'Self-hosting guide', title:'zsh · eu-cowork',
+          c1t:'Clone the repository',
+          c1d:'One clone, every service. An ordinary Docker Compose stack, nothing exotic.',
+          c2t:'Install and start',
+          c2d:'The installer generates the secrets, pulls the images and starts the stack with automatic TLS. On a fresh Ubuntu server, setup-server.sh prepares the machine first.',
+          copyLabel:'Copy', copied:'Copied',
+          copyA1:'Copy the clone command', copyA2:'Copy the install command',
           o1t:'Built on LibreChat',
           o1d:'A thin fork of LibreChat, over 40,000 stars on GitHub and in use worldwide.',
           o2t:'No seat limit',
@@ -3798,7 +3810,6 @@ sov: {
     this._initRail();
     this._initFit();
     this._initReveal();
-    this._startTerminal();
 this._capInit();
 this._pgInit();
 this._mobInit();
@@ -4180,7 +4191,6 @@ this._mobInit();
     if (this._io) this._io.disconnect();
     clearTimeout(this._revealSafety);
     if (this._cio) this._cio.disconnect();
-    clearTimeout(this._termTimer);
     clearTimeout(this._copyTimer);
     clearTimeout(this._fitTimer);
     (this._sgIos||[]).forEach(io=>{ try{ io.disconnect(); }catch(e){} });
@@ -4213,34 +4223,12 @@ clearTimeout(this._mobTimer);
       this._wsHost = null;
     }
   }
-  /* Erklärende Abläufe spielen genau einmal und bleiben im Endzustand stehen:
-     der Endzustand IST die Aussage (fertige Datei, gesetzte Rechte, laufender
-     Stack), eine Schleife nimmt sie sofort wieder zurück. */
-  _startTerminal(){
-    const cmd = this._termShow, out = this._termOut;
-    if (this._reduced()){ this.setState({ termTyped: cmd, termLines: out, termDone:true }); return; }
-    let ci = 0, li = 0, phase = 'type';
-    const step = () => {
-      if (phase === 'type'){
-        ci++; this.setState({ termTyped: cmd.slice(0, ci) });
-        if (ci >= cmd.length){ phase = 'out'; this._termTimer = setTimeout(step, 700); return; }
-        /* 22 statt 32 ms: der Befehl ist mit dem Klon-Teil fast doppelt so
-           lang geworden, bei alter Geschwindigkeit tippt er über drei
-           Sekunden und der Blick wandert weg, bevor die Ausgabe kommt. */
-        this._termTimer = setTimeout(step, 22);
-      } else {
-        li++; this.setState({ termLines: out.slice(0, li) });
-        if (li >= out.length){ this.setState({ termDone:true }); return; }
-        this._termTimer = setTimeout(step, 540);
-      }
-    };
-    this._termTimer = setTimeout(step, 1000);
-  }
-  copyCmd(){
-    try { navigator.clipboard && navigator.clipboard.writeText(this._termCmd); } catch(e){}
-    this.setState({ copied:true });
+  copyCmd(i){
+    const cmd = (i === 2) ? this._cmd2 : this._cmd1;
+    try { navigator.clipboard && navigator.clipboard.writeText(cmd); } catch(e){}
+    this.setState({ copied:i });
     clearTimeout(this._copyTimer);
-    this._copyTimer = setTimeout(()=>this.setState({ copied:false }), 1600);
+    this._copyTimer = setTimeout(()=>this.setState({ copied:0 }), 1600);
   }
   _reduced(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
   _deepQ(sel){
@@ -4838,17 +4826,17 @@ _mobInit(){
     vm.replayMob  = () => this.replayMob();
     vm.olkReplayCls  = this.state.olkDone ? ' is-on' : '';
     vm.mobReplayCls  = this.state.mobDone ? ' is-on' : '';
-    /* Der Cursor blinkt nur, solange getippt wird — danach steht der Befehl. */
-    vm.termCaret = this.state.termDone ? 'none' : 'euc-caret 1.1s step-end infinite';
-    vm.termCaretOp = this.state.termDone ? '0' : '1';
-    vm.termTyped = this.state.termTyped;
-    vm.termLines = (this.state.termLines||[]).map(text => ({ text, color: text.charAt(0)==='→' ? '#F4C542' : (text.charAt(0)==='✓' ? '#8FD3B4' : '#C4D0DD') }));
-    vm.cmd = this._termCmd; vm.copyCmd = () => this.copyCmd();
+    vm.cmd1 = this._cmd1; vm.copy1 = () => this.copyCmd(1);
+    vm.cmd2 = this._cmd2; vm.copy2 = () => this.copyCmd(2);
     /* Einweg-Schalter: der Hinweis erklärt einen Zustand, kein Auf und Zu.
        Wer ein zweites Mal drückt, bekommt keine verschwindende Antwort. */
     vm.showStoreNote = () => { if (!this.state.storeNote) this.setState({ storeNote:true }); };
     vm.storeNoteCls = this.state.storeNote ? ' is-on' : '';
-    if (t.selfhost) vm.copyBtnLabel = this.state.copied ? t.selfhost.copied : t.selfhost.copyLabel;
+    /* Die Rueckmeldung steht nur an dem Knopf, den man gedrueckt hat. */
+    if (t.selfhost){
+      vm.copyLabel1 = this.state.copied === 1 ? t.selfhost.copied : t.selfhost.copyLabel;
+      vm.copyLabel2 = this.state.copied === 2 ? t.selfhost.copied : t.selfhost.copyLabel;
+    }
     if (t.faq){ const open = this.state.faqOpen; vm.faqItems = t.faq.items.map((it,i)=>({ q:it.q, a:it.a, open:i===open, sign:i===open?'\u2212':'+', maxH:i===open?'260px':'0px', op:i===open?'1':'0', pad:i===open?'2px 0 20px':'0 0 0', toggle:()=>this.setState({ faqOpen: this.state.faqOpen===i?-1:i }) })); }
     vm.pgRef = this.pgRef;
     vm.globeRef = this.globeRef;
