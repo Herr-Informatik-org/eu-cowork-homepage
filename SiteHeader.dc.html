@@ -366,7 +366,7 @@
 
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
     <nav class="euc-hd-nav">
-      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="3">
         <a href="{{ item.href }}" class="{{ item.cls }}">{{ item.label }}</a>
       </sc-for>
     </nav>
@@ -392,7 +392,7 @@
         <button onClick="{{ toggleMenu }}" aria-label="Close" class="euc-hd-close">&times;</button>
       </div>
       <nav>
-        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="3">
           <a href="{{ item.href }}" onClick="{{ closeMenu }}">{{ item.label }}</a>
         </sc-for>
       </nav>
@@ -489,9 +489,9 @@ class Component extends DCLogic {
     const onLanding = this.props.onLanding === true;
     const active = this.props.activeNav || 'home';
     const T = {
-      de: { docs:'Docs', blog:'Blog',
+      de: { pricing:'Preise', docs:'Docs', blog:'Blog',
             primary:'Auf die Warteliste', secondary:'Self-host for free' },
-      en: { docs:'Docs', blog:'Blog',
+      en: { pricing:'Pricing', docs:'Docs', blog:'Blog',
             primary:'Join the waitlist', secondary:'Self-host for free' }
     }[lang];
     /* Schlanke Hauptnavigation: alles Erklärende liegt auf der Startseite
@@ -499,6 +499,7 @@ class Component extends DCLogic {
        Vergleich, FAQ, Self-Host ...) bleiben bestehen und sind über die
        Fussleiste erreichbar. */
     const nav = [
+      { key:'pricing',     label:T.pricing,        href: '/preise' },
       { key:'docs',        label:T.docs,           href: '/docs' },
       { key:'blog',        label:T.blog,           href: '/blog' }
     ].map(n => ({ ...n, cls: n.key === active ? 'is-active' : '' }));

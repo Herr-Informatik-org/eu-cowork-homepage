@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Preise: gratis selbst hosten oder betreiben lassen | EU Cowork AI</title>
+<meta name="description" content="EU Cowork AI ist im Selbstbetrieb dauerhaft gratis, mit allen Enterprise-Funktionen und ohne Seat-Limit. Betreuter Betrieb kostet 14 € pro Person und Monat. Support für eigene Installationen separat buchbar.">
+<link rel="canonical" href="https://eucowork.ai/preise">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/preise">
+<meta property="og:title" content="Preise: gratis selbst hosten oder betreiben lassen | EU Cowork AI">
+<meta property="og:description" content="Zwei Wege, ein Produkt: Selbstbetrieb dauerhaft gratis mit allen Enterprise-Funktionen, betreuter Betrieb für 14 € pro Person und Monat.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Preise: gratis selbst hosten oder betreiben lassen | EU Cowork AI">
+<meta name="twitter:description" content="Selbstbetrieb gratis, betreuter Betrieb 14 € pro Person und Monat. Kein Seat-Limit, kein Feature-Gating.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/content.css">
+
+<style>
+/* ==========================================================================
+   Preise: seiteneigene Bauteile
+   Alles Weitere kommt aus content.css. Hier stehen nur die Teile, die es
+   sonst nirgends gibt: die Umschaltung, die Preiskarte und die Merkmalliste.
+
+   Kein JavaScript. Die Umschaltung laeuft ueber zwei versteckte Radios und
+   Geschwister-Selektoren — beide Tafeln stehen im Markup und sind damit auch
+   ohne Skript und fuer Crawler vollstaendig lesbar. Das ist dieselbe Regel
+   wie auf den uebrigen statischen Seiten.
+   ========================================================================== */
+
+/* ---------- Umschaltung ---------- */
+.pr-switch { display: flex; justify-content: center; margin: 0 0 clamp(32px, 4vw, 44px); }
+.pr-tabs {
+  display: inline-flex; gap: 4px; padding: 4px;
+  background: var(--c-ice-100); border-radius: var(--r-full);
+  box-shadow: inset 0 0 0 1px rgba(18, 50, 107, .07);
+}
+.pr-tab {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 40px; padding: 0 20px; border-radius: var(--r-full);
+  font-family: var(--f-body); font-size: 14.5px; font-weight: 500;
+  color: var(--c-body-soft); cursor: pointer; white-space: nowrap;
+  transition: color .18s ease, background-color .18s ease, box-shadow .18s ease;
+}
+.pr-tab svg { flex: 0 0 auto; }
+.pr-radio { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+#pr-betrieb:checked ~ .pr-switch label[for="pr-betrieb"],
+#pr-support:checked ~ .pr-switch label[for="pr-support"] {
+  color: var(--c-ink); background: var(--c-surface);
+  box-shadow: 0 1px 2px rgba(11, 30, 51, .10), 0 0 0 1px rgba(18, 50, 107, .06);
+}
+/* Der Fokusring gehoert sichtbar an das Label, weil das Radio selbst
+   ausgeblendet ist. */
+.pr-radio:focus-visible ~ .pr-switch label[for="pr-betrieb"],
+.pr-radio:focus-visible ~ .pr-switch label[for="pr-support"] { outline: 2px solid var(--c-eu-700); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .pr-tab:hover { color: var(--c-ink); } }
+
+.pr-panel { display: none; }
+#pr-betrieb:checked ~ .pr-panels > #pr-panel-betrieb,
+#pr-support:checked ~ .pr-panels > #pr-panel-support { display: block; }
+/* Ohne Skript ist nichts geklickt: dann stehen beide Tafeln, statt dass die
+   Seite leer wirkt. Sobald CSS und Radios greifen, blendet die Regel oben. */
+@media (scripting: none) { .pr-panel { display: block; } }
+
+/* ---------- Preiskarten ---------- */
+.pr-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-5); }
+/* `stretch` statt `start`: die beiden Karten sind ein Paar und sollen als
+   Paar auftreten. Bei unterschiedlicher Höhe wirkt die kürzere wie ein
+   Nachtrag. Ueberschuessige Hoehe bleibt unten stehen — die Merkmalliste an
+   die Unterkante zu schieben, riss bei kurzen Listen ein Loch in die Mitte. */
+@media (min-width: 860px) { .pr-grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); } }
+
+.pr-card {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--c-surface); border: var(--bd);
+  border-radius: var(--r-card); box-shadow: var(--sh-soft);
+  padding: clamp(26px, 3.2vw, 36px);
+}
+/* Die dunkle Karte traegt denselben Verlauf wie der Schlusskasten der
+   Startseite: vier weiche Radien ueber Navy, darueber dasselbe Korn gegen
+   Streifenbildung. Ein WebGL-Verlauf waere hier ein Skript fuer ein Standbild. */
+.pr-card.is-deep {
+  color: var(--c-on-deep); border-color: transparent;
+  background-color: var(--c-deep);
+  background-image:
+    radial-gradient(74% 108% at 82% 8%,   rgba(63,124,201,.48) 0%, rgba(63,124,201,0) 62%),
+    radial-gradient(62% 92%  at 14% 96%,  rgba(46,108,134,.58) 0%, rgba(46,108,134,0) 66%),
+    radial-gradient(122% 128% at 96% 88%, rgba(18,50,107,.86) 0%, rgba(18,50,107,0) 58%),
+    radial-gradient(46% 64% at 58% 30%,   rgba(165,216,230,.16) 0%, rgba(165,216,230,0) 70%),
+    linear-gradient(148deg, #0B1E33 0%, #12326B 58%, #0B1E33 100%);
+  box-shadow: var(--sh-3);
+}
+.pr-card.is-deep::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: .05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.pr-card > * { position: relative; z-index: 1; }
+
+/* Die helle Karte bekommt oben eine schmale Eisfläche, damit die beiden
+   Karten als Paar auftreten und nicht als Karte plus Kasten. */
+.pr-card.is-light::after {
+  content: ''; position: absolute; inset: 0 0 auto; height: 120px; z-index: 0;
+  background: linear-gradient(180deg, rgba(165,216,230,.16) 0%, rgba(165,216,230,0) 100%);
+  pointer-events: none;
+}
+
+.pr-k {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--c-eu-500);
+}
+.pr-card.is-deep .pr-k { color: var(--c-ice-300); }
+
+.pr-name {
+  font-family: var(--f-display); font-weight: 500;
+  font-size: clamp(21px, 2.2vw, 25px); line-height: 1.2; letter-spacing: -.014em;
+  color: var(--c-ink); margin: var(--s-4) 0 0;
+}
+.pr-card.is-deep .pr-name { color: var(--c-on-deep); }
+
+.pr-claim {
+  font-family: var(--f-body); font-size: 15px; line-height: 1.55;
+  color: var(--c-body-soft); margin: var(--s-3) 0 0; max-width: 40ch; text-wrap: pretty;
+}
+.pr-card.is-deep .pr-claim { color: var(--c-on-deep-body); }
+
+.pr-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 9px; margin: var(--s-6) 0 0; }
+.pr-amount {
+  font-family: var(--f-display); font-weight: 400;
+  font-size: clamp(42px, 5.4vw, 60px); line-height: 1; letter-spacing: -.028em;
+  color: var(--c-ink); font-variant-numeric: tabular-nums;
+}
+.pr-card.is-deep .pr-amount { color: var(--c-on-deep); }
+/* Ein Wort statt einer Zahl: „Auf Anfrage" in 60 px erschlaegt die Karte und
+   bricht um. Es traegt hier dieselbe Groesse wie der Kartenname. */
+.pr-amount.is-word { font-size: clamp(26px, 2.8vw, 32px); letter-spacing: -.018em; line-height: 1.15; }
+.pr-unit { font-family: var(--f-body); font-size: 14.5px; line-height: 1.4; color: var(--c-body-soft); }
+.pr-card.is-deep .pr-unit { color: var(--c-on-deep-muted); }
+.pr-note {
+  font-family: var(--f-body); font-size: 13.5px; line-height: 1.5;
+  color: var(--c-body-soft); margin: var(--s-3) 0 0; max-width: 42ch;
+}
+.pr-card.is-deep .pr-note { color: var(--c-on-deep-muted); }
+
+.pr-actions { margin: var(--s-6) 0 0; }
+.pr-card.is-deep .euc-btn-primary { color: var(--c-deep); background: var(--c-on-deep); border-color: var(--c-on-deep); }
+
+/* ---------- Merkmalliste ---------- */
+.pr-list { list-style: none; margin: var(--s-6) 0 0; padding: var(--s-5) 0 0; border-top: 1px solid var(--c-line-soft); }
+.pr-card.is-deep .pr-list { border-top-color: rgba(165, 216, 230, .18); }
+.pr-list li {
+  display: flex; align-items: flex-start; gap: 11px;
+  font-family: var(--f-body); font-size: 14.5px; line-height: 1.5;
+  color: var(--c-body); padding: 7px 0;
+}
+.pr-card.is-deep .pr-list li { color: var(--c-on-deep-body); }
+.pr-tick { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 2px; color: var(--c-eu-500); }
+.pr-card.is-deep .pr-tick { color: var(--c-ice-300); }
+.pr-tick svg { display: block; }
+.pr-listhead {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--c-muted);
+  margin: 0 0 var(--s-3);
+}
+.pr-card.is-deep .pr-listhead { color: var(--c-on-deep-label); }
+
+/* Die Marke „Enterprise" hinter einzelnen Zeilen. Sie ist der Grund, warum
+   die Gratis-Karte keine abgespeckte Fassung ist: die Punkte sind genau die,
+   die wir zu LibreChat hinzugebaut haben — und sie sind ueberall dabei. */
+.pr-ent {
+  display: inline-flex; align-items: center; margin-left: 7px; padding: 2px 7px;
+  border-radius: var(--r-full); font-family: var(--f-mono); font-size: 10px;
+  font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+  color: #6B4E02; background: rgba(244, 197, 66, .20); white-space: nowrap;
+  vertical-align: 1px;
+}
+.pr-card.is-deep .pr-ent { color: #F4C542; background: rgba(244, 197, 66, .14); }
+
+/* ---------- Zeile unter den Karten ---------- */
+.pr-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-6);
+  margin: clamp(28px, 3.4vw, 40px) 0 0; padding: var(--s-5);
+  background: var(--c-ice-100); border-radius: var(--r-card);
+}
+.pr-foot p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--c-body); flex: 1 1 340px; }
+
+/* ---------- Enterprise-Tafel ---------- */
+.pr-ent-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-4); margin: var(--s-6) 0 0; }
+@media (min-width: 700px)  { .pr-ent-grid { grid-template-columns: 1fr 1fr; gap: var(--s-5); } }
+.pr-ent-item { display: flex; align-items: flex-start; gap: 12px; }
+.pr-ent-ico { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 2px; color: var(--c-eu-500); }
+.pr-ent-ico svg { display: block; }
+.pr-ent-t { display: block; font-family: var(--f-display); font-weight: 500; font-size: 15.5px;
+  line-height: 1.3; letter-spacing: -.007em; color: var(--c-ink); }
+.pr-ent-d { display: block; margin-top: 4px; font-family: var(--f-body); font-size: 13.5px;
+  line-height: 1.55; color: var(--c-body-soft); text-wrap: pretty; }
+</style>
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/preise" aria-current="page">Preise</a>
+    <a href="/docs">Docs</a>
+    <a href="/blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <a class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
+    <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/preise">Preise</a>
+      <a href="/docs">Docs</a>
+      <a href="/blog">Blog</a>
+      <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+      <a class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main" id="inhalt">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <div class="euc-wrap">
+    <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/">Start</a></li>
+        <li><span aria-current="page">Preise</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="euc-wrap euc-hero">
+    <p class="euc-eyebrow">Preise</p>
+
+    <h1>Der volle Funktionsumfang. <span class="euc-marker">Ab null Euro.</span></h1>
+
+    <p class="euc-lead">Es gibt keine kleine und keine grosse Ausgabe. Wer EU Cowork AI selbst betreibt, bekommt alles — auch die Enterprise-Funktionen, die wir zusätzlich zu LibreChat gebaut haben. Bezahlt wird nur, wer den Betrieb abgeben oder Unterstützung dazu buchen will.</p>
+  </section>
+
+  <div class="euc-wrap-wide">
+
+    <!-- ==================== UMSCHALTUNG + TAFELN ==================== -->
+    <input class="pr-radio" type="radio" name="pr" id="pr-betrieb" checked>
+    <input class="pr-radio" type="radio" name="pr" id="pr-support">
+
+    <div class="pr-switch">
+      <div class="pr-tabs" role="group" aria-label="Preise umschalten">
+        <label class="pr-tab" for="pr-betrieb">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2"></rect><rect width="20" height="8" x="2" y="14" rx="2"></rect><path d="M6 6h.01"></path><path d="M6 18h.01"></path></svg>
+          <span>Betrieb</span>
+        </label>
+        <label class="pr-tab" for="pr-support">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+          <span>Support</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="pr-panels">
+
+      <!-- ---------- Tafel 1: Betrieb ---------- -->
+      <section class="pr-panel" id="pr-panel-betrieb" aria-label="Preise für den Betrieb">
+        <div class="pr-grid">
+
+          <!-- Community -->
+          <article class="pr-card is-light">
+            <span class="pr-k">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></svg>
+              <span>Community</span>
+            </span>
+            <h2 class="pr-name">Selbst betreiben</h2>
+            <p class="pr-claim">Ein Compose-Stack auf Ihrer eigenen Maschine. Sie behalten Daten, Schlüssel und Kontrolle vollständig bei sich.</p>
+
+            <div class="pr-price">
+              <span class="pr-amount">0 €</span>
+              <span class="pr-unit">dauerhaft, für beliebig viele Personen</span>
+            </div>
+            <p class="pr-note">Kosten entstehen nur ausserhalb: Ihr Server und Ihr eigener Schlüssel beim Modell-Anbieter, direkt bei diesem abgerechnet.</p>
+
+            <div class="pr-actions">
+              <a class="euc-btn-secondary" href="/self-hosting">Zum Selbstbetrieb</a>
+            </div>
+
+            <ul class="pr-list">
+              <li class="pr-listhead">Enthalten</li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Chat, Agenten, Skills, Dateien und Websuche</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Rechte bis auf Werkzeug-Ebene<span class="pr-ent">Enterprise</span></span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Audit-Log jedes Zugriffs<span class="pr-ent">Enterprise</span></span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Admin-Panel mit Rollen und Gruppen<span class="pr-ent">Enterprise</span></span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Verbrauch in Euro und gepoolte Budgets<span class="pr-ent">Enterprise</span></span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>OIDC und Entra ID<span class="pr-ent">Enterprise</span></span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Outlook-Add-in<span class="pr-ent">Enterprise</span></span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Dokumentation und öffentliche Kanäle</span></li>
+            </ul>
+          </article>
+
+          <!-- Betreut -->
+          <article class="pr-card is-deep">
+            <span class="pr-k">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+              <span>Betreut</span>
+            </span>
+            <h2 class="pr-name">Betreiben lassen</h2>
+            <p class="pr-claim">Dieselbe Software, betrieben in ISO-27001-Rechenzentren in der Schweiz. Updates, Sicherungen und Erreichbarkeit liegen bei uns.</p>
+
+            <div class="pr-price">
+              <span class="pr-amount">14 €</span>
+              <span class="pr-unit">pro Person und Monat</span>
+            </div>
+            <p class="pr-note">Darin enthalten sind 8 € monatliches Modell-Guthaben, das der ganzen Organisation gemeinsam zur Verfügung steht — nicht pro Kopf gedeckelt.</p>
+
+            <div class="pr-actions">
+              <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+            </div>
+
+            <ul class="pr-list">
+              <li class="pr-listhead">Alles aus Community, dazu</li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Betrieb, Überwachung und Sicherung durch uns</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Eigene Instanz, eigene Datenbank, eigene Schlüssel</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Modell-Guthaben inklusive, im Pool der Organisation</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Geprüfte Aktualisierungen ohne eigenen Aufwand</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Auftragsverarbeitungsvertrag und Subprozessorenliste</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Umzug zu sich selbst jederzeit möglich</span></li>
+            </ul>
+          </article>
+
+        </div>
+
+        <div class="pr-foot">
+          <p><strong>Der Wechsel geht in beide Richtungen.</strong> Beide Wege nutzen dieselbe Bauform. Ein Umzug ist ein Archiv, eine Kopie und ein Rückspielen — Konversationen, Konten und Einstellungen kommen mit.</p>
+          <a class="euc-textlink" href="/docs/betrieb/backup-und-umzug">Wie ein Umzug abläuft →</a>
+        </div>
+      </section>
+
+      <!-- ---------- Tafel 2: Support ---------- -->
+      <section class="pr-panel" id="pr-panel-support" aria-label="Support für eigene Installationen">
+        <div class="pr-grid">
+
+          <article class="pr-card is-light">
+            <span class="pr-k">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10"></path><path d="M12 6v6l4 2"></path></svg>
+              <span>Community</span>
+            </span>
+            <h2 class="pr-name">Selbst weiterkommen</h2>
+            <p class="pr-claim">Die vollständige Dokumentation ist öffentlich: Installation, Betrieb, Rechte, Konnektoren, Umzug und Fehlerbehebung.</p>
+
+            <div class="pr-price">
+              <span class="pr-amount">0 €</span>
+              <span class="pr-unit">ohne Anmeldung</span>
+            </div>
+            <p class="pr-note">Kein gestufter Zugang: Es gibt keine Dokumentation, die nur zahlende Kunden sehen.</p>
+
+            <div class="pr-actions">
+              <a class="euc-btn-secondary" href="/docs">Zur Dokumentation</a>
+            </div>
+
+            <ul class="pr-list">
+              <li class="pr-listhead">Enthalten</li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Vollständige Dokumentation, deutsch und englisch</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Installations- und Betriebs-Runbooks</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Öffentliche Kanäle für Fragen und Fehler</span></li>
+            </ul>
+          </article>
+
+          <article class="pr-card is-deep">
+            <span class="pr-k">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+              <span>Business</span>
+            </span>
+            <h2 class="pr-name">Support-Abo</h2>
+            <p class="pr-claim">Für alle, die selbst betreiben und trotzdem jemanden erreichen wollen. Die Instanz bleibt bei Ihnen, wir helfen daran.</p>
+
+            <div class="pr-price">
+              <span class="pr-amount is-word">Auf Anfrage</span>
+            </div>
+            <p class="pr-note">Der Preis richtet sich nach Instanzzahl und zugesagter Reaktionszeit. Wir nennen ihn nach einem kurzen Gespräch, in dem klar wird, was Sie tatsächlich brauchen.</p>
+
+            <div class="pr-actions">
+              <a class="euc-btn-primary" href="/warteliste">Gespräch anfragen</a>
+            </div>
+
+            <ul class="pr-list">
+              <li class="pr-listhead">Umfang</li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Zugesagte Reaktionszeit statt Best Effort</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Benannte Ansprechperson für Ihre Installation</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Begleitung bei Aktualisierungen und Umzügen</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Durchsicht Ihrer Einrichtung gegen die Härtungsliste</span></li>
+              <li><span class="pr-tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span>Unterstützung beim Anbinden eigener Systeme</span></li>
+            </ul>
+          </article>
+
+        </div>
+
+        <div class="pr-foot">
+          <p><strong>Support ändert nichts an der Software.</strong> Es gibt keine Fassung mit Zusatzfunktionen für zahlende Kunden. Sie bezahlen Erreichbarkeit und Erfahrung, nicht freigeschaltete Schalter.</p>
+          <a class="euc-textlink" href="/docs">Was die Doku abdeckt →</a>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <div class="euc-wrap">
+
+    <!-- ==================== WAS ENTERPRISE HEISST ==================== -->
+    <section class="euc-section">
+      <h2 id="enterprise">Was „Enterprise" hier bedeutet</h2>
+      <p>Die Chat-Oberfläche ist <a class="euc-link" href="https://www.librechat.ai" rel="noopener">LibreChat</a>, quelloffen unter MIT-Lizenz. Die folgenden Bausteine haben wir zusätzlich gebaut, weil eine Firmenumgebung sie braucht. Sie sind der Grund, warum eine gratis betriebene Instanz nicht die abgespeckte Fassung ist — <strong>sie enthält genau dieselben Bausteine wie die betreute</strong>.</p>
+
+      <div class="pr-ent-grid">
+        <div class="pr-ent-item">
+          <span class="pr-ent-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+          <span><span class="pr-ent-t">MCP-Gateway</span><span class="pr-ent-d">Prüft vor jedem Werkzeug-Aufruf die Regel aus der Kette Benutzer, Rolle, Gruppe, Standard — und protokolliert jede Entscheidung mit Begründung.</span></span>
+        </div>
+        <div class="pr-ent-item">
+          <span class="pr-ent-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><path d="M14 2v6h6"></path><path d="m9 15 2 2 4-4"></path></svg></span>
+          <span><span class="pr-ent-t">Admin-Panel</span><span class="pr-ent-d">Benutzer, Rollen, Gruppen, Konfiguration, Aufbewahrung, Auskunft und Löschung pro Person. Permissiv lizenziert, kein Copyleft.</span></span>
+        </div>
+        <div class="pr-ent-item">
+          <span class="pr-ent-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"></circle><path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path><path d="M7 6h1v4"></path><path d="m16.71 13.88.7.71-2.82 2.82"></path></svg></span>
+          <span><span class="pr-ent-t">Verbrauch in Euro</span><span class="pr-ent-d">Tokens werden pro Person, Gruppe und Modell in Euro umgerechnet. Das Monatsbudget liegt im Pool der Organisation, mit Soft-Block statt stiller Überschreitung.</span></span>
+        </div>
+        <div class="pr-ent-item">
+          <span class="pr-ent-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></span>
+          <span><span class="pr-ent-t">OIDC und Entra ID</span><span class="pr-ent-d">Anmeldung über Ihr bestehendes Verzeichnis. Gruppen und Rollen kommen mit und speisen direkt die Rechteregeln.</span></span>
+        </div>
+        <div class="pr-ent-item">
+          <span class="pr-ent-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></span>
+          <span><span class="pr-ent-t">Outlook-Add-in</span><span class="pr-ent-d">Ein Chat-Bereich neben der geöffneten E-Mail, gegen dieselbe Instanz und dieselben Rechte. Gesendet wird nie automatisch.</span></span>
+        </div>
+        <div class="pr-ent-item">
+          <span class="pr-ent-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><path d="M2 12h20"></path><path d="M6 16h.01"></path><path d="M10 16h.01"></path></svg></span>
+          <span><span class="pr-ent-t">Installationspaket</span><span class="pr-ent-d">Compose-Stack, Server-Vorbereitung, Installer, Sicherung und Umzug, Auto-TLS und eigene Metasuchmaschine — als ein Paket, nicht als Bastelanleitung.</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FRAGEN ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen">Häufige Fragen zum Preis</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>Ist die gratis betriebene Fassung eingeschränkt?</h3>
+          <p>Nein. Es gibt kein Seat-Limit, keinen Branding-Zwang und keine Funktion hinter einer Enterprise-Schranke. Was im Repository liegt, ist der volle Funktionsumfang. Bezahlt wird der Betrieb, nicht die Software.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Warum wird das Guthaben in Euro angegeben und nicht in Tokens?</h3>
+          <p>Weil ein Token keine Grösse ist, mit der sich planen lässt: Wie viel Arbeit in einem Token steckt, hängt vom Modell ab und ändert sich mit jedem neuen Modell. Die Verbrauchsmessung rechnet Tokens deshalb intern in Euro um, und genau diese Zahl steht im Panel. Wer die Token-Zahlen sehen will, findet sie dort ebenfalls, aufgeschlüsselt nach Person, Gruppe und Modell.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Was passiert, wenn das Guthaben aufgebraucht ist?</h3>
+          <p>Es wird gesperrt statt still weitergerechnet. Die Administration sieht den Stand im Panel, bekommt vorher eine Warnung und kann das Budget erhöhen oder Guthaben nachlegen. Eine ungewollte Rechnung am Monatsende gibt es nicht.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Brauche ich für den Selbstbetrieb einen eigenen Modell-Schlüssel?</h3>
+          <p>Ja. Im Selbstbetrieb tragen Sie Ihren eigenen Schlüssel beim Modell-Anbieter ein und werden von diesem direkt abgerechnet. Wir stehen dazwischen weder technisch noch kaufmännisch.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Kann ich später vom betreuten Betrieb zurück zu mir wechseln?</h3>
+          <p>Ja, in beide Richtungen. Beide Wege nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug: Archiv erzeugen, kopieren, zurückspielen. Konversationen, Konten, Einstellungen und Uploads bleiben erhalten, sofern die Verschlüsselungs-Schlüssel übernommen werden.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Gibt es Rabatte für grössere Teams?</h3>
+          <p>Ab etwa fünfzig Personen und für IT-Dienstleister, die mehrere Kunden betreiben, sprechen wir über Staffelungen. Das ist ein Gespräch, keine Tabelle.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SCHLUSS ==================== -->
+    <div class="cta-box">
+      <h2>Erst ausprobieren, dann entscheiden.</h2>
+      <p>Der Selbstbetrieb kostet nichts und lässt sich in einer Stunde beurteilen. Wer danach lieber betreiben lässt, nimmt seine Instanz mit.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+        <a class="euc-btn-secondary" href="/self-hosting">Selbst hosten</a>
+      </div>
+    </div>
+
+    <!-- ==================== WEITER ==================== -->
+    <nav class="euc-weiter" aria-label="Weiterlesen">
+      <p class="euc-weiter-titel">Weiter</p>
+      <ul>
+        <li><a href="/self-hosting">Self-Hosting: Installation, Stack und Systemanforderungen</a></li>
+        <li><a href="/governance">Governance: Rechte, Rollen und Audit-Log</a></li>
+        <li><a href="/sicherheit">Security &amp; Trust: Nachweise und Verarbeitungsorte</a></li>
+        <li><a href="/vergleich">Vergleich mit ChatGPT, Copilot und Open WebUI</a></li>
+      </ul>
+    </nav>
+
+  </div>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t">Überall betreibbar</div>
+              <div class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t">DSGVO-konform</div>
+              <div class="euc-badge-s">EU-Verarbeitung</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span>Schweizer Instanz</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc">Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Produkt</p>
+          <nav aria-label="Produkt">
+            <a href="/#funktionen">Funktionen</a>
+            <a href="/#souveraenitaet">Souveränität</a>
+            <a href="/preise">Preise</a>
+            <a href="/self-hosting">Self-Host</a>
+            <a href="/integrationen">Integrationen</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Wissen</p>
+          <nav aria-label="Wissen">
+            <a href="/faq">FAQ</a>
+            <a href="/docs">Docs</a>
+            <a href="/blog">Blog</a>
+            <a href="/vergleich">Vergleich</a>
+            <a href="/governance">Governance</a>
+            <a href="/vision">Vision</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/sicherheit">Security &amp; Trust</a>
+            <a href="/avv">AVV</a>
+            <a href="/sicherheit#toms">TOM-Übersicht</a>
+            <a href="/subprozessoren">Subprozessoren</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle">Rechtliches</p>
+          <nav aria-label="Rechtliches">
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+            <a href="/agb">AGB</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
+      <span class="euc-built">Built on LibreChat · MIT</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== JSON-LD: WebPage + BreadcrumbList ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://eucowork.ai/preise#webpage",
+  "url": "https://eucowork.ai/preise",
+  "name": "Preise: gratis selbst hosten oder betreiben lassen",
+  "inLanguage": "de-CH",
+  "isPartOf": { "@id": "https://eucowork.ai/#website" },
+  "about": { "@id": "https://eucowork.ai/#software" },
+  "description": "EU Cowork AI ist im Selbstbetrieb dauerhaft gratis, mit allen Enterprise-Funktionen und ohne Seat-Limit. Betreuter Betrieb kostet 14 € pro Person und Monat.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Preise", "item": "https://eucowork.ai/preise" }
+    ]
+  }
+}
+</script>
+
+<!-- ==================== JSON-LD: Angebote ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "EU Cowork AI",
+  "description": "Selbst gehostete KI-Chatplattform für Unternehmen mit Rechteverwaltung bis auf Werkzeug-Ebene, Audit-Log und europäischer Datenresidenz.",
+  "brand": { "@type": "Brand", "name": "EU Cowork AI" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Community: selbst betreiben",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "description": "Vollständiger Funktionsumfang inklusive aller Enterprise-Bausteine, ohne Seat-Limit. Server und Modell-Schlüssel stellt der Betreiber selbst.",
+      "url": "https://eucowork.ai/preise"
+    },
+    {
+      "@type": "Offer",
+      "name": "Betreut: betreiben lassen",
+      "price": "14",
+      "priceCurrency": "EUR",
+      "description": "Betrieb in ISO-27001-Rechenzentren in der Schweiz, inklusive monatlichem Modell-Guthaben im Pool der Organisation. Preis pro Person und Monat.",
+      "url": "https://eucowork.ai/preise"
+    }
+  ]
+}
+</script>
+
+<!-- ==================== JSON-LD: FAQ ==================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Ist die gratis betriebene Fassung von EU Cowork AI eingeschränkt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Es gibt kein Seat-Limit, keinen Branding-Zwang und keine Funktion hinter einer Enterprise-Schranke. Was im Repository liegt, ist der volle Funktionsumfang. Bezahlt wird der Betrieb, nicht die Software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum wird das Modell-Guthaben in Euro angegeben und nicht in Tokens?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Weil ein Token keine planbare Grösse ist: Wie viel Arbeit darin steckt, hängt vom Modell ab und ändert sich mit jedem neuen Modell. Die Verbrauchsmessung rechnet Tokens intern in Euro um; diese Zahl steht im Admin-Panel, die Token-Zahlen ebenfalls, aufgeschlüsselt nach Person, Gruppe und Modell."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was passiert, wenn das monatliche Guthaben aufgebraucht ist?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es wird gesperrt statt still weitergerechnet. Die Administration sieht den Stand im Panel, bekommt vorher eine Warnung und kann das Budget erhöhen oder Guthaben nachlegen. Eine ungewollte Rechnung am Monatsende entsteht nicht."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich für den Selbstbetrieb einen eigenen Modell-Schlüssel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Im Selbstbetrieb tragen Sie Ihren eigenen Schlüssel beim Modell-Anbieter ein und werden von diesem direkt abgerechnet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich vom betreuten Betrieb zurück in den Selbstbetrieb wechseln?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, in beide Richtungen. Beide Wege nutzen dieselbe Bauform, deshalb ist der Wechsel ein Umzug: Archiv erzeugen, kopieren, zurückspielen. Konversationen, Konten, Einstellungen und Uploads bleiben erhalten, sofern die Verschlüsselungs-Schlüssel übernommen werden."
+      }
+    }
+  ],
+  "url": "https://eucowork.ai/preise",
+  "inLanguage": "de-CH",
+  "mainEntityOfPage": { "@id": "https://eucowork.ai/preise#webpage" }
+}
+</script>
+
+</body>
+</html>
