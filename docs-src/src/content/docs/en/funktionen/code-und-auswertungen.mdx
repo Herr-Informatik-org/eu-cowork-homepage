@@ -1,6 +1,6 @@
 ---
 title: Analyses, spreadsheets and code
-description: Excel analyses and PDFs as downloads from the chat, diagrams and interfaces as artifacts, and the two backends for code execution.
+description: Excel analyses and PDFs as downloads from the chat, diagrams and interfaces as artifacts, and what code execution requires.
 sidebar:
   order: 4
 ---
@@ -12,7 +12,7 @@ to need an AI for. This page describes what happens along the way, which part wo
 additional technology and which part requires a backend.
 
 Code execution and artifacts come from [LibreChat](https://www.librechat.ai/docs). What we add
-is the selection and preparation of the two execution backends.
+is the selection and preparation of the execution backend.
 
 ## What you get out of it
 
@@ -47,143 +47,54 @@ content directly in a side area of the interface instead of emitting it as a cod
 | React | a small, operable interface, for example a calculator |
 | Markdown | formatted documents |
 
-**Artifacts need no execution backend.** They are active on all four shipped model cards and
-work immediately after installation. So anyone who only wants a diagram or an overview does not
+**Artifacts need no execution backend.** They are active on the shipped model cards and work
+immediately after installation. So anyone who only wants a diagram or an overview does not
 need code execution.
 
 <Aside type="caution" title="The preview needs HTTPS">
-The interactive preview only runs in a secure context. If you call the instance through
-`http://<IP-Adresse>`, the preview stays empty or reports a connection error. That is not a
-fault of the backend but a browser rule. The clean route is a real domain name with a valid
-certificate.
-
-For instances with strict data protection requirements there is one more thing to note: the
-React preview pulls its bundler from an external service as long as you do not provide one of
-your own.
+The interactive preview only runs in a secure context. Without a valid certificate it stays
+empty or reports a connection error. That is not a fault of the backend but a browser rule. The
+clean route is a real domain name with a valid certificate.
 </Aside>
 
 ## Code execution is off in the shipped state
 
-The customer template sets `interface.runCode: false`, and `executeCode` is commented out on the
-model cards. The reason is the same as with file search: execution needs a backend of its own,
-which is not part of the compose package. Without a backend the button would be a dead button
-and every attempt would end in an error.
+Out of the box, code execution is not enabled. The reason is the same as with file search:
+execution needs a separate, sealed off backend that is not part of the base installation.
+Without a backend the button would be a dead button and every attempt would end in an error.
 
-So you decide deliberately whether to offer this feature, and set up one of the two backends for
-it.
+So you decide deliberately whether to offer this feature.
 
-## For admins: the two backends
+## For admins
 
-Both are licensed under Apache 2.0 and are operated next to the stack.
+Code execution is the only place where generated code runs on your machine. Accordingly it
+belongs in an isolated environment of its own, operated separately from the rest of the
+installation and never shared between instances.
 
-| | LibreCodeInterpreter | ClickHouse code-interpreter |
-|---|---|---|
-| Role | quickly set up variant | hardened target variant |
-| Isolation | nsjail | libkrun microVM with its own guest kernel, plus nsjail, seccomp and an egress gateway |
-| Requirement on the host | nothing special | `/dev/kvm`, so a Linux host with KVM |
-| Setup | prebuilt image, ready in minutes | build from source including language runtimes, the first run takes a long time |
-| Address on the network | `http://librecode:8000` | `http://code-interpreter:3112/v1` |
-| Side services | Redis for sessions, Garage as storage | its own compose stack with several services |
-| Setup script | `distribution/librecodeinterpreter/setup.sh` | `distribution/code-interpreter/setup-ubuntu.sh` |
+Three points decide when picking a backend:
 
-Both scripts are repeatable. They check the prerequisites, clone the respective project at a
-tested version, create the configuration, attach the stack to the internal network and run a
-health and smoke test.
+- **Isolation.** Executed code must reach neither the data of the instance nor the rest of the
+  network.
+- **Reachability.** The backend is addressed internally only. Nothing is needed from outside
+  for that; diagnostic access belongs on the loopback address or in an SSH tunnel.
+- **Outbound traffic.** Which destinations executed code may reach on the internet is defined
+  at host or network level. Plan this allowlist as part of the setup and record the permitted
+  destinations in your operations handbook.
 
-Count on around 0.5 GB of additional memory for runner, Redis and storage.
-
-### Switching is done exclusively through one variable
-
-`LIBRECHAT_CODE_BASEURL` in `distribution/.env` decides which backend LibreChat uses. Both may
-run in parallel, they carry different names on the network.
-
-```bash title="distribution/.env"
-# Schnelle Variante, Routen liegen direkt unter /exec:
-LIBRECHAT_CODE_BASEURL=http://librecode:8000
-LIBRECHAT_CODE_API_KEY=eucowork-librecode
-```
-
-```bash title="distribution/.env"
-# Gehärtete Variante, LibreChat hängt /exec an die Basis-URL an:
-LIBRECHAT_CODE_BASEURL=http://code-interpreter:3112/v1
-LIBRECHAT_CODE_API_KEY=eucowork-server
-```
-
-<Aside type="danger" title="The slash detail otherwise costs an hour">
-One variant needs `/v1` at the end, the other does **not**. Mix them up and the backend answers
-with `Not Found`, and in the chat it looks as if execution is broken.
-
-`LIBRECHAT_CODE_API_KEY` has to be set in both cases, even if the value is arbitrary. Empty
-means LibreChat does not even try.
-</Aside>
+If code execution is not needed at all, leave the backend out: it is switched off out of the
+box.
 
 ### Enabling it afterwards
 
 <Steps>
 
-1. **In the configuration file** set `interface.runCode: true`. As with file search: this is a
-   permission field and is written into the roles on every start. If you want to give execution
-   to individual roles only, leave the line out and maintain the permission
-   **"Code-Interpreter"** (code interpreter) in the role editor under **"Werkzeuge"** (tools).
+1. **Set the permission.** The permission **"Code-Interpreter"** (code interpreter) is in the
+   role editor under **"Werkzeuge"** (tools). If you want to give execution to individual roles
+   only, maintain it exclusively there.
 
-2. **On the model cards** set `executeCode: true` so that the model uses the tool by itself,
-   without anyone clicking.
+2. **Activate it on the model cards** so that the model uses the tool by itself, without anyone
+   clicking.
 
-3. **Restart and check.**
-
-   ```bash title="On the server"
-   docker compose up -d --force-recreate api
-   ```
+3. **Check** that a generated file really appears as a download in a fresh chat.
 
 </Steps>
-
-### Isolation and network
-
-The path between LibreChat and the execution backend runs exclusively inside the internal
-Docker network `eucowork-sandbox`, with no host port. Alongside it, the substack brings its own
-ports for diagnostics and maintenance. Those belong on the loopback address, and the next
-section shows how to make sure they are.
-
-With several customer instances on one machine, each instance gets its own sandbox network and
-its own interpreter. Code execution is the only place where generated code runs on your
-machine, which is why it is never shared between customers.
-
-<Aside type="danger" title="Required step: bind the substack ports locally">
-The ports of the code substack belong exclusively on `127.0.0.1`. None of them is needed from
-outside for operation — LibreChat talks to the runner over the internal Docker network, not
-over the host.
-
-For the **quick variant `setup.sh` handles this**: it binds the runner to `127.0.0.1` and,
-once the stack is up, checks the actual bindings of the running containers. If they deviate,
-the script stops the stack. An instance set up before this version of the script only picks up
-the binding after `setup.sh` has run once more. You can check the current state directly:
-
-```bash title="On the server"
-docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'
-```
-
-If that shows anything other than `127.0.0.1`, run `setup.sh` again or set the rule yourself.
-Ports published by Docker through `ports:` are not covered by `ufw`; the `DOCKER-USER` chain is
-what takes effect:
-
-```bash title="On the server"
-sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
-```
-
-The same applies to the diagnostic ports of the hardened variant:
-
-```bash title="On the server"
-sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
-```
-
-Make the rules permanent with `iptables-persistent` and verify them once after the next
-reboot. If you need the ports for diagnostics from another machine, use an SSH tunnel instead
-of opening them up.
-</Aside>
-
-<Aside type="note" title="Outbound connections from the sandbox">
-Which destinations executed code may reach on the internet is defined at host or network level
-— on the machine's firewall or at the upstream network boundary. Plan this allowlist as part
-of the setup and record the permitted destinations in your operations handbook. If code
-execution is not needed at all, leave the substack out: it is switched off out of the box.
-</Aside>

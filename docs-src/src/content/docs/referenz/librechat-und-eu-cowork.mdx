@@ -1,6 +1,6 @@
 ---
 title: Was von LibreChat kommt
-description: Ehrliche Einordnung, welche Teile der Plattform von LibreChat stammen und welche wir selbst gebaut haben, und warum der Fork bewusst dünn bleibt.
+description: Einordnung, welche Teile der Plattform von LibreChat stammen und welche wir selbst gebaut haben, und warum der Fork bewusst dünn bleibt.
 sidebar:
   order: 4
 ---
@@ -19,11 +19,10 @@ Antwort suchen müssen und wem Sie einen Fehler melden.
 Agenten- und Dateisystem sowie eine Administrations-Schnittstelle mit. Das Projekt ist
 ausgereift und wird aktiv weiterentwickelt.
 
-Unser laufender Stack verwendet das **offizielle LibreChat-Image, festgenagelt auf einen
-Digest**. Nicht auf `:latest`, sondern auf eine bestimmte, von uns getestete Fassung. Wer die
-Plattform nur betreiben will, baut LibreChat also nie aus dem Quellcode. Ein Versionssprung
-ist eine bewusste Handlung: neues Image ziehen, Digest eintragen, Stack neu starten, Prüfliste
-abarbeiten.
+Unser laufender Stack verwendet das **offizielle LibreChat-Image in einer festgelegten, von uns
+getesteten Fassung**, nicht einfach den jeweils neuesten Stand. Wer die Plattform nur betreiben
+will, baut LibreChat also nie aus dem Quellcode. Ein Versionssprung ist eine bewusste Handlung
+mit einer eigenen Prüfliste.
 
 ## Was von LibreChat kommt
 
@@ -34,34 +33,34 @@ abarbeiten.
 | **Skills** | hinterlegte Standard-Prozesse, die ein Modell auf Zuruf abarbeitet |
 | **Memory** | Langzeitgedächtnis über Konversationen hinweg, mit Opt-out im Chat |
 | **Artifacts** | React, HTML, Mermaid und SVG direkt im Chat, unabhängig von der Code-Ausführung |
-| **Dateien** | Upload als Kontext, Bildverständnis, die RAG-API mit pgvector für die Dateisuche |
-| **Web-Suche** | das Gerüst dafür, inklusive Anbindung an SearXNG |
+| **Dateien** | Upload als Kontext, Bildverständnis, die Dateisuche über hochgeladene Dokumente |
+| **Web-Suche** | das Gerüst dafür samt Anbindung einer Suchmaschine |
 | **Code-Ausführung** | die steckbare Schnittstelle zum Sandbox-Backend |
 | **MCP-Client** | die Fähigkeit, mit Konnektoren über das Model Context Protocol zu sprechen |
 | **Presets und Prompts** | Prompt-Bibliothek, Voreinstellungen, Lesezeichen |
-| **Volltextsuche** | Suche über frühere Konversationen über Meilisearch |
-| **Administration** | die REST-Schnittstelle `/api/admin/*` samt fortlaufender Audit-Kette |
+| **Volltextsuche** | Suche über frühere Konversationen |
+| **Administration** | die Administrations-Schnittstelle samt fortlaufender Audit-Kette |
 | **Identität** | OIDC inklusive Entra ID, LDAP und SAML, dazu der Rollen-Abgleich |
 | **Verbrauchsmessung** | Token-Erfassung und Guthaben pro Person |
 
 ## Was wir gebaut haben
 
-| Baustein | Was es tut | Wo es liegt |
-|---|---|---|
-| **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu ein Sidecar für alles, was diese Schnittstelle nicht kann: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto | `services/admin` |
-| **MCP-Gateway** | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem, entlang der Kette Benutzer, Rolle, Gruppe, Standard. Fällt die Prüfung aus, wird verweigert | `services/mcp-gateway` |
-| **Model-Router** | verteilt Anfragen je nach Aufgabe auf unterschiedliche Modelle und Denkaufwände | im MCP-Gateway |
-| **Beispiel-Konnektor-Brücke** | ausschliesslich lesender Zugang zu einem Fachsystem, als Vorlage für eigene Anbindungen | eigener Ordner unter `services/` |
-| **Outlook-Add-in** | seitliches Chat-Pane in Outlook mit der geöffneten Mail als Kontext, gegen dieselbe Instanz und dieselben Rechte | `services/office-addin` |
-| **Modellkarten und Systemprompt** | die kuratierte Auswahl im Modell-Picker und der deutsche Systemprompt, der serverseitig eingefügt wird | `distribution/librechat.yaml` |
-| **Installationspaket** | Compose-Stack, Server-Vorbereitung, Installer, Backup und Umzug, Caddy, SearXNG, Branding | `distribution/` |
-| **Konfigurationsprofile** | Kunden-Template gegenüber einer Instanz mit Konnektoren, dazu die Compose-Profile für Dateisuche, Konnektoren und TLS | `distribution/` |
+| Baustein | Was es tut |
+|---|---|
+| **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu ein begleitender Dienst für alles, was diese Schnittstelle nicht kann: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto |
+| **MCP-Gateway** | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem, entlang der Kette Benutzer, Rolle, Gruppe, Standard. Fällt die Prüfung aus, wird verweigert |
+| **Model-Router** | verteilt Anfragen je nach Aufgabe auf unterschiedliche Modelle und Denkaufwände |
+| **Beispiel-Konnektor-Brücke** | ausschliesslich lesender Zugang zu einem Fachsystem, als Vorlage für eigene Anbindungen |
+| **Outlook-Add-in** | seitliches Chat-Pane in Outlook mit der geöffneten Mail als Kontext, gegen dieselbe Instanz und dieselben Rechte |
+| **Modellkarten und Systemprompt** | die kuratierte Auswahl im Modell-Picker und der deutsche Systemprompt, der serverseitig eingefügt wird |
+| **Installationspaket** | Compose-Stack, Server-Vorbereitung, Installer, Backup und Umzug, Reverse-Proxy, Branding |
+| **Konfigurationsprofile** | Kunden-Template gegenüber einer Instanz mit Konnektoren, dazu die Ausbaustufen für Dateisuche, Konnektoren und TLS |
 
 <Aside type="note" title="Code-Ausführung">
-Für die Code-Ausführung bindet EU Cowork AI zwei etablierte Backends ein, statt einen eigenen
-Runner mitzuliefern — wahlweise eine gehärtete Variante mit microVM-Isolation oder eine
-leichtere Übergangsvariante. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen
-Sie auf Host- oder Netzebene fest.
+Für die Code-Ausführung bindet EU Cowork AI etablierte Backends ein, statt einen eigenen Runner
+mitzuliefern — wahlweise eine gehärtete Variante mit microVM-Isolation oder eine leichtere
+Übergangsvariante. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf
+Host- oder Netzebene fest.
 </Aside>
 
 ## Warum der Fork dünn bleibt
@@ -73,7 +72,7 @@ zurückhängt, ist kein Vorteil, sondern ein Risiko.
 
 Daraus folgt eine feste Reihenfolge, in der eine Änderung versucht wird:
 
-1. **Konfiguration.** Lässt sich das in der `librechat.yaml`, in der `.env` oder im
+1. **Konfiguration.** Lässt sich das in der `librechat.yaml`, in der Umgebungsdatei oder im
    Admin-Panel lösen?
 2. **CSS.** Reicht eine Anpassung der Darstellung?
 3. **Kleiner Patch.** Eine eng begrenzte Änderung im Fork.
@@ -86,27 +85,18 @@ MCP-Gateway, die mitgelieferte Konnektor-Brücke und das Outlook-Add-in sind all
 
 Praktisch heisst das für Sie: Ein Update von LibreChat berührt unsere Dienste nicht, und eine
 neue Fassung des Admin-Panels berührt LibreChat nicht. Beides wird getrennt aktualisiert. Eine
-Freigabe von EU Cowork AI ist immer ein getestetes Paar aus einem bestimmten LibreChat-Digest
+Freigabe von EU Cowork AI ist immer ein getestetes Paar aus einer bestimmten LibreChat-Fassung
 und bestimmten Sidecar-Ständen.
 
 ## Die Datei `librechat.yaml`
 
-Die zentrale Konfigurationsdatei der Chat-Anwendung liegt unter
-`distribution/librechat.yaml`. Sie steuert, welche Modelle es gibt, wie die Oberfläche
-aussieht, welche Konnektoren eingebunden sind und wie die Web-Suche arbeitet.
+Die zentrale Konfigurationsdatei der Chat-Anwendung ist die `librechat.yaml`. Sie steuert,
+welche Modelle es gibt, wie die Oberfläche aussieht, welche Konnektoren eingebunden sind und
+wie die Web-Suche arbeitet.
 
 **Die vollständige Feldreferenz steht bei LibreChat**, unter
-[www.librechat.ai/docs](https://www.librechat.ai/docs). Wir dokumentieren hier nur, was bei
-uns davon besonders relevant ist.
-
-| Block | Was er bei uns steuert |
-|---|---|
-| `interface` | welche Bedienelemente sichtbar sind. Hier sind im Kunden-Template das Parameter-Panel, die Dateisuche und die Code-Ausführung ausgeschaltet, und hier steht, dass Nutzer keine eigenen Konnektoren anlegen dürfen |
-| `endpoints` | die Modell-Anbieter. EuRouter als Standardweg mit EU-Verarbeitung, wahlweise OpenRouter als bewusst gekennzeichnete Nicht-EU-Option. Darunter liegen auch die Fähigkeiten der Agenten |
-| `modelSpecs` | die kuratierten Modellkarten, die im Picker erscheinen, samt Beschriftung, Standardkarte und dem deutschen Systemprompt |
-| `mcpServers` | die Konnektoren. Im Kunden-Template ist dieser Block bewusst leer, es ist kein Konnektor vorkonfiguriert. In der Beispielkonfiguration mit Konnektoren stehen hier die einzelnen Brücken |
-| `webSearch` | Suchmaschine, Scraper und Reranker. Im Kunden-Template ist SearXNG hinterlegt, der Scraper fehlt noch |
-| `memory` | das Langzeitgedächtnis: welche Regeln gelten, welche Grenzen es hat und dass Nutzer es abschalten können |
+[www.librechat.ai/docs](https://www.librechat.ai/docs). Wie die Datei in einer Auslieferung
+vorbelegt ist, steht in den mitgelieferten Betriebsunterlagen.
 
 Zwei Mechanikregeln, die immer wieder für Überraschungen sorgen:
 
@@ -168,7 +158,7 @@ OIDC, LDAP und SAML.
   <LinkCard
     title="Umgebungsvariablen"
     href="/docs/referenz/umgebungsvariablen"
-    description="Jede Variable der .env mit Zweck, Pflichtangabe und Standardwert."
+    description="Wie eine Instanz konfiguriert wird und was Sie selbst setzen."
   />
 </CardGrid>
 

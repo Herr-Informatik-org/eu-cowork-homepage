@@ -1,6 +1,6 @@
 ---
 title: Outlook add-in
-description: 'The AI colleague in your inbox: summarize mail, draft replies, pull out tasks. Including attachment limits, sign-in and distribution.'
+description: 'The AI colleague in your inbox: summarize mail, draft replies, pull out tasks. Including attachments, sign-in and distribution.'
 sidebar:
   order: 6
 ---
@@ -8,10 +8,10 @@ sidebar:
 import { Aside, Steps } from '@astrojs/starlight/components';
 
 The Outlook add-in brings the AI colleague into the inbox as a side pane. The open message
-serves as the context. This page describes the feature set, the actual limits on attachments,
-the sign-in and the route for distribution inside the company.
+serves as the context. This page describes the feature set, how attachments are handled, the
+sign-in and the route for distribution inside the company.
 
-The add-in is our own development and lives in `services/office-addin`.
+The add-in is our own development.
 
 ## What it can do
 
@@ -47,29 +47,21 @@ No model traffic runs past the platform.
 The pane reads files **itself** and only sends on the text. The file does not leave your
 machine.
 
-| Format | What is read | Limit |
-|---|---|---|
-| PDF | Text per page, **no OCR** | 40 pages |
-| Word `.docx` | Paragraphs including table cells and line breaks | none of its own |
-| Excel `.xlsx` | Sheet name and rows, gaps between columns are preserved | 8 sheets, 300 rows per sheet |
-| Text `.txt .md .csv .tsv .json .log .yml .xml` | raw text | none of its own |
-| Images JPEG and PNG | as an image attachment, scaled down before sending | 4 images |
+| Format | What is read |
+|---|---|
+| PDF | Text per page, **no OCR** |
+| Word `.docx` | Paragraphs including table cells and line breaks |
+| Excel `.xlsx` | Sheet name and rows, gaps between columns are preserved |
+| Text `.txt .md .csv .tsv .json .log .yml .xml` | raw text |
+| Images JPEG and PNG | as an image attachment, scaled down before sending |
 
-Documents and images are counted separately, each with its own limits per message:
-
-| | Documents | Images |
-|---|---|---|
-| Number per message | at most 5 | at most 4 |
-| Size per file | 10 MB | 4 MB |
-| Characters per file | 20,000 | not applicable |
-| Characters in total | 40,000 | not applicable |
-
-The two counters run independently of each other. Four images therefore use up none of the five
-document slots.
+Upper limits for number, size and amount of text apply per message. Documents and images are
+counted separately and the two counters run independently of each other. When a limit is
+reached, the pane tells you instead of silently leaving something out.
 
 **Not read** are the old binary formats `.doc`, `.xls` and `.ppt`, PowerPoint, archives, cloud
-attachments (only a link arrives there) and attached emails. In each of these cases the pane
-tells you the reason instead of silently leaving something out.
+attachments (only a link arrives there) and attached emails. In these cases too the pane names
+the reason.
 
 Files reach the conversation in three ways: through the menu in the input field, by dragging
 onto the chat area and, for images, through the clipboard.
@@ -104,8 +96,7 @@ The pane does not ask for a password. Instead, sign-in runs through a device cod
 
 <Steps>
 
-1. In the pane press **"Anmelden"** (sign in). An eight character code in the form `XXXX-XXXX`
-   appears.
+1. In the pane press **"Anmelden"** (sign in). A short code appears.
 
 2. **"Im Browser fortfahren"** (continue in the browser). A confirmation page opens there on your
    own chat domain, showing the same code.
@@ -117,9 +108,9 @@ The pane does not ask for a password. Instead, sign-in runs through a device cod
 
 </Steps>
 
-The process expires after 10 minutes. At the end the pane receives exactly one value: your
-personal key named **"Outlook-Add-in"**. It is valid for **90 days** and can be revoked at any
-time, in the settings of the web chat under **"API-Schlüssel für Agenten"** (API keys for
+The process expires after a short time. At the end the pane receives exactly one value: your
+personal key named **"Outlook-Add-in"**. It is valid for a limited period and can be revoked at
+any time, in the settings of the web chat under **"API-Schlüssel für Agenten"** (API keys for
 agents).
 
 The advantage of this route: two factor sign-in and, later, Entra sign-in work without extra
@@ -140,54 +131,34 @@ there is simply no second conversation history.
 
 | Prerequisite | Detail |
 |---|---|
-| Publicly valid TLS | Office loads publicly trusted HTTPS only. An **internal certificate authority is not enough**, the pane would stay empty. The stack has to run with the `production` profile |
+| Publicly valid TLS | Office loads publicly trusted HTTPS only. An **internal certificate authority is not enough**, the pane would stay empty |
 | Mailboxes on Exchange Online | POP3, IMAP and on premises Exchange are not supported by the add-in platform. There is no way around this |
 | Admin rights in Microsoft 365 | Role "Global Administrator" or "Exchange Administrator" |
-| Domain set in the `.env` | `EUCOWORK_DOMAIN`, `DOMAIN_CLIENT` and `DOMAIN_SERVER` |
+| Reachable chat domain | The pane addresses the same domain as the web chat |
 
-<Aside type="danger" title="DISABLE_COMPRESSION=true is mandatory">
-If the value is `false`, LibreChat holds the response stream back until the end instead of
-sending it continuously. The Outlook display window then aborts after around 60 seconds with "no
-connection", even though everything on the server side is running correctly. What is affected is
-exactly the long, tool heavy answers you want the add-in for in the first place.
-
-The value is set to `true` by default in the compose package. Leave it there.
+<Aside type="caution" title="Answers have to be streamed continuously">
+If the response stream is buffered instead of sent continuously, the Outlook display window
+aborts after a short time with "no connection", even though everything on the server side is
+running correctly. What is affected is exactly the long, tool heavy answers you want the add-in
+for in the first place. The default is set correctly; it should not be changed.
 </Aside>
 
 ## For admins: setup
 
 <Steps>
 
-1. **Build and start the add-in service**, then have the reverse proxy learn the new routes.
-
-   ```bash title="On the server"
-   cd ~/eu-cowork/distribution
-   docker compose build office-addin
-   docker compose up -d office-addin
-   docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile
-   ```
+1. **Provide the add-in** so that it is served under your chat domain.
 
 2. **Create the agent.** Create an agent in the chat, for example with the name
-   `Outlook-Assistent`, with the customer's default model and initially without connectors. A
-   ready made instruction template is in `services/office-addin/README.md`.
+   `Outlook-Assistent`, with the customer's default model and initially without connectors.
 
-3. **Grant the agent remote access.** Without that grant the interface answers with
-   `403 No remote access to agent`. In addition the role permission **"Remote-Agenten"** (remote
-   agents) has to be set. In the customer template it is set globally, because the add-in is
-   distributed to everyone.
+3. **Grant the agent remote access.** Without that grant the interface refuses access. In
+   addition the role permission **"Remote-Agenten"** (remote agents) has to be set; out of the
+   box it is set globally, because the add-in is distributed to everyone.
 
-4. **Store the identifier of the agent** so that nobody has to select it in the pane.
+4. **Store the default agent** so that nobody has to select it in the pane.
 
-   ```bash title="distribution/.env"
-   OFFICE_DEFAULT_AGENT_ID=agent_xxxxxxxxxxxxxxxxxxxxx
-   ```
-
-   ```bash title="On the server"
-   docker compose up -d admin
-   ```
-
-5. **Check the manifest.** It sits at `https://<ihre-domain.ch>/office/manifest.xml` and must no
-   longer contain a placeholder.
+5. **Check the manifest.** It must no longer contain a placeholder.
 
 </Steps>
 
@@ -219,9 +190,9 @@ appear a second time in the ribbon.
 ### Optional: adopting the writing style
 
 If the pane should learn your personal writing style from sent mail, it needs its own app
-registration in Entra with the delegated permission `Mail.Read`. Without this step the add-in
-works completely, only the style adoption is missing. The access token stays in the client and
-does not go to your server. `Mail.Send` is deliberately not requested.
+registration in Entra with a delegated read permission on the mailbox. Without this step the
+add-in works completely, only the style adoption is missing. The access token stays in the
+client and does not go to your server. A permission to send is deliberately not requested.
 
 ### Troubleshooting
 
@@ -229,12 +200,13 @@ does not go to your server. `Mail.Send` is deliberately not requested.
 |---|---|
 | Add-in does not appear in the ribbon | Distribution takes up to 24 hours. Test immediately through sideload. Restart classic Outlook |
 | Pane stays white | Check the certificate. It needs a publicly valid one, not an internal certificate authority |
-| Pane empty only in Outlook on the web | The reverse proxy sets framing headers. Neither container nor proxy may send `X-Frame-Options` or `frame-ancestors` |
-| `403 No remote access to agent` | The remote access grant for the agent is missing, or the role permission is off |
-| `401` while chatting | The personal key has expired. Sign out in the pane and sign in again |
-| Abort after around 60 seconds | `DISABLE_COMPRESSION` is set to `false` |
+| Pane empty only in Outlook on the web | The pane must not be blocked by framing headers |
+| Access to the agent is refused | The remote access grant for the agent is missing, or the role permission is off |
+| Sign-in demanded while chatting | The personal key has expired. Sign out in the pane and sign in again |
+| Abort on long answers | The response stream is buffered instead of being sent continuously |
 | Add-in missing for individual people | Their mailbox is not on Exchange Online |
 
 Errors from the pane additionally land in the admin panel under **"Logs"**, tab
 **"Client-Fehler"** (client errors). The technical cause is listed there with person, platform
-and file name, never a file content. The entries are removed automatically after 30 days.
+and file name, never a file content. The entries are removed automatically once the retention
+period has passed.

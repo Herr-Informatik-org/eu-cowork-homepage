@@ -1,182 +1,80 @@
 ---
 title: Backup and migration
-description: What backup.sh saves and what it deliberately does not, how a restore behaves and how an existing instance moves to a new server.
+description: What a backup of EU Cowork AI covers, how a restore behaves and what a migration to a new server amounts to.
 sidebar:
   order: 6
 ---
 
-import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-One script covers both: the daily backup and the migration to a new machine. Technically a
-migration is nothing other than a backup on the old server, a copy and a restore on the new one.
-This page shows both paths and the point at which a migration can get expensive.
+A supplied script covers both: the regular backup and the migration to a new machine.
+Technically a migration is nothing other than a backup on the old server, a copy and a restore
+on the new one.
 
 ## What gets backed up
 
-One run produces exactly one archive containing:
+A run produces exactly one archive. It contains the complete dump of the database — accounts,
+conversations, agents, credit and bookings, permission rules and logs — the configuration files
+of the instance including secrets, as well as the uploaded files and images.
 
-- the complete dump of the database `LibreChat`, meaning accounts, conversations, agents,
-  balances and transactions, permission rules and logs,
-- `.env` with all secrets,
-- `librechat.yaml` and `librechat.internal.yaml`,
-- `searxng/settings.yml`,
-- the directory `skills/`,
-- the agent definitions `seed-agents/*.json`,
-- the directories `uploads/` and `images/`.
+Not in the archive are the raw data of the database and the search index: both are derived and
+are rebuilt on their own after a restore. Runtime logs are not included either, they are not
+state.
 
-## What is deliberately not backed up
+## Backing up regularly
 
-| Not in the archive | Why |
-|---|---|
-| `data-node/` | Raw data of the database. The logical dump above covers the same content and can be restored independently of the version. |
-| `meili_data/` | Search index. Purely derived, it is rebuilt on its own after the restore. |
-| `logs/` | Runtime logs, not state. |
-| Everything that lives in the repository | Comes back through `git clone` or `git pull`. |
+The backup is set up once and then runs on a schedule. Old archives are deleted according to an
+adjustable retention rule. The instance has to be running for the dump.
 
-## The commands
+## Restore and its effect
 
-```bash title="In the distribution directory"
-./backup.sh backup
-./backup.sh list
-./backup.sh restore backups/<archiv>.tar.gz
-```
+A restore is **destructive**: the database is replaced by the state from the archive, the
+previous content is gone afterwards, and the files from the archive overwrite anything with the
+same name. The script therefore asks beforehand and requires an explicit confirmation.
 
-Full call syntax:
-
-| Command | Options | Default |
-|---|---|---|
-| `./backup.sh backup` | `--dest VERZEICHNIS`, `--keep N` | `./backups`, 14 archives |
-| `./backup.sh restore <archiv.tar.gz>` | `--yes`, `--force-env` | prompt active, `.env` is preserved |
-| `./backup.sh list` | `--dest VERZEICHNIS` | `./backups` |
-
-The archive is named `<stack>-<datum>-<uhrzeit>.tar.gz` and gets permissions `600`, because it
-contains the `.env` with all secrets. Older archives are deleted according to the `--keep` rule.
-For the dump, the database container has to be running.
-
-## Backing up daily
-
-`./backup.sh backup` prints the matching cron line at the end, with the paths of your instance
-already filled in:
-
-```text title="crontab -e"
-15 3 * * * cd <pfad-zur-distribution> && ./backup.sh backup --keep <N> >> <ziel>/backup.log 2>&1
-```
-
-## The restore and its effect
-
-A restore is **destructive**. This is what happens:
-
-1. The containers `api` and `admin` are stopped.
-2. The database `LibreChat` is **replaced** by the state from the archive, the previous content
-   is gone afterwards.
-3. The files from the archive are written back and overwrite anything with the same name.
-4. The containers are started again, the search index rebuilds itself.
-
-Without `--yes` the script asks beforehand and requires you to type `JA` in capital letters.
-
-There is one exception: an already existing `.env` is **not** overwritten, because it contains
-the domain and ports of the current machine. The version from the archive is placed next to it as
-`.env.aus-backup`. If you want to adopt it completely, repeat the restore with `--force-env`.
+There is one exception: the configuration of the current machine is not overwritten just like
+that, because it contains the addresses and operating parameters of exactly this server. The
+version from the archive is placed alongside it.
 
 ## Migration to a new server
 
-<Steps>
+The sequence in short:
 
-1. **Back up on the old server.**
-
-   ```bash title="Old server"
-   cd ~/eu-cowork/distribution
-   ./backup.sh backup
-   ```
-
-2. **Transfer the archive.** The path is in the output of the previous step.
-
-   ```bash title="Old server"
-   scp backups/eucowork-<zeitstempel>.tar.gz <neuer-server>:~/
-   ```
-
-3. **Prepare the new server.** Set up the operating system with
-   [`setup-server.sh`](/docs/en/betrieb/server-vorbereiten), then log in again and clone the
-   repository.
-
-4. **Get the `.env` out of the archive.**
-
-   ```bash title="New server"
-   cd ~/eu-cowork/distribution
-   tar -xzf ~/eucowork-<zeitstempel>.tar.gz -O ./files/.env > .env
-   chmod 600 .env
-   wc -l .env
-   ```
-
-   The path inside the archive needs the leading `./`. Without that dot, `tar` does not find the
-   entry, but the redirection still creates a file, and an empty one at that. That is exactly
-   what the last line is for: `wc -l .env` has to report clearly more than zero lines.
-
-5. **Adjust the `.env`.** Change only the values that change with the machine:
-
-   ```bash title="New server, distribution/.env"
-   DOMAIN_CLIENT=https://<ihre-domain.ch>
-   DOMAIN_SERVER=https://<ihre-domain.ch>
-   EUCOWORK_DOMAIN=<ihre-domain.ch>
-   API_BIND=127.0.0.1
-   ```
-
-6. **Start the stack and load the data.**
-
-   ```bash title="New server"
-   ./install.sh --migrate --profiles production,internal,microsoft,filesearch
-   ./backup.sh restore ~/eucowork-<zeitstempel>.tar.gz
-   docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
-   ```
-
-7. **Trial run on the new machine.** Before the domain is moved over: sign in to the chat and
-   the panel, check old conversations and the user list. At this point the instance is reachable
-   through its IP address or an entry in your local `hosts` file.
-
-8. **Collect the stragglers — before the switchover.** Between the first dump and the
-   switchover, more data is created on the old server. So freeze it **first**, take a second
-   backup and load it on the new machine:
-
-   ```bash title="Old server"
-   docker compose stop api admin
-   ./backup.sh backup
-   ```
-
-   ```bash title="New server"
-   ./backup.sh restore ~/eucowork-<timestamp-2>.tar.gz
-   docker compose --profile production --profile internal --profile microsoft --profile filesearch restart api
-   ```
-
-   The order matters: the restore replaces the data on the new machine completely. Everything
-   that is to survive there must therefore be created after the restore — which is why the
-   switchover comes only in the next step.
-
-9. **Move DNS and verify.** Now set the DNS record to the new machine and check the certificate
-   issuance in Caddy's log. Leave the old stack stopped for a few days until the migration is
-   confirmed.
-
-</Steps>
+1. Back up on the old server and transfer the archive.
+2. Prepare the new server and set up the application in migration mode — this generates **no**
+   new secrets but carries over the ones from the archive.
+3. Restore the archive and give the instance a trial run over its IP address before switching
+   over: sign in to chat and panel, check conversations and the user list.
+4. Freeze the old server, take a second backup and restore it, so that no data is lost that was
+   created between the two backups.
+5. Only then move DNS and check the certificate issuance. Leave the old stack stopped for a few
+   days until the migration is confirmed.
 
 The transferred copy of the archive contains secrets and conversations. Delete it from the
 handover path after the migration and keep only the regular backup rotation.
 
-<Aside type="danger" title="Carry over CREDS_KEY and CREDS_IV">
-This is the most expensive mistake during a migration. If these two values are regenerated on the
-new server instead of carried over from the old `.env`, all encrypted credentials in the database
-are unreadable: every person's OAuth tokens for connectors with per-user sign-in, and the API
-keys stored in the panel. Every person would have to set up every connection again. That is why the path goes
-through the `.env` from the archive. The same principle applies in a milder form to `JWT_SECRET`
-and `JWT_REFRESH_SECRET`, where only all sessions become invalid, and to `MEILI_MASTER_KEY`,
-where the search index is rebuilt.
+<Aside type="danger" title="Carry over the encryption keys">
+This is the most expensive mistake in a migration. If the keys with which the application
+encrypts data in the database are regenerated on the new server instead of carried over from the
+old configuration, all encrypted credentials become unreadable: the OAuth tokens of every person
+for connectors with per-person sign-in, and the API keys stored in the panel. Every person would
+have to rebuild every connection. That is why the path leads through the configuration from the
+archive. The same applies in a milder form to the keys of the sign-in tokens — there only all
+sessions become invalid — and to the key of the full-text search, where the index is rebuilt.
 </Aside>
 
-## Two recommendations that really matter
+## Two recommendations that really count
 
 - **Test the restore once before you rely on it.** An archive that has never been restored is an
   assumption, not a backup. The test belongs on a test machine, not on the production system.
-- **Mirror the archive off the server.** A copy on the same machine protects against an
-  accidental deletion, not against the loss of the machine. Because the archive contains secrets,
-  it belongs in a cloud only encrypted and never in a repository.
+- **Mirror the archive off the server.** A copy on the same machine protects against accidental
+  deletion, not against the loss of the machine. Because the archive contains secrets, it
+  belongs in a cloud only encrypted, and never in a repository.
+
+<Aside type="note" title="Commands and sequence in the operations manual">
+The invocation of the script, the options and the migration step by step are described in the
+operations manual that comes with the delivery package.
+</Aside>
 
 ## Next
 
@@ -184,11 +82,11 @@ where the search index is rebuilt.
   <LinkCard
     title="Several instances on one server"
     href="/docs/en/betrieb/mehrere-instanzen"
-    description="Backup per stack, separate networks, separate code interpreter."
+    description="What has to stay separate per customer and what may be shared."
   />
   <LinkCard
     title="Troubleshooting"
     href="/docs/en/betrieb/fehlerbehebung"
-    description="When something jams after the migration: symptom, cause, fix."
+    description="If something goes wrong after the migration: where to look first."
   />
 </CardGrid>

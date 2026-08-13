@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-vdxcvpsm"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Services and ports | EU Cowork AI</title><link rel="canonical" href="https://eucowork.ai/docs/en/referenz/dienste-und-ports"/><link rel="alternate" hreflang="de-CH" href="https://eucowork.ai/docs/referenz/dienste-und-ports"/><link rel="alternate" hreflang="en" href="https://eucowork.ai/docs/en/referenz/dienste-und-ports"/><link rel="alternate" hreflang="x-default" href="https://eucowork.ai/docs/referenz/dienste-und-ports"/><link rel="sitemap" href="/docs/sitemap-index.xml"/><link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="shortcut icon" href="/docs/favicon.ico" type="image/x-icon"/><meta name="generator" content="Astro v7.2.0"/><meta name="generator" content="Starlight v0.41.7"/><meta property="og:title" content="Services and ports"/><meta property="og:type" content="article"/><meta property="og:url" content="https://eucowork.ai/docs/en/referenz/dienste-und-ports"/><meta property="og:locale" content="en"/><meta property="og:description" content="All containers of the stack with image, purpose, port and profile, plus the Docker networks and which ports belong to the outside."/><meta property="og:site_name" content="EU Cowork AI"/><meta name="description" content="All containers of the stack with image, purpose, port and profile, plus the Docker networks and which ports belong to the outside."/><meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png"/><meta name="twitter:card" content="summary_large_image"/><script>
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-vdxcvpsm"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Services and ports | EU Cowork AI</title><link rel="canonical" href="https://eucowork.ai/docs/en/referenz/dienste-und-ports"/><link rel="alternate" hreflang="de-CH" href="https://eucowork.ai/docs/referenz/dienste-und-ports"/><link rel="alternate" hreflang="en" href="https://eucowork.ai/docs/en/referenz/dienste-und-ports"/><link rel="alternate" hreflang="x-default" href="https://eucowork.ai/docs/referenz/dienste-und-ports"/><link rel="sitemap" href="/docs/sitemap-index.xml"/><link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="shortcut icon" href="/docs/favicon.ico" type="image/x-icon"/><meta name="generator" content="Astro v7.2.0"/><meta name="generator" content="Starlight v0.41.7"/><meta property="og:title" content="Services and ports"/><meta property="og:type" content="article"/><meta property="og:url" content="https://eucowork.ai/docs/en/referenz/dienste-und-ports"/><meta property="og:locale" content="en"/><meta property="og:description" content="How the stack is structured in principle and what is reachable from the outside."/><meta property="og:site_name" content="EU Cowork AI"/><meta name="description" content="How the stack is structured in principle and what is reachable from the outside."/><meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png"/><meta name="twitter:card" content="summary_large_image"/><script>
 	window.StarlightThemeProvider = (() => {
 		const storedTheme =
 			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
@@ -75,214 +75,25 @@
 		})();
 	</script></sl-sidebar-state-persist><div class="md:sl-hidden"><div class="mobile-preferences sl-flex astro-b5gddk54"><div class="social-icons astro-b5gddk54"></div><starlight-theme-select><label style="--sl-select-width: 6.25em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select theme</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="dark" class="astro-r2p65idu">Dark</option><option value="light" class="astro-r2p65idu">Light</option><option value="auto" selected class="astro-r2p65idu">Auto</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-theme-select><script>
 	StarlightThemeProvider.updatePickers();
-</script><starlight-lang-select><label style="--sl-select-width: 7em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select language</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path fill-rule="evenodd" d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z" clip-rule="evenodd"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="/docs/referenz/dienste-und-ports" class="astro-r2p65idu">Deutsch</option><option value="/docs/en/referenz/dienste-und-ports" selected class="astro-r2p65idu">English</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-lang-select></div></div></div></div></nav><div class="main-frame astro-gqpr5s5a"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-abfeecmu"><aside class="right-sidebar-container print:hidden astro-abfeecmu"><div class="right-sidebar astro-abfeecmu"><div class="lg:sl-hidden astro-q5mffni3"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-5ulgm6bh"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-5ulgm6bh"><details id="starlight__mobile-toc" class="astro-5ulgm6bh"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-5ulgm6bh"><span class="toggle sl-flex astro-5ulgm6bh">On this page<svg aria-hidden="true" class="caret astro-5ulgm6bh astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-5ulgm6bh"></span></summary><div class="dropdown astro-5ulgm6bh"><ul class="isMobile astro-cxyftcne" style="--depth: 0;"><li style="--depth: 0;" class="astro-cxyftcne"><a href="#_top" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Overview</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#the-services" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">The services</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#which-ports-belong-to-the-outside" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Which ports belong to the outside</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#the-docker-networks" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">The Docker networks</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#health-checks" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Health checks</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/docs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-q5mffni3"><div class="sl-container astro-q5mffni3"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-cxyftcne" style="--depth: 0;"><li style="--depth: 0;" class="astro-cxyftcne"><a href="#_top" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Overview</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#the-services" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">The services</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#which-ports-belong-to-the-outside" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Which ports belong to the outside</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#the-docker-networks" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">The Docker networks</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#health-checks" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Health checks</span></a></li></ul></nav></starlight-toc><script type="module" src="/docs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-abfeecmu"><main data-pagefind-body class="astro-vdxcvpsm" lang="en" dir="ltr"><div class="content-panel astro-oil7k7jf"><div class="sl-container astro-oil7k7jf"><h1 id="_top" class="astro-2sm4b3ln">Services and ports</h1></div></div><div class="content-panel astro-oil7k7jf"><div class="sl-container astro-oil7k7jf"><div class="sl-markdown-content">
-<p>This page lists every container of the Compose stack with image, task, port and profile. It is
-meant for looking things up, for example when you are writing a firewall rule or want to know
-why a service did not start.</p>
-<p>All container names carry a prefix from the variable <code dir="auto">STACK_NAME</code>, which defaults to
-<code dir="auto">eucowork</code>. The container of the chat is therefore called <code dir="auto">eucowork-api</code> by default.</p>
-<div class="sl-heading-wrapper level-h2"><h2 id="the-services">The services</h2><a class="sl-anchor-link" href="#the-services"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “The services”</span></a></div>
-<table>
-<thead>
-<tr>
-<th>Service</th>
-<th>Image</th>
-<th>Purpose</th>
-<th>Port</th>
-<th>Profile</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code dir="auto">api</code></td>
-<td><code dir="auto">registry.librechat.ai/danny-avila/librechat-dev</code>, pinned to a digest</td>
-<td>LibreChat, interface and API</td>
-<td>host <code dir="auto">${API_BIND}:${PORT}</code>, default <code dir="auto">0.0.0.0:3080</code></td>
-<td>no profile</td>
-</tr>
-<tr>
-<td><code dir="auto">admin</code></td>
-<td>build from <code dir="auto">../services/admin</code></td>
-<td>own admin panel and sidecar</td>
-<td>host <code dir="auto">127.0.0.1:3010</code></td>
-<td>no profile</td>
-</tr>
-<tr>
-<td><code dir="auto">office-addin</code></td>
-<td>build from <code dir="auto">../services/office-addin</code></td>
-<td>task pane and manifest for Outlook</td>
-<td>host <code dir="auto">127.0.0.1:3040</code>, 8080 inside the container</td>
-<td>no profile</td>
-</tr>
-<tr>
-<td><code dir="auto">mongodb</code></td>
-<td><code dir="auto">mongo:8.0.20</code></td>
-<td>database <code dir="auto">LibreChat</code></td>
-<td>internal only, 27017</td>
-<td>no profile</td>
-</tr>
-<tr>
-<td><code dir="auto">meilisearch</code></td>
-<td><code dir="auto">getmeili/meilisearch:v1.35.1</code></td>
-<td>full text search across conversations</td>
-<td>internal only, 7700</td>
-<td>no profile</td>
-</tr>
-<tr>
-<td><code dir="auto">searxng</code></td>
-<td><code dir="auto">searxng/searxng:latest</code></td>
-<td>own metasearch engine for web search</td>
-<td>internal only, 8080</td>
-<td>no profile</td>
-</tr>
-<tr>
-<td><code dir="auto">vectordb</code></td>
-<td><code dir="auto">pgvector/pgvector:0.8.0-pg15-trixie</code></td>
-<td>vector database of the file search</td>
-<td>internal only</td>
-<td><code dir="auto">filesearch</code></td>
-</tr>
-<tr>
-<td><code dir="auto">rag_api</code></td>
-<td><code dir="auto">registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest</code></td>
-<td>processing of uploaded documents</td>
-<td>internal only, <code dir="auto">${RAG_PORT}</code>, default 8000</td>
-<td><code dir="auto">filesearch</code></td>
-</tr>
-<tr>
-<td><code dir="auto">mcp-gateway</code></td>
-<td>build from <code dir="auto">../services/mcp-gateway</code></td>
-<td>permission check and log in front of all connectors, plus the model router</td>
-<td>internal only, 3020</td>
-<td><code dir="auto">internal</code></td>
-</tr>
-<tr>
-<td>connector bridges, profiles <code dir="auto">internal</code> and <code dir="auto">microsoft</code></td>
-<td>partly built from <code dir="auto">../services</code>, partly an unmodified third party image</td>
-<td>translate between the chat layer and a third party system, not active in the customer template</td>
-<td>internal only, 3000, 3030 or 8000 depending on the bridge</td>
-<td><code dir="auto">internal</code>, <code dir="auto">microsoft</code></td>
-</tr>
-<tr>
-<td><code dir="auto">caddy</code></td>
-<td><code dir="auto">caddy:2-alpine</code></td>
-<td>reverse proxy with automatic TLS</td>
-<td>host 80 and 443</td>
-<td><code dir="auto">production</code></td>
-</tr>
-<tr>
-<td><code dir="auto">admin-panel</code></td>
-<td>AGPL panel of LibreChat</td>
-<td>transitional tool, not part of the product</td>
-<td>host <code dir="auto">${ADMIN_PANEL_PORT}</code>, default 3000</td>
-<td><code dir="auto">interim</code></td>
-</tr>
-</tbody>
-</table>
-<p>The bridges of the <code dir="auto">internal</code> profile run through the gateway and each hold their own service
-account in the third party system, whose permissions there form the actual authorization
-boundary. The bridge of the <code dir="auto">microsoft</code> profile deliberately bypasses the gateway, because
-there every person signs in individually. How such a bridge is put together and which parts
-belong to it is described by
-<a href="/docs/en/konnektoren/muster">the connector pattern</a>.</p>
-<aside aria-label="Pin images to a digest for production" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Pin images to a digest for production</p><div class="starlight-aside__content"><p>The LibreChat image is pinned to a digest so that the same verified version runs on every
-server. <code dir="auto">searxng</code>, <code dir="auto">rag_api</code> and the interim panel <code dir="auto">admin-panel</code> sit on <code dir="auto">:latest</code> and may fetch
-a newer build on a <code dir="auto">docker compose pull</code>. For a reproducible installation, pin those three to a
-digest as well in <code dir="auto">distribution/docker-compose.yml</code> and make changing the digest part of your
-update procedure. Why a fixed digest is the better choice is explained under
-<a href="/docs/en/betrieb/aktualisieren">Updating</a>.</p></div></aside>
-<div class="sl-heading-wrapper level-h2"><h2 id="which-ports-belong-to-the-outside">Which ports belong to the outside</h2><a class="sl-anchor-link" href="#which-ports-belong-to-the-outside"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Which ports belong to the outside”</span></a></div>
-<p>Only three: <strong>22, 80 and 443.</strong> Everything else stays local.</p>
-<table>
-<thead>
-<tr>
-<th>Port</th>
-<th>Service</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>22</td>
-<td>SSH</td>
-<td>administration</td>
-</tr>
-<tr>
-<td>80</td>
-<td>Caddy</td>
-<td>issuance of the certificates and redirect to HTTPS</td>
-</tr>
-<tr>
-<td>443</td>
-<td>Caddy</td>
-<td>chat, admin panel and Outlook add-in</td>
-</tr>
-</tbody>
-</table>
-<p>Caddy is the only service that may listen on all interfaces. The admin panel and the Outlook
-add-in are already bound to <code dir="auto">127.0.0.1</code> out of the box. The database, the search index, the
-gateway and all connector bridges are not published on the host at all, they are reachable
-exclusively on the internal Docker network.</p>
-<p>Two points you have to take care of yourself:</p>
-<ul>
-<li><strong>The chat port is bound to <code dir="auto">0.0.0.0</code> by default.</strong> In production <code dir="auto">API_BIND=127.0.0.1</code>
-belongs in the <code dir="auto">.env</code>, otherwise LibreChat is reachable unencrypted at <code dir="auto">&lt;server-ip&gt;:3080</code>,
-bypassing Caddy and TLS.</li>
-<li><strong>The transitional panel of the <code dir="auto">interim</code> profile binds to all interfaces.</strong> It is a test
-tool and does not belong on a reachable server.</li>
-</ul>
-<aside aria-label="The firewall does not take effect on Docker ports" class="starlight-aside starlight-aside--danger"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V8a1 1 0 0 0-1-1Zm0 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm9.71-7.44-5.27-5.27a1.05 1.05 0 0 0-.71-.29H8.27a1.05 1.05 0 0 0-.71.29L2.29 7.56a1.05 1.05 0 0 0-.29.71v7.46c.004.265.107.518.29.71l5.27 5.27c.192.183.445.286.71.29h7.46a1.05 1.05 0 0 0 .71-.29l5.27-5.27a1.05 1.05 0 0 0 .29-.71V8.27a1.05 1.05 0 0 0-.29-.71ZM20 15.31 15.31 20H8.69L4 15.31V8.69L8.69 4h6.62L20 8.69v6.62Z"/></svg>The firewall does not take effect on Docker ports</p><div class="starlight-aside__content"><p>Ports published by Docker through <code dir="auto">ports:</code> bypass <code dir="auto">ufw</code>, because Docker writes its own iptables
-rules into the <code dir="auto">DOCKER-USER</code> chain. A container bound to <code dir="auto">0.0.0.0</code> is reachable from the
-outside despite an active firewall. The protection lies in binding to <code dir="auto">127.0.0.1</code>, not in the
-firewall rule.</p><p>Where a rule really is needed, for example for the debug ports of the hardened code interpreter
-substack, it has to go into the same chain:</p><div class="expressive-code"><link rel="stylesheet" href="/docs/_astro/ec.5ssx4.css"><script type="module" src="/docs/_astro/ec.0vx5m.js"></script><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal-Fenster</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:101ch"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">sudo</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">iptables</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-I</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">DOCKER-USER</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-p</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">tcp</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-m</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">multiport</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--dports</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">3112,2000,3190,13000</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">!</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-s</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#F78C6C;--1:#AA0982">127.0.0.1</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-j</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">DROP</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP"><div></div></button></div></figure></div><p>The interim interpreter (port 8000) does not need this: its <code dir="auto">setup.sh</code> binds it to <code dir="auto">127.0.0.1</code>
-and verifies the binding after startup. On an instance set up before that change this only holds
-once <code dir="auto">setup.sh</code> has run again; until then the rule for port 8000 is still needed.</p></div></aside>
-<div class="sl-heading-wrapper level-h2"><h2 id="the-docker-networks">The Docker networks</h2><a class="sl-anchor-link" href="#the-docker-networks"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “The Docker networks”</span></a></div>
-<p>The stack uses two networks.</p>
-<table>
-<thead>
-<tr>
-<th>Network</th>
-<th>Type</th>
-<th>Who is in it</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code dir="auto">default</code></td>
-<td>bridge with a fixed subnet from <code dir="auto">DOCKER_SUBNET</code>, default <code dir="auto">172.28.0.0/16</code></td>
-<td>all services of the stack</td>
-</tr>
-<tr>
-<td><code dir="auto">sandbox</code></td>
-<td>external network from <code dir="auto">SANDBOX_NETWORK</code>, default <code dir="auto">eucowork-sandbox</code></td>
-<td>only <code dir="auto">api</code>, plus the separate code interpreter stack</td>
-</tr>
-</tbody>
-</table>
-<p>The sandbox network is deliberately created outside the stack, so that both Compose projects
-can start and stop independently of each other. <code dir="auto">install.sh</code> creates it. If it is missing,
-Compose reports on startup that the network declared as external cannot be found. The command
-for it:</p>
-<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal-Fenster</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:38ch"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">network</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">create</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">eucowork-sandbox</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="docker network create eucowork-sandbox"><div></div></button></div></figure></div>
-<p>The fixed subnet is intentional. If it collides with a route that a VPN pushes onto the
-machine, the outbound connections of the containers break. In that case enter a free range in
-<code dir="auto">DOCKER_SUBNET</code> in the <code dir="auto">.env</code>.</p>
-<aside aria-label="Several instances on one machine" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Several instances on one machine</p><div class="starlight-aside__content"><p><code dir="auto">STACK_NAME</code>, <code dir="auto">DOCKER_SUBNET</code> and <code dir="auto">SANDBOX_NETWORK</code> apply across all of Docker and therefore
-have to be unique per instance. The same applies to the host ports <code dir="auto">PORT</code>,
-<code dir="auto">ADMIN_SIDECAR_PORT</code> and <code dir="auto">OFFICE_ADDIN_PORT</code>. In the worst case, two instances on the same
-sandbox network would end up in the code interpreter of the other customer.</p></div></aside>
-<div class="sl-heading-wrapper level-h2"><h2 id="health-checks">Health checks</h2><a class="sl-anchor-link" href="#health-checks"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Health checks”</span></a></div>
-<p>Only the connector bridges of the <code dir="auto">internal</code> profile have health checks. They query their own
-health endpoint every 30 seconds, with a five second timeout and three attempts. The start
-period is 15 to 20 seconds depending on the bridge.</p>
-<p>All other services have no health check. In <code dir="auto">docker compose ps</code> they therefore appear as <code dir="auto">Up</code>
-without a health status, which is not an error. Whether the application really started cleanly
-is visible in the log:</p>
-<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal-Fenster</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:26ch"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">compose</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">logs</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-f</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">api</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="docker compose logs -f api"><div></div></button></div></figure></div>
-<p>A connector bridge developed in house additionally ships a self test of its own. It checks the
-credentials, the permissions actually granted, read access and that writing paths are blocked:</p>
-<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal-Fenster</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:72ch"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">compose</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--profile</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">internal</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">run</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--rm</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">&lt;bridge&gt;</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">node</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">src/selftest.js</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="docker compose --profile internal run --rm <bridge> node src/selftest.js"><div></div></button></div></figure></div>
-<p>The name of the service is in your <code dir="auto">docker-compose.yml</code>, the procedure is described by
-<a href="/docs/en/konnektoren/muster">the connector pattern</a>.</p></div><footer class="sl-flex astro-xhxjzfa7"><div class="meta sl-flex astro-xhxjzfa7"></div><div class="pagination-links print:hidden astro-jgq3vlii" dir="ltr"><a href="/docs/en/referenz/umgebungsvariablen" rel="prev" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-jgq3vlii">Previous<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Environment variables</span></span></a><a href="/docs/en/referenz/befehle" rel="next" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-jgq3vlii">Next<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Command reference</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
+</script><starlight-lang-select><label style="--sl-select-width: 7em" class="astro-r2p65idu"><span class="sr-only astro-r2p65idu">Select language</span><svg aria-hidden="true" class="icon label-icon astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path fill-rule="evenodd" d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z" clip-rule="evenodd"/></svg><select autocomplete="off" class="astro-r2p65idu"><option value="/docs/referenz/dienste-und-ports" class="astro-r2p65idu">Deutsch</option><option value="/docs/en/referenz/dienste-und-ports" selected class="astro-r2p65idu">English</option></select><svg aria-hidden="true" class="icon caret astro-r2p65idu astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg></label></starlight-lang-select></div></div></div></div></nav><div class="main-frame astro-gqpr5s5a"><script type="module">var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStorage.getItem(n),t=JSON.parse(e||`{}`);Array.isArray(t.open)&&t.hash===i&&(r=t.open)}catch{}return{hash:i,open:r,scroll:e?.scrollTop||0}},i=e=>{try{sessionStorage.setItem(n,JSON.stringify(e))}catch{}},a=()=>i(r()),o=(e,t)=>{let n=r();n.open[t]=e,i(n)};t?.addEventListener(`click`,e=>{if(!(e.target instanceof Element))return;let t=e.target.closest(`summary`)?.closest(`details`);if(!t)return;let n=t.querySelector(`sl-sidebar-restore`),r=parseInt(n?.dataset.index||``);isNaN(r)||o(!t.open,r)}),addEventListener(`visibilitychange`,()=>{document.visibilityState===`hidden`&&a()});</script><div class="lg:sl-flex astro-abfeecmu"><aside class="right-sidebar-container print:hidden astro-abfeecmu"><div class="right-sidebar astro-abfeecmu"><div class="lg:sl-hidden astro-q5mffni3"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-5ulgm6bh"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-5ulgm6bh"><details id="starlight__mobile-toc" class="astro-5ulgm6bh"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-5ulgm6bh"><span class="toggle sl-flex astro-5ulgm6bh">On this page<svg aria-hidden="true" class="caret astro-5ulgm6bh astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></span><span class="display-current astro-5ulgm6bh"></span></summary><div class="dropdown astro-5ulgm6bh"><ul class="isMobile astro-cxyftcne" style="--depth: 0;"><li style="--depth: 0;" class="astro-cxyftcne"><a href="#_top" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Overview</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#what-is-reachable-from-the-outside" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">What is reachable from the outside</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#operating-documentation" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Operating documentation</span></a></li></ul></div></details></nav></mobile-starlight-toc><script type="module" src="/docs/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.BcSo_yiZ.js"></script></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-q5mffni3"><div class="sl-container astro-q5mffni3"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-cxyftcne" style="--depth: 0;"><li style="--depth: 0;" class="astro-cxyftcne"><a href="#_top" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Overview</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#what-is-reachable-from-the-outside" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">What is reachable from the outside</span></a></li><li style="--depth: 0;" class="astro-cxyftcne"><a href="#operating-documentation" style="--depth: 0;" class="astro-cxyftcne"><span style="--depth: 0;" class="astro-cxyftcne">Operating documentation</span></a></li></ul></nav></starlight-toc><script type="module" src="/docs/_astro/TableOfContents.astro_astro_type_script_index_0_lang.Csloo1VZ.js"></script></div></div></div></aside><div class="main-pane astro-abfeecmu"><main data-pagefind-body class="astro-vdxcvpsm" lang="en" dir="ltr"><div class="content-panel astro-oil7k7jf"><div class="sl-container astro-oil7k7jf"><h1 id="_top" class="astro-2sm4b3ln">Services and ports</h1></div></div><div class="content-panel astro-oil7k7jf"><div class="sl-container astro-oil7k7jf"><div class="sl-markdown-content">
+<p>EU Cowork AI runs as a Docker Compose stack. The chat application is only one of several
+containers: database, search index and the further services each run in a container of their
+own and talk to each other over an internal network.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="what-is-reachable-from-the-outside">What is reachable from the outside</h2><a class="sl-anchor-link" href="#what-is-reachable-from-the-outside"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “What is reachable from the outside”</span></a></div>
+<p>The only thing published to the outside is a reverse proxy on the usual web ports, which
+terminates TLS and distributes everything else internally. All remaining services — database,
+search index, connectors and the additional in-house services — are reachable exclusively on
+the internal network and are not published on the host.</p>
+<p>Depending on the deployment stage, further containers are added, for example for file search or
+for connectors. Which ones those are and how they are switched on is described in the operating
+documentation.</p>
+<aside aria-label="Plan network access" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Plan network access</p><div class="starlight-aside__content"><p>Besides the web ports, the instance needs an outbound path to the model provider. Decide before
+going live which destinations the server may reach on the outside, and allow access to the
+server itself only from your administration network.</p></div></aside>
+<div class="sl-heading-wrapper level-h2"><h2 id="operating-documentation">Operating documentation</h2><a class="sl-anchor-link" href="#operating-documentation"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Operating documentation”</span></a></div>
+<p>The list of the individual services with their tasks and dependencies, the network and
+deployment variants as well as the checks for operation are included with the delivery.
+Customers receive these documents together with their access.</p>
+<p>How the stack is started, stopped and observed day to day is on the
+<a href="/docs/en/referenz/befehle">command reference</a> page. The licenses of the building blocks
+involved are on the <a href="/docs/en/referenz/lizenzen">licenses and origin</a> page.</p></div><footer class="sl-flex astro-xhxjzfa7"><div class="meta sl-flex astro-xhxjzfa7"></div><div class="pagination-links print:hidden astro-jgq3vlii" dir="ltr"><a href="/docs/en/referenz/umgebungsvariablen" rel="prev" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg><span class="astro-jgq3vlii">Previous<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Environment variables</span></span></a><a href="/docs/en/referenz/befehle" rel="next" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-jgq3vlii">Next<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Command reference</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>

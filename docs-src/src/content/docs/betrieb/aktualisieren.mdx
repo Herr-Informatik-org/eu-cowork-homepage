@@ -1,132 +1,72 @@
 ---
 title: Aktualisieren
-description: Die geprüfte Update-Kette für eine laufende Instanz, der Wechsel der LibreChat-Version über den Digest und der Rückweg.
+description: Wie eine laufende Instanz von EU Cowork AI auf einen neuen Stand kommt, warum vorher gesichert wird und wie der Rückweg aussieht.
 sidebar:
   order: 5
 ---
 
-import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Ein Update besteht aus vier Handgriffen: neuen Stand holen, `.env` gegen die Vorlage
-vergleichen, sichern, installieren. Diese Seite beschreibt die Kette in der Reihenfolge, in
-der sie geprüft ist, und die beiden Stellen, an denen erfahrungsgemäss etwas übersehen wird.
+Ein Update besteht aus vier Handgriffen: neuen Stand holen, die eigene Konfiguration gegen die
+Vorlage vergleichen, sichern, installieren. Ausgeführt wird es mit demselben Installationsskript
+wie die Ersteinrichtung, nur im Update-Modus.
 
-## Die Update-Kette
+## Der Vergleich mit der Vorlage
 
-```bash title="Auf dem Server"
-cd ~/eu-cowork && git pull
-cd distribution
-diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | sort -u)
-./backup.sh backup
-./install.sh --migrate --profiles production,internal,microsoft,filesearch
-```
+Vor dem Update wird die Konfiguration der Instanz gegen die mitgelieferte Vorlage gehalten.
+Verglichen werden nur die **Namen** der Werte, keine Inhalte — Geheimnisse tauchen dabei also
+nicht auf. Zwei Dinge lesen Sie daraus ab:
 
-Geben Sie beim letzten Befehl dieselben Profile an wie bei der Installation. Fehlt ein Profil,
-werden die zugehörigen Dienste nicht mit erneuert.
-
-## Der Vergleich mit `.env.example`
-
-Der `diff` stellt nur die **Namen** der Variablen gegenüber, keine Werte. Geheimnisse tauchen
-dabei also nicht auf. Zwei Dinge lesen Sie daraus ab:
-
-- Zeilen, die nur in `.env.example` stehen, sind neu hinzugekommen. Prüfen Sie in der
-  Beispieldatei, was sie tun, und ergänzen Sie sie bei Bedarf.
-- Zeilen, die nur in Ihrer `.env` stehen, sind entweder instanzspezifisch oder stammen aus
-  einer alten Version und können weg.
-
-Neue Variablen sind fast immer optional, der Stack startet auch ohne sie. Die Vorlage ist
-durchgehend kommentiert, dort steht jeweils, wofür ein Wert gebraucht wird.
+- Werte, die nur in der Vorlage stehen, sind neu hinzugekommen. Die Vorlage ist durchgehend
+  kommentiert, dort steht, wofür ein Wert gebraucht wird. Neue Werte sind fast immer optional.
+- Werte, die nur in Ihrer Konfiguration stehen, sind entweder instanzspezifisch oder stammen
+  aus einer alten Version und können weg.
 
 ## Warum immer vorher ein Backup
 
 Ein Update wechselt Programmstände unter einer bestehenden Datenbank. Geht dabei etwas schief,
 ist der schnellste Weg zurück ein Archiv von vorher. Ein Backup dauert Sekunden, ein verlorener
-Datenbestand kostet Tage.
+Datenbestand kostet Tage. Details unter [Backup und Umzug](/docs/betrieb/backup-und-umzug).
 
-```bash title="Vor jedem Update"
-./backup.sh backup
-```
+## Der Update-Modus
 
-Das Archiv liegt danach unter `backups/` und trägt die Rechte `600`. Details dazu stehen unter
-[Backup und Umzug](/docs/betrieb/backup-und-umzug).
+Im Update-Modus lässt der Installer die vorhandene Konfiguration unangetastet und erzeugt keine
+neuen Geheimnisse. Genau das wollen Sie beim Update: Ihre Schlüssel und Adressen bleiben, wie
+sie sind. Gleichzeitig erneuert er alle Bestandteile der Auslieferung.
 
-## Was `--migrate` macht
-
-Mit `--migrate` lässt der Installer die vorhandene `.env` unangetastet und erzeugt keine neuen
-Geheimnisse. Genau das wollen Sie beim Update: Ihre Schlüssel, Domains und Ports bleiben, wie
-sie sind. Existiert keine `.env`, bricht der Modus ab.
-
-Gleichzeitig baut `install.sh` die selbst entwickelten Dienste neu.
-
-<Aside type="caution" title="Fallstrick force-recreate">
-`docker compose up -d --force-recreate api` erneuert **nur** den Chat. Das Admin-Panel, das
-MCP-Gateway, die mitgelieferte Konnektor-Brücke und das Outlook-Add-in werden aus Quelle
-gebaut und bleiben auf dem alten Stand.
-Sie brauchen `--build`, und genau das macht `install.sh`. Nutzen Sie deshalb den Installer und
-nicht den Compose-Befehl von Hand.
+<Aside type="caution" title="Einzelne Container von Hand zu erneuern reicht nicht">
+Wer nur den Chat-Container neu erzeugt, lässt die übrigen mitgelieferten Bestandteile auf dem
+alten Stand zurück. Nutzen Sie deshalb den Installer und nicht einzelne Befehle von Hand.
 </Aside>
 
-## LibreChat-Version anheben
+## Warum Versionen fest gepinnt sind
 
-Das LibreChat-Image ist bewusst nicht auf `latest` gesetzt, sondern auf einen Digest, also auf
-eine feste, unveränderliche Version. Der Grund: `latest` zieht auf jedem Server und bei jedem
-Abruf einen anderen Stand. Ein Release von EU Cowork AI ist aber eine **getestete Kombination**
-aus LibreChat-Version und den eigenen Diensten. Nur mit einem Digest fährt jeder Server genau
-die Kombination, die auch geprüft wurde.
-
-<Steps>
-
-1. Neuen Stand holen und den Digest ermitteln:
-
-   ```bash title="Auf dem Server"
-   docker pull registry.librechat.ai/danny-avila/librechat-dev:latest
-   docker image inspect registry.librechat.ai/danny-avila/librechat-dev:latest --format '{{index .RepoDigests 0}}'
-   ```
-
-2. Den ausgegebenen Digest in `distribution/docker-compose.yml` beim Dienst `api` eintragen.
-   Der bisherige Digest bleibt als Kommentar darüber stehen, das ist der Rückweg.
-
-3. Den Stack neu starten und die Prüfpunkte durchgehen: Anmeldung am Chat, Anmeldung am Panel,
-   eine Testfrage im Chat und `docker compose ps` ohne Neustartschleifen.
-
-</Steps>
+Die Images sind bewusst nicht auf `latest` gesetzt, sondern auf eine feste, unveränderliche
+Version. Der Grund: `latest` zieht auf jedem Server und bei jedem Abruf einen anderen Stand.
+Ein Release von EU Cowork AI ist aber eine **getestete Kombination** aus LibreChat-Version und
+den ergänzenden Bestandteilen. Nur mit einer festen Version fährt jeder Server genau die
+Kombination, die auch geprüft wurde.
 
 ## Nach dem Update prüfen
 
-```bash title="Auf dem Server"
-docker compose ps
-docker compose logs -f api
-```
-
-Alle Container müssen `Up` melden. Im Log des Chats werden Konfigurationsfehler sichtbar,
-etwa eine YAML-Datei, die nicht mehr zum Schema passt.
+Vier Punkte: Anmeldung am Chat, Anmeldung am Admin-Panel, eine Testfrage im Chat und ein Blick
+darauf, ob alle Dienste stabil laufen. Konfigurationsfehler — etwa eine YAML-Datei, die nach
+einem Update nicht mehr zum Schema passt — werden dabei sichtbar.
 
 ## Rollback
 
-Ein Rollback setzt den **gesamten Arbeitsbaum** auf den vorigen Stand zurück, nicht einzelne
-Dateien. Der Grund: Das Chat-Image kommt als Digest aus der `docker-compose.yml`, die eigenen
-Dienste werden dagegen beim Installieren aus dem Quellstand gebaut. Nur zusammen ergeben
-beide wieder die Kombination, die vorher lief.
+Ein Rollback setzt den **gesamten Auslieferungsstand** auf die vorige Version zurück, nicht
+einzelne Dateien. Nur zusammen ergeben die Bestandteile wieder die Kombination, die vorher lief.
+Die Konfiguration der Instanz bleibt dabei unangetastet.
 
-```bash title="Auf dem Server"
-git stash                       # eigene Änderungen an versionierten Dateien sichern
-git checkout <voriger-commit>   # Stand vor dem Update, gesamter Arbeitsbaum
-./install.sh --migrate --profiles production,internal,microsoft,filesearch
-```
-
-Die `.env` ist nicht versioniert und bleibt dabei unangetastet. Haben Sie Werte direkt in
-versionierten Dateien geändert, holt `git stash pop` sie zurück; besser ist, solche Werte von
-vornherein über die `.env` zu setzen, damit ein Rollback sie gar nicht erst berührt.
-
-Nur wenn auch Daten betroffen sind, kommt der Restore dazu. Er ist zerstörend und ersetzt den
-Datenbestand durch den Stand aus dem Archiv:
-
-```bash title="Auf dem Server"
-./backup.sh restore backups/<archiv-vor-dem-update>.tar.gz
-```
-
-Siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). Prüfen Sie den Rollback einmal auf
+Nur wenn auch Daten betroffen sind, kommt der Restore aus dem Archiv dazu. Er ist zerstörend,
+siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). Prüfen Sie den Rollback einmal auf
 einer Testinstanz, bevor Sie ihn im Ernstfall zum ersten Mal brauchen.
+
+<Aside type="note" title="Ablauf im Betriebshandbuch">
+Die Update-Kette mit allen Befehlen, der Versionswechsel und der Rückweg stehen im
+Betriebshandbuch, das dem Auslieferungspaket beiliegt.
+</Aside>
 
 ## Weiter
 
@@ -139,6 +79,6 @@ einer Testinstanz, bevor Sie ihn im Ernstfall zum ersten Mal brauchen.
   <LinkCard
     title="Fehlerbehebung"
     href="/docs/betrieb/fehlerbehebung"
-    description="Symptom, Ursache, Lösung für die häufigsten Störungen."
+    description="Wo Sie zuerst hinschauen, wenn im Betrieb etwas klemmt."
   />
 </CardGrid>

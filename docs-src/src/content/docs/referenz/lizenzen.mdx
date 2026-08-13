@@ -38,13 +38,13 @@ Ausgabe. Das war der Anlass, die Lizenzfrage ganz an den Anfang zu stellen.
 
 ## Die eigenen Bausteine
 
-| Komponente | Ort im Repository | Lizenz |
-|---|---|---|
-| Monorepo mit Distribution, Skripten und Dokumentation | Wurzel des Repositorys | MIT |
-| Admin-Panel, Sidecar-API und Frontend | `services/admin` | MIT |
-| MCP-Gateway inklusive Model-Router | `services/mcp-gateway` | MIT |
-| Beispiel-Konnektor-Brücke | eigener Ordner unter `services/` | MIT |
-| Outlook-Add-in | `services/office-addin` | MIT |
+| Komponente | Lizenz |
+|---|---|
+| Monorepo mit Distribution, Skripten und Dokumentation | MIT |
+| Admin-Panel samt begleitendem Dienst und Frontend | MIT |
+| MCP-Gateway inklusive Model-Router | MIT |
+| Beispiel-Konnektor-Brücke | MIT |
+| Outlook-Add-in | MIT |
 
 ## Die mitgelieferten Fremdkomponenten
 
@@ -55,30 +55,29 @@ laufen als eigenständige Container. Unser Code bindet nichts davon ein, sondern
 | Komponente | Aufgabe | Lizenz |
 |---|---|---|
 | [LibreChat](https://github.com/danny-avila/LibreChat) | die Chat-Anwendung selbst | MIT |
-| [MongoDB](https://github.com/mongodb/mongo) `8.0` | Datenbank für Konversationen, Nutzer und Verbrauch | SSPL-1.0 ¹ |
-| [Meilisearch](https://github.com/meilisearch/meilisearch) `v1.35.1` | Volltextsuche über frühere Konversationen | MIT, einzelne Teile der Enterprise Edition unter BUSL-1.1 ² |
+| [MongoDB](https://github.com/mongodb/mongo) | Datenbank für Konversationen, Nutzer und Verbrauch | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | Volltextsuche über frühere Konversationen | MIT, einzelne Teile der Enterprise Edition unter BUSL-1.1 ² |
 | [SearXNG](https://github.com/searxng/searxng) | eigene Metasuchmaschine für die Web-Suche | AGPL-3.0 ³ |
 | [pgvector](https://github.com/pgvector/pgvector) | Vektordatenbank für die Dateisuche | PostgreSQL-Lizenz |
 | [rag_api](https://github.com/danny-avila/rag_api) | Einbettung hochgeladener Dateien für die Dateisuche | MIT |
 | [Caddy](https://github.com/caddyserver/caddy) | Reverse-Proxy mit automatischem TLS | Apache-2.0 |
-| zwei Konnektor-Brücken aus Fremdprojekten | übersetzen zwischen der Chat-Schicht und einem Fremdsystem. Welches Projekt hinter welcher Brücke steht, benennt `distribution/docker-compose.yml` beim jeweiligen Dienst | MPL-2.0 und MIT |
+| Konnektor-Brücken aus Fremdprojekten | übersetzen zwischen der Chat-Schicht und einem Fremdsystem. Welches Projekt hinter welcher Brücke steht, benennen die Betriebsunterlagen der Auslieferung | MPL-2.0 und MIT |
 
-Von diesen Komponenten startet nur ein Teil im Grundzustand. pgvector und rag_api brauchen das
-Compose-Profil `filesearch`, die Konnektor-Brücken die Profile `internal` beziehungsweise
-`microsoft` und Caddy das Profil `production`. Welcher Dienst wann läuft, steht unter
-[Dienste und Ports](/docs/referenz/dienste-und-ports).
+Von diesen Komponenten startet nur ein Teil im Grundzustand. Die Bausteine für die Dateisuche,
+die Konnektor-Brücken und der Reverse-Proxy kommen erst mit der jeweiligen Ausbaustufe dazu.
+Zum Aufbau siehe [Dienste und Ports](/docs/referenz/dienste-und-ports).
 
 ### Die Code-Ausführung
 
-Die beiden Backends für die Code-Ausführung sind kein Teil der Haupt-Compose, sondern eigene
-Substacks. Aktiv ist immer nur eines.
+Die beiden Backends für die Code-Ausführung laufen getrennt vom übrigen Stack. Aktiv ist immer
+nur eines.
 
 | Backend | Rolle | Lizenz |
 |---|---|---|
-| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | gehärtete Variante mit microVM-Isolation, braucht `/dev/kvm` | Apache-2.0 |
+| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | gehärtete Variante mit microVM-Isolation | Apache-2.0 |
 | [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | leichtere Übergangsvariante mit vorgebautem Image | Apache-2.0 |
 
-Beide Substacks bringen aus den Compose-Dateien ihrer Projekte weitere Hilfsdienste mit, etwa
+Beide bringen aus den Compose-Dateien ihrer Projekte weitere Hilfsdienste mit, etwa
 einen Zwischenspeicher und einen S3-kompatiblen Objektspeicher. Deren Lizenzen stehen in den
 jeweiligen Projekten dokumentiert. Da sie je nach Fassung unterschiedlich ausfallen, prüfen
 Sie sie für die Fassung, die Sie tatsächlich einsetzen.
@@ -115,9 +114,9 @@ bereitgestellt und nie verteilt wird.
 
 Für ein Produkt, das ausdrücklich permissiv bleiben soll, ist das der falsche Weg. Deshalb:
 
-- **Das AGPL-Panel ist nicht Teil der Distribution.** Es steht im Compose-Stack nur hinter dem
-  ausdrücklichen Profil `interim` und startet nie von selbst mit. Es war eine
-  Übergangslösung für interne Tests, bevor unser eigenes Panel fertig war.
+- **Das AGPL-Panel ist nicht Teil der Distribution.** Es startet nie von selbst mit, sondern
+  nur auf ausdrückliche Anforderung. Es war eine Übergangslösung für interne Tests, bevor
+  unser eigenes Panel fertig war.
 - **Unser Panel ist ein eigenständiger Neubau** unter MIT-Lizenz. Es arbeitet gegen dieselbe
   Administrations-Schnittstelle von LibreChat, die selbst unter MIT steht.
 - **Es wurde kein Code aus dem AGPL-Panel übernommen.** Das Panel diente als Vorbild für die
@@ -138,12 +137,11 @@ zu Aufbau, Bauen, Prüfen, Commit-Format und Secret-Regeln stehen in `AGENTS.md`
 Ein paar Punkte, die sich in der Praxis bewährt haben:
 
 - **Wohin die Änderung gehört.** Sidecars, Distribution und Dokumentation kommen in dieses
-  Repository. Änderungen an LibreChat selbst gehören in das Fork-Repository, das als
-  Submodule `librechat/` eingebunden ist.
+  Repository. Änderungen an LibreChat selbst gehören in das Fork-Repository.
 - **Klein und auf ein Thema begrenzt.** Umformatierungen nicht mit inhaltlichen Änderungen
   mischen.
-- **Keine Geheimnisse im Diff.** Schlüssel werden ausschliesslich als `${VARIABLE}`
-  referenziert, neue Variablen bekommen einen Platzhalter in `distribution/.env.example`.
+- **Keine Geheimnisse im Diff.** Schlüssel werden ausschliesslich als Variablen referenziert,
+  neue Variablen bekommen einen Platzhalter in der Konfigurationsvorlage.
 - **Beiträge stehen unter der MIT-Lizenz** dieses Projekts. Fremder Code darf nur mit
   verträglicher Lizenz und Herkunftshinweis übernommen werden. **Kein Code aus AGPL-Quellen**,
   insbesondere nicht aus dem AGPL-Admin-Panel von LibreChat.

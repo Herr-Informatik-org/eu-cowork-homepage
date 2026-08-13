@@ -33,7 +33,7 @@ Prozesswissen gehört in **Skills**, nicht in den Agenten. Der Agent bleibt eine
 Persona, Modell, Werkzeuge.
 
 Der Grund ist praktisch. Skills sind reine Dateien, portabel und versionierbar. Ein Agent
-dagegen lebt in der Datenbank einer Instanz und lässt sich weder aus der Konfigurationsdatei
+dagegen lebt in der Datenbank einer Instanz und lässt sich weder aus der Konfiguration
 anlegen noch bequem exportieren. Wer sein Wissen in Agenten steckt, baut es bei jeder neuen
 Instanz von Hand nach. Wer es in Skills steckt, kopiert eine Datei.
 
@@ -47,7 +47,7 @@ Agenten stehen im Modell-Picker in einem eigenen Untermenü. Sie wählen den Age
 Modellkarte, danach läuft die Unterhaltung mit dessen Anweisungen und dessen Werkzeugen.
 
 Ein Agent darf mehrere Schritte hintereinander gehen, also nachschlagen, lesen, rechnen und
-erst dann antworten. Das Schritt-Budget pro Durchlauf liegt im Auslieferungszustand bei 100.
+erst dann antworten. Die Zahl der Schritte pro Durchlauf ist begrenzt.
 
 ### Wer Agenten bauen darf
 
@@ -64,9 +64,9 @@ eigenes Recht und im Rollen-Editor unter **Erstellen & Teilen** hinterlegt:
 Agenten überschaubar und verhindert, dass zwanzig halbfertige Varianten desselben Assistenten
 entstehen.
 
-Selbst gebaute Agenten laufen im Kunden-Template ausschliesslich auf dem EU-Anbieter. Das ist
-eine bewusste Grenze: ein selbst gebauter Agent soll nicht versehentlich Daten über einen
-Nicht-EU-Anbieter schicken.
+Selbst gebaute Agenten laufen ab Werk ausschliesslich auf den EU-Karten. Das ist eine bewusste
+Grenze: ein selbst gebauter Agent soll nicht versehentlich Daten über einen Nicht-EU-Anbieter
+schicken.
 
 ## Wie ein Skill wirkt
 
@@ -96,7 +96,7 @@ Es gibt zwei Wege, einen Skill bereitzustellen, und sie verhalten sich unterschi
 | Weg | Wie | Für wen sichtbar |
 |---|---|---|
 | Upload in der Oberfläche | Admin lädt den Skill hoch und teilt ihn gezielt | nur die freigegebenen Personen und Gruppen |
-| Deployment-Verzeichnis `distribution/skills/` | Datei auf den Server legen | die ganze Instanz, schreibgeschützt |
+| Instanzweite Bereitstellung | Admin legt den Skill als Datei auf dem Server ab | die ganze Instanz, schreibgeschützt |
 
 Auf den Modellkarten ist der Skill-Katalog aktiv. Was darin steht, ist aber nicht „alles",
 sondern genau das, was der jeweiligen Person freigegeben ist. Dazu kommt das Rollen-Recht
@@ -104,12 +104,12 @@ sondern genau das, was der jeweiligen Person freigegeben ist. Dazu kommt das Rol
 ausrollen" trägt.
 
 <Aside type="danger" title="Skills nie pauschal ausrollen">
-Ein Skill im Deployment-Verzeichnis **gewinnt gegen einen gleichnamigen Skill aus der
+Ein instanzweit bereitgestellter Skill **gewinnt gegen einen gleichnamigen Skill aus der
 Datenbank**. Legen Sie also einen Skill, der nur für den Verkauf gedacht ist, zusätzlich als
-Datei ins Deployment-Verzeichnis, hebeln Sie damit die gezielte Freigabe aus. Der Skill ist
-danach für alle sichtbar, ohne dass jemand etwas geändert hat.
+Datei auf den Server, hebeln Sie damit die gezielte Freigabe aus. Der Skill ist danach für
+alle sichtbar, ohne dass jemand etwas geändert hat.
 
-Regel: Das Deployment-Verzeichnis ist ausschliesslich für Skills, die instanzweit gelten
+Regel: Die instanzweite Bereitstellung ist ausschliesslich für Skills, die instanzweit gelten
 dürfen und keine vertraulichen Inhalte enthalten. Alles andere wird hochgeladen und gezielt
 geteilt.
 
@@ -119,26 +119,25 @@ würde die genannten Skills an alle Nutzer der Karte binden.
 
 <Aside type="note" title="Geteilte Skills sind zunächst inaktiv">
 Ein an eine Person geteilter Skill ist bei dieser Person standardmässig **nicht** aktiv, sie
-müsste ihn erst selbst einschalten. Wenn freigegebene Skills sofort wirken sollen, setzen Sie
-beim Einrichten den Basis-Override `interface.skills.defaultActiveOnShare` auf `true`. Das
-gehört ins Panel, nicht in die Konfigurationsdatei, sonst überschreibt der Start-Seeder die
-im Rollen-Editor gepflegten Skill-Rechte bei jedem Neustart.
+müsste ihn erst selbst einschalten. Sollen freigegebene Skills sofort wirken, lässt sich das
+beim Einrichten im Panel umstellen. Diese Einstellung gehört ins Panel, sonst überschreibt
+der Start die im Rollen-Editor gepflegten Skill-Rechte bei jedem Neustart.
 </Aside>
 
 ## Was ausgeliefert wird
 
 Ein Gerüst, kein fertiger Agent.
 
-- `distribution/skills/` enthält nur die Anleitung. Skill-Inhalte gehören nicht ins
-  öffentliche Repository, weil sie Stundensätze, interne Kennungen und Prozesse enthalten.
-  Sie werden wie die `.env` von Hand auf den Server gebracht.
-- `distribution/seed-agents/` enthält ein Skript und Beispiel-Definitionen, mit denen sich
-  Standard-Agenten einmalig pro Instanz anlegen lassen. Es ist ausdrücklich als Gerüst
-  gekennzeichnet und gegen die laufende Instanz zu prüfen.
+- Skill-Inhalte werden nicht mitgeliefert. Sie enthalten Stundensätze, interne Kennungen und
+  Prozesse und werden deshalb von Hand auf den Server gebracht, wie die übrigen vertraulichen
+  Angaben.
+- Für Standard-Agenten gibt es Beispiel-Definitionen, mit denen sich ein Grundbestand einmalig
+  pro Instanz anlegen lässt. Sie sind ausdrücklich als Gerüst gekennzeichnet und gegen die
+  laufende Instanz zu prüfen.
 
 Der Grund dafür ist eine Eigenheit von LibreChat: Agenten lassen sich nicht in der
-Konfigurationsdatei definieren und es gibt keinen Export im Builder. Die Konfiguration kann
-einen Agenten nur über seine Kennung referenzieren.
+Konfiguration definieren und es gibt keinen Export im Builder. Die Konfiguration kann einen
+Agenten nur über seine Kennung referenzieren.
 
 ## Für Admins
 
@@ -162,13 +161,9 @@ Remote-Agenten**.
 
 <Steps>
 
-1. Ordner mit `SKILL.md` nach `distribution/skills/` legen.
+1. Ordner mit `SKILL.md` in der dafür vorgesehenen Ablage auf dem Server hinterlegen.
 
-2. Neu starten, denn Skills aus dem Deployment-Verzeichnis werden beim Start gelesen:
-
-   ```bash title="Auf dem Server"
-   docker compose restart api
-   ```
+2. Anwendung neu starten, denn instanzweit bereitgestellte Skills werden beim Start gelesen.
 
 3. Testen, und zwar in beide Richtungen. Positiv: löst der Skill bei den Formulierungen aus,
    die in seiner Beschreibung stehen? Negativ: hält er sich bei fremden Aufgaben heraus?
@@ -177,8 +172,7 @@ Remote-Agenten**.
 
 ### Katalog begrenzen
 
-Ab etwa fünf Skills lohnt es sich, den Katalog zu deckeln, über
-`endpoints.agents.skills.maxCatalogSkills`. Sonst wächst die Liste der Beschreibungen, die in
-jeder Unterhaltung mitgeführt wird, und kostet in jedem Chat Tokens.
+Ab etwa fünf Skills lohnt es sich, den Katalog zu deckeln. Sonst wächst die Liste der
+Beschreibungen, die in jeder Unterhaltung mitgeführt wird, und kostet in jedem Chat Tokens.
 
 Dasselbe Prinzip gilt bei Konnektoren: wenige, klar beschriebene Werkzeuge schlagen viele.

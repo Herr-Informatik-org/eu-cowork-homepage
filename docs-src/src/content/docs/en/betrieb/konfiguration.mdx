@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: The three configuration levels of EU Cowork AI, the most important values in the .env, the Compose profiles and the interface block.
+description: The three configuration levels of EU Cowork AI, which level wins in a conflict and how the domain lock is set.
 sidebar:
   order: 3
 ---
@@ -8,195 +8,79 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 EU Cowork AI is configured in three places. Knowing which place is responsible for what, and
-which level wins in a conflict, saves you the search. This page sorts the levels and lists the
-values that are really needed in daily operation.
+which level wins in a conflict, saves you the search.
 
 ## The three levels
 
-| Level | File or place | Content | When it takes effect |
+| Level | Place | Content | When it takes effect |
 |---|---|---|---|
-| Infrastructure and secrets | `distribution/.env` | Ports, domains, keys, bindings, profile values | after `docker compose up -d` |
-| Product behavior | `distribution/librechat.yaml` | Model cards, interface, connectors, registration | after a restart of the service `api` |
+| Infrastructure and secrets | Environment file of the instance | Addresses, keys, operating parameters | after a restart of the application |
+| Product behaviour | `librechat.yaml` | Model cards, interface, connectors, registration | after a restart of the chat service |
 | Runtime overrides | Admin panel, page **Configuration** | the same product settings, per instance, role or group | immediately, without a restart |
 
-Which YAML file is active is decided by `LIBRECHAT_CONFIG_FILE` in the `.env`. The default is
-`librechat.yaml`, the customer template. Next to it sits `librechat.internal.yaml` as an
-example of an instance with connectors attached. All statements in this documentation refer
-to the customer template.
+The environment file is created during installation from a template that is commented
+throughout. It states for every value what it is needed for.
 
 ## Which level wins
 
-A value set in the panel stands **above** the YAML. The panel writes its values into the
-database, LibreChat reads them on the next request and they survive a restart. The YAML remains
-the starting state, which applies as long as no override exists.
+A value set in the panel sits **above** the YAML. The panel writes its values into the database,
+the application reads them on the next call and they survive a restart. The YAML remains the
+initial state that applies as long as no override exists.
 
-In the panel you recognize this by two details: sections with an active override carry the badge
-**"aus DB-Override"** (from DB override), and next to every overridden field there is an icon to remove it.
+In the panel you recognise this by two details: sections with an active override carry the badge
+**from DB override**, and next to every overridden field there is an icon to remove it.
 
-<Aside type="caution" title="Clearing a field does not remove the override">
-Anyone who clears an overridden field in the panel saves an empty value and keeps the override.
-You only get back to the YAML state through the reset icon next to the field.
+<Aside type="caution" title="Emptying a field does not remove the override">
+Anyone who empties an overridden field in the panel saves an empty value and keeps the override.
+The only way back to the YAML state is the reset icon next to the field.
 </Aside>
 
-For model cards an additional cascade applies: **group before role before base**. Permissions for
-tools, on the other hand, belong in the role editor and not in the configuration, in the
-"Funktionen" (features) tab they would be discarded server side.
-
-## The most important values in the `.env`
-
-| Variable | Purpose | Default |
-|---|---|---|
-| `EUROUTER_API_KEY` | Key of the inference provider, the only mandatory value | placeholder |
-| `DOMAIN_CLIENT` | Chat URL reachable in the browser, also the basis of the invitation links | `http://localhost:3080` |
-| `DOMAIN_SERVER` | Server URL, basis of the redirect URI for connectors with per-user sign-in | `http://localhost:3080` |
-| `EUCOWORK_DOMAIN` | Domain for Caddy and the Office manifest | `localhost` |
-| `PORT` | Port of the chat | `3080` |
-| `API_BIND` | Host binding of the chat port, in production `127.0.0.1` | `0.0.0.0` |
-| `ADMIN_SIDECAR_PORT`, `ADMIN_SIDECAR_BIND` | Port and binding of the admin panel | `3010`, `127.0.0.1` |
-| `CADDY_FILE` | Selects the TLS variant: `Caddyfile`, `Caddyfile.internal` or `Caddyfile.proxied` | `Caddyfile` |
-| `LIBRECHAT_CONFIG_FILE` | Selects the active YAML file | `librechat.yaml` |
-| `DISABLE_COMPRESSION` | Must stay `true`, otherwise LibreChat buffers the response stream | `true` |
-| `BAN_VIOLATIONS` | Without this value, bans from the panel have no effect | `true` |
-| `LIBRECHAT_CODE_BASEURL` | Decides which backend handles code execution | not set |
-| `SEARCH_MAX_LLM_OUTPUT_CHARS` | Character budget of the web search context | `15000` |
-| `USD_EUR_RATE` | Conversion rate in the spending dashboard, fix it per month | `0.92` |
-| `UID`, `GID` | User under which the containers write | set by the installer |
-| `ALLOW_REGISTRATION` | Self registration allowed | `true` |
-| `NO_INDEX` | No indexing by search engines | `true` |
-| `APP_TITLE` | Title in the browser tab | `EU-Cowork AI` |
-| `STACK_NAME`, `DOCKER_SUBNET`, `SANDBOX_NETWORK` | Only needed when several instances run on one machine | `eucowork`, `172.28.0.0/16`, `eucowork-sandbox` |
-
-The complete list with comments is in `distribution/.env.example`.
-
-<Aside type="caution" title="Do not set DISABLE_COMPRESSION to false">
-LibreChat writes its answers as a stream, but does not call `res.flush()` while doing so. With
-compression active the server therefore buffers the whole answer until the end. Clients with a
-time limit, above all the view of the Outlook add-in, then abort on long answers. Caddy still
-compresses for browsers, so there is no downside.
-</Aside>
-
-## Compose profiles
-
-Without a profile the base stack starts: chat, admin panel, Outlook add-in, MongoDB, Meilisearch
-and SearXNG. Each profile adds further services.
-
-| Profile | Adds |
-|---|---|
-| `production` | Caddy as a reverse proxy with automatic TLS on ports 80 and 443 |
-| `filesearch` | Vector database and RAG service for searching uploaded files |
-| `internal` | MCP gateway and the example connectors that run through it |
-| `microsoft` | Example bridge to a file store with per-user sign-in |
-| `interim` | The old admin panel under AGPL, purely a transitional solution |
-
-```bash title="Examples"
-docker compose up -d
-docker compose --profile production up -d
-docker compose --profile internal up -d --build mcp-gateway
-```
-
-Profiles are passed along on every call. If you later restart the stack without the profiles,
-you do not stop the corresponding services, but you also do not restart them. So always run
-update and restart with the same list of profiles you installed with.
+For model cards an additional cascade applies: **group before role before base**. Permissions
+for tools, by contrast, belong in the role editor and not in the configuration; in the features
+tab they would be discarded server-side.
 
 ## The `interface` block
 
-The block is in the active YAML file and controls what is visible in the interface. These are
-the switches that are actually set in the customer template:
+The `interface` block in the YAML controls what is visible in the interface: the model picker,
+web search, file search, code execution, presets, bookmarks and the parameter panel. Features
+whose backend is not running are deliberately switched off on delivery — a visible button
+without effect is worse than no button.
 
-| Switch | Default | Effect |
-|---|---|---|
-| `customWelcome` | set | Welcome text on the start page of the chat |
-| `mcpServers.use` | `true` | Staff may use the connectors defined by the admin |
-| `mcpServers.create` | `false` | Nobody except the admin creates their own connectors |
-| `mcpServers.share` | `false` | Connectors are not shared from person to person |
-| `webSearch` | `true` | The button for web search is visible |
-| `fileSearch` | `false` | [Search in uploaded files](/docs/en/funktionen/dateien-und-wissen), needs the profile `filesearch` and an embeddings provider |
-| `runCode` | `false` | [Code execution](/docs/en/funktionen/code-und-auswertungen), needs a backend behind `LIBRECHAT_CODE_BASEURL` |
-| `remoteAgents.use` | `true` | Agents may be addressed from outside, a prerequisite for the Outlook add-in |
-| `remoteAgents.create` | `false` | Agents are maintained in the interface, not created through the API |
-| `parameters` | `false` | The parameter panel for temperature and similar settings stays hidden |
-| `modelSelect` | `true` | The model picker with the curated cards is visible |
+Two rules matter here:
 
-`fileSearch` and `runCode` are deliberately off as long as their backend is not running. A
-visible button without effect is worse than no button. As soon as the profile `filesearch` is
-running and an embeddings provider is entered, set `fileSearch: true`, and for code execution
-accordingly `runCode: true`.
+- **The block is global.** The values are written into all roles on start. A difference between
+  roles therefore cannot be expressed in the YAML. If a tool is to be released for one role
+  only, leave the field out of the YAML and set it in the role editor of the admin panel.
+- **Capability lists replace rather than merge.** Anyone who touches the list of agent
+  capabilities replaces the default list completely. Nothing is merged, so everything to be kept
+  has to be listed again.
 
-<Aside type="note" title="Web search in the customer template">
-The button is visible and your own metasearch engine runs in the stack. What is still missing is
-the scraper that reads out the result pages. As long as it is not configured, LibreChat does not
-attach the search tool to the model, so the search does not trigger. This is configured in the
-panel under **"Konfiguration"** (configuration) in the "Funktionen" (features) tab.
-</Aside>
-
-### Rule 1: The block is global
-
-The values are written into all roles at startup and set again on every restart. A difference
-between roles therefore cannot be expressed in the YAML. If you want to enable a tool for one
-role only, leave the field out of the YAML and set it in the role editor of the admin panel.
-That is exactly why skills and agents are deliberately not in the `interface` block.
-
-### Rule 2: `capabilities` replaces instead of merging
-
-Which capabilities exist at all is defined by `endpoints.agents.capabilities`. Artifacts, meaning
-diagrams and HTML directly in the chat, can only be controlled there, an `interface.artifacts`
-does not exist. Anyone who touches the list replaces the default list completely. Nothing is
-merged, so everything you want to keep has to be listed again.
-
-## SMB simple profile
-
-For companies that want the plainest possible interface, you switch off the controls that only
-power users need. All fields below are present in the customer template as a starting point:
-
-```yaml title="distribution/librechat.yaml"
-interface:
-  modelSelect: false
-  presets: false
-  multiConvo: false
-  bookmarks: false
-  marketplace:
-    use: false
-  parameters: false
-  mcpServers:
-    use: true
-    create: false
-    share: false
-    public: false
-```
-
-What this does:
-
-- `modelSelect: false` hides the model picker. Everyone then works with the default card
-  including its stored system prompt, without being able to choose a raw model themselves.
-- `presets: false` removes the presets, `multiConvo: false` the parallel chats,
-  `bookmarks: false` the bookmarks and `marketplace.use: false` the tool marketplace.
-- `parameters: false` keeps the parameter panel hidden. If the admin should still see it, the
-  ADMIN role gets an override on `interface.parameters` in the panel.
-
-After every change to the YAML, restart the chat service:
-
-```bash title="On the server"
-docker compose restart api
-```
+For companies that want the plainest possible interface, the controls that only power users need
+can be switched off as a group. The delivered file already contains the matching fields as a
+commented-out template.
 
 ## Domain lock
 
-The domain lock is the first step after installation and belongs in place **before** the
-instance is reachable under its domain. What matters is not `ALLOW_REGISTRATION` but the list
-of allowed email domains: it decides who can create an account in the first place.
+The domain lock is the first step after the installation and belongs in place **before** the
+instance is reachable under its domain. What matters is the list of allowed e-mail domains: it
+decides who can create an account at all.
 
-```yaml title="distribution/librechat.yaml"
+```yaml title="librechat.yaml"
 registration:
   allowedDomains:
-    - 'ihre-firma.ch'
+    - 'your-company.com'
 ```
 
-You maintain the same list in the panel under **"Konfiguration"** (configuration) in the "Funktionen"
-(features) tab, in the field **"Erlaubte E-Mail-Domains"** (allowed email domains). It applies to self registration and to invitations: an invitation to
-an address outside the list does not work.
+You maintain the same list in the panel under **Configuration** in the features tab in the field
+**Allowed e-mail domains**. It applies to self-registration and to invitations: an invitation to
+an address outside the list has no effect.
 
-You can verify this with a registration under a foreign domain, it has to be rejected. For bans
-from the panel to take effect at all, `BAN_VIOLATIONS=true` also has to be set in the `.env`.
+You can verify this with a registration under a foreign domain; it has to be rejected.
+
+<Aside type="note" title="Complete value lists in the operations manual">
+Which values live in the environment file and which optional building blocks can be switched on
+is described in the operations manual that comes with the delivery package.
+</Aside>
 
 ## Next
 
@@ -204,7 +88,7 @@ from the panel to take effect at all, `BAN_VIOLATIONS=true` also has to be set i
   <LinkCard
     title="Domain and certificate"
     href="/docs/en/betrieb/domain-und-tls"
-    description="The three Caddy variants and when you need which one."
+    description="The three TLS variants and when you need which one."
   />
   <LinkCard
     title="Several instances on one server"

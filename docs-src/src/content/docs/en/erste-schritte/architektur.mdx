@@ -1,6 +1,6 @@
 ---
 title: Architecture
-description: How the stack is built, which layers exist, how the data flows, what the Compose profiles add and why the tenant boundary is the stack.
+description: The setup in broad strokes — access through a reverse proxy, the application behind it, the data storage next to it and the model providers outside.
 sidebar:
   order: 2
 ---
@@ -8,180 +8,75 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 import DiagrammArchitektur from '../../../../components/DiagrammArchitektur.astro';
 
-EU Cowork AI is a single Docker Compose stack on one Linux machine. This page shows which
-services run inside it, how the data flows between them and which decisions sit behind that.
-It is written for anyone who operates the server or wants to understand the path a request
-takes.
+EU Cowork AI runs as a Docker Compose stack on a Linux machine. This page shows the setup in
+broad strokes. It describes the path a request takes and the decisions behind it — not the
+setup in detail.
 
 ## The data flow
 
 <DiagrammArchitektur />
 
-Two things stand out. First, every path from the outside goes through Caddy, no other service
-accepts connections from the network. Second, the connectors go through the MCP gateway,
-while a connector with per-user sign-in deliberately does not. The reason is explained below.
+Two things matter here. First, every path from the outside goes through the reverse proxy; the
+other services accept no connections from the network. Second, accounts, conversations and
+files stay on your server, while for the model responses themselves the provider is called.
 
 ## The layers
 
-### Reverse proxy
+**Reverse proxy.** The only entry point from the outside. It terminates TLS, takes care of the
+certificate and routes the requests to the services behind it.
 
-`caddy` is the only service on ports 80 and 443. It obtains and renews the TLS certificate on
-its own and routes by hostname and path: the chat domain to LibreChat, `admin.<ihre-domain.ch>`
-(the placeholder stands for your own domain) to the admin panel, `/office/*` to the Outlook
-add-in and `/api/office/*` to the admin sidecar. Caddy only starts with the `production`
-profile.
+**Application.** This is [LibreChat](https://www.librechat.ai). The service serves the
+interface, talks to the model providers, runs the agents and processes uploaded files.
 
-For networks without public reachability there are two variants of the same file, selectable
-through `CADDY_FILE`: `Caddyfile.internal` uses an internal certificate authority instead of
-Let's Encrypt, `Caddyfile.proxied` only listens unencrypted on port 80 behind an existing
-firewall appliance.
+**Data storage.** Accounts, conversations, messages, agents and logs live in the database of
+the instance, alongside a search index across your own chats and the uploaded files on the same
+server. The database is the source of truth, the search index can be rebuilt from it at any
+time.
 
-### Chat
+**What EU Cowork AI adds.** Around LibreChat sit our own services for administration,
+permissions and usage overview, plus the connection to third party systems. They are reachable
+only inside the instance and are not exposed to the network.
 
-`api` is LibreChat. The service serves the interface, talks to the model providers, runs the
-agents, processes uploaded files and is the only MCP client in the stack. The image is
-deliberately pinned to a digest and not to `:latest`, so that every server runs the same
-verified version.
+**Outside the instance.** For the model responses the inference provider is called, for web
+search external search engines. If code execution is switched on, it runs in a separate,
+isolated environment next to the application.
 
-### Data storage
-
-| Service | Content | Note |
-|---|---|---|
-| `mongodb` | database `LibreChat`: users, conversations, messages, agents, usage, permission rules, logs | the single source of truth, everything else can be derived |
-| `meilisearch` | search index across titles and messages | purely derived state, rebuilt after a restore |
-| `vectordb` | pgvector database for file search | only with the `filesearch` profile |
-| `uploads/` and `images/` | uploaded files and images | directories next to the `docker-compose.yml` |
-
-The database does not know about tenants. That is intentional and the reason for the next
-section.
-
-### Sidecars
-
-Our own services live as source code in the repository and are built during installation.
-
-- **`admin`** serves the admin panel and provides its interface. It passes requests through to
-  the administration interface of LibreChat and adds what is missing there: usage in euros,
-  shared budget, permission rules for the connectors, retention and the interface for the
-  Outlook add-in. You sign in with the existing LibreChat administrator account, there is no
-  separate user management.
-- **`mcp-gateway`** sits between LibreChat and every connector. Before every tool call it
-  checks the rule maintained in the panel, filters the tool list per person and writes every
-  call with time, server, tool, person, decision and reason into a log. If the check fails,
-  access is denied. The model router runs in the same container.
-- **`office-addin`** serves the task pane for Outlook and the manifest. The actual work is
-  done by an agent on the server, the pane is only the interface.
-
-Alongside these the stack ships the **example connectors**. They are bridges to a third party
-system, partly written by us, partly unmodified third party images, see
-[Licenses and origin](/docs/en/referenz/lizenzen). None of them is active in the customer
-template. All bridges hold credentials and have no sign-in of their own, which is why they are
-only reachable on the internal Docker network. How such a bridge is put together is described
-by [the connector pattern](/docs/en/konnektoren/muster).
-
-<Aside type="note" title="Why the gateway exists at all">
-LibreChat **cannot** filter MCP servers defined in the configuration per role or per person.
-They are resolved unfiltered for every user. This is exactly the gap the gateway closes. The
-connector with per-user sign-in deliberately bypasses it, because there every person signs in
-to the third party system individually and their own permissions there are already the
-boundary.
+<Aside type="note" title="What comes from LibreChat">
+Chat, agents, file handling and model connectivity come from LibreChat and are publicly
+documented there. The additions from EU Cowork AI sit on top without changing the core, which
+is why updates from LibreChat remain possible.
 </Aside>
 
-### Sandbox network
+## Why one instance per customer
 
-Code execution does not run in the main stack, but in a separate Compose stack that is
-attached through a separate Docker network. The `api` container is the only service that sits
-in both networks. There are two backends, and switching between them happens exclusively
-through `LIBRECHAT_CODE_BASEURL`.
-
-This is the only place in the system where code created by users runs on the machine. That is
-why every customer gets a separate sandbox network and a separate code interpreter instance.
-Which destinations that code may reach on the outside is defined at host or network level;
-with code execution enabled, that belongs in the setup.
-
-### Web search
-
-`searxng` is your own metasearch engine inside the stack. LibreChat queries it internally, and
-it fetches the results from external search engines. The identity of the user is not passed
-along, but the search terms do leave the server.
-
-## The Compose profiles
-
-Without a profile the base stack starts. Everything else is added by a profile. The installer
-takes the profiles as a comma separated list and passes them on to Docker Compose.
-
-| Profile | What it adds | When you need it |
-|---|---|---|
-| no profile | `api`, `admin`, `office-addin`, `mongodb`, `meilisearch`, `searxng` | always, this is the base stack |
-| `production` | `caddy` | as soon as the instance should be reachable under a domain with TLS |
-| `internal` | `mcp-gateway` and the example connectors that run through it | when connectors should run through the permission gateway |
-| `microsoft` | the example bridge to a file store with per-user sign-in | when your file store should be readable in the chat |
-| `filesearch` | `vectordb`, `rag_api` | for file search across uploaded documents |
-| `interim` | the old AGPL panel of LibreChat | only as a transitional tool, not part of the product |
-
-```bash title="On the server"
-./install.sh --profiles production,internal,microsoft,filesearch
-```
-
-<Aside type="caution" title="Forgetting a profile is a common mistake">
-If you enable file search in the configuration but start without the `filesearch` profile, you
-get a button with no effect. The same applies to the connectors without the `internal` profile.
-Profiles belong to **every** Compose call, not just the first one.
-</Aside>
-
-## Why the tenant boundary is the stack and not the VM
-
-One customer is one Compose stack: its own MongoDB, its own Meilisearch, its own uploads, its
-own `.env`, its own Docker network, its own code interpreter. This follows directly from the
-fact that LibreChat does not know about tenants. The separation therefore has to sit below the
-application, and there it sits cleanly.
-
-Whether two stacks share the same machine is after that a pure question of cost and risk. The
-measured idle load of one stack is around 0.7 GB of memory and almost no CPU load, so for a
-customer with three people a dedicated VM would be a waste.
+LibreChat does not know about tenants. The separation therefore sits below the application: one
+customer is one instance with its own database, its own search index, its own files, its own
+configuration and its own inference key. Whether two instances share a machine is after that a
+pure question of cost and risk.
 
 | May be shared | Must never be shared |
 |---|---|
-| Docker images and their layers | database, search index, uploads |
-| a shared reverse proxy on 80 and 443 | `.env` and all secrets |
-| monitoring, backup schedule, system updates | sandbox network and code interpreter |
+| Docker images and their layers | database, search index, files |
+| a shared reverse proxy | configuration and all secrets |
+| monitoring, backup schedule, system updates | the environment for code execution |
 | | the inference key, otherwise the cost per customer cannot be attributed |
 
-For several stacks to run side by side, three names have to be unique per instance, because
-they apply across all of Docker: `STACK_NAME`, `DOCKER_SUBNET` and `SANDBOX_NETWORK`. On top of
-that come the host ports `PORT`, `ADMIN_SIDECAR_PORT` and `OFFICE_ADDIN_PORT`.
-
-## Only Caddy binds to the outside
-
-All services except Caddy are bound to `127.0.0.1` or not published on the host at all. The
-admin panel on port 3010 and the add-in on port 3040 are bound locally out of the box. The
-connector bridges, the database, the search index and the gateway are reachable exclusively on
-the internal Docker network.
-
-Two points belong in the setup here. The first is the chat port: in production
-`API_BIND=127.0.0.1` belongs in the `.env`, so that all traffic runs through Caddy and TLS.
-You can verify this after startup with `ss -tlnp`.
-
-The second is the transitional panel `admin-panel` from the `interim` profile. It is a
-development tool and not part of the stack in normal operation — simply do not start the
-`interim` profile on a production server.
-
-<Aside type="danger" title="With Docker ports the binding matters, not the firewall">
-Ports published by Docker are not covered by `ufw`, because Docker keeps its own rules in the
-`DOCKER-USER` chain. Binding to `127.0.0.1` is therefore the decisive measure; where you want
-to filter in addition, the rule belongs in `DOCKER-USER`.
+<Aside type="note" title="The setup documents">
+Which services an instance brings along in detail, how they are configured and what to watch
+in operation is described in the documents that come with the delivery.
 </Aside>
 
 ## Next steps
 
 <CardGrid>
   <LinkCard
-    title="Services and ports"
-    href="/docs/en/referenz/dienste-und-ports"
-    description="The complete table of all containers with image, purpose, port and profile."
-  />
-  <LinkCard
     title="System requirements"
     href="/docs/en/erste-schritte/systemanforderungen"
-    description="Measured figures per container and the rule of thumb from user count to VM size."
+    description="What an instance needs in terms of CPU, memory and disk."
+  />
+  <LinkCard
+    title="What is EU Cowork AI?"
+    href="/docs/en/erste-schritte/ueberblick"
+    description="The overview of the platform, its limits and its license."
   />
 </CardGrid>

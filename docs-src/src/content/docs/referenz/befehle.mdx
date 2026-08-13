@@ -1,188 +1,42 @@
 ---
 title: Befehlsübersicht
-description: Alle Befehle für Installation, Betrieb, Aktualisierung, Backup, Umzug und Diagnose auf einer Seite zum Nachschlagen.
+description: Womit eine Instanz im Alltag verwaltet wird und wo die ausführliche Anleitung liegt.
 sidebar:
   order: 3
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-Diese Seite ist zum Nachschlagen gedacht. Jeder Befehl steht so, wie er auf dem Server
-eingegeben wird. Sofern nicht anders vermerkt, ist das Arbeitsverzeichnis immer
-`~/eu-cowork/distribution`.
-
-## Installation
-
-| Befehl | Wirkung |
-|---|---|
-| `sudo apt-get update && sudo apt-get install -y git` | Git installieren, ohne das lässt sich das Repository nicht holen |
-| `git clone https://github.com/<organisation>/eu-cowork.git` | Repository klonen. Die konkrete Adresse steht in Ihrer Bezugsquelle beziehungsweise wird Ihnen vom Anbieter mitgeteilt |
-| `./setup-server.sh` | frischen Ubuntu-Server vorbereiten: Docker, Firewall, Protokoll-Rotation, Swap, Zeitzone, Sicherheitsaktualisierungen |
-| `./setup-server.sh --user eucowork` | Dienstbenutzer explizit setzen, bei Bedarf anlegen |
-| `./setup-server.sh --no-firewall --no-swap` | Firewall- und Swap-Schritt überspringen |
-| `./install.sh` | `.env` mit erzeugten Secrets anlegen, Netz und Verzeichnisse erstellen, Stack starten |
-| `./install.sh --profiles production` | zusätzlich Caddy mit automatischem Zertifikat |
-| `./install.sh --profiles production,internal,microsoft,filesearch` | mit allen Konnektor-Profilen und der Dateisuche |
-| `./install.sh --migrate --profiles ...` | vorhandene `.env` unangetastet lassen, für Update und Umzug |
-| `./install.sh --no-build` | eigene Dienste nicht neu bauen, nur sinnvoll wenn sie aktuell sind |
-
-Nach `setup-server.sh` müssen Sie sich neu anmelden, sonst greift die Gruppe `docker` nicht.
-Danach diese drei Prüfungen:
-
-| Befehl | Erwartung |
-|---|---|
-| `docker compose version` | eine Version 2, sonst fehlt das Compose-Plugin |
-| `id -u` | im einfachsten Fall 1000, mit dieser Kennung schreiben die Container |
-| `ls -l /dev/kvm` | vorhanden bedeutet, das gehärtete Code-Interpreter-Backend ist möglich |
-
-## Betrieb
+Eine Instanz wird mit den üblichen Docker-Compose-Kommandos verwaltet. Es gibt dafür keine
+eigene Kommandozeile, die man erst lernen müsste.
 
 | Zweck | Befehl |
 |---|---|
 | Starten | `docker compose up -d` |
-| Mit Dateisuche | `docker compose --profile filesearch up -d` |
-| Mit Caddy und TLS | `docker compose --profile production up -d` |
-| Mit Konnektoren über das Gateway | `docker compose --profile internal up -d` |
-| Mit dem Konnektor mit Anmeldung pro Person | `docker compose --profile microsoft up -d` |
-| Einzelnen Dienst neu bauen | `docker compose --profile internal up -d --build mcp-gateway` |
-| Neustart eines Dienstes | `docker compose restart api` |
-| Protokoll mitlesen | `docker compose logs -f api` |
 | Status | `docker compose ps` |
+| Protokoll mitlesen | `docker compose logs -f` |
+| Neustart | `docker compose restart` |
 | Anhalten | `docker compose down` |
 
-Die Profile gehören bei **jedem** Aufruf dazu. Nach einem `docker compose down` und einem
-`docker compose up -d` ohne `--profile internal` fehlen die Konnektoren, weil sie ohne ihr
-Profil nicht wieder anlaufen.
+Je nach Ausbaustufe werden nicht alle Dienste im Grundzustand mitgestartet. Die dafür nötigen
+Angaben gehören dann bei **jedem** Aufruf dazu, sonst fehlen die betroffenen Dienste nach einem
+Neustart.
 
-<Aside type="note" title="Rechteänderungen und der Werkzeug-Katalog">
-Änderungen an den Zugriffsregeln greifen bei Werkzeugaufrufen innert rund zehn Sekunden. Die
-Liste der Werkzeuge im Modell-Kontext hängt jedoch an einem Zwischenspeicher mit zwölf
-Stunden Laufzeit. Nach einer Rechteänderung deshalb `docker compose restart api`, sonst sieht
-die betroffene Person die Änderung erst am nächsten Tag.
+## Mitgelieferte Hilfsskripte
+
+Für Installation, Aktualisierung, Sicherung und Umzug bringt die Auslieferung fertige Skripte
+mit, damit diese Abläufe nicht von Hand zusammengesetzt werden müssen. Ihre Aufrufe, Optionen
+und die passende Reihenfolge sind in den Betriebsunterlagen beschrieben, die der Auslieferung
+beiliegen. Kunden erhalten sie zusammen mit dem Zugang.
+
+<Aside type="caution" title="Vor jeder Aktualisierung sichern">
+Das gilt ohne Ausnahme. Zur Sicherung gehören neben der Datenbank auch die Konfiguration und
+die hochgeladenen Dateien; das mitgelieferte Backup-Werkzeug nimmt beides mit. Ein Archiv
+enthält Zugangsdaten und wird entsprechend geschützt aufbewahrt.
 </Aside>
 
-## Aktualisieren
+## Verwandte Seiten
 
-```bash title="Vollständiger Update-Lauf"
-cd ~/eu-cowork && git pull
-cd distribution
-diff <(grep -o '^[A-Z_]*' .env.example | sort -u) <(grep -o '^[A-Z_]*' .env | sort -u)
-./backup.sh backup
-./install.sh --migrate --profiles production,internal,microsoft,filesearch
-```
-
-| Zeile | Wirkung |
-|---|---|
-| `git pull` | neuen Stand des Repositorys holen |
-| `diff <(...) <(...)` | zeigt, welche Variablen in der `.env.example` neu sind und in Ihrer `.env` fehlen |
-| `./backup.sh backup` | Sicherung vor jedem Update, ohne Ausnahme |
-| `./install.sh --migrate --profiles ...` | `.env` bleibt unverändert, die eigenen Dienste werden neu gebaut |
-
-<Aside type="caution" title="--force-recreate erneuert die eigenen Dienste nicht">
-`docker compose up -d --force-recreate api` erzeugt den Chat-Container neu, lässt `admin`,
-`mcp-gateway`, `office-addin` und die selbst gebaute Konnektor-Brücke aber unverändert. Diese
-vier werden aus Quellcode gebaut und brauchen `--build`. Genau das macht `./install.sh`, wenn Sie nicht `--no-build` angeben. Wer
-nur mit `--force-recreate` arbeitet, fährt nach einem Update alte Sidecars weiter.
-</Aside>
-
-Die LibreChat-Version ist bewusst auf einen Digest gepinnt. Zum Anheben:
-
-```bash title="Neuen Digest ermitteln"
-docker pull registry.librechat.ai/danny-avila/librechat-dev:latest
-docker image inspect registry.librechat.ai/danny-avila/librechat-dev:latest --format '{{index .RepoDigests 0}}'
-```
-
-Den ausgegebenen Digest tragen Sie in `docker-compose.yml` ein, starten den Stack neu und
-prüfen anschliessend, ob alles läuft.
-
-## Backup und Umzug
-
-| Befehl | Wirkung |
-|---|---|
-| `./backup.sh backup` | ein Archiv nach `backups/` mit Datenbank-Dump und den nicht versionierten Dateien |
-| `./backup.sh backup --dest /pfad --keep 30` | anderes Zielverzeichnis, andere Anzahl behaltener Archive |
-| `./backup.sh list` | vorhandene Archive mit Datum und Grösse |
-| `./backup.sh restore <archiv.tar.gz>` | destruktiv, ersetzt die Datenbank, fragt vorher nach |
-| `./backup.sh restore <archiv.tar.gz> --yes` | ohne Rückfrage, für Skripte |
-| `./backup.sh restore <archiv.tar.gz> --force-env` | überschreibt zusätzlich eine vorhandene `.env` |
-
-Ohne `--yes` müssen Sie wörtlich `JA` eintippen. Voreingestellt sind das Verzeichnis
-`./backups` und 14 behaltene Archive. Jedes Archiv bekommt die Rechte 600, denn es enthält
-die `.env` mit allen Secrets.
-
-Gesichert werden die Datenbank `LibreChat`, dazu `.env`, `librechat.yaml`,
-`librechat.internal.yaml`, `searxng/settings.yml`, `skills/`, `seed-agents/*.json`,
-`uploads/` und `images/`. Bewusst nicht gesichert werden `data-node/`, `meili_data/` und
-`logs/`, weil sie entweder im Dump stecken oder sich neu aufbauen.
-
-```bash title="Tägliche Sicherung um 03:15, Zeile aus crontab -e"
-15 3 * * * cd <pfad> && ./backup.sh backup --keep <N> >> <dest>/backup.log 2>&1
-```
-
-Die passende Zeile mit Ihren Pfaden gibt `./backup.sh backup` am Ende selbst aus.
-
-### Umzug auf einen neuen Server
-
-```bash title="1. Auf dem alten Server"
-./backup.sh backup
-```
-
-```bash title="2. Archiv übertragen"
-scp backups/eucowork-<zeitstempel>.tar.gz <neuer-server>:~/
-```
-
-```bash title="3. Auf dem neuen Server, .env aus dem Archiv holen"
-tar -xzf ~/eucowork-<zeitstempel>.tar.gz -O ./files/.env > .env
-chmod 600 .env
-```
-
-```bash title="4. Auf dem neuen Server, Stack und Daten"
-./install.sh --migrate --profiles production,internal,microsoft,filesearch
-./backup.sh restore ~/eucowork-<zeitstempel>.tar.gz
-```
-
-Der Pfad im `tar`-Aufruf braucht das führende `./`. Ohne das findet GNU tar den Eintrag nicht
-und die Umleitung legt eine **leere** `.env` an. Prüfen Sie deshalb mit `wc -l .env`, dass die
-Datei Inhalt hat.
-
-<Aside type="danger" title="CREDS_KEY und CREDS_IV müssen mitkommen">
-Werden diese beiden Werte auf dem neuen Server neu erzeugt statt aus der alten `.env`
-übernommen, sind alle verschlüsselten Zugangsdaten in der Datenbank unlesbar. Jede Person
-müsste ihre Konnektor-Verbindungen neu aufbauen, und die im Panel hinterlegten Schlüssel wären
-verloren.
-</Aside>
-
-## Diagnose
-
-| Befehl | Wofür |
-|---|---|
-| `docker compose ps` | läuft jeder Container, oder startet einer dauernd neu |
-| `docker compose logs -f api` | Startfehler und Konfigurationsfehler der Anwendung |
-| `docker compose logs caddy` | Zertifikatsausstellung und Weiterleitungen |
-| `docker system df` | wie viel Platz Images, Container, Volumes und Build-Cache belegen |
-| `docker network create eucowork-sandbox` | fehlendes Sandbox-Netz anlegen |
-| `docker exec eucowork-api id` | mit welcher Kennung der Chat-Container schreibt |
-| `ls -ldn uploads` | wem das Upload-Verzeichnis gehört, muss zur Kennung oben passen |
-
-```bash title="Kommen die Container ins Internet?"
-docker run --rm curlimages/curl -sI -m 10 https://api.eurouter.ai/api/v1/models
-```
-
-HTTP 401 heisst, der Weg nach draussen steht. Ein Timeout oder HTTP 000 heisst blockiert,
-typischerweise durch einen VPN-Client, einen Firmen-Proxy oder eine Kollision des
-Docker-Subnetzes mit einer bestehenden Route.
-
-```bash title="Rechte an den eingehängten Verzeichnissen richtigstellen"
-chown -R $(id -u):$(id -g) logs uploads images data-node meili_data
-```
-
-Das hilft, wenn `api` in einer Neustartschleife hängt und im Protokoll `EACCES` auf `/app/logs`
-steht oder wenn ein Upload mit `EACCES` auf `/app/uploads/temp` scheitert.
-
-```bash title="Selbsttest einer selbst gebauten Konnektor-Brücke"
-docker compose --profile internal run --rm <brücke> node src/selftest.js
-```
-
-Prüft Zugangsdaten, gewährte Berechtigungen, Lesezugriff und dass schreibende Pfade
-blockiert werden. Den Dienstnamen entnehmen Sie Ihrer `docker-compose.yml`, das Vorgehen
-beschreibt [das Konnektor-Muster](/docs/konnektoren/muster).
+- [Installation und Betrieb](/docs/betrieb/installation) beschreibt den Ablauf vom leeren
+  Server bis zur laufenden Instanz.
+- [Fehlerbehebung](/docs/betrieb/fehlerbehebung) sammelt die häufigen Fehlerbilder.

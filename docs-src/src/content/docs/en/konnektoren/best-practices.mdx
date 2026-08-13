@@ -1,19 +1,19 @@
 ---
 title: Best practices for connectors
-description: Ten rules with reasoning and measured figures, plus a checklist to run before granting access to a new connector.
+description: Ten rules with reasoning, plus a checklist to run before granting access to a new connector.
 sidebar:
   order: 7
 ---
 
-import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 This page sums up what has proven itself in operation. The rules are ordered by importance, and the first one is the one that gets forgotten most often and costs the most.
 
 ## 1. Set the server default to denied right away
 
-Without a rule document the permission gateway lets everyone through. A freshly created connector is therefore visible to every person who may use MCP at all.
+Without a rule in place a connector is not blocked automatically. A freshly created connector is therefore visible to every person who may use MCP at all.
 
-This is built that way on purpose, because a configuration mistake should not paralyze the whole chat. For you it means that the period between "connector created" and "permissions set" is an open window. With an ERP connection, that window covers every customer, every document, and all the personnel data the service account can see.
+This is deliberate, because a configuration mistake should not paralyze the whole chat. For you it means that the period between "connector created" and "permissions set" is an open window. With an ERP connection, that window covers every customer, every document, and all the personnel data the service account can see.
 
 So set **"Server-Standard"** (server default) to denied in the same work step in which you create the connector, and only grant access afterwards. Remember to save, the panel only writes when you press the button.
 
@@ -21,13 +21,9 @@ So set **"Server-Standard"** (server default) to denied in the same work step in
 
 The tool catalog of a connector is sent to the model **with every single message**. It is not a one time investment, it is ongoing rent on every chat.
 
-| Example | Tools | Context per conversation |
-|---|---|---|
-| Bridge to a large product family, unfiltered | 164 | roughly 96,000 tokens |
-| The same bridge, filtered to the use case | 21 | roughly 8,000 tokens |
-| Deliberately narrow bridge | 7 | roughly 2,000 tokens |
+The order of magnitude is substantial: a large connector can offer more than a hundred tools and thereby occupy a considerable share of the available context before the first question is even asked. Narrowed down to the use case, often only a small fraction of that remains.
 
-The filtering saves 92 percent. The second effect is at least as important: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. A narrow catalog delivers not only cheaper but also more reliable answers.
+The second effect is at least as important: the more similar sounding tools there are in the catalog, the more often the model reaches for the wrong one. A narrow catalog delivers not only cheaper but also more reliable answers.
 
 So enable tools one at a time and on request, not as a precaution.
 
@@ -59,13 +55,13 @@ Only two levels are reliable: the permissions of the account in the source syste
 
 If a system offers per-person access through an interface, take it. Then the target system knows the person making the request, and their permissions there apply unchanged. You have to rebuild nothing and maintain nothing on top, and a permission change in the source system takes effect in the chat right away.
 
-A connection to your file storage typically works this way, see [pattern B](/docs/en/konnektoren/muster). The price for it is that every person has to connect once, and that such a connector does not run through the gateway and therefore cannot be controlled per role or group. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
+A connection to your file storage typically works this way, see [pattern B](/docs/en/konnektoren/muster). The price for it is that every person has to connect once, and that no grants per role or group apply to such a connector. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
 
 A service account is the fallback for systems without this option. It is not bad, but it demands rules 1, 4, and 8 with some insistence.
 
 ## 7. Keys only as a variable reference
 
-Never enter credentials into the configuration in plain text, only ever as a reference to an environment variable, so in the form `${MEIN_SCHLUESSEL}`. You store the value itself in the `.env` on the server or in the panel under **"Einstellungen → API-Schlüssel"** (settings → API keys).
+Never enter credentials into the configuration in plain text, only ever as a reference to an environment variable, so in the form `${MEIN_SCHLUESSEL}`. You store the value itself in the panel under **"Einstellungen → API-Schlüssel"** (settings → API keys).
 
 This is not a formality. A plain text value in the configuration would be readable through the configuration view and would come along in exports and backups of the settings. That is why the panel explicitly rejects plain text for provider keys.
 
@@ -86,7 +82,7 @@ Four levers help:
 - **Upper limits are set and should stay that way.** Tool results are capped in length, and so is the character budget that web search passes on to the model. If a response looks truncated, that is the protection doing its job.
 - **Prefer connectors with staged responses.** A well built detail query loads only the master data first and fetches expensive sections such as software inventory, services, or patch levels only on explicit request. That saves on every single question.
 - **For questions about many objects, use an evaluation tool instead of many individual queries.** Ten individual queries cost ten results in the context, one evaluation costs one.
-- **With tool heavy agents, load the tool definitions only when needed.** There is a capability for this that puts the catalog behind a search tool instead of writing it into every prompt in full. It only pays off with a large number of tools and is not set in the shipped customer template.
+- **With tool heavy agents, do not write the whole catalog into every prompt.** Tool definitions can also be loaded only when needed. That only pays off with a large number of tools.
 
 What you do not have to handle yourself: if a conversation runs very long, the history is compacted automatically.
 
@@ -110,10 +106,10 @@ Work through these points before the first person uses the connector:
 - [ ] The service account in the source system has exactly the permissions it needs, and no more.
 - [ ] The data boundary is drawn in the source system, not in the prompt.
 - [ ] Credentials appear in the configuration only as a variable reference.
-- [ ] The connector runs through the gateway, or there is a reason why it does not.
+- [ ] Grants per role and group apply to the connector, or there is a reason why the permissions in the target system are enough.
 - [ ] **"Server-Standard"** (server default) is set to denied and has been saved.
 - [ ] The grants are set, and only one instance is granted per person.
-- [ ] The connection test is green, and the chat layer has been restarted.
+- [ ] The connection test is green, and the instance has been restarted.
 - [ ] A test user with narrow permissions demonstrably sees less than one with wide permissions.
 - [ ] For a vendor outside the EU this is documented and communicated.
 - [ ] A look at the log under **"Audit-Log → MCP-Tool-Calls"** (audit log) shows the expected calls and decisions.
@@ -125,13 +121,13 @@ Work through these points before the first person uses the connector:
     description="Three proven shapes: service account, per-person sign-in, and read-only bridge, with how the permissions flow."
   />
   <LinkCard
-    title="Permission gateway"
+    title="Permissions and grants"
     href="/docs/en/konnektoren/gateway-und-rechte"
-    description="The permission cascade, the effective times, and where you maintain the rules."
+    description="The permission cascade and where you maintain the grants."
   />
   <LinkCard
     title="Connecting your own connector"
     href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
-    description="The complete path in the panel or through the configuration files, including troubleshooting."
+    description="What to settle beforehand, how to measure a third party connector, and what counts when granting access."
   />
 </CardGrid>

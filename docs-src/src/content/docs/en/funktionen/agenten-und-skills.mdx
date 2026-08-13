@@ -34,7 +34,7 @@ persona, model, tools.
 
 The reason is practical. Skills are plain files, portable and versionable. An agent on the other
 hand lives in the database of one instance and can neither be created from the configuration
-file nor exported conveniently. Whoever puts their knowledge into agents rebuilds it by hand on
+nor exported conveniently. Whoever puts their knowledge into agents rebuilds it by hand on
 every new instance. Whoever puts it into skills copies a file.
 
 You only need an agent of your own once a model card is not enough, for example because a
@@ -46,7 +46,7 @@ Agents appear in the model picker in a submenu of their own. You select the agen
 card, after which the conversation runs with its instructions and its tools.
 
 An agent may take several steps in sequence, so look something up, read, calculate and only then
-answer. The step budget per run is 100 in the shipped state.
+answer. The number of steps per run is limited.
 
 ### Who is allowed to build agents
 
@@ -63,9 +63,8 @@ The usual arrangement: ordinary team members use, a small group builds. That kee
 agents manageable and prevents twenty half finished variants of the same assistant from
 appearing.
 
-Self built agents run exclusively on the EU provider in the customer template. That is a
-deliberate boundary: a self built agent should not accidentally send data through a non EU
-provider.
+Self built agents run exclusively on the EU cards out of the box. That is a deliberate
+boundary: a self built agent should not accidentally send data through a non EU provider.
 
 ## How a skill takes effect
 
@@ -94,7 +93,7 @@ There are two ways to provide a skill, and they behave differently.
 | Route | How | Visible to whom |
 |---|---|---|
 | Upload in the interface | Admin uploads the skill and shares it deliberately | only the people and groups it was granted to |
-| Deployment directory `distribution/skills/` | Put the file on the server | the whole instance, read only |
+| Instance wide provisioning | Admin puts the skill on the server as a file | the whole instance, read only |
 
 The skill catalog is active on the model cards. What is in it, however, is not "everything" but
 exactly what has been granted to the person in question. On top of that comes the role
@@ -102,12 +101,12 @@ permission **"Skills nutzen"** (use skills), which in the panel carries the note
 Person/Rolle, nie pauschal ausrollen" (grant per person or role, never roll out to everyone).
 
 <Aside type="danger" title="Never roll out skills to everyone">
-A skill in the deployment directory **wins against a skill of the same name from the database**.
-So if you additionally put a skill that is only meant for sales into the deployment directory as
-a file, you defeat the targeted grant. The skill is visible to everyone afterwards, without
-anyone having changed anything.
+A skill provided instance wide **wins against a skill of the same name from the database**. So
+if you additionally put a skill that is only meant for sales onto the server as a file, you
+defeat the targeted grant. The skill is visible to everyone afterwards, without anyone having
+changed anything.
 
-Rule: the deployment directory is exclusively for skills that may apply instance wide and
+Rule: instance wide provisioning is exclusively for skills that may apply instance wide and
 contain no confidential material. Everything else is uploaded and shared deliberately.
 
 For the same reason the configuration contains **no fixed skill list**. Such a list would bind
@@ -116,26 +115,25 @@ the named skills to all users of the card.
 
 <Aside type="note" title="Shared skills are inactive at first">
 A skill shared with a person is **not** active for that person by default, they would have to
-switch it on themselves first. If granted skills should take effect immediately, set the base
-override `interface.skills.defaultActiveOnShare` to `true` during setup. That belongs in the
-panel, not in the configuration file, otherwise the startup seeder overwrites the skill
-permissions maintained in the role editor on every restart.
+switch it on themselves first. If granted skills should take effect immediately, this can be
+changed in the panel during setup. That setting belongs in the panel, otherwise startup
+overwrites the skill permissions maintained in the role editor on every restart.
 </Aside>
 
 ## What is shipped
 
 A skeleton, not a finished agent.
 
-- `distribution/skills/` contains the instructions only. Skill contents do not belong in the
-  public repository, because they contain hourly rates, internal identifiers and processes. They
-  are brought onto the server by hand, like the `.env`.
-- `distribution/seed-agents/` contains a script and example definitions with which standard
-  agents can be created once per instance. It is explicitly marked as a skeleton and is to be
-  checked against the running instance.
+- Skill contents are not shipped. They contain hourly rates, internal identifiers and
+  processes, and are therefore brought onto the server by hand, like the other confidential
+  material.
+- For standard agents there are example definitions with which a basic set can be created once
+  per instance. They are explicitly marked as a skeleton and are to be checked against the
+  running instance.
 
 The reason for this is a peculiarity of LibreChat: agents cannot be defined in the
-configuration file and there is no export in the builder. The configuration can only reference
-an agent by its identifier.
+configuration and there is no export in the builder. The configuration can only reference an
+agent by its identifier.
 
 ## For admins
 
@@ -158,13 +156,9 @@ Remote-Agenten"** (administration, remote agents).
 
 <Steps>
 
-1. Put the folder containing `SKILL.md` into `distribution/skills/`.
+1. Put the folder containing `SKILL.md` into the location provided for it on the server.
 
-2. Restart, because skills from the deployment directory are read at startup:
-
-   ```bash title="On the server"
-   docker compose restart api
-   ```
+2. Restart the application, because skills provided instance wide are read at startup.
 
 3. Test, and do it in both directions. Positive: does the skill trigger on the phrasings that
    are in its description? Negative: does it stay out of unrelated tasks?
@@ -173,8 +167,7 @@ Remote-Agenten"** (administration, remote agents).
 
 ### Limiting the catalog
 
-From about five skills onward it pays to cap the catalog, through
-`endpoints.agents.skills.maxCatalogSkills`. Otherwise the list of descriptions carried along in
-every conversation grows and costs tokens in every chat.
+From about five skills onward it pays to cap the catalog. Otherwise the list of descriptions
+carried along in every conversation grows and costs tokens in every chat.
 
 The same principle applies to connectors: few, clearly described tools beat many.

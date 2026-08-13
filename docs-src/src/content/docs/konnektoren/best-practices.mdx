@@ -1,19 +1,19 @@
 ---
 title: Best Practices für Konnektoren
-description: Zehn Regeln mit Begründung und Messzahlen, dazu eine Checkliste vor der Freigabe eines neuen Konnektors.
+description: Zehn Regeln mit Begründung, dazu eine Checkliste vor der Freigabe eines neuen Konnektors.
 sidebar:
   order: 7
 ---
 
-import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 Diese Seite fasst zusammen, was sich im Betrieb bewährt hat. Die Regeln stehen nach Wichtigkeit, die erste ist die, die am häufigsten vergessen wird und am meisten kostet.
 
 ## 1. Server-Standard sofort auf verweigert
 
-Ohne Regeldokument lässt das Rechte-Gateway durch. Ein frisch angelegter Konnektor ist damit für jede Person sichtbar, die überhaupt MCP benutzen darf.
+Ohne gesetzte Regel wird ein Konnektor nicht automatisch gesperrt. Ein frisch angelegter Konnektor ist damit für jede Person sichtbar, die überhaupt MCP benutzen darf.
 
-Das ist bewusst so gebaut, weil ein Konfigurationsfehler nicht den ganzen Chat lahmlegen soll. Für Sie bedeutet es aber, dass der Zeitraum zwischen „Konnektor angelegt" und „Rechte gesetzt" ein offenes Fenster ist. Bei einer ERP-Anbindung sind das in diesem Fenster sämtliche Kunden, Belege und Personaldaten, die das Dienstkonto sehen kann.
+Das ist bewusst so, weil ein Konfigurationsfehler nicht den ganzen Chat lahmlegen soll. Für Sie bedeutet es aber, dass der Zeitraum zwischen „Konnektor angelegt" und „Rechte gesetzt" ein offenes Fenster ist. Bei einer ERP-Anbindung sind das in diesem Fenster sämtliche Kunden, Belege und Personaldaten, die das Dienstkonto sehen kann.
 
 Setzen Sie den **Server-Standard** deshalb im selben Arbeitsschritt auf verweigert, in dem Sie den Konnektor anlegen, und geben Sie erst danach gezielt frei. Denken Sie an das Speichern, das Panel schreibt erst auf Knopfdruck.
 
@@ -21,13 +21,9 @@ Setzen Sie den **Server-Standard** deshalb im selben Arbeitsschritt auf verweige
 
 Der Werkzeug-Katalog eines Konnektors wird dem Modell bei **jeder einzelnen Nachricht** mitgeschickt. Er ist keine einmalige Investition, sondern eine laufende Miete auf jeden Chat.
 
-| Beispiel | Werkzeuge | Kontext pro Konversation |
-|---|---|---|
-| Brücke zu einer grossen Produktfamilie, ungefiltert | 164 | rund 96 000 Tokens |
-| Dieselbe Brücke, auf den Anwendungsfall gefiltert | 21 | rund 8 000 Tokens |
-| Bewusst schmal gebaute Brücke | 7 | rund 2 000 Tokens |
+Die Grössenordnung ist erheblich: Ein umfangreicher Konnektor kann über hundert Werkzeuge anbieten und damit einen beträchtlichen Teil des verfügbaren Kontexts belegen, bevor die erste Frage gestellt ist. Auf den Anwendungsfall beschränkt, bleibt davon oft nur ein kleiner Bruchteil übrig.
 
-Die Filterung spart 92 Prozent. Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
+Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
 
 Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich.
 
@@ -59,13 +55,13 @@ Verlässlich sind nur zwei Ebenen: die Rechte des Kontos im Quellsystem, also et
 
 Wenn ein System einen personenbezogenen Zugang über eine Schnittstelle anbietet, nehmen Sie ihn. Dann kennt das Zielsystem die anfragende Person, und ihre dortigen Rechte gelten unverändert. Sie müssen nichts nachbauen, nichts nachpflegen, und ein Rechtewechsel im Quellsystem wirkt sofort auch im Chat.
 
-Eine Anbindung an Ihre Dateiablage funktioniert typischerweise so, siehe [Muster B](/docs/konnektoren/muster). Der Preis dafür ist, dass jede Person sich einmal verbinden muss, und dass ein solcher Konnektor nicht über das Gateway läuft und damit nicht pro Rolle oder Gruppe steuerbar ist. Das ist der richtige Tausch: Eine feinere Grenze im Zielsystem ist mehr wert als eine gröbere Grenze davor.
+Eine Anbindung an Ihre Dateiablage funktioniert typischerweise so, siehe [Muster B](/docs/konnektoren/muster). Der Preis dafür ist, dass jede Person sich einmal verbinden muss, und dass für einen solchen Konnektor keine Freigaben pro Rolle oder Gruppe gelten. Das ist der richtige Tausch: Eine feinere Grenze im Zielsystem ist mehr wert als eine gröbere Grenze davor.
 
 Ein Dienstkonto ist die Notlösung für Systeme ohne diese Möglichkeit. Es ist nicht schlecht, aber es verlangt die Regeln 1, 4 und 8 mit Nachdruck.
 
 ## 7. Schlüssel nur als Variablenreferenz
 
-Tragen Sie Zugangsdaten niemals im Klartext in die Konfiguration ein, sondern ausschliesslich als Referenz auf eine Umgebungsvariable, also in der Form `${MEIN_SCHLUESSEL}`. Den Wert selbst hinterlegen Sie in der `.env` auf dem Server oder im Panel unter **Einstellungen → API-Schlüssel**.
+Tragen Sie Zugangsdaten niemals im Klartext in die Konfiguration ein, sondern ausschliesslich als Referenz auf eine Umgebungsvariable, also in der Form `${MEIN_SCHLUESSEL}`. Den Wert selbst hinterlegen Sie im Panel unter **Einstellungen → API-Schlüssel**.
 
 Das ist keine Formsache. Ein Klartextwert in der Konfiguration wäre über die Konfigurationsansicht lesbar und würde in Exporten und Sicherungen der Einstellungen mitlaufen. Deshalb lehnt das Panel bei Provider-Schlüsseln Klartext ausdrücklich ab.
 
@@ -86,7 +82,7 @@ Vier Stellschrauben helfen:
 - **Obergrenzen sind gesetzt und sollten es bleiben.** Werkzeug-Ergebnisse sind in der Länge gedeckelt, ebenso das Zeichenbudget, das die Web-Suche ans Modell weitergibt. Wirkt eine Antwort abgeschnitten, ist das der Schutz bei der Arbeit.
 - **Konnektoren mit gestuften Antworten bevorzugen.** Eine gut gebaute Detailabfrage lädt zuerst nur die Stammdaten und holt teure Abschnitte wie Softwareinventar, Dienste oder Patch-Stände erst auf ausdrückliche Anforderung. Das spart bei jeder einzelnen Frage.
 - **Für Fragen über viele Objekte ein Auswertungswerkzeug statt vieler Einzelabfragen.** Zehn Einzelabfragen kosten zehn Ergebnisse im Kontext, eine Auswertung kostet eines.
-- **Bei werkzeugschweren Agenten die Werkzeug-Definitionen erst bei Bedarf laden.** Es gibt dafür eine Fähigkeit, die den Katalog hinter ein Suchwerkzeug legt, statt ihn komplett in jeden Prompt zu schreiben. Sie lohnt sich erst bei sehr vielen Werkzeugen und ist im ausgelieferten Kunden-Template nicht gesetzt.
+- **Bei werkzeugschweren Agenten den Katalog nicht komplett in jeden Prompt schreiben.** Werkzeug-Definitionen lassen sich auch erst bei Bedarf nachladen. Das lohnt sich erst bei sehr vielen Werkzeugen.
 
 Was Sie nicht selbst regeln müssen: Läuft ein Gespräch sehr lang, wird der Verlauf automatisch verdichtet.
 
@@ -110,10 +106,10 @@ Gehen Sie diese Punkte durch, bevor die erste Person den Konnektor benutzt:
 - [ ] Das Dienstkonto im Quellsystem hat genau die Rechte, die es braucht, und nicht mehr.
 - [ ] Die Datengrenze ist im Quellsystem gezogen, nicht im Prompt.
 - [ ] Zugangsdaten stehen ausschliesslich als Variablenreferenz in der Konfiguration.
-- [ ] Der Konnektor läuft über das Gateway, oder es ist begründet, warum nicht.
+- [ ] Für den Konnektor greifen Freigaben pro Rolle und Gruppe, oder es ist begründet, warum die Rechte im Zielsystem genügen.
 - [ ] Der **Server-Standard** steht auf verweigert und ist gespeichert.
 - [ ] Die Freigaben sind gesetzt, und pro Person ist nur eine Instanz freigegeben.
-- [ ] Der Verbindungstest ist grün, und die Chat-Schicht wurde neu gestartet.
+- [ ] Der Verbindungstest ist grün, und die Instanz wurde neu gestartet.
 - [ ] Eine Testperson mit engen Rechten sieht nachweislich weniger als eine mit weiten.
 - [ ] Bei einem Anbieter ausserhalb der EU ist das dokumentiert und kommuniziert.
 - [ ] Ein Blick ins Protokoll unter **Audit-Log → MCP-Tool-Calls** zeigt die erwarteten Aufrufe und Entscheide.
@@ -125,13 +121,13 @@ Gehen Sie diese Punkte durch, bevor die erste Person den Konnektor benutzt:
     description="Drei bewährte Bauformen: Dienstkonto, Anmeldung pro Person und nur lesende Brücke, mit dem Verlauf der Rechte."
   />
   <LinkCard
-    title="Rechte-Gateway"
+    title="Rechte und Freigaben"
     href="/docs/konnektoren/gateway-und-rechte"
-    description="Die Rechtekaskade, die Wirkzeiten und wo Sie die Regeln pflegen."
+    description="Die Rechtekaskade und wo Sie die Freigaben pflegen."
   />
   <LinkCard
     title="Eigenen Konnektor anbinden"
     href="/docs/konnektoren/eigenen-konnektor-anbinden"
-    description="Der vollständige Weg im Panel oder über die Konfigurationsdateien, samt Fehlersuche."
+    description="Was Sie vorher klären, woran Sie einen fremden Konnektor messen und was beim Freigeben zählt."
   />
 </CardGrid>

@@ -1,6 +1,6 @@
 ---
 title: Chat und Modelle
-description: Wie der Chat funktioniert, welche Modellkarten ausgeliefert werden, wie Erinnerungen und die automatische Kompaktierung langer Gespräche arbeiten.
+description: Wie der Chat funktioniert, wie Modellkarten aufgebaut sind, wie Erinnerungen und die automatische Kompaktierung langer Gespräche arbeiten.
 sidebar:
   order: 1
 ---
@@ -43,8 +43,7 @@ den ersten Nachrichten ableitet. Sie können den Titel jederzeit überschreiben.
 
 **Privater Chat** heisst im Rollen-Editor des Admin-Panels **Temporäre Chats** und trägt dort
 den Zusatz „Unterhaltungen ohne Speicherung". Wie lange eine solche Unterhaltung überhaupt
-aufbewahrt wird, legt der Admin im Panel fest, unter **Konfiguration → Funktionen** im Feld
-**Temporäre Chats: Aufbewahrung (Stunden)**.
+aufbewahrt wird, legt der Admin fest.
 
 **Abzweigen** ist der richtige Weg, wenn ein Gespräch in zwei Richtungen weitergehen soll.
 Sie behalten den bisherigen Verlauf und probieren im Abzweig eine andere Variante, ohne die
@@ -55,9 +54,8 @@ liest mit. Das Recht dazu ist ein eigenes Rollen-Recht und lässt sich entziehen
 
 ## Alte Chats durchsuchen
 
-In der Seitenleiste gibt es eine Suche über den vollen Text aller eigenen Unterhaltungen.
-Dahinter läuft Meilisearch als eigener Dienst im Stack. Die Suche findet also auch eine
-Formulierung mitten in einer Antwort von vor drei Wochen.
+In der Seitenleiste gibt es eine Suche über den vollen Text aller eigenen Unterhaltungen. Die
+Suche findet also auch eine Formulierung mitten in einer Antwort von vor drei Wochen.
 
 <Aside type="note" title="Drei Suchen, die nicht dasselbe sind">
 Die Volltextsuche über Ihre Chats ist etwas anderes als die **Dateisuche** über einen
@@ -74,52 +72,29 @@ Eine Modellkarte ist ein fertig zusammengestelltes Preset. Sie bündelt drei Din
 2. den hinterlegten Systemprompt, also die Arbeitsanweisung an das Modell,
 3. die Vorauswahl der Werkzeuge, die auf dieser Karte scharf sind.
 
-Der Systemprompt wird serverseitig eingefügt und gelangt nicht in den Browser. Alle
+Der Systemprompt wird serverseitig eingefügt und gelangt nicht in den Browser. Die
 ausgelieferten Karten tragen denselben deutschen Prompt: Antwort auf Deutsch, sachlicher Ton,
 keine erfundenen Fakten, Rückfragen bei unklaren Aufträgen.
 
 Neue Chats starten auf der Standardkarte. Sie dürfen die Karte wechseln, der Wechsel ist
 nicht gesperrt.
 
-## Die Karten im Auslieferungszustand
+## Welche Karten Sie vorfinden
 
-Das Kunden-Template `distribution/librechat.yaml` liefert genau vier Karten aus:
+Welche Karten im Picker stehen, entscheidet der Admin. Zwei Unterscheidungen sind im Alltag
+wichtig:
 
-| Karte im Picker | Anbieter und Modell | Verarbeitung |
-|---|---|---|
-| EU-Cowork Kollege (EU · Text) | EuRouter, `glm-5.2`. Standardkarte | EU |
-| EU-Cowork Kollege (EU · Text + Bilder) | EuRouter, `kimi-k2.6` | EU |
-| EU-Cowork Kollege (Sonnet 5 · ⚠ Nicht-EU) | OpenRouter, `anthropic/claude-sonnet-5` | nicht EU-resident |
-| EU-Cowork Kollege (Opus 4.8 · ⚠ Nicht-EU) | OpenRouter, `anthropic/claude-opus-4.8` | nicht EU-resident |
-
-Die Standardkarte versteht nur Text. Bilder und Screenshots gehören auf die Karte
-„Text + Bilder" oder auf eine der beiden Nicht-EU-Karten, die ebenfalls Bilder lesen können.
-
-Zusätzlich blendet der Picker ein Untermenü mit weiteren OpenRouter-Modellen ein. Diese
-Modelle laufen **ohne** den EU-Cowork-Systemprompt, sie sind roh. Wer eine rein europäische
-Instanz will, entfernt den OpenRouter-Endpunkt und die beiden Nicht-EU-Karten aus der
-Konfiguration.
+- **Text oder Text und Bilder.** Nicht jede Karte versteht Bilder. Screenshots und Fotos
+  gehören auf eine Karte, die als bildfähig gekennzeichnet ist; auf einer reinen Text-Karte
+  bleibt ein Bild wirkungslos.
+- **EU oder nicht EU.** Karten, deren Anfragen die EU verlassen, tragen die Kennzeichnung
+  ⚠ Nicht-EU im Namen.
 
 <Aside type="caution" title="Die Kennzeichnung ist Absicht">
 Das Zeichen ⚠ und der Zusatz „Nicht-EU" stehen im Kartennamen, damit im Moment der Auswahl
 sichtbar ist, dass diese Anfrage die EU verlässt. Die Kennzeichnung darf nicht entfernt
-werden, solange die Karte auf OpenRouter zeigt. OpenRouter ist ein US-Gateway und
-verarbeitet Anfragen nicht EU-resident.
-</Aside>
-
-## Der Model-Router als Möglichkeit
-
-Zusätzlich gibt es einen eigenen Model-Router. Er nimmt eine einzige Karte für alles und
-entscheidet pro Anfrage selbst, welches Modell die Aufgabe bekommt: eine günstige Route für
-einfache Fragen, eine starke Route für komplexe Aufgaben, eine Bild-Route, sobald ein Bild
-in der Nachricht liegt.
-
-<Aside type="note" title="Im Auslieferungszustand nicht aktiv">
-Nach der Installation sehen Ihre Mitarbeitenden die vier Karten oben, keine Router-Karte —
-die Modellwahl bleibt damit vorhersehbar. Die Routen sind im Admin-Panel unter
-**Einstellungen → Router** konfigurierbar („Komplexe Aufgaben (Standard-Route)", „Einfache
-Aufgaben (günstige Route)", „Bilder (Vision-Route)"), sodass Sie den Router gezielt
-einschalten können, wenn Sie ihn wollen.
+werden, solange die Karte auf einen Anbieter ausserhalb der EU zeigt. Wer eine rein
+europäische Instanz will, bietet solche Karten gar nicht erst an.
 </Aside>
 
 ## Erinnerungen: das Langzeitgedächtnis
@@ -131,10 +106,10 @@ Gespeichert wird bewusst wenig und nur in vier Kategorien:
 
 | Kategorie | Inhalt |
 |---|---|
-| `praeferenzen` | Wie Sie Antworten wollen: Sprache, Format, Detailgrad, Ton, wiederkehrende Korrekturen |
-| `arbeitskontext` | Rolle, Team, Zuständigkeiten, verwendete Systeme |
-| `projekte` | Laufende Projekte, Kunden und Themen mit Kurzstand |
-| `notizen` | Sonstige stabile Fakten, die künftige Antworten besser machen |
+| Präferenzen | Wie Sie Antworten wollen: Sprache, Format, Detailgrad, Ton, wiederkehrende Korrekturen |
+| Arbeitskontext | Rolle, Team, Zuständigkeiten, verwendete Systeme |
+| Projekte | Laufende Projekte, Kunden und Themen mit Kurzstand |
+| Notizen | Sonstige stabile Fakten, die künftige Antworten besser machen |
 
 Ausdrücklich **nicht** gespeichert werden Passwörter und Schlüssel, Gesundheits-, Religions-
 und politische Angaben, Lohndaten, sensible Fakten über Dritte und einmalige Details ohne
@@ -154,9 +129,8 @@ Ein Modell kann pro Anfrage nur eine begrenzte Menge Text lesen. Wird eine Unter
 lang, fasst ein separater Lauf die älteren Nachrichten automatisch zusammen und schickt
 künftig diese Zusammenfassung statt des vollen Verlaufs an das Modell.
 
-- Auf den grossen Karten greift das bei rund **250 000 Tokens**, also nach sehr langer Arbeit
-  an einem Thema.
-- Auf der Bild-Karte greift es früher, weil deren Fenster kleiner ist, bei rund 205 000 Tokens.
+- Der Punkt, an dem das greift, hängt von der gewählten Karte ab: Karten mit kleinerem
+  Kontextfenster kompaktieren früher.
 - Zuerst werden alte Werkzeug-Ergebnisse abgeräumt, etwa lange Trefferlisten aus einem
   Fachsystem. Erst danach sind echte Nachrichten an der Reihe.
 
@@ -173,43 +147,31 @@ einen neuen Chat oder zweigen Sie an der passenden Stelle ab.
 
 ### Modellkarten pro Rolle und Gruppe
 
-Welche Karten eine Person sieht, entscheidet nicht die Konfigurationsdatei allein, sondern
-das Admin-Panel. Die Kaskade lautet **Gruppe vor Rolle vor Basis**.
+Welche Karten eine Person sieht, entscheidet das Admin-Panel. Die Kaskade lautet **Gruppe vor
+Rolle vor Basis**.
 
 - **Verwaltung → Rollen**: pro Rolle ein Schalter je Karte. Dazu der Schalter **Weitere
   Modelle (Roh-Untermenü)** mit dem Zusatz „Aus = diese Rolle sieht NUR die oben aktivierten
-  Karten". Der Knopf **Auf YAML-Stand zurücksetzen** stellt die Auswahl der
-  Basiskonfiguration wieder her.
+  Karten".
 - **Verwaltung → Gruppen**: pro Gruppe entweder **Erben** oder **Eigene Auswahl (übersteuert
   die Rollen-Regel)**.
 
-Das ist der saubere Weg, um etwa der Geschäftsleitung die Nicht-EU-Karten freizugeben und
-allen anderen nur die beiden EU-Karten zu zeigen.
+Das ist der saubere Weg, um etwa der Geschäftsleitung zusätzliche Karten freizugeben und
+allen anderen nur die EU-Karten zu zeigen.
 
 ### Modell-Picker ganz ausblenden
 
-Im Template steht `interface.modelSelect: true`, der Picker ist also sichtbar. Für ein
-bewusst einfaches Setup setzen Sie ihn im Panel unter **Konfiguration → Funktionen** auf
-**Modell-Auswahl anzeigen: aus**. Dann arbeiten alle auf der Standardkarte und sehen gar
-keine Modellauswahl mehr.
+Für ein bewusst einfaches Setup setzen Sie im Panel unter **Konfiguration → Funktionen** die
+**Modell-Auswahl anzeigen** auf **aus**. Dann arbeiten alle auf der Standardkarte und sehen
+gar keine Modellauswahl mehr.
 
 ### Parameter-Panel
 
-Das Panel für Temperatur und ähnliche Feineinstellungen ist im Auslieferungszustand
-**aus** (`interface.parameters: false`). Das ist bewusst so: Mitarbeitende ohne
-KI-Hintergrund verstellen sonst Werte, deren Wirkung sie nicht abschätzen können.
-
-Wieder einschalten geht pro Rolle über die Konfigurations-Kaskade im Panel, nicht über den
-Rollen-Editor. `parameters` ist kein Rechte-Feld, sondern eine Konfigurationsoption. In der
-Praxis bekommt die Rolle ADMIN den Override `interface.parameters: true`, alle anderen Rollen
-erben das ausgeschaltete Verhalten.
-
-### OpenRouter-Schlüssel
-
-Die beiden Nicht-EU-Karten brauchen einen gültigen `OPENROUTER_API_KEY`. Fehlt er,
-erscheinen die Karten trotzdem im Picker, jeder Aufruf endet aber mit einem Fehler. Wenn Sie
-diese Karten nicht anbieten wollen, entfernen Sie sie aus der Konfiguration, statt den
-Schlüssel wegzulassen.
+Das Panel für Temperatur und ähnliche Feineinstellungen ist im Auslieferungszustand **aus**.
+Das ist bewusst so: Mitarbeitende ohne KI-Hintergrund verstellen sonst Werte, deren Wirkung
+sie nicht abschätzen können. Wieder einschalten geht pro Rolle über die
+Konfigurations-Kaskade im Panel; in der Praxis bekommt die Rolle ADMIN diesen Override, alle
+anderen Rollen erben das ausgeschaltete Verhalten.
 
 ### Sinnvolle Reihenfolge beim Einrichten
 

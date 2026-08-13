@@ -1,123 +1,68 @@
 ---
 title: Admin-Panel
-description: Wo das Admin-Panel erreichbar ist, wie es aufgebaut ist und in welcher Reihenfolge ein neuer Admin vorgeht.
+description: Was das Admin-Panel leistet und in welcher Reihenfolge eine neue Administratorin vorgeht.
 sidebar:
   order: 1
 ---
 
-import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Das Admin-Panel ist die Oberfläche, über die Sie EU Cowork AI verwalten: Konten, Rollen, Gruppen, Konnektoren, Modelle, Verbrauch und Protokolle. Diese Seite beschreibt den Einstieg und den Aufbau. Die einzelnen Bereiche sind in den folgenden Kapiteln erklärt. Zielgruppe ist die Person, die die Instanz betreut.
+Das Admin-Panel ist die Oberfläche, über die EU Cowork AI verwaltet wird: Konten, Rollen, Gruppen, Konnektoren, Modelle, Verbrauch und Protokolle. Diese Seite gibt den Überblick, die einzelnen Bereiche sind in den folgenden Kapiteln beschrieben. Zielgruppe ist die Person, die die Instanz betreut.
 
-## Zugang und Anmeldung
+## Zugang
 
-Das Panel läuft als eigener Dienst neben dem Chat und ist unter einer eigenen Adresse erreichbar.
-
-| Umgebung | Adresse |
-| --- | --- |
-| Produktion hinter Caddy | `https://admin.<ihre-domain.ch>` |
-| Lokal oder ohne Reverse-Proxy | `http://localhost:3010` |
-
-Sie melden sich mit Ihrem **bestehenden LibreChat-Admin-Konto** an, also mit derselben E-Mail-Adresse und demselben Passwort wie im Chat. Es gibt kein zweites Konto und kein zusätzliches Geheimnis, das Sie irgendwo hinterlegen müssten. Wer in LibreChat die Rolle `ADMIN` hat, kommt hier hinein, alle anderen nicht.
-
-<Aside type="note" title="Keine eigene Benutzerverwaltung">
-Das Panel führt keine eigene Nutzerdatenbank. Es prüft die Anmeldung gegen LibreChat und arbeitet danach mit demselben Token weiter. Wird ein Konto in LibreChat gesperrt oder die Rolle entzogen, wirkt das sofort auch hier.
-</Aside>
+Das Panel ist unter einer eigenen Adresse erreichbar, die zu Ihrer Installation gehört. Sie melden sich mit Ihrem bestehenden Administratorkonto an, also mit derselben E-Mail-Adresse und demselben Passwort wie im Chat. Es gibt kein zweites Konto und kein zusätzliches Geheimnis. Wer im Chat die Administratorrolle hat, kommt hinein, alle anderen nicht. Wird ein Konto gesperrt oder die Rolle entzogen, wirkt das auch hier.
 
 <Aside type="caution" title="Empfohlen: Administratorzugänge zusätzlich absichern">
 Weil das Panel dieselben Konten benutzt wie der Chat, gelten für Administratorkonten die schärferen Anforderungen. Zwei Massnahmen gehören in jede produktive Einrichtung:
 
-- **Zwei-Faktor-Anmeldung für alle Konten mit der Rolle `ADMIN`** aktivieren.
-- **Den Zugang zu `admin.<ihre-domain.ch>` auf bekannte Netze begrenzen**, etwa auf Ihr VPN oder eine IP-Freigabeliste im vorgelagerten Reverse-Proxy. Das Panel wird im Alltag von wenigen Personen gebraucht, eine Einschränkung kostet also nichts.
+- **Zwei-Faktor-Anmeldung für alle Administratorkonten** aktivieren.
+- **Den Zugang auf bekannte Netze begrenzen**, etwa auf Ihr VPN oder eine IP-Freigabeliste. Das Panel wird im Alltag von wenigen Personen gebraucht, eine Einschränkung kostet also nichts.
 
 Nehmen Sie beides in Ihre Abnahmeliste auf und prüfen Sie es nach dem Aufsetzen einmal aktiv nach.
 </Aside>
 
-## Die Navigation
+## Was Sie dort tun
 
-Die Seitenleiste ist in vier Gruppen unterteilt: **Analyse**, **Verwaltung**, **Finanzen** und **System**.
+Die Oberfläche ist in vier Bereiche gegliedert:
 
-| Gruppe | Menüpunkt | Zweck |
-| --- | --- | --- |
-| Analyse | **Übersicht** | Monats-Dashboard: Verbrauch in Euro, Budgetstand, Tokens, aktive Nutzer, Tagesbalken pro Modell und Top-Tabellen |
-| Analyse | **Aktivität** | Rollierendes Fenster über 7, 30 oder 90 Tage, Router-Verteilung, OpenRouter-Konto |
-| Analyse | **Logs** | Einzelne Anfragen, Sessions, Client-Fehler und Diagnose |
-| Verwaltung | **Benutzer** | Konten anlegen, einladen, Rolle ändern, Guthaben, sperren, löschen, Datenexport |
-| Verwaltung | **Rollen** | Rollen, ihre Rechte und die Modell-Karten pro Rolle |
-| Verwaltung | **Gruppen** | Gruppen, Mitglieder und die Modell-Karten pro Gruppe |
-| Verwaltung | **MCP-Zugriff** | Wer darf welchen Konnektor nutzen |
-| Verwaltung | **Remote-Agenten** | Welche Agenten ausserhalb des Chats sichtbar sind, etwa im Outlook-Add-in |
-| Finanzen | **Verbrauch** | Verbrauch pro Person, Monatslimit, Guthaben, sperren |
-| Finanzen | **Abrechnung** | Monatsrechnung, CSV- und PDF-Beleg, Einzahlungen, Monatsarchiv |
-| System | **Konfiguration** | Sieben Reiter für die LibreChat-Konfiguration, dazu YAML-Import und -Export |
-| System | **Audit-Log** | Änderungshistorie aller Panel-Aktionen und aller Konnektor-Aufrufe |
-| System | **Einstellungen** | Panel-eigene Werte: Budget, Abrechnung, Router, API-Schlüssel, Aufbewahrung |
+| Bereich | Wofür |
+| --- | --- |
+| Analyse | Kennzahlen zur Nutzung und die Protokolle |
+| Verwaltung | Benutzer, Rollen, Gruppen, Zugriff auf Konnektoren und Agenten |
+| Finanzen | Verbrauch pro Person, Budgets und Abrechnungsbelege |
+| System | Konfiguration, Audit-Log und die Einstellungen der Instanz |
 
-Dazu kommen zwei Unterseiten pro Person, die Sie aus der Benutzerliste heraus öffnen:
-
-- **Verbrauch: `<Name>`** zeigt den Verbrauch einer einzelnen Person im Detail.
-- **Zugriffe: `<Name>`** beantwortet die Frage „Was darf diese Person, und warum". Das ist das erste Werkzeug, wenn jemand meldet, er sehe einen Konnektor oder ein Modell nicht.
-
-## Die Karte „Erste Schritte"
-
-Auf einer frisch installierten Instanz erscheint oben auf der **Übersicht** die Karte **Erste Schritte** mit vier Punkten:
-
-1. **Gruppe anlegen**
-2. **Modell-Karten pro Gruppe**
-3. **MCP-Zugriff regeln**
-4. **Mitarbeitende einladen**
-
-Die Häkchen kommen aus den echten Daten, es gibt keinen separat abgehakten Zustand, der veralten könnte. Die Karte verschwindet von selbst, sobald Gruppen und MCP-Regeln existieren, und lässt sich über **Ausblenden** vorher wegklicken.
+Zu jeder Person lassen sich zwei Detailansichten öffnen: der Verbrauch im Einzelnen und eine Übersicht, was diese Person darf und warum. Die zweite ist das erste Werkzeug, wenn jemand meldet, er sehe einen Konnektor oder ein Modell nicht.
 
 ## Zwei Grundprinzipien
 
-### Speichern ist überall ausdrücklich
+**Speichern ist ausdrücklich.** Das Panel arbeitet mit einer Arbeitskopie und schreibt erst, wenn Sie speichern. Solange Änderungen offen sind, weist die Oberfläche darauf hin.
 
-Das Panel arbeitet mit einer Arbeitskopie und schreibt erst, wenn Sie **Speichern** drücken. Solange Änderungen offen sind, tragen die betroffenen Bereiche einen Hinweis, zum Beispiel den Badge **Nicht gespeichert** unter **MCP-Zugriff**, im Rollen-Editor „1 Bereich ungespeichert" beziehungsweise „N Bereiche ungespeichert" und in der Konfiguration eine Speicherleiste mit der Zahl der offenen Änderungen.
-
-<Aside type="caution" title="Eigene Speicherpfade">
-Ein paar Felder speichern bewusst getrennt und sind deshalb nicht Teil des grossen Speichern-Knopfs: das Feld **Gateway-Ziel** eines MCP-Servers hat einen eigenen Knopf **Ziel speichern**, und unter **Einstellungen** speichern Budget und PDF-Anschriften jeweils für sich. Wenn Sie den Eindruck haben, eine Änderung sei verschwunden, prüfen Sie zuerst, ob der passende Knopf gedrückt wurde.
-</Aside>
-
-### Es gibt keine Klartext-Geheimnisse im Panel
-
-Das ist eine bewusste Entwurfsentscheidung und zieht sich durch alle Masken:
-
-- Ein Provider-Schlüssel darf in der Konfiguration nur als `${VARIABLE}` oder als `user_provided` stehen. Klartext wird abgelehnt, weil der Wert sonst lesbar in der Datenbank landen würde.
-- Gespeicherte Schlüssel unter **Einstellungen → API-Schlüssel** sind write-only. Sie werden nie wieder angezeigt, ändern heisst überschreiben.
-- Der Verbindungstest löst die Variablenreferenz serverseitig auf. Der Schlüssel verlässt den Server nicht, auch nicht in Fehlermeldungen.
-- Im Audit-Log wird bei Schlüsseländerungen nur der Name protokolliert, der Wert wird zwangsredigiert.
+**Es gibt keine Klartext-Geheimnisse.** Zugangsschlüssel werden nur als Referenz hinterlegt, nie im Klartext angezeigt und in Protokollen nur mit ihrem Namen erwähnt. Verbindungstests laufen serverseitig, der Schlüssel verlässt den Server nicht, auch nicht in Fehlermeldungen.
 
 ## Reihenfolge für einen neuen Admin
 
-Wenn Sie eine frische Instanz übernehmen, arbeiten Sie diese acht Punkte der Reihe nach ab. Sie bauen aufeinander auf.
+Wenn Sie eine frische Instanz übernehmen, ergibt diese Reihenfolge Sinn, weil die Schritte aufeinander aufbauen:
 
-<Steps>
+1. Die Registrierung auf die E-Mail-Domains Ihrer Firma eingrenzen.
+2. Ein Monatsbudget setzen, zunächst ohne harte Durchsetzung, um einen Monat lang zu sehen, wo Sie landen.
+3. Gruppen anlegen, sie sind die Basis für Zugriffe und Modelle.
+4. Pro Gruppe festlegen, welche Modelle sichtbar sind.
+5. Konnektoren anbinden und den Zugriff darauf gezielt freigeben.
+6. Mitarbeitende einladen.
+7. Die Aufbewahrungsfrist passend zu Ihrem Löschkonzept festlegen.
 
-1. **Domain-Lock setzen** unter **Konfiguration → Funktionen**, Feld **Erlaubte E-Mail-Domains**. Damit kann sich nur registrieren, wer eine Adresse Ihrer Firma hat.
-
-2. **Preise pflegen** unter **Konfiguration → Preise**, am schnellsten mit dem Knopf **Von OpenRouter übernehmen**. Ohne gepflegte Preise rechnet die Verbrauchsmessung mit Pauschalwerten.
-
-3. **Budget setzen** unter **Einstellungen → Budget & Durchsetzung**, zunächst ohne harte Durchsetzung. So sehen Sie einen Monat lang, wo Sie tatsächlich landen, ohne jemanden auszusperren.
-
-4. **Gruppen anlegen** unter **Verwaltung → Gruppen**. Gruppen sind die Basis für Zugriffe und Modelle.
-
-5. **Modell-Karten pro Gruppe festlegen**, damit jede Gruppe genau die Modelle sieht, die für sie gedacht sind.
-
-6. **Konnektoren anbinden** und unter **MCP-Zugriff** den **Server-Standard** auf verweigert stellen, danach gezielt freigeben. Ohne Regel lässt das Gateway durch.
-
-7. **Mitarbeitende einladen** unter **Verwaltung → Benutzer**, mit gesetzter Auto-Gruppe.
-
-8. **Aufbewahrungsfrist festlegen** unter **Einstellungen → Aufbewahrung**.
-
-</Steps>
+<Aside type="note" title="Unterlagen zur Einrichtung">
+Die Schritt-für-Schritt-Anleitungen zur Einrichtung Ihrer Instanz gehören zur Auslieferung und werden Ihnen zusammen mit der Installation übergeben.
+</Aside>
 
 ## Weiter im Kapitel
 
 <CardGrid>
   <LinkCard title="Benutzer, Gruppen und Rollen" href="/docs/administration/benutzer-und-gruppen" description="Konten einladen und anlegen, Rechte vergeben, sperren und löschen." />
-  <LinkCard title="Modelle und Modellkarten" href="/docs/administration/modelle-und-karten" description="Provider pflegen, Karten definieren, Sichtbarkeit steuern, Model-Router." />
+  <LinkCard title="Modelle und Modellkarten" href="/docs/administration/modelle-und-karten" description="Karten definieren und ihre Sichtbarkeit pro Rolle und Gruppe steuern." />
   <LinkCard title="Verbrauch, Budgets und Abrechnung" href="/docs/administration/verbrauch-und-budgets" description="Von Tokens zu Euro, Budget, Monatslimit, Belege." />
-  <LinkCard title="Protokolle und Audit" href="/docs/administration/protokolle-und-audit" description="Anfragen, Sessions, Diagnose und die lückenlose Änderungshistorie." />
-  <LinkCard title="Datenschutz und Aufbewahrung" href="/docs/administration/datenschutz-und-aufbewahrung" description="Retention, Auskunft, Telemetrie und was den Stack verlässt." />
+  <LinkCard title="Protokolle und Audit" href="/docs/administration/protokolle-und-audit" description="Nutzungsprotokoll und Änderungshistorie." />
+  <LinkCard title="Datenschutz und Aufbewahrung" href="/docs/administration/datenschutz-und-aufbewahrung" description="Aufbewahrung, Auskunft, Telemetrie und was die Instanz verlässt." />
 </CardGrid>

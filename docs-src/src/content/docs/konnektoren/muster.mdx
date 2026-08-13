@@ -19,15 +19,15 @@ Drei Bauformen decken praktisch alles ab, was in einem KMU anfällt. Diese Seite
 
 Die Antwort darauf ist nicht ein Filter im Prompt, sondern die Struktur der Konten: **pro Rechteprofil ein eigenes Dienstkonto und eine eigene Konnektor-Instanz**, statt eines Generalschlüssels für alle. Ein Zugangsschlüssel erbt vollständig die Rechte seines Kontos im Zielsystem. Damit ist das Konto hinter dem Schlüssel die eigentliche Datengrenze, nicht die Konfiguration und nicht der Prompt. Was das Konto nicht sehen darf, sieht auch der Chat nicht, unabhängig davon, was das Modell versucht.
 
-Die Regeln im Rechte-Gateway kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Fällt eine Regel im Panel einmal aus, trägt immer noch die Rechtegrenze des Dienstkontos.
+Die Freigaben in EU Cowork AI kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Fällt eine Regel im Panel einmal aus, trägt immer noch die Rechtegrenze des Dienstkontos.
 
-| Instanz | Eigenes Dienstkonto mit | Gedacht für |
-|---|---|---|
-| `erp-leitung` | dem weitesten Rechteprofil | Geschäftsleitung |
-| `erp-buchhaltung` | kaufmännischer Sicht | Finanzen und Administration |
-| `erp-technik` | technischer Sicht ohne kaufmännische Daten | Service und Projekte |
+| Instanz mit eigenem Dienstkonto | Gedacht für |
+|---|---|
+| weitestes Rechteprofil | Geschäftsleitung |
+| kaufmännische Sicht | Finanzen und Administration |
+| technische Sicht ohne kaufmännische Daten | Service und Projekte |
 
-Die Namen sind blosse Etiketten. Welche Rechte diese Profile tatsächlich haben, legen Sie im Zielsystem fest, nicht bei uns.
+Welche Rechte diese Profile tatsächlich haben, legen Sie im Zielsystem fest, nicht bei uns.
 
 **Worauf Sie achten.**
 
@@ -39,9 +39,9 @@ Geben Sie deshalb pro Person **genau eine** Instanz frei. Braucht jemand ein and
 
 Dazu drei Punkte, die im Alltag zählen:
 
-- **Server-Standard sofort auf verweigert.** Ohne Regeldokument lässt das Gateway durch. Solange der Standard nicht auf verweigert steht, sehen alle Personen alle Instanzen und damit alles, was die Dienstkonten sehen.
+- **Server-Standard sofort auf verweigert.** Solange der Standard nicht auf verweigert steht, sehen alle Personen alle Instanzen und damit alles, was die Dienstkonten sehen.
 - **Halten Sie die Freigabe im Zielsystem lesend**, wo immer der Anwendungsfall das zulässt. Schreiben, Anlegen und Löschen schalten Sie nur für einzelne Objekte frei, für die Sie den Bedarf wirklich haben.
-- **Nutzen Sie das Protokoll.** Jeder Aufruf über das Gateway wird unveränderlich mitgeschrieben. Im Protokoll des Zielsystems ist zusätzlich erkennbar, aus welchem Profil eine Abfrage kam. Getrennte Dienstkonten zahlen sich hier ein zweites Mal aus.
+- **Nutzen Sie das Protokoll.** Jede Entscheidung wird unveränderlich mitgeschrieben. Im Protokoll des Zielsystems ist zusätzlich erkennbar, aus welchem Profil eine Abfrage kam. Getrennte Dienstkonten zahlen sich hier ein zweites Mal aus.
 
 Brauchen Sie eine feinere Trennung, ist der Weg nicht ein zusätzlicher Filter im Chat, sondern ein weiteres Konto mit engeren Rechten und eine weitere Instanz des Konnektors.
 
@@ -55,10 +55,8 @@ Damit gilt: Wer einen Ordner im Zielsystem nicht sehen darf, sieht ihn auch im C
 
 **Das ist der bevorzugte Weg.** Wenn ein System diese Anmeldeart anbietet, nehmen Sie sie. Die Rechte des Zielsystems sind bereits die Grenze, und sie sind feiner, als eine Regel davor je sein könnte: bis auf Dokument- und Feldebene statt nur bis auf Konnektor- und Werkzeugebene.
 
-<Aside type="note" title="Solche Konnektoren dürfen am Gateway vorbei laufen">
-Weil die Rechte der Person bereits die Grenze sind, wäre eine zusätzliche Prüfung im Gateway kein Sicherheitsgewinn, sondern nur zusätzliche Komplexität im Anmeldeverfahren. Ein solcher Konnektor wird deshalb direkt verbunden und trägt im Panel den Badge **Direkt**.
-
-Praktische Folge: Für ihn gibt es **keine** Regeln pro Rolle, Gruppe oder Person. Es gilt nur der **Generalschalter pro Rolle** auf der Seite MCP-Zugriff. Wer den Konnektor gar nicht haben soll, wird über die Modell- und Agentenkonfiguration gesteuert oder darf MCP insgesamt nicht nutzen.
+<Aside type="note" title="Die Steuerung liegt hier im Zielsystem">
+Weil die Rechte der Person bereits die Grenze sind, brächte eine zusätzliche Rechteregel davor keinen Sicherheitsgewinn. Für einen solchen Konnektor gibt es deshalb keine Regeln pro Rolle, Gruppe oder Person; steuerbar ist nur, ob eine Rolle Konnektoren überhaupt benutzen darf. Wer den Konnektor gar nicht haben soll, wird über die Modell- und Agentenkonfiguration gesteuert.
 </Aside>
 
 **Worauf Sie achten.**
@@ -67,28 +65,21 @@ Praktische Folge: Für ihn gibt es **keine** Regeln pro Rolle, Gruppe oder Perso
 - **Nur lesend, wo das reicht.** Ein ausdrücklicher Nur-Lese-Schalter in der Brücke ist mehr wert als der Vorsatz, nicht zu schreiben. Bereiche, die der Anwendungsfall nicht braucht, etwa Mail, Kalender oder Chat-Verläufe, schalten Sie gar nicht erst frei. Jede zusätzliche Berechtigung verlangt ohnehin eine erneute Einwilligung.
 - **Der Zugang bleibt bestehen und muss erneuert werden können.** Fehlt die Berechtigung, die Verbindung im Hintergrund zu erneuern, stirbt sie nach kurzer Zeit, und jede Person muss neu verbinden.
 
-<Aside type="caution" title="Nach einem Umzug: ohne übernommene Schlüssel muss jede Person neu verbinden">
-Die persönlichen Zugriffstoken liegen verschlüsselt in der Datenbank Ihrer Instanz. Der Schlüssel dafür steht in der `.env` und wird bei einer Neuinstallation **neu erzeugt**.
-
-Ziehen Sie auf einen neuen Server um, müssen Sie `CREDS_KEY` und `CREDS_IV` aus der alten `.env` übernehmen. Vergessen Sie das, sind alle gespeicherten Verbindungen unbrauchbar, und **jede Person muss ihren Zugang einmal neu aufbauen**. Es gehen dabei keine Daten verloren, aber es ist ein Support-Fall pro Mitarbeitendem.
+<Aside type="caution" title="Nach einem Umzug müssen die Schlüssel der Instanz mitkommen">
+Die persönlichen Zugriffstoken liegen verschlüsselt in der Datenbank Ihrer Instanz. Ziehen Sie auf einen neuen Server um, müssen die zugehörigen Schlüssel der alten Instanz übernommen werden. Geschieht das nicht, sind alle gespeicherten Verbindungen unbrauchbar, und **jede Person muss ihren Zugang einmal neu aufbauen**. Es gehen dabei keine Daten verloren, aber es ist ein Support-Fall pro Mitarbeitendem. Nehmen Sie den Punkt in Ihren Umzugsplan auf, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
 </Aside>
 
 ## Muster C: Nur lesende Brücke zu einem Fachsystem
 
 **Wofür es taugt.** Ihr Monitoring, Ihre Inventarisierung, Ihr Ticketsystem. Also Fachsysteme, aus denen Sie Auskunft wollen, in denen aber niemand aus dem Chat heraus etwas verändern soll.
 
-**Wie die Rechte laufen.** Technisch ist das ein Dienstkonto wie in Muster A. Der Unterschied liegt in der Absicht: Hier soll ausschliesslich gelesen werden. Und genau da lohnt sich der Aufwand, **das Lesen wirklich zu erzwingen, statt es zu versprechen**.
+**Wie die Rechte laufen.** Technisch ist das ein Dienstkonto wie in Muster A. Der Unterschied liegt in der Absicht: Hier soll ausschliesslich gelesen werden. Und genau da lohnt sich der Aufwand, **das Lesen wirklich zu erzwingen, statt es zu versprechen**. Drei Ebenen tragen dazu bei, und jede würde für sich allein genügen:
 
-Jede der folgenden Schichten würde für sich allein genügen. Das ist der Punkt: Fällt eine aus, tragen die anderen.
+- Der technische Zugang im Zielsystem bekommt **nur Leserechte**. Damit lehnt das Zielsystem jeden schreibenden Aufruf selbst ab, unabhängig von unserer Software.
+- Die Brücke **bietet gar keine schreibenden Werkzeuge an**. Was nicht existiert, kann nicht aufgerufen werden.
+- Die **Freigabe** entscheidet, wer die Werkzeuge überhaupt sieht.
 
-| # | Schicht | Wirkung |
-|---|---|---|
-| 1 | Der technische Zugang im Zielsystem bekommt nur Leserechte | Das Zielsystem lehnt jeden schreibenden Aufruf selbst ab, unabhängig von unserer Software |
-| 2 | Die Brücke kennt nur `GET` und eine Pfad-Allowlist | Es gibt keine Codezeile, die einen schreibenden Aufruf absetzen könnte |
-| 3 | Beim Start prüft die Brücke, welche Rechte ihr tatsächlich gewährt wurden | Ist ein schreibendes Recht dabei, fährt der Dienst nicht hoch |
-| 4 | Die Regel im Rechte-Gateway | Wer die Werkzeuge überhaupt sieht, entscheidet der Admin im Panel |
-
-**Die fünfte und härteste Grenze.** Die vier Schichten verhindern, dass geschrieben wird. Sie sagen nichts darüber, **wie viel** gelesen werden darf. Standardmässig sieht ein technischer Zugang meist das ganze System.
+**Die härteste Grenze ist eine andere.** Diese Ebenen verhindern, dass geschrieben wird. Sie sagen nichts darüber, **wie viel** gelesen werden darf. Standardmässig sieht ein technischer Zugang meist das ganze System.
 
 Geben Sie dem technischen Zugang deshalb im Zielsystem nur die Bereiche, die er wirklich braucht. Was er nicht sieht, existiert für den Chat schlicht nicht. Das ist die härteste verfügbare Grenze, sie liegt vollständig bei Ihnen im Fachsystem, und sie lässt sich weder durch einen Prompt noch durch einen Fehler in unserer Software umgehen. Brauchen Sie mehrere Sichten, ist der Weg derselbe wie in Muster A: ein zweiter technischer Zugang mit engerem Bereich, eine zweite Instanz der Brücke, und im Panel bekommt jede Person genau eine davon.
 
@@ -100,41 +91,35 @@ Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, u
 
 **Worauf Sie achten.**
 
-- **Ein Selbsttest ist die Mühe wert.** Ein kleines Prüfprogramm, das die Anmeldung, die tatsächlich gewährten Rechte, einen Lesezugriff und das Blocken schreibender Pfade nachweist, macht aus einer Zusicherung einen Beleg. Es lässt sich nach jeder Änderung erneut ausführen.
+- **Ein Selbsttest ist die Mühe wert.** Ein kleines Prüfprogramm, das die Anmeldung, die tatsächlich gewährten Rechte und einen Lesezugriff nachweist, macht aus einer Zusicherung einen Beleg. Es lässt sich nach jeder Änderung erneut ausführen.
 - **Gestufte Antworten sparen bei jeder Frage.** Eine Detailabfrage sollte zuerst nur die Stammdaten laden und teure Abschnitte wie Softwareinventar, Dienste oder Patch-Stände erst auf ausdrückliche Anforderung nachliefern.
 - **Für Fragen über viele Objekte ein Auswertungswerkzeug.** Zehn Einzelabfragen kosten zehn Ergebnisse im Kontext, eine Auswertung kostet eines.
-- **Alle sehen dasselbe.** Das Fachsystem kennt den einzelnen Chat-Nutzer nicht, es sieht nur den technischen Zugang. Die Trennung zwischen Ihren Mitarbeitenden macht ausschliesslich die Regel im Panel und der Bereich, den Sie dem Zugang gegeben haben.
+- **Alle sehen dasselbe.** Das Fachsystem kennt den einzelnen Chat-Nutzer nicht, es sieht nur den technischen Zugang. Die Trennung zwischen Ihren Mitarbeitenden macht ausschliesslich die Freigabe im Panel und der Bereich, den Sie dem Zugang gegeben haben.
 
 ## Was der Werkzeug-Katalog kostet
 
 Alle drei Muster teilen eine Eigenschaft: Der Werkzeug-Katalog eines Konnektors, also Name, Beschreibung und Parameter jedes Werkzeugs, wird dem Modell **bei jeder einzelnen Nachricht** mitgeschickt. Er ist keine einmalige Investition, sondern eine laufende Miete auf jeden Chat.
 
-Die Grössenordnung ist erheblich und gemessen:
+Die Grössenordnung ist erheblich: Ein umfangreicher Konnektor kann über hundert Werkzeuge anbieten und damit einen beträchtlichen Teil des verfügbaren Kontexts belegen, bevor die erste Frage gestellt ist. Auf den Anwendungsfall beschränkt, bleibt davon oft nur ein kleiner Bruchteil übrig.
 
-| Beispiel | Werkzeuge | Kontext pro Konversation |
-|---|---|---|
-| Brücke zu einer grossen Produktfamilie, ungefiltert | 164 | rund 96 000 Tokens |
-| Dieselbe Brücke, auf den Anwendungsfall gefiltert | 21 | rund 8 000 Tokens |
-| Bewusst schmal gebaute Brücke | 7 | rund 2 000 Tokens |
-
-Die Filterung spart **92 Prozent**, und zwar bei jeder einzelnen Nachricht jeder Konversation. Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
+Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
 
 Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich.
 
 <CardGrid>
   <LinkCard
-    title="Rechte-Gateway"
+    title="Rechte und Freigaben"
     href="/docs/konnektoren/gateway-und-rechte"
-    description="Die Rechtekaskade, die Wirkzeiten und wo Sie die Regeln pflegen."
+    description="Die Rechtekaskade und wo Sie die Freigaben pflegen."
   />
   <LinkCard
     title="Eigenen Konnektor anbinden"
     href="/docs/konnektoren/eigenen-konnektor-anbinden"
-    description="Der vollständige Weg im Panel oder über die Konfigurationsdateien, samt Fehlersuche."
+    description="Was Sie vorher klären, woran Sie einen fremden Konnektor messen und was beim Freigeben zählt."
   />
   <LinkCard
     title="Best Practices für Konnektoren"
     href="/docs/konnektoren/best-practices"
-    description="Zehn Regeln mit Begründung und Messzahlen, dazu eine Checkliste vor der Freigabe."
+    description="Zehn Regeln mit Begründung, dazu eine Checkliste vor der Freigabe."
   />
 </CardGrid>

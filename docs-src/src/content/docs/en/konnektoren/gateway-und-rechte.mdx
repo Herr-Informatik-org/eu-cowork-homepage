@@ -1,6 +1,6 @@
 ---
-title: Permission gateway
-description: Why every connector runs through its own gateway, how the permission cascade decides, and what you have to do after every change.
+title: Permissions and grants
+description: How EU Cowork AI decides who may use which connector, and where you maintain the grants.
 sidebar:
   order: 2
 ---
@@ -8,22 +8,21 @@ sidebar:
 import { Aside, Steps } from '@astrojs/starlight/components';
 import DiagrammGateway from '../../../../components/DiagrammGateway.astro';
 
-The permission gateway is the place where EU Cowork AI decides who may use which connector. This page explains why this layer is needed, how it decides, and where you maintain the rules.
+A permission check sits in front of the connectors. On every tool call it decides whether the person making the request may use this connector, and it records the decision. This page explains why this layer is needed, what it decides on, and where you maintain the grants.
 
-## Why the gateway exists
+## Why this layer is needed
 
-LibreChat, the chat layer underneath EU Cowork AI, **cannot filter** MCP servers that are defined in the configuration file **per role or per person**. Its internal tool registry resolves those servers unchanged for every user. Anyone who may use MCP at all therefore sees every configured server, or none.
+If connectors are attached without a permission layer of their own, you can usually only define whether someone may use connectors at all, not which ones. Anyone who may use MCP then sees every attached system, or none.
 
-For a tool like a weather lookup that does not matter. For an ERP it does: "accounting may see invoices, but not salaries" cannot be expressed at that level. The gateway closes exactly this gap. It is a separate small service that sits between the chat layer and every connector, checks every request, and only then forwards it.
+For a tool like a weather lookup that does not matter. For an ERP it does: "accounting may see invoices, but not salaries" cannot be expressed at that level. The permission check closes exactly this gap.
 
-## What the gateway does
+## What the permission check does
 
-- **Permission check before the call.** On every tool call the rule is checked first. If access is denied, the connector is never contacted at all. The person making the request gets a plain text message in the chat that points them at the admin. The chat carries on normally, there is no crash.
-- **Filtered tool list.** When the chat layer asks which tools a connector offers, the gateway answers per person. For someone without a grant the list is empty, so the connector simply looks empty rather than blocked.
-- **A log of every call.** Every decision is written down immutably, with time, connector, tool, person, role, decision, and reason. How long these entries are kept is defined in your own deletion policy, see [Data protection and retention](/docs/en/administration/datenschutz-und-aufbewahrung).
-- **Fail closed.** If the rule cannot be read, for example because the database is stuck, access is denied rather than allowed. If a request arrives without an identity, it is denied as well.
-- **Identity headers are stripped.** The chat layer sends the person's identifier along as HTTP headers so that the gateway can decide. Before the request moves on, the gateway strips those headers out again. The connector never learns them.
-- **No credentials of its own.** The gateway holds no key for the connectors itself. Credentials stay where they belong: in the chat configuration as a variable reference, or in the connector itself.
+- **A check before the call.** On every tool call the rule is checked first. If access is denied, the connector is never contacted at all. The person making the request gets a plain text message in the chat that points them at the admin. The chat carries on normally, there is no crash.
+- **A per-person tool list.** Anyone without a grant for a connector is not offered its tools in the first place.
+- **A log of every call.** Every decision is written down immutably, denials included. How long these entries are kept is defined in your own deletion policy, see [Data protection and retention](/docs/en/administration/datenschutz-und-aufbewahrung).
+- **Deny when in doubt.** If the rule cannot be evaluated, or the person making the request cannot be established, access is denied rather than allowed.
+- **The connector does not learn who is asking.** The identity is needed for the decision and is not passed on to the connector.
 
 ## The path of a request
 
@@ -48,54 +47,28 @@ The first thing to do after creating a connector is the default: **set "Server-S
 That way it is defined from the first second who can see behind the connector, and access is a deliberate decision rather than a side effect. Put this step on your acceptance checklist.
 </Aside>
 
-## The additional tool level
-
-Above the connector level there is a second, finer level for individual tools. It has a chain of its own too: **tool user before tool role before tool default before the decision at connector level.** A tool without a rule of its own simply inherits the decision of the connector.
-
-One rule is absolute here: **a denied connector beats any tool level grant.** So you cannot use the tool level to partially reopen a blocked connector.
+Above the connector level, individual tools can be controlled on top of that. A tool without a rule of its own simply inherits the decision of the connector, and one rule is absolute here: **a denied connector beats any tool level grant.**
 
 <Aside type="tip" title="Cut your connectors so that the connector level is enough">
-The gateway enforces tool rules, and existing rules are preserved when you save. In day to day work, control at connector level carries most cases — and it is the more robust boundary. So plan your connectors accordingly: better two narrow connectors, each with its own service account, than one with many tools, half of which would have to be blocked. [Connector patterns](/docs/en/konnektoren/muster) shows what that looks like.
+In day to day work, control at connector level carries most cases — and it is the more robust boundary. So plan your connectors accordingly: better two narrow connectors, each with its own service account, than one with many tools, half of which would have to be blocked. [Connector patterns](/docs/en/konnektoren/muster) shows what that looks like.
 </Aside>
 
-## Effective times, and why a restart is needed
+## When a change takes effect
 
-Permission changes take effect at different speeds in two places. This is the most common stumbling block in operation.
-
-| What | When it takes effect |
-|---|---|
-| Tool **calls** | within roughly 10 seconds, the gateway only caches the rules briefly |
-| A change of **group membership** | within roughly one minute |
-| The **tool catalog in the prompt**, meaning what the model is offered at all | only after a restart of the chat layer, otherwise after 12 hours |
-
-The reason for the third row: the chat layer stores the tool catalog per person for 12 hours. If you take a connector away from someone, the call can be blocked immediately while the tool is still being offered in the menu. Conversely, a newly granted connector does not show up right away.
-
-```bash title="After permission changes, on the server"
-cd ~/eu-cowork/distribution
-docker compose restart api
-```
+Permission changes take effect on **calls** quickly: a connector taken away is blocked within a short time. The **tool catalog**, meaning what the model is offered at all, is cached per person and can lag behind briefly. In practice that means a tool may still be in the menu although the call is already denied, and a newly granted connector does not show up in the very same second. After a restart of the instance the catalog is current again.
 
 ## Where you maintain this in the panel
 
-Everything about permissions lives under **"Verwaltung → MCP-Zugriff"** (administration → MCP access). The page has three levels:
-
-**The card "Generalschalter pro Rolle"** (master switch per role) at the very top, with the subtitle *"Aus = die Rolle sieht keinerlei MCP-Server"* (off = the role sees no MCP servers at all). This is the main switch. If it is off for a role, every further rule is meaningless.
-
-**One card per connector.** Each one carries a badge: **"Gateway"** means this connector runs through the gateway and can be controlled per role, group, and person. **"Direkt"** (direct) means it is connected without the gateway, and then only the master switch applies. Inside the card you will find:
-
-- the field **"Server-Standard"** (server default) with the subtitle *"Gilt für alle ohne eigene Regel"* (applies to everyone without a rule of their own)
-- the sections **"Gruppen"** (groups) and **"Benutzer-Ausnahmen"** (user exceptions), the latter with the button **"+ Benutzer-Ausnahme"** (add user exception)
-- the buttons **"Verwerfen"** (discard), **"Regeln zurücksetzen"** (reset rules), and **"Speichern"** (save)
+Everything about permissions lives under **"Verwaltung → MCP-Zugriff"** (administration → MCP access). At the very top is the master switch per role: if it is off for a role, that role sees no connectors at all and every further rule is meaningless. Below it you find one card per connector, with the **"Server-Standard"** (server default), the grants for groups, and the user exceptions.
 
 **Saving is explicit.** Every card keeps a working copy, your switches only take effect after you click **"Speichern"** (save). As long as something is still open, a notice under the card says that the changes are not in force yet.
 
-You find the log under **"System → Audit-Log"** (system → audit log), tab **"MCP-Tool-Calls"**, with the columns time, server, tool, user, decision, and reason. The view can be exported as CSV.
+You find the log under **"System → Audit-Log"** (system → audit log), tab **"MCP-Tool-Calls"**. The view can be exported as CSV.
 
-If you want to work the other way round, starting from a person, open the subpage **"Zugriffe"** (access) from the user list. It answers "what may this person do, and why", names the deciding stage for each row, for example "via Gruppe GL" (via group GL) or "Server-Default", and links to the place where you change it.
+If you want to work the other way round, starting from a person, open the subpage **"Zugriffe"** (access) from the user list. It answers "what may this person do, and why", names the deciding stage for each row, and links to the place where you change it.
 
-## What the gateway does not do
+## What the permission check does not do
 
-- **It does not replace the permissions in the source system.** A service account with permissions that are too broad remains a risk, even with the gateway in front of it. Draw the data boundary in the source system, not in the prompt.
+- **It does not replace the permissions in the source system.** A service account with permissions that are too broad remains a risk, even with a check in front of it. Draw the data boundary in the source system, not in the prompt.
 - **It does not filter arguments and it does not filter content.** A tool that accepts a free form query language cannot sensibly be restricted to "invoices only". Prefer connectors with separate tools or with a read only mode.
-- **It does not check any incoming sign-in.** The gateway has no port on the host and is reachable only inside the internal Docker network. That is precisely why it may work without a sign-in of its own.
-- **It cannot control directly connected connectors.** Anything that should be controllable per role or group has to run through the gateway.
+- **It does not apply to connectors that work with the permissions of the individual person.** There the target system itself is the boundary, see [connector patterns](/docs/en/konnektoren/muster).

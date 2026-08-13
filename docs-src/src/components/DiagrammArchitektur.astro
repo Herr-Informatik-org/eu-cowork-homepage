@@ -1,11 +1,14 @@
 ---
 /**
- * Schichtbild des Stacks.
+ * Schematischer Weg einer Anfrage.
  *
  * Bewusst als handgeschriebenes SVG statt als Mermaid-Block: Starlight bringt
  * keinen Mermaid-Renderer mit, und die verfuegbaren Plugins ziehen zur Bauzeit
  * einen kompletten Browser nach. Ein festes SVG ist kleiner, braucht kein
  * JavaScript im Browser und faerbt sich ueber die Theme-Variablen mit.
+ *
+ * Das Bild bleibt bewusst auf der allgemeinen Ebene: Zugang, Reverse-Proxy,
+ * Anwendung, Datenhaltung, Modellanbieter.
  *
  * Die Beschriftungen haengen an der Sprache der Seite. Ohne das stuende auf der
  * englischen Fassung ein deutsches Diagramm.
@@ -18,60 +21,42 @@ const en = Astro.url.pathname.startsWith('/docs/en');
 
 const t = en
   ? {
-      titel: 'How the stack is layered',
+      titel: 'The path of a request',
       beschreibung:
-        'Top to bottom: access through the browser and Outlook, with Caddy in front as the only service on ports 80 and 443. Below that the application layer with LibreChat, the admin panel and the Outlook add-in, then storage with MongoDB, Meilisearch and pgvector, then the internal services SearXNG, RAG API and MCP gateway, then the connector bridges to third party systems. At the bottom sits everything that lives outside the stack: the sandbox network with the code interpreter, plus model providers and search engines on the internet.',
+        'From top to bottom: the browser reaches a reverse proxy that terminates TLS and is the only entry point. Behind it runs the application, LibreChat, with its data storage for accounts, conversations and the search index. For the model responses themselves the application talks to the model provider outside the server.',
       zugang: 'Access',
-      einstieg: 'Entry',
       ausserhalb: 'Outside',
-      caddySub: 'the only service on ports 80 and 443, certificate handled automatically',
-      rahmen: 'Compose stack, everything below runs only on the internal Docker network',
-      apiSub: 'LibreChat, chat and API',
-      adminSub: 'admin panel and sidecar',
-      officeSub: 'task pane and manifest',
-      mongoSub: 'accounts, chats, logs',
-      meiliSub: 'search across your own chats',
-      pgSub: 'pgvector, filesearch profile',
-      searxSub: 'your own metasearch engine',
-      ragSub: 'file search, filesearch profile',
-      gwSub: 'permissions and logging',
-      bruecken: 'Connector bridges',
-      brueckenSub: 'one per third party system, none active in the customer template',
-      sandbox: 'Sandbox network',
-      sandboxSub: 'code interpreter, separate network',
-      internet: 'Internet',
-      internetSub: 'model providers, search engines',
+      server: 'Your server',
+      proxy: 'Reverse proxy',
+      proxySub: 'entry point, TLS',
+      app: 'Application',
+      appSub: 'LibreChat: chat, agents, files',
+      daten: 'Data storage',
+      datenSub: 'accounts, conversations, search index',
+      modelle: 'Model provider',
+      modelleSub: 'the model responses are computed there',
     }
   : {
-      titel: 'Aufbau des Stacks in sieben Schichten',
+      titel: 'Der Weg einer Anfrage',
       beschreibung:
-        'Von oben nach unten: Zugang über Browser und Outlook, davor Caddy als einziger Dienst auf Port 80 und 443. Darunter die Anwendungsschicht mit LibreChat, Admin-Panel und Outlook-Add-in, dann die Datenhaltung mit MongoDB, Meilisearch und pgvector, dann die internen Dienste SearXNG, RAG-API und MCP-Gateway, dann die Konnektor-Brücken zu Fremdsystemen. Ganz unten liegt alles, was ausserhalb des Stacks lebt: das Sandbox-Netz mit dem Code-Interpreter sowie Modellanbieter und Suchmaschinen im Internet.',
+        'Von oben nach unten: Der Browser erreicht einen Reverse-Proxy, der TLS beendet und der einzige Einstieg ist. Dahinter läuft die Anwendung, LibreChat, mit ihrer Datenhaltung für Konten, Konversationen und den Suchindex. Für die Modellantworten selbst spricht die Anwendung den Modellanbieter ausserhalb des Servers an.',
       zugang: 'Zugang',
-      einstieg: 'Einstieg',
       ausserhalb: 'Ausserhalb',
-      caddySub: 'einziger Dienst auf Port 80 und 443, Zertifikat automatisch',
-      rahmen: 'Compose-Stack, alles Weitere nur im internen Docker-Netz',
-      apiSub: 'LibreChat, Chat und API',
-      adminSub: 'Admin-Panel und Sidecar',
-      officeSub: 'Task Pane und Manifest',
-      mongoSub: 'Konten, Chats, Protokolle',
-      meiliSub: 'Suche über eigene Chats',
-      pgSub: 'pgvector, Profil filesearch',
-      searxSub: 'eigene Metasuchmaschine',
-      ragSub: 'Dateisuche, Profil filesearch',
-      gwSub: 'Rechte und Protokoll',
-      bruecken: 'Konnektor-Brücken',
-      brueckenSub: 'je Fremdsystem eine, im Kunden-Template ist keine aktiv',
-      sandbox: 'Sandbox-Netz',
-      sandboxSub: 'Code-Interpreter, eigenes Netz',
-      internet: 'Internet',
-      internetSub: 'Modellanbieter, Suchmaschinen',
+      server: 'Ihr Server',
+      proxy: 'Reverse-Proxy',
+      proxySub: 'Einstieg, TLS',
+      app: 'Anwendung',
+      appSub: 'LibreChat: Chat, Agenten, Dateien',
+      daten: 'Datenhaltung',
+      datenSub: 'Konten, Konversationen, Suchindex',
+      modelle: 'Modellanbieter',
+      modelleSub: 'dort werden die Modellantworten berechnet',
     };
 ---
 
 <figure class="euc-diagramm">
   <svg
-    viewBox="0 0 880 620"
+    viewBox="0 0 720 480"
     role="img"
     aria-labelledby="arch-titel arch-beschreibung"
     xmlns="http://www.w3.org/2000/svg"
@@ -81,95 +66,44 @@ const t = en
 
     <text class="d-caption" x="20" y="24">{t.zugang}</text>
     <g class="d-node">
-      <rect x="240" y="34" width="180" height="44" rx="10" />
-      <text class="d-label" x="330" y="61">Browser</text>
-    </g>
-    <g class="d-node">
-      <rect x="460" y="34" width="180" height="44" rx="10" />
-      <text class="d-label" x="550" y="61">Outlook</text>
+      <rect x="270" y="34" width="180" height="44" rx="10" />
+      <text class="d-label" x="360" y="61">Browser</text>
     </g>
 
-    <path class="d-arrow" d="M330 78 L330 104" marker-end="url(#pfeil)" />
-    <path class="d-arrow" d="M550 78 L550 104" marker-end="url(#pfeil)" />
+    <path class="d-arrow" d="M360 78 L360 104" marker-end="url(#pfeil)" />
 
-    <text class="d-caption" x="20" y="124">{t.einstieg}</text>
+    <rect class="d-frame" x="16" y="110" width="688" height="260" rx="14" />
+    <text class="d-frame-label" x="34" y="132">{t.server}</text>
+
     <g class="d-node d-node-accent">
-      <rect x="240" y="108" width="400" height="48" rx="10" />
-      <text class="d-label" x="440" y="130">Caddy</text>
-      <text class="d-sub" x="440" y="147">{t.caddySub}</text>
+      <rect x="185" y="146" width="350" height="52" rx="10" />
+      <text class="d-label" x="360" y="169">{t.proxy}</text>
+      <text class="d-sub" x="360" y="186">{t.proxySub}</text>
     </g>
 
-    <path class="d-arrow" d="M440 156 L440 184" marker-end="url(#pfeil)" />
-
-    <rect class="d-frame" x="16" y="184" width="848" height="336" rx="14" />
-    <text class="d-frame-label" x="34" y="206">{t.rahmen}</text>
+    <path class="d-arrow" d="M360 198 L360 218" marker-end="url(#pfeil)" />
 
     <g class="d-node">
-      <rect x="40" y="222" width="250" height="52" rx="10" />
-      <text class="d-label" x="165" y="245">api</text>
-      <text class="d-sub" x="165" y="262">{t.apiSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="310" y="222" width="250" height="52" rx="10" />
-      <text class="d-label" x="435" y="245">admin</text>
-      <text class="d-sub" x="435" y="262">{t.adminSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="580" y="222" width="250" height="52" rx="10" />
-      <text class="d-label" x="705" y="245">office-addin</text>
-      <text class="d-sub" x="705" y="262">{t.officeSub}</text>
+      <rect x="185" y="222" width="350" height="52" rx="10" />
+      <text class="d-label" x="360" y="245">{t.app}</text>
+      <text class="d-sub" x="360" y="262">{t.appSub}</text>
     </g>
 
-    <g class="d-node">
-      <rect x="40" y="294" width="250" height="52" rx="10" />
-      <text class="d-label" x="165" y="317">mongodb</text>
-      <text class="d-sub" x="165" y="334">{t.mongoSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="310" y="294" width="250" height="52" rx="10" />
-      <text class="d-label" x="435" y="317">meilisearch</text>
-      <text class="d-sub" x="435" y="334">{t.meiliSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="580" y="294" width="250" height="52" rx="10" />
-      <text class="d-label" x="705" y="317">vectordb</text>
-      <text class="d-sub" x="705" y="334">{t.pgSub}</text>
-    </g>
+    <path class="d-arrow" d="M360 274 L360 294" marker-end="url(#pfeil)" />
 
     <g class="d-node">
-      <rect x="40" y="366" width="250" height="52" rx="10" />
-      <text class="d-label" x="165" y="389">searxng</text>
-      <text class="d-sub" x="165" y="406">{t.searxSub}</text>
-    </g>
-    <g class="d-node">
-      <rect x="310" y="366" width="250" height="52" rx="10" />
-      <text class="d-label" x="435" y="389">rag_api</text>
-      <text class="d-sub" x="435" y="406">{t.ragSub}</text>
-    </g>
-    <g class="d-node d-node-accent">
-      <rect x="580" y="366" width="250" height="52" rx="10" />
-      <text class="d-label" x="705" y="389">mcp-gateway</text>
-      <text class="d-sub" x="705" y="406">{t.gwSub}</text>
+      <rect x="185" y="298" width="350" height="52" rx="10" />
+      <text class="d-label" x="360" y="321">{t.daten}</text>
+      <text class="d-sub" x="360" y="338">{t.datenSub}</text>
     </g>
 
+    <path class="d-arrow" d="M360 370 L360 396" marker-end="url(#pfeil)" />
+
+    <text class="d-caption" x="20" y="420">{t.ausserhalb}</text>
     <g class="d-node d-node-muted">
-      <rect x="40" y="438" width="790" height="52" rx="10" />
-      <text class="d-label" x="435" y="461">{t.bruecken}</text>
-      <text class="d-sub" x="435" y="478">{t.brueckenSub}</text>
-    </g>
-
-    <path class="d-arrow" d="M440 520 L440 548" marker-end="url(#pfeil)" />
-
-    <text class="d-caption" x="20" y="568">{t.ausserhalb}</text>
-    <g class="d-node d-node-muted">
-      <rect x="140" y="552" width="280" height="52" rx="10" />
-      <text class="d-label" x="280" y="575">{t.sandbox}</text>
-      <text class="d-sub" x="280" y="592">{t.sandboxSub}</text>
-    </g>
-    <g class="d-node d-node-muted">
-      <rect x="440" y="552" width="300" height="52" rx="10" />
-      <text class="d-label" x="590" y="575">{t.internet}</text>
-      <text class="d-sub" x="590" y="592">{t.internetSub}</text>
+      <rect x="185" y="400" width="350" height="52" rx="10" />
+      <text class="d-label" x="360" y="423">{t.modelle}</text>
+      <text class="d-sub" x="360" y="440">{t.modelleSub}</text>
     </g>
 
     <defs>

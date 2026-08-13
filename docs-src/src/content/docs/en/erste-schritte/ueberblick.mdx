@@ -1,6 +1,6 @@
 ---
 title: What is EU Cowork AI?
-description: Overview of the platform, its building blocks, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits.
+description: Overview of the platform, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits.
 sidebar:
   order: 1
 ---
@@ -20,53 +20,46 @@ separate hosting build.
 | Your situation | Who runs the server | What you do |
 |---|---|---|
 | **You use the platform yourself** | your own IT team | set up the server, install the instance, invite your team members |
-| **You are an SMB customer and have it run for you** | your IT service provider | you receive a ready instance and work in the chat and in the admin panel |
-| **You are an IT service provider** | you, for several customers | one separate stack per customer, on a dedicated or a shared machine |
+| **You are an SMB customer and have it run for you** | your IT service provider | you receive a ready instance and work in the chat and in the administration |
+| **You are an IT service provider** | you, for several customers | one separate instance per customer, on a dedicated or a shared machine |
 
 The third case is the reason behind many design decisions. A customer is always a separate,
-fully isolated stack with its own database, its own files and its own inference key. Details
-are on the [architecture](/docs/en/erste-schritte/architektur) page.
+fully isolated instance with its own database, its own files and its own inference key. More on
+that on the [architecture](/docs/en/erste-schritte/architektur) page.
 
 ## What the system consists of
 
-The chat interface is [LibreChat](https://www.librechat.ai), an open source platform under
-the MIT license. Around it sit our own services, the so called sidecars. The LibreChat fork
-deliberately stays close to the original so that updates remain possible.
+The chat interface is [LibreChat](https://www.librechat.ai), an open source platform under the
+MIT license. Chat, agents, file handling and model connectivity come from there — that is, the
+application your team members see. The fork deliberately stays close to the original so that
+updates remain possible.
 
-| Building block | Origin | Purpose |
-|---|---|---|
-| chat, agents, file handling, model connectivity | LibreChat | the application your team members see |
-| admin panel and sidecar | EU Cowork AI | users, roles, permissions, usage, configuration, logs |
-| MCP gateway | EU Cowork AI | permission check and log entry before every access to a third party system |
-| example connectors | EU Cowork AI and third parties | bridges to a third party system as a template, not active in the customer template |
-| Outlook add-in | EU Cowork AI | chat pane inside Outlook with the open mail as context |
-| installation package | EU Cowork AI | Compose stack, installation scripts, backup, configuration profiles |
-
-On top of that come standard building blocks as prebuilt images: MongoDB as the database,
-Meilisearch for full text search across old chats, SearXNG as your own metasearch engine and
-Caddy as a reverse proxy with automatic certificates.
+We added everything a company needs to run it under control: administration of users, roles and
+permissions, a permission check with logging before every access to a third party system, a
+usage overview with budgets, a chat pane inside Outlook and an installation package for your own
+server.
 
 ## What the platform can do
 
-After installing with the customer template you get, among other things: chat with streaming
-and history, a model picker with four curated cards, uploading files as context, image
-understanding on the cards that support it, artifacts such as diagrams and HTML directly in
-the chat, agents, the scaffolding for skills as standard procedures whose content you create
-yourself, a long term memory with opt-out, and full text search across earlier conversations.
+After installing you get, among other things: chat with streaming and history, a model picker
+with curated cards, uploading files as context, image understanding on the cards that support
+it, artifacts such as diagrams and HTML directly in the chat, agents, the scaffolding for skills
+as standard procedures whose content you create yourself, a long term memory with opt-out, and
+full text search across earlier conversations.
 
 Three features are deliberately switched off in the delivered state, because they need
 additional building blocks and would otherwise result in a dead button:
 
 | Feature | Why it is off | What is needed |
 |---|---|---|
-| file search across uploaded documents | needs a RAG service and a vector database | Compose profile `filesearch` |
-| code execution, for example generating an Excel file | needs a code backend | one of the two code interpreter substacks |
-| parameter panel for temperature and similar settings | unnecessary for non developers | can be re-enabled per role in the panel |
+| file search across uploaded documents | needs additional services | enable it during setup |
+| code execution, for example generating an Excel file | needs a code backend | enable it during setup |
+| parameter panel for temperature and similar settings | unnecessary for non developers | can be re-enabled per role |
 
 ## What the platform deliberately does not do
 
-- **No multi tenancy inside the application.** One customer is one stack. This is a deliberate
-  decision, because it puts the separation below the application.
+- **No multi tenancy inside the application.** One customer is one instance. This is a
+  deliberate decision, because it puts the separation below the application.
 - **Users do not create their own connectors.** Which third party systems are reachable is
   decided by the administration alone.
 - **The bundled example connectors only read.** They ship no tools that change anything in the
@@ -87,30 +80,29 @@ The overall product is released under the MIT license. In practice that means:
   those from someone.
 
 The official LibreChat admin panel is released under the AGPL and is therefore deliberately
-**not** used. Instead there is a separate, permissively licensed panel that works against the
-MIT licensed administration interface of LibreChat. This keeps the overall product free of
-copyleft obligations.
+**not** used. Instead there is a separate, permissively licensed administration that works
+against the MIT licensed administration interface of LibreChat. This keeps the overall product
+free of copyleft obligations.
 
 ## Where the data lives
 
-Conversations, messages, users and usage data live in the MongoDB of your own stack. Uploaded
-files live in a directory next to it on the same server. There is no back channel to us.
-Telemetry is switched off, for Meilisearch for example fixed in the Compose stack.
+Conversations, messages, users and usage data live in the database of your own instance.
+Uploaded files live next to it on the same server. There is no back channel to us, telemetry is
+switched off.
 
 For the model responses themselves the content does leave the server, because the computation
-happens at the inference provider. The default is **EuRouter** at
-`https://api.eurouter.ai/api/v1`, where processing takes place in the EU. **OpenRouter** can
-be enabled optionally and is **not** EU resident. Two of the four shipped model cards are
-therefore visibly labeled as non EU.
+happens at the inference provider. The default is **EuRouter**, where processing takes place in
+the EU. **OpenRouter** can be enabled optionally and is **not** EU resident. Model cards outside
+the EU are visibly labeled in the interface.
 
 <Aside type="note" title="Web search and data residency">
-SearXNG runs inside your stack, but it forwards the search query to external search engines,
-without passing along the identity of the user. The statement "everything stays in the EU"
-applies to storage and inference, not to web search.
+The search engine runs inside your instance, but it forwards the search query to external search
+engines, without passing along the identity of the user. The statement "everything stays in the
+EU" applies to storage and inference, not to web search.
 </Aside>
 
-One instance in production use is located in Switzerland, for example. Where your instance is
-located is decided by your choice of server.
+There is a hosted instance in Switzerland. Where your own instance is located is decided by your
+choice of server.
 
 ## Scope and boundaries
 
@@ -119,8 +111,8 @@ not part of the delivery or that call for a decision during setup.
 
 | Area | Status |
 |---|---|
-| web search | The search engine runs inside the stack. You choose the scraper according to your data residency requirements and configure it during setup |
-| outbound connections from code execution | granted at host or network level, not inside the application. Code execution is switched off out of the box |
+| web search | The search engine runs inside the instance. You choose the scraper according to your data residency requirements and configure it during setup |
+| outbound connections from code execution | granted outside the application. Code execution is switched off out of the box |
 | user provisioning via SCIM | not included. Accounts are created on first sign-in via OIDC, revoking access runs through the identity provider |
 | automatic billing | receipts as CSV and PDF are included, a payment integration is not |
 | OCR, image generation, speech input and output | not included. Scanned PDF files are not read as text |
@@ -131,16 +123,16 @@ not part of the delivery or that call for a decision during setup.
   <LinkCard
     title="System requirements"
     href="/docs/en/erste-schritte/systemanforderungen"
-    description="How much memory, CPU and disk an instance really needs, with measured figures."
+    description="What an instance needs in terms of CPU, memory and disk."
   />
   <LinkCard
     title="Quickstart"
     href="/docs/en/erste-schritte/schnellstart"
-    description="From an empty Ubuntu server to a running instance, command by command."
+    description="The path to your own instance in broad strokes."
   />
   <LinkCard
     title="Architecture"
     href="/docs/en/erste-schritte/architektur"
-    description="Which services exist, how the data flows and why the tenant boundary is the Compose stack."
+    description="The path a request takes and why every customer gets a separate instance."
   />
 </CardGrid>

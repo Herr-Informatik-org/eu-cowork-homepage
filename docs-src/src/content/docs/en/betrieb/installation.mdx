@@ -1,155 +1,77 @@
 ---
 title: Installation
-description: install.sh in detail, from the generated secrets through the directories to the steps that remain manual.
+description: How an instance of EU Cowork AI is set up and which steps follow after the first start.
 sidebar:
   order: 2
 ---
 
 import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-`install.sh` takes the stack from nothing to running: it creates the `.env`, generates all
-secrets, sets up directories and the sandbox network and starts the containers. This page shows
-what happens automatically and what remains to be done by hand afterwards.
+The setup is carried out by an installation script from the delivery package. It creates the
+configuration, generates the required secrets and starts the application. The prerequisite is a
+prepared server, see [Prepare the server](/docs/en/betrieb/server-vorbereiten).
 
-The prerequisite is a prepared server. On a fresh Ubuntu system,
-[`setup-server.sh`](/docs/en/betrieb/server-vorbereiten) runs first, after which you log in
-again.
+## What the installer takes care of
 
-## Invocation
+- It checks the prerequisites on the machine and aborts if something fundamental is missing.
+- It creates the configuration file from the supplied template and sets all secrets to freshly
+  generated random values. The file is readable only by the service user.
+- It sets up the directories for uploads, logs and data with the correct permissions.
+- It fetches the images and starts the application.
+- It reports at the end which values still have to be entered by hand. Only the names of the
+  values are reported, never their contents.
 
-```bash title="On the server"
-cd ~/eu-cowork/distribution
-./install.sh --profiles production,internal,microsoft,filesearch
-```
-
-To try it out locally, `./install.sh` without options is enough. The chat then runs on
-`http://localhost:3080`, the admin panel on `http://localhost:3010`.
-
-## Options
-
-| Option | Effect |
-|---|---|
-| `--profiles LISTE` | Compose profiles, comma separated. Allowed are `production`, `internal`, `microsoft`, `filesearch` and `interim`. The last one additionally starts the AGPL transitional panel and is not needed in normal operation. Without this option only the base stack starts. |
-| `--migrate` | Migration and update mode. An existing `.env` stays untouched, no secrets are generated. If the `.env` is missing, the mode aborts. |
-| `--no-build` | Does not rebuild the services developed in house. Faster, but only useful when the images are already built. |
-| `-h`, `--help` | Shows the help. |
-
-What the individual profiles switch on is described under
-[Configuration](/docs/en/betrieb/konfiguration#compose-profiles).
-
-## What the installer does automatically
-
-1. **Preflight.** Checks whether Docker is running, whether `docker compose` is present in
-   version 2 and whether `openssl`, `curl` and `tar` are installed. If any of these is missing,
-   it aborts. With less than 4 GB of RAM or less than 20 GB of free disk space it only warns, it
-   does not abort for that reason.
-2. **Create the `.env`.** Copies `.env.example` to `.env`, replaces all `GENERATE` placeholders
-   with freshly generated random values, writes in the `UID` and `GID` of the executing user and
-   sets the file permissions to `600`.
-3. **SearXNG configuration.** Creates `searxng/settings.yml` from the example file and inserts
-   its own secret there.
-4. **Report open placeholders.** Lists which values are still missing in the `.env`. Only the
-   names of the variables are reported, never their content.
-5. **Create the sandbox network.** Creates the Docker network from `SANDBOX_NETWORK`, by default
-   `eucowork-sandbox`. Through it the chat later reaches the backend for code execution.
-6. **Create directories and fix ownership.** Creates `logs`, `uploads`, `images`, `data-node`
-   and `meili_data` and sets the owner to the executing user. Without this step Docker creates
-   the directories as `root` on first start, while the container runs under your UID and ends up
-   in a restart loop.
-7. **Pull images.** Fetches all images from the registry. Anything built from source is skipped.
-8. **Start the stack.** Starts the containers with the chosen profiles and rebuilds the services
-   developed in house, unless `--no-build` is set.
-9. **Print addresses.** Names the URLs for chat and admin panel at the end, along with the
-   commands for logs and backup.
-
-## The secrets the installer generates
-
-| Variable | Used for |
-|---|---|
-| `CREDS_KEY` | Encrypts stored credentials in the database |
-| `CREDS_IV` | Initialization vector for the same encryption |
-| `JWT_SECRET` | Signature of the login tokens |
-| `JWT_REFRESH_SECRET` | Signature of the refresh tokens |
-| `MEILI_MASTER_KEY` | Access to the full text search |
-| `POSTGRES_PASSWORD` | Access to the vector database of the file search |
-| `SEARXNG_SECRET` | Your own metasearch engine |
-| `ADMIN_PANEL_SESSION_SECRET` | Panel sessions |
-
-All values end up in `distribution/.env`, and the file gets permissions `600`. It never belongs
-in a repository and never unencrypted in a cloud.
-
-<Aside type="danger" title="Back up CREDS_KEY and CREDS_IV">
-These two values decrypt everything that is stored encrypted in the database: the OAuth tokens
-your staff used to connect a connector, and the API keys stored in the panel. If they
-are lost, or if they are regenerated during a migration instead of carried over, that data is
-irrecoverably unreadable. Every person then has to set up every connection again. The regular
-backup contains the `.env` and therefore both values, see
+<Aside type="danger" title="Secure the generated secrets">
+Some of the generated values decrypt what is stored encrypted in the database: the OAuth tokens
+with which your staff connected a connector, and the API keys stored in the panel. If these
+values are lost, or regenerated during a migration instead of carried over, the affected data
+is irretrievably unreadable. Every person would then have to rebuild every connection. The
+regular backup contains the configuration file and therefore these values, see
 [Backup and migration](/docs/en/betrieb/backup-und-umzug).
 </Aside>
 
 ## The only mandatory value
 
-For a standard installation you have to enter exactly one value yourself: the key for
-EuRouter, the inference provider with EU processing.
-
-```bash title="distribution/.env"
-EUROUTER_API_KEY=__IHR_SCHLUESSEL__
-```
-
-The installer reports this placeholder explicitly at the end. After entering it, restart the
-stack:
-
-```bash title="On the server"
-docker compose up -d
-```
-
-Everything else is optional: OpenRouter as a deliberately non EU resident second option, the
-connectors, SMTP delivery and the backend for code execution.
+For a standard installation you enter exactly one value yourself: the key of the inference
+provider with EU processing. The installer explicitly points this out at the end. Everything
+else is optional — a second option for models, the connectors, e-mail delivery and the backend
+for code execution.
 
 ## What remains manual
 
-- Log in again after `setup-server.sh`, otherwise the group `docker` does not take effect.
-- Set DNS records for `<ihre-domain.ch>` **and** `admin.<ihre-domain.ch>`.
-- Enter production values in the `.env`: `DOMAIN_CLIENT`, `DOMAIN_SERVER`,
-  `EUCOWORK_DOMAIN` and `API_BIND=127.0.0.1`.
-- Choose the TLS variant, see [Domain and certificate](/docs/en/betrieb/domain-und-tls).
-- Install the backend for code execution as its own Compose stack, if Excel and PDF output is
-  needed.
+- Set the DNS records and choose the TLS variant, see
+  [Domain and certificate](/docs/en/betrieb/domain-und-tls).
 - Set the domain lock for registration, see
   [Configuration](/docs/en/betrieb/konfiguration#domain-lock).
 - Define role permissions and model cards in the admin panel.
-- For every connector in the panel under **MCP access**, set the server default to denied and
-  then grant access selectively.
+- Deliberately grant access for each connector in the panel instead of leaving it open.
 - Set up the backup, see [Backup and migration](/docs/en/betrieb/backup-und-umzug).
 
 ## After the first start
 
 <Steps>
 
-1. **Open the chat.** In production at `https://<ihre-domain.ch>`, locally at
-   `http://localhost:3080`.
+1. **Open the chat.** At the address the installer prints at the end.
 
 2. **Create the first account.** Register in the chat. The first registered account of an
-   instance automatically gets the ADMIN role.
+   instance automatically receives the ADMIN role.
 
-3. **Check the admin panel.** In production `https://admin.<ihre-domain.ch>`, locally
-   `http://localhost:3010`. You sign in with the LibreChat account you just created. The panel
-   has no user management of its own and no password of its own.
+3. **Check the admin panel.** You sign in with the account you just created. The panel has no
+   user management and no password of its own.
 
-4. **Close off access.** Set the domain lock so that only people from your email domain can
+4. **Close off access.** Set the domain lock so that only people from your e-mail domain can
    register.
 
-5. **Create a second admin account.** Not only your personal account, otherwise you lock
-   yourself out when it matters.
+5. **Create a second admin account.** Not only the personal one, otherwise you lock yourself
+   out when it matters.
 
-6. **Set up the backup.** Run `./backup.sh backup` once and add the cron line it prints.
+6. **Set up the backup.** Back up once by hand and then schedule the backup.
 
 </Steps>
 
-<Aside type="tip" title="First functional test">
-A test question in the chat shows whether the inference key works. If no answer arrives or it
-runs into a timeout, first check whether the containers can reach the internet. The test for
-that is described under [Troubleshooting](/docs/en/betrieb/fehlerbehebung#egress-test).
+<Aside type="note" title="Detailed instructions in the operations manual">
+The invocation, the options and the complete list of configuration values are in the operations
+manual that comes with the delivery package.
 </Aside>
 
 ## Next
@@ -158,11 +80,11 @@ that is described under [Troubleshooting](/docs/en/betrieb/fehlerbehebung#egress
   <LinkCard
     title="Configuration"
     href="/docs/en/betrieb/konfiguration"
-    description="The three levels: .env, librechat.yaml and the overrides in the admin panel."
+    description="The three levels: environment, librechat.yaml and the overrides in the admin panel."
   />
   <LinkCard
     title="Domain and certificate"
     href="/docs/en/betrieb/domain-und-tls"
-    description="Let's Encrypt, an internal CA on the LAN or operation behind an existing WAF."
+    description="Public certificate, an internal CA on the LAN or operation behind an existing WAF."
   />
 </CardGrid>

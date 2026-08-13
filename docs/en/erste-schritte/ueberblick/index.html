@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-vdxcvpsm"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>What is EU Cowork AI? | EU Cowork AI</title><link rel="canonical" href="https://eucowork.ai/docs/en/erste-schritte/ueberblick"/><link rel="alternate" hreflang="de-CH" href="https://eucowork.ai/docs/erste-schritte/ueberblick"/><link rel="alternate" hreflang="en" href="https://eucowork.ai/docs/en/erste-schritte/ueberblick"/><link rel="alternate" hreflang="x-default" href="https://eucowork.ai/docs/erste-schritte/ueberblick"/><link rel="sitemap" href="/docs/sitemap-index.xml"/><link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="shortcut icon" href="/docs/favicon.ico" type="image/x-icon"/><meta name="generator" content="Astro v7.2.0"/><meta name="generator" content="Starlight v0.41.7"/><meta property="og:title" content="What is EU Cowork AI?"/><meta property="og:type" content="article"/><meta property="og:url" content="https://eucowork.ai/docs/en/erste-schritte/ueberblick"/><meta property="og:locale" content="en"/><meta property="og:description" content="Overview of the platform, its building blocks, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits."/><meta property="og:site_name" content="EU Cowork AI"/><meta name="description" content="Overview of the platform, its building blocks, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits."/><meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png"/><meta name="twitter:card" content="summary_large_image"/><script>
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-vdxcvpsm"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>What is EU Cowork AI? | EU Cowork AI</title><link rel="canonical" href="https://eucowork.ai/docs/en/erste-schritte/ueberblick"/><link rel="alternate" hreflang="de-CH" href="https://eucowork.ai/docs/erste-schritte/ueberblick"/><link rel="alternate" hreflang="en" href="https://eucowork.ai/docs/en/erste-schritte/ueberblick"/><link rel="alternate" hreflang="x-default" href="https://eucowork.ai/docs/erste-schritte/ueberblick"/><link rel="sitemap" href="/docs/sitemap-index.xml"/><link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="shortcut icon" href="/docs/favicon.ico" type="image/x-icon"/><meta name="generator" content="Astro v7.2.0"/><meta name="generator" content="Starlight v0.41.7"/><meta property="og:title" content="What is EU Cowork AI?"/><meta property="og:type" content="article"/><meta property="og:url" content="https://eucowork.ai/docs/en/erste-schritte/ueberblick"/><meta property="og:locale" content="en"/><meta property="og:description" content="Overview of the platform, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits."/><meta property="og:site_name" content="EU Cowork AI"/><meta name="description" content="Overview of the platform, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits."/><meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png"/><meta name="twitter:card" content="summary_large_image"/><script>
 	window.StarlightThemeProvider = (() => {
 		const storedTheme =
 			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
@@ -100,72 +100,33 @@ separate hosting build.</p>
 <tr>
 <td><strong>You are an SMB customer and have it run for you</strong></td>
 <td>your IT service provider</td>
-<td>you receive a ready instance and work in the chat and in the admin panel</td>
+<td>you receive a ready instance and work in the chat and in the administration</td>
 </tr>
 <tr>
 <td><strong>You are an IT service provider</strong></td>
 <td>you, for several customers</td>
-<td>one separate stack per customer, on a dedicated or a shared machine</td>
+<td>one separate instance per customer, on a dedicated or a shared machine</td>
 </tr>
 </tbody>
 </table>
 <p>The third case is the reason behind many design decisions. A customer is always a separate,
-fully isolated stack with its own database, its own files and its own inference key. Details
-are on the <a href="/docs/en/erste-schritte/architektur">architecture</a> page.</p>
+fully isolated instance with its own database, its own files and its own inference key. More on
+that on the <a href="/docs/en/erste-schritte/architektur">architecture</a> page.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="what-the-system-consists-of">What the system consists of</h2><a class="sl-anchor-link" href="#what-the-system-consists-of"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “What the system consists of”</span></a></div>
-<p>The chat interface is <a href="https://www.librechat.ai">LibreChat</a>, an open source platform under
-the MIT license. Around it sit our own services, the so called sidecars. The LibreChat fork
-deliberately stays close to the original so that updates remain possible.</p>
-<table>
-<thead>
-<tr>
-<th>Building block</th>
-<th>Origin</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>chat, agents, file handling, model connectivity</td>
-<td>LibreChat</td>
-<td>the application your team members see</td>
-</tr>
-<tr>
-<td>admin panel and sidecar</td>
-<td>EU Cowork AI</td>
-<td>users, roles, permissions, usage, configuration, logs</td>
-</tr>
-<tr>
-<td>MCP gateway</td>
-<td>EU Cowork AI</td>
-<td>permission check and log entry before every access to a third party system</td>
-</tr>
-<tr>
-<td>example connectors</td>
-<td>EU Cowork AI and third parties</td>
-<td>bridges to a third party system as a template, not active in the customer template</td>
-</tr>
-<tr>
-<td>Outlook add-in</td>
-<td>EU Cowork AI</td>
-<td>chat pane inside Outlook with the open mail as context</td>
-</tr>
-<tr>
-<td>installation package</td>
-<td>EU Cowork AI</td>
-<td>Compose stack, installation scripts, backup, configuration profiles</td>
-</tr>
-</tbody>
-</table>
-<p>On top of that come standard building blocks as prebuilt images: MongoDB as the database,
-Meilisearch for full text search across old chats, SearXNG as your own metasearch engine and
-Caddy as a reverse proxy with automatic certificates.</p>
+<p>The chat interface is <a href="https://www.librechat.ai">LibreChat</a>, an open source platform under the
+MIT license. Chat, agents, file handling and model connectivity come from there — that is, the
+application your team members see. The fork deliberately stays close to the original so that
+updates remain possible.</p>
+<p>We added everything a company needs to run it under control: administration of users, roles and
+permissions, a permission check with logging before every access to a third party system, a
+usage overview with budgets, a chat pane inside Outlook and an installation package for your own
+server.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="what-the-platform-can-do">What the platform can do</h2><a class="sl-anchor-link" href="#what-the-platform-can-do"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “What the platform can do”</span></a></div>
-<p>After installing with the customer template you get, among other things: chat with streaming
-and history, a model picker with four curated cards, uploading files as context, image
-understanding on the cards that support it, artifacts such as diagrams and HTML directly in
-the chat, agents, the scaffolding for skills as standard procedures whose content you create
-yourself, a long term memory with opt-out, and full text search across earlier conversations.</p>
+<p>After installing you get, among other things: chat with streaming and history, a model picker
+with curated cards, uploading files as context, image understanding on the cards that support
+it, artifacts such as diagrams and HTML directly in the chat, agents, the scaffolding for skills
+as standard procedures whose content you create yourself, a long term memory with opt-out, and
+full text search across earlier conversations.</p>
 <p>Three features are deliberately switched off in the delivered state, because they need
 additional building blocks and would otherwise result in a dead button:</p>
 <table>
@@ -179,25 +140,25 @@ additional building blocks and would otherwise result in a dead button:</p>
 <tbody>
 <tr>
 <td>file search across uploaded documents</td>
-<td>needs a RAG service and a vector database</td>
-<td>Compose profile <code dir="auto">filesearch</code></td>
+<td>needs additional services</td>
+<td>enable it during setup</td>
 </tr>
 <tr>
 <td>code execution, for example generating an Excel file</td>
 <td>needs a code backend</td>
-<td>one of the two code interpreter substacks</td>
+<td>enable it during setup</td>
 </tr>
 <tr>
 <td>parameter panel for temperature and similar settings</td>
 <td>unnecessary for non developers</td>
-<td>can be re-enabled per role in the panel</td>
+<td>can be re-enabled per role</td>
 </tr>
 </tbody>
 </table>
 <div class="sl-heading-wrapper level-h2"><h2 id="what-the-platform-deliberately-does-not-do">What the platform deliberately does not do</h2><a class="sl-anchor-link" href="#what-the-platform-deliberately-does-not-do"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “What the platform deliberately does not do”</span></a></div>
 <ul>
-<li><strong>No multi tenancy inside the application.</strong> One customer is one stack. This is a deliberate
-decision, because it puts the separation below the application.</li>
+<li><strong>No multi tenancy inside the application.</strong> One customer is one instance. This is a
+deliberate decision, because it puts the separation below the application.</li>
 <li><strong>Users do not create their own connectors.</strong> Which third party systems are reachable is
 decided by the administration alone.</li>
 <li><strong>The bundled example connectors only read.</strong> They ship no tools that change anything in the
@@ -217,23 +178,22 @@ repository is the full feature set.</li>
 those from someone.</li>
 </ul>
 <p>The official LibreChat admin panel is released under the AGPL and is therefore deliberately
-<strong>not</strong> used. Instead there is a separate, permissively licensed panel that works against the
-MIT licensed administration interface of LibreChat. This keeps the overall product free of
-copyleft obligations.</p>
+<strong>not</strong> used. Instead there is a separate, permissively licensed administration that works
+against the MIT licensed administration interface of LibreChat. This keeps the overall product
+free of copyleft obligations.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="where-the-data-lives">Where the data lives</h2><a class="sl-anchor-link" href="#where-the-data-lives"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Where the data lives”</span></a></div>
-<p>Conversations, messages, users and usage data live in the MongoDB of your own stack. Uploaded
-files live in a directory next to it on the same server. There is no back channel to us.
-Telemetry is switched off, for Meilisearch for example fixed in the Compose stack.</p>
+<p>Conversations, messages, users and usage data live in the database of your own instance.
+Uploaded files live next to it on the same server. There is no back channel to us, telemetry is
+switched off.</p>
 <p>For the model responses themselves the content does leave the server, because the computation
-happens at the inference provider. The default is <strong>EuRouter</strong> at
-<code dir="auto">https://api.eurouter.ai/api/v1</code>, where processing takes place in the EU. <strong>OpenRouter</strong> can
-be enabled optionally and is <strong>not</strong> EU resident. Two of the four shipped model cards are
-therefore visibly labeled as non EU.</p>
-<aside aria-label="Web search and data residency" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Web search and data residency</p><div class="starlight-aside__content"><p>SearXNG runs inside your stack, but it forwards the search query to external search engines,
-without passing along the identity of the user. The statement “everything stays in the EU”
-applies to storage and inference, not to web search.</p></div></aside>
-<p>One instance in production use is located in Switzerland, for example. Where your instance is
-located is decided by your choice of server.</p>
+happens at the inference provider. The default is <strong>EuRouter</strong>, where processing takes place in
+the EU. <strong>OpenRouter</strong> can be enabled optionally and is <strong>not</strong> EU resident. Model cards outside
+the EU are visibly labeled in the interface.</p>
+<aside aria-label="Web search and data residency" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Web search and data residency</p><div class="starlight-aside__content"><p>The search engine runs inside your instance, but it forwards the search query to external search
+engines, without passing along the identity of the user. The statement “everything stays in the
+EU” applies to storage and inference, not to web search.</p></div></aside>
+<p>There is a hosted instance in Switzerland. Where your own instance is located is decided by your
+choice of server.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="scope-and-boundaries">Scope and boundaries</h2><a class="sl-anchor-link" href="#scope-and-boundaries"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Scope and boundaries”</span></a></div>
 <p>So that you can match the feature set against your requirements, here are the areas that are
 not part of the delivery or that call for a decision during setup.</p>
@@ -247,11 +207,11 @@ not part of the delivery or that call for a decision during setup.</p>
 <tbody>
 <tr>
 <td>web search</td>
-<td>The search engine runs inside the stack. You choose the scraper according to your data residency requirements and configure it during setup</td>
+<td>The search engine runs inside the instance. You choose the scraper according to your data residency requirements and configure it during setup</td>
 </tr>
 <tr>
 <td>outbound connections from code execution</td>
-<td>granted at host or network level, not inside the application. Code execution is switched off out of the box</td>
+<td>granted outside the application. Code execution is switched off out of the box</td>
 </tr>
 <tr>
 <td>user provisioning via SCIM</td>
@@ -268,4 +228,4 @@ not part of the delivery or that call for a decision during setup.</p>
 </tbody>
 </table>
 <div class="sl-heading-wrapper level-h2"><h2 id="next-steps">Next steps</h2><a class="sl-anchor-link" href="#next-steps"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Next steps”</span></a></div>
-<div class="card-grid astro-lmor3ela"><div class="sl-link-card astro-vodiqeol"><span class="sl-flex stack astro-vodiqeol"><a href="/docs/en/erste-schritte/systemanforderungen" class="astro-vodiqeol"><span class="title astro-vodiqeol">System requirements</span></a><span class="description astro-vodiqeol">How much memory, CPU and disk an instance really needs, with measured figures.</span></span><svg aria-hidden="true" class="icon rtl:flip astro-vodiqeol astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.333em;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg></div><div class="sl-link-card astro-vodiqeol"><span class="sl-flex stack astro-vodiqeol"><a href="/docs/en/erste-schritte/schnellstart" class="astro-vodiqeol"><span class="title astro-vodiqeol">Quickstart</span></a><span class="description astro-vodiqeol">From an empty Ubuntu server to a running instance, command by command.</span></span><svg aria-hidden="true" class="icon rtl:flip astro-vodiqeol astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.333em;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg></div><div class="sl-link-card astro-vodiqeol"><span class="sl-flex stack astro-vodiqeol"><a href="/docs/en/erste-schritte/architektur" class="astro-vodiqeol"><span class="title astro-vodiqeol">Architecture</span></a><span class="description astro-vodiqeol">Which services exist, how the data flows and why the tenant boundary is the Compose stack.</span></span><svg aria-hidden="true" class="icon rtl:flip astro-vodiqeol astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.333em;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg></div></div></div><footer class="sl-flex astro-xhxjzfa7"><div class="meta sl-flex astro-xhxjzfa7"></div><div class="pagination-links print:hidden astro-jgq3vlii" dir="ltr"><a href="/docs/en/erste-schritte/architektur" rel="next" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-jgq3vlii">Next<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Architecture</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>
+<div class="card-grid astro-lmor3ela"><div class="sl-link-card astro-vodiqeol"><span class="sl-flex stack astro-vodiqeol"><a href="/docs/en/erste-schritte/systemanforderungen" class="astro-vodiqeol"><span class="title astro-vodiqeol">System requirements</span></a><span class="description astro-vodiqeol">What an instance needs in terms of CPU, memory and disk.</span></span><svg aria-hidden="true" class="icon rtl:flip astro-vodiqeol astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.333em;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg></div><div class="sl-link-card astro-vodiqeol"><span class="sl-flex stack astro-vodiqeol"><a href="/docs/en/erste-schritte/schnellstart" class="astro-vodiqeol"><span class="title astro-vodiqeol">Quickstart</span></a><span class="description astro-vodiqeol">The path to your own instance in broad strokes.</span></span><svg aria-hidden="true" class="icon rtl:flip astro-vodiqeol astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.333em;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg></div><div class="sl-link-card astro-vodiqeol"><span class="sl-flex stack astro-vodiqeol"><a href="/docs/en/erste-schritte/architektur" class="astro-vodiqeol"><span class="title astro-vodiqeol">Architecture</span></a><span class="description astro-vodiqeol">The path a request takes and why every customer gets a separate instance.</span></span><svg aria-hidden="true" class="icon rtl:flip astro-vodiqeol astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.333em;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg></div></div></div><footer class="sl-flex astro-xhxjzfa7"><div class="meta sl-flex astro-xhxjzfa7"></div><div class="pagination-links print:hidden astro-jgq3vlii" dir="ltr"><a href="/docs/en/erste-schritte/architektur" rel="next" class="astro-jgq3vlii"><svg aria-hidden="true" class="astro-jgq3vlii astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg><span class="astro-jgq3vlii">Next<br class="astro-jgq3vlii"><span class="link-title astro-jgq3vlii">Architecture</span></span></a></div></footer></div></div></main></div></div></div></div></body></html>

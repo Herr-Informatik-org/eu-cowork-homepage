@@ -1,142 +1,39 @@
 ---
 title: Services and ports
-description: All containers of the stack with image, purpose, port and profile, plus the Docker networks and which ports belong to the outside.
+description: How the stack is structured in principle and what is reachable from the outside.
 sidebar:
   order: 2
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-This page lists every container of the Compose stack with image, task, port and profile. It is
-meant for looking things up, for example when you are writing a firewall rule or want to know
-why a service did not start.
+EU Cowork AI runs as a Docker Compose stack. The chat application is only one of several
+containers: database, search index and the further services each run in a container of their
+own and talk to each other over an internal network.
 
-All container names carry a prefix from the variable `STACK_NAME`, which defaults to
-`eucowork`. The container of the chat is therefore called `eucowork-api` by default.
+## What is reachable from the outside
 
-## The services
+The only thing published to the outside is a reverse proxy on the usual web ports, which
+terminates TLS and distributes everything else internally. All remaining services — database,
+search index, connectors and the additional in-house services — are reachable exclusively on
+the internal network and are not published on the host.
 
-| Service | Image | Purpose | Port | Profile |
-|---|---|---|---|---|
-| `api` | `registry.librechat.ai/danny-avila/librechat-dev`, pinned to a digest | LibreChat, interface and API | host `${API_BIND}:${PORT}`, default `0.0.0.0:3080` | no profile |
-| `admin` | build from `../services/admin` | own admin panel and sidecar | host `127.0.0.1:3010` | no profile |
-| `office-addin` | build from `../services/office-addin` | task pane and manifest for Outlook | host `127.0.0.1:3040`, 8080 inside the container | no profile |
-| `mongodb` | `mongo:8.0.20` | database `LibreChat` | internal only, 27017 | no profile |
-| `meilisearch` | `getmeili/meilisearch:v1.35.1` | full text search across conversations | internal only, 7700 | no profile |
-| `searxng` | `searxng/searxng:latest` | own metasearch engine for web search | internal only, 8080 | no profile |
-| `vectordb` | `pgvector/pgvector:0.8.0-pg15-trixie` | vector database of the file search | internal only | `filesearch` |
-| `rag_api` | `registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest` | processing of uploaded documents | internal only, `${RAG_PORT}`, default 8000 | `filesearch` |
-| `mcp-gateway` | build from `../services/mcp-gateway` | permission check and log in front of all connectors, plus the model router | internal only, 3020 | `internal` |
-| connector bridges, profiles `internal` and `microsoft` | partly built from `../services`, partly an unmodified third party image | translate between the chat layer and a third party system, not active in the customer template | internal only, 3000, 3030 or 8000 depending on the bridge | `internal`, `microsoft` |
-| `caddy` | `caddy:2-alpine` | reverse proxy with automatic TLS | host 80 and 443 | `production` |
-| `admin-panel` | AGPL panel of LibreChat | transitional tool, not part of the product | host `${ADMIN_PANEL_PORT}`, default 3000 | `interim` |
+Depending on the deployment stage, further containers are added, for example for file search or
+for connectors. Which ones those are and how they are switched on is described in the operating
+documentation.
 
-The bridges of the `internal` profile run through the gateway and each hold their own service
-account in the third party system, whose permissions there form the actual authorization
-boundary. The bridge of the `microsoft` profile deliberately bypasses the gateway, because
-there every person signs in individually. How such a bridge is put together and which parts
-belong to it is described by
-[the connector pattern](/docs/en/konnektoren/muster).
-
-<Aside type="caution" title="Pin images to a digest for production">
-The LibreChat image is pinned to a digest so that the same verified version runs on every
-server. `searxng`, `rag_api` and the interim panel `admin-panel` sit on `:latest` and may fetch
-a newer build on a `docker compose pull`. For a reproducible installation, pin those three to a
-digest as well in `distribution/docker-compose.yml` and make changing the digest part of your
-update procedure. Why a fixed digest is the better choice is explained under
-[Updating](/docs/en/betrieb/aktualisieren).
+<Aside type="caution" title="Plan network access">
+Besides the web ports, the instance needs an outbound path to the model provider. Decide before
+going live which destinations the server may reach on the outside, and allow access to the
+server itself only from your administration network.
 </Aside>
 
-## Which ports belong to the outside
+## Operating documentation
 
-Only three: **22, 80 and 443.** Everything else stays local.
+The list of the individual services with their tasks and dependencies, the network and
+deployment variants as well as the checks for operation are included with the delivery.
+Customers receive these documents together with their access.
 
-| Port | Service | Reason |
-|---|---|---|
-| 22 | SSH | administration |
-| 80 | Caddy | issuance of the certificates and redirect to HTTPS |
-| 443 | Caddy | chat, admin panel and Outlook add-in |
-
-Caddy is the only service that may listen on all interfaces. The admin panel and the Outlook
-add-in are already bound to `127.0.0.1` out of the box. The database, the search index, the
-gateway and all connector bridges are not published on the host at all, they are reachable
-exclusively on the internal Docker network.
-
-Two points you have to take care of yourself:
-
-- **The chat port is bound to `0.0.0.0` by default.** In production `API_BIND=127.0.0.1`
-  belongs in the `.env`, otherwise LibreChat is reachable unencrypted at `<server-ip>:3080`,
-  bypassing Caddy and TLS.
-- **The transitional panel of the `interim` profile binds to all interfaces.** It is a test
-  tool and does not belong on a reachable server.
-
-<Aside type="danger" title="The firewall does not take effect on Docker ports">
-Ports published by Docker through `ports:` bypass `ufw`, because Docker writes its own iptables
-rules into the `DOCKER-USER` chain. A container bound to `0.0.0.0` is reachable from the
-outside despite an active firewall. The protection lies in binding to `127.0.0.1`, not in the
-firewall rule.
-
-Where a rule really is needed, for example for the debug ports of the hardened code interpreter
-substack, it has to go into the same chain:
-
-```bash
-sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
-```
-
-The interim interpreter (port 8000) does not need this: its `setup.sh` binds it to `127.0.0.1`
-and verifies the binding after startup. On an instance set up before that change this only holds
-once `setup.sh` has run again; until then the rule for port 8000 is still needed.
-</Aside>
-
-## The Docker networks
-
-The stack uses two networks.
-
-| Network | Type | Who is in it |
-|---|---|---|
-| `default` | bridge with a fixed subnet from `DOCKER_SUBNET`, default `172.28.0.0/16` | all services of the stack |
-| `sandbox` | external network from `SANDBOX_NETWORK`, default `eucowork-sandbox` | only `api`, plus the separate code interpreter stack |
-
-The sandbox network is deliberately created outside the stack, so that both Compose projects
-can start and stop independently of each other. `install.sh` creates it. If it is missing,
-Compose reports on startup that the network declared as external cannot be found. The command
-for it:
-
-```bash
-docker network create eucowork-sandbox
-```
-
-The fixed subnet is intentional. If it collides with a route that a VPN pushes onto the
-machine, the outbound connections of the containers break. In that case enter a free range in
-`DOCKER_SUBNET` in the `.env`.
-
-<Aside type="caution" title="Several instances on one machine">
-`STACK_NAME`, `DOCKER_SUBNET` and `SANDBOX_NETWORK` apply across all of Docker and therefore
-have to be unique per instance. The same applies to the host ports `PORT`,
-`ADMIN_SIDECAR_PORT` and `OFFICE_ADDIN_PORT`. In the worst case, two instances on the same
-sandbox network would end up in the code interpreter of the other customer.
-</Aside>
-
-## Health checks
-
-Only the connector bridges of the `internal` profile have health checks. They query their own
-health endpoint every 30 seconds, with a five second timeout and three attempts. The start
-period is 15 to 20 seconds depending on the bridge.
-
-All other services have no health check. In `docker compose ps` they therefore appear as `Up`
-without a health status, which is not an error. Whether the application really started cleanly
-is visible in the log:
-
-```bash
-docker compose logs -f api
-```
-
-A connector bridge developed in house additionally ships a self test of its own. It checks the
-credentials, the permissions actually granted, read access and that writing paths are blocked:
-
-```bash
-docker compose --profile internal run --rm <bridge> node src/selftest.js
-```
-
-The name of the service is in your `docker-compose.yml`, the procedure is described by
-[the connector pattern](/docs/en/konnektoren/muster).
+How the stack is started, stopped and observed day to day is on the
+[command reference](/docs/en/referenz/befehle) page. The licenses of the building blocks
+involved are on the [licenses and origin](/docs/en/referenz/lizenzen) page.

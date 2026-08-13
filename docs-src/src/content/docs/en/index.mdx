@@ -1,13 +1,13 @@
 ---
 title: Documentation
-description: Documentation for EU Cowork AI. Install it on your own server, operate it, administer it, and connect it to your own systems.
+description: Documentation for EU Cowork AI. Overview, running it on your own server, administration and connecting it to your own systems.
 template: splash
 editUrl: false
 hero:
   title: EU Cowork AI
-  tagline: The AI colleague that runs on your own server. This documentation shows you how to install it, operate it, and connect it to your systems.
+  tagline: The AI colleague that runs on your own server. This documentation shows what the platform does, how it is operated and how it connects to your systems.
   actions:
-    - text: Up and running in 30 minutes
+    - text: Quickstart
       link: /docs/en/erste-schritte/schnellstart
       icon: right-arrow
       variant: primary
@@ -25,22 +25,22 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
   <LinkCard
     title="What is EU Cowork AI?"
     href="/docs/en/erste-schritte/ueberblick"
-    description="The five minute overview: what the platform does, what it is made of, and what comes from LibreChat."
+    description="The five minute overview: what the platform does and what comes from LibreChat."
   />
   <LinkCard
     title="Quickstart"
     href="/docs/en/erste-schritte/schnellstart"
-    description="From an empty Ubuntu server to a running instance. Every command ready to copy."
+    description="The path to your own instance in broad strokes."
   />
   <LinkCard
     title="System requirements"
     href="/docs/en/erste-schritte/systemanforderungen"
-    description="How much memory, CPU and disk an instance really needs, with measured figures."
+    description="What an instance needs in terms of memory, CPU and disk."
   />
   <LinkCard
     title="Connect your own system"
     href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
-    description="Your ERP, your ticketing system, your document store. Step by step from the admin panel."
+    description="Your ERP, your ticketing system, your document store — with a permission check in front."
   />
 </CardGrid>
 
@@ -48,13 +48,13 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid>
   <Card title="Getting started" icon="rocket">
-    Overview, architecture, system requirements and the quickstart on a fresh server.
-    Begin here if you are setting up EU Cowork AI for the first time.
+    Overview, architecture, system requirements and the path to your own instance.
+    Begin here if you are looking at EU Cowork AI for the first time.
   </Card>
 
   <Card title="Install and operate" icon="setting">
-    Prepare the server, install, set up domain and certificate, update, back up, migrate.
-    Plus the failure modes that actually show up in daily operation.
+    What to consider when setting it up and in daily operation: domain and certificate,
+    updates, backups, migration, and the failure modes that actually show up.
   </Card>
 
   <Card title="For your team" icon="approve-check">
@@ -63,41 +63,40 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
   </Card>
 
   <Card title="Administration" icon="seti:config">
-    The admin panel: users and groups, roles and permissions, model cards,
-    spending and budgets, logs and retention.
+    Users and groups, roles and permissions, model cards, spending and budgets,
+    logs and retention.
   </Card>
 
   <Card title="Connectors and MCP" icon="puzzle">
-    How the platform reaches third party systems, how the permission gateway sits
+    How the platform reaches third party systems, how the permission check sits
     in front of them, and how you connect your own systems safely.
   </Card>
 
   <Card title="Reference" icon="list-format">
-    Environment variables, services and ports, command reference, licenses and the
-    points where the LibreChat documentation takes over.
+    Terminology, licenses and the points where the LibreChat documentation takes over.
   </Card>
 </CardGrid>
 
 ## A note on the German labels
 
-The admin panel and the chat interface currently ship in German only. Wherever this
+The administration and the chat interface currently ship in German only. Wherever this
 documentation names a menu item, a tab, a field or a button, it therefore quotes the German
 string you will actually see on screen and adds an English gloss, like this: open
-**"MCP-Zugriff"** (MCP access) and set **"Server-Standard"** (server default) to denied.
-Nothing here describes an English interface that does not exist.
+**"Konfiguration"** (configuration). Nothing here describes an English interface that does not
+exist.
 
 ## This documentation and LibreChat
 
 EU Cowork AI builds on [LibreChat](https://www.librechat.ai), an open source chat
 platform released under the MIT license. The chat interface, the agent system, file
 handling and model connectivity come from there. We added everything a company needs
-to run it under control: our own admin panel, a permission gateway in front of every
-connector, usage metering with budgets, and an installation package for your own server.
+to run it under control: administration, permission management in front of the connectors,
+a usage overview with budgets, and an installation package for your own server.
 
-This documentation describes the complete system and states at every point where a
-building block comes from. Where the LibreChat documentation goes deeper, we link to it
-rather than retelling it badly. Which building block comes from whom is set out in detail
-under [LibreChat and EU Cowork](/docs/en/referenz/librechat-und-eu-cowork).
+This documentation gives the overview and states where a building block comes from. Where the
+LibreChat documentation goes deeper, we link to it rather than retelling it badly. The detailed
+setup documents come with the delivery. Which building block comes from whom is set out under
+[LibreChat and EU Cowork](/docs/en/referenz/librechat-und-eu-cowork).
 
 <div class="euc-footnote">
 Something missing or incorrect? Write to <a href="mailto:hallo@eucowork.ai">hallo@eucowork.ai</a>.

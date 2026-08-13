@@ -1,6 +1,6 @@
 ---
 /**
- * Weg einer Werkzeug-Anfrage durch das Rechte-Gateway.
+ * Konzeptskizze: Weg einer Werkzeug-Anfrage durch die Rechtepruefung.
  *
  * Handgeschriebenes SVG statt Mermaid, gleiche Begruendung wie in
  * DiagrammArchitektur.astro. Die Beschriftungen haengen an der Sprache der
@@ -10,62 +10,46 @@ const en = Astro.url.pathname.startsWith('/docs/en');
 
 const t = en
   ? {
-      titel: 'How a tool request travels through the gateway',
+      titel: 'How a tool request travels through the permission check',
       beschreibung:
-        'A person asks a question and the model decides to call a tool. The call goes to the gateway together with identity headers, and the gateway checks the permissions. If access is denied, the person gets a plain text message and the connector is never contacted. If access is allowed, the gateway strips the identity headers and forwards the call to the connector, which queries the target system and returns the result. Either way a log entry is written.',
+        'A person asks a question and the model decides to call a tool. The call is checked against the permission rules before it reaches the connector. If access is denied, the person gets a plain text message and the target system never sees the request. If access is allowed, the connector queries the target system and the result goes back to the model. Either way the decision is logged.',
       frage: 'Question in the chat',
       frageSub: 'the model decides to use a tool',
-      kante: 'call plus identity headers',
-      gateway: 'The gateway checks permissions',
-      gatewaySub: 'user before role before group before default',
+      pruefung: 'Permission check',
+      pruefungSub: 'every call is checked and logged',
       verweigert: 'denied',
       erlaubt: 'allowed',
       meldung: 'Message in the chat',
-      meldungSub1: 'the connector is never contacted,',
-      meldungSub2: 'the target system never sees the request',
-      header: 'Identity headers removed',
-      headerSub: 'the connector sees no user data',
+      meldungSub: 'the target system never sees the request',
       konnektor: 'Connector',
-      konnektorSub: 'the MCP server, for example the ERP bridge',
+      konnektorSub: 'offers the tools of a target system',
       ziel: 'Target system',
       zielSub: 'its own permissions apply on top',
       ergebnis: 'Result returned to the model',
-      protokoll: 'Log',
-      protokollSub1: 'always, denials included:',
-      protokollSub2: 'time, connector, tool,',
-      protokollSub3: 'person, decision, reason',
     }
   : {
-      titel: 'Weg einer Werkzeug-Anfrage durch das Gateway',
+      titel: 'Weg einer Werkzeug-Anfrage durch die Rechteprüfung',
       beschreibung:
-        'Eine Person stellt eine Frage, das Modell ruft ein Werkzeug auf. Der Aufruf geht mit Identitäts-Headern an das Gateway, das die Rechte prüft. Bei Verweigerung erhält die Person eine Klartext-Meldung und der Konnektor wird nie kontaktiert. Bei Erlaubnis entfernt das Gateway die Identitäts-Header und leitet an den Konnektor weiter, der das Zielsystem abfragt und das Ergebnis zurückgibt. In beiden Fällen entsteht ein Protokolleintrag.',
+        'Eine Person stellt eine Frage, das Modell ruft ein Werkzeug auf. Der Aufruf wird gegen die Rechteregeln geprüft, bevor er den Konnektor erreicht. Bei Verweigerung erhält die Person eine Klartext-Meldung, das Zielsystem sieht die Anfrage nie. Bei Erlaubnis fragt der Konnektor das Zielsystem ab und das Ergebnis geht zurück an das Modell. In beiden Fällen wird die Entscheidung protokolliert.',
       frage: 'Frage im Chat',
       frageSub: 'das Modell entscheidet, ein Werkzeug zu nutzen',
-      kante: 'Aufruf plus Identitäts-Header',
-      gateway: 'Gateway prüft die Rechte',
-      gatewaySub: 'Benutzer vor Rolle vor Gruppe vor Standard',
+      pruefung: 'Rechteprüfung',
+      pruefungSub: 'jeder Aufruf wird geprüft und protokolliert',
       verweigert: 'verweigert',
       erlaubt: 'erlaubt',
       meldung: 'Meldung im Chat',
-      meldungSub1: 'der Konnektor wird nie kontaktiert,',
-      meldungSub2: 'das Zielsystem sieht die Anfrage nicht',
-      header: 'Identitäts-Header entfernen',
-      headerSub: 'der Konnektor sieht keine Nutzerdaten',
+      meldungSub: 'das Zielsystem sieht die Anfrage nicht',
       konnektor: 'Konnektor',
-      konnektorSub: 'der MCP-Server, zum Beispiel die ERP-Brücke',
+      konnektorSub: 'bietet die Werkzeuge eines Zielsystems an',
       ziel: 'Zielsystem',
       zielSub: 'dessen eigene Rechte gelten zusätzlich',
       ergebnis: 'Ergebnis zurück an das Modell',
-      protokoll: 'Protokoll',
-      protokollSub1: 'immer, auch bei Verweigerung:',
-      protokollSub2: 'Zeit, Konnektor, Werkzeug,',
-      protokollSub3: 'Person, Entscheid, Grund',
     };
 ---
 
 <figure class="euc-diagramm">
   <svg
-    viewBox="0 0 880 560"
+    viewBox="0 0 880 450"
     role="img"
     aria-labelledby="gw-titel gw-beschreibung"
     xmlns="http://www.w3.org/2000/svg"
@@ -79,65 +63,45 @@ const t = en
       <text class="d-sub" x="440" y="60">{t.frageSub}</text>
     </g>
 
-    <path class="d-arrow" d="M440 72 L440 106" marker-end="url(#gw-pfeil)" />
-    <text class="d-edge" x="452" y="94">{t.kante}</text>
+    <path class="d-arrow" d="M440 72 L440 110" marker-end="url(#gw-pfeil)" />
 
     <g class="d-node d-node-accent">
-      <rect x="290" y="110" width="300" height="56" rx="10" />
-      <text class="d-label" x="440" y="135">{t.gateway}</text>
-      <text class="d-sub" x="440" y="152">{t.gatewaySub}</text>
+      <rect x="290" y="114" width="300" height="56" rx="10" />
+      <text class="d-label" x="440" y="139">{t.pruefung}</text>
+      <text class="d-sub" x="440" y="156">{t.pruefungSub}</text>
     </g>
 
-    <path class="d-arrow" d="M290 138 L190 138 L190 214" marker-end="url(#gw-pfeil)" />
-    <text class="d-edge d-edge-end" x="278" y="130">{t.verweigert}</text>
+    <path class="d-arrow" d="M290 142 L190 142 L190 214" marker-end="url(#gw-pfeil)" />
+    <text class="d-edge d-edge-end" x="278" y="134">{t.verweigert}</text>
 
     <g class="d-node d-node-deny">
-      <rect x="40" y="218" width="300" height="70" rx="10" />
+      <rect x="40" y="218" width="300" height="56" rx="10" />
       <text class="d-label" x="190" y="243">{t.meldung}</text>
-      <text class="d-sub" x="190" y="260">{t.meldungSub1}</text>
-      <text class="d-sub" x="190" y="276">{t.meldungSub2}</text>
+      <text class="d-sub" x="190" y="260">{t.meldungSub}</text>
     </g>
 
-    <path class="d-arrow" d="M590 138 L690 138 L690 214" marker-end="url(#gw-pfeil)" />
-    <text class="d-edge" x="602" y="130">{t.erlaubt}</text>
+    <path class="d-arrow" d="M590 142 L690 142 L690 214" marker-end="url(#gw-pfeil)" />
+    <text class="d-edge" x="602" y="134">{t.erlaubt}</text>
 
     <g class="d-node">
       <rect x="540" y="218" width="300" height="52" rx="10" />
-      <text class="d-label" x="690" y="241">{t.header}</text>
-      <text class="d-sub" x="690" y="258">{t.headerSub}</text>
+      <text class="d-label" x="690" y="241">{t.konnektor}</text>
+      <text class="d-sub" x="690" y="258">{t.konnektorSub}</text>
     </g>
 
     <path class="d-arrow" d="M690 270 L690 302" marker-end="url(#gw-pfeil)" />
 
     <g class="d-node">
       <rect x="540" y="306" width="300" height="52" rx="10" />
-      <text class="d-label" x="690" y="329">{t.konnektor}</text>
-      <text class="d-sub" x="690" y="346">{t.konnektorSub}</text>
+      <text class="d-label" x="690" y="329">{t.ziel}</text>
+      <text class="d-sub" x="690" y="346">{t.zielSub}</text>
     </g>
 
-    <path class="d-arrow" d="M690 358 L690 390" marker-end="url(#gw-pfeil)" />
+    <path class="d-arrow" d="M540 332 L440 332 L440 380" marker-end="url(#gw-pfeil)" />
 
     <g class="d-node">
-      <rect x="540" y="394" width="300" height="52" rx="10" />
-      <text class="d-label" x="690" y="417">{t.ziel}</text>
-      <text class="d-sub" x="690" y="434">{t.zielSub}</text>
-    </g>
-
-    <path class="d-arrow" d="M540 420 L440 420 L440 468" marker-end="url(#gw-pfeil)" />
-
-    <g class="d-node">
-      <rect x="290" y="472" width="300" height="44" rx="10" />
-      <text class="d-label" x="440" y="499">{t.ergebnis}</text>
-    </g>
-
-    <path class="d-arrow-dashed" d="M340 152 L240 152 L120 152 L120 336" marker-end="url(#gw-pfeil)" />
-
-    <g class="d-node d-node-muted">
-      <rect x="20" y="340" width="200" height="86" rx="10" />
-      <text class="d-label" x="120" y="365">{t.protokoll}</text>
-      <text class="d-sub" x="120" y="382">{t.protokollSub1}</text>
-      <text class="d-sub" x="120" y="398">{t.protokollSub2}</text>
-      <text class="d-sub" x="120" y="414">{t.protokollSub3}</text>
+      <rect x="290" y="384" width="300" height="44" rx="10" />
+      <text class="d-label" x="440" y="411">{t.ergebnis}</text>
     </g>
 
     <defs>

@@ -1,117 +1,67 @@
 ---
 title: Verbrauch, Budgets und Abrechnung
-description: Wie aus Tokens Euro werden, wie das gemeinsame Monatsbudget und persönliche Limits zusammenspielen und wie Belege entstehen.
+description: Wie der Verbrauch gemessen wird, wie Monatsbudget und persönliche Limits zusammenspielen und wie Belege entstehen.
 sidebar:
   order: 4
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-Die Verbrauchsmessung ist immer aktiv. Sie zeigt, was die Nutzung tatsächlich kostet, und sie ist die Grundlage für Budgets, Limits und Belege. Diese Seite erklärt die Rechnung dahinter und die Stellen im Panel, an denen Sie eingreifen.
+Die Verbrauchsmessung ist immer aktiv. Sie zeigt, was die Nutzung tatsächlich kostet, und ist die Grundlage für Budgets, Limits und Belege.
 
 ## Was gemessen wird
 
-Grundlage sind die Transaktionen von LibreChat, also die Tokens jeder einzelnen Anfrage, getrennt nach Eingabe und Ausgabe. Daraus entsteht ein Betrag pro Anfrage, den das Panel nach Person, Modell, Tag und Monat aufsummiert.
+Grundlage sind die Tokens jeder einzelnen Anfrage, getrennt nach Eingabe und Ausgabe. Daraus entsteht ein Betrag pro Anfrage, den das Panel nach Person, Modell, Tag und Monat aufsummiert. Die Modellpreise sind in der Konfiguration hinterlegt und lassen sich aus dem Katalog des Anbieters übernehmen; abgerechnet wird in Euro zu einem Wechselkurs, der pro Abrechnungsmonat eingefroren wird. Abgeschlossene Monate und ihre Belege bleiben damit, wie sie waren.
 
-Der Weg von Tokens zu Euro hat zwei Schritte:
-
-<Steps>
-
-1. **Tokens mal Preis ergibt USD.** Die Preise stehen in der Preistabelle in USD pro einer Million Tokens.
-
-2. **USD mal Kurs ergibt Euro.** Der Kurs steht in der Umgebungsvariablen `USD_EUR_RATE` und ist unter **Einstellungen → Abrechnung** in der Karte **Wechselkurs** sichtbar.
-
-</Steps>
-
-<Aside type="note" title="Der Kurs wird pro Abrechnungsmonat eingefroren">
-Sobald ein Monat abgeschlossen ist, hält das Panel den verwendeten Kurs fest. Ändern Sie später `USD_EUR_RATE`, wirkt das nur auf den laufenden und auf kommende Monate. Abgeschlossene Monate und ihre Belege bleiben, wie sie waren. Im Monatsarchiv sehen Sie in der Spalte **Kurs**, welcher Wert für den jeweiligen Monat gilt.
+<Aside type="caution" title="Preise pflegen lohnt sich">
+Fehlt für ein Modell der Preis, wird mit einem Pauschalwert gerechnet. Die Auswertung sieht dann plausibel aus und ist trotzdem falsch. Gleiches gilt für die Kontextgrösse: ohne gepflegten Wert wird konservativ angenommen, und lange Konversationen werden früher beschnitten, als das Modell es nötig hätte.
 </Aside>
 
-## Die Preistabelle
+## Monatsbudget und persönliche Limits
 
-Die Preise pflegen Sie unter **Konfiguration → Preise**, je Endpoint eine Tabelle mit den Spalten **Modell**, **Kontext (Tokens)**, **Eingabe (USD/1M)** und **Ausgabe (USD/1M)**.
+Für die Organisation lässt sich ein **gemeinsames Monatsbudget** in Euro setzen. Es ist ein gemeinsamer Monats-Tank, kein Betrag pro Person. Ohne Eintrag gibt es kein Budget. Auf der Übersicht wird der Stand gegen den realen Verbrauch gestellt, mit Warnung und Hochrechnung, bevor es knapp wird.
 
-Der Knopf **Von OpenRouter übernehmen** füllt Kontextgrösse und Preise aus dem Live-Katalog in den Entwurf. Gespeichert wird erst mit **Speichern**, damit jede Änderung in der Historie steht.
+Ob das Budget nur angezeigt oder auch durchgesetzt wird, entscheidet ein Schalter. Im Auslieferungszustand ist er **aus**:
 
-<Aside type="danger" title="Zwei Fallen, die Geld beziehungsweise Qualität kosten">
-**Ein leeres Preisfeld heisst nicht gratis.** Fehlt der Preis, rechnet LibreChat mit seiner eingebauten Tabelle, und für unbekannte Modelle sind das pauschal 6 USD je Million Tokens. Ihre Auswertung sieht dann plausibel aus und ist trotzdem falsch.
-
-**Eine leere Kontextgrösse ist teurer, als sie aussieht.** Das Chat-Frontend fällt in dem Fall still auf rund 32 000 Tokens zurück und beschneidet lange Konversationen, selbst bei einem Modell mit sehr grossem Kontext. Hier gepflegte Werte gewinnen über beides und wirken sofort für neue Antworten.
-</Aside>
-
-## Das gemeinsame Monatsbudget
-
-Unter **Einstellungen → Budget & Durchsetzung** steht das Feld **Budget in EUR pro Monat**. Das ist ein gemeinsamer Monats-Tank für die ganze Organisation, kein Betrag pro Person. Leer bedeutet: kein Budget. Auf der **Übersicht** wird der Stand gegen den realen Verbrauch gestellt, ab 80 Prozent erscheint eine Warnung, dazu eine Hochrechnung auf den Monat.
-
-Darunter liegt der Schalter **Budget hart durchsetzen**. Er ist im Auslieferungszustand **aus**.
-
-| Schalter | Wirkung |
+| Einstellung | Wirkung |
 | --- | --- |
-| aus (Standard) | Das Budget ist reine Anzeige. Overage ist erlaubt, niemand wird ausgesperrt. Technisch prüft LibreChat gar nichts, es kann also auch niemand versehentlich hängen bleiben. |
-| an | Ist das Budget aufgebraucht, werden neue Anfragen abgelehnt, für **alle** Konten inklusive der Admins. Im Chat erscheint eine Hinweisleiste. Das Panel selbst bleibt immer bedienbar. |
+| aus (Standard) | Das Budget ist reine Anzeige. Niemand wird ausgesperrt. |
+| an | Ist das Budget aufgebraucht, werden neue Anfragen abgelehnt, für **alle** Konten inklusive der Administratoren. Im Chat erscheint eine Hinweisleiste. Das Panel selbst bleibt bedienbar. |
 
-Eine Budget-Erhöhung, das Ausschalten des Schalters und der Monatswechsel lösen die Sperre innert einer Minute.
+Eine Budget-Erhöhung, das Ausschalten des Schalters und der Monatswechsel heben die Sperre wieder auf.
 
-Im selben Formular steht **Plattformgebühr in EUR pro Nutzer/Monat (Abrechnung)**, Standard 6 Euro. Sie erscheint als Position auf der Monatsabrechnung und wird zusammen mit dem Budget gespeichert.
-
-## Das persönliche Monatslimit
-
-Auf der Seite **Finanzen → Verbrauch** steht pro Person die Spalte **Monatslimit**. Ein Limit ist optional, ohne Eintrag gilt kein persönliches Limit.
+Zusätzlich lässt sich pro Person ein **Monatslimit** setzen.
 
 <Aside type="caution" title="Der Pool schlägt das persönliche Limit">
-Persönliche Limits greifen nur, wenn **Budget hart durchsetzen** eingeschaltet ist, es ist derselbe Schalter. Und wichtiger: ist der gemeinsame Topf leer, stehen alle auf null, auch wer sein eigenes Limit noch längst nicht ausgeschöpft hat. Das persönliche Limit ist eine zusätzliche Bremse, keine Reservierung.
+Persönliche Limits greifen nur bei eingeschalteter Durchsetzung, es ist derselbe Schalter. Und wichtiger: ist der gemeinsame Topf leer, stehen alle auf null, auch wer sein eigenes Limit noch längst nicht ausgeschöpft hat. Das persönliche Limit ist eine zusätzliche Bremse, keine Reservierung.
 </Aside>
 
-Die Zeile zeigt den Grund der Sperre als Badge:
+## Guthaben: zwei Bedeutungen
 
-| Badge | Bedeutung |
-| --- | --- |
-| **gesperrt (Budget)** | das gemeinsame Monatsbudget der Organisation ist aufgebraucht |
-| **gesperrt (Limit)** | das persönliche Monatslimit dieser Person ist erreicht |
+Das Wort „Guthaben" steht im Panel an zwei Stellen und meint zwei verschiedene Dinge:
 
-Die Tabelle hat ausserdem die Spalten **Nutzer**, **Verbrauch** für den gewählten Monat, **Tokens**, **Anfragen**, **Letzte Aktivität** und **Guthaben**. Der Knopf **Guthaben-CSV** exportiert die Ansicht.
-
-## Guthaben pro Person und Guthaben der Organisation
-
-Das Wort „Guthaben" steht im Panel an zwei Stellen und meint zwei verschiedene Dinge. Verwechseln Sie die beiden nicht.
-
-| | **Guthaben** auf der Seite Verbrauch | **Guthaben** auf der Seite Abrechnung |
+| | Guthaben einer Person | Guthaben der Organisation |
 | --- | --- | --- |
-| Was es ist | das individuelle Limit-Konto einer Person in Euro | der Kontostand der Organisation aus erfassten Einzahlungen |
-| Wozu es dient | technische Durchsetzung von Sperren pro Konto | kaufmännischer Überblick, was eingezahlt und was verbraucht wurde |
-| Wann es relevant ist | nur, wenn die harte Durchsetzung aktiv ist | unabhängig davon, sobald Sie Einzahlungen erfassen |
-| Wie es sich ändert | über **Guthaben-Top-up** an der Zeile | über **Einzahlung erfassen** im Ledger |
+| Was es ist | das individuelle Limit-Konto in Euro | der Kontostand aus erfassten Einzahlungen |
+| Wozu es dient | technische Durchsetzung von Sperren pro Konto | kaufmännischer Überblick über Einzahlungen und Verbrauch |
+| Wann es relevant ist | nur bei aktiver Durchsetzung | sobald Sie Einzahlungen erfassen |
 
 Kurz gefasst: das Guthaben pro Person ist ein Ventil, das Guthaben der Organisation ist eine Buchhaltung. Das Token-Guthaben selbst ist bewusst organisationsweit gepoolt, damit einzelne Personen nicht an einer künstlichen Grenze stehen, während anderswo Budget übrig ist.
 
-## Abrechnung
+## Abrechnung und Belege
 
-Die Seite **Finanzen → Abrechnung** zeigt den gewählten Monat mit zwei Positionen:
-
-- **Plattformgebühr**, gerechnet aus der Nutzerzahl mal dem Betrag aus den Einstellungen. Sie hängt am Konto, nicht an der Nutzung.
-- **Token-Verbrauch** aus der Verbrauchsmessung.
-
-Zwei Knöpfe erzeugen Belege: **CSV-Beleg** und **PDF**. Anbieter- und Kundenanschrift für den PDF-Kopf stehen unter **Einstellungen → Abrechnung** in der Karte **Anschriften**.
+Die Abrechnungsseite zeigt den gewählten Monat mit zwei Positionen: einer Plattformgebühr pro Nutzer und dem gemessenen Token-Verbrauch. Beides lässt sich als CSV und als PDF ausgeben. Einzahlungen werden in einem Ledger erfasst, der nur ergänzt wird: eine Korrektur passiert als Gegenbuchung, der Originaleintrag bleibt stehen. Vergangene Monate liegen in einem Archiv.
 
 <Aside type="note" title="Lieber gesperrt als falsch">
-Fehlt eine Grundlage, etwa die Nutzerzahl, sperrt das Panel die Belege, statt still mit null zu rechnen. Ein Beleg, der ohne Fehlermeldung eine zu kleine Zahl ausweist, wäre schlimmer als gar kein Beleg.
+Fehlt eine Rechengrundlage, sperrt das Panel die Belege, statt still mit null zu rechnen. Ein Beleg, der ohne Fehlermeldung eine zu kleine Zahl ausweist, wäre schlimmer als gar kein Beleg.
 </Aside>
-
-### Ledger und Storno
-
-Einzahlungen erfassen Sie über **Einzahlung erfassen**. Der Ledger ist append-only: eine Korrektur passiert als **Storno**, also als Gegenbuchung mit Bezug auf den ursprünglichen Beleg. Der Originaleintrag bleibt stehen und verschwindet nie. Die Zusammenfassung zeigt den Saldo als Einzahlungen minus Verbrauch, wobei die Plattformgebühr dort nicht enthalten ist und separat abgerechnet wird.
-
-Unter **Vergangene Abrechnungen** liegt das Monatsarchiv mit den Spalten **Monat**, **Aktive Nutzer**, **Tokens**, **Token-Kosten** und **Kurs**, dazu **Anzeigen** und **PDF** je Zeile.
 
 <Aside type="caution" title="Belege sind keine Steuerrechnungen">
-Die Fussnote im Panel sagt es klar: fakturiert wird ausserhalb dieses Systems, CSV und PDF sind Belege, keine Steuerrechnungen. Es gibt auch keine Zahlungsanbindung. Rechnungsstellung und Zahlungseingang laufen weiterhin über Ihre Buchhaltung.
+CSV und PDF sind Belege, keine Steuerrechnungen, und es gibt keine Zahlungsanbindung. Rechnungsstellung und Zahlungseingang laufen weiterhin über Ihre Buchhaltung.
 </Aside>
 
-## Die Dashboard-Ansichten
+## Die Auswertungen
 
-Zwei Seiten unter **Analyse** zeigen dieselben Zahlen aus unterschiedlichem Blickwinkel:
+Zwei Ansichten zeigen dieselben Zahlen aus unterschiedlichem Blickwinkel: eine **Monatssicht** auf den Kalendermonat mit Kennzahlen, Tagesverlauf und den Tabellen pro Nutzer und pro Modell, und eine **rollierende Sicht** über die letzten Wochen mit Vergleich zur Vorperiode.
 
-- **Übersicht** ist die Monatssicht auf den Kalendermonat. Oben die Kennzahlen Verbrauch in Euro, Budgetstand mit Hochrechnung, Tokens und aktive Nutzer, darunter ein Tages-Chart pro Modell sowie die Tabellen **Verbrauch pro Nutzer** und **Verbrauch pro Modell**.
-- **Aktivität** ist ein rollierendes Fenster über **7 Tage**, **30 Tage** oder **90 Tage**, mit Vergleich zur Vorperiode, den **Modellen im Zeitraum**, der **Router-Verteilung (eu-auto)** und dem importierten OpenRouter-Konto. Für den OpenRouter-Teil schaltet die Ansicht 7 Tage still auf 30 hoch, weil der Anbieter für kürzere Zeiträume keine brauchbare Statistik liefert.
-
-Für die Frage nach einer einzelnen Anfrage ist keine der beiden Seiten zuständig, dafür gibt es die [Protokolle](/docs/administration/protokolle-und-audit).
+Für die Frage nach einer einzelnen Anfrage ist keine der beiden zuständig, dafür gibt es die [Protokolle](/docs/administration/protokolle-und-audit).

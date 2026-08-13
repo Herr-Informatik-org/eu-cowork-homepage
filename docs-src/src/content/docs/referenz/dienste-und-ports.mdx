@@ -1,142 +1,38 @@
 ---
 title: Dienste und Ports
-description: Alle Container des Stacks mit Image, Zweck, Port und Profil. Dazu die Docker-Netze, die Healthchecks und die Frage, welche Ports nach aussen gehören.
+description: Wie der Stack grundsätzlich aufgebaut ist und was von aussen erreichbar ist.
 sidebar:
   order: 2
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-Diese Seite listet jeden Container des Compose-Stacks mit Image, Aufgabe, Port und Profil.
-Sie ist zum Nachschlagen gedacht, etwa wenn Sie eine Firewall-Regel schreiben oder wissen
-wollen, warum ein Dienst nicht gestartet ist.
+EU Cowork AI läuft als Docker-Compose-Stack. Die Chat-Anwendung ist dabei nur einer von
+mehreren Containern: Datenbank, Suchindex und die weiteren Dienste laufen jeweils in einem
+eigenen Container und sprechen untereinander über ein internes Netz.
 
-Alle Containernamen tragen ein Präfix aus der Variablen `STACK_NAME`, ohne Angabe lautet es
-`eucowork`. Der Container des Chats heisst also standardmässig `eucowork-api`.
+## Was von aussen erreichbar ist
 
-## Die Dienste
+Nach aussen veröffentlicht wird nur ein Reverse-Proxy auf den üblichen Web-Ports, der TLS
+terminiert und alles Weitere intern verteilt. Sämtliche übrigen Dienste — Datenbank,
+Suchindex, Konnektoren und die eigenen Zusatzdienste — sind ausschliesslich im internen Netz
+erreichbar und werden auf dem Host nicht veröffentlicht.
 
-| Dienst | Image | Zweck | Port | Profil |
-|---|---|---|---|---|
-| `api` | `registry.librechat.ai/danny-avila/librechat-dev`, auf Digest gepinnt | LibreChat, Oberfläche und Schnittstelle | Host `${API_BIND}:${PORT}`, Vorgabe `0.0.0.0:3080` | ohne Profil |
-| `admin` | Build aus `../services/admin` | eigenes Admin-Panel und Sidecar | Host `127.0.0.1:3010` | ohne Profil |
-| `office-addin` | Build aus `../services/office-addin` | Task Pane und Manifest für Outlook | Host `127.0.0.1:3040`, im Container 8080 | ohne Profil |
-| `mongodb` | `mongo:8.0.20` | Datenbank `LibreChat` | nur intern, 27017 | ohne Profil |
-| `meilisearch` | `getmeili/meilisearch:v1.35.1` | Volltextsuche über Konversationen | nur intern, 7700 | ohne Profil |
-| `searxng` | `searxng/searxng:latest` | eigene Metasuchmaschine für die Web-Suche | nur intern, 8080 | ohne Profil |
-| `vectordb` | `pgvector/pgvector:0.8.0-pg15-trixie` | Vektordatenbank der Dateisuche | nur intern | `filesearch` |
-| `rag_api` | `registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest` | Auswertung hochgeladener Dokumente | nur intern, `${RAG_PORT}`, Vorgabe 8000 | `filesearch` |
-| `mcp-gateway` | Build aus `../services/mcp-gateway` | Rechteprüfung und Protokoll vor allen Konnektoren, dazu der Model-Router | nur intern, 3020 | `internal` |
-| Konnektor-Brücken, Profile `internal` und `microsoft` | teils eigener Build aus `../services`, teils unverändertes Fremd-Image | übersetzen zwischen der Chat-Schicht und einem Fremdsystem, im Kunden-Template nicht aktiv | nur intern, je nach Brücke 3000, 3030 oder 8000 | `internal`, `microsoft` |
-| `caddy` | `caddy:2-alpine` | Reverse-Proxy mit automatischem TLS | Host 80 und 443 | `production` |
-| `admin-panel` | AGPL-Panel von LibreChat | Übergangswerkzeug, nicht Teil des Produkts | Host `${ADMIN_PANEL_PORT}`, Vorgabe 3000 | `interim` |
+Je nach Ausbaustufe kommen weitere Container hinzu, etwa für die Dateisuche oder für
+Konnektoren. Welche das sind und wie sie zugeschaltet werden, steht in den Betriebsunterlagen.
 
-Die Brücken des Profils `internal` laufen über das Gateway und halten je ein eigenes
-Dienstkonto im Fremdsystem, dessen Rechte dort die eigentliche Berechtigungsgrenze bilden. Die
-Brücke des Profils `microsoft` läuft bewusst am Gateway vorbei, weil sich dort jede Person
-selbst anmeldet. Wie so eine Brücke aufgebaut ist und welche Bauteile dazugehören, beschreibt
-[das Konnektor-Muster](/docs/konnektoren/muster).
-
-<Aside type="caution" title="Images für den produktiven Betrieb auf einen Digest pinnen">
-Das LibreChat-Image ist auf einen Digest gepinnt, damit auf jedem Server dieselbe geprüfte
-Version läuft. `searxng`, `rag_api` und das Interim-Panel `admin-panel` stehen auf `:latest`
-und können bei einem `docker compose pull` eine neuere Fassung ziehen. Für eine reproduzierbare
-Installation pinnen Sie diese drei in `distribution/docker-compose.yml` ebenfalls auf einen
-Digest und nehmen den Wechsel des Digests in Ihren Aktualisierungsablauf auf. Warum ein fester
-Digest die bessere Wahl ist, steht unter [Aktualisieren](/docs/betrieb/aktualisieren).
+<Aside type="caution" title="Netzzugang planen">
+Zusätzlich zu den Web-Ports braucht die Instanz einen ausgehenden Weg zum Modell-Anbieter.
+Legen Sie vor der Inbetriebnahme fest, welche Ziele der Server nach aussen erreichen darf, und
+lassen Sie den Serverzugang selbst nur aus Ihrem Verwaltungsnetz zu.
 </Aside>
 
-## Welche Ports gehören nach aussen
+## Betriebsunterlagen
 
-Nur drei: **22, 80 und 443.** Alles andere bleibt lokal.
+Die Aufstellung der einzelnen Dienste mit ihren Aufgaben und Abhängigkeiten, die Netz- und
+Ausbauvarianten sowie die Prüfschritte für den Betrieb liegen der Auslieferung bei. Kunden
+erhalten diese Unterlagen zusammen mit dem Zugang.
 
-| Port | Dienst | Begründung |
-|---|---|---|
-| 22 | SSH | Administration |
-| 80 | Caddy | Ausstellung der Zertifikate und Weiterleitung auf HTTPS |
-| 443 | Caddy | Chat, Admin-Panel und Outlook-Add-in |
-
-Caddy ist der einzige Dienst, der auf allen Schnittstellen lauschen darf. Das Admin-Panel und
-das Outlook-Add-in sind bereits ab Werk an `127.0.0.1` gebunden. Die Datenbank, der
-Suchindex, das Gateway und sämtliche Konnektor-Brücken sind gar nicht auf dem Host
-veröffentlicht, sie sind ausschliesslich im internen Docker-Netz erreichbar.
-
-Zwei Punkte müssen Sie selbst beachten:
-
-- **Der Chat-Port ist standardmässig auf `0.0.0.0` gebunden.** In Produktion gehört
-  `API_BIND=127.0.0.1` in die `.env`, sonst ist LibreChat unverschlüsselt unter
-  `<server-ip>:3080` erreichbar, an Caddy und TLS vorbei.
-- **Das Übergangs-Panel des Profils `interim` bindet auf allen Schnittstellen.** Es ist ein
-  Testwerkzeug und gehört nicht auf einen erreichbaren Server.
-
-<Aside type="danger" title="Die Firewall greift bei Docker-Ports nicht">
-Von Docker über `ports:` veröffentlichte Ports umgehen `ufw`, weil Docker eigene
-iptables-Regeln in der Kette `DOCKER-USER` schreibt. Ein auf `0.0.0.0` gebundener Container
-ist trotz aktiver Firewall von aussen erreichbar. Der Schutz liegt in der Bindung an
-`127.0.0.1`, nicht in der Firewall-Regel.
-
-Wo eine Regel wirklich nötig ist, etwa bei den Debug-Ports des gehärteten
-Code-Interpreter-Substacks, muss sie in dieselbe Kette:
-
-```bash
-sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
-```
-
-Der Interim-Interpreter (Port 8000) braucht das nicht: sein `setup.sh` bindet ihn an
-`127.0.0.1` und prüft die Bindung nach dem Start nach. Bei einer Instanz, die vor dieser
-Änderung aufgesetzt wurde, gilt das erst nach einem erneuten Lauf von `setup.sh`; bis dahin
-bleibt die Regel für Port 8000 nötig.
-</Aside>
-
-## Die Docker-Netze
-
-Der Stack verwendet zwei Netze.
-
-| Netz | Art | Wer hängt drin |
-|---|---|---|
-| `default` | Bridge mit festem Subnetz aus `DOCKER_SUBNET`, Vorgabe `172.28.0.0/16` | alle Dienste des Stacks |
-| `sandbox` | externes Netz aus `SANDBOX_NETWORK`, Vorgabe `eucowork-sandbox` | nur `api`, dazu der getrennte Code-Interpreter-Stack |
-
-Das Sandbox-Netz wird bewusst ausserhalb des Stacks angelegt, damit beide Compose-Projekte
-unabhängig voneinander starten und stoppen können. `install.sh` legt es an. Fehlt es, meldet
-Compose beim Start, das als extern deklarierte Netz sei nicht auffindbar. Der Befehl dazu:
-
-```bash
-docker network create eucowork-sandbox
-```
-
-Das feste Subnetz ist Absicht. Kollidiert es mit einer Route, die ein VPN auf die Maschine
-schiebt, brechen die ausgehenden Verbindungen der Container. Dann tragen Sie in der `.env`
-einen freien Bereich in `DOCKER_SUBNET` ein.
-
-<Aside type="caution" title="Mehrere Instanzen auf einer Maschine">
-`STACK_NAME`, `DOCKER_SUBNET` und `SANDBOX_NETWORK` gelten Docker-weit und müssen deshalb pro
-Instanz eindeutig sein. Dasselbe gilt für die Host-Ports `PORT`, `ADMIN_SIDECAR_PORT` und
-`OFFICE_ADDIN_PORT`. Zwei Instanzen am selben Sandbox-Netz würden im schlimmsten Fall im
-Code-Interpreter des jeweils anderen Kunden landen.
-</Aside>
-
-## Healthchecks
-
-Healthchecks haben nur die Konnektor-Brücken des Profils `internal`. Sie fragen alle 30
-Sekunden den eigenen Gesundheitsendpunkt ab, mit fünf Sekunden Zeitlimit und drei Versuchen.
-Die Anlaufzeit liegt je nach Brücke bei 15 bis 20 Sekunden.
-
-Alle übrigen Dienste haben keinen Healthcheck. In `docker compose ps` erscheinen sie deshalb
-als `Up` ohne Gesundheitsangabe, das ist kein Fehler. Ob die Anwendung wirklich sauber
-gestartet ist, sehen Sie im Protokoll:
-
-```bash
-docker compose logs -f api
-```
-
-Eine selbst entwickelte Konnektor-Brücke bringt zusätzlich einen eigenen Selbsttest mit. Er
-prüft die Zugangsdaten, die tatsächlich gewährten Berechtigungen, den Lesezugriff und dass
-schreibende Pfade blockiert werden:
-
-```bash
-docker compose --profile internal run --rm <brücke> node src/selftest.js
-```
-
-Den Namen des Dienstes entnehmen Sie Ihrer `docker-compose.yml`, das Vorgehen beschreibt
-[das Konnektor-Muster](/docs/konnektoren/muster).
+Wie der Stack im Alltag gestartet, gestoppt und beobachtet wird, steht in der
+[Befehlsübersicht](/docs/referenz/befehle). Die Lizenzen der beteiligten Bausteine stehen unter
+[Lizenzen und Herkunft](/docs/referenz/lizenzen).

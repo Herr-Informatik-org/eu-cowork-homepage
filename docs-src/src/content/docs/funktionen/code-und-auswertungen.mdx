@@ -1,6 +1,6 @@
 ---
 title: Auswertungen, Tabellen und Code
-description: Excel-Auswertungen und PDF als Download aus dem Chat, Diagramme und Oberflächen als Artefakte, und die beiden Backends für die Code-Ausführung.
+description: Excel-Auswertungen und PDF als Download aus dem Chat, Diagramme und Oberflächen als Artefakte, und was die Code-Ausführung voraussetzt.
 sidebar:
   order: 4
 ---
@@ -12,7 +12,7 @@ Mitarbeitende eine KI am ehesten brauchen. Diese Seite beschreibt, was dabei pas
 davon ohne zusätzliche Technik funktioniert und was ein Backend voraussetzt.
 
 Code-Ausführung und Artefakte kommen von [LibreChat](https://www.librechat.ai/docs). Von uns
-kommt die Auswahl und Vorbereitung der beiden Ausführungs-Backends.
+kommt die Auswahl und Vorbereitung des Ausführungs-Backends.
 
 ## Was Sie davon haben
 
@@ -48,144 +48,57 @@ auszugeben:
 | React | eine kleine, bedienbare Oberfläche, etwa ein Rechner |
 | Markdown | formatierte Dokumente |
 
-**Artefakte brauchen kein Ausführungs-Backend.** Sie sind auf allen vier ausgelieferten
-Modellkarten aktiv und funktionieren nach der Installation sofort. Wer also nur ein
-Diagramm oder eine Übersicht möchte, braucht die Code-Ausführung nicht.
+**Artefakte brauchen kein Ausführungs-Backend.** Sie sind auf den ausgelieferten Modellkarten
+aktiv und funktionieren nach der Installation sofort. Wer also nur ein Diagramm oder eine
+Übersicht möchte, braucht die Code-Ausführung nicht.
 
 <Aside type="caution" title="Vorschau braucht HTTPS">
-Die interaktive Vorschau läuft nur in einem sicheren Kontext. Rufen Sie die Instanz über
-`http://<IP-Adresse>` auf, bleibt die Vorschau leer oder meldet einen Verbindungsfehler. Das
-ist kein Fehler des Backends, sondern eine Browser-Regel. Der saubere Weg ist ein echter
-Domainname mit gültigem Zertifikat.
-
-Für Instanzen mit strengen Datenschutzvorgaben ist ausserdem zu beachten: die React-Vorschau
-zieht ihren Bundler aus einem externen Dienst, solange Sie keinen eigenen bereitstellen.
+Die interaktive Vorschau läuft nur in einem sicheren Kontext. Ohne gültiges Zertifikat bleibt
+sie leer oder meldet einen Verbindungsfehler. Das ist kein Fehler des Backends, sondern eine
+Browser-Regel. Der saubere Weg ist ein echter Domainname mit gültigem Zertifikat.
 </Aside>
 
 ## Im Auslieferungszustand ist die Code-Ausführung aus
 
-Im Kunden-Template steht `interface.runCode: false`, und auf den Modellkarten ist
-`executeCode` auskommentiert. Der Grund ist derselbe wie bei der Dateisuche: die Ausführung
-braucht ein eigenes Backend, das nicht Teil des Compose-Pakets ist. Ohne Backend wäre der
-Knopf ein toter Knopf, und jeder Versuch endete in einem Fehler.
+Ab Werk ist die Code-Ausführung nicht freigeschaltet. Der Grund ist derselbe wie bei der
+Dateisuche: die Ausführung braucht ein eigenes, abgeschottetes Backend, das nicht Teil der
+Grundinstallation ist. Ohne Backend wäre der Knopf ein toter Knopf, und jeder Versuch endete
+in einem Fehler.
 
-Sie entscheiden also bewusst, ob Sie diese Funktion anbieten, und richten dafür eines der
-beiden Backends ein.
+Sie entscheiden also bewusst, ob Sie diese Funktion anbieten.
 
-## Für Admins: die zwei Backends
+## Für Admins
 
-Beide sind Apache-2.0-lizenziert und werden neben dem Stack betrieben.
+Die Code-Ausführung ist die einzige Stelle, an der erzeugter Code auf Ihrer Maschine läuft.
+Entsprechend gehört sie in eine eigene, isolierte Umgebung, die getrennt von der übrigen
+Installation betrieben und nie zwischen Instanzen geteilt wird.
 
-| | LibreCodeInterpreter | ClickHouse code-interpreter |
-|---|---|---|
-| Rolle | schnell eingerichtete Variante | gehärtete Zielvariante |
-| Isolation | nsjail | libkrun-microVM mit eigenem Gast-Kernel, dazu nsjail, seccomp und ein Egress-Gateway |
-| Voraussetzung am Host | keine besondere | `/dev/kvm`, also ein Linux-Host mit KVM |
-| Einrichtung | vorgebautes Image, in Minuten fertig | Bau aus Quellcode samt Sprach-Runtimes, der erste Lauf dauert lange |
-| Adresse im Netz | `http://librecode:8000` | `http://code-interpreter:3112/v1` |
-| Nebendienste | Redis für Sitzungen, Garage als Ablage | eigener Compose-Stack mit mehreren Diensten |
-| Einrichtungsskript | `distribution/librecodeinterpreter/setup.sh` | `distribution/code-interpreter/setup-ubuntu.sh` |
+Bei der Auswahl eines Backends sind drei Punkte entscheidend:
 
-Beide Skripte sind wiederholbar. Sie prüfen die Voraussetzungen, klonen das jeweilige Projekt
-auf eine getestete Version, legen die Konfiguration an, hängen den Stack an das interne Netz
-und führen einen Health- und Smoke-Test aus.
+- **Isolation.** Ausgeführter Code darf weder an die Daten der Instanz noch an das restliche
+  Netz herankommen.
+- **Erreichbarkeit.** Das Backend wird ausschliesslich intern angesprochen. Von aussen wird
+  dafür nichts gebraucht; Diagnosezugänge gehören auf die Loopback-Adresse oder in einen
+  SSH-Tunnel.
+- **Ausgehender Verkehr.** Welche Ziele ausgeführter Code im Internet erreichen darf, legen
+  Sie auf Host- oder Netzebene fest. Planen Sie diese Freigabeliste bei der Einrichtung mit
+  ein und halten Sie die erlaubten Ziele in Ihrem Betriebshandbuch fest.
 
-Rechnen Sie mit rund 0,5 GB zusätzlichem Arbeitsspeicher für Runner, Redis und Ablage.
-
-### Umschalten geht ausschliesslich über eine Variable
-
-`LIBRECHAT_CODE_BASEURL` in `distribution/.env` entscheidet, welches Backend LibreChat
-benutzt. Beide dürfen parallel laufen, sie tragen unterschiedliche Namen im Netz.
-
-```bash title="distribution/.env"
-# Schnelle Variante, Routen liegen direkt unter /exec:
-LIBRECHAT_CODE_BASEURL=http://librecode:8000
-LIBRECHAT_CODE_API_KEY=eucowork-librecode
-```
-
-```bash title="distribution/.env"
-# Gehärtete Variante, LibreChat hängt /exec an die Basis-URL an:
-LIBRECHAT_CODE_BASEURL=http://code-interpreter:3112/v1
-LIBRECHAT_CODE_API_KEY=eucowork-server
-```
-
-<Aside type="danger" title="Das Schrägstrich-Detail kostet sonst eine Stunde">
-Die eine Variante braucht `/v1` am Ende, die andere **nicht**. Vertauscht man das, antwortet
-das Backend mit `Not Found`, und im Chat sieht es aus, als sei die Ausführung kaputt.
-
-`LIBRECHAT_CODE_API_KEY` muss in beiden Fällen gesetzt sein, auch wenn der Wert beliebig ist.
-Leer bedeutet: LibreChat versucht es gar nicht erst.
-</Aside>
+Wird die Code-Ausführung gar nicht gebraucht, lassen Sie das Backend weg: Im
+Auslieferungszustand ist sie ausgeschaltet.
 
 ### Danach freischalten
 
 <Steps>
 
-1. **In der Konfigurationsdatei** `interface.runCode: true` setzen. Wie bei der Dateisuche
-   gilt: das ist ein Rechte-Feld und wird bei jedem Start in die Rollen geschrieben. Wer die
-   Ausführung nur einzelnen Rollen geben will, lässt die Zeile weg und pflegt das Recht
-   **Code-Interpreter** im Rollen-Editor unter **Werkzeuge**.
+1. **Recht setzen.** Das Recht **Code-Interpreter** steht im Rollen-Editor unter
+   **Werkzeuge**. Wer die Ausführung nur einzelnen Rollen geben will, pflegt es
+   ausschliesslich dort.
 
-2. **Auf den Modellkarten** `executeCode: true` setzen, damit das Modell das Werkzeug von
-   selbst benutzt, ohne dass jemand klickt.
+2. **Auf den Modellkarten aktivieren**, damit das Modell das Werkzeug von selbst benutzt,
+   ohne dass jemand klickt.
 
-3. **Neu starten und prüfen.**
-
-   ```bash title="Auf dem Server"
-   docker compose up -d --force-recreate api
-   ```
+3. **Prüfen**, ob in einem frischen Chat eine erzeugte Datei tatsächlich als Download
+   erscheint.
 
 </Steps>
-
-### Isolation und Netz
-
-Der Weg zwischen LibreChat und dem Ausführungs-Backend läuft ausschliesslich im internen
-Docker-Netz `eucowork-sandbox`, für diesen Weg gibt es keinen Host-Port. Daneben bringt der
-Substack eigene Ports für Diagnose und Wartung mit. Die gehören auf die Loopback-Adresse,
-und der nächste Abschnitt zeigt, wie Sie das sicherstellen.
-
-Bei mehreren Kundeninstanzen auf einer Maschine bekommt jede Instanz ihr eigenes
-Sandbox-Netz und einen eigenen Interpreter. Die Code-Ausführung ist die einzige Stelle, an der
-erzeugter Code auf Ihrer Maschine läuft, deshalb wird sie nie zwischen Kunden geteilt.
-
-<Aside type="danger" title="Pflichtschritt: die Ports des Substacks lokal binden">
-Die Ports des Code-Substacks gehören ausschliesslich auf `127.0.0.1`. Für den Betrieb wird
-von aussen keiner davon gebraucht — LibreChat spricht den Runner über das interne Docker-Netz
-an, nicht über den Host.
-
-Bei der **schnellen Variante erledigt das `setup.sh`**: Es bindet den Runner auf `127.0.0.1`
-und prüft nach dem Start die tatsächliche Bindung der laufenden Container. Weicht sie ab,
-stoppt das Skript den Stack. Eine Instanz, die vor dieser Fassung des Skripts aufgesetzt
-wurde, übernimmt die Bindung erst, wenn `setup.sh` einmal neu gelaufen ist. Prüfen lässt sich
-der Ist-Zustand direkt:
-
-```bash title="Auf dem Server"
-docker inspect code-interpreter-api --format '{{.NetworkSettings.Ports}}'
-```
-
-Steht dort etwas anderes als `127.0.0.1`, lassen Sie `setup.sh` erneut laufen oder setzen die
-Regel selbst. Von Docker über `ports:` veröffentlichte Ports werden von `ufw` nicht erfasst,
-wirksam ist die Kette `DOCKER-USER`:
-
-```bash title="Auf dem Server"
-sudo iptables -I DOCKER-USER -p tcp --dport 8000 ! -s 127.0.0.1 -j DROP
-```
-
-Für die gehärtete Variante gilt dasselbe für deren Diagnose-Ports:
-
-```bash title="Auf dem Server"
-sudo iptables -I DOCKER-USER -p tcp -m multiport --dports 3112,2000,3190,13000 ! -s 127.0.0.1 -j DROP
-```
-
-Machen Sie die Regeln mit `iptables-persistent` dauerhaft und prüfen Sie sie nach dem
-nächsten Neustart einmal nach. Wer die Ports zur Diagnose von einem anderen Rechner braucht,
-nimmt einen SSH-Tunnel statt einer Freigabe.
-</Aside>
-
-<Aside type="note" title="Ausgehende Verbindungen aus der Sandbox">
-Welche Ziele ausgeführter Code im Internet erreichen darf, legen Sie auf Host- oder
-Netzebene fest — auf der Firewall der Maschine oder am vorgelagerten Netzübergang. Planen Sie
-diese Freigabeliste bei der Einrichtung mit ein und halten Sie die erlaubten Ziele in Ihrem
-Betriebshandbuch fest. Wenn die Code-Ausführung gar nicht gebraucht wird, lassen Sie den
-Substack weg: Im Auslieferungszustand ist sie ausgeschaltet.
-</Aside>

@@ -1,13 +1,13 @@
 ---
 title: Was ist EU Cowork AI?
-description: Überblick über die Plattform, ihre Bausteine, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob EU Cowork AI passt.
+description: Überblick über die Plattform, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob EU Cowork AI passt.
 sidebar:
   order: 1
 ---
 
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-EU Cowork AI ist eine KI-Chatplattform für Unternehmen, die auf dem eigenen Server läuft.
+EU Cowork AI ist eine KI-Chatplattform für Unternehmen, die auf einem eigenen Server läuft.
 Diese Seite sagt in wenigen Minuten, was das System ist, woraus es besteht, was es kann und
 was es bewusst nicht kann. Sie richtet sich an IT-Verantwortliche, die vor der Entscheidung
 stehen, ob sie die Plattform einsetzen.
@@ -20,54 +20,46 @@ gesonderten Hosting-Build gibt es nicht.
 | Ausgangslage | Wer betreibt den Server | Was Sie tun |
 |---|---|---|
 | **Sie nutzen die Plattform selbst** | Ihre eigene IT | Server aufsetzen, Instanz installieren, Mitarbeitende einladen |
-| **Sie sind KMU-Kunde und lassen betreiben** | Ihr IT-Dienstleister | Sie bekommen eine fertige Instanz und arbeiten im Chat und im Admin-Panel |
-| **Sie sind IT-Dienstleister** | Sie, für mehrere Kunden | Pro Kunde ein eigener Stack, wahlweise auf eigener oder geteilter Maschine |
+| **Sie sind KMU-Kunde und lassen betreiben** | Ihr IT-Dienstleister | Sie bekommen eine fertige Instanz und arbeiten im Chat und in der Administration |
+| **Sie sind IT-Dienstleister** | Sie, für mehrere Kunden | pro Kunde eine eigene Instanz, wahlweise auf eigener oder geteilter Maschine |
 
-Der dritte Fall ist der Grund für viele Design-Entscheidungen: Ein Kunde ist immer ein
-eigener, vollständig getrennter Stack mit eigener Datenbank, eigenen Dateien und eigenem
-Inferenz-Schlüssel. Details dazu stehen unter [Architektur](/docs/erste-schritte/architektur).
+Der dritte Fall ist der Grund für viele Design-Entscheidungen: Ein Kunde ist immer eine eigene,
+vollständig getrennte Instanz mit eigener Datenbank, eigenen Dateien und eigenem
+Inferenz-Schlüssel. Mehr dazu unter [Architektur](/docs/erste-schritte/architektur).
 
 ## Woraus das System besteht
 
-Die Chat-Oberfläche ist [LibreChat](https://www.librechat.ai), eine quelloffene Plattform
-unter MIT-Lizenz. Darum herum liegen unsere eigenen Dienste, die sogenannten Sidecars. Der
-Fork von LibreChat bleibt bewusst nah am Original, damit Aktualisierungen weiterhin möglich
-bleiben.
+Die Chat-Oberfläche ist [LibreChat](https://www.librechat.ai), eine quelloffene Plattform unter
+MIT-Lizenz. Von dort stammen Chat, Agenten, Dateiverarbeitung und Modellanbindung — also die
+Anwendung, die Ihre Mitarbeitenden sehen. Der Fork bleibt bewusst nah am Original, damit
+Aktualisierungen weiterhin möglich bleiben.
 
-| Baustein | Herkunft | Aufgabe |
-|---|---|---|
-| Chat, Agenten, Dateiverarbeitung, Modellanbindung | LibreChat | die Anwendung, die Ihre Mitarbeitenden sehen |
-| Admin-Panel und Sidecar | EU Cowork AI | Benutzer, Rollen, Rechte, Verbrauch, Konfiguration, Protokolle |
-| MCP-Gateway | EU Cowork AI | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem |
-| Beispiel-Konnektoren | EU Cowork AI und Dritte | Brücken zu einem Fremdsystem als Vorlage, im Kunden-Template nicht aktiv |
-| Outlook-Add-in | EU Cowork AI | Chat-Bereich in Outlook mit der geöffneten Mail als Kontext |
-| Installationspaket | EU Cowork AI | Compose-Stack, Installationsskripte, Backup, Konfigurationsprofile |
-
-Dazu kommen Standardbausteine als fertige Images: MongoDB als Datenbank, Meilisearch für die
-Volltextsuche über alte Chats, SearXNG als eigene Metasuchmaschine und Caddy als
-Reverse-Proxy mit automatischem Zertifikat.
+Ergänzt haben wir alles, was ein Unternehmen für den geregelten Betrieb braucht: Administration
+von Benutzern, Rollen und Rechten, eine Rechteprüfung mit Protokoll vor jedem Zugriff auf ein
+Fremdsystem, eine Verbrauchsübersicht mit Budgets, einen Chat-Bereich in Outlook und ein
+Installationspaket für den eigenen Server.
 
 ## Was die Plattform kann
 
-Nach der Installation mit dem Kunden-Template stehen unter anderem bereit: Chat mit
-Streaming und Verlauf, ein Modell-Picker mit vier kuratierten Karten, Dateien als Kontext
-hochladen, Bilder verstehen auf den passenden Karten, Artifacts wie Diagramme und HTML direkt
-im Chat, Agenten nutzen, das Gerüst für Skills als Standard-Prozesse, deren Inhalte Sie selbst
-anlegen, ein Langzeitgedächtnis mit Opt-out und die Volltextsuche über frühere Konversationen.
+Nach der Installation stehen unter anderem bereit: Chat mit Streaming und Verlauf, ein
+Modell-Picker mit kuratierten Karten, Dateien als Kontext hochladen, Bilder verstehen auf den
+passenden Karten, Artifacts wie Diagramme und HTML direkt im Chat, Agenten nutzen, das Gerüst
+für Skills als Standard-Prozesse, deren Inhalte Sie selbst anlegen, ein Langzeitgedächtnis mit
+Opt-out und die Volltextsuche über frühere Konversationen.
 
 Drei Funktionen sind im Auslieferungszustand bewusst ausgeschaltet, weil sie zusätzliche
 Bausteine brauchen und sonst zu einem toten Knopf führen würden:
 
 | Funktion | Warum aus | Was nötig ist |
 |---|---|---|
-| Dateisuche über hochgeladene Dokumente | braucht RAG-Dienst und Vektordatenbank | Compose-Profil `filesearch` |
-| Code-Ausführung, etwa eine Excel-Datei erzeugen | braucht ein Code-Backend | einen der beiden Code-Interpreter-Substacks |
-| Parameter-Panel für Temperatur und Ähnliches | für Nicht-Entwickler unnötig | pro Rolle im Panel wieder aktivierbar |
+| Dateisuche über hochgeladene Dokumente | braucht zusätzliche Dienste | bei der Einrichtung zuschalten |
+| Code-Ausführung, etwa eine Excel-Datei erzeugen | braucht ein Code-Backend | bei der Einrichtung zuschalten |
+| Parameter-Panel für Temperatur und Ähnliches | für Nicht-Entwickler unnötig | pro Rolle wieder aktivierbar |
 
 ## Was die Plattform bewusst nicht tut
 
-- **Keine Mandantenfähigkeit in der Anwendung.** Ein Kunde ist ein eigener Stack. Das ist
-  eine bewusste Entscheidung, weil die Trennung dadurch unterhalb der Anwendung liegt.
+- **Keine Mandantenfähigkeit in der Anwendung.** Ein Kunde ist eine eigene Instanz. Das ist eine
+  bewusste Entscheidung, weil die Trennung dadurch unterhalb der Anwendung liegt.
 - **Nutzer legen keine eigenen Konnektoren an.** Welche Fremdsysteme erreichbar sind,
   entscheidet ausschliesslich die Administration.
 - **Die mitgelieferten Beispiel-Konnektoren arbeiten ausschliesslich lesend.** Sie bringen
@@ -89,41 +81,39 @@ Das Gesamtprodukt steht unter der MIT-Lizenz. Praktisch heisst das:
   das von jemandem beziehen wollen.
 
 Das offizielle Admin-Panel von LibreChat steht unter der AGPL und wird deshalb bewusst
-**nicht** verwendet. Stattdessen gibt es ein eigenes, permissiv lizenziertes Panel, das gegen
-die MIT-lizenzierte Administrations-Schnittstelle von LibreChat arbeitet. So bleibt das
+**nicht** verwendet. Stattdessen gibt es eine eigene, permissiv lizenzierte Administration, die
+gegen die MIT-lizenzierte Administrations-Schnittstelle von LibreChat arbeitet. So bleibt das
 Gesamtprodukt frei von Copyleft-Pflichten.
 
 ## Wo die Daten liegen
 
-Konversationen, Nachrichten, Benutzer und Verbrauchsdaten liegen in der MongoDB Ihres eigenen
-Stacks. Hochgeladene Dateien liegen als Verzeichnis daneben auf demselben Server. Es gibt
-keinen Rückkanal zu uns. Telemetrie ist ausgeschaltet, für Meilisearch etwa fest im
-Compose-Stack.
+Konversationen, Nachrichten, Benutzer und Verbrauchsdaten liegen in der Datenbank Ihrer eigenen
+Instanz. Hochgeladene Dateien liegen daneben auf demselben Server. Es gibt keinen Rückkanal zu
+uns, Telemetrie ist ausgeschaltet.
 
-Für die Modellantworten selbst verlassen die Inhalte den Server, denn die Rechenlast liegt
-beim Inferenz-Anbieter. Standard ist **EuRouter** unter `https://api.eurouter.ai/api/v1`, dort
-wird in der EU verarbeitet. **OpenRouter** ist optional zuschaltbar und **nicht** EU-resident.
-Zwei der vier ausgelieferten Modellkarten sind deshalb sichtbar als Nicht-EU gekennzeichnet.
+Für die Modellantworten selbst verlassen die Inhalte den Server, denn die Rechenlast liegt beim
+Inferenz-Anbieter. Standard ist **EuRouter**, dort wird in der EU verarbeitet. **OpenRouter**
+ist optional zuschaltbar und **nicht** EU-resident. Modellkarten ausserhalb der EU sind in der
+Oberfläche sichtbar gekennzeichnet.
 
 <Aside type="note" title="Web-Suche und Datenresidenz">
-SearXNG läuft in Ihrem Stack, leitet die Suchanfrage aber an externe Suchmaschinen weiter,
-ohne die Identität des Nutzers mitzuschicken. Die Aussage „alles bleibt in der EU" gilt für
-Speicherung und Inferenz, nicht für die Web-Suche.
+Die Suchmaschine läuft in Ihrer Instanz, leitet die Suchanfrage aber an externe Suchmaschinen
+weiter, ohne die Identität des Nutzers mitzuschicken. Die Aussage „alles bleibt in der EU" gilt
+für Speicherung und Inferenz, nicht für die Web-Suche.
 </Aside>
 
-Eine produktiv genutzte Instanz liegt beispielsweise in der Schweiz. Wo Ihre Instanz liegt,
-entscheiden Sie mit der Wahl des Servers.
+Es gibt eine gehostete Instanz in der Schweiz. Wo Ihre eigene Instanz liegt, entscheiden Sie mit
+der Wahl des Servers.
 
 ## Umfang und Abgrenzung
 
-Damit Sie den Funktionsumfang sauber gegen Ihre Anforderungen halten können, hier die
-Bereiche, die nicht im Lieferumfang stehen oder bei der Einrichtung eine Entscheidung
-verlangen.
+Damit Sie den Funktionsumfang sauber gegen Ihre Anforderungen halten können, hier die Bereiche,
+die nicht im Lieferumfang stehen oder bei der Einrichtung eine Entscheidung verlangen.
 
 | Bereich | Stand |
 |---|---|
-| Web-Suche | Die Suchmaschine läuft im Stack. Den Scraper wählen Sie nach Ihren Anforderungen an die Datenresidenz und hinterlegen ihn bei der Einrichtung |
-| Ausgehende Verbindungen der Code-Ausführung | werden auf Host- oder Netzebene freigegeben, nicht in der Anwendung. Im Auslieferungszustand ist die Code-Ausführung aus |
+| Web-Suche | Die Suchmaschine läuft in der Instanz. Den Scraper wählen Sie nach Ihren Anforderungen an die Datenresidenz und hinterlegen ihn bei der Einrichtung |
+| Ausgehende Verbindungen der Code-Ausführung | werden ausserhalb der Anwendung freigegeben. Im Auslieferungszustand ist die Code-Ausführung aus |
 | Benutzer-Bereitstellung über SCIM | nicht enthalten. Konten entstehen beim ersten Login über OIDC, das Entziehen läuft über den Identity Provider |
 | Automatische Abrechnung | Belege als CSV und PDF sind enthalten, eine Zahlungsanbindung nicht |
 | OCR, Bildgenerierung, Sprachein- und -ausgabe | nicht enthalten. Gescannte PDF-Dateien werden nicht als Text gelesen |
@@ -134,16 +124,16 @@ verlangen.
   <LinkCard
     title="Systemanforderungen"
     href="/docs/erste-schritte/systemanforderungen"
-    description="Wie viel Arbeitsspeicher, CPU und Plattenplatz eine Instanz wirklich braucht, mit gemessenen Werten."
+    description="Was eine Instanz an CPU, Arbeitsspeicher und Plattenplatz braucht."
   />
   <LinkCard
     title="Schnellstart"
     href="/docs/erste-schritte/schnellstart"
-    description="Vom leeren Ubuntu-Server zur laufenden Instanz, Befehl für Befehl."
+    description="Der Weg zu einer eigenen Instanz in groben Zügen."
   />
   <LinkCard
     title="Architektur"
     href="/docs/erste-schritte/architektur"
-    description="Welche Dienste es gibt, wie die Daten fliessen und warum die Mandantengrenze der Compose-Stack ist."
+    description="Welchen Weg eine Anfrage nimmt und warum jeder Kunde eine eigene Instanz bekommt."
   />
 </CardGrid>

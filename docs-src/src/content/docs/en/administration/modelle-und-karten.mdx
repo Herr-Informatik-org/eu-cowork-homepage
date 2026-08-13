@@ -1,134 +1,64 @@
 ---
 title: Models and model cards
-description: Connect providers, define model cards, control their visibility per role and group, and operate the model router.
+description: What model cards are and how their visibility per role and group is controlled.
 sidebar:
   order: 3
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-In the chat, users do not select a raw model but a **model card**. A card bundles a provider, a model and the presets that go with it, in particular the German system prompt, under a comprehensible name. This page shows how you maintain cards, who sees them and how our own model router works.
+In the chat, users do not select a raw model but a **model card**. A card bundles a provider, a model and the presets that go with it under a comprehensible name. This page shows what you control with that as an administrator.
 
 ## What a model card is
 
-A card is a curated preset. Instead of "glm-5.2 through EuRouter", the person reads "EU-Cowork Kollege (EU · Text)" in the model picker and automatically gets the matching system prompt and the matching parameters. That has three advantages: the choice stays comprehensible, the system prompt is inserted server side and never lands in the browser, and you can tailor the selection per role and group.
+A card is a curated preset. Instead of a technical model name, the person reads a comprehensible label in the model picker and automatically gets the matching system prompt and the matching parameters. That has three advantages: the choice stays comprehensible, the system prompt is inserted server side and never lands in the browser, and you can tailor the selection per role and group.
 
-Cards are maintained under **"Konfiguration → Modell-Karten"** (configuration, model cards). They are not granted there but at the roles and groups.
+A card carries, among other things, a visible label, a short description, its position in the picker, the provider and model behind it as well as presets such as temperature, greeting text and system prompt. Exactly one card is the default card.
 
-## Maintaining providers
+You can additionally set whether only cards are selectable or whether the raw model list appears next to them.
 
-The providers themselves sit under **"Konfiguration → KI-Provider"** (configuration, AI providers). Name, base URL, key and model list per endpoint are listed there.
+## Providers
 
-<Aside type="danger" title="Keys only as a variable reference">
-A provider key may only be entered as `${VARIABLE}` or as `user_provided`. Plain text is rejected, because the value would otherwise end up readable in the database. The error message in the panel says, in essence, that the API key has to be `${ENV_NAME}` or `user_provided`, never plain text. The actual value belongs in the `.env` on the server or under **"Einstellungen → API-Schlüssel"** (settings, API keys). `user_provided` means that each person stores their own key in the chat.
+The providers and the models they offer are maintained in the configuration. A connection test checks the connection without revealing the secret.
+
+<Aside type="danger" title="Keys only as a reference">
+An access key is never stored in the configuration in plain text, only as a reference to a value held server side. Plain text is rejected. Alternatively each person stores their own key in the chat.
 </Aside>
-
-The button **"Verbindung testen"** (test connection) checks the connection without revealing the secret: the sidecar resolves the variable reference server side, uses it to fetch the provider's model list and reports back only the status and the number of models. The key never leaves the server, not even in error texts. What is tested is the state currently in the form, so unsaved changes as well.
-
-<Aside type="note" title="Making overrides visible and removing them">
-Everything you change in the configuration is an override on top of the shipped file `librechat.yaml` and takes effect immediately, without a restart. Sections with an active override carry the badge **"aus DB-Override"** (from a database override). Simply emptying a field does **not** remove the override; the reset symbol next to the field is there for that. For a complete rollback there is **"Auf YAML zurücksetzen"** (reset to YAML); this dialog lists what will be deleted and what stays, and requires you to type `ZURÜCKSETZEN`.
-</Aside>
-
-## Defining cards
-
-Above the card list there are three switches that apply to all cards:
-
-| Field | Meaning |
-| --- | --- |
-| **"Erzwingen (enforce)"** (enforce) | Only cards permitted, no free choice of model |
-| **"Priorisieren (prioritize)"** (prioritize) | Cards come before everything else in the picker |
-| **"Zusätzliche Endpoints"** (additional endpoints) | Appear next to the cards in the picker |
-
-Each individual card has these fields:
-
-| Field | Meaning |
-| --- | --- |
-| **"Name (intern)"** (internal name) | technical key of the card, appears in the rules per role and group |
-| **"Label (sichtbar)"** (visible label) | what the person reads in the picker |
-| **"Standard-Karte"** (default card) | Exactly one card should be the default |
-| **"Beschreibung"** (description) | one line of explanation below the label |
-| **"Reihenfolge"** (order) | position in the picker |
-| **"Icon-URL"** (icon URL) | optional image |
-| **"Endpoint"** (endpoint) | which provider serves the card |
-| **"Modell"** (model) | model slug at the provider |
-| **"Temperatur"** (temperature) | preset for creativity |
-| **"Begrüssung (greeting)"** (greeting) | text in the empty chat |
-| **"System-Prompt (promptPrefix)"** (system prompt) | is injected server side and does not leak through the chat configuration |
-
-If several cards are marked as default, the panel warns and points out that only the first one takes effect in the chat. Further preset fields for which there is no form field here are preserved on saving and can be edited in full in the tab **"Experten"** (experts).
 
 ## Visibility per role and group
 
-Which card is seen by whom is decided by a cascade. In the panel it appears as a legend above the switches: **"Es gewinnt: Gruppe › Rolle › Basis"** (the winner is group, then role, then base).
+Which card is seen by whom is decided by a cascade. The winner is: **group › role › base**.
 
 <Steps>
 
 1. **Base** is the shipped configuration. It applies to everyone for whom there is no narrower rule.
 
-2. **Role** overrides the base. In the role editor you switch the cards on or off individually. All on means the role follows the base again. The switch **"Weitere Modelle (Roh-Untermenü)"** (further models, raw submenu) with the subtitle "Aus = diese Rolle sieht NUR die oben aktivierten Karten" (off means this role sees ONLY the cards enabled above) hides additional endpoints such as the raw model list.
+2. **Role** overrides the base. In the role editor you switch the cards on or off individually and hide the raw model list if you want to.
 
-3. **Group** overrides the role. In the group dialog you choose between **"Erben"** (inherit, no rule of its own for this group) and **"Eigene Auswahl (übersteuert die Rollen-Regel)"** (own selection, overrides the role rule).
+3. **Group** overrides the role. A group either inherits the rule of the role or gets a selection of its own.
 
 </Steps>
 
-The button **"Auf YAML-Stand zurücksetzen"** (reset to the YAML state) selects all cards of the base again on both levels. For a group the rule stays in place in the process; to remove it completely, set the mode to **"Erben"** (inherit).
+On both levels the selection can be reset to the shipped state in one step.
 
 <Aside type="note" title="Save once more after changing cards">
-The selection stores a copy of the card names. If you afterwards rename or add a card in the configuration, save the affected role and group rules once more. Cards from a rule that no longer exists are removed on saving and shown as a warning beforehand.
+The selection stores a copy of the card names. If you afterwards rename or add a card, save the affected role and group rules once more. Cards that no longer exist are removed in the process and shown as a warning beforehand.
 </Aside>
 
-## Provider routing
+## Restricting providers
 
-On the same page sits the card **"Provider-Routing (OpenRouter)"** (provider routing). It restricts which providers OpenRouter may use for your requests. Two switches and a list:
+If an endpoint runs through an intermediary that in turn uses several providers, you can restrict which of them may serve your requests: only providers without storage and without training on the prompts, and on request only providers with a registered office or data center in the EU, the EEA and Switzerland.
 
-- **"Keine Datennutzung durch Provider"** (no data use by providers) sets `data_collection: deny`, so only providers without prompt storage and without training.
-- **"Provider einschränken (Allowlist)"** (restrict providers, allowlist) activates the list below it. The button **"Nur EU-Provider auswählen"** (select EU providers only) sets it in one step to the providers with a registered office or data center in the EU, the EEA and Switzerland.
+<Aside type="caution" title="Two limitations">
+First: the information on registered office and data center comes from the intermediary, and **the registered office of a provider is no guarantee of the place of processing**. Treat "EU only" as a sensible restriction, not as an assurance.
 
-<Aside type="caution" title="Two limitations, which are also stated in the panel">
-First: the information on registered office and data center comes from OpenRouter, and **the registered office of a provider is no guarantee of the place of processing**. Treat "EU only" as a sensible restriction, not as an assurance.
-
-Second: **models without a matching provider will return an error afterwards.** If you set the list narrowly, check every card that runs through this endpoint. A known case is the combination of quantization `fp8` and "EU only": for GLM no provider is then left, because the only EU provider serves `fp4`. In that case OpenRouter answers that no endpoint was found.
+Second: **models without a matching provider will return an error afterwards.** If you set the list narrowly, check every card that runs through this endpoint.
 </Aside>
 
-## The model router
+## Model router
+
+Next to the fixed cards there is the option of distributing requests automatically to a suitable model, instead of having every question answered by the most expensive one. If the assessment fails, the request goes to the stronger model: in case of doubt the router decides for quality, not for the saving.
 
 <Aside type="note" title="Not active as shipped">
-The router runs internally as a pilot and is **not** rolled out in the customer template. The routes can already be configured in full in the panel, but after installation your team sees the shipped model cards and no router card. The context is described in [Chat and models](/docs/en/funktionen/chat-und-modelle).
-</Aside>
-
-The model router is our own development and runs in the MCP gateway. It takes a request, assesses it and sends it to the appropriate model, instead of having every question answered by the most expensive model. It is maintained under **"Einstellungen → Router"** (settings, router).
-
-### The three routes
-
-| Route | When it applies |
-| --- | --- |
-| **"Komplexe Aufgaben (Standard-Route)"** (complex tasks, default route) | The classifier says KOMPLEX, and additionally always when the classifier itself fails |
-| **"Einfache Aufgaben (günstige Route)"** (simple tasks, cheap route) | The classifier says SIMPEL |
-| **"Bilder (Vision-Route)"** (images, vision route) | Photo in the message or an image reference in the history |
-
-For each route you enter the model and set two details:
-
-- **"Denkaufwand"** (reasoning effort) is the reasoning effort the router passes to the model. More effort means more thinking tokens, better results, higher cost and higher latency. The choices are **"Standard"** (default), **"Aus"** (off), **"niedrig"** (low), **"mittel"** (medium), **"hoch"** (high) and **"maximal (xhigh)"** (maximum). If the request already brings its own value, the router touches nothing.
-- **"Quantisierung"** (quantization) demands a computing precision from the provider, for example `fp8` or `bf16`. Without a specification the same request can land at an `fp4` provider and answer noticeably more weakly. The setting only takes effect when OpenRouter is the upstream.
-
-### Classifier and fail-open
-
-A small model of its own, deliberately kept small, does the classification. Two fields control it:
-
-- **"Klassifikator-Modell"** (classifier model): rates every request with a single word, so it should stay cheap and fast.
-- **"Klassifikator-Timeout (ms)"** (classifier timeout): permitted are 1000 to 60000 milliseconds.
-
-If the classifier runs into the timeout or fails, **fail-open onto the default route** takes effect. So in case of doubt the router decides for quality and not for the saving. A fault in the classifier therefore leads to higher cost, but never to an outage.
-
-### Operating note for your own routers
-
-Next to the standard router `eu-auto` you can create router profiles of your own. Each profile is an additional virtual model with its own slug.
-
-<Aside type="caution" title="A new router needs two further entries">
-A created profile alone is not enough. Additionally enter the slug
-
-1. into the **"Modell-Liste"** (model list) of the endpoint "EU-Cowork Router" under **"Konfiguration → KI-Provider"** (configuration, AI providers), otherwise it cannot be selected, and
-2. into the **"Preistabelle"** (price table) under **"Konfiguration → Preise"** (configuration, prices), otherwise usage metering calculates zero for this slug.
-
-When deleting a profile the same applies in reverse: remove the slug from the model list and the price table as well. The slug cannot be changed afterwards, because cards, prices and running chats would break.
+The router is **not** rolled out in the customer template. After installation your team sees the shipped model cards. The context is described in [Chat and models](/docs/en/funktionen/chat-und-modelle).
 </Aside>

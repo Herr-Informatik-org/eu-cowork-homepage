@@ -1,102 +1,40 @@
 ---
 title: Protokolle und Audit
-description: Anfragen, Sessions und Diagnose unter Logs, dazu die lückenlose Änderungshistorie und der Konnektor-Audit.
+description: Nutzungsprotokoll, Änderungshistorie und der Nachweis über Konnektor-Zugriffe.
 sidebar:
   order: 5
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-Es gibt zwei Protokollseiten mit zwei verschiedenen Aufgaben. **Logs** beantwortet die Frage, was das System getan hat, also welche Anfragen liefen und was sie gekostet haben. **Audit-Log** beantwortet die Frage, wer etwas verändert hat und wer auf welche Daten zugegriffen hat. Diese Seite geht beide durch.
+Es gibt zwei Protokollsichten mit zwei verschiedenen Aufgaben. Die eine beantwortet die Frage, **was das System getan hat**, also welche Anfragen liefen und was sie gekostet haben. Die andere beantwortet die Frage, **wer etwas verändert hat** und wer auf welche Daten zugegriffen hat.
 
-## Die Seite Logs
+## Nutzungsprotokoll
 
-Unter **Analyse → Logs** liegen vier Reiter: **Anfragen**, **Sessions**, **Client-Fehler** und **Diagnose**.
+Hier steht jede einzelne Anfrage ans Modell mit Zeitpunkt, Modell, Anbieter, Person, Tokens und Kosten, dazu einige technische Kennzahlen zur Antwortqualität. Die Anfragen einer Konversation lassen sich gebündelt betrachten. Die Ansicht ist filter- und sortierbar, und was gefiltert angezeigt wird, lässt sich genau so als CSV exportieren.
 
-### Anfragen
-
-Jede Zeile ist eine einzelne Anfrage ans Modell, rekonstruiert aus der Verbrauchsmessung. Die Tabelle hat diese Spalten:
-
-| Spalte | Inhalt |
-| --- | --- |
-| **Datum** | Zeitpunkt, trägt zugleich die Tagestrenner und lässt sich nicht ausblenden |
-| **Modell** | angefragtes Modell |
-| **Provider** | Anbieter, der bedient hat |
-| **Akteur** | Person, verlinkt auf deren Verbrauchsseite |
-| **Input** | Eingabe-Tokens |
-| **Output** | Ausgabe-Tokens |
-| **Tokens** | Eingabe und Ausgabe zusammen |
-| **Kosten** | Betrag in Euro zum Monatskurs, der USD-Originalwert steht im Tooltip |
-| **Speed** | Ausgabegeschwindigkeit |
-| **TTFT** | Zeit bis zum ersten Token |
-| **Cache** | Anteil aus dem Prompt-Cache |
-| **Ende** | Abschlussgrund der Antwort |
-| **Konversation** | Kennung der Konversation, filtert die Ansicht auf genau diese |
-| **Typ** | Art der Anfrage, standardmässig ausgeblendet |
-
-Über das Zahnrad blenden Sie Spalten ein und aus, ein Klick auf einen Spaltenkopf sortiert.
-
-<Aside type="tip" title="Der Filterzustand steht in der URL">
-Reiter, Modell, Person, Konversation, Zeitraum und Sortierung landen als Parameter in der Adresszeile. Eine gefilterte Ansicht ist damit verlinkbar: Sie können einem Kollegen genau die Ansicht schicken, die Sie gerade vor sich haben, statt den Filterweg zu beschreiben. Standardwerte werden bewusst nicht in die URL geschrieben, damit die Links kurz bleiben.
+<Aside type="note" title="Keine Gesprächsinhalte">
+Angezeigt wird nur die Kennung einer Konversation, nie deren Titel und nie ihr Inhalt. Das ist eine bewusste Datenschutzentscheidung: die Admin-Ansicht soll zeigen, was etwas gekostet hat, und nicht, worüber jemand geschrieben hat.
 </Aside>
 
-Der Knopf **CSV** exportiert genau die gefilterte Ansicht, nicht die ganze Tabelle. Export und Anzeige verwenden dieselben Parameter und sehen deshalb garantiert dasselbe.
+Daneben gibt es eine Ansicht für technische Fehler und eine Diagnose-Ansicht für die Fehlersuche an Konnektoren.
 
-### Sessions
+## Änderungshistorie und Konnektor-Nachweis
 
-Eine Session ist eine Chat-Konversation mit allen ihren Anfragen gebündelt. Die Spalten sind **Zeitraum**, **Session**, **Nutzer**, **Primärmodell**, **Weitere Modelle**, **Anfragen**, **Tokens** und **Kosten**. Enthalten sind auch die Titel- und Memory-Anfragen der Konversation.
+Die zweite Sicht protokolliert **jede verändernde Aktion** im Panel, also alles, was anlegt, ändert oder löscht, samt Zeitpunkt, handelnder Person, betroffenem Ziel und Ergebnis. Zu einem Eintrag lässt sich der Zustand vorher und nachher vergleichen. Anmeldungen sind enthalten, auch fehlgeschlagene.
 
-Angezeigt wird nur die Kennung der Konversation, nie deren Titel. Das ist eine bewusste Datenschutzentscheidung: die Admin-Ansicht soll zeigen, was etwas gekostet hat, und nicht, worüber jemand geschrieben hat.
+Ebenfalls festgehalten wird **jeder Werkzeug-Aufruf über einen Konnektor**, mit dem Entscheid und der Begründung, welche Regel ihn erlaubt oder verweigert hat. Damit ist nachvollziehbar, warum ein Zugriff zustande kam, und nicht nur, dass es so war. Beide Trails lassen sich als CSV exportieren.
 
-### Client-Fehler
-
-Hier landen Fehler, die im Outlook-Add-in auftreten, etwa eine nicht lesbare Datei oder eine abgebrochene Anfrage. Eine leere Liste ist ein gutes Zeichen. Auch dieser Reiter hat einen CSV-Export.
-
-### Diagnose
-
-Der Reiter **Diagnose** ist für die Fehlersuche an Konnektoren gedacht und schaltet zwischen zwei Quellen um:
-
-| Ansicht | Inhalt |
-| --- | --- |
-| **LibreChat-Log** | die letzten Zeilen der Logdatei des Chat-Containers, direkt gelesen. Hier stehen Handshake- und Verbindungsfehler zu MCP-Servern im Klartext. Filterbar nach Datei, Zeilenzahl, Freitext und Stufe. |
-| **Gateway-Fehler** | Fehler, die das MCP-Gateway beim Weiterleiten an einen Konnektor aufgezeichnet hat, unabhängig davon, ob im Chat gerade jemand aktiv ist. |
-
-<Aside type="note" title="Abgelehnte Aufrufe stehen nicht in der Diagnose">
-Wenn das Gateway einen Aufruf wegen der Rechteregeln verweigert, ist das kein Fehler, sondern eine Entscheidung. Solche Fälle stehen deshalb nicht hier, sondern im Audit-Log unter **MCP-Tool-Calls**.
+<Aside type="caution" title="Geheimnisse werden redigiert">
+Ändern Sie einen Zugangsschlüssel, steht im Protokoll, dass der Schlüssel mit diesem Namen geändert wurde, nie der Wert. Werte, die nach einem Geheimnis aussehen, werden durch einen Platzhalter ersetzt. Ein Export ist damit auch dann unbedenklich, wenn der Empfänger keine Schlüssel sehen darf.
 </Aside>
 
-## Die Seite Audit-Log
-
-Unter **System → Audit-Log** liegen zwei Reiter: **Panel-Aktionen** und **MCP-Tool-Calls**. Beide lassen sich als CSV exportieren.
-
-### Panel-Aktionen
-
-Protokolliert wird **jede verändernde Anfrage** an das Panel, also alles, was anlegt, ändert oder löscht. Das gilt zentral für alle Masken, auch für solche, die später dazukommen. Die Tabelle hat die Spalten **Zeit**, **Aktion**, **Bereich**, **Akteur**, **Ziel** und **Status**, jede Zeile lässt sich aufklappen.
-
-Drei Eigenschaften sind wichtig:
-
-- **Anmeldungen sind enthalten, auch fehlgeschlagene.** Der Bereich heisst dann **Anmeldung**, und der Status zeigt, ob der Versuch durchging.
-- **Alt-Neu-Vergleich.** Der aufgeklappte Eintrag zeigt unter **Alt → Neu** die Spalten **Vorher** und **Nachher**. Wo der Vorher-Zustand für eine Route nicht erfasst werden kann, sagt der Eintrag das ausdrücklich, statt einen leeren Wert zu zeigen.
-- **Append-only.** Es wird ausschliesslich geschrieben, nie geändert oder gelöscht, und es gibt keine automatische Ablauffrist.
-
-<Aside type="caution" title="Bei Schlüsseländerungen wird nur der Name protokolliert">
-Ändern Sie einen API-Schlüssel, steht im Audit, dass der Schlüssel mit diesem Namen geändert wurde, aber nie der Wert. Der Eintrag wird für diesen Pfad vollständig redigiert. Ebenso werden Feldnamen, die nach einem Geheimnis aussehen, überall sonst durch einen Platzhalter ersetzt. Das Audit-Log ist damit auch dann unbedenklich exportierbar, wenn der Empfänger keine Schlüssel sehen darf.
-</Aside>
-
-Nicht erfasst werden bewusst: die Aufrufe des Outlook-Add-ins, der reine Token-Refresh, der Metering-Abruf per Service-Token und die MCP-Verbindungstests. Das sind entweder keine Änderungen oder sie würden die Historie fluten.
-
-### MCP-Tool-Calls
-
-Dieser Reiter zeigt jeden Werkzeug-Aufruf, der über das MCP-Gateway lief, mit den Spalten **Zeit**, **Server · Werkzeug**, **Nutzer**, **Entscheid** und **Grund**. Über den Filter lassen sich die Einträge auf einen Entscheid eingrenzen, die Voreinstellung ist **Jeder Entscheid**.
-
-Der Grund nennt die Stufe, die entschieden hat, also etwa die Benutzer-Ausnahme, die Rollen-Regel, die Gruppen-Regel oder den Server-Standard. Damit ist nachvollziehbar, warum ein Zugriff erlaubt oder verweigert wurde, und nicht nur, dass es so war.
-
-Auch dieser Trail wird **ohne Ablauffrist** geführt. Es gibt keinen Index, der Einträge nach einer Zeit entfernt.
+Wie lange die Einträge aufbewahrt werden, legen Sie in Ihrem Löschkonzept fest, siehe [Datenschutz und Aufbewahrung](/docs/administration/datenschutz-und-aufbewahrung).
 
 ## Wofür Sie das brauchen
 
-**Nachweispflicht.** Wenn jemand fragt, wer wann welche Einstellung geändert oder wer auf welche Daten aus einem angebundenen System zugegriffen hat, ist das ohne lückenloses Protokoll nicht zu beantworten. Genau dafür sind beide Trails append-only und ohne Ablauffrist ausgelegt. Das gilt besonders für Konnektoren, die im Dienstkonto-Modus laufen: dort ist das Gateway die einzige Durchsetzungsstelle, und sein Protokoll ist der einzige Nachweis.
+**Nachweispflicht.** Wenn jemand fragt, wer wann welche Einstellung geändert oder wer auf welche Daten aus einem angebundenen System zugegriffen hat, ist das ohne Protokoll nicht zu beantworten. Das gilt besonders für Konnektoren, die im Dienstkonto-Modus laufen.
 
-**Fehlersuche.** Meldet jemand „das Werkzeug antwortet nicht", trennen die Ansichten die Fälle sauber. Ein verweigerter Aufruf steht als Entscheid im Audit, ein technischer Fehler steht unter **Diagnose**, und eine Anfrage, die nie ankam, fehlt in beiden. Das erspart Raten.
+**Fehlersuche.** Meldet jemand „das Werkzeug antwortet nicht", trennen die Ansichten die Fälle sauber: ein verweigerter Aufruf ist eine Entscheidung und steht im Audit, ein technischer Fehler steht in der Diagnose, und eine Anfrage, die nie ankam, fehlt in beiden. Das erspart Raten.
 
-**Kostenanalyse.** Die Reiter **Anfragen** und **Sessions** zeigen, welches Modell, welche Person und welche Art von Konversation den Verbrauch treibt. Eine gefilterte Ansicht plus CSV-Export reicht meist aus, um die Frage „warum war letzter Monat teurer" zu beantworten. Die aggregierte Sicht dazu steht unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).
+**Kostenanalyse.** Das Nutzungsprotokoll zeigt, welches Modell, welche Person und welche Art von Konversation den Verbrauch treibt. Eine gefilterte Ansicht plus CSV-Export reicht meist aus, um die Frage „warum war letzter Monat teurer" zu beantworten. Die aggregierte Sicht dazu steht unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).

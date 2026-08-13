@@ -1,6 +1,6 @@
 ---
 title: Web-Suche
-description: Wie die Web-Suche im Chat funktioniert, aus welchen Bausteinen sie besteht und wie Scraper und Modellkarten dafür konfiguriert werden.
+description: Wie die Web-Suche im Chat funktioniert, aus welchen Bausteinen sie besteht und was bei der Einrichtung zu entscheiden ist.
 sidebar:
   order: 3
 ---
@@ -12,7 +12,7 @@ Rechtsstand, Angaben zu fremden Firmen. Diese Seite erklärt, wie sie benutzt wi
 welchen Bausteinen sie besteht und welche davon Sie bei der Einrichtung selbst wählen.
 
 Das Such-Gerüst stammt von [LibreChat](https://www.librechat.ai/docs). Von uns kommt die
-eigene Suchmaschine im Stack und die Vorkonfiguration.
+selbst betriebene Suchinstanz und die Vorkonfiguration.
 
 ## So wird sie im Chat benutzt
 
@@ -37,48 +37,29 @@ Ohne Scraper hätte der Kollege nur Überschriften und Zweizeiler, aus denen sic
 belastbare Antwort bauen lässt.
 
 <Aside type="caution" title="Die Web-Suche wird bei der Einrichtung fertiggestellt">
-Die Suchmaschine bringt das Kunden-Template mit: **SearXNG** läuft als eigener Dienst im
-Stack, `webSearch.searchProvider` steht auf `searxng`. Den **Scraper wählen Sie selbst**, weil
-die Wahl des Anbieters davon abhängt, wie Sie es mit der Datenresidenz halten; ein Reranker
-ist optional und ab Werk auf `none` gesetzt.
+Die Suchmaschine bringt die Installation mit: Sie läuft als eigene Suchinstanz bei Ihnen und
+baut keine Nutzerprofile auf. Den **Scraper wählen Sie selbst**, weil die Wahl des Anbieters
+davon abhängt, wie Sie es mit der Datenresidenz halten; ein Reranker ist optional und ab Werk
+nicht gesetzt.
 
 Planen Sie diesen Schritt fest mit ein: Das Such-Werkzeug wird dem Modell erst angeboten,
-wenn ein Scraper hinterlegt ist. Die beiden nächsten Abschnitte zeigen die Konfiguration, und
-zwar vollständig — Scraper **und** `webSearch: true` auf jeder Modellkarte, die Sie anbieten.
+wenn ein Scraper hinterlegt ist.
 </Aside>
 
 ## Für Admins: Scraper und Reranker konfigurieren
 
-Beides wird im Admin-Panel unter **Konfiguration → Funktionen** gepflegt, in zwei Karten.
+Beides wird im Admin-Panel unter **Konfiguration → Funktionen** gepflegt, in den beiden Karten
+zur Web-Suche. Dort wählen Sie den Such-Provider, den Scraper und optional einen Reranker,
+dazu die SafeSearch-Stufe und die Geduld beim Abholen einer Seite. LibreChat unterstützt für
+Scraper und Reranker jeweils mehrere Anbieter; welche in Frage kommen, steht in der
+[LibreChat-Dokumentation](https://www.librechat.ai/docs).
 
-**Karte „Web-Suche"**
-
-| Feld | Bedeutung |
-|---|---|
-| Such-Provider | `searxng` oder einer der kommerziellen Anbieter, die LibreChat unterstützt. Ausgeliefert ist `searxng` |
-| SearXNG-URL | Zeigt auf den internen Dienst, als Referenz `${SEARXNG_INSTANCE_URL}` halten |
-| SearXNG-Schlüssel | optional |
-| SafeSearch | 0 aus, 1 moderat, 2 streng |
-| Scraper-Timeout (ms) | Geduld beim Abholen einer Seite |
-
-**Karte „Web-Suche: Scraper & Reranker"**
-
-| Feld | Bedeutung |
-|---|---|
-| Scraper | `firecrawl` oder einer der kommerziellen Anbieter, die LibreChat unterstützt. Zusatz im Panel: „Holt die Seiteninhalte zu den Treffern" |
-| Firecrawl-Schlüssel, daneben je ein Feld für die übrigen Anbieter | Schlüssel zum gewählten Scraper |
-| Reranker | `jina`, `cohere` oder `none`. Die ersten beiden brauchen zwingend den passenden Schlüssel |
-| Jina-Schlüssel, Cohere-Schlüssel | Schlüssel zum gewählten Reranker |
-
-Schlüssel gehören **nie im Klartext** in die Konfiguration. Tragen Sie sie als
-`${VARIABLE}` ein und hinterlegen Sie den Wert im Panel unter **Einstellungen →
-API-Schlüssel** oder in der `.env` auf dem Server.
+Schlüssel gehören **nie im Klartext** in die Konfiguration. Tragen Sie sie als Referenz auf
+eine Variable ein und hinterlegen Sie den Wert an der dafür vorgesehenen Stelle.
 
 <Aside type="note" title="Welcher Scraper passt zur EU-Positionierung">
-Der vorgesehene europäische Weg ist ein **selbst gehostetes Firecrawl** neben dem Stack.
-Dann verlässt der Volltext-Abruf Ihre Infrastruktur nicht. Den Container stellen Sie selbst
-bereit; die Zeilen dafür liegen vorbereitet im Kunden-Template und müssen nur einkommentiert
-werden.
+Der vorgesehene europäische Weg ist ein **selbst gehosteter Scraper**. Dann verlässt der
+Volltext-Abruf Ihre Infrastruktur nicht.
 
 Die gehosteten Varianten der Scraper-Anbieter sind schnell eingerichtet, verarbeiten aber
 nicht EU-resident. Wer sie einsetzt, sollte das genauso benennen wie die Nicht-EU-Modellkarten.
@@ -86,48 +67,30 @@ nicht EU-resident. Wer sie einsetzt, sollte das genauso benennen wie die Nicht-E
 
 ### Damit der Kollege von selbst sucht
 
-Zwei weitere Stellschrauben und ein Neustart entscheiden, ob gesucht wird:
+Zwei weitere Stellschrauben entscheiden, ob gesucht wird:
 
 <Steps>
 
 1. **Rollen-Recht.** Im Rollen-Editor unter **Werkzeuge** das Recht **Web-Suche** für die
-   betroffenen Rollen. Im Auslieferungszustand steht `interface.webSearch: true` in der
-   Konfigurationsdatei, das Recht ist also gesetzt.
+   betroffenen Rollen.
 
-2. **Karten-Flag.** Auf den Modellkarten ist `webSearch: true` auskommentiert. Erst wenn Sie
-   es setzen, hängt das Werkzeug an der Karte und das Modell entscheidet selbst über den
-   Einsatz. Das gehört auf **alle** Karten, die Sie anbieten.
+2. **Karten-Flag.** Das Such-Werkzeug muss auf den Modellkarten aktiv sein, die Sie anbieten.
+   Erst dann hängt es an der Karte und das Modell entscheidet selbst über den Einsatz.
 
-3. **Neu starten**, danach in einem frischen Chat prüfen.
-
-   ```bash title="Auf dem Server"
-   docker compose up -d --force-recreate api
-   ```
+3. Anschliessend in einem frischen Chat prüfen.
 
 </Steps>
 
 ### Wie viel Text beim Modell ankommt
 
-Das Zeichenbudget der Suchergebnisse steuert `SEARCH_MAX_LLM_OUTPUT_CHARS` in der `.env`,
-Standard `15000`. Höher bedeutet mehr Kontext für die Antwort und mehr Tokens pro Anfrage,
-also höhere Kosten. Niedriger bedeutet knappere Grundlage.
-
-### SearXNG im Stack
-
-SearXNG ist eine Metasuchmaschine, die selbst keine Ergebnisse hat, sondern mehrere
-Suchmaschinen abfragt und die Treffer zusammenführt. Der Dienst läuft nur intern, ohne
-Host-Port, und belegt im Leerlauf rund 65 MB.
-
-In `distribution/searxng/settings.yml` sind drei Dinge wichtig:
-
-- `formats` enthält `json`. Ohne das JSON-Format kann LibreChat die Ergebnisse nicht lesen.
-- `safe_search: 1`, also moderat.
-- `secret_key` wird beim Installieren durch ein generiertes Geheimnis ersetzt.
+Wie viel Text aus den Suchergebnissen an das Modell geht, ist begrenzt und einstellbar. Mehr
+bedeutet mehr Kontext für die Antwort und mehr Tokens pro Anfrage, also höhere Kosten.
+Weniger bedeutet eine knappere Grundlage.
 
 ## Datenschutz der Web-Suche
 
-SearXNG läuft bei Ihnen, die Suchanfrage geht aber weiter. Die Metasuchmaschine fragt externe
-Suchmaschinen ab und gibt deren Treffer zurück. Was dabei passiert und was nicht:
+Die Suchinstanz läuft bei Ihnen, die Suchanfrage geht aber weiter: Sie fragt externe
+Suchmaschinen ab und führt deren Treffer zusammen. Was dabei passiert und was nicht:
 
 | | |
 |---|---|
@@ -136,7 +99,7 @@ Suchmaschinen ab und gibt deren Treffer zurück. Was dabei passiert und was nich
 | Bleibt bei Ihnen | die Unterhaltung, die Dokumente, die Antwort |
 
 <Aside type="note" title="Formulierung für Schulung und Datenschutzhinweis">
-Sauber formuliert lautet die Aussage: Speicherung und Inferenz laufen dort, wo Sie den Stack
+Sauber formuliert lautet die Aussage: Speicherung und Inferenz laufen dort, wo Sie die Instanz
 betreiben; die Suchanfrage selbst geht an externe Suchmaschinen, und zwar ohne
 Nutzeridentität. Wer die Web-Suche in einer Datenschutzerklärung beschreibt, nimmt diese
 Unterscheidung am besten wörtlich auf.

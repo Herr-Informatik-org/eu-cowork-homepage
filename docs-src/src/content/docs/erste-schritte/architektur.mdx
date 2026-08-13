@@ -1,6 +1,6 @@
 ---
 title: Architektur
-description: Wie der Stack aufgebaut ist, welche Schichten es gibt, wie die Daten fliessen, was die Compose-Profile zuschalten und warum die Mandantengrenze der Stack ist.
+description: Der Aufbau in groben Zügen — Zugang über einen Reverse-Proxy, die Anwendung dahinter, die Datenhaltung daneben und die Modellanbieter ausserhalb.
 sidebar:
   order: 2
 ---
@@ -8,181 +8,77 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 import DiagrammArchitektur from '../../../components/DiagrammArchitektur.astro';
 
-EU Cowork AI ist ein einzelner Docker-Compose-Stack auf einer Linux-Maschine. Diese Seite
-zeigt, welche Dienste darin laufen, wie die Daten zwischen ihnen fliessen und welche
-Entscheidungen dahinterstehen. Sie ist für alle gedacht, die den Server betreiben oder
-verstehen wollen, wo eine Anfrage entlangläuft.
+EU Cowork AI läuft als Docker-Compose-Stack auf einer Linux-Maschine. Diese Seite zeigt den
+Aufbau in groben Zügen. Sie beschreibt, welchen Weg eine Anfrage nimmt und welche
+Entscheidungen dahinterstehen — nicht die Einrichtung im Einzelnen.
 
 ## Der Datenfluss
 
 <DiagrammArchitektur />
 
-Zwei Dinge fallen auf. Erstens führt jeder Weg von aussen über Caddy, kein anderer Dienst
-nimmt Verbindungen aus dem Netz an. Zweitens gehen die Konnektoren über das MCP-Gateway,
-ein Konnektor mit Anmeldung pro Person jedoch bewusst nicht. Die Begründung steht weiter
-unten.
+Zwei Dinge sind daran wesentlich. Erstens führt jeder Weg von aussen über den Reverse-Proxy;
+die übrigen Dienste nehmen keine Verbindungen aus dem Netz an. Zweitens bleiben Konten,
+Konversationen und Dateien auf Ihrem Server, während für die Modellantworten selbst der
+Anbieter angesprochen wird.
 
 ## Die Schichten
 
-### Reverse-Proxy
+**Reverse-Proxy.** Der einzige Einstieg von aussen. Er beendet TLS, kümmert sich um das
+Zertifikat und verteilt die Anfragen an die Dienste dahinter.
 
-`caddy` ist der einzige Dienst auf den Ports 80 und 443. Er holt und erneuert das
-TLS-Zertifikat selbständig und verteilt nach Hostname und Pfad: die Chat-Domain auf
-LibreChat, `admin.<ihre-domain.ch>` auf das Admin-Panel, `/office/*` auf das Outlook-Add-in und
-`/api/office/*` auf den Admin-Sidecar. Caddy startet nur mit dem Profil `production`.
+**Anwendung.** Das ist [LibreChat](https://www.librechat.ai). Der Dienst liefert die
+Oberfläche aus, spricht die Modell-Anbieter an, führt die Agenten aus und verarbeitet
+hochgeladene Dateien.
 
-Für Netze ohne öffentliche Erreichbarkeit gibt es zwei Varianten derselben Datei, wählbar über
-`CADDY_FILE`: `Caddyfile.internal` verwendet eine interne Zertifizierungsstelle statt Let's
-Encrypt, `Caddyfile.proxied` lauscht nur unverschlüsselt auf Port 80 hinter einer vorhandenen
-Firewall-Appliance.
+**Datenhaltung.** Konten, Konversationen, Nachrichten, Agenten und Protokolle liegen in der
+Datenbank der Instanz, dazu kommen ein Suchindex über die eigenen Chats und die hochgeladenen
+Dateien auf demselben Server. Die Datenbank ist die Quelle der Wahrheit, der Suchindex lässt
+sich daraus jederzeit neu aufbauen.
 
-### Chat
+**Ergänzungen von EU Cowork AI.** Um LibreChat herum liegen eigene Dienste für Administration,
+Rechteverwaltung und Verbrauchsübersicht sowie die Anbindung an Fremdsysteme. Sie sind nur
+innerhalb der Instanz erreichbar und stehen nicht im Netz.
 
-`api` ist LibreChat. Der Dienst liefert die Oberfläche aus, spricht die Modell-Anbieter an,
-führt die Agenten aus, verarbeitet hochgeladene Dateien und ist der einzige MCP-Client im
-Stack. Das Image ist bewusst auf einen Digest gepinnt und nicht auf `:latest`, damit auf jedem
-Server dieselbe geprüfte Version läuft.
+**Ausserhalb der Instanz.** Für die Modellantworten wird der Inferenz-Anbieter angesprochen,
+für die Web-Suche externe Suchmaschinen. Wird die Code-Ausführung eingeschaltet, läuft sie in
+einer eigenen, abgetrennten Umgebung neben der Anwendung.
 
-### Datenhaltung
-
-| Dienst | Inhalt | Hinweis |
-|---|---|---|
-| `mongodb` | Datenbank `LibreChat`: Nutzer, Konversationen, Nachrichten, Agenten, Verbrauch, Rechteregeln, Protokolle | die einzige Quelle der Wahrheit, alles Weitere ist ableitbar |
-| `meilisearch` | Suchindex über Titel und Nachrichten | reiner Ableitungszustand, wird nach einem Restore neu aufgebaut |
-| `vectordb` | pgvector-Datenbank für die Dateisuche | nur mit dem Profil `filesearch` |
-| `uploads/` und `images/` | hochgeladene Dateien und Bilder | Verzeichnisse neben der `docker-compose.yml` |
-
-Die Datenbank kennt keine Mandanten. Das ist Absicht und der Grund für den nächsten Abschnitt.
-
-### Sidecars
-
-Die eigenen Dienste liegen als Quellcode im Repository und werden beim Installieren gebaut.
-
-- **`admin`** liefert das Admin-Panel aus und stellt dessen Schnittstelle bereit. Es reicht
-  Anfragen an die Administrations-Schnittstelle von LibreChat durch und ergänzt, was dort
-  fehlt: Verbrauch in Euro, gemeinsames Budget, Rechteregeln für die Konnektoren, Aufbewahrung
-  und die Schnittstelle des Outlook-Add-ins. Angemeldet wird man mit dem bestehenden
-  LibreChat-Administratorkonto, eine eigene Nutzerverwaltung gibt es nicht.
-- **`mcp-gateway`** sitzt zwischen LibreChat und jedem Konnektor. Es prüft vor jedem
-  Werkzeugaufruf die im Panel gepflegte Regel, filtert die Werkzeugliste pro Person und
-  schreibt jeden Aufruf mit Zeit, Server, Werkzeug, Person, Entscheid und Begründung in ein
-  Protokoll. Fällt die Prüfung aus, wird verweigert. Im selben Container läuft zusätzlich der
-  Model-Router.
-- **`office-addin`** liefert das Task Pane für Outlook und das Manifest aus. Die eigentliche
-  Arbeit macht ein Agent auf dem Server, das Pane ist nur die Oberfläche.
-
-Daneben liegen im Stack die **Beispiel-Konnektoren**. Es sind Brücken zu einem Fremdsystem,
-teils selbst geschrieben, teils unveränderte Fremd-Images, siehe
-[Lizenzen und Herkunft](/docs/referenz/lizenzen). Im Kunden-Template ist keine davon aktiv.
-Alle Brücken halten Zugangsdaten und haben selbst keine eigene Anmeldung, deshalb sind sie
-nur im internen Docker-Netz erreichbar. Wie so eine Brücke aufgebaut ist, beschreibt
-[das Konnektor-Muster](/docs/konnektoren/muster).
-
-<Aside type="note" title="Warum es das Gateway überhaupt gibt">
-LibreChat kann in der Konfiguration definierte MCP-Server **nicht** pro Rolle oder Person
-filtern. Sie werden für jeden Nutzer ungefiltert aufgelöst. Genau diese Lücke schliesst das
-Gateway. Ein Konnektor mit Anmeldung pro Person läuft bewusst direkt daran vorbei, weil dort
-jede Person sich einzeln beim Fremdsystem anmeldet und die eigenen Rechte dort bereits die
-Grenze sind.
+<Aside type="note" title="Was von LibreChat kommt">
+Chat, Agenten, Dateiverarbeitung und Modellanbindung stammen von LibreChat und sind dort
+öffentlich dokumentiert. Die Ergänzungen von EU Cowork AI setzen darauf auf, ohne den Kern zu
+verändern; deshalb bleiben Aktualisierungen von LibreChat möglich.
 </Aside>
 
-### Sandbox-Netz
+## Warum eine Instanz je Kunde
 
-Die Code-Ausführung läuft nicht im Hauptstack, sondern in einem eigenen Compose-Stack, der
-über ein separates Docker-Netz angebunden ist. Der `api`-Container ist der einzige Dienst, der
-in beiden Netzen hängt. Es gibt zwei Backends, umgeschaltet wird ausschliesslich über
-`LIBRECHAT_CODE_BASEURL`.
-
-Das ist die einzige Stelle im System, an der von Nutzern erzeugter Code auf der Maschine
-läuft. Deshalb bekommt jeder Kunde ein eigenes Sandbox-Netz und eine eigene
-Code-Interpreter-Instanz. Welche Ziele dieser Code nach aussen erreichen darf, legen Sie auf
-Host- oder Netzebene fest; das gehört bei aktivierter Code-Ausführung in die Einrichtung.
-
-### Web-Suche
-
-`searxng` ist eine eigene Metasuchmaschine im Stack. LibreChat fragt sie intern ab, sie holt
-die Ergebnisse bei externen Suchmaschinen. Die Identität des Nutzers wird dabei nicht
-weitergegeben, die Suchbegriffe verlassen aber den Server.
-
-## Die Compose-Profile
-
-Ohne Profil startet der Grundstack. Alles Weitere schaltet ein Profil zu. Der Installer nimmt
-die Profile als kommagetrennte Liste entgegen und reicht sie an Docker Compose weiter.
-
-| Profil | Was dazukommt | Wann Sie es brauchen |
-|---|---|---|
-| ohne Profil | `api`, `admin`, `office-addin`, `mongodb`, `meilisearch`, `searxng` | immer, das ist der Grundstack |
-| `production` | `caddy` | sobald die Instanz unter einer Domain mit TLS erreichbar sein soll |
-| `internal` | `mcp-gateway` und die Beispiel-Konnektoren, die darüber laufen | wenn Konnektoren über das Rechte-Gateway laufen sollen |
-| `microsoft` | die Beispiel-Brücke zu einer Dateiablage mit Anmeldung pro Person | wenn Ihre Dateiablage im Chat lesbar sein soll |
-| `filesearch` | `vectordb`, `rag_api` | für die Dateisuche über hochgeladene Dokumente |
-| `interim` | das alte AGPL-Panel von LibreChat | nur als Übergangswerkzeug, nicht Teil des Produkts |
-
-```bash title="Auf dem Server"
-./install.sh --profiles production,internal,microsoft,filesearch
-```
-
-<Aside type="caution" title="Profil vergessen ist ein häufiger Fehler">
-Wer die Dateisuche in der Konfiguration einschaltet, aber ohne das Profil `filesearch`
-startet, bekommt einen Knopf ohne Wirkung. Dasselbe gilt für die Konnektoren ohne das Profil
-`internal`. Profile gehören bei **jedem** Compose-Aufruf dazu, nicht nur beim ersten.
-</Aside>
-
-## Warum die Mandantengrenze der Stack ist und nicht die VM
-
-Ein Kunde ist ein Compose-Stack: eigene MongoDB, eigene Meilisearch, eigene Uploads, eigene
-`.env`, eigenes Docker-Netz, eigener Code-Interpreter. Das folgt direkt daraus, dass LibreChat
-keine Mandanten kennt. Die Trennung muss deshalb unterhalb der Anwendung liegen, und dort
-liegt sie sauber.
-
-Ob zwei Stacks dieselbe Maschine teilen, ist danach eine reine Kosten- und Risikofrage. Die
-gemessene Grundlast eines Stacks liegt bei rund 0,7 GB Arbeitsspeicher und nahezu keiner
-CPU-Last, für einen Kunden mit drei Personen wäre eine eigene VM Verschwendung.
+LibreChat kennt keine Mandanten. Die Trennung liegt deshalb unterhalb der Anwendung: Ein Kunde
+ist eine eigene Instanz mit eigener Datenbank, eigenem Suchindex, eigenen Dateien, eigener
+Konfiguration und eigenem Inferenz-Schlüssel. Ob zwei Instanzen sich eine Maschine teilen, ist
+danach eine reine Kosten- und Risikofrage.
 
 | Darf geteilt werden | Darf nie geteilt werden |
 |---|---|
-| Docker-Images und deren Schichten | Datenbank, Suchindex, Uploads |
-| ein gemeinsamer Reverse-Proxy auf 80 und 443 | `.env` und alle Secrets |
-| Überwachung, Backup-Zeitplan, Systemaktualisierungen | Sandbox-Netz und Code-Interpreter |
+| Docker-Images und deren Schichten | Datenbank, Suchindex, Dateien |
+| ein gemeinsamer Reverse-Proxy | Konfiguration und alle Secrets |
+| Überwachung, Backup-Zeitplan, Systemaktualisierungen | die Umgebung der Code-Ausführung |
 | | der Inferenz-Schlüssel, sonst sind die Kosten pro Kunde nicht auflösbar |
 
-Damit mehrere Stacks nebeneinander laufen, müssen drei Namen je Instanz eindeutig sein, weil
-sie Docker-weit gelten: `STACK_NAME`, `DOCKER_SUBNET` und `SANDBOX_NETWORK`. Dazu kommen die
-Host-Ports `PORT`, `ADMIN_SIDECAR_PORT` und `OFFICE_ADDIN_PORT`.
-
-## Nur Caddy bindet nach aussen
-
-Alle Dienste ausser Caddy sind an `127.0.0.1` gebunden oder gar nicht auf dem Host
-veröffentlicht. Das Admin-Panel auf Port 3010 und das Add-in auf Port 3040 sind ab Werk
-lokal gebunden. Die Konnektor-Brücken, die Datenbank, der Suchindex und das Gateway sind
-ausschliesslich im internen Docker-Netz erreichbar.
-
-Zwei Punkte gehören dabei in die Einrichtung. Der erste ist der Chat-Port: In Produktion
-gehört `API_BIND=127.0.0.1` in die `.env`, damit der gesamte Verkehr über Caddy und TLS
-läuft. Prüfen lässt sich das nach dem Start mit `ss -tlnp`.
-
-Der zweite ist das Übergangs-Panel `admin-panel` aus dem Profil `interim`. Es ist ein
-Entwicklungswerkzeug und im Normalbetrieb nicht Teil des Stacks — starten Sie das Profil
-`interim` auf einem produktiven Server gar nicht erst.
-
-<Aside type="danger" title="Bei Docker-Ports zählt die Bindung, nicht die Firewall">
-Von Docker veröffentlichte Ports werden von `ufw` nicht erfasst, weil Docker seine eigenen
-Regeln in der Kette `DOCKER-USER` führt. Die Bindung an `127.0.0.1` ist deshalb die
-massgebliche Massnahme; wo zusätzlich gefiltert werden soll, gehört die Regel in
-`DOCKER-USER`.
+<Aside type="note" title="Die Unterlagen zur Einrichtung">
+Welche Dienste eine Instanz im Einzelnen mitbringt, wie sie konfiguriert werden und was beim
+Betrieb zu beachten ist, beschreiben die Unterlagen, die der Auslieferung beiliegen.
 </Aside>
 
 ## Weiter
 
 <CardGrid>
   <LinkCard
-    title="Dienste und Ports"
-    href="/docs/referenz/dienste-und-ports"
-    description="Die vollständige Tabelle aller Container mit Image, Zweck, Port und Profil."
-  />
-  <LinkCard
     title="Systemanforderungen"
     href="/docs/erste-schritte/systemanforderungen"
-    description="Gemessene Werte pro Container und die Faustregel von der Nutzerzahl zur VM-Grösse."
+    description="Was eine Instanz an CPU, Arbeitsspeicher und Plattenplatz braucht."
+  />
+  <LinkCard
+    title="Was ist EU Cowork AI?"
+    href="/docs/erste-schritte/ueberblick"
+    description="Der Überblick über die Plattform, ihre Grenzen und die Lizenz."
   />
 </CardGrid>

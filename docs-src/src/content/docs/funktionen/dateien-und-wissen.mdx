@@ -16,8 +16,8 @@ Unterhaltungen durchsuchen. Zwei davon sind nach der Installation da, eines nich
 | Was Sie wollen | Wie es heisst | Auslieferungszustand |
 |---|---|---|
 | Diese eine Datei soll der Kollege jetzt lesen | Datei anhängen (Kontext) | **an** |
-| Ein Bestand aus vielen Dokumenten soll dauerhaft durchsuchbar sein | Dateisuche, auch RAG genannt, kurz für Retrieval-Augmented Generation, also Antworten aus nachgeschlagenen Textstellen | **aus**, braucht das Profil `filesearch` |
-| Ich suche eine Stelle in meinen alten Chats | Volltextsuche über Unterhaltungen | **an**, läuft über Meilisearch |
+| Ein Bestand aus vielen Dokumenten soll dauerhaft durchsuchbar sein | Dateisuche, auch RAG genannt, kurz für Retrieval-Augmented Generation, also Antworten aus nachgeschlagenen Textstellen | **aus**, wird vom Admin eingerichtet |
+| Ich suche eine Stelle in meinen alten Chats | Volltextsuche über Unterhaltungen | **an** |
 
 Die Dateiverarbeitung stammt von [LibreChat](https://www.librechat.ai/docs), ebenso die
 RAG-Schnittstelle dahinter.
@@ -45,20 +45,11 @@ Abschnitt für Admins.
 
 ### Grenzen
 
-Es gelten die Standardwerte von LibreChat, solange der Admin nichts anderes setzt:
-
-| Grenze | Wert |
-|---|---|
-| Dateien pro Nachricht | 10 |
-| Grösse je Datei | 512 MB |
-| Grösse aller Dateien zusammen | 512 MB |
-| Serverseitiges Limit je Upload | 512 MB |
-| Profilbild | 2 MB |
-
-Diese Zahlen sind grosszügig gesetzt und selten die eigentliche Grenze. Praktisch wichtiger
-ist, wie viel Text ein Modell in einer Anfrage lesen kann. Ein Dokument mit mehreren hundert
-Seiten füllt den Kontext, verdrängt den Rest des Gesprächs und macht die Antwort schlechter.
-Für solche Bestände ist die Dateisuche da.
+Wie viele Dateien Sie pro Nachricht anhängen dürfen und wie gross eine Datei sein darf, legt
+der Admin fest. Die Voreinstellung ist grosszügig und selten die eigentliche Grenze.
+Praktisch wichtiger ist, wie viel Text ein Modell in einer Anfrage lesen kann. Ein Dokument
+mit mehreren hundert Seiten füllt den Kontext, verdrängt den Rest des Gesprächs und macht die
+Antwort schlechter. Für solche Bestände ist die Dateisuche da.
 
 <Aside type="caution" title="Gescannte Dokumente brauchen eine Textebene">
 Texterkennung ist nicht Teil des Lieferumfangs. Ein PDF, das nur aus Bildern besteht, etwa
@@ -73,26 +64,25 @@ Text herauskopieren und in den Chat einfügen.
 ## Dateisuche über einen Dokumentenbestand
 
 Die Dateisuche ist etwas anderes als das Anhängen. Hochgeladene Dokumente werden in
-Abschnitte zerlegt, in Zahlenvektoren übersetzt und in einer Vektordatenbank abgelegt, also in
-einem Speicher, der nicht nach Stichwörtern sucht, sondern nach inhaltlicher Ähnlichkeit. Auf
-eine Frage hin holt der Kollege dann gezielt die passenden Abschnitte heraus, statt das ganze
-Dokument in den Kontext zu legen.
+Abschnitte zerlegt und so abgelegt, dass nicht nach Stichwörtern, sondern nach inhaltlicher
+Ähnlichkeit gesucht wird. Auf eine Frage hin holt der Kollege dann gezielt die passenden
+Abschnitte heraus, statt das ganze Dokument in den Kontext zu legen.
 
 Der Vorteil zeigt sich bei vielen und langen Dokumenten: eine Handvoll Handbücher, eine
 Sammlung von Richtlinien, ein Projektarchiv. Statt „lies diese 400 Seiten" heisst es dann
 „finde die drei Stellen, die meine Frage beantworten".
 
 <Aside type="note" title="Im Auslieferungszustand ausgeschaltet">
-Im Auslieferungszustand steht `interface.fileSearch: false`, weil die Dateisuche ein
-zusätzliches Backend und einen Anbieter für die Embeddings voraussetzt. So ist nach der
-Installation nur sichtbar, was auch funktioniert. Wie Sie beides einschalten, steht unten.
+Die Dateisuche ist ab Werk aus, weil sie zusätzliche Bausteine und einen Anbieter für die
+Embeddings voraussetzt. So ist nach der Installation nur sichtbar, was auch funktioniert. Wie
+Sie sie einschalten, steht unten.
 </Aside>
 
 ## Volltextsuche über eigene Chats
 
 Die Suche in der Seitenleiste durchsucht Ihre Unterhaltungen, nicht Ihre Dokumente. Sie
-findet die Stelle, an der etwas besprochen wurde. Diese Suche ist immer an, sie braucht kein
-zusätzliches Profil und keinen Embeddings-Anbieter. Dahinter läuft Meilisearch.
+findet die Stelle, an der etwas besprochen wurde. Diese Suche ist immer an, sie braucht
+keinen Embeddings-Anbieter.
 
 ## Für Admins
 
@@ -100,74 +90,41 @@ zusätzliches Profil und keinen Embeddings-Anbieter. Dahinter läuft Meilisearch
 
 <Steps>
 
-1. **Embeddings-Anbieter in der `.env` hinterlegen.** Beispiel aus `distribution/.env.example`,
-   Embeddings über EuRouter:
+1. **Einen Anbieter für die Embeddings hinterlegen.** Ohne ihn lassen sich Dokumente nicht
+   für die inhaltliche Suche aufbereiten. Wer die EU-Positionierung halten will, wählt einen
+   Anbieter, der EU-resident verarbeitet.
 
-   ```bash title="distribution/.env"
-   EMBEDDINGS_PROVIDER=openai
-   RAG_OPENAI_BASEURL=https://api.eurouter.ai/api/v1
-   RAG_OPENAI_API_KEY=${EUROUTER_API_KEY}
-   EMBEDDINGS_MODEL=mistral-embed
-   ```
+2. **Die dafür nötigen Zusatzbausteine bereitstellen.** Die Dateisuche bringt einen eigenen
+   Dienst für das Aufbereiten und Durchsuchen der Dokumente mit; er wird nur intern
+   angesprochen.
 
-2. **Stack mit dem Profil starten.**
+3. **Oberfläche freischalten.** Erst danach erscheint der Schalter im Chat.
 
-   ```bash title="Auf dem Server"
-   cd ~/eu-cowork/distribution
-   docker compose --profile filesearch up -d
-   ```
-
-   Damit kommen zwei Dienste dazu: `vectordb` (pgvector) als Vektordatenbank und `rag_api`
-   als Dienst, der Dokumente zerlegt und durchsucht. Beide sind nur intern erreichbar.
-
-3. **Oberfläche freischalten.** In `distribution/librechat.yaml` `interface.fileSearch` auf
-   `true` setzen.
-
-   ```yaml title="distribution/librechat.yaml"
-   interface:
-     fileSearch: true
-   ```
-
-   Dieser Schalter gehört in die Datei, nicht ins Panel. `fileSearch` ist ein Rechte-Feld:
-   der Wert aus der Konfigurationsdatei wird bei **jedem** Start in die Rollen geschrieben.
-   Wer die Dateisuche nur für einzelne Rollen freigeben will, nimmt die Zeile aus der Datei
-   heraus und pflegt das Recht ausschliesslich im Rollen-Editor. Ein Wert im Reiter
-   **Funktionen** des Panels würde für Werkzeug-Rechte serverseitig verworfen.
-
-4. **Fähigkeit ergänzen.** In `endpoints.agents.capabilities` muss `'file_search'` stehen.
-   Wichtig: diese Liste **ersetzt** die Standardliste, sie wird nicht dazugemischt. Wer dort
-   etwas ergänzt, muss alles aufzählen, was er behalten will.
-
-5. **Rollen-Recht prüfen.** Im Rollen-Editor unter **Werkzeuge** steht das Recht
+4. **Rollen-Recht prüfen.** Im Rollen-Editor unter **Werkzeuge** steht das Recht
    **Datei-Suche (RAG)** mit dem Zusatz „Hochgeladene Dokumente durchsuchen". Optional dazu
-   **Datei-Zitate** für Quellenangaben aus Dateien.
+   **Datei-Zitate** für Quellenangaben aus Dateien. Wer die Dateisuche nur einzelnen Rollen
+   geben will, pflegt das Recht ausschliesslich hier.
 
-6. **Neu starten**, damit die Rollen den neuen Stand bekommen:
-
-   ```bash title="Auf dem Server"
-   docker compose --profile filesearch up -d --force-recreate api
-   ```
+5. **Anschliessend prüfen**, ob die Suche in einem frischen Chat wirklich Treffer aus dem
+   Bestand liefert.
 
 </Steps>
 
-Zur Dimensionierung: `rag_api` belegt im Leerlauf rund 100 MB, `vectordb` rund 29 MB.
-Spitzen entstehen beim Einlesen grosser Dokumente, weil dann Embeddings berechnet werden.
-
 <Aside type="note" title="Häufigstes Fehlerbild">
-Die Dateisuche bleibt wirkungslos, weil der Stack ohne `--profile filesearch` gestartet
-wurde. Dann laufen `vectordb` und `rag_api` schlicht nicht mit. Prüfen mit
-`docker compose ps`.
+Die Dateisuche bleibt wirkungslos, weil die zusätzlichen Bausteine gar nicht mitlaufen. Der
+Schalter ist dann sichtbar, jede Anfrage läuft aber ins Leere. Vor dem Freischalten also
+zuerst prüfen, ob der Suchdienst läuft.
 </Aside>
 
 ### Limits und erlaubte Dateitypen ändern
 
-Im Panel unter **Konfiguration → Dateien & Speicher**. Dort stehen unter anderem **Max.
-Dateigrösse Server (MB)**, **Avatar-Limit (MB)** und die **Endpoint-Limits (JSON)** mit den
-Feldern `fileLimit`, `fileSizeLimit`, `totalSizeLimit` und `supportedMimeTypes`.
+Im Panel unter **Konfiguration → Dateien & Speicher**. Dort stehen die Obergrenzen für
+Uploads, das Limit für Profilbilder und die Liste der erlaubten Dateitypen.
 
 Ein sinnvoller Eingriff bei der Einrichtung ist, die Obergrenze pro Datei auf einen für Ihren
-Alltag realistischen Wert zu senken — für reine Dokumentenarbeit genügen meist 25 bis 50 MB.
-Das hält versehentlich hochgeladene Videos und Archive aus dem Speicher heraus.
+Alltag realistischen Wert zu senken — für reine Dokumentenarbeit genügt meist ein niedriger
+zweistelliger MB-Wert. Das hält versehentlich hochgeladene Videos und Archive aus dem
+Speicher heraus.
 
 ### Was beim Löschen eines Kontos passiert
 

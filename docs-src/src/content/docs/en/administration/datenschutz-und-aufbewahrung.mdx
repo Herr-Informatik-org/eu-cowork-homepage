@@ -1,32 +1,25 @@
 ---
 title: Data protection and retention
-description: Set the retention period, disclosure and deletion per person, telemetry and what actually leaves the stack.
+description: Retention, disclosure and deletion per person, telemetry and what leaves the instance.
 sidebar:
   order: 6
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-This page states as precisely as possible which data stays for how long, how you provide a disclosure or carry out a deletion and what the installation sends outward. It is meant as the basis for your own deletion policy.
+This page describes how you set the retention, how you provide a disclosure or carry out a deletion and what the installation sends outward. It is meant as the basis for your own deletion policy.
 
 ## The retention period
 
-Under **"Einstellungen → Aufbewahrung"** (settings, retention) sits the card **"Aufbewahrung (Retention)"** (retention) with the field **"Aufbewahrung in Tagen"** (retention in days).
+In the settings you define a retention period in days. Without a period nothing is deleted automatically; set it during setup to match your deletion policy. What counts is the last change to a conversation, not the date it was created.
 
-| Property | Value |
-| --- | --- |
-| Permitted range | 1 to 3650 days |
-| Field empty | Nothing is deleted automatically. Set the period during setup to match your deletion policy |
-| Decisive | the last change to the conversation, not the date it was created |
-| When deletion happens | in a daily run |
-
-What is deleted are **conversations including their messages and the shared links created for them**, and permanently at that. What is not deleted is the **billing data**, meaning the transactions of usage metering. The usage of a past month therefore stays traceable even when the associated chats are long gone.
+What is deleted are **conversations including their messages and the shared links created for them**, and permanently at that. What is not deleted is the **billing data**. The usage of a past month therefore stays traceable even when the associated chats are long gone.
 
 <Aside type="caution" title="Every shortening asks back">
-If you set or shorten the period, a confirmation prompt appears. It names the old and the new period and points out that the shorter period will permanently delete additional, older conversations on the next run. You confirm with **"Frist setzen"** (set period). Extending it brings nothing back, what is already deleted stays deleted.
+If you set or shorten the period, a confirmation prompt appears with the old and the new period and the note that the shorter period will permanently delete additional, older conversations. Extending it later brings nothing back, what is already deleted stays deleted.
 </Aside>
 
-The button **"Jetzt ausführen"** (run now) appears as soon as a period is set and triggers the run immediately, likewise with a confirmation prompt. Below the field it states when the last run was, whether it was triggered automatically or manually and how many conversations and messages it removed.
+The cleanup runs regularly by itself and can additionally be triggered by hand. When it last ran and what it removed is stated next to it.
 
 ## Disclosure and deletion per person
 
@@ -34,46 +27,27 @@ You reach both from the user list. The order is not arbitrary.
 
 <Steps>
 
-1. **Export.** The button **"Daten exportieren (JSON)"** (export data as JSON) delivers all data of this person as one JSON file: account, groups, credit balance, conversations, messages, file metadata and transactions.
+1. **Export.** The data export delivers the data of this person as one file: account, groups, credit balance, conversations, messages, file metadata and transactions. Files are included as metadata, not as content. Credentials are deliberately not included, so neither the password nor two factor secrets nor stored keys.
 
-2. **Delete.** Only afterwards delete. After the deletion no disclosure can be given any more, which is why the export button also sits directly in the deletion dialog in the block **"Erst exportieren, dann löschen"** (export first, then delete).
+2. **Delete.** Only afterwards delete. After the deletion no disclosure can be given any more, which is why the export button also sits directly in the deletion dialog.
 
 </Steps>
 
-Two points about the export:
-
-- **Files are included as metadata, not as content.** The actual files sit in the upload directory of the stack. Including them would turn the export into a file server.
-- **Credentials are deliberately not included**, so neither the password hash nor two factor secrets nor the encrypted API keys stored for that person.
-
-In the deletion dialog, the checkbox **"Auch Verbrauchs-Transaktionen löschen"** (delete usage transactions as well) decides the depth:
-
-| Choice | Result |
-| --- | --- |
-| unticked | Account, conversations, messages, files, keys, agents and credit balance disappear. The transactions remain as a billing receipt. |
-| ticked | additionally the transactions. This is the full GDPR deletion, and the **billing receipts are lost** in the process. |
-
-In both cases you confirm by typing the email address exactly.
+When deleting you decide on the depth: either the account and its content disappear and the transactions remain as a billing receipt, or usage is deleted as well. That is the full GDPR deletion, and the billing receipts are lost in the process. In both cases you confirm by typing the email address exactly.
 
 ## Telemetry
 
-The shipped state switches telemetry off. Two values in the `.env` are responsible for that:
+The shipped state switches telemetry off: the components in use send no usage data to their makers, and search engines do not index the interface. If you take over an existing installation, check this once.
 
-| Variable | Effect |
-| --- | --- |
-| `MEILI_NO_ANALYTICS=true` | Meilisearch, the full text search across the conversations, sends no usage data to its maker |
-| `NO_INDEX=true` | Search engines do not index the interface |
+## What leaves the instance
 
-Both are set to `true` in the shipped state. If you take over an existing installation, check this once.
+The installation runs entirely on your machine; conversations, the search index and uploaded files sit there. Where this machine physically stands is decided by your choice of hoster.
 
-## Where the data sits and what leaves the stack
+Two things inevitably leave the instance, and you should know them and communicate them internally:
 
-The installation runs entirely on your machine. Conversations and messages sit in the MongoDB of the stack, the search index in Meilisearch, uploaded files in local volumes. Of all the services, only the reverse proxy Caddy publishes ports outward; everything else is limited to the local interface or to the internal Docker network. Where this machine physically stands is decided by your choice of hoster.
+**Model requests go to the configured provider.** A language model computes where it is operated. In the shipped state that is a provider with processing in the EU. If you additionally connect providers outside the EU, the requests of those cards go there. There is no mode in which a cloud request does not leave the machine. Locally operated models are the exception, but they need suitable hardware.
 
-Two things inevitably leave the stack, and you should know them and communicate them internally:
-
-**Model requests go to the configured provider.** A language model computes where it is operated. In the shipped state that is EuRouter with processing in the EU. If you additionally connect providers outside the EU, the requests of those cards go there. There is no mode in which a cloud request does not leave the machine. Locally operated models are the exception, but they need suitable hardware.
-
-**Web search requests go to external search engines.** The search runs through the self hosted SearXNG in the stack. SearXNG is a meta searcher, it forwards the search query to external search engines, though **without the identity of the person searching**. The queries themselves therefore do leave the stack.
+**Web search requests go to external search engines.** The search runs through a self hosted meta search which forwards the query to external search engines, though **without the identity of the person searching**. The queries themselves therefore do leave the instance.
 
 <Aside type="note" title="Wording for your privacy notices">
 Put precisely, the statement reads: storage and inference can be kept in the EU or in Switzerland; with web search the search text leaves the instance, and it does so without any link to the user. Anyone who takes that distinction over verbatim into privacy notices and training is on safe ground even when critical questions come up.
@@ -81,9 +55,9 @@ Put precisely, the statement reads: storage and inference can be kept in the EU 
 
 ## Marking providers outside the EU
 
-Providers that are not EU resident are marked as such in the panel and in the chat, so that the choice is made deliberately. This affects in particular model cards through OpenRouter, whose visible label carries the note "Nicht-EU" (non EU). The same rule applies to connectors: a connector whose target system is operated outside the EU has to be marked and does not belong in a customer deployment unasked.
+Providers that are not EU resident are marked as such in the panel and in the chat, so that the choice is made deliberately. The same rule applies to connectors: a connector whose target system is operated outside the EU has to be marked and does not belong in a customer deployment unasked.
 
-Also note that the origin information in **"Provider-Routing"** (provider routing) comes from the provider and that the registered office of a provider is no guarantee of the place of processing. More on that under [Models and model cards](/docs/en/administration/modelle-und-karten).
+Also note that origin information about providers comes from those providers themselves and that the registered office of a provider is no guarantee of the place of processing. More on that under [Models and model cards](/docs/en/administration/modelle-und-karten).
 
 ## Scope
 

@@ -16,8 +16,8 @@ conversations. Two of them are there after installation, one is not.
 | What you want | What it is called | State as shipped |
 |---|---|---|
 | The colleague should read this one file now | Attaching a file (context) | **on** |
-| A collection of many documents should be permanently searchable | File search, also known as RAG, short for retrieval augmented generation, meaning answers built from looked up passages | **off**, needs the `filesearch` profile |
-| I am looking for a passage in my old chats | Full text search across conversations | **on**, runs through Meilisearch |
+| A collection of many documents should be permanently searchable | File search, also known as RAG, short for retrieval augmented generation, meaning answers built from looked up passages | **off**, set up by the admin |
+| I am looking for a passage in my old chats | Full text search across conversations | **on** |
 
 File handling comes from [LibreChat](https://www.librechat.ai/docs), as does the RAG interface
 behind it.
@@ -45,20 +45,11 @@ section for admins.
 
 ### Limits
 
-The LibreChat defaults apply as long as the admin sets nothing else:
-
-| Limit | Value |
-|---|---|
-| Files per message | 10 |
-| Size per file | 512 MB |
-| Size of all files together | 512 MB |
-| Server side limit per upload | 512 MB |
-| Profile picture | 2 MB |
-
-These numbers are set generously and are rarely the real limit. What matters more in practice
-is how much text a model can read in one request. A document of several hundred pages fills the
-context, crowds out the rest of the conversation and makes the answer worse. File search exists
-for collections like that.
+How many files you may attach per message and how large a file may be is set by the admin. The
+default is generous and is rarely the real limit. What matters more in practice is how much
+text a model can read in one request. A document of several hundred pages fills the context,
+crowds out the rest of the conversation and makes the answer worse. File search exists for
+collections like that.
 
 <Aside type="caution" title="Scanned documents need a text layer">
 Text recognition is not part of the delivery. A PDF consisting only of images, for example a
@@ -72,26 +63,25 @@ out and paste it into the chat.
 
 ## File search across a document collection
 
-File search is something different from attaching. Uploaded documents are split into sections,
-translated into number vectors and stored in a vector database, meaning a store that does not
-search by keyword but by similarity of meaning. In response to a question the colleague then
-fetches exactly the matching sections instead of putting the whole document into the context.
+File search is something different from attaching. Uploaded documents are split into sections
+and stored in a way that is searched not by keyword but by similarity of meaning. In response
+to a question the colleague then fetches exactly the matching sections instead of putting the
+whole document into the context.
 
 The advantage shows with many long documents: a handful of manuals, a collection of policies, a
 project archive. Instead of "read these 400 pages" it becomes "find the three passages that
 answer my question".
 
 <Aside type="note" title="Switched off as shipped">
-As shipped, `interface.fileSearch: false`, because file search requires an additional backend
-and a provider for the embeddings. That way only what actually works is visible after
-installation. How to switch both on is explained below.
+File search is off out of the box, because it requires additional building blocks and a
+provider for the embeddings. That way only what actually works is visible after installation.
+How to switch it on is explained below.
 </Aside>
 
 ## Full text search across your own chats
 
 The search in the sidebar searches your conversations, not your documents. It finds the passage
-where something was discussed. This search is always on, it needs no additional profile and no
-embeddings provider. Meilisearch runs behind it.
+where something was discussed. This search is always on, it needs no embeddings provider.
 
 ## For admins
 
@@ -99,76 +89,41 @@ embeddings provider. Meilisearch runs behind it.
 
 <Steps>
 
-1. **Store an embeddings provider in the `.env`.** Example from `distribution/.env.example`,
-   embeddings through EuRouter:
+1. **Store a provider for the embeddings.** Without one, documents cannot be prepared for
+   search by meaning. If you want to keep the EU positioning, choose a provider that processes
+   EU resident.
 
-   ```bash title="distribution/.env"
-   EMBEDDINGS_PROVIDER=openai
-   RAG_OPENAI_BASEURL=https://api.eurouter.ai/api/v1
-   RAG_OPENAI_API_KEY=${EUROUTER_API_KEY}
-   EMBEDDINGS_MODEL=mistral-embed
-   ```
+2. **Provide the additional building blocks.** File search brings its own service for
+   preparing and searching the documents; it is addressed internally only.
 
-2. **Start the stack with the profile.**
+3. **Enable the interface.** Only then does the switch appear in the chat.
 
-   ```bash title="On the server"
-   cd ~/eu-cowork/distribution
-   docker compose --profile filesearch up -d
-   ```
-
-   That adds two services: `vectordb` (pgvector) as the vector database and `rag_api` as the
-   service that splits and searches documents. Both are only reachable internally.
-
-3. **Enable the interface.** In `distribution/librechat.yaml`, set `interface.fileSearch` to
-   `true`.
-
-   ```yaml title="distribution/librechat.yaml"
-   interface:
-     fileSearch: true
-   ```
-
-   This switch belongs in the file, not in the panel. `fileSearch` is a permission field: the
-   value from the configuration file is written into the roles on **every** start. If you want
-   to grant file search to individual roles only, take the line out of the file and maintain the
-   permission exclusively in the role editor. A value in the panel tab **"Funktionen"**
-   (features) would be discarded server side for tool permissions.
-
-4. **Add the capability.** `'file_search'` must be listed in `endpoints.agents.capabilities`.
-   Important: this list **replaces** the default list, it is not merged into it. Whoever adds
-   something there has to enumerate everything they want to keep.
-
-5. **Check the role permission.** In the role editor under **"Werkzeuge"** (tools) you find the
+4. **Check the role permission.** In the role editor under **"Werkzeuge"** (tools) you find the
    permission **"Datei-Suche (RAG)"** (file search) with the note "Hochgeladene Dokumente
    durchsuchen" (search uploaded documents). Optionally alongside it **"Datei-Zitate"** (file
-   citations) for source references from files.
+   citations) for source references from files. If you want to grant file search to individual
+   roles only, maintain the permission exclusively here.
 
-6. **Restart** so that the roles pick up the new state:
-
-   ```bash title="On the server"
-   docker compose --profile filesearch up -d --force-recreate api
-   ```
+5. **Check afterwards** that the search really returns hits from the collection in a fresh
+   chat.
 
 </Steps>
 
-On sizing: `rag_api` uses around 100 MB when idle, `vectordb` around 29 MB. Peaks occur while
-reading in large documents, because embeddings are computed then.
-
 <Aside type="note" title="Most common failure pattern">
-File search stays ineffective because the stack was started without `--profile filesearch`.
-Then `vectordb` and `rag_api` simply do not run. Check with `docker compose ps`.
+File search stays ineffective because the additional building blocks are not running at all.
+The switch is visible, but every request comes up empty. So before enabling it, check that the
+search service is running.
 </Aside>
 
 ### Changing limits and permitted file types
 
 In the panel under **"Konfiguration → Dateien & Speicher"** (configuration, files and storage).
-Among other things you find **"Max. Dateigrösse Server (MB)"** (maximum file size on the
-server), **"Avatar-Limit (MB)"** (avatar limit) and the **"Endpoint-Limits (JSON)"** (endpoint
-limits) with the fields `fileLimit`, `fileSizeLimit`, `totalSizeLimit` and
-`supportedMimeTypes`.
+There you find the upper limits for uploads, the limit for profile pictures and the list of
+permitted file types.
 
 One sensible intervention during setup is to lower the upper limit per file to a value that is
-realistic for your daily work — for pure document work 25 to 50 MB is usually enough. That
-keeps accidentally uploaded videos and archives out of storage.
+realistic for your daily work — for pure document work a low two digit MB value is usually
+enough. That keeps accidentally uploaded videos and archives out of storage.
 
 ### What happens when an account is deleted
 

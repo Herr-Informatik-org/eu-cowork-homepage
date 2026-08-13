@@ -1,32 +1,25 @@
 ---
 title: Datenschutz und Aufbewahrung
-description: Aufbewahrungsfrist setzen, Auskunft und Löschung pro Person, Telemetrie und was den Stack tatsächlich verlässt.
+description: Aufbewahrung, Auskunft und Löschung pro Person, Telemetrie und was die Instanz verlässt.
 sidebar:
   order: 6
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-Diese Seite sagt möglichst genau, welche Daten wie lange bleiben, wie Sie eine Auskunft erteilen oder eine Löschung durchführen und was die Installation nach aussen sendet. Sie ist als Grundlage für Ihr eigenes Löschkonzept gedacht.
+Diese Seite beschreibt, wie Sie die Aufbewahrung festlegen, wie Sie eine Auskunft erteilen oder eine Löschung durchführen und was die Installation nach aussen sendet. Sie ist als Grundlage für Ihr eigenes Löschkonzept gedacht.
 
 ## Die Aufbewahrungsfrist
 
-Unter **Einstellungen → Aufbewahrung** steht die Karte **Aufbewahrung (Retention)** mit dem Feld **Aufbewahrung in Tagen**.
+Sie legen in den Einstellungen eine Aufbewahrungsfrist in Tagen fest. Ohne Frist wird nichts automatisch gelöscht; setzen Sie sie bei der Einrichtung passend zu Ihrem Löschkonzept. Massgeblich ist die letzte Änderung an einer Konversation, nicht ihr Anlagedatum.
 
-| Eigenschaft | Wert |
-| --- | --- |
-| Zulässiger Bereich | 1 bis 3650 Tage |
-| Feld leer | Es wird nichts automatisch gelöscht. Setzen Sie die Frist bei der Einrichtung passend zu Ihrem Löschkonzept |
-| Massgeblich | die letzte Änderung an der Konversation, nicht ihr Anlagedatum |
-| Wann gelöscht wird | in einem täglichen Lauf |
-
-Gelöscht werden **Konversationen samt ihren Nachrichten und den dazu erzeugten geteilten Links**, und zwar endgültig. Nicht gelöscht werden die **Abrechnungsdaten**, also die Transaktionen der Verbrauchsmessung. Der Verbrauch eines vergangenen Monats bleibt damit nachvollziehbar, auch wenn die zugehörigen Chats längst weg sind.
+Gelöscht werden **Konversationen samt ihren Nachrichten und den dazu erzeugten geteilten Links**, und zwar endgültig. Nicht gelöscht werden die **Abrechnungsdaten**. Der Verbrauch eines vergangenen Monats bleibt damit nachvollziehbar, auch wenn die zugehörigen Chats längst weg sind.
 
 <Aside type="caution" title="Jede Verkürzung fragt nach">
-Setzen oder verkürzen Sie die Frist, kommt eine Rückfrage. Sie nennt die alte und die neue Frist und weist darauf hin, dass die kürzere Frist beim nächsten Lauf zusätzliche, ältere Konversationen endgültig löscht. Bestätigt wird mit **Frist setzen**. Eine Verlängerung holt nichts zurück, bereits Gelöschtes bleibt gelöscht.
+Setzen oder verkürzen Sie die Frist, kommt eine Rückfrage mit alter und neuer Frist und dem Hinweis, dass die kürzere Frist zusätzliche, ältere Konversationen endgültig löscht. Eine spätere Verlängerung holt nichts zurück, bereits Gelöschtes bleibt gelöscht.
 </Aside>
 
-Der Knopf **Jetzt ausführen** erscheint, sobald eine Frist gesetzt ist, und stösst den Lauf sofort an, ebenfalls mit Rückfrage. Unter dem Feld steht, wann der letzte Lauf war, ob er automatisch oder manuell ausgelöst wurde und wie viele Konversationen und Nachrichten er entfernt hat.
+Die Bereinigung läuft regelmässig von selbst und lässt sich zusätzlich von Hand anstossen. Wann sie zuletzt lief und was sie entfernt hat, steht daneben.
 
 ## Auskunft und Löschung pro Person
 
@@ -34,46 +27,27 @@ Beides erreichen Sie aus der Benutzerliste. Die Reihenfolge ist nicht beliebig.
 
 <Steps>
 
-1. **Exportieren.** Der Knopf **Daten exportieren (JSON)** liefert alle Daten dieser Person als eine JSON-Datei: Konto, Gruppen, Guthaben, Konversationen, Nachrichten, Datei-Metadaten und Transaktionen.
+1. **Exportieren.** Der Datenexport liefert die Daten dieser Person als eine Datei: Konto, Gruppen, Guthaben, Konversationen, Nachrichten, Datei-Metadaten und Transaktionen. Dateien sind als Metadaten enthalten, nicht als Inhalt. Zugangsdaten sind bewusst nicht enthalten, also weder Passwort noch Zwei-Faktor-Geheimnisse noch hinterlegte Schlüssel.
 
-2. **Löschen.** Erst danach löschen. Nach der Löschung lässt sich keine Auskunft mehr erteilen, deshalb steht der Export-Knopf auch direkt im Lösch-Dialog im Block **Erst exportieren, dann löschen**.
+2. **Löschen.** Erst danach löschen. Nach der Löschung lässt sich keine Auskunft mehr erteilen, deshalb steht der Export-Knopf auch direkt im Lösch-Dialog.
 
 </Steps>
 
-Zwei Punkte zum Export:
-
-- **Dateien sind als Metadaten enthalten, nicht als Inhalt.** Die eigentlichen Dateien liegen im Upload-Verzeichnis des Stacks. Sie mitzuliefern hiesse, aus dem Export einen Dateiserver zu machen.
-- **Zugangsdaten sind bewusst nicht enthalten**, also weder Passwort-Hash noch Zwei-Faktor-Geheimnisse noch die verschlüsselt hinterlegten API-Schlüssel der Person.
-
-Im Lösch-Dialog entscheidet die Checkbox **Auch Verbrauchs-Transaktionen löschen** über die Tiefe:
-
-| Auswahl | Ergebnis |
-| --- | --- |
-| ohne Haken | Konto, Konversationen, Nachrichten, Dateien, Schlüssel, Agenten und Guthaben verschwinden. Die Transaktionen bleiben als Abrechnungsbeleg erhalten. |
-| mit Haken | zusätzlich die Transaktionen. Das ist die DSGVO-Volllöschung, und die **Abrechnungsbelege gehen dabei verloren**. |
-
-Bestätigt wird in beiden Fällen durch exaktes Eintippen der E-Mail-Adresse.
+Beim Löschen entscheiden Sie über die Tiefe: entweder verschwinden Konto und Inhalte und die Transaktionen bleiben als Abrechnungsbeleg erhalten, oder es wird zusätzlich der Verbrauch gelöscht. Das ist die DSGVO-Volllöschung, und die Abrechnungsbelege gehen dabei verloren. Bestätigt wird in beiden Fällen durch exaktes Eintippen der E-Mail-Adresse.
 
 ## Telemetrie
 
-Der Auslieferungszustand schaltet Telemetrie ab. Zwei Werte in der `.env` sind dafür zuständig:
+Der Auslieferungszustand schaltet Telemetrie ab: die eingesetzten Komponenten senden keine Nutzungsdaten an ihre Hersteller, und Suchmaschinen indexieren die Oberfläche nicht. Wenn Sie eine bestehende Installation übernehmen, prüfen Sie das einmal nach.
 
-| Variable | Wirkung |
-| --- | --- |
-| `MEILI_NO_ANALYTICS=true` | Meilisearch, die Volltextsuche über die Konversationen, sendet keine Nutzungsdaten an seinen Hersteller |
-| `NO_INDEX=true` | Suchmaschinen indexieren die Oberfläche nicht |
+## Was die Instanz verlässt
 
-Beide stehen im Auslieferungszustand auf `true`. Wenn Sie eine bestehende Installation übernehmen, prüfen Sie das einmal nach.
+Die Installation läuft vollständig auf Ihrer Maschine, Konversationen, Suchindex und hochgeladene Dateien liegen dort. Wo diese Maschine physisch steht, entscheiden Sie mit der Wahl des Hosters.
 
-## Wo die Daten liegen und was den Stack verlässt
+Zwei Dinge verlassen die Instanz zwangsläufig, und die sollten Sie kennen und intern kommunizieren:
 
-Die Installation läuft vollständig auf Ihrer Maschine. Konversationen und Nachrichten liegen in der MongoDB des Stacks, der Suchindex in Meilisearch, hochgeladene Dateien in lokalen Volumes. Von allen Diensten veröffentlicht nur der Reverse-Proxy Caddy Ports nach aussen, alles andere ist auf die lokale Schnittstelle beziehungsweise auf das interne Docker-Netz beschränkt. Wo diese Maschine physisch steht, entscheiden Sie mit der Wahl des Hosters.
+**Modellanfragen gehen an den konfigurierten Anbieter.** Ein Sprachmodell rechnet dort, wo es betrieben wird. Im Auslieferungszustand ist das ein Anbieter mit Verarbeitung in der EU. Wenn Sie zusätzlich Anbieter ausserhalb der EU zuschalten, gehen die Anfragen dieser Karten dorthin. Es gibt keinen Modus, in dem eine Cloud-Anfrage die Maschine nicht verlässt. Lokal betriebene Modelle sind die Ausnahme, sie brauchen aber passende Hardware.
 
-Zwei Dinge verlassen den Stack zwangsläufig, und die sollten Sie kennen und intern kommunizieren:
-
-**Modellanfragen gehen an den konfigurierten Provider.** Ein Sprachmodell rechnet dort, wo es betrieben wird. Im Auslieferungszustand ist das EuRouter mit Verarbeitung in der EU. Wenn Sie zusätzlich Anbieter ausserhalb der EU zuschalten, gehen die Anfragen dieser Karten dorthin. Es gibt keinen Modus, in dem eine Cloud-Anfrage die Maschine nicht verlässt. Lokal betriebene Modelle sind die Ausnahme, sie brauchen aber passende Hardware.
-
-**Web-Suchanfragen gehen an externe Suchmaschinen.** Die Suche läuft über das selbst gehostete SearXNG im Stack. SearXNG ist ein Metasucher, es leitet die Suchanfrage an externe Suchmaschinen weiter, allerdings **ohne die Identität der suchenden Person**. Die Anfragen selbst verlassen also den Stack.
+**Web-Suchanfragen gehen an externe Suchmaschinen.** Die Suche läuft über eine selbst gehostete Meta-Suche, die die Suchanfrage an externe Suchmaschinen weiterleitet, allerdings **ohne die Identität der suchenden Person**. Die Anfragen selbst verlassen also die Instanz.
 
 <Aside type="note" title="Formulierung für Ihre Datenschutzhinweise">
 Sauber formuliert lautet die Aussage: Speicherung und Inferenz lassen sich in der EU beziehungsweise der Schweiz halten; bei der Web-Suche verlässt der Suchtext die Instanz, und zwar ohne Nutzerbezug. Wer diese Unterscheidung in Datenschutzhinweisen und Schulungen wörtlich übernimmt, ist auch bei kritischen Nachfragen auf der sicheren Seite.
@@ -81,9 +55,9 @@ Sauber formuliert lautet die Aussage: Speicherung und Inferenz lassen sich in de
 
 ## Kennzeichnung von Anbietern ausserhalb der EU
 
-Anbieter, die nicht EU-resident sind, werden im Panel und im Chat als solche gekennzeichnet, damit die Wahl bewusst geschieht. Das betrifft insbesondere Modellkarten über OpenRouter, deren sichtbares Label den Hinweis „Nicht-EU" trägt. Dieselbe Regel gilt für Konnektoren: ein Konnektor, dessen Zielsystem ausserhalb der EU betrieben wird, muss gekennzeichnet werden und gehört nicht ungefragt in ein Kundendeployment.
+Anbieter, die nicht EU-resident sind, werden im Panel und im Chat als solche gekennzeichnet, damit die Wahl bewusst geschieht. Dieselbe Regel gilt für Konnektoren: ein Konnektor, dessen Zielsystem ausserhalb der EU betrieben wird, muss gekennzeichnet werden und gehört nicht ungefragt in ein Kundendeployment.
 
-Beachten Sie ausserdem, dass die Herkunftsangaben im **Provider-Routing** vom Anbieter stammen und der Sitz eines Anbieters keine Garantie für den Verarbeitungsort ist. Mehr dazu unter [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
+Beachten Sie ausserdem, dass Herkunftsangaben zu Anbietern von diesen selbst stammen und der Sitz eines Anbieters keine Garantie für den Verarbeitungsort ist. Mehr dazu unter [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
 
 ## Abgrenzung
 

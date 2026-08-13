@@ -39,13 +39,13 @@ reason for putting the license question right at the beginning.
 
 ## Our own building blocks
 
-| Component | Location in the repository | License |
-|---|---|---|
-| monorepo with distribution, scripts and documentation | root of the repository | MIT |
-| admin panel, sidecar API and frontend | `services/admin` | MIT |
-| MCP gateway including the model router | `services/mcp-gateway` | MIT |
-| example connector bridge | its own folder under `services/` | MIT |
-| Outlook add-in | `services/office-addin` | MIT |
+| Component | License |
+|---|---|
+| monorepo with distribution, scripts and documentation | MIT |
+| admin panel with its accompanying service and frontend | MIT |
+| MCP gateway including the model router | MIT |
+| example connector bridge | MIT |
+| Outlook add-in | MIT |
 
 ## The shipped third party components
 
@@ -56,30 +56,29 @@ their normal network interfaces.
 | Component | Task | License |
 |---|---|---|
 | [LibreChat](https://github.com/danny-avila/LibreChat) | the chat application itself | MIT |
-| [MongoDB](https://github.com/mongodb/mongo) `8.0` | database for conversations, users and usage | SSPL-1.0 ¹ |
-| [Meilisearch](https://github.com/meilisearch/meilisearch) `v1.35.1` | full text search across earlier conversations | MIT, individual parts of the Enterprise Edition under BUSL-1.1 ² |
+| [MongoDB](https://github.com/mongodb/mongo) | database for conversations, users and usage | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | full text search across earlier conversations | MIT, individual parts of the Enterprise Edition under BUSL-1.1 ² |
 | [SearXNG](https://github.com/searxng/searxng) | own metasearch engine for web search | AGPL-3.0 ³ |
 | [pgvector](https://github.com/pgvector/pgvector) | vector database for file search | PostgreSQL license |
 | [rag_api](https://github.com/danny-avila/rag_api) | embedding of uploaded files for file search | MIT |
 | [Caddy](https://github.com/caddyserver/caddy) | reverse proxy with automatic TLS | Apache-2.0 |
-| two connector bridges from third party projects | translate between the chat layer and a third party system. Which project sits behind which bridge is named in `distribution/docker-compose.yml` at the respective service | MPL-2.0 and MIT |
+| connector bridges from third party projects | translate between the chat layer and a third party system. Which project sits behind which bridge is named in the operating documentation included with the delivery | MPL-2.0 and MIT |
 
-Only some of these components start in the base state. pgvector and rag_api need the Compose
-profile `filesearch`, the connector bridges the `internal` and `microsoft` profiles
-respectively and Caddy the `production` profile. Which service runs when is described
-on the [services and ports](/docs/en/referenz/dienste-und-ports) page.
+Only some of these components start in the base state. The building blocks for file search, the
+connector bridges and the reverse proxy are added with the respective deployment stage. On the
+structure, see the [services and ports](/docs/en/referenz/dienste-und-ports) page.
 
 ### Code execution
 
-The two backends for code execution are not part of the main Compose stack, but separate
-substacks. Only one is ever active.
+The two backends for code execution run separately from the rest of the stack. Only one is ever
+active.
 
 | Backend | Role | License |
 |---|---|---|
-| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | hardened variant with microVM isolation, needs `/dev/kvm` | Apache-2.0 |
+| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | hardened variant with microVM isolation | Apache-2.0 |
 | [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | lighter transitional variant with a prebuilt image | Apache-2.0 |
 
-Both substacks bring further helper services from the Compose files of their projects, for
+Both bring further helper services from the Compose files of their projects, for
 example a cache and an S3 compatible object store. Their licenses are documented in the
 respective projects. Since they differ depending on the version, check them for the version
 you actually deploy.
@@ -115,9 +114,9 @@ network and never distributed.
 
 For a product that is meant to stay explicitly permissive, that is the wrong path. Therefore:
 
-- **The AGPL panel is not part of the distribution.** In the Compose stack it sits only behind
-  the explicit `interim` profile and never starts on its own. It was a transitional solution
-  for internal tests, before our own panel was finished.
+- **The AGPL panel is not part of the distribution.** It never starts on its own, only on
+  explicit request. It was a transitional solution for internal tests, before our own panel was
+  finished.
 - **Our panel is an independent new build** under the MIT license. It works against the same
   administration interface of LibreChat, which is itself under MIT.
 - **No code was taken from the AGPL panel.** The panel served as a model for the interaction
@@ -139,11 +138,10 @@ are in `AGENTS.md`.
 A few points that have proven useful in practice:
 
 - **Where the change belongs.** Sidecars, distribution and documentation go into this
-  repository. Changes to LibreChat itself belong in the fork repository, which is included as
-  the submodule `librechat/`.
+  repository. Changes to LibreChat itself belong in the fork repository.
 - **Small and limited to one topic.** Do not mix reformatting with substantive changes.
-- **No secrets in the diff.** Keys are referenced exclusively as `${VARIABLE}`, and new
-  variables get a placeholder in `distribution/.env.example`.
+- **No secrets in the diff.** Keys are referenced exclusively as variables, and new variables
+  get a placeholder in the configuration template.
 - **Contributions are released under the MIT license** of this project. Third party code may
   only be taken over with a compatible license and an attribution note. **No code from AGPL
   sources**, in particular not from the AGPL admin panel of LibreChat.

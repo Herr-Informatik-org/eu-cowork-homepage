@@ -1,203 +1,42 @@
 ---
 title: Troubleshooting
-description: The failure modes that really occur in operation, with symptom, cause and fix, plus log commands and the egress test.
+description: Where to look first when something goes wrong and which groups of causes are most common in the operation of EU Cowork AI.
 sidebar:
   order: 8
 ---
 
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Most disturbances in operation have one of ten causes. This page describes them one by one, each
-with symptom, cause and fix, and first names the tools with which you narrow down within a few
-minutes where the problem sits.
+Most disturbances can be assigned to a group of causes within a few minutes. This page shows
+where to look for that. The detailed troubleshooting with the concrete commands is in the
+operations manual.
 
 ## Where do I look first
 
-1. **Admin panel, page "Logs".** Four tabs: **"Anfragen"** (requests) shows every single request
-   with model, duration and cost, **"Sessions"** groups those same requests per conversation,
-   **"Client-Fehler"** (client errors) shows the errors that occur in the Outlook add-in,
-   and **"Diagnose"** (diagnostics) shows the server logs.
-2. **The "Diagnose" tab.** There you switch between the LibreChat log and the errors of the
-   permission gateway. For the question of why a person does not see a connector, the page
-   **"Zugriffe"** (access) of that person is additionally the fastest answer, it names the decisive rule level
-   per connector.
-3. **Only then go to the command line.** What does not become visible in the panel are startup
-   errors of the containers. Those are in `docker compose logs`.
+1. **Admin panel, page Logs.** It shows the individual requests with model, duration and cost,
+   the same requests summarised per conversation, the errors from the Outlook add-in and the
+   server logs. See [Logs and audit](/docs/en/administration/protokolle-und-audit).
+2. **The Access page of the person concerned.** For the question why someone does not see a
+   connector, this is the fastest answer: it names the decisive rule level per connector.
+3. **Only then the command line.** What does not become visible in the panel are startup errors
+   of the services.
 
-## Log and status commands
+## The most common groups of causes
 
-```bash title="In the distribution directory"
-docker compose ps
-docker compose logs -f api
-docker compose logs caddy
-docker compose --profile internal logs -f mcp-gateway
-```
-
-`docker compose ps` shows whether a container is stuck in a restart loop. In the log of the
-service `api`, configuration errors become visible, for example a YAML file that does not match
-the schema. Caddy's log answers all questions around certificates.
-
-## Egress test
-
-Many disturbances are in truth blocked connections to the outside. The test checks whether the
-**containers** can reach the internet, independently of the application:
-
-```bash title="On the server"
-docker run --rm curlimages/curl -sI -m 10 https://api.eurouter.ai/api/v1/models
-```
-
-- **HTTP 401** means: the way out works. The error then lies with the key or with the chosen
-  model.
-- **Timeout or HTTP 000** means: egress is blocked. Typical causes are a VPN client on the work
-  device, a corporate proxy or a collision of the Docker subnet with an existing route.
-
-## Common failure modes
-
-### The sandbox network is missing at startup
-
-**Symptom:** Startup aborts with `network eucowork-sandbox declared as external, but could
-not be found`.
-
-**Cause:** The external Docker network to the code interpreter does not exist. Normally
-`install.sh` creates it, after a manual `docker compose up` it is missing.
-
-**Fix:**
-
-```bash title="On the server"
-docker network create eucowork-sandbox
-```
-
-If your stack carries its own `SANDBOX_NETWORK`, use that name.
-
-### The chat restarts over and over, the log shows EACCES on /app/logs
-
-**Symptom:** The container `api` is stuck in a restart loop, the log shows a permission error on
-`/app/logs`.
-
-**Cause:** The mounted directories belong to `root`. The container, however, runs under the UID
-from the `.env` and may not write into them. This happens when Docker creates the directories
-itself on first start.
-
-**Fix:**
-
-```bash title="In the distribution directory"
-chown -R $(id -u):$(id -g) logs uploads images data-node meili_data
-```
-
-Then restart the stack. On the regular path through `install.sh` this does not occur, the script
-creates the directories in advance with the correct owner.
-
-### The panel cannot write keys into the `.env`
-
-**Symptom:** An API key stored under **Settings** in the panel is not saved.
-
-**Cause:** The admin sidecar runs in the container as UID 1000. If the server user has a different
-UID, it lacks write permission on the mounted `.env`.
-
-**Fix:** Set the owner of the file to UID 1000. You can check your own UID with `id -u`, see also
-[Prepare the server](/docs/en/betrieb/server-vorbereiten).
-
-### Answers in the Outlook add-in break off after about a minute
-
-**Symptom:** A loading error appears in the task pane, even though the answer finishes computing
-on the server. The same question works in the browser.
-
-**Cause:** `DISABLE_COMPRESSION` is set to `false`. Compression then buffers the whole response
-stream until the end, and the view in Outlook aborts after its time limit.
-
-**Fix:** Set `DISABLE_COMPRESSION=true` in the `.env`, which is also the default, and restart the
-chat.
-
-### Model calls and web search run into timeouts
-
-**Symptom:** The application runs, but answers do not arrive, the calls run into timeouts.
-
-**Cause:** The containers do not reach the internet.
-
-**Fix:** Run the egress test above. On a timeout, depending on the environment: configure the VPN
-client so that it does not intercept Docker, make the corporate proxy known through `HTTP_PROXY`,
-`HTTPS_PROXY` and `NO_PROXY`, or change the Docker subnet if it collides with a VPN route. On an
-ordinary Ubuntu server the problem usually does not occur, it is a topic on work devices with
-security software.
-
-### After the migration every person has to reconnect their connectors
-
-**Symptom:** Existing connections to connectors with per-user sign-in no longer work on the new
-server, every person has to connect again.
-
-**Cause:** `CREDS_KEY` and `CREDS_IV` were regenerated on the new server instead of carried over
-from the old `.env`. That makes all encrypted credentials in the database unreadable.
-
-**Fix:** Carry both values over from the old `.env` and restart the chat. If only an archive is
-left, get the file out of it, see
-[Backup and migration](/docs/en/betrieb/backup-und-umzug). If the old `.env` is lost for good,
-only reconnecting helps.
-
-### The file search has no effect
-
-**Symptom:** The button for searching uploaded files is there, but nothing happens.
-
-**Cause:** The profile `filesearch` was not passed at startup, so the vector database and the RAG
-service are not running at all. Or the embeddings provider is missing in the `.env`.
-
-**Fix:**
-
-```bash title="On the server"
-docker compose --profile filesearch up -d
-```
-
-Then set `interface.fileSearch: true` in the active YAML file and restart the chat.
-
-### The file upload fails with EACCES on /app/uploads/temp
-
-**Symptom:** An error appears during upload, the log shows a permission error on
-`/app/uploads/temp`.
-
-**Cause:** The owner of the mounted directory `uploads` does not match the UID of the container.
-After a migration, `UID` and `GID` in the `.env` often still come from the old machine.
-
-**Fix:** First check which UID the container uses and who owns the directory:
-
-```bash title="In the distribution directory"
-docker exec eucowork-api id
-ls -ldn uploads
-```
-
-Then either fix the owner with
-`sudo chown -R $(id -u):$(id -g) uploads images`, which takes effect immediately, or set `UID` and
-`GID` in the `.env` to the values of the server user and recreate the affected containers.
-
-### Behind a WAF the answer appears only at the end
-
-**Symptom:** The answer does not build up piece by piece, but appears all at once, or it breaks
-off on long answers.
-
-**Cause:** The upstream appliance buffers the response stream in order to inspect it.
-
-**Fix:** Set an exception for `/api/*` in the WAF so that the answer is not scanned, and switch
-off compression support there. On the application side `DISABLE_COMPRESSION=true` has to stay.
-Details under [Domain and certificate](/docs/en/betrieb/domain-und-tls).
-
-### After tests with curl no login is possible any more
-
-**Symptom:** After script calls against the API, suddenly nobody coming from the server can log in
-any more.
-
-**Cause:** LibreChat treats requests without a browser identifier as an abuse attempt and bans not
-only the account but also the source address for 120 minutes. With Docker that is the gateway
-address of **all** requests from the host. The ban lives in the database and survives a restart,
-and unbanning the person in the panel does not clear it.
-
-**Fix:** Delete the document with the key `BANS:<ip>` in the collection `logs` of the database
-`LibreChat`. You can avoid this by running functional tests in the interface instead of through a
-script. The bundled `.env.example` additionally sets `NON_BROWSER_VIOLATION_SCORE=0` as a safety
-net, the limit on failed login attempts is unaffected by that.
+| Picture | Where the cause usually sits |
+|---|---|
+| Answers do not arrive or run into timeouts | The instance does not reach the internet — typically a VPN client, a corporate proxy or a colliding network route. Less often an invalid key of the inference provider. |
+| A feature is visible but does nothing | The corresponding optional part is not running or is not configured. Affects mainly file search, code execution and web search. |
+| A service restarts repeatedly after the installation | Permissions on the mounted data directories. On the regular path through the installer this does not occur. |
+| Answers appear only at the end in one go | An upstream appliance buffers the response stream, see [Domain and certificate](/docs/en/betrieb/domain-und-tls). |
+| After a migration every person has to reconnect their connectors | The encryption keys were regenerated instead of carried over, see [Backup and migration](/docs/en/betrieb/backup-und-umzug). |
+| After an update something in the interface no longer fits | The YAML configuration no longer matches the current schema, or a new value is missing from the configuration. |
 
 <Aside type="tip" title="If none of this fits">
-Note down what was changed last, and compare the `.env` with `.env.example`. A large part of the
-remaining disturbances comes down to a missing variable, a forgotten Compose profile or a YAML
-file that no longer matches the schema after an update. Both become visible in the log of the
-service `api`.
+Note down what was changed last and compare your configuration with the supplied template. A
+large part of the remaining disturbances comes down to a missing value or a YAML file that no
+longer matches the schema after an update. If that does not get you further, the support path
+from your contract does.
 </Aside>
 
 ## Next
@@ -206,16 +45,11 @@ service `api`.
   <LinkCard
     title="Configuration"
     href="/docs/en/betrieb/konfiguration"
-    description="Which level wins, which variables exist and what the profiles switch on."
+    description="Which level wins and where each setting is maintained."
   />
   <LinkCard
     title="Backup and migration"
     href="/docs/en/betrieb/backup-und-umzug"
     description="Back up, restore and move to a new server."
-  />
-  <LinkCard
-    title="Command reference"
-    href="/docs/en/referenz/befehle"
-    description="All commands for operation, updating, backup and diagnostics on one page for looking up."
   />
 </CardGrid>

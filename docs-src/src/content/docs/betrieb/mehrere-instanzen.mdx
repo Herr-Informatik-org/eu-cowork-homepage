@@ -1,26 +1,25 @@
 ---
 title: Mehrere Instanzen auf einem Server
-description: Warum die Mandantengrenze der Compose-Stack ist, was pro Kunde getrennt bleiben muss und wie mehrere Stacks eine Maschine teilen.
+description: Warum die Mandantengrenze die Instanz ist, was pro Kunde getrennt bleiben muss und wann eine eigene Maschine sinnvoll ist.
 sidebar:
   order: 7
 ---
 
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Für einen Kunden mit drei Personen ist eine eigene virtuelle Maschine Verschwendung: die
-Grundlast einer Instanz liegt bei etwa 0,7 GB Arbeitsspeicher und praktisch null CPU. Mehrere
-Instanzen dürfen sich deshalb eine Maschine teilen. Diese Seite beschreibt, wo dabei die
-Trennlinie verläuft und welche Werte pro Instanz eindeutig sein müssen. Sie richtet sich an
-IT-Dienstleister, die mehrere Kunden betreiben.
+Für einen Kunden mit wenigen Personen ist eine eigene virtuelle Maschine Verschwendung: Die
+Grundlast einer Instanz ist gering. Mehrere Instanzen dürfen sich deshalb eine Maschine teilen.
+Diese Seite beschreibt, wo dabei die Trennlinie verläuft. Sie richtet sich an IT-Dienstleister,
+die mehrere Kunden betreiben.
 
-## Die Mandantengrenze ist der Stack, nicht die Maschine
+## Die Mandantengrenze ist die Instanz, nicht die Maschine
 
-Ein Kunde ist genau **ein Compose-Stack**: eigene Datenbank, eigene Volltextsuche, eigene
-Uploads, eigene `.env`, eigenes Docker-Netz, eigener Code-Interpreter. Das ist nicht
-verhandelbar und folgt direkt aus der Architektur: die Anwendung selbst kennt keine Mandanten.
-Die Trennung muss deshalb unterhalb der Anwendung liegen, und dort liegt sie sauber.
+Ein Kunde ist genau **eine Instanz**: eigene Datenbank, eigene Volltextsuche, eigene Uploads,
+eigene Konfiguration, eigene Geheimnisse, eigenes Backend für die Code-Ausführung. Das ist
+nicht verhandelbar und folgt direkt aus der Architektur: Die Anwendung selbst kennt keine
+Mandanten. Die Trennung muss deshalb unterhalb der Anwendung liegen, und dort liegt sie sauber.
 
-Ob zwei Stacks dieselbe Maschine teilen, ist danach eine Kosten- und Risikofrage, keine
+Ob zwei Instanzen dieselbe Maschine teilen, ist danach eine Kosten- und Risikofrage, keine
 Architekturfrage mehr.
 
 ## Was nie geteilt wird
@@ -29,128 +28,58 @@ Architekturfrage mehr.
 |---|---|
 | Datenbank | Enthält Konten, Konversationen und Buchungen eines Kunden |
 | Uploads und Bilder | Kundeninhalte |
-| `.env` und alle Geheimnisse | Ein gemeinsames Geheimnis hebt jede Trennung auf |
-| Sandbox-Netz und Code-Interpreter | Die einzige Stelle, an der Code von Nutzenden läuft |
+| Konfiguration und alle Geheimnisse | Ein gemeinsames Geheimnis hebt jede Trennung auf |
+| Backend für die Code-Ausführung | Die einzige Stelle, an der Code von Nutzenden läuft |
 | Inferenz-Schlüssel | Mit einem geteilten Schlüssel sind die Kosten pro Kunde nicht mehr auflösbar |
-| Eigene Metasuchmaschine | Sieht die Suchanfragen und damit Nutzerinhalte. Die Trennung kostet 65 MB, also trennen |
+| Eigene Metasuchmaschine | Sieht die Suchanfragen und damit Nutzerinhalte |
 
 ## Was geteilt werden darf
 
-- **Docker-Images und deren Schichten.** Das ist der grösste Spareffekt, ein LibreChat-Image
-  belegt rund 2 GB und wird nur einmal vorgehalten.
-- **Ein Edge-Reverse-Proxy** als einziger Dienst auf Port 80 und 443.
-- **Host-Monitoring, Backup-Cron und automatische Security-Updates.**
+- **Docker-Images und deren Schichten.** Das ist der grösste Spareffekt: Die Images werden nur
+  einmal vorgehalten.
+- **Ein vorgelagerter Reverse-Proxy** als einziger Dienst, der die öffentlichen Ports hält.
+- **Host-Monitoring, Backup-Planung und automatische Sicherheitsaktualisierungen.**
 
 Geteilt werden zwangsläufig auch Kernel, Docker-Dienst und die Hardware-Ressourcen. Das ist die
-eigentliche Grenze dieser Betriebsart: ein Neustart wegen eines Kernel-Updates trifft alle
+eigentliche Grenze dieser Betriebsart: Ein Neustart wegen eines Kernel-Updates trifft alle
 Kunden der Maschine.
 
-<Aside type="caution" title="Der Code-Interpreter ist der harte Punkt">
+<Aside type="caution" title="Die Code-Ausführung ist der harte Punkt">
 Überall sonst führt die Plattform nur eigenen Code aus, Nutzende haben keinen Zugang zur
-Kommandozeile. Die Ausnahme ist die Code-Ausführung. Geben Sie deshalb jedem Stack ein eigenes
-`SANDBOX_NETWORK`. Sonst hängen zwei Kunden am selben Netzwerknamen und ein Chat des einen
-Kunden kann im Backend des anderen landen. Auf einer geteilten Maschine ist zudem das
-gehärtete Backend die bessere Wahl, es setzt allerdings `/dev/kvm` voraus.
+Kommandozeile. Die Ausnahme ist die Code-Ausführung. Sie bekommt deshalb pro Instanz ein
+eigenes, getrenntes Backend. Auf einer geteilten Maschine ist zudem die gehärtete Variante die
+bessere Wahl.
 </Aside>
 
-## Die vier Variablen
+## Was pro Instanz eindeutig sein muss
 
-Docker-weit eindeutig und damit die eigentlichen Kollisionsstellen sind vier Namen. Alle
-stehen in der `.env`:
-
-```bash title="distribution/.env von Kunde A"
-COMPOSE_PROJECT_NAME=eucowork-kunde-a
-STACK_NAME=eucowork-kunde-a
-DOCKER_SUBNET=172.29.0.0/16
-SANDBOX_NETWORK=eucowork-sandbox-a
-PORT=3081
-ADMIN_SIDECAR_PORT=3011
-OFFICE_ADDIN_PORT=3041
-```
-
-`COMPOSE_PROJECT_NAME` ist der Name des Compose-Projekts und bestimmt, wie die benannten
-Volumes heissen — also wo Datenbank, Suchindex und Zertifikate eines Kunden liegen.
-`STACK_NAME` ist das Präfix aller Container-Namen, `DOCKER_SUBNET` das eigene Bridge-Netz und
-`SANDBOX_NETWORK` das Netz zum Code-Interpreter. Zusätzlich müssen die drei Host-Ports pro
-Stack unterschiedlich sein. Bleiben die Werte auf ihren Standardwerten, startet der zweite
-Stack nicht.
-
-<Aside type="danger" title="COMPOSE_PROJECT_NAME pro Kunde setzen">
-Ohne diese Variable leitet Docker Compose den Projektnamen aus dem Namen des
-Projektverzeichnisses ab. Da jeder Kunde in einem gleichnamigen Unterverzeichnis
-`distribution/` liegt, trügen sonst mehrere Stacks denselben Projektnamen und damit dieselben
-Volume-Namen. Setzen Sie `COMPOSE_PROJECT_NAME` deshalb bei **jedem** Stack auf einen eigenen
-Wert, bevor Sie ihn zum ersten Mal starten, und prüfen Sie danach einmal nach:
-
-```bash title="Auf dem Server"
-docker compose config --format json | head -c 200
-docker volume ls
-```
-
-Jeder Kunde muss einen eigenen Satz Volumes mit seinem Projektnamen als Präfix haben.
-</Aside>
-
-## Verzeichnis-Layout
-
-```text
-/srv/eucowork/kunde-a/distribution/
-/srv/eucowork/kunde-b/distribution/
-/srv/eucowork/edge/
-```
-
-Jeder Kunde bekommt einen eigenen Klon mit eigener `.env` und eigenen Daten. Die Trennung der
-benannten Volumes kommt aus `COMPOSE_PROJECT_NAME`, siehe oben — nicht aus dem
-Verzeichnisnamen, der hier bei allen Kunden `distribution` lautet.
-
-## Ein gemeinsamer Edge-Proxy
-
-Port 80 und 443 gibt es auf einer Maschine nur einmal. Die Kunden-Stacks laufen deshalb
-**ohne** das Profil `production`, bringen also keinen eigenen Caddy mit. Stattdessen steht ein
-kleiner gemeinsamer Stack davor, der beide Ports hält und pro Kunde einen Block in seiner
-Konfiguration bekommt:
-
-```text title="Vorlage für den geteilten Proxy"
-kunde-a.cowork.example.ch {
-	encode zstd gzip
-	handle /api/office/* { reverse_proxy host.docker.internal:3011 }
-	handle_path /office/* { reverse_proxy host.docker.internal:3041 }
-	handle { reverse_proxy host.docker.internal:3081 }
-}
-admin.kunde-a.cowork.example.ch { reverse_proxy host.docker.internal:3011 }
-```
-
-Die Portnummern sind dieselben, die in der `.env` des jeweiligen Kunden stehen.
-
-<Aside type="note" title="Der Edge-Stack liegt noch nicht im Repository">
-Die interne Instanz und jeder Einzelkunde fahren den mitgelieferten Caddy mit dem Profil
-`production`. Der gemeinsame Edge-Stack ist als vollständige Vorlage dokumentiert, aber noch
-kein fertiger Baustein im Repository. Gebaut wird er mit dem ersten Kunden, der sich eine
-Maschine teilt.
-</Aside>
+Mehrere Instanzen auf einer Maschine kollidieren, wenn sie sich Namen oder Adressen teilen.
+Jede Instanz braucht deshalb einen eigenen Projekt- und Datenbereich sowie eigene
+Netzwerk- und Portzuweisungen. Welche Werte das im Einzelnen sind und wie sie gesetzt werden,
+steht im Betriebshandbuch. Bleiben sie auf den Standardwerten, startet die zweite Instanz nicht.
 
 ## Wann eine eigene Maschine
 
-| Nutzerzahl | Empfehlung | Maschine |
-|---|---|---|
-| 1 bis 15 | mehrere Stacks auf einer Maschine, drei bis fünf Kunden | 4 vCPU, 16 GB RAM, 80 GB |
-| 15 bis 50 | eigene Maschine | 4 vCPU, 8 bis 16 GB RAM, 100 GB |
-| über 50, regulierte Branche, vertraglich zugesicherte dedizierte Infrastruktur oder eigener ERP-Anschluss | eigene Maschine | 8 vCPU, 32 GB RAM, ab 200 GB |
+- **Kleine Kundschaft:** mehrere Instanzen auf einer gemeinsamen Maschine, je nach Grösse drei
+  bis fünf Kunden.
+- **Mittlere Kundschaft:** eine eigene Maschine pro Kunde.
+- **Grosse Kundschaft, regulierte Branche, vertraglich zugesicherte dedizierte Infrastruktur
+  oder eigener ERP-Anschluss:** eine eigene, entsprechend dimensionierte Maschine.
 
-Budget pro Kundeninstanz inklusive eigenem Code-Interpreter: 1,5 bis 2 GB Arbeitsspeicher. Die
-Images belegen einmalig rund 5 bis 6 GB und werden geteilt, danach wachsen vor allem die
-Uploads.
+Die konkreten Richtwerte für Arbeitsspeicher, CPU und Plattenplatz stehen unter
+[Systemanforderungen](/docs/erste-schritte/systemanforderungen).
 
-## Betrieb mit mehreren Stacks
+## Betrieb mit mehreren Instanzen
 
-- **Backup pro Stack.** `backup.sh` läuft im jeweiligen Kundenverzeichnis und sichert genau
-  dessen Daten. Ein Cron-Eintrag pro Stack, mit versetzten Uhrzeiten.
-- **Update pro Stack.** Kunden dürfen unterschiedliche Versionen fahren. Genau dafür ist das
-  Image auf einen Digest gepinnt, siehe [Aktualisieren](/docs/betrieb/aktualisieren).
+- **Backup pro Instanz.** Jede Instanz sichert genau ihre eigenen Daten, mit versetzten
+  Uhrzeiten.
+- **Update pro Instanz.** Kunden dürfen unterschiedliche Versionen fahren. Genau dafür sind die
+  Versionen fest gepinnt, siehe [Aktualisieren](/docs/betrieb/aktualisieren).
 - **Monitoring.** Die erste Grenze ist der Plattenplatz, nicht der Arbeitsspeicher. Ein Alarm
-  ab 70 Prozent Belegung ist sinnvoll, ebenso die Überwachung auf Container-Neustarts.
-- **Offboarding.** Verzeichnis stoppen, Archiv ziehen, Verzeichnis und Netze löschen. Kein
-  Eingriff in andere Stacks, keine Aufräumarbeit in einer gemeinsamen Datenbank. Das ist der
-  eigentliche Gewinn der Stack-Grenze.
+  ab 70 Prozent Belegung ist sinnvoll, ebenso die Überwachung auf Dienste, die neu starten.
+- **Offboarding.** Instanz stoppen, Archiv ziehen, Daten löschen. Kein Eingriff in andere
+  Instanzen, keine Aufräumarbeit in einer gemeinsamen Datenbank. Das ist der eigentliche Gewinn
+  der Instanzgrenze.
 
 ## Weiter
 
@@ -158,11 +87,11 @@ Uploads.
   <LinkCard
     title="Konfiguration"
     href="/docs/betrieb/konfiguration"
-    description="Wo STACK_NAME, DOCKER_SUBNET und SANDBOX_NETWORK stehen und was sonst in die .env gehört."
+    description="Die drei Konfigurationsebenen und welche bei einem Widerspruch gewinnt."
   />
   <LinkCard
     title="Backup und Umzug"
     href="/docs/betrieb/backup-und-umzug"
-    description="Sicherung pro Stack, Restore und der komplette Umzug."
+    description="Sicherung pro Instanz, Restore und der komplette Umzug."
   />
 </CardGrid>

@@ -1,199 +1,55 @@
 ---
 title: Eigenen Konnektor anbinden
-description: 'Zwei vollständige Wege, ein eigenes System an EU Cowork AI anzuschliessen: im Admin-Panel ohne Neustart oder über die Konfigurationsdateien.'
+description: Was Sie klären, bevor Sie ein eigenes System an EU Cowork AI anschliessen, und woran Sie einen fremden Konnektor messen.
 sidebar:
   order: 3
 ---
 
-import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-Diese Seite zeigt, wie Sie ein eigenes System als Konnektor anbinden. Es gibt zwei Wege: vollständig im Admin-Panel, ohne Neustart und ohne Zugriff auf den Server, oder über die Konfigurationsdateien. Beide sind hier komplett beschrieben, Sie brauchen nur einen davon.
+Ein eigenes System wird als Konnektor angebunden: ein Dienst, der eine überschaubare Zahl von Werkzeugen anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Angelegt und freigegeben wird er im Admin-Panel, ohne Zugriff auf den Server.
 
-## Bevor Sie anfangen
-
-**Ein Konnektor muss über das Gateway laufen, wenn er pro Rolle oder Gruppe steuerbar sein soll.** Direkt verbundene Konnektoren gibt die Chat-Schicht technisch bedingt allen Nutzern unverändert weiter, dort gilt nur der Generalschalter pro Rolle. Die einzige sinnvolle Ausnahme ist ein Konnektor mit Anmeldung pro Person, bei dem ohnehin die Rechte der Person greifen.
-
-Sie brauchen zwei Angaben:
-
-- den **technischen Namen**, unter dem der Konnektor bei Ihnen laufen soll, zum Beispiel `crm-lesen`
-- die **echte Adresse des Konnektors**, also die URL, unter der er MCP spricht, zum Beispiel `http://mein-dienst:8080/mcp`
-
-<Aside type="caution" title="Zwei Fallen beim Namen und bei der Adresse">
-Der Name darf nur Buchstaben, Ziffern und die Zeichen `.` `_` `-` enthalten, höchstens 64 Zeichen. Beim Anlegen prüft das Panel nur dieses Muster und ob der Name schon vergeben ist. Die Namen `router`, `healthz` und `errors` sind zwar anlegbar, aber nicht übers Gateway routbar: das Gateway belegt diese Pfade selbst, und das Speichern des **Gateway-Ziels** scheitert dann mit «Reservierter Name (vom Gateway belegt)». Nehmen Sie für einen Konnektor, der übers Gateway laufen soll, also von vornherein einen anderen Namen.
-
-Die Adresse des Konnektors darf **keinen Schrägstrich am Ende** haben. Also `http://mein-dienst:8080/mcp` und nicht `http://mein-dienst:8080/mcp/`. Mit Schrägstrich antwortet der Dienst mit einer Weiterleitung, und die blockiert der eingebaute Schutz gegen Anfragen an interne Adressen.
+<Aside type="note" title="Die Anleitung kommt mit der Auslieferung">
+Mit Ihrer Instanz erhalten Sie eine Anleitung, die den Weg vom Anlegen bis zur Freigabe Schritt für Schritt beschreibt, passend zu Ihrer Installation. Diese Seite bleibt bewusst auf der Ebene davor: was Sie vorher klären, woran Sie einen Konnektor messen und was Sie beim Freigeben nicht vergessen dürfen.
 </Aside>
 
-## Weg A: über das Admin-Panel
+## Was Sie vorher klären
 
-Dieser Weg braucht keinen Serverzugriff und keinen Neustart. Er ist der empfohlene Weg für alles, was Sie nicht mit dem Stack ausliefern.
-
-<Steps>
-1. **Konnektor anlegen.**
-
-   **Konfiguration → MCP-Server → + MCP-Server**. Im Dialog *Neuer MCP-Server* tragen Sie unter **Server-Name (Schlüssel)** den technischen Namen ein. Das Feld **Vorlage (optional)** bietet an, einen vorhandenen Eintrag zu kopieren. Beachten Sie die Warnung im Dialog: Eine Kopie startet **ohne Rechteregeln und ohne Gateway-Ziel**, beides hängt am alten Schlüssel und muss neu gesetzt werden. Klicken Sie **Anlegen**.
-
-2. **Grunddaten ausfüllen.**
-
-   Die neue Kachel klappt auf. Füllen Sie aus:
-
-   - **Anzeigename**: der lesbare Name, den Ihre Mitarbeitenden sehen. Leer lassen heisst, der technische Name wird angezeigt. Der technische Schlüssel selbst ist später nicht umbenennbar, weil Regeln und Gateway-Ziel daran hängen.
-   - **Typ**: `streamable-http` für einen Konnektor über das Gateway. Zur Auswahl stehen ausserdem `sse`, `websocket` und `stdio`.
-   - **URL**: `http://mcp-gateway:3020/<name>`, also für unser Beispiel `http://mcp-gateway:3020/crm-lesen`. Das ist bewusst **nicht** die Adresse Ihres Dienstes, sondern die des Gateways.
-   - **Timeout (ms)**: bei einer Brücke, die beim ersten Aufruf etwas Anlauf braucht, ist `60000` ein bewährter Wert.
-   - **Beim Start verbinden** und **Im Chat-Menü**: Steht *Im Chat-Menü* aus, ist der Konnektor nur über Agenten nutzbar, nicht im Werkzeug-Menü des Chats.
-   - **Server-Instruktionen**: eine kurze Anleitung in Prosa, wann dieses Werkzeug benutzt werden soll und was es nicht kann. Dieser Text wird nur eingefügt, wenn der Konnektor aktiv ist, er bläht also nicht den allgemeinen Systemprompt auf.
-
-   Die Felder **Command** und **Args** gelten nur für `stdio`. **OAuth (JSON)** brauchen Sie nur bei Anmeldung pro Person.
-
-3. **Gateway-Ziel eintragen und separat speichern.**
-
-   Sobald die URL auf das Gateway zeigt, erscheint in der Kachel das Feld **Gateway-Ziel**. Tragen Sie dort die **echte Adresse Ihres Konnektors** ein, also `http://mein-dienst:8080/mcp`, und klicken Sie **Ziel speichern**.
-
-   Das ist ein **eigener Speicherpfad**, unabhängig vom Speichern-Knopf des Reiters. Erst damit weiss das Gateway, wohin es diesen Namen weiterleiten soll. Die Änderung wirkt innert rund 10 Sekunden, ohne Neustart.
-
-4. **Schlüssel als Variablenreferenz hinterlegen.**
-
-   Braucht Ihr Konnektor einen Schlüssel, tragen Sie ihn im Feld **Headers (JSON)** ausschliesslich als Referenz ein, niemals im Klartext:
-
-   ```json
-   { "x-api-key": "${CRM_API_KEY}" }
-   ```
-
-   Den Wert selbst hinterlegen Sie unter **Einstellungen → API-Schlüssel**. Gespeicherte Schlüssel sind write-only, sie werden nie wieder angezeigt, anpassen heisst überschreiben. Schlüssel, die in der `.env` auf dem Server landen, wirken erst nach einem `docker compose ... up -d`, weil die betroffenen Container ihre Schlüssel beim Start lesen.
-
-5. **Verbindung testen.**
-
-   Ganz unten in der Kachel liegt der Bereich **Verbindung** mit dem Button **Verbindung testen**. Der Test baut vom Server aus eine echte MCP-Verbindung auf und meldet, an welcher Stufe es scheitert. Getestet wird der **aktuelle Formularstand**, also auch noch nicht gespeicherte Änderungen. Der Schlüssel verlässt den Server dabei nicht.
-
-   Der Test prüft die Verbindung, **nicht die Rechte**. Wer den Konnektor benutzen darf, steht im Reiter MCP-Zugriff.
-
-6. **Konfiguration speichern.**
-
-   Der neue Konnektor ist erst nach dem **Speichern** des Reiters dauerhaft eingetragen. Das Gateway-Ziel aus Schritt 3 ist davon unabhängig und bereits gespeichert.
-
-7. **SSRF-Allowlist ergänzen.**
-
-   **Konfiguration → Funktionen → Abschnitt MCP-Netzwerk → Feld Erlaubte MCP-Hosts.** Eingetragen werden **Hostnamen, keine URLs**, kommagetrennt.
-
-   Die Chat-Schicht blockt Verbindungen zu internen Hosts und privaten Adressen standardmässig. Massgeblich ist der Host aus dem Feld **URL**. Läuft Ihr Konnektor über das Gateway, ist das `mcp-gateway`, und ein einziger Eintrag genügt für alle Konnektoren dahinter. Verbinden Sie einen Konnektor direkt, muss dessen eigener Hostname in die Liste. In einer frisch installierten Kundeninstanz ist diese Liste leer, prüfen Sie sie also beim ersten Konnektor.
-
-8. **Rechte setzen.**
-
-   **Verwaltung → MCP-Zugriff**, Karte des neuen Konnektors: **Server-Standard** auf verweigert stellen, **Speichern**, danach gezielt Rollen, Gruppen oder einzelne Personen freigeben. Ohne Regel lässt das Gateway durch, dieser Schritt ist deshalb kein Feinschliff, sondern Pflicht.
-
-9. **Chat-Schicht neu starten.**
-
-   Damit der Werkzeug-Katalog im Prompt aktualisiert wird:
-
-   ```bash title="Auf dem Server"
-   cd ~/eu-cowork/distribution
-   docker compose restart api
-   ```
-</Steps>
-
-## Weg B: über die Konfigurationsdateien
-
-Dieser Weg ist der richtige, wenn der Konnektor Teil Ihrer ausgelieferten Konfiguration sein soll, also versioniert im Repository steht und bei jeder Installation mitkommt. Sie brauchen dafür zwei Einträge, und **beide müssen denselben Namen verwenden**.
-
-<Tabs>
-<TabItem label="Chat-Konfiguration">
-
-In der aktiven Konfigurationsdatei, also `distribution/librechat.yaml` oder `distribution/librechat.internal.yaml`:
-
-```yaml title="librechat.yaml"
-mcpServers:
-  mein-konnektor:
-    type: streamable-http
-    url: "http://mcp-gateway:3020/mein-konnektor"
-    headers:
-      X-EUCowork-User-Id: "{{LIBRECHAT_USER_ID}}"
-      X-EUCowork-User-Role: "{{LIBRECHAT_USER_ROLE}}"
-      X-EUCowork-User-Email: "{{LIBRECHAT_USER_EMAIL}}"
-    timeout: 60000
-    serverInstructions: |
-      Kurze Anleitung, wann dieses Werkzeug benutzt wird.
-
-mcpSettings:
-  allowedDomains:
-    - mcp-gateway
-```
-
-Die drei `X-EUCowork-*`-Header sind **nicht optional**. Sie sind die Identität, mit der das Gateway entscheidet. Fehlen sie, kommt die Anfrage ohne Identität an und wird verweigert. Die Platzhalter in doppelten geschweiften Klammern füllt die Chat-Schicht pro Person aus, das Gateway entfernt die Header wieder, bevor die Anfrage an Ihren Konnektor weiterläuft.
-
-</TabItem>
-<TabItem label="Compose">
-
-In `distribution/docker-compose.yml`, beim Dienst `mcp-gateway`:
-
-```yaml title="docker-compose.yml"
-    environment:
-      - MCP_GATEWAY_UPSTREAMS={"mein-konnektor":"http://mein-dienst:8080/mcp"}
-```
-
-Das ist **eine einzige JSON-Zuordnung für alle Konnektoren**. Wenn dort bereits Einträge stehen, ergänzen Sie Ihren, statt die Zeile zu ersetzen. Achten Sie auf den fehlenden Schrägstrich am Ende der Adresse.
-
-Danach:
-
-```bash title="Auf dem Server"
-cd ~/eu-cowork/distribution
-docker compose --profile internal up -d --build mcp-gateway
-docker compose restart api
-```
-
-</TabItem>
-</Tabs>
-
-<Aside type="note" title="Wenn beide Wege denselben Namen benutzen">
-Das Gateway kennt zwei Quellen für Ziele: die Compose-Variable `MCP_GATEWAY_UPSTREAMS` und die im Panel gepflegten Ziele. Bei gleichem Namen **gewinnt die Compose-Variable**. Das ist Absicht, damit ein Panel-Eintrag die mitgelieferten Konnektoren nicht übernehmen kann. Praktisch heisst es: Ein im Panel gesetztes Gateway-Ziel bleibt wirkungslos, wenn derselbe Name schon in der Compose-Variable steht. Im Verbindungstest sehen Sie, aus welcher Quelle das Ziel stammt.
-</Aside>
+- **Der technische Name.** Unter diesem Namen läuft der Konnektor in Ihrer Instanz. Er ist später nicht umbenennbar, weil die Rechteregeln daran hängen. Wählen Sie ihn also sprechend und dauerhaft, zum Beispiel `crm-lesen`.
+- **Die Adresse, unter der der Konnektor MCP spricht.** Der Dienst muss aus Ihrer Instanz heraus erreichbar sein.
+- **Die Zugangsdaten zum Zielsystem.** Sie gehören ausschliesslich als Referenz auf eine Umgebungsvariable in die Konfiguration, nie im Klartext. Den Wert selbst hinterlegen Sie unter **Einstellungen → API-Schlüssel**. Gespeicherte Schlüssel sind write-only, sie werden nie wieder angezeigt, anpassen heisst überschreiben.
+- **Das Konto hinter den Zugangsdaten.** Es ist die eigentliche Datengrenze. Geben Sie ihm im Zielsystem genau die Rechte und genau die Bereiche, die der Anwendungsfall braucht, siehe [Muster für Konnektoren](/docs/konnektoren/muster).
+- **Eine kurze Anleitung in Prosa** dazu, wann dieses Werkzeug benutzt werden soll und was es nicht kann. Sie wird nur eingefügt, wenn der Konnektor aktiv ist, und verbessert die Trefferquote spürbar.
 
 ## Woher bekomme ich einen MCP-Server für mein System
 
 **Es gibt fertige Server für viele Produkte.** Weil MCP ein offener Standard ist, veröffentlichen Hersteller und Communities Konnektoren für gängige Software. Suchen Sie nach dem Produktnamen zusammen mit „MCP server". Für Systeme mit eigener Programmierschnittstelle ist die Chance gut, dass jemand die Brücke schon gebaut hat.
 
-**Sie können einen eigenen bauen.** Ein Konnektor ist ein kleiner HTTP-Dienst, der eine Handvoll Werkzeuge anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Für einen begrenzten Zweck, etwa „fünf Leseabfragen auf unsere Fachanwendung", ist das überschaubar. Eine bewusst schmal gebaute Brücke kommt erfahrungsgemäss mit rund sieben Werkzeugen aus und ist damit im Kontext deutlich günstiger als ein fertiger Server mit hundert.
+**Sie können einen eigenen bauen.** Ein Konnektor ist ein kleiner Dienst, der eine Handvoll Werkzeuge anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Für einen begrenzten Zweck, etwa „fünf Leseabfragen auf unsere Fachanwendung", ist das überschaubar. Eine bewusst schmal gebaute Brücke ist im Kontext deutlich günstiger als ein fertiger Server mit hundert Werkzeugen.
 
 **Prüfen Sie einen fremden Server, bevor Sie ihn anschliessen.** Ein Konnektor bekommt Zugriff auf Ihre Daten, das ist keine Formalität. Vier Fragen:
 
 1. **Welche Werkzeuge exponiert er?** Lesen Sie die Liste vollständig. Schreibende Werkzeuge, die Sie nicht brauchen, sind reines Risiko und kosten dazu Kontext.
 2. **Gibt es einen Nur-Lese-Modus?** Ein Schalter, der Schreibzugriffe im Code abschaltet, ist deutlich mehr wert als der Vorsatz, sie nicht zu benutzen.
-3. **Ist er für mehrere Nutzer geeignet?** Konnektoren, die sich einen Zustand über mehrere Aufrufe merken, funktionieren hinter einem gemeinsam genutzten Gateway nicht zuverlässig.
+3. **Ist er für mehrere Nutzer geeignet?** Konnektoren, die sich einen Zustand über mehrere Aufrufe merken, funktionieren im Mehrbenutzer-Betrieb nicht zuverlässig.
 4. **Wo liegen die Zugangsdaten und wie ist die Lizenz?** Ein Konnektor, der selbst Schlüssel hält, gehört ausschliesslich ins interne Netz.
 
-Ein Beispiel aus der Praxis: Für ein Monitoring-System haben wir drei vorhandene Server geprüft. Alle drei boten Neustart, Skriptausführung, Verteilung von Software und schreibenden Ticket-Zugriff an, und keiner hatte einen Nur-Lese-Modus. Einer hielt zusätzlich einen zustandsbehafteten Modus, der hinter einem Mehrbenutzer-Proxy nicht funktioniert. Deshalb ist dort eine eigene, schmale Brücke entstanden. Das Ergebnis dieser Prüfung kann durchaus „wir bauen selbst" lauten. Wie eine solche Brücke aufgebaut wird, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
+Das Ergebnis dieser Prüfung kann durchaus „wir bauen selbst" lauten, gerade wenn ein fertiger Server neben dem Lesen auch Neustarts, Skriptläufe oder schreibende Änderungen anbietet und sich das nicht abschalten lässt. Wie eine schmale Brücke zugeschnitten wird, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
 
-## Fehlersuche
+## Freigabe ist ein eigener Schritt
 
-Der Verbindungstest im Panel arbeitet in vier Stufen und meldet, an welcher es scheitert. Suchen Sie die erste Stufe mit einem Kreuz, dort liegt die Ursache.
+Ein angelegter Konnektor ist noch kein freigegebener Konnektor, und ohne gesetzte Regel wird nicht automatisch gesperrt.
 
-| Stufe | Was geprüft wird | Typische Ursachen |
-|---|---|---|
-| **Konfiguration** | Ist die URL überhaupt eine gültige Adresse, und läuft sie über das Gateway | Tippfehler in der URL, ein anderes Protokoll als `http` oder `https`. Der Test meldet hier auch, wenn eine Direktverbindung ohne Rechtedurchsetzung vorliegt |
-| **MCP-Gateway** | Läuft das Gateway, und kennt es einen Konnektor mit diesem Namen | Der Stack läuft ohne das Profil `internal`. Oder das Feld **Gateway-Ziel** wurde nicht gesetzt, dann nennt die Meldung die Namen, die das Gateway tatsächlich kennt |
-| **Handshake (initialize)** | Antwortet an der Zieladresse wirklich ein MCP-Server | Die referenzierte Variable ist leer oder nicht gesetzt, dann bekäme der Konnektor einen leeren Schlüssel. Der Dienst läuft nicht. Oder eine Firewall liefert eine HTML-Fehlerseite statt einer MCP-Antwort |
-| **Tool-Liste (tools/list)** | Liefert der Konnektor seine Werkzeuge aus | Ein Fehler hier kippt das Gesamtergebnis bewusst nicht, manche Server implementieren die Abfrage nicht |
+<Aside type="danger" title="Server-Standard im selben Arbeitsschritt auf verweigert">
+Setzen Sie den **Server-Standard** auf verweigert und speichern Sie, bevor Sie irgendetwas anderes tun. Danach geben Sie gezielt die Rollen, Gruppen oder Personen frei, die den Konnektor brauchen. Wie die Entscheidung zustande kommt, steht unter [Rechte und Freigaben](/docs/konnektoren/gateway-und-rechte).
+</Aside>
 
-Ob das Gateway einen Namen kennt, prüfen Sie auch direkt auf dem Server:
+Prüfen Sie die Freigabe zum Schluss mit zwei Testpersonen mit unterschiedlichen Rechten. Sehen beide dasselbe, greift Ihre Rechtegrenze nicht.
 
-```bash title="Auf dem Server"
-docker compose --profile internal exec mcp-gateway \
-  node -e "fetch('http://localhost:3020/healthz').then(r=>r.json()).then(j=>console.log(j.servers))"
-```
+## Wenn etwas nicht funktioniert
 
-Der Name Ihres Konnektors muss in dieser Liste stehen. Erscheint er nicht, fehlt das Gateway-Ziel.
-
-Weitere Fehlerbilder, die der Verbindungstest nicht sieht:
-
-| Symptom | Ursache und Lösung |
-|---|---|
-| Verbindungstest grün, im Chat bleibt der Konnektor unsichtbar | Der Werkzeug-Katalog hängt an einem Zwischenspeicher von 12 Stunden. `docker compose restart api` |
-| Meldung über eine blockierte private oder reservierte Adresse | Der Host aus dem Feld URL fehlt unter **Erlaubte MCP-Hosts** |
-| Der Konnektor antwortet mit einer Weiterleitung | Schrägstrich am Ende der Zieladresse entfernen |
-| Im Panel gesetztes Gateway-Ziel wirkt nicht | Derselbe Name steht in der Compose-Variable, und die gewinnt |
-| Alle Aufrufe werden verweigert, obwohl freigegeben | Die Identitäts-Header fehlen im Konnektor-Eintrag. Ohne Identität verweigert das Gateway |
-| Werkzeug meldet „Zugriff verweigert" | Das ist kein Fehler, sondern die Rechteregel. Prüfen Sie **MCP-Zugriff** und die Unterseite **Zugriffe** der betroffenen Person |
-| Der Konnektor ist gar nicht erst anlegbar | Der Name enthält unerlaubte Zeichen, ist länger als 64 Zeichen oder ist schon vergeben |
-| Meldung «Reservierter Name (vom Gateway belegt)» beim Speichern des Gateway-Ziels | Der Konnektor heisst `router`, `healthz` oder `errors`. Angelegt ist er, übers Gateway routbar wird er nicht. Unter anderem Namen neu anlegen |
-
-Laufende Gateway-Fehler sehen Sie im Panel unter **Analyse → Logs**, Reiter **Diagnose**, Umschalter **Gateway-Fehler**. Dort steht bewusst nur der Meldungstext samt Konnektor und Methode, niemals Header oder Inhalte, weil dort die Zugangsdaten stecken.
+- **Der Verbindungstest im Panel** baut vom Server aus eine echte MCP-Verbindung auf und meldet, an welcher Stelle es scheitert. Getestet wird der aktuelle Formularstand, auch noch nicht gespeicherte Änderungen. Der Schlüssel verlässt den Server dabei nicht. Der Test prüft die Verbindung, **nicht die Rechte**.
+- **Ein Werkzeug meldet „Zugriff verweigert".** Das ist kein Fehler, sondern die Rechteregel. Prüfen Sie **Verwaltung → MCP-Zugriff** und die Unterseite **Zugriffe** der betroffenen Person.
+- **Der Konnektor bleibt im Chat unsichtbar, obwohl der Test grün ist.** Der Werkzeug-Katalog wird pro Person zwischengespeichert. Nach einem Neustart der Instanz ist er wieder aktuell.
+- **Der Dienst ist nicht erreichbar.** Verbindungen zu internen Hosts und privaten Adressen sind standardmässig blockiert. Der Host muss unter **Konfiguration → Funktionen → Erlaubte MCP-Hosts** eingetragen sein.
+- **Die referenzierte Variable ist leer.** Dann bekommt der Konnektor einen leeren Schlüssel und das Zielsystem lehnt ab. Prüfen Sie den hinterlegten Wert.

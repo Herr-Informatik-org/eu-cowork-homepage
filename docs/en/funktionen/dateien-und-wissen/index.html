@@ -97,12 +97,12 @@ conversations. Two of them are there after installation, one is not.</p>
 <tr>
 <td>A collection of many documents should be permanently searchable</td>
 <td>File search, also known as RAG, short for retrieval augmented generation, meaning answers built from looked up passages</td>
-<td><strong>off</strong>, needs the <code dir="auto">filesearch</code> profile</td>
+<td><strong>off</strong>, set up by the admin</td>
 </tr>
 <tr>
 <td>I am looking for a passage in my old chats</td>
 <td>Full text search across conversations</td>
-<td><strong>on</strong>, runs through Meilisearch</td>
+<td><strong>on</strong></td>
 </tr>
 </tbody>
 </table>
@@ -124,114 +124,66 @@ image has no effect, see
 <p>The exact list of permitted file types is configurable. Where, is covered further down in the
 section for admins.</p>
 <div class="sl-heading-wrapper level-h3"><h3 id="limits">Limits</h3><a class="sl-anchor-link" href="#limits"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Limits”</span></a></div>
-<p>The LibreChat defaults apply as long as the admin sets nothing else:</p>
-<table>
-<thead>
-<tr>
-<th>Limit</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Files per message</td>
-<td>10</td>
-</tr>
-<tr>
-<td>Size per file</td>
-<td>512 MB</td>
-</tr>
-<tr>
-<td>Size of all files together</td>
-<td>512 MB</td>
-</tr>
-<tr>
-<td>Server side limit per upload</td>
-<td>512 MB</td>
-</tr>
-<tr>
-<td>Profile picture</td>
-<td>2 MB</td>
-</tr>
-</tbody>
-</table>
-<p>These numbers are set generously and are rarely the real limit. What matters more in practice
-is how much text a model can read in one request. A document of several hundred pages fills the
-context, crowds out the rest of the conversation and makes the answer worse. File search exists
-for collections like that.</p>
+<p>How many files you may attach per message and how large a file may be is set by the admin. The
+default is generous and is rarely the real limit. What matters more in practice is how much
+text a model can read in one request. A document of several hundred pages fills the context,
+crowds out the rest of the conversation and makes the answer worse. File search exists for
+collections like that.</p>
 <aside aria-label="Scanned documents need a text layer" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Scanned documents need a text layer</p><div class="starlight-aside__content"><p>Text recognition is not part of the delivery. A PDF consisting only of images, for example a
 scanned contract or a photographed receipt, contains no readable text. This applies in the web
 chat exactly as it does in the <a href="/docs/en/funktionen/outlook-add-in">Outlook add-in</a>.</p><p>The usual route: convert the document into a searchable text PDF beforehand with the tool of
 your choice — many scanners and document management systems do this anyway — or copy the text
 out and paste it into the chat.</p></div></aside>
 <div class="sl-heading-wrapper level-h2"><h2 id="file-search-across-a-document-collection">File search across a document collection</h2><a class="sl-anchor-link" href="#file-search-across-a-document-collection"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “File search across a document collection”</span></a></div>
-<p>File search is something different from attaching. Uploaded documents are split into sections,
-translated into number vectors and stored in a vector database, meaning a store that does not
-search by keyword but by similarity of meaning. In response to a question the colleague then
-fetches exactly the matching sections instead of putting the whole document into the context.</p>
+<p>File search is something different from attaching. Uploaded documents are split into sections
+and stored in a way that is searched not by keyword but by similarity of meaning. In response
+to a question the colleague then fetches exactly the matching sections instead of putting the
+whole document into the context.</p>
 <p>The advantage shows with many long documents: a handful of manuals, a collection of policies, a
 project archive. Instead of “read these 400 pages” it becomes “find the three passages that
 answer my question”.</p>
-<aside aria-label="Switched off as shipped" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Switched off as shipped</p><div class="starlight-aside__content"><p>As shipped, <code dir="auto">interface.fileSearch: false</code>, because file search requires an additional backend
-and a provider for the embeddings. That way only what actually works is visible after
-installation. How to switch both on is explained below.</p></div></aside>
+<aside aria-label="Switched off as shipped" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Switched off as shipped</p><div class="starlight-aside__content"><p>File search is off out of the box, because it requires additional building blocks and a
+provider for the embeddings. That way only what actually works is visible after installation.
+How to switch it on is explained below.</p></div></aside>
 <div class="sl-heading-wrapper level-h2"><h2 id="full-text-search-across-your-own-chats">Full text search across your own chats</h2><a class="sl-anchor-link" href="#full-text-search-across-your-own-chats"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Full text search across your own chats”</span></a></div>
 <p>The search in the sidebar searches your conversations, not your documents. It finds the passage
-where something was discussed. This search is always on, it needs no additional profile and no
-embeddings provider. Meilisearch runs behind it.</p>
+where something was discussed. This search is always on, it needs no embeddings provider.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="for-admins">For admins</h2><a class="sl-anchor-link" href="#for-admins"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “For admins”</span></a></div>
 <div class="sl-heading-wrapper level-h3"><h3 id="switching-on-file-search">Switching on file search</h3><a class="sl-anchor-link" href="#switching-on-file-search"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Switching on file search”</span></a></div>
 <ol role="list" class="sl-steps">
 <li>
-<p><strong>Store an embeddings provider in the <code dir="auto">.env</code>.</strong> Example from <code dir="auto">distribution/.env.example</code>,
-embeddings through EuRouter:</p>
-<div class="expressive-code"><link rel="stylesheet" href="/docs/_astro/ec.5ssx4.css"><script type="module" src="/docs/_astro/ec.0vx5m.js"></script><figure class="frame has-title not-content"><figcaption class="header"><span class="title">distribution/.env</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:49ch"><code><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">EMBEDDINGS_PROVIDER</span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#ECC48D;--1:#3B61B0">openai</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">RAG_OPENAI_BASEURL</span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#ECC48D;--1:#3B61B0">https://api.eurouter.ai/api/v1</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">RAG_OPENAI_API_KEY</span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#D6DEEB;--1:#403F53">${</span><span style="--0:#C5E478;--1:#3B61B0">EUROUTER_API_KEY</span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">EMBEDDINGS_MODEL</span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#ECC48D;--1:#3B61B0">mistral-embed</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="EMBEDDINGS_PROVIDER=openaiRAG_OPENAI_BASEURL=https://api.eurouter.ai/api/v1RAG_OPENAI_API_KEY=${EUROUTER_API_KEY}EMBEDDINGS_MODEL=mistral-embed"><div></div></button></div></figure></div>
+<p><strong>Store a provider for the embeddings.</strong> Without one, documents cannot be prepared for
+search by meaning. If you want to keep the EU positioning, choose a provider that processes
+EU resident.</p>
 </li>
 <li>
-<p><strong>Start the stack with the profile.</strong></p>
-<div class="expressive-code"><figure class="frame is-terminal has-title not-content"><figcaption class="header"><span class="title">On the server</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:41ch"><code><div class="ec-line"><div class="code"><span style="--0:#C5E478;--1:#3B61B0">cd</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">~/eu-cowork/distribution</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">compose</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--profile</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">filesearch</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">up</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-d</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="cd ~/eu-cowork/distributiondocker compose --profile filesearch up -d"><div></div></button></div></figure></div>
-<p>That adds two services: <code dir="auto">vectordb</code> (pgvector) as the vector database and <code dir="auto">rag_api</code> as the
-service that splits and searches documents. Both are only reachable internally.</p>
+<p><strong>Provide the additional building blocks.</strong> File search brings its own service for
+preparing and searching the documents; it is addressed internally only.</p>
 </li>
 <li>
-<p><strong>Enable the interface.</strong> In <code dir="auto">distribution/librechat.yaml</code>, set <code dir="auto">interface.fileSearch</code> to
-<code dir="auto">true</code>.</p>
-<div class="expressive-code"><figure class="frame has-title not-content"><figcaption class="header"><span class="title">distribution/librechat.yaml</span></figcaption><pre data-language="yaml" class="wrap" style="--ecMaxLine:18ch"><code><div class="ec-line"><div class="code"><span style="--0:#7FDBCA;--1:#111111">interface</span><span style="--0:#D6DEEB;--1:#403F53">:</span></div></div><div class="ec-line" style="--ecIndent:2ch"><div class="code"><span class="indent">  </span><span style="--0:#7FDBCA;--1:#111111">fileSearch</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#FF6A83;--1:#A24848">true</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="interface:  fileSearch: true"><div></div></button></div></figure></div>
-<p>This switch belongs in the file, not in the panel. <code dir="auto">fileSearch</code> is a permission field: the
-value from the configuration file is written into the roles on <strong>every</strong> start. If you want
-to grant file search to individual roles only, take the line out of the file and maintain the
-permission exclusively in the role editor. A value in the panel tab <strong>“Funktionen”</strong>
-(features) would be discarded server side for tool permissions.</p>
-</li>
-<li>
-<p><strong>Add the capability.</strong> <code dir="auto">'file_search'</code> must be listed in <code dir="auto">endpoints.agents.capabilities</code>.
-Important: this list <strong>replaces</strong> the default list, it is not merged into it. Whoever adds
-something there has to enumerate everything they want to keep.</p>
+<p><strong>Enable the interface.</strong> Only then does the switch appear in the chat.</p>
 </li>
 <li>
 <p><strong>Check the role permission.</strong> In the role editor under <strong>“Werkzeuge”</strong> (tools) you find the
 permission <strong>“Datei-Suche (RAG)”</strong> (file search) with the note “Hochgeladene Dokumente
 durchsuchen” (search uploaded documents). Optionally alongside it <strong>“Datei-Zitate”</strong> (file
-citations) for source references from files.</p>
+citations) for source references from files. If you want to grant file search to individual
+roles only, maintain the permission exclusively here.</p>
 </li>
 <li>
-<p><strong>Restart</strong> so that the roles pick up the new state:</p>
-<div class="expressive-code"><figure class="frame is-terminal has-title not-content"><figcaption class="header"><span class="title">On the server</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:62ch"><code><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">compose</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--profile</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">filesearch</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">up</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-d</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">--force-recreate</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">api</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="In die Zwischenablage kopieren" data-copied="Kopiert!" data-code="docker compose --profile filesearch up -d --force-recreate api"><div></div></button></div></figure></div>
+<p><strong>Check afterwards</strong> that the search really returns hits from the collection in a fresh
+chat.</p>
 </li>
-</ol>
-<p>On sizing: <code dir="auto">rag_api</code> uses around 100 MB when idle, <code dir="auto">vectordb</code> around 29 MB. Peaks occur while
-reading in large documents, because embeddings are computed then.</p>
-<aside aria-label="Most common failure pattern" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Most common failure pattern</p><div class="starlight-aside__content"><p>File search stays ineffective because the stack was started without <code dir="auto">--profile filesearch</code>.
-Then <code dir="auto">vectordb</code> and <code dir="auto">rag_api</code> simply do not run. Check with <code dir="auto">docker compose ps</code>.</p></div></aside>
+</ol><aside aria-label="Most common failure pattern" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 11a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm.38-3.92a1 1 0 0 0-.76 0 1 1 0 0 0-.33.21 1.15 1.15 0 0 0-.21.33 1 1 0 0 0 .21 1.09c.097.088.209.16.33.21A1 1 0 0 0 13 8a1.05 1.05 0 0 0-.29-.71 1 1 0 0 0-.33-.21ZM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16.001A8 8 0 0 1 12 20Z"/></svg>Most common failure pattern</p><div class="starlight-aside__content"><p>File search stays ineffective because the additional building blocks are not running at all.
+The switch is visible, but every request comes up empty. So before enabling it, check that the
+search service is running.</p></div></aside>
 <div class="sl-heading-wrapper level-h3"><h3 id="changing-limits-and-permitted-file-types">Changing limits and permitted file types</h3><a class="sl-anchor-link" href="#changing-limits-and-permitted-file-types"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Changing limits and permitted file types”</span></a></div>
 <p>In the panel under <strong>“Konfiguration → Dateien &amp; Speicher”</strong> (configuration, files and storage).
-Among other things you find <strong>“Max. Dateigrösse Server (MB)”</strong> (maximum file size on the
-server), <strong>“Avatar-Limit (MB)”</strong> (avatar limit) and the <strong>“Endpoint-Limits (JSON)”</strong> (endpoint
-limits) with the fields <code dir="auto">fileLimit</code>, <code dir="auto">fileSizeLimit</code>, <code dir="auto">totalSizeLimit</code> and
-<code dir="auto">supportedMimeTypes</code>.</p>
+There you find the upper limits for uploads, the limit for profile pictures and the list of
+permitted file types.</p>
 <p>One sensible intervention during setup is to lower the upper limit per file to a value that is
-realistic for your daily work — for pure document work 25 to 50 MB is usually enough. That
-keeps accidentally uploaded videos and archives out of storage.</p>
+realistic for your daily work — for pure document work a low two digit MB value is usually
+enough. That keeps accidentally uploaded videos and archives out of storage.</p>
 <div class="sl-heading-wrapper level-h3"><h3 id="what-happens-when-an-account-is-deleted">What happens when an account is deleted</h3><a class="sl-anchor-link" href="#what-happens-when-an-account-is-deleted"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “What happens when an account is deleted”</span></a></div>
 <p>When a person is deleted through the admin panel, their files are removed as well and the
 search indexes are cleaned up. The dialog explicitly offers <strong>“Daten exportieren (JSON)”</strong>

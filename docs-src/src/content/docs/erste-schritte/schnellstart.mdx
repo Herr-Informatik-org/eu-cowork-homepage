@@ -1,247 +1,77 @@
 ---
 title: Schnellstart
-description: Vom leeren Ubuntu-Server zur laufenden Instanz mit Domain und Zertifikat. Jeder Befehl zum Kopieren, dazu eine Prüfliste am Ende.
+description: Der Weg zu einer eigenen Instanz in groben Zügen, von der Serverwahl bis zum ersten Konto.
 sidebar:
   order: 4
 ---
 
 import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Diese Anleitung führt von einem frischen Ubuntu-Server zu einer erreichbaren Instanz mit
-eigener Domain und gültigem Zertifikat. Sie brauchen einen SSH-Zugang mit sudo-Rechten und
-etwa 30 Minuten, wovon der grösste Teil auf das Herunterladen und Bauen der Images entfällt.
+Es gibt zwei Wege zu einer eigenen Instanz. Entweder Sie nutzen eine gehostete Instanz in der
+Schweiz und bekommen einen fertigen Zugang, oder Sie betreiben die Plattform selbst auf einem
+eigenen Linux-Server. Diese Seite beschreibt den zweiten Weg in groben Zügen.
 
 <Steps>
 
-1. **Voraussetzungen prüfen**
+1. **Server bereitstellen**
 
-   Bevor Sie anfangen, sollten diese Punkte stimmen. Details stehen unter
-   [Systemanforderungen](/docs/erste-schritte/systemanforderungen).
+   Eine Linux-Maschine mit aktuellem Docker und Compose v2. Wie gross sie sein sollte, steht
+   unter [Systemanforderungen](/docs/erste-schritte/systemanforderungen).
 
-   - Ubuntu 22.04 oder 24.04, mindestens 4 GB Arbeitsspeicher und 40 GB freier Platz
-   - SSH-Zugang mit sudo-Rechten
-   - Zwei DNS-Einträge zeigen als A-Record auf den Server: `<ihre-domain.ch>` **und**
-     `admin.<ihre-domain.ch>`
-   - Die Ports 80 und 443 sind von aussen erreichbar, sonst kann kein Zertifikat ausgestellt
-     werden
-   - Ein API-Schlüssel für EuRouter liegt bereit. Legen Sie dafür ein Konto auf
-     [eurouter.ai](https://eurouter.ai) an und erzeugen Sie den Schlüssel dort in Ihrem Konto.
+2. **Domain eintragen**
 
-2. **Repository klonen**
+   Die Domain, unter der die Instanz erreichbar sein soll, zeigt per DNS auf den Server. Das
+   Zertifikat holt der Reverse-Proxy anschliessend selbständig, dafür muss der Server aus dem
+   Netz erreichbar sein.
 
-   ```bash title="Auf dem Server"
-   sudo apt-get update && sudo apt-get install -y git
-   git clone https://github.com/<organisation>/eu-cowork.git
-   cd eu-cowork/distribution
-   ```
+3. **Installieren**
 
-   Die konkrete Adresse des Repositorys steht in Ihrer Bezugsquelle beziehungsweise wird
-   Ihnen vom Anbieter mitgeteilt.
+   Die Installation läuft als Docker-Compose-Stack und wird von einem Skript geführt. Es legt
+   die Konfiguration an, würfelt die Secrets aus und startet die Dienste. Bereitliegen sollte
+   dabei der Zugang zu Ihrem Inferenz-Anbieter; im Auslieferungszustand ist das
+   [EuRouter](https://eurouter.ai), wo in der EU verarbeitet wird.
 
-3. **Server vorbereiten**
+4. **Zugang beschränken**
 
-   ```bash title="Auf dem Server"
-   ./setup-server.sh
-   ```
+   Bevor die Instanz an die ersten Personen geht, gehört festgelegt, welche E-Mail-Domänen
+   sich überhaupt registrieren dürfen. Diese Liste ist der massgebliche Zugangsschutz — nicht
+   die Frage, wer die Adresse kennt.
 
-   Das Skript ist idempotent, ein zweiter Lauf überspringt Erledigtes. Es installiert die
-   Basispakete und Docker Engine mit Compose v2 aus der offiziellen Quelle, richtet die
-   Protokoll-Rotation ein, nimmt Ihren Benutzer in die Gruppe `docker` auf, setzt die Firewall
-   auf 22, 80 und 443, legt bei Bedarf Swap an, stellt die Zeitzone und aktiviert
-   Sicherheitsaktualisierungen. Am Stack ändert es nichts.
+5. **Erstes Konto anlegen**
 
-   Mit `--user <name>` setzen Sie den Dienstbenutzer explizit, `--no-firewall` und
-   `--no-swap` überspringen die jeweiligen Schritte.
+   Das erste registrierte Konto wird automatisch Administrator, alle weiteren sind normale
+   Benutzer. Legen Sie danach ein zweites Administratorkonto an, damit Sie sich nicht
+   aussperren.
 
-4. **Neu anmelden und nachsehen**
+6. **Einrichten**
 
-   Die neue Gruppenzugehörigkeit wirkt erst mit einer neuen Sitzung. Melden Sie sich ab und
-   wieder an, dann prüfen Sie:
-
-   ```bash title="Auf dem Server"
-   docker compose version
-   id -u
-   ls -l /dev/kvm
-   ```
-
-   `docker compose version` muss eine Version 2 melden. Bei `id -u` ist 1000 der einfachste
-   Fall, weil die Container mit dieser Kennung schreiben. Meldet der Befehl einen anderen
-   Wert, funktioniert die Installation trotzdem, Sie müssen aber die Besitzrechte der
-   eingehängten Verzeichnisse angleichen. Wie das geht, steht unter
-   [Fehlerbehebung](/docs/betrieb/fehlerbehebung). Ist `/dev/kvm` vorhanden, kommt später das
-   gehärtete Code-Interpreter-Backend in Frage.
-
-5. **`.env` anlegen und den EuRouter-Schlüssel eintragen**
-
-   Die `.env` erzeugt der Installer, denn er würfelt dabei acht Secrets aus. Kopieren Sie die
-   Datei nicht von Hand, sonst bleiben die Platzhalter stehen.
-
-   ```bash title="Auf dem Server"
-   ./install.sh
-   docker compose down
-   ```
-
-   Der erste Lauf legt die `.env` mit Rechten 600 an und startet den Stack lokal. Das
-   anschliessende `docker compose down` hält ihn wieder an, damit der Chat nicht ungeschützt
-   auf Port 3080 erreichbar ist, solange die Domain-Einstellungen fehlen.
-
-   Jetzt die `.env` bearbeiten. Diese Werte gehören gesetzt, einige stehen dort auskommentiert
-   und müssen nur aktiviert werden:
-
-   ```bash title="distribution/.env"
-   EUROUTER_API_KEY=__IHR_SCHLUESSEL__
-   DOMAIN_CLIENT=https://<ihre-domain.ch>
-   DOMAIN_SERVER=https://<ihre-domain.ch>
-   EUCOWORK_DOMAIN=<ihre-domain.ch>
-   API_BIND=127.0.0.1
-   ```
-
-   `API_BIND` ist der wichtigste dieser Werte. Ohne ihn veröffentlicht der Chat seinen Port
-   auf allen Schnittstellen und ist unverschlüsselt am Reverse-Proxy vorbei erreichbar. Die
-   Firewall verhindert das nicht.
-
-6. **Stack mit Reverse-Proxy starten**
-
-   ```bash title="Auf dem Server"
-   ./install.sh --profiles production
-   ```
-
-   Der Installer legt das Sandbox-Netz und die Datenverzeichnisse an, zieht die Images, baut
-   die eigenen Dienste der gewählten Profile und startet alles. Am Ende nennt er die beiden URLs.
-
-   Ihre gerade eingetragenen Werte bleiben dabei erhalten. Der Installer erkennt die
-   vorhandene `.env`, überspringt die Erzeugung der Secrets und weist am Schluss nur noch auf
-   Einträge hin, die weiterhin auf einem Platzhalter stehen.
-
-   Brauchen Sie Konnektoren oder die Dateisuche, geben Sie die Profile gleich mit an:
-
-   ```bash title="Optional, mit allen Profilen"
-   ./install.sh --profiles production,internal,microsoft,filesearch
-   ```
-
-7. **DNS und Zertifikat prüfen**
-
-   Caddy holt das Zertifikat beim ersten Aufruf selbständig. Das dauert einige Sekunden und
-   ist im Protokoll sichtbar:
-
-   ```bash title="Auf dem Server"
-   docker compose logs caddy
-   ```
-
-   Scheitert die Ausstellung, liegt es fast immer an einem der beiden DNS-Einträge oder daran,
-   dass Port 80 von aussen nicht erreichbar ist. Beides muss stimmen, `admin.<ihre-domain.ch>`
-   ebenso wie die Hauptdomain.
-
-8. **Domain-Lock setzen**
-
-   <Aside type="danger" title="Domain-Lock und Administratorkonto vor der Freigabe">
-   Dieser Schritt gehört erledigt, bevor Sie die Instanz an die ersten Personen weitergeben:
-   Tragen Sie Ihre E-Mail-Domäne ein und legen Sie das Administratorkonto an. Die Domänenliste
-   ist der massgebliche Zugangsschutz — nicht die Frage, wer den Registrierungslink kennt.
-   </Aside>
-
-   In der Auslieferungsdatei steht der Block auskommentiert. Aktivieren Sie ihn und tragen Sie
-   Ihre Domäne ein:
-
-   ```yaml title="distribution/librechat.yaml"
-   registration:
-     allowedDomains:
-       - 'ihre-firma.ch'
-   ```
-
-   ```bash title="Auf dem Server"
-   docker compose restart api
-   ```
-
-   Sobald das Panel läuft, pflegen Sie dieselbe Liste dort unter
-   **Konfiguration → Funktionen → Erlaubte E-Mail-Domains**. Sie gilt für die
-   Selbstregistrierung und für Einladungen.
-
-9. **Erstes Konto anlegen**
-
-   Öffnen Sie `https://<ihre-domain.ch>` und registrieren Sie sich. **Das erste registrierte
-   Konto wird automatisch Administrator.** Alle weiteren Konten sind normale Benutzer.
-
-   Legen Sie danach ein zweites Administratorkonto an, damit Sie sich nicht aussperren.
-
-10. **Admin-Panel öffnen**
-
-    Das Panel liegt unter `https://admin.<ihre-domain.ch>`. Angemeldet wird mit demselben
-    LibreChat-Administratorkonto, ein eigenes Passwort gibt es nicht.
-
-    Auf einer frischen Instanz erscheint auf der Übersicht die Karte **Erste Schritte** mit
-    vier Aufgaben: Gruppe anlegen, Modellkarten pro Gruppe festlegen, MCP-Zugriff regeln und
-    Mitarbeitende einladen.
+   In der Administration richten Sie ein, was im Alltag gilt: Gruppen anlegen, Modelle je
+   Gruppe freigeben, Zugriffe auf Fremdsysteme regeln und Mitarbeitende einladen.
 
 </Steps>
 
-## Läuft alles?
-
-Drei Prüfungen, die die häufigsten Fehler zeigen.
-
-```bash title="Alle Container oben, keine Neustartschleife"
-docker compose ps
-```
-
-Jeder Container muss `Up` melden. Ein Dienst, der immer wieder neu startet, hat fast immer
-ein Rechteproblem an einem der eingehängten Verzeichnisse.
-
-```bash title="Startet die Anwendung sauber?"
-docker compose logs -f api
-```
-
-Warten Sie, bis die Anwendung meldet, dass sie lauscht. Fehler in der Konfigurationsdatei
-werden genau hier sichtbar und sonst nirgends.
-
-```bash title="Kommen die Container ins Internet?"
-docker run --rm curlimages/curl -sI -m 10 https://api.eurouter.ai/api/v1/models
-```
-
-**HTTP 401** ist das gewünschte Ergebnis, denn es bedeutet, der Weg nach draussen steht und
-nur der Schlüssel fehlt in diesem Testaufruf. Ein Timeout oder HTTP 000 heisst, der Egress ist
-blockiert. Typische Ursachen sind ein VPN-Client, ein Firmen-Proxy oder eine Kollision des
-Docker-Subnetzes mit einer bestehenden Route.
-
-<Aside type="tip" title="Vorher lokal ausprobieren">
-Sie können den Stack ohne Server auf dem eigenen Rechner starten, etwa um das Panel
-anzusehen. Docker mit Compose v2 genügt.
-
-```bash title="Auf dem eigenen Rechner"
-git clone https://github.com/<organisation>/eu-cowork.git
-cd eu-cowork/distribution
-./install.sh
-```
-
-Der Chat läuft danach auf `http://localhost:3080`, das Admin-Panel auf
-`http://localhost:3010`. Ohne EuRouter-Schlüssel antwortet kein Modell, alles andere ist
-bedienbar.
-
-Das Submodule `librechat/` braucht `--recurse-submodules` beim Klonen, und das brauchen Sie
-nur, wenn Sie LibreChat selbst verändern wollen. Für Betrieb und Installation genügt der
-Klon oben, weil der Stack das fertige LibreChat-Image verwendet.
+<Aside type="note" title="Die Anleitung im Einzelnen">
+Die vollständige Installationsanleitung mit allen Befehlen, Konfigurationswerten und
+Prüfschritten liegt der Auslieferung bei. Sie gehört zum Installationspaket und wird dort
+gepflegt, wo auch die Skripte liegen.
 </Aside>
 
 ## Weiter
 
 <CardGrid>
   <LinkCard
-    title="Konfiguration"
-    href="/docs/betrieb/konfiguration"
-    description="Welche Werte in der .env stehen, welche Datei die Anwendung liest und was im Panel übersteuert wird."
+    title="Systemanforderungen"
+    href="/docs/erste-schritte/systemanforderungen"
+    description="Was eine Instanz an CPU, Arbeitsspeicher und Plattenplatz braucht."
   />
   <LinkCard
-    title="Admin-Panel"
-    href="/docs/administration/admin-panel"
-    description="Benutzer und Gruppen, Rollen und Rechte, Modellkarten, Verbrauch und Budgets."
+    title="Architektur"
+    href="/docs/erste-schritte/architektur"
+    description="Welchen Weg eine Anfrage nimmt und warum jeder Kunde eine eigene Instanz bekommt."
   />
   <LinkCard
-    title="Eigenen Konnektor anbinden"
-    href="/docs/konnektoren/eigenen-konnektor-anbinden"
-    description="Ihr ERP, Ihr Ticketsystem, Ihre Dateiablage, mit Rechteprüfung und Protokoll davor."
-  />
-  <LinkCard
-    title="Backup und Umzug"
-    href="/docs/betrieb/backup-und-umzug"
-    description="Was gesichert werden muss, wie eine Sicherung zurückgespielt wird und wie eine Instanz auf einen anderen Server zieht."
+    title="Was ist EU Cowork AI?"
+    href="/docs/erste-schritte/ueberblick"
+    description="Der Überblick über die Plattform, ihre Grenzen und die Lizenz."
   />
 </CardGrid>

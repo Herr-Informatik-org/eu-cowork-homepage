@@ -1,245 +1,76 @@
 ---
 title: Quickstart
-description: From an empty Ubuntu server to a running instance with domain and certificate. Every command ready to copy, plus a checklist at the end.
+description: The path to your own instance in broad strokes, from choosing the server to the first account.
 sidebar:
   order: 4
 ---
 
 import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-This guide takes you from a fresh Ubuntu server to a reachable instance with your own domain
-and a valid certificate. You need SSH access with sudo rights and about 30 minutes, most of
-which goes into downloading and building the images.
+There are two ways to get your own instance. Either you use a hosted instance in Switzerland
+and receive a ready made account, or you run the platform yourself on your own Linux server.
+This page describes the second way in broad strokes.
 
 <Steps>
 
-1. **Check the prerequisites**
+1. **Provide a server**
 
-   Before you start, these points should be in place. Details are on the
+   A Linux machine with a current Docker and Compose v2. How large it should be is on the
    [system requirements](/docs/en/erste-schritte/systemanforderungen) page.
 
-   - Ubuntu 22.04 or 24.04, at least 4 GB of memory and 40 GB of free disk
-   - SSH access with sudo rights
-   - Two DNS entries point to the server as A records: `<ihre-domain.ch>` **and**
-     `admin.<ihre-domain.ch>`. The placeholder stands for your own domain
-   - Ports 80 and 443 are reachable from the outside, otherwise no certificate can be issued
-   - An API key for EuRouter is at hand. Create an account at
-     [eurouter.ai](https://eurouter.ai) and generate the key there in your account.
+2. **Point the domain at it**
 
-2. **Clone the repository**
+   The domain under which the instance should be reachable points to the server via DNS. The
+   reverse proxy then obtains the certificate on its own, which requires the server to be
+   reachable from the network.
 
-   ```bash title="On the server"
-   sudo apt-get update && sudo apt-get install -y git
-   git clone https://github.com/<organisation>/eu-cowork.git
-   cd eu-cowork/distribution
-   ```
+3. **Install**
 
-   The exact address of the repository is stated by your source of supply, or your provider
-   tells you what it is.
+   The installation runs as a Docker Compose stack and is guided by a script. It creates the
+   configuration, generates the secrets and starts the services. Have the access to your
+   inference provider at hand; out of the box that is [EuRouter](https://eurouter.ai), where
+   processing takes place in the EU.
 
-3. **Prepare the server**
+4. **Restrict access**
 
-   ```bash title="On the server"
-   ./setup-server.sh
-   ```
+   Before the instance goes to the first people, define which email domains may register at
+   all. That list is the decisive access protection — not the question of who knows the
+   address.
 
-   The script is idempotent, a second run skips what is already done. It installs the base
-   packages and Docker Engine with Compose v2 from the official source, sets up log rotation,
-   adds your user to the `docker` group, sets the firewall to 22, 80 and 443, creates swap if
-   needed, sets the time zone and enables security updates. It changes nothing in the stack.
+5. **Create the first account**
 
-   With `--user <name>` you set the service user explicitly, `--no-firewall` and `--no-swap`
-   skip the respective steps.
+   The first registered account automatically becomes administrator, all further accounts are
+   normal users. Afterwards create a second administrator account so that you do not lock
+   yourself out.
 
-4. **Sign in again and check**
+6. **Set things up**
 
-   The new group membership only takes effect with a new session. Sign out and back in, then
-   check:
-
-   ```bash title="On the server"
-   docker compose version
-   id -u
-   ls -l /dev/kvm
-   ```
-
-   `docker compose version` has to report a version 2. For `id -u`, 1000 is the simplest case,
-   because the containers write with that ID. If the command reports a different value, the
-   installation still works, but you have to align the ownership of the mounted directories.
-   How that is done is described under [Troubleshooting](/docs/en/betrieb/fehlerbehebung). If
-   `/dev/kvm` is present, the hardened code interpreter backend is an option later on.
-
-5. **Create the `.env` and enter the EuRouter key**
-
-   The `.env` is created by the installer, because it generates eight secrets in the process.
-   Do not copy the file by hand, otherwise the placeholders stay in place.
-
-   ```bash title="On the server"
-   ./install.sh
-   docker compose down
-   ```
-
-   The first run creates the `.env` with permissions 600 and starts the stack locally. The
-   subsequent `docker compose down` stops it again, so that the chat is not reachable
-   unprotected on port 3080 while the domain settings are still missing.
-
-   Now edit the `.env`. These values need to be set, some of them are commented out in the
-   file and only need to be activated:
-
-   ```bash title="distribution/.env"
-   EUROUTER_API_KEY=__IHR_SCHLUESSEL__
-   DOMAIN_CLIENT=https://<ihre-domain.ch>
-   DOMAIN_SERVER=https://<ihre-domain.ch>
-   EUCOWORK_DOMAIN=<ihre-domain.ch>
-   API_BIND=127.0.0.1
-   ```
-
-   `__IHR_SCHLUESSEL__` is the placeholder for your own key, `<ihre-domain.ch>` the
-   placeholder for your own domain.
-
-   `API_BIND` is the most important of these values. Without it the chat publishes its port on
-   all interfaces and is reachable unencrypted, bypassing the reverse proxy. The firewall does
-   not prevent that.
-
-6. **Start the stack with the reverse proxy**
-
-   ```bash title="On the server"
-   ./install.sh --profiles production
-   ```
-
-   The installer creates the sandbox network and the data directories, pulls the images,
-   builds the own services of the selected profiles and starts everything. At the end it prints the two URLs.
-
-   The values you just entered are preserved. The installer recognizes the existing `.env`,
-   skips the generation of the secrets and only points out, at the end, any entries that are
-   still on a placeholder.
-
-   If you need connectors or file search, pass the profiles right away:
-
-   ```bash title="Optional, with all profiles"
-   ./install.sh --profiles production,internal,microsoft,filesearch
-   ```
-
-7. **Check DNS and certificate**
-
-   Caddy obtains the certificate on its own on the first request. This takes a few seconds and
-   is visible in the log:
-
-   ```bash title="On the server"
-   docker compose logs caddy
-   ```
-
-   If issuance fails, it is almost always down to one of the two DNS entries or to port 80 not
-   being reachable from the outside. Both have to be correct, `admin.<ihre-domain.ch>` just as
-   much as the main domain.
-
-8. **Set the domain lock**
-
-   <Aside type="danger" title="Domain lock and administrator account before handover">
-   Complete this step before you hand the instance to the first people: enter your email
-   domain and create the administrator account. The domain list is the decisive access
-   protection — not the question of who knows the registration link.
-   </Aside>
-
-   In the shipped file the block is commented out. Activate it and enter your domain:
-
-   ```yaml title="distribution/librechat.yaml"
-   registration:
-     allowedDomains:
-       - 'ihre-firma.ch'
-   ```
-
-   ```bash title="On the server"
-   docker compose restart api
-   ```
-
-   Once the panel is running, you maintain the same list there under
-   **"Konfiguration → Funktionen → Erlaubte E-Mail-Domains"** (configuration, features,
-   allowed email domains). It applies to self registration and to invitations.
-
-9. **Create the first account**
-
-   Open `https://<ihre-domain.ch>` and register. **The first registered account automatically
-   becomes administrator.** All further accounts are normal users.
-
-   Afterwards create a second administrator account so that you do not lock yourself out.
-
-10. **Open the admin panel**
-
-    The panel is at `https://admin.<ihre-domain.ch>`. You sign in with the same LibreChat
-    administrator account, there is no separate password.
-
-    On a fresh instance the overview shows the card **"Erste Schritte"** (first steps) with
-    four tasks: create a group, define the model cards per group, set the MCP access rules and
-    invite your team members.
+   In the administration you set up what applies day to day: create groups, release models per
+   group, govern access to third party systems and invite your team members.
 
 </Steps>
 
-## Is everything running?
-
-Three checks that reveal the most common errors.
-
-```bash title="All containers up, no restart loop"
-docker compose ps
-```
-
-Every container has to report `Up`. A service that restarts over and over almost always has a
-permission problem on one of the mounted directories.
-
-```bash title="Does the application start cleanly?"
-docker compose logs -f api
-```
-
-Wait until the application reports that it is listening. Errors in the configuration file
-become visible exactly here and nowhere else.
-
-```bash title="Do the containers reach the internet?"
-docker run --rm curlimages/curl -sI -m 10 https://api.eurouter.ai/api/v1/models
-```
-
-**HTTP 401** is the desired result, because it means the path to the outside works and only
-the key is missing in this test call. A timeout or HTTP 000 means egress is blocked. Typical
-causes are a VPN client, a corporate proxy or a collision of the Docker subnet with an
-existing route.
-
-<Aside type="tip" title="Try it locally first">
-You can start the stack on your own machine without a server, for example to look at the
-panel. Docker with Compose v2 is enough.
-
-```bash title="On your own machine"
-git clone https://github.com/<organisation>/eu-cowork.git
-cd eu-cowork/distribution
-./install.sh
-```
-
-The chat then runs at `http://localhost:3080`, the admin panel at `http://localhost:3010`.
-Without an EuRouter key no model responds, everything else can be used.
-
-The submodule `librechat/` requires `--recurse-submodules` when cloning, and you only need it
-if you want to change LibreChat itself. For operation and installation the clone above is
-enough, because the stack uses the prebuilt LibreChat image.
+<Aside type="note" title="The step by step guide">
+The complete installation guide with every command, configuration value and check comes with
+the delivery. It is part of the installation package and is maintained where the scripts live.
 </Aside>
 
 ## Next steps
 
 <CardGrid>
   <LinkCard
-    title="Configuration"
-    href="/docs/en/betrieb/konfiguration"
-    description="Which values live in the .env, which file the application reads and what the panel overrides."
+    title="System requirements"
+    href="/docs/en/erste-schritte/systemanforderungen"
+    description="What an instance needs in terms of CPU, memory and disk."
   />
   <LinkCard
-    title="Admin panel"
-    href="/docs/en/administration/admin-panel"
-    description="Users and groups, roles and permissions, model cards, usage and budgets."
+    title="Architecture"
+    href="/docs/en/erste-schritte/architektur"
+    description="The path a request takes and why every customer gets a separate instance."
   />
   <LinkCard
-    title="Connect your own system"
-    href="/docs/en/konnektoren/eigenen-konnektor-anbinden"
-    description="Your ERP, your ticketing system, your document store, with permission checks and logging in front."
-  />
-  <LinkCard
-    title="Backup and migration"
-    href="/docs/en/betrieb/backup-und-umzug"
-    description="What has to be backed up, how a backup is restored and how an instance moves to another server."
+    title="What is EU Cowork AI?"
+    href="/docs/en/erste-schritte/ueberblick"
+    description="The overview of the platform, its limits and its license."
   />
 </CardGrid>

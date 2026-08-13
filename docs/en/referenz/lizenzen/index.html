@@ -125,34 +125,28 @@ reason for putting the license question right at the beginning.</p></div></aside
 <thead>
 <tr>
 <th>Component</th>
-<th>Location in the repository</th>
 <th>License</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>monorepo with distribution, scripts and documentation</td>
-<td>root of the repository</td>
 <td>MIT</td>
 </tr>
 <tr>
-<td>admin panel, sidecar API and frontend</td>
-<td><code dir="auto">services/admin</code></td>
+<td>admin panel with its accompanying service and frontend</td>
 <td>MIT</td>
 </tr>
 <tr>
 <td>MCP gateway including the model router</td>
-<td><code dir="auto">services/mcp-gateway</code></td>
 <td>MIT</td>
 </tr>
 <tr>
 <td>example connector bridge</td>
-<td>its own folder under <code dir="auto">services/</code></td>
 <td>MIT</td>
 </tr>
 <tr>
 <td>Outlook add-in</td>
-<td><code dir="auto">services/office-addin</code></td>
 <td>MIT</td>
 </tr>
 </tbody>
@@ -176,12 +170,12 @@ their normal network interfaces.</p>
 <td>MIT</td>
 </tr>
 <tr>
-<td><a href="https://github.com/mongodb/mongo">MongoDB</a> <code dir="auto">8.0</code></td>
+<td><a href="https://github.com/mongodb/mongo">MongoDB</a></td>
 <td>database for conversations, users and usage</td>
 <td>SSPL-1.0 ¹</td>
 </tr>
 <tr>
-<td><a href="https://github.com/meilisearch/meilisearch">Meilisearch</a> <code dir="auto">v1.35.1</code></td>
+<td><a href="https://github.com/meilisearch/meilisearch">Meilisearch</a></td>
 <td>full text search across earlier conversations</td>
 <td>MIT, individual parts of the Enterprise Edition under BUSL-1.1 ²</td>
 </tr>
@@ -206,19 +200,18 @@ their normal network interfaces.</p>
 <td>Apache-2.0</td>
 </tr>
 <tr>
-<td>two connector bridges from third party projects</td>
-<td>translate between the chat layer and a third party system. Which project sits behind which bridge is named in <code dir="auto">distribution/docker-compose.yml</code> at the respective service</td>
+<td>connector bridges from third party projects</td>
+<td>translate between the chat layer and a third party system. Which project sits behind which bridge is named in the operating documentation included with the delivery</td>
 <td>MPL-2.0 and MIT</td>
 </tr>
 </tbody>
 </table>
-<p>Only some of these components start in the base state. pgvector and rag_api need the Compose
-profile <code dir="auto">filesearch</code>, the connector bridges the <code dir="auto">internal</code> and <code dir="auto">microsoft</code> profiles
-respectively and Caddy the <code dir="auto">production</code> profile. Which service runs when is described
-on the <a href="/docs/en/referenz/dienste-und-ports">services and ports</a> page.</p>
+<p>Only some of these components start in the base state. The building blocks for file search, the
+connector bridges and the reverse proxy are added with the respective deployment stage. On the
+structure, see the <a href="/docs/en/referenz/dienste-und-ports">services and ports</a> page.</p>
 <div class="sl-heading-wrapper level-h3"><h3 id="code-execution">Code execution</h3><a class="sl-anchor-link" href="#code-execution"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Code execution”</span></a></div>
-<p>The two backends for code execution are not part of the main Compose stack, but separate
-substacks. Only one is ever active.</p>
+<p>The two backends for code execution run separately from the rest of the stack. Only one is ever
+active.</p>
 <table>
 <thead>
 <tr>
@@ -230,7 +223,7 @@ substacks. Only one is ever active.</p>
 <tbody>
 <tr>
 <td><a href="https://github.com/ClickHouse/code-interpreter">ClickHouse code-interpreter</a></td>
-<td>hardened variant with microVM isolation, needs <code dir="auto">/dev/kvm</code></td>
+<td>hardened variant with microVM isolation</td>
 <td>Apache-2.0</td>
 </tr>
 <tr>
@@ -240,7 +233,7 @@ substacks. Only one is ever active.</p>
 </tr>
 </tbody>
 </table>
-<p>Both substacks bring further helper services from the Compose files of their projects, for
+<p>Both bring further helper services from the Compose files of their projects, for
 example a cache and an S3 compatible object store. Their licenses are documented in the
 respective projects. Since they differ depending on the version, check them for the version
 you actually deploy.</p>
@@ -267,9 +260,9 @@ modifies it has to disclose the source code even when the software is only provi
 network and never distributed.</p>
 <p>For a product that is meant to stay explicitly permissive, that is the wrong path. Therefore:</p>
 <ul>
-<li><strong>The AGPL panel is not part of the distribution.</strong> In the Compose stack it sits only behind
-the explicit <code dir="auto">interim</code> profile and never starts on its own. It was a transitional solution
-for internal tests, before our own panel was finished.</li>
+<li><strong>The AGPL panel is not part of the distribution.</strong> It never starts on its own, only on
+explicit request. It was a transitional solution for internal tests, before our own panel was
+finished.</li>
 <li><strong>Our panel is an independent new build</strong> under the MIT license. It works against the same
 administration interface of LibreChat, which is itself under MIT.</li>
 <li><strong>No code was taken from the AGPL panel.</strong> The panel served as a model for the interaction
@@ -287,11 +280,10 @@ are in <code dir="auto">AGENTS.md</code>.</p>
 <p>A few points that have proven useful in practice:</p>
 <ul>
 <li><strong>Where the change belongs.</strong> Sidecars, distribution and documentation go into this
-repository. Changes to LibreChat itself belong in the fork repository, which is included as
-the submodule <code dir="auto">librechat/</code>.</li>
+repository. Changes to LibreChat itself belong in the fork repository.</li>
 <li><strong>Small and limited to one topic.</strong> Do not mix reformatting with substantive changes.</li>
-<li><strong>No secrets in the diff.</strong> Keys are referenced exclusively as <code dir="auto">${VARIABLE}</code>, and new
-variables get a placeholder in <code dir="auto">distribution/.env.example</code>.</li>
+<li><strong>No secrets in the diff.</strong> Keys are referenced exclusively as variables, and new variables
+get a placeholder in the configuration template.</li>
 <li><strong>Contributions are released under the MIT license</strong> of this project. Third party code may
 only be taken over with a compatible license and an attribution note. <strong>No code from AGPL
 sources</strong>, in particular not from the AGPL admin panel of LibreChat.</li>

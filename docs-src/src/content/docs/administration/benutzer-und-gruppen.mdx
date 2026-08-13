@@ -5,152 +5,61 @@ sidebar:
   order: 2
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-Wer Zugang hat und was er darf, wird an drei Stellen entschieden: am Konto, an der Rolle und an der Gruppe. Diese Seite geht die Masken der Reihe nach durch und nennt jeweils die Beschriftungen, die Sie im Panel sehen.
+Wer Zugang hat und was er darf, wird an drei Stellen entschieden: am Konto, an der Rolle und an der Gruppe. Diese Seite beschreibt, was Ihnen als Administrator dafür zur Verfügung steht.
 
-## Die Benutzerliste
+## Konten
 
-Unter **Verwaltung → Benutzer** stehen alle Konten mit diesen Spalten:
+Die Benutzerliste zeigt alle Konten mit Rolle, Anmeldeart, Status, letzter Aktivität und dem Anteil am Verbrauch. Von dort aus erreichen Sie alles Weitere zu einer Person: Verbrauch ansehen, Zugriffe ansehen, Daten exportieren, Rolle ändern, Guthaben aufladen, sperren und löschen.
 
-| Spalte | Inhalt |
-| --- | --- |
-| **Nutzer** | Name und E-Mail-Adresse |
-| **Rolle** | aktuelle Rolle, meist `USER` oder `ADMIN` |
-| **Anmeldung** | wie sich die Person anmeldet, offene Einladungen stehen hier als „Einladung" |
-| **Status** | aktiv oder gesperrt |
-| **Zuletzt online** | Datum des letzten Zugriffs |
-| **Verbrauchsanteil** | Anteil am gesamten Firmenverbrauch der letzten 30 Tage, als absoluter Balken von 0 bis 100 Prozent |
-| **Erstellt** | Anlagedatum des Kontos |
-
-Ein Klick auf den Namen öffnet den Verbrauch der Person im Detail. Über das Menü am Zeilenende erreichen Sie **Verbrauch ansehen**, **Zugriffe ansehen**, **Daten exportieren (JSON)**, **Rolle ändern**, **Guthaben-Top-up**, **Sperren** beziehungsweise **Entsperren** und **Löschen**.
-
-<Aside type="tip" title="Zuletzt online ist bewusst taggenau">
-Die Spalte zeigt den Tag, nicht die Uhrzeit. Das ist kein Versehen, sondern eine Entwurfsentscheidung: es soll kein Minuten-Tracking der Mitarbeitenden entstehen. Für die Frage „wird das Werkzeug überhaupt genutzt" reicht der Tag, für Leistungskontrolle taugt die Angabe bewusst nicht.
+<Aside type="tip" title="Keine Minutenüberwachung">
+Die Aktivität wird taggenau angezeigt, nicht auf die Minute. Das ist eine bewusste Entwurfsentscheidung: für die Frage „wird das Werkzeug überhaupt genutzt" reicht der Tag, für eine Leistungskontrolle taugt die Angabe bewusst nicht.
 </Aside>
 
-## Personen einladen
+## Personen aufnehmen
 
-Der Dialog **Benutzer einladen** ist der normale Weg, weil die Person ihr Passwort selbst setzt und Sie nie eines übermitteln müssen.
+Es gibt zwei Wege:
 
-<Steps>
+- **Einladen** ist der normale Weg. Die eingeladene Person setzt ihr Passwort selbst, Sie müssen nie eines übermitteln. Einladungen sind befristet und gelten nur für die angegebene Adresse. Optional wird die Person bei der Registrierung automatisch in eine oder mehrere Gruppen aufgenommen.
+- **Direkt anlegen** erzeugt ein Konto ohne Registrierung, samt Rolle und Gruppen. Ein Initial-Passwort lässt sich erzeugen und in die Zwischenablage legen, damit es nicht in Screenshots oder im Browser-Autofill landet.
 
-1. E-Mail-Adresse der einzuladenden Person eintragen.
-
-2. Optional unter **Automatisch in Gruppe(n) aufnehmen (optional)** eine oder mehrere Gruppen anhaken.
-
-3. **Einladen** drücken. Sie erhalten in jedem Fall einen Link zurück, den Sie kopieren und selbst versenden können.
-
-</Steps>
-
-Drei Punkte gehören dazu:
-
-- **Die Einladung gilt 7 Tage** und nur für genau diese Adresse. Eine andere Person kann den Link nicht verwenden.
-- **Die Domain muss zur Registrierungs-Whitelist passen**, also zu den **Erlaubten E-Mail-Domains** unter **Konfiguration → Funktionen**. Passt sie nicht, scheitert die Registrierung, obwohl der Link gültig ist.
-- **Ist SMTP konfiguriert**, geht zusätzlich eine E-Mail raus. Ohne Mailversand bleibt es beim Link.
-
-<Aside type="note" title="Warum die Gruppe erst rund eine Minute später greift">
-Beim Einladen existiert das Konto noch gar nicht, es entsteht erst mit der Registrierung. Das Panel merkt die gewünschte Gruppenzuordnung deshalb vor und ein Hintergrund-Abgleich setzt sie, sobald das Konto da ist. In der Praxis dauert das rund eine Minute. Wenn eine frisch registrierte Person also kurz noch nichts sieht, warten Sie einen Moment, bevor Sie einen Fehler suchen.
-</Aside>
-
-## Benutzer anlegen
-
-Der Dialog **Benutzer anlegen** erzeugt ein Konto direkt, ohne Registrierung. Er hat die Felder **Name**, **E-Mail**, **Initial-Passwort**, **Rolle** und **Gruppen (optional)**.
-
-Das Passwort braucht mindestens 8 Zeichen. Der Knopf **Generieren** erzeugt eines und legt es direkt in die Zwischenablage, von dort übertragen Sie es in den Passwort-Manager der Person. Das Feld selbst zeigt den Wert nicht im Klartext an, damit er nicht in Screenshots oder im Browser-Autofill landet.
+Damit eine Einladung zum Ziel führt, muss die E-Mail-Domain zu den für die Registrierung erlaubten Domains passen. Ist ein Mailversand eingerichtet, geht zusätzlich eine E-Mail raus, andernfalls verschicken Sie den Einladungslink selbst.
 
 ## Rollen und Rechte
 
-Unter **Verwaltung → Rollen** legen Sie Rollen an und öffnen mit einem Klick den Rollen-Editor **Rolle: `<Name>`**. Die Rechte sind dort in fünf Karten gruppiert.
+Rollen bündeln Rechte. Neben den beiden Systemrollen für Benutzer und Administratoren können Sie eigene Rollen anlegen. Die Rechte sind thematisch gruppiert:
 
-### Werkzeuge
-
-| Recht | Bedeutung |
+| Gruppe | Worum es geht |
 | --- | --- |
-| **Web-Suche** | Suchen im Web |
-| **Code-Interpreter** | Excel, PDF und CSV erzeugen, Code in der Sandbox ausführen |
-| **Datei-Suche (RAG)** | Hochgeladene Dokumente durchsuchen |
-| **Datei-Zitate** | Quellenangaben aus Dateien |
-| **MCP-Server** | Generalschalter für alle Konnektoren, die Feinsteuerung pro Server liegt unter **MCP-Zugriff** |
+| Werkzeuge | Web-Suche, Code-Interpreter, Dateisuche und Zitate, Zugriff auf Konnektoren |
+| Chat-Funktionen | Parallel-Antworten, temporäre Chats, Lesezeichen, Memories |
+| Erstellen und Teilen | Agenten, Prompts, Skills und geteilte Links |
+| Remote-Agenten | Agenten ausserhalb des Chats, etwa im Outlook-Add-in |
+| Sichtbarkeit | ob Nutzer und Gruppen im Teilen-Dialog erscheinen |
 
-Die Beschriftung des letzten Rechts führt im Panel zusätzlich ein paar Konnektoren als
-Beispiele in Klammern mit. Gemeint ist unabhängig davon immer der Generalschalter über
-sämtliche angebundenen Systeme.
+Zusätzlich legen Sie pro Rolle fest, welche Modellkarten sichtbar sind, siehe [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
 
-### Chat-Funktionen
-
-**Parallel-Antworten**, **Temporäre Chats**, **Lesezeichen**, **Memories nutzen**, **Memories anlegen**.
-
-### Erstellen & Teilen
-
-**Agents nutzen**, **Agents erstellen**, **Agents teilen**, **Prompts nutzen**, **Prompts erstellen**, **Skills nutzen**, **Skills erstellen**, **Geteilte Links erzeugen**, **Agent-Marketplace**.
+<Aside type="danger" title="Vorsicht bei der Administratorrolle">
+Änderungen an der Administratorrolle betreffen auch Ihr eigenes Konto und wirken sofort für alle Administratoren. Es gibt keine Ausnahme für die Person, die den Schalter umlegt. Prüfen Sie solche Änderungen deshalb doppelt.
+</Aside>
 
 <Aside type="caution" title="Skills nie pauschal ausrollen">
-Skills sind hinterlegte Standard-Prozesse und werden ausschliesslich über dieses Rollen-Recht freigegeben, nicht über die Konfigurationsdatei. Geben Sie sie gezielt pro Rolle oder Person frei. Ein Skill, der im Deployment-Verzeichnis liegt, gewinnt zudem gegen einen gleichnamigen Skill aus der Datenbank und würde eine gezielte Freigabe aushebeln.
+Skills sind hinterlegte Standard-Prozesse und werden ausschliesslich über das Rollen-Recht freigegeben. Geben Sie sie gezielt pro Rolle oder Person frei.
 </Aside>
-
-### Remote-Agenten
-
-**Remote-Agenten (Agents API / Outlook)**, **Remote-Agenten erstellen**, **Remote-Agenten teilen**, **Remote-Agenten öffentlich freigeben**. Welche Agenten dabei sichtbar sind, steuern Sie unter **Verwaltung → Remote-Agenten**.
-
-### Sichtbarkeit
-
-**Nutzer im Teilen-Dialog sehen** und **Gruppen im Teilen-Dialog sehen**.
-
-<Aside type="danger" title="Vorsicht bei der Rolle ADMIN">
-Öffnen Sie die Rolle `ADMIN`, blendet das Panel die Warnung ein, dass dies auch Ihr eigenes Konto betrifft und entzogene Rechte sofort für alle Admins gelten. Es gibt keine Ausnahme für die Person, die den Schalter umlegt. Prüfen Sie Änderungen an dieser Rolle deshalb doppelt.
-</Aside>
-
-Beim Löschen einer selbst angelegten Rolle nennt der Dialog, wie viele Konten dadurch auf `USER` zurückfallen. Die Systemrollen `ADMIN` und `USER` lassen sich nicht löschen.
-
-### Modell-Karten pro Rolle
-
-Im selben Editor steht oben die Karte **Modell-Karten** mit einem Schalter je Karte. Alle Schalter an bedeutet: die Rolle folgt der Basis-Konfiguration. Darunter liegt der Schalter **Weitere Modelle (Roh-Untermenü)** mit dem Untertitel „Aus = diese Rolle sieht NUR die oben aktivierten Karten". Der Knopf **Auf YAML-Stand zurücksetzen** wählt wieder alle Karten der Basis an. Details dazu stehen unter [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
 
 ## Gruppen
 
-Unter **Verwaltung → Gruppen** stehen die Gruppen mit den Spalten **Gruppe**, **Quelle**, **Mitglieder** und **MCP-Regeln**.
+Gruppen sind die Basis für Zugriffe und Modellauswahl. Sie sind entweder lokal im Panel gepflegt oder kommen aus Ihrem Identity Provider (Entra ID) und sind dann schreibgeschützt, ihre Mitglieder verwaltet der Identity Provider.
 
-Die **Quelle** ist entweder **Lokal** oder **Entra ID**. Lokale Gruppen pflegen Sie hier im Panel. Gruppen aus Entra ID kommen per OIDC-Sync herein und sind schreibgeschützt, deren Mitglieder verwaltet der Identity Provider.
+Pro Gruppe lässt sich festlegen, welche Konnektoren erlaubt sind und welche Modellkarten sichtbar sind. Wo eine Gruppe keine eigene Regel hat, gilt die Regel der Rolle.
 
-Die Spalte **MCP-Regeln** zählt, für wie viele Konnektoren diese Gruppe eine eigene Regel hat, und springt direkt in die gefilterte Ansicht unter **MCP-Zugriff**. Das ist der schnellste Weg von der Frage „was darf diese Gruppe" zur Antwort.
+## Sperren und löschen
 
-Pro Gruppe lässt sich zusätzlich die Kartenauswahl setzen. Die Modus-Auswahl bietet **Erben** (keine eigene Regel für diese Gruppe) und **Eigene Auswahl (übersteuert die Rollen-Regel)**.
+Eine **Sperre** ist befristet oder unbefristet und jederzeit wieder aufhebbar. Sie greift beim nächsten Login oder beim nächsten Zugriff, nicht mitten in einer laufenden Sitzung.
 
-## Konten sperren
+Das **Löschen** eines Kontos entfernt Konto, Konversationen, Nachrichten, Dateien, Schlüssel, Agenten und Guthaben und ist nicht rückgängig zu machen. Der Dialog verlangt deshalb eine ausdrückliche Bestätigung und bietet direkt davor den Datenexport an: Nach der Löschung lässt sich keine Auskunft mehr erteilen, die Auskunft nach DSGVO muss also vorher passieren. Optional lassen sich die Verbrauchs-Transaktionen mitlöschen; dann geht allerdings der Abrechnungsbeleg verloren. Mehr dazu unter [Datenschutz und Aufbewahrung](/docs/administration/datenschutz-und-aufbewahrung).
 
-Der Dialog **Sperren: `<E-Mail>`** kennt die Dauern **24 Stunden**, **7 Tage**, **30 Tage**, **1 Jahr** und **Unbefristet**. Aufheben können Sie jede Sperre jederzeit über **Entsperren**.
+## „Was darf diese Person, und warum"
 
-Eine Sperre wirkt beim nächsten Login oder beim nächsten Request, nicht auf eine bereits laufende Sitzung. Die endet erst mit dem Ablauf ihres Tokens.
-
-<Aside type="caution" title="BAN_VIOLATIONS muss gesetzt sein">
-Damit Sperren aus dem Panel überhaupt greifen, muss in der `.env` des Stacks `BAN_VIOLATIONS=true` stehen. Im Auslieferungszustand ist das der Fall. Wurde der Wert auf `false` gesetzt, laufen Sperren ins Leere, ohne dass das Panel es merkt.
-</Aside>
-
-## Konten löschen
-
-Löschen entfernt Konto, Konversationen, Nachrichten, Dateien, Schlüssel, Agenten und Guthaben und räumt zusätzlich die Meilisearch-Indizes. Das ist nicht rückgängig zu machen.
-
-Der Dialog **Löschen: `<E-Mail>`** ist deshalb dreistufig aufgebaut:
-
-<Steps>
-
-1. **Erst exportieren, dann löschen.** Der Block oben im Dialog enthält den Knopf **Daten exportieren (JSON)**. Nach der Löschung lässt sich keine Auskunft mehr erteilen, die Auskunft nach DSGVO muss also vorher passieren. Der Export enthält Konversationen, Nachrichten, Datei-Metadaten und Transaktionen, aber keine Zugangsdaten.
-
-2. Optional die Checkbox **Auch Verbrauchs-Transaktionen löschen** setzen, Untertitel „DSGVO-Volllöschung, Abrechnungsbelege gehen verloren". Ohne Haken bleiben die Transaktionen als Beleg erhalten, das Konto verschwindet trotzdem.
-
-3. Zur Bestätigung die E-Mail-Adresse exakt eintippen, dann **Endgültig löschen**.
-
-</Steps>
-
-## Die Seite „Zugriffe: `<Name>`"
-
-Diese Unterseite erreichen Sie aus der Benutzerliste über **Zugriffe ansehen**. Sie beantwortet die Frage, die im Alltag am häufigsten kommt: „Warum sehe ich diesen Konnektor nicht?"
-
-Die Seite zeigt Rolle und Gruppen der Person und darunter drei Bereiche: **MCP-Zugriff**, **Modell-Karten** und **Remote-Agent-Freigaben**. Die MCP-Tabelle hat die Spalten **Server**, **Zugriff**, **Entschieden durch** und **Werkzeuge**.
-
-Entscheidend ist die Spalte **Entschieden durch**. Sie nennt die Stufe, die tatsächlich gewonnen hat, zum Beispiel „via Gruppe GL" oder „Server-Default", und verlinkt dorthin, wo sich das ändern lässt. Die Reihenfolge im Gateway lautet: Ausnahme für diese Person, dann Rollen-Regel, dann Gruppen-Regel, dann Server-Standard. Widersprechen sich mehrere Gruppen, gewinnt „verweigert".
-
-<Aside type="caution" title="Ein Server ganz ohne Regel wird durchgelassen">
-Fehlt für einen Konnektor jede Regel, lässt das Gateway durch. Die Seite weist dann in der Zeile darauf hin, dass der Standard auf „verweigert" gesetzt werden sollte. Prüfen Sie das nach jedem neu angebundenen Konnektor.
-</Aside>
+Zu jeder Person gibt es eine Übersicht ihrer Zugriffe: Rolle, Gruppen, erlaubte Konnektoren, sichtbare Modellkarten und Agenten-Freigaben. Zu jedem Eintrag steht, welche Ebene die Entscheidung getroffen hat, und der Weg dorthin ist verlinkt. Das ist der schnellste Weg, wenn jemand meldet, er sehe einen Konnektor oder ein Modell nicht.

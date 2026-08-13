@@ -1,152 +1,80 @@
 ---
 title: Several instances on one server
-description: Why the tenant boundary is the Compose stack, what has to stay separate per customer and how several stacks share one machine.
+description: Why the tenant boundary is the instance, what has to stay separate per customer and when a dedicated machine makes sense.
 sidebar:
   order: 7
 ---
 
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-For a customer with three people, a dedicated virtual machine is a waste: the baseline load of an
-instance is around 0.7 GB of memory and practically zero CPU. Several instances may therefore
-share one machine. This page describes where the dividing line runs and which values have to be
-unique per instance. It is aimed at IT service providers who operate several customers.
+For a customer with only a few people, a dedicated virtual machine is a waste: the baseline load
+of an instance is low. Several instances may therefore share one machine. This page describes
+where the dividing line runs. It is aimed at IT service providers who operate several customers.
 
-## The tenant boundary is the stack, not the machine
+## The tenant boundary is the instance, not the machine
 
-One customer is exactly **one Compose stack**: its own database, its own full text search, its own
-uploads, its own `.env`, its own Docker network, its own code interpreter. That is not negotiable
-and follows directly from the architecture: the application itself knows nothing about tenants.
+A customer is exactly **one instance**: its own database, its own full-text search, its own
+uploads, its own configuration, its own secrets, its own backend for code execution. That is not
+negotiable and follows directly from the architecture: the application itself knows no tenants.
 The separation therefore has to sit below the application, and there it sits cleanly.
 
-Whether two stacks share the same machine is, after that, a question of cost and risk, no longer
-a question of architecture.
+Whether two instances share the same machine is then a question of cost and risk, no longer an
+architectural one.
 
 ## What is never shared
 
 | Area | Reason |
 |---|---|
-| Database | Contains a customer's accounts, conversations and transactions |
+| Database | Contains accounts, conversations and bookings of a customer |
 | Uploads and images | Customer content |
-| `.env` and all secrets | A shared secret cancels out every separation |
-| Sandbox network and code interpreter | The only place where code from users runs |
-| Inference key | With a shared key the costs per customer can no longer be broken out |
-| Your own metasearch engine | Sees the search queries and therefore user content. The separation costs 65 MB, so separate them |
+| Configuration and all secrets | A shared secret cancels out every separation |
+| Backend for code execution | The only place where code from users runs |
+| Inference key | With a shared key, costs per customer can no longer be broken out |
+| Own meta search engine | Sees the search queries and thereby user content |
 
 ## What may be shared
 
-- **Docker images and their layers.** This is the biggest saving, a LibreChat image takes about
-  2 GB and is kept only once.
-- **One edge reverse proxy** as the only service on ports 80 and 443.
-- **Host monitoring, backup cron and automatic security updates.**
+- **Docker images and their layers.** That is the biggest saving: the images are held only once.
+- **An upstream reverse proxy** as the only service holding the public ports.
+- **Host monitoring, backup scheduling and automatic security updates.**
 
-Inevitably, the kernel, the Docker service and the hardware resources are shared as well. That is
-the real limit of this operating mode: a restart because of a kernel update hits every customer
-on the machine.
-
-<Aside type="caution" title="The code interpreter is the hard part">
-Everywhere else the platform only runs its own code, users have no access to the command line. The
-exception is code execution. So give every stack its own `SANDBOX_NETWORK`. Otherwise two
-customers hang on the same network name and a chat of one customer can end up in the other's
-backend. On a shared machine the hardened backend is also the better choice, although it requires
-`/dev/kvm`.
-</Aside>
-
-## The four variables
-
-Unique across all of Docker, and therefore the actual collision points, are four names. All of
-them are in the `.env`:
-
-```bash title="distribution/.env of customer A"
-COMPOSE_PROJECT_NAME=eucowork-kunde-a
-STACK_NAME=eucowork-kunde-a
-DOCKER_SUBNET=172.29.0.0/16
-SANDBOX_NETWORK=eucowork-sandbox-a
-PORT=3081
-ADMIN_SIDECAR_PORT=3011
-OFFICE_ADDIN_PORT=3041
-```
-
-`COMPOSE_PROJECT_NAME` is the name of the compose project and determines what the named volumes
-are called — that is, where a customer's database, search index and certificates live.
-`STACK_NAME` is the prefix of all container names, `DOCKER_SUBNET` the dedicated bridge network
-and `SANDBOX_NETWORK` the network to the code interpreter. In addition, the three host ports have
-to differ per stack. If the values stay on their defaults, the second stack does not start.
-
-<Aside type="danger" title="Set COMPOSE_PROJECT_NAME per customer">
-Without this variable, Docker Compose derives the project name from the name of the project
-directory. Since every customer sits in an identically named `distribution/` subdirectory,
-several stacks would otherwise carry the same project name and therefore the same volume names.
-So set `COMPOSE_PROJECT_NAME` to its own value for **every** stack before starting it for the
-first time, and verify afterwards:
-
-```bash title="On the server"
-docker compose config --format json | head -c 200
-docker volume ls
-```
-
-Every customer must have their own set of volumes prefixed with their project name.
-</Aside>
-
-## Directory layout
-
-```text
-/srv/eucowork/kunde-a/distribution/
-/srv/eucowork/kunde-b/distribution/
-/srv/eucowork/edge/
-```
-
-Every customer gets their own clone with their own `.env` and their own data. The separation of
-the named volumes comes from `COMPOSE_PROJECT_NAME`, see above — not from the directory name,
-which is `distribution` for every customer here.
-
-## A shared edge proxy
-
-Ports 80 and 443 exist only once on a machine. The customer stacks therefore run **without** the
-profile `production`, so they bring no Caddy of their own. Instead, a small shared stack sits in
-front, holds both ports and gets one block per customer in its configuration:
-
-```text title="Template for the shared proxy"
-kunde-a.cowork.example.ch {
-	encode zstd gzip
-	handle /api/office/* { reverse_proxy host.docker.internal:3011 }
-	handle_path /office/* { reverse_proxy host.docker.internal:3041 }
-	handle { reverse_proxy host.docker.internal:3081 }
-}
-admin.kunde-a.cowork.example.ch { reverse_proxy host.docker.internal:3011 }
-```
-
-The port numbers are the same ones that are in the `.env` of the respective customer.
-
-<Aside type="note" title="The edge stack is not in the repository yet">
-The internal instance and every single customer run the bundled Caddy with the profile
-`production`. The shared edge stack is documented as a complete template, but it is not yet a
-finished building block in the repository. It will be built with the first customer who shares a
+Kernel, Docker service and the hardware resources are inevitably shared as well. That is the
+real limit of this way of operating: a reboot for a kernel update hits every customer on the
 machine.
+
+<Aside type="caution" title="Code execution is the hard part">
+Everywhere else the platform only runs its own code; users have no access to the command line.
+The exception is code execution. It therefore gets its own separate backend per instance. On a
+shared machine the hardened variant is the better choice as well.
 </Aside>
 
-## When a machine of its own
+## What has to be unique per instance
 
-| Number of users | Recommendation | Machine |
-|---|---|---|
-| 1 to 15 | several stacks on one machine, three to five customers | 4 vCPU, 16 GB RAM, 80 GB |
-| 15 to 50 | a machine of its own | 4 vCPU, 8 to 16 GB RAM, 100 GB |
-| more than 50, a regulated industry, contractually assured dedicated infrastructure or a dedicated ERP connection | a machine of its own | 8 vCPU, 32 GB RAM, 200 GB and up |
+Several instances on one machine collide if they share names or addresses. Every instance
+therefore needs its own project and data area as well as its own network and port assignments.
+Which values these are in detail and how they are set is described in the operations manual. If
+they stay on their defaults, the second instance does not start.
 
-Budget per customer instance including its own code interpreter: 1.5 to 2 GB of memory. The
-images take about 5 to 6 GB once and are shared, after that it is mainly the uploads that grow.
+## When a dedicated machine
 
-## Operating several stacks
+- **Small customers:** several instances on a shared machine, depending on size three to five
+  customers.
+- **Medium customers:** a dedicated machine per customer.
+- **Large customers, regulated industries, contractually guaranteed dedicated infrastructure or
+  a dedicated ERP connection:** a dedicated machine sized accordingly.
 
-- **Backup per stack.** `backup.sh` runs in the respective customer directory and backs up
-  exactly that customer's data. One cron entry per stack, with staggered times.
-- **Update per stack.** Customers may run different versions. That is exactly what the image
-  digest pin is for, see [Updating](/docs/en/betrieb/aktualisieren).
+The concrete guide values for memory, CPU and disk space are under
+[System requirements](/docs/en/erste-schritte/systemanforderungen).
+
+## Operating several instances
+
+- **Backup per instance.** Every instance backs up exactly its own data, at staggered times.
+- **Update per instance.** Customers may run different versions. That is exactly what the pinned
+  versions are for, see [Updating](/docs/en/betrieb/aktualisieren).
 - **Monitoring.** The first limit is disk space, not memory. An alert from 70 percent usage makes
-  sense, and so does watching for container restarts.
-- **Offboarding.** Stop the directory, take an archive, delete the directory and the networks. No
-  intervention in other stacks, no cleanup in a shared database. That is the real gain of the
-  stack boundary.
+  sense, as does monitoring for services that restart.
+- **Offboarding.** Stop the instance, take an archive, delete the data. No intervention in other
+  instances, no cleanup in a shared database. That is the real gain of the instance boundary.
 
 ## Next
 
@@ -154,11 +82,11 @@ images take about 5 to 6 GB once and are shared, after that it is mainly the upl
   <LinkCard
     title="Configuration"
     href="/docs/en/betrieb/konfiguration"
-    description="Where STACK_NAME, DOCKER_SUBNET and SANDBOX_NETWORK live and what else belongs in the .env."
+    description="The three configuration levels and which one wins in a conflict."
   />
   <LinkCard
     title="Backup and migration"
     href="/docs/en/betrieb/backup-und-umzug"
-    description="Backup per stack, restore and the complete migration."
+    description="Backup per instance, restore and the complete migration."
   />
 </CardGrid>
