@@ -1326,16 +1326,13 @@ pre code {
   a:hover { color: var(--c-ink); }
   .euc-nav a:hover { color: var(--c-ink); }
   .euc-breadcrumb a:hover { color: var(--c-ink); text-decoration: underline; }
-  .euc-btn-primary:hover {
-    background: var(--c-deep-hover);
-    color: var(--c-on-deep);
-    transform: translateY(-2px);
-    box-shadow: var(--sh-3), inset 0 1px 0 rgba(255,255,255,.10);
-  }
-  .euc-btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--sh-2), var(--edge);
-  }
+  /* Kein Anheben und kein wachsender Schatten: ein Knopf, der beim
+     Ueberfahren springt, verschiebt optisch seine Nachbarn — und der Sprung
+     wiederholt sich bei jeder Mausbewegung ueber eine Knopfreihe. Der
+     Zustandswechsel liegt deshalb allein in der Farbe, wie auf der
+     Startseite. Der Druckzustand (:active) bleibt ein Versatz nach unten. */
+  .euc-btn-primary:hover { background: var(--c-deep-hover); color: var(--c-on-deep); }
+  .euc-btn-secondary:hover { border-color: #9FB0C0; background: #FBFCFD; }
   .euc-mob-panel a:hover { background: var(--c-ice-100); }
   .euc-mob-panel a.euc-btn-primary:hover { background: var(--c-deep-hover); color: var(--c-on-deep); }
   /* Im Blatt hebt der Sekundärknopf nicht ab (er sitzt in einer Liste), er
@@ -1344,7 +1341,7 @@ pre code {
   .toc a:hover { color: var(--c-eu-700); }
   .table-wrap tbody tr:hover { background: #FBFCFD; }
   .euc-textlink:hover { color: var(--c-eu-500); border-color: var(--c-ice-300); }
-  .euc-card:hover { transform: translateY(-3px); box-shadow: var(--sh-3), var(--edge); }
+  .euc-card:hover { box-shadow: var(--sh-2), var(--edge); }
   .euc-weiter a:hover { color: var(--c-eu-700); border-color: var(--c-ice-300); }
   .euc-footer-col nav a:hover { color: var(--c-ice-300); }
   .euc-footer-more:hover { color: #C9E9F2; }
