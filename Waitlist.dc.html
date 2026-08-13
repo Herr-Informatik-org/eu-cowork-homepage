@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Warteliste: frühen Zugang sichern | EU Cowork AI</title>
-<meta name="description" content="EU Cowork AI ist im Aufbau. Tragen Sie sich in die Warteliste ein; frühe Interessenten erhalten Vortritt beim Zugang zur gehosteten Schweizer Instanz.">
+<title>Frühen Zugang sichern | EU Cowork AI</title>
+<meta name="description" content="EU Cowork AI ist im Aufbau. Geschäftliche E-Mail eintragen und die europäische KI-Plattform vor der Veröffentlichung testen. Kein Spam, jederzeit abmeldbar.">
 <link rel="canonical" href="https://eucowork.ai/warteliste">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://eucowork.ai/warteliste">
-<meta property="og:title" content="Warteliste: frühen Zugang sichern | EU Cowork AI">
-<meta property="og:description" content="EU Cowork AI ist im Aufbau. Tragen Sie sich ein; frühe Interessenten erhalten Vortritt.">
+<meta property="og:title" content="Frühen Zugang sichern | EU Cowork AI">
+<meta property="og:description" content="EU Cowork AI ist im Aufbau. Testen Sie die europäische KI-Plattform vor der Veröffentlichung.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Warteliste: frühen Zugang sichern | EU Cowork AI">
-<meta name="twitter:description" content="EU Cowork AI ist im Aufbau. Frühe Interessenten erhalten Vortritt.">
+<meta name="twitter:title" content="Frühen Zugang sichern | EU Cowork AI">
+<meta name="twitter:description" content="EU Cowork AI ist im Aufbau. Testen Sie die europäische KI-Plattform vor der Veröffentlichung.">
 <meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -27,16 +27,10 @@
 </head>
 <body>
 <noscript>
-  <h1>Sichern Sie sich frühen Zugang.</h1>
-  <p>EU Cowork AI ist im Aufbau. Tragen Sie sich ein: wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.</p>
-  <h2>Was Sie erhalten</h2>
-  <ul>
-    <li>Bevorzugter Zugang zur geschlossenen Beta</li>
-    <li>Mitreden bei Funktionen und Roadmap</li>
-    <li>Kein Spam, jederzeit abbestellbar</li>
-  </ul>
-  <p>Plätze werden nach Reihenfolge und Fit vergeben. Die Anmeldung braucht JavaScript; bitte aktivieren Sie es oder schreiben Sie an info@herr-informatik.ch.</p>
-  <h2>Weiter</h2>
+  <h1>Frühen Zugang zu EU Cowork AI sichern.</h1>
+  <p>Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.</p>
+  <p>Beta-Zugang · Direkter Austausch · Jederzeit abmeldbar</p>
+  <p>Die Anmeldung braucht JavaScript; bitte aktivieren Sie es oder schreiben Sie an info@herr-informatik.ch.</p>
   <ul>
     <li><a href="/self-hosting">Self-Hosting in 60 Sekunden</a></li>
     <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
@@ -55,158 +49,247 @@
   @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/jetbrains-mono-500-latin.woff2') format('woff2')}
 </style>
 <style>
-  /* ---- Design v2, Warteliste --------------------------------------------
-     Tokens identisch zu assets/content.css. Die Formularzustände liegen in
-     Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
-     und :active (Inline-Stile schlagen jede Regel). ---------------------- */
+  /* ---- Warteliste, "European Precision" ---------------------------------
+     Die Seite hat genau EINE Aufgabe: eine E-Mail-Adresse entgegennehmen.
+     Alles, was davon ablenkt, ist hier bewusst nicht vorhanden — keine
+     zweite Marketing-Spalte, keine volle Navigation, kein grosser Fuss,
+     keine schwebende Karte. Deshalb bringt diese Seite ihre eigene, kleine
+     Kopf- und Fusszeile mit, statt SiteHeader/SiteFooter zu importieren.
+
+     Tokens wortgleich zu assets/content.css und SiteHeader. Zustände liegen
+     in Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
+     und :active (Inline-Stile schlagen jede Regel). --------------------- */
   :root{
     --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
-    --c-bg:#FAFAF7; --c-bg-cool:#F5F8FA; --c-surface:#FFFFFF; --c-deep:#0B1E33;
+    --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+    --c-bg:#FAFAF7; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
-    --c-line:#E7ECF0; --c-line-soft:#EEF1F4; --c-line-field:#D8DEE4;
-    --wl-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    --c-danger:#B4472F;
+    --c-hairline:#DDE4EA; --c-hairline-strong:#C6D0DA;
+    --bd:1px solid var(--c-hairline);
+    --r-control:4px;   /* Knopf, Eingabefeld */
+    --r-frame:8px;     /* Formular-Rahmen */
+    --r-card:12px;
+    --sh-flat:0 1px 2px rgba(11,30,51,.04);
+    --sh-soft:0 1px 2px rgba(11,30,51,.04), 0 8px 18px -12px rgba(11,30,51,.13);
     --wl-ease:cubic-bezier(.23,1,.32,1);
-    --sh-2:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18);
-    --sh-3:0 1px 2px rgba(11,30,51,.05), 0 8px 20px -12px rgba(11,30,51,.18), 0 24px 48px -28px rgba(11,30,51,.22);
-    --sh-4:0 2px 4px rgba(11,30,51,.06), 0 14px 30px -14px rgba(11,30,51,.26), 0 40px 72px -34px rgba(11,30,51,.30);
-    --edge:inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06);
   }
   *{ box-sizing:border-box; }
-  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  html{ -webkit-text-size-adjust:100%; }
   body{
     margin:0; background:var(--c-bg); color:var(--c-body);
-    font-family:var(--wl-body);
+    font-family:var(--f-display);
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    overflow-x:hidden;
   }
   a{ color:var(--c-eu-700); text-underline-offset:2px; transition:color .15s ease; }
   ::selection{ background:var(--c-ice-300); color:var(--c-deep); }
   input::placeholder, textarea::placeholder{ color:var(--c-muted); }
   h1{ text-wrap:balance; overflow-wrap:break-word; }
   p{ text-wrap:pretty; }
-  :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:6px; }
+  :focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; border-radius:var(--r-control); }
 
-  /* Die Bühne trägt Farbe, aber keine Dauerschleife: Sektionshintergründe
-     werden in v2 nicht animiert. */
-  @keyframes euc-pulse{ 0%{ transform:scale(1); opacity:.9; } 70%{ transform:scale(2.8); opacity:0; } 100%{ transform:scale(2.8); opacity:0; } }
+  /* Die Seite trägt den Fuss unten, auch wenn das Formular kurz ist. */
+  #top{ min-height:100vh; min-height:100svh; display:flex; flex-direction:column; }
 
-  .wl-card{
-    border:0; border-radius:24px; background:var(--c-surface);
-    box-shadow:var(--sh-4), var(--edge); overflow:hidden;
+  /* ---- Kopfzeile: Marke links, Rückweg rechts. Sonst nichts. ----------- */
+  .wl-hd{
+    flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
+    gap:16px; min-height:68px; padding:0 clamp(20px,5vw,44px);
+    border-bottom:var(--bd); background:rgba(250,250,247,.86);
+    backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px);
+  }
+  .wl-brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
+  .wl-brand-word{ font-size:17px; font-weight:600; letter-spacing:-.010em; color:var(--c-ink); white-space:nowrap; }
+  .wl-brand-ai{ color:var(--c-eu-500); }
+  .wl-hd-right{ display:flex; align-items:center; gap:6px; }
+  .wl-lang{ display:inline-flex; align-items:center; padding:2px; border:var(--bd); border-radius:var(--r-control); background:var(--c-surface); }
+  .wl-lang button{
+    min-height:26px; padding:0 8px; border:0; border-radius:2px; cursor:pointer;
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.06em;
+    background:transparent; color:var(--c-body-soft); transition:background .15s ease, color .15s ease;
+  }
+  .wl-lang button.is-on{ background:var(--c-deep); color:#F7FAFC; }
+  .wl-back{
+    display:inline-flex; align-items:center; gap:7px; min-height:36px; padding:0 10px;
+    font-size:14px; font-weight:500; color:var(--c-ink); text-decoration:none;
+    white-space:nowrap; border-radius:var(--r-control); transition:color .15s ease;
+  }
+  .wl-back svg{ flex:0 0 auto; }
+
+  /* ---- Bühne: ein sehr ruhiger Verlauf, sonst Papierweiss. ------------- */
+  .wl-main{
+    flex:1 1 auto;
+    background:
+      radial-gradient(110% 62% at 50% 0%, rgba(214,237,245,.55) 0%, rgba(214,237,245,0) 62%),
+      var(--c-bg);
+    padding:clamp(48px,7vw,88px) clamp(20px,5vw,44px) clamp(56px,8vw,96px);
+  }
+  /* Eine Spalte, 560px. Die Breite ist das Versprechen: kurz. */
+  .wl-wrap{ max-width:560px; margin:0 auto; }
+
+  .wl-eyebrow{
+    font-family:var(--f-mono); font-size:11.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--c-eu-500);
+  }
+  .wl-h1{
+    font-family:var(--f-display); font-weight:400;
+    font-size:clamp(32px,4.4vw,46px); line-height:1.10; letter-spacing:-.021em;
+    color:var(--c-ink); margin:16px 0 0;
+  }
+  .wl-sub{
+    font-size:clamp(16px,1.3vw,17.5px); line-height:1.58; letter-spacing:-.005em;
+    color:var(--c-body); margin:16px 0 0;
+  }
+  /* Die drei Vorteile als eine schmale Zeile statt als Liste mit Symbolen.
+     Der Trenner haengt am CSS, nicht am Text: so steht er mittig zwischen
+     zwei Eintraegen und faellt nach dem letzten und am Zeilenumbruch weg. */
+  .wl-meta{
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+    margin-top:18px; font-size:13.5px; letter-spacing:.006em; color:var(--c-body-soft);
+  }
+  .wl-meta span:not(:last-child)::after{
+    content:'·'; margin-left:8px; color:var(--c-hairline-strong);
   }
 
-  /* --- Eingaben: Fokus in Europa-Blau, 48px hoch --- */
+  /* ---- Formular: zurückhaltender Rahmen, kein Schwebeeffekt. ---------- */
+  .wl-panel{
+    margin-top:clamp(28px,4vw,38px);
+    background:var(--c-surface); border:var(--bd); border-radius:var(--r-frame);
+    box-shadow:var(--sh-flat); padding:clamp(22px,3.4vw,30px);
+  }
+  .wl-row + .wl-row{ margin-top:18px; }
+  .wl-label{
+    display:flex; align-items:center; gap:7px; margin-bottom:8px;
+    font-family:var(--f-mono); font-size:10.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--c-body-soft);
+  }
+  .wl-opt{ font-family:var(--f-mono); font-size:10px; letter-spacing:.06em; color:var(--c-muted); text-transform:none; }
+  .wl-req{ color:var(--c-danger); }
+
   .wl-field{
-    width:100%; box-sizing:border-box; min-height:48px;
-    font-family:var(--wl-body); font-size:15px; color:var(--c-ink);
-    background:var(--c-surface); border:1px solid var(--c-line-field);
-    border-radius:10px; padding:13px 14px; outline:none;
+    width:100%; min-height:46px;
+    font-family:var(--f-display); font-size:15px; color:var(--c-ink);
+    background:var(--c-surface); border:1px solid var(--c-hairline-strong);
+    border-radius:var(--r-control); padding:12px 13px; outline:none;
     transition:border-color 150ms ease, box-shadow 150ms ease;
   }
   .wl-field:focus, .wl-field:focus-visible{
-    border-color:var(--c-eu-700);
-    box-shadow:0 0 0 3px rgba(18,50,107,.16);
-    outline:none;
+    border-color:var(--c-eu-700); box-shadow:0 0 0 3px rgba(18,50,107,.14); outline:none;
   }
   .wl-select{ cursor:pointer; }
   .wl-textarea{ line-height:1.5; resize:vertical; }
 
-  /* --- Auswahl-Chips --- */
-  .wl-chip{
+  /* Der Fangfeld-Eingang ist die einzige Bot-Abwehr, die sichtbar Platz
+     kosten würde — deshalb steht er hier und nicht auf dem Bildschirm.
+     display:none nimmt ihn zugleich aus Tab-Reihenfolge und Autofill. */
+  .wl-hp{ display:none; }
+
+  /* Segmentierte Auswahl statt Pillen: gleiche Kante wie jeder Knopf. */
+  .wl-seg{ display:flex; flex-wrap:wrap; gap:8px; }
+  .wl-seg-btn{
     display:inline-flex; align-items:center; justify-content:center;
-    min-height:44px; padding:10px 16px; border-radius:10px; cursor:pointer;
-    font-family:var(--wl-body); font-size:14px; font-weight:500;
-    color:#33404D; background:var(--c-surface); border:1px solid var(--c-line-field);
-    transition:transform 140ms var(--wl-ease), border-color 150ms ease,
-               background 150ms ease, color 150ms ease;
+    min-height:40px; padding:0 14px; cursor:pointer;
+    font-family:var(--f-display); font-size:14px; font-weight:500;
+    color:#33404D; background:var(--c-surface);
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-control);
+    transition:border-color 150ms ease, background 150ms ease, color 150ms ease;
   }
-  .wl-chip-s{ font-size:13.5px; padding:10px 12px; }
-  .wl-chip.is-on{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); }
-  .wl-chip:active{ transform:scale(.97); }
+  .wl-seg-btn.is-on{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); }
 
-  /* --- Anti-Bot-Schalter --- */
-  .wl-verify{
-    width:100%; display:flex; align-items:center; gap:12px; margin-top:18px;
-    min-height:56px; background:var(--c-deep); border:1px solid var(--c-deep);
-    border-radius:11px; padding:14px 16px; cursor:pointer; text-align:left;
-    transition:transform 140ms var(--wl-ease), background 150ms ease;
-  }
-  .wl-verify:active{ transform:scale(.985); }
-  .wl-verify:focus-visible{ outline:2px solid var(--c-eu-700); outline-offset:3px; }
-
-  /* --- Zustimmung: 20px sichtbar, 44px Trefferfläche --- */
-  .wl-consent-box{
-    position:relative; flex:0 0 auto; margin-top:1px;
-    width:20px; height:20px; border-radius:6px;
-    border:1.5px solid #C4CBD3; background:var(--c-surface);
-    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
-    transition:background 150ms ease, border-color 150ms ease, transform 140ms var(--wl-ease);
-  }
-  .wl-consent-box::before{ content:''; position:absolute; inset:-12px; border-radius:12px; }
-  .wl-consent-box:active{ transform:scale(.92); }
-
-  /* --- Absenden --- */
   .wl-submit{
-    width:100%; margin-top:22px; min-height:52px;
+    width:100%; margin-top:22px; min-height:48px;
     display:inline-flex; align-items:center; justify-content:center;
-    font-family:var(--wl-body); font-size:15.5px; font-weight:600;
-    color:#F7FAFC; background:var(--c-deep); border:0; border-radius:11px;
-    padding:15px; cursor:pointer;
-    box-shadow:var(--sh-2), inset 0 1px 0 rgba(255,255,255,.10);
-    transition:transform 200ms var(--wl-ease), background 200ms var(--wl-ease),
-               box-shadow 200ms var(--wl-ease);
+    font-family:var(--f-display); font-size:15px; font-weight:600;
+    color:#F7FAFC; background:var(--c-deep);
+    border:1px solid var(--c-deep); border-radius:var(--r-control);
+    padding:0 18px; cursor:pointer;
+    transition:background 150ms ease, border-color 150ms ease;
   }
-  .wl-submit:active{ transform:scale(.985); }
+  .wl-note{
+    font-size:12.5px; line-height:1.55; letter-spacing:.006em;
+    color:var(--c-body-soft); margin-top:13px;
+  }
+  .wl-err{ font-size:12.5px; line-height:1.45; color:var(--c-danger); margin-top:7px; }
 
-  /* --- Erfolgsansicht --- */
-  .wl-btn, .wl-btn2{
-    display:inline-flex; align-items:center; justify-content:center;
-    min-height:44px; padding:12px 18px; border-radius:10px;
-    font-family:var(--wl-body); font-size:14.5px; text-decoration:none;
-    cursor:pointer;
-    transition:transform 140ms var(--wl-ease), background 150ms ease, box-shadow 150ms ease;
+  /* ---- Erfolg ---------------------------------------------------------- */
+  .wl-done{ text-align:left; }
+  .wl-done-check{
+    width:44px; height:44px; border-radius:50%;
+    background:#EAF3F7; box-shadow:inset 0 0 0 1px rgba(46,108,134,.18);
+    display:flex; align-items:center; justify-content:center;
   }
-  .wl-btn{ font-weight:600; color:#F7FAFC; background:var(--c-deep); border:0;
-           box-shadow:var(--sh-2), inset 0 1px 0 rgba(255,255,255,.10); }
-  .wl-btn2{ font-weight:500; color:var(--c-ink); background:var(--c-surface); border:0;
-            box-shadow:0 1px 2px rgba(11,30,51,.05), var(--edge); }
-  .wl-btn:active, .wl-btn2:active{ transform:scale(.97); }
+  .wl-done-t{
+    font-family:var(--f-display); font-size:clamp(22px,2.6vw,26px); font-weight:500;
+    letter-spacing:-.016em; color:var(--c-ink); margin-top:18px;
+  }
+  .wl-done-b{ font-size:15.5px; line-height:1.6; color:#556170; margin:10px 0 0; }
+  .wl-done-hr{ height:1px; background:var(--c-hairline); margin:24px 0 20px; }
+  .wl-ask{ font-size:14.5px; line-height:1.55; color:var(--c-body); margin:0; }
+  .wl-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-top:14px; }
+  .wl-btn2{
+    display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:0 14px;
+    font-family:var(--f-display); font-size:14px; font-weight:500;
+    color:var(--c-ink); background:var(--c-surface);
+    border:1px solid var(--c-hairline-strong); border-radius:var(--r-control);
+    cursor:pointer; text-decoration:none;
+    transition:border-color 150ms ease, background 150ms ease;
+  }
+  .wl-link{
+    background:none; border:0; padding:0; cursor:pointer;
+    font-family:var(--f-display); font-size:13.5px; color:var(--c-eu-700);
+    text-decoration:underline; text-underline-offset:2px;
+  }
+
+  /* ---- Fuss: eine Zeile. ---------------------------------------------- */
+  .wl-ft{
+    flex:0 0 auto; border-top:var(--bd);
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px;
+    padding:20px clamp(20px,5vw,44px);
+    font-size:13px; letter-spacing:.006em; color:var(--c-body-soft);
+  }
+  .wl-ft a{ color:var(--c-body-soft); text-decoration:none; }
 
   @media (hover:hover) and (pointer:fine){
     a:hover{ color:var(--c-ink); }
-    .wl-field:hover{ border-color:#BFC8D2; }
-    .wl-chip:hover{ border-color:var(--c-eu-700); }
-    .wl-chip.is-on:hover{ background:#123456; border-color:#123456; }
-    .wl-verify:hover{ background:#123456; }
-    .wl-submit:hover{ background:#123456; transform:translateY(-2px); box-shadow:var(--sh-3), inset 0 1px 0 rgba(255,255,255,.10); }
-    .wl-btn:hover{ background:#123456; }
-    .wl-btn2:hover{ box-shadow:var(--sh-2), var(--edge); }
+    .wl-back:hover{ color:var(--c-eu-700); }
+    .wl-lang button:hover{ color:var(--c-ink); }
+    .wl-lang button.is-on:hover{ color:#F7FAFC; }
+    .wl-field:hover{ border-color:#B4BFCB; }
+    .wl-seg-btn:hover{ border-color:var(--c-eu-700); }
+    .wl-seg-btn.is-on:hover{ background:#123456; border-color:#123456; }
+    .wl-submit:hover{ background:#123456; border-color:#123456; }
+    .wl-btn2:hover{ border-color:var(--c-eu-700); }
+    .wl-ft a:hover{ color:var(--c-ink); }
   }
 
-  /* Der Formular→Erfolg-Wechsel ist der seltenste und einzige emotional
-     aufgeladene Moment der Seite — hier liegt das Delight-Budget. sc-if hängt
+  /* Der Formular→Erfolg-Wechsel ist der einzige emotional aufgeladene
+     Moment der Seite — hier liegt das ganze Bewegungsbudget. sc-if hängt
      den Knoten neu ein, damit greift @starting-style. */
   .wl-done{
     opacity:1; transform:none;
     transition:opacity 300ms var(--wl-ease), transform 380ms var(--wl-ease);
   }
-  @starting-style{ .wl-done{ opacity:0; transform:translateY(10px) scale(.985); } }
-
-  /* Der Haken ist der Moment: das einzige Überschwingen der ganzen Seite. */
+  @starting-style{ .wl-done{ opacity:0; transform:translateY(8px); } }
   .wl-done-check{
     opacity:1; transform:none;
-    transition:transform 420ms cubic-bezier(.34,1.56,.64,1) 140ms,
-               opacity   220ms linear 140ms;
+    transition:transform 420ms cubic-bezier(.34,1.56,.64,1) 120ms, opacity 220ms linear 120ms;
   }
   @starting-style{ .wl-done-check{ opacity:0; transform:scale(.82); } }
 
+  @media (max-width:520px){
+    .wl-seg{ display:grid; grid-template-columns:1fr; }
+    /* Auf dem Telefon muessen Marke, Sprache und Rueckweg in eine Zeile
+       passen — sonst bricht die Kopfzeile zweizeilig um. */
+    .wl-hd{ padding:0 16px; gap:10px; }
+    .wl-hd-right{ gap:2px; }
+    .wl-brand-word{ font-size:15.5px; }
+    .wl-back{ font-size:13px; gap:6px; padding:0 4px; }
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
-    html{ scroll-behavior:auto; }
-    .wl-submit:hover{ transform:none; }
-    .wl-done,
-    .wl-done-check{ transition:opacity 200ms linear !important; transform:none !important; }
+    .wl-done, .wl-done-check{ transition:opacity 200ms linear !important; transform:none !important; }
     @starting-style{
       .wl-done{ opacity:0; transform:none; }
       .wl-done-check{ opacity:0; transform:none; }
@@ -215,210 +298,201 @@
 </style>
 </helmet>
 <div id="top">
-  <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
-  <main>
-    <section style="position:relative; overflow:hidden; padding:clamp(120px,14vw,164px) clamp(20px,5vw,80px) clamp(72px,9vw,112px);">
-      <div aria-hidden="true" style="position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; opacity:.5;">
-        <div style="position:absolute; top:-16%; right:-6%; width:60%; height:80%; background:radial-gradient(closest-side, rgba(165,216,230,.95), rgba(165,216,230,0)); filter:blur(74px);"></div>
-        <div style="position:absolute; bottom:-24%; left:-10%; width:56%; height:78%; background:radial-gradient(closest-side, rgba(214,237,245,.98), rgba(214,237,245,0)); filter:blur(86px);"></div>
+
+  <header class="wl-hd">
+    <a href="/" class="wl-brand">
+      <svg width="24" height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+        <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+      </svg>
+      <span class="wl-brand-word">EU Cowork <span class="wl-brand-ai">AI</span></span>
+    </a>
+    <div class="wl-hd-right">
+      <div class="wl-lang">
+        <button onClick="{{ toDe }}" type="button" class="{{ deCls }}">DE</button>
+        <button onClick="{{ toEn }}" type="button" class="{{ enCls }}">EN</button>
       </div>
+      <a href="/" class="wl-back">{{ t.back }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+    </div>
+  </header>
 
-      <div style="position:relative; z-index:1; max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(36px,5vw,68px); align-items:flex-start;">
-        <div style="flex:1 1 380px; min-width:0; max-width:480px;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:#2E6C86;">{{ t.eyebrow }}</div>
-          <div style="display:inline-flex; align-items:center; gap:9px; margin-top:18px; padding:7px 13px; border:0; background:#EAF4F8; border-radius:99px; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.18);">
-            <span style="position:relative; display:inline-flex; width:7px; height:7px;"><span style="position:absolute; inset:0; border-radius:50%; background:#5BA783; opacity:.5; animation:euc-pulse 2.4s ease-out infinite;"></span><span style="position:relative; width:7px; height:7px; border-radius:50%; background:#5BA783;"></span></span>
-            <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#2E6C86;">{{ t.pill }}</span>
-          </div>
-          <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(40px,5.2vw,58px); line-height:1.08; letter-spacing:-.022em; color:#0B1E33; margin:18px 0 0; text-wrap:balance;">{{ t.h1 }}</h1>
-          <p style="font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:18px 0 0; max-width:440px; text-wrap:pretty;">{{ t.sub }}</p>
+  <main class="wl-main">
+    <div class="wl-wrap">
 
-          <div style="margin-top:30px; display:flex; flex-direction:column; gap:13px;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#7D93AB;">{{ t.benefitsTitle }}</div>
-            <sc-for list="{{ t.benefits }}" as="b" hint-placeholder-count="3">
-              <div style="display:flex; align-items:flex-start; gap:11px;">
-                <span style="flex:0 0 auto; margin-top:1px; width:22px; height:22px; border-radius:7px; background:#EAF3F7; border:0; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.16); display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E6C86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                <span style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.5; color:#33404D;">{{ b }}</span>
-              </div>
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div class="wl-eyebrow">{{ t.eyebrow }}</div>
+          <h1 class="wl-h1">{{ t.h1 }}</h1>
+          <p class="wl-sub">{{ t.sub }}</p>
+          <div class="wl-meta">
+            <sc-for list="{{ t.meta }}" as="m" hint-placeholder-count="3">
+              <span>{{ m }}</span>
             </sc-for>
           </div>
 
-          <div style="display:flex; align-items:center; gap:14px; margin-top:30px;">
-            <div style="display:flex;">
-              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; background:linear-gradient(135deg,#A5D8E6,#0B1E33);"></span>
-              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#D6EDF5,#3E6E86);"></span>
-              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#F4C542,#0B1E33);"></span>
-              <span style="width:32px; height:32px; border-radius:50%; border:2px solid #FAFAF7; margin-left:-11px; background:linear-gradient(135deg,#7DBBA0,#123456);"></span>
+          <div class="wl-panel">
+            <div class="wl-row">
+              <label for="wl-email" class="wl-label">{{ t.labels.email }}<span class="wl-req">*</span></label>
+              <input id="wl-email" type="email" inputmode="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}" class="wl-field">
+              <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div class="wl-err">{{ eEmail }}</div></sc-if>
             </div>
-            <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.45; letter-spacing:.006em; color:#5A6472;">{{ t.trust }}</span>
+
+            <div class="wl-row">
+              <label for="wl-company" class="wl-label">{{ t.labels.company }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+              <input id="wl-company" type="text" value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" class="wl-field">
+            </div>
+
+            <div class="wl-row">
+              <div class="wl-label">{{ t.labels.interest }}<span class="wl-opt">{{ t.labels.optional }}</span></div>
+              <div role="radiogroup" aria-label="{{ t.labels.interest }}" class="wl-seg">
+                <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
+                  <button onClick="{{ c.onClick }}" type="button" role="radio" aria-checked="{{ c.on }}" class="wl-seg-btn {{ c.cls }}">{{ c.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <input value="{{ hp }}" onChange="{{ onHp }}" type="text" class="wl-hp" aria-hidden="true">
+
+            <button onClick="{{ onSubmit }}" type="button" class="wl-submit">{{ t.labels.submit }}</button>
+            <div class="wl-note">{{ t.labels.note }} <a href="/datenschutz">{{ t.labels.noteLink }}</a></div>
           </div>
         </div>
+      </sc-if>
 
-        <div style="flex:1 1 440px; min-width:0;">
-          <div class="wl-card">
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div class="wl-done">
+          <div class="wl-done-check"><svg width="22" height="22" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          <div class="wl-done-t">{{ t.success.title }}</div>
+          <p class="wl-done-b">{{ t.success.body }}</p>
 
-            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
-              <div style="padding:clamp(24px,3vw,34px);">
-                <div style="font-family:var(--f-display); font-size:20px; font-weight:600; color:#0B1E33; letter-spacing:-.010em;">{{ t.formTitle }}</div>
+          <div class="wl-done-hr"></div>
 
-                <div style="margin-top:20px;">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.email }}</span><span style="color:#B4472F;">*</span></div>
-                  <input type="email" inputmode="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="{{ t.labels.emailPh }}" class="wl-field">
-                  <sc-if value="{{ eEmail }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:6px;">{{ eEmail }}</div></sc-if>
-                </div>
-
-                <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
-                  <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.name }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                    <input type="text" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ t.labels.namePh }}" class="wl-field">
-                  </div>
-                  <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.company }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                    <input type="text" value="{{ company }}" onChange="{{ onCompany }}" placeholder="{{ t.labels.companyPh }}" class="wl-field">
-                  </div>
-                </div>
-
-                <div style="margin-top:16px;">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:9px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.users }}</span><span style="color:#B4472F;">*</span></div>
-                  <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                    <sc-for list="{{ userChips }}" as="c" hint-placeholder-count="5">
-                      <button onClick="{{ c.onClick }}" type="button" class="wl-chip {{ c.cls }}">{{ c.label }}</button>
-                    </sc-for>
-                  </div>
-                  <sc-if value="{{ eUsers }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eUsers }}</div></sc-if>
-                </div>
-
-                <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
-                  <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.region }}</span><span style="color:#B4472F;">*</span></div>
-                    <select value="{{ region }}" onChange="{{ onRegion }}" class="wl-field wl-select">
-                      <option value="">{{ t.labels.regionPh }}</option>
-                      <sc-for list="{{ t.regionOptions }}" as="r" hint-placeholder-count="6">
-                        <option value="{{ r }}">{{ r }}</option>
-                      </sc-for>
-                    </select>
-                    <sc-if value="{{ eRegion }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:6px;">{{ eRegion }}</div></sc-if>
-                  </div>
-                  <div style="flex:1 1 170px; min-width:0;">
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.interest }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                      <sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3">
-                        <button onClick="{{ c.onClick }}" type="button" class="wl-chip wl-chip-s {{ c.cls }}">{{ c.label }}</button>
-                      </sc-for>
-                    </div>
-                  </div>
-                </div>
-
-                <div style="margin-top:16px;">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#5A6472;">{{ t.labels.usecase }}</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9AA5B1;">{{ t.labels.optional }}</span></div>
-                  <textarea rows="2" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" class="wl-field wl-textarea"></textarea>
-                </div>
-
-                <button onClick="{{ onVerify }}" type="button" class="wl-verify">
-                  <span style="flex:0 0 auto; width:22px; height:22px; border-radius:6px; border:1.5px solid {{ verifyBoxBorder }}; background:{{ verifyBoxBg }}; display:inline-flex; align-items:center; justify-content:center; transition:background .2s ease, border-color .2s ease;"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" style="opacity:{{ verifyIconOpacity }}; transition:opacity .2s ease;"><path d="M3 7.4 L5.8 10 L11 4" stroke="#0B1E33" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-                  <span style="flex:1; font-family:'Inter',sans-serif; font-size:14px; color:#E6EEF4;">{{ verifyLabel }}</span>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.1em; color:#7D93AB;">ANTI-BOT</span>
-                </button>
-                <sc-if value="{{ eVerify }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eVerify }}</div></sc-if>
-
-                <label style="display:flex; align-items:flex-start; gap:11px; margin-top:18px; cursor:pointer;">
-                  <button onClick="{{ onToggleConsent }}" type="button" role="checkbox" aria-checked="{{ consent }}" class="wl-consent-box" style="border-color:{{ consentBorder }}; background:{{ consentBg }};"><svg width="11" height="11" viewBox="0 0 14 14" fill="none" style="opacity:{{ consentIconOpacity }};"><path d="M3 7.4 L5.8 10 L11 4" stroke="#F7FAFC" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-                  <span style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.5; color:#556170;">{{ t.labels.consent }} <a href="/datenschutz" style="color:#12326B; text-decoration:underline;">{{ t.labels.consentLink }}</a>{{ t.labels.consentEnd }}</span>
-                </label>
-                <sc-if value="{{ eConsent }}" hint-placeholder-val="{{ false }}"><div style="font-family:'Inter',sans-serif; font-size:12.5px; color:#B4472F; margin-top:7px;">{{ eConsent }}</div></sc-if>
-
-                <button onClick="{{ onSubmit }}" type="button" class="wl-submit">{{ t.labels.submit }}</button>
-                <div style="font-family:'Inter',sans-serif; font-size:12px; line-height:1.5; letter-spacing:.006em; color:#5A6472; margin-top:14px; text-align:center;">{{ t.labels.footnote }}</div>
+          <!-- Qualifizierung erst NACH der Anmeldung, und freiwillig: die
+               Nutzerzahl und der Anwendungsfall haben die Anmeldung vorher
+               teurer gemacht, als sie wert waren. -->
+          <sc-if value="{{ askClosed }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <p class="wl-ask">{{ t.success.ask }}</p>
+              <div class="wl-actions">
+                <button onClick="{{ onOpenAsk }}" type="button" class="wl-btn2">{{ t.success.askBtn }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                <a href="/" class="wl-link">{{ t.success.home }}</a>
+                <button onClick="{{ onReset }}" type="button" class="wl-link">{{ t.success.again }}</button>
               </div>
-            </sc-if>
+            </div>
+          </sc-if>
 
-            <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
-              <div class="wl-done" style="padding:clamp(30px,4vw,44px); text-align:center;">
-                <div class="wl-done-check" style="width:60px; height:60px; margin:0 auto; border-radius:50%; background:#EAF3F7; border:0; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 1px rgba(46,108,134,.16); display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 14 14" fill="none"><path d="M3 7.4 L5.8 10 L11 4" stroke="#2E7D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-                <div style="font-family:var(--f-display); font-size:clamp(24px,3vw,30px); font-weight:500; color:#0B1E33; letter-spacing:-.016em; margin-top:20px;">{{ t.success.title }}</div>
-                <p style="font-family:'Inter',sans-serif; font-size:15.5px; line-height:1.6; color:#556170; margin:12px auto 0; max-width:360px;">{{ t.success.body }}</p>
-
-                <div style="margin-top:26px; text-align:left; border:0; border-radius:16px; background:#F5F8FA; box-shadow:0 1px 2px rgba(11,30,51,.05), inset 0 1px 0 rgba(255,255,255,.34), inset 0 0 0 1px rgba(11,30,51,.06); overflow:hidden;">
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#5A6472; padding:13px 16px 0;">{{ t.success.recapTitle }}</div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:11px 16px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.emailLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36; word-break:break-all;">{{ savedEmail }}</span></div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.usersLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedUsers }}</span></div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 11px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.regionLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedRegion }}</span></div>
-                  <div style="display:flex; align-items:center; gap:12px; padding:0 16px 13px;"><span style="width:74px; flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#5A6472;">{{ t.success.interestLabel }}</span><span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:500; color:#1E2A36;">{{ savedInterest }}</span></div>
-                </div>
-
-                <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:24px;">
-                  <a href="/" class="wl-btn">{{ t.success.homeBtn }}</a>
-                  <button onClick="{{ onReset }}" type="button" class="wl-btn2">{{ t.success.editBtn }}</button>
-                </div>
+          <sc-if value="{{ askOpen }}" hint-placeholder-val="{{ false }}">
+            <div class="wl-panel" style="margin-top:0;">
+              <div class="wl-row">
+                <label for="wl-users" class="wl-label">{{ t.labels.users }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                <select id="wl-users" value="{{ users }}" onChange="{{ onUsers }}" class="wl-field wl-select">
+                  <option value="">{{ t.labels.usersPh }}</option>
+                  <sc-for list="{{ t.userOptions }}" as="u" hint-placeholder-count="5">
+                    <option value="{{ u }}">{{ u }}</option>
+                  </sc-for>
+                </select>
               </div>
-            </sc-if>
+              <div class="wl-row">
+                <label for="wl-usecase" class="wl-label">{{ t.labels.usecase }}<span class="wl-opt">{{ t.labels.optional }}</span></label>
+                <textarea id="wl-usecase" rows="3" value="{{ usecase }}" onChange="{{ onUsecase }}" placeholder="{{ t.labels.usecasePh }}" class="wl-field wl-textarea"></textarea>
+              </div>
+              <button onClick="{{ onSaveAsk }}" type="button" class="wl-submit">{{ t.success.askSubmit }}</button>
+            </div>
+          </sc-if>
 
-          </div>
+          <sc-if value="{{ askDone }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <p class="wl-ask">{{ t.success.askThanks }}</p>
+              <div class="wl-actions">
+                <a href="/" class="wl-btn2">{{ t.success.home }}</a>
+              </div>
+            </div>
+          </sc-if>
         </div>
-      </div>
-    </section>
+      </sc-if>
+
+    </div>
   </main>
-  <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
+
+  <footer class="wl-ft">
+    <span>{{ t.rights }}</span>
+    <a href="/datenschutz">{{ t.privacy }}</a>
+    <a href="/impressum">{{ t.imprint }}</a>
+  </footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
 class Component extends DCLogic {
   constructor(props){
     super(props);
-    this.emailRef = React.createRef();
-    this.nameRef = React.createRef();
-    this.companyRef = React.createRef();
-    this.usecaseRef = React.createRef();
-    this.regionRef = React.createRef();
     const initLang = (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de';
-    this.state = { lang: initLang, email:'', name:'', company:'', usecase:'', region:'', users:'', interest:'', consent:false, verified:false, submitted:false,
-      eEmail:'', eUsers:'', eRegion:'', eConsent:'', eVerify:'',
-      savedEmail:'', savedUsers:'', savedRegion:'', savedInterest:'' };
+    this.state = { lang: initLang, email:'', company:'', interest:'', hp:'',
+      users:'', usecase:'', submitted:false, ask:'closed', eEmail:'' };
     this._onLang = (e)=>this.setState({ lang:e.detail });
+    // Zeitfalle: ein Formular, das in unter 1.5 s ausgefüllt wurde, hat kein
+    // Mensch ausgefüllt. Zusammen mit dem Fangfeld ersetzt das den sichtbaren
+    // Anti-Bot-Block, der wie ein zweiter Handlungsaufruf aussah.
+    this._t0 = Date.now();
     this.C = {
       de: {
         eyebrow:'// Early Access',
-        pill:'Early Access offen',
-        h1:'Sichern Sie sich frühen Zugang.',
-        sub:'EU Cowork AI ist im Aufbau. Tragen Sie sich ein — wir möchten verstehen, wer Interesse hat, und geben frühen Interessenten den Vortritt.',
-        benefitsTitle:'Was Sie erhalten',
-        benefits:['Bevorzugter Zugang zur geschlossenen Beta','Mitreden bei Funktionen & Roadmap','Kein Spam — jederzeit abbestellbar'],
-        trust:'Plätze werden nach Reihenfolge und Fit vergeben.',
-        formTitle:'Auf die Warteliste',
-        labels:{ email:'E-Mail-Adresse', emailPh:'name@firma.ch', name:'Name', namePh:'Vor- und Nachname', company:'Firma / Organisation', companyPh:'Firmenname', optional:'optional',
-          users:'Potenzielle Nutzer', region:'Region', regionPh:'Bitte wählen …', interest:'Interesse an',
-          usecase:'Wofür möchten Sie EU Cowork AI einsetzen?', usecasePh:'Kurz in ein, zwei Sätzen (optional)',
-          verify:'Zum Bestätigen klicken', verified:'Bestätigt — danke!',
-          consent:'Ich akzeptiere die', consentLink:'Datenschutzerklärung', consentEnd:'.',
-          submit:'Auf die Warteliste', footnote:'Kein Spam. Wir nutzen Ihre Angaben nur, um Sie über den Zugang zu informieren.' },
+        h1:'Frühen Zugang zu EU Cowork AI sichern.',
+        sub:'Testen Sie die europäische KI-Plattform vor der Veröffentlichung und geben Sie Rückmeldung direkt an unser Produktteam.',
+        meta:['Beta-Zugang','Direkter Austausch','Jederzeit abmeldbar'],
+        back:'Zur Startseite',
+        rights:'© 2026 EU Cowork AI', privacy:'Datenschutz', imprint:'Impressum',
+        labels:{
+          email:'Geschäftliche E-Mail-Adresse', emailPh:'name@firma.ch',
+          company:'Unternehmen', companyPh:'Firmenname', optional:'optional',
+          interest:'Interesse',
+          users:'Teamgrösse', usersPh:'Bitte wählen …',
+          usecase:'Wofür möchten Sie EU Cowork AI einsetzen?', usecasePh:'Ein, zwei Sätze genügen',
+          submit:'Frühen Zugang anfragen',
+          note:'Kein Spam. Wir informieren Sie nur über Beta-Zugang und Veröffentlichung. Jederzeit abmeldbar.',
+          noteLink:'Datenschutzerklärung'
+        },
         userOptions:['1','2–10','11–50','51–200','200+'],
-        regionOptions:['Schweiz','Deutschland','Österreich','Liechtenstein','Übriges EU/EWR','Andere'],
-        interestOptions:[{label:'Schweiz-Hosting',value:'hosted'},{label:'Self-Host',value:'selfhost'},{label:'Beides',value:'both'}],
-        errors:{ email:'Bitte eine gültige E-Mail-Adresse angeben.', users:'Bitte Nutzerzahl wählen.', region:'Bitte Region wählen.', consent:'Bitte Datenschutzerklärung akzeptieren.', verify:'Bitte bestätigen, dass Sie kein Bot sind.' },
-        none:'—',
-        success:{ title:'Sie sind auf der Liste.', body:'Danke für Ihr Interesse. Wir melden uns per E-Mail, sobald Ihr früher Zugang bereit ist.', recapTitle:'Ihre Angaben', emailLabel:'E-Mail', usersLabel:'Nutzer', regionLabel:'Region', interestLabel:'Interesse', homeBtn:'Zurück zur Startseite', editBtn:'Angaben ändern' }
+        interestOptions:[{label:'Schweizer Betrieb',value:'hosted'},{label:'Self-Hosting',value:'selfhost'},{label:'Beides',value:'both'}],
+        errors:{ email:'Bitte eine gültige E-Mail-Adresse angeben.' },
+        success:{
+          title:'Vielen Dank.',
+          body:'Wir melden uns, sobald wir Ihnen Zugang anbieten können. Die ersten Einladungen werden schrittweise verschickt.',
+          ask:'Möchten Sie uns bereits etwas zu Ihrem Unternehmen erzählen?',
+          askBtn:'Zwei kurze Fragen beantworten',
+          askSubmit:'Angaben senden',
+          askThanks:'Danke, das hilft uns bei der Priorisierung.',
+          home:'Zur Startseite', again:'Andere E-Mail eintragen'
+        }
       },
       en: {
         eyebrow:'// Early Access',
-        pill:'Early access open',
-        h1:'Get early access.',
-        sub:'EU Cowork AI is in the making. Add yourself — we want to understand who’s interested, and we give early sign-ups priority.',
-        benefitsTitle:'What you get',
-        benefits:['Priority access to the closed beta','A say in features & roadmap','No spam — unsubscribe anytime'],
-        trust:'Places are allocated by order and fit.',
-        formTitle:'Join the waitlist',
-        labels:{ email:'Email address', emailPh:'name@company.com', name:'Name', namePh:'First and last name', company:'Company / organisation', companyPh:'Company name', optional:'optional',
-          users:'Potential users', region:'Region', regionPh:'Please choose …', interest:'Interested in',
-          usecase:'What would you use EU Cowork AI for?', usecasePh:'Briefly, a sentence or two (optional)',
-          verify:'Click to verify', verified:'Verified — thanks!',
-          consent:'I accept the', consentLink:'privacy policy', consentEnd:'.',
-          submit:'Join the waitlist', footnote:'No spam. We only use your details to tell you about access.' },
+        h1:'Get early access to EU Cowork AI.',
+        sub:'Try the European AI platform before launch and send feedback straight to our product team.',
+        meta:['Beta access','Direct feedback','Unsubscribe anytime'],
+        back:'Back to home',
+        rights:'© 2026 EU Cowork AI', privacy:'Privacy', imprint:'Imprint',
+        labels:{
+          email:'Work email address', emailPh:'name@company.com',
+          company:'Company', companyPh:'Company name', optional:'optional',
+          interest:'Interested in',
+          users:'Team size', usersPh:'Please choose …',
+          usecase:'What would you use EU Cowork AI for?', usecasePh:'A sentence or two is enough',
+          submit:'Request early access',
+          note:'No spam. We only write about beta access and launch. Unsubscribe anytime.',
+          noteLink:'Privacy policy'
+        },
         userOptions:['1','2–10','11–50','51–200','200+'],
-        regionOptions:['Switzerland','Germany','Austria','Liechtenstein','Rest of EU/EEA','Other'],
-        interestOptions:[{label:'Swiss hosting',value:'hosted'},{label:'Self-host',value:'selfhost'},{label:'Both',value:'both'}],
-        errors:{ email:'Please enter a valid email address.', users:'Please choose a user count.', region:'Please choose a region.', consent:'Please accept the privacy policy.', verify:'Please confirm you’re not a bot.' },
-        none:'—',
-        success:{ title:'You’re on the list.', body:'Thanks for your interest. We’ll email you as soon as your early access is ready.', recapTitle:'Your details', emailLabel:'Email', usersLabel:'Users', regionLabel:'Region', interestLabel:'Interest', homeBtn:'Back to home', editBtn:'Edit details' }
+        interestOptions:[{label:'Swiss hosting',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Both',value:'both'}],
+        errors:{ email:'Please enter a valid email address.' },
+        success:{
+          title:'Thank you.',
+          body:'We will get in touch as soon as we can offer you access. The first invitations go out in batches.',
+          ask:'Would you like to tell us a little about your company already?',
+          askBtn:'Answer two short questions',
+          askSubmit:'Send details',
+          askThanks:'Thanks, that helps us prioritise.',
+          home:'Back to home', again:'Use a different email'
+        }
       }
     };
   }
@@ -427,68 +501,70 @@ class Component extends DCLogic {
     try {
       const raw = localStorage.getItem('eucowork_waitlist');
       if (raw){ const r = JSON.parse(raw);
-        this.setState({ submitted:true, email:r.email||'', name:r.name||'', company:r.company||'', region:r.region||'', usecase:r.usecase||'', users:r.users||'', interest:r.interest||'', consent:true, verified:true,
-          savedEmail:r.email||'', savedUsers:r.users||'', savedRegion:r.region||'', savedInterest:r.interestLabel||(this.C[this.state.lang]||this.C.de).none });
+        this.setState({ submitted:true, email:r.email||'', company:r.company||'', interest:r.interest||'',
+          users:r.users||'', usecase:r.usecase||'', ask: r.qualified ? 'done' : 'closed' });
       }
     } catch(e){}
   }
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
   _copy(){ return this.C[this.state.lang] || this.C.de; }
-  setUsers(v){ this.setState({ users:v, eUsers:'' }); }
+  setLang(l){
+    try { localStorage.setItem('eucowork_lang', l); } catch(e){}
+    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
+  }
   setInterest(v){ this.setState({ interest: this.state.interest===v ? '' : v }); }
-  toggleConsent(){ this.setState({ consent: !this.state.consent, eConsent:'' }); }
-  verify(){ this.setState({ verified:true, eVerify:'' }); }
-  setField(key, e){ var v = (e && e.target) ? e.target.value : ''; var p = {}; p[key] = v; if(key==='email') p.eEmail=''; if(key==='region') p.eRegion=''; this.setState(p); }
+  setField(key, e){ var v = (e && e.target) ? e.target.value : ''; var p = {}; p[key] = v; if(key==='email') p.eEmail=''; this.setState(p); }
   validEmail(x){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x); }
+  _store(extra){
+    const rec = Object.assign({
+      email:(this.state.email||'').trim(), company:(this.state.company||'').trim(),
+      interest:this.state.interest, users:this.state.users, usecase:(this.state.usecase||'').trim(),
+      ts:new Date().toISOString()
+    }, extra || {});
+    try { localStorage.setItem('eucowork_waitlist', JSON.stringify(rec)); } catch(e){}
+  }
   submit(){
     const c = this._copy();
     const email = (this.state.email || '').trim();
-    const region = this.state.region || '';
-    const name = (this.state.name || '').trim();
-    const company = (this.state.company || '').trim();
-    const usecase = (this.state.usecase || '').trim();
-    const next = { eEmail:'', eUsers:'', eRegion:'', eConsent:'', eVerify:'' };
-    let ok = true;
-    if (!this.validEmail(email)){ next.eEmail = c.errors.email; ok = false; }
-    if (!this.state.users){ next.eUsers = c.errors.users; ok = false; }
-    if (!region){ next.eRegion = c.errors.region; ok = false; }
-    if (!this.state.verified){ next.eVerify = c.errors.verify; ok = false; }
-    if (!this.state.consent){ next.eConsent = c.errors.consent; ok = false; }
-    if (!ok){ this.setState(next); return; }
-    const io = c.interestOptions.find(o => o.value === this.state.interest);
-    const interestLabel = io ? io.label : c.none;
-    const record = { email, name, company, users:this.state.users, region, interest:this.state.interest, interestLabel, usecase, ts:new Date().toISOString() };
-    try { localStorage.setItem('eucowork_waitlist', JSON.stringify(record)); } catch(e){}
-    this.setState({ submitted:true, eEmail:'', eUsers:'', eRegion:'', eConsent:'', eVerify:'',
-      savedEmail:email, savedUsers:this.state.users, savedRegion:region, savedInterest:interestLabel });
+    if (!this.validEmail(email)){ this.setState({ eEmail:c.errors.email }); return; }
+    // Fangfeld gefüllt oder zu schnell abgeschickt: still annehmen, nichts
+    // speichern. Ein Bot bekommt so keine Rückmeldung, woran er scheitert.
+    const bot = !!(this.state.hp || '').trim() || (Date.now() - this._t0) < 1500;
+    if (!bot) this._store({ qualified:false });
+    this.setState({ submitted:true, eEmail:'' });
     try { window.scrollTo({ top:0, behavior:'smooth' }); } catch(e){ window.scrollTo(0,0); }
   }
+  saveAsk(){ this._store({ qualified:true }); this.setState({ ask:'done' }); }
   reset(){
     try { localStorage.removeItem('eucowork_waitlist'); } catch(e){}
-    this.setState({ submitted:false });
+    this._t0 = Date.now();
+    this.setState({ submitted:false, ask:'closed', email:'', company:'', interest:'', users:'', usecase:'', eEmail:'' });
   }
   renderVals(){
     const c = this._copy();
-    const userChips = c.userOptions.map(v => { const on = this.state.users===v; return { label:v, value:v, cls:on?'is-on':'', onClick:()=>this.setUsers(v) }; });
-    const interestChips = c.interestOptions.map(o => { const on = this.state.interest===o.value; return { label:o.label, value:o.value, cls:on?'is-on':'', onClick:()=>this.setInterest(o.value) }; });
+    const isDe = this.state.lang !== 'en';
+    const interestChips = c.interestOptions.map(o => {
+      const on = this.state.interest === o.value;
+      return { label:o.label, value:o.value, on: on ? 'true' : 'false', cls: on ? 'is-on' : '', onClick:()=>this.setInterest(o.value) };
+    });
     return {
       t: c,
+      interestChips,
       notSubmitted: !this.state.submitted,
       submitted: this.state.submitted,
-      userChips, interestChips,
-      email:this.state.email, name:this.state.name, company:this.state.company, usecase:this.state.usecase, region:this.state.region,
-      onEmail:(e)=>this.setField('email',e), onName:(e)=>this.setField('name',e), onCompany:(e)=>this.setField('company',e), onUsecase:(e)=>this.setField('usecase',e), onRegion:(e)=>this.setField('region',e),
-      eEmail:this.state.eEmail, eUsers:this.state.eUsers, eRegion:this.state.eRegion, eConsent:this.state.eConsent, eVerify:this.state.eVerify,
-      consent:this.state.consent,
-      consentBg: this.state.consent ? '#0B1E33' : '#fff',
-      consentBorder: this.state.consent ? '#0B1E33' : '#C4CBD3',
-      consentIconOpacity: this.state.consent ? '1' : '0',
-      verifyLabel: this.state.verified ? c.labels.verified : c.labels.verify,
-      verifyBoxBg: this.state.verified ? '#A5D8E6' : 'transparent',
-      verifyBoxBorder: this.state.verified ? '#A5D8E6' : '#5A7086',
-      verifyIconOpacity: this.state.verified ? '1' : '0',
-      savedEmail:this.state.savedEmail, savedUsers:this.state.savedUsers, savedRegion:this.state.savedRegion, savedInterest:this.state.savedInterest,
-      onSubmit:()=>this.submit(), onVerify:()=>this.verify(), onToggleConsent:()=>this.toggleConsent(), onReset:()=>this.reset()
+      askClosed: this.state.submitted && this.state.ask === 'closed',
+      askOpen:   this.state.submitted && this.state.ask === 'open',
+      askDone:   this.state.submitted && this.state.ask === 'done',
+      email:this.state.email, company:this.state.company, hp:this.state.hp,
+      users:this.state.users, usecase:this.state.usecase,
+      onEmail:(e)=>this.setField('email',e), onCompany:(e)=>this.setField('company',e),
+      onHp:(e)=>this.setField('hp',e),
+      onUsers:(e)=>this.setField('users',e), onUsecase:(e)=>this.setField('usecase',e),
+      eEmail:this.state.eEmail,
+      deCls: isDe ? 'is-on' : '', enCls: !isDe ? 'is-on' : '',
+      toDe:()=>this.setLang('de'), toEn:()=>this.setLang('en'),
+      onSubmit:()=>this.submit(), onOpenAsk:()=>this.setState({ ask:'open' }),
+      onSaveAsk:()=>this.saveAsk(), onReset:()=>this.reset()
     };
   }
 }
@@ -499,16 +575,16 @@ class Component extends DCLogic {
   "@type": "WebPage",
   "@id": "https://eucowork.ai/warteliste#webpage",
   "url": "https://eucowork.ai/warteliste",
-  "name": "Warteliste: frühen Zugang sichern",
+  "name": "Frühen Zugang zu EU Cowork AI sichern",
   "inLanguage": "de-CH",
   "isPartOf": { "@id": "https://eucowork.ai/#website" },
   "about": { "@id": "https://eucowork.ai/#software" },
-  "description": "EU Cowork AI ist im Aufbau. Wer sich einträgt, erhält bevorzugten Zugang zur geschlossenen Beta, kann bei Funktionen und Roadmap mitreden und wird ausschliesslich über den Zugang informiert; kein Spam, jederzeit abbestellbar. Plätze werden nach Reihenfolge und Fit vergeben. Abgefragt werden E-Mail-Adresse, potenzielle Nutzerzahl, Region und das Interesse an Schweizer Hosting, Self-Hosting oder beidem.",
+  "description": "EU Cowork AI ist im Aufbau. Wer sich einträgt, testet die europäische KI-Plattform vor der Veröffentlichung und gibt Rückmeldung direkt an das Produktteam. Die Anmeldung verlangt nur die geschäftliche E-Mail-Adresse; Unternehmen und das Interesse an Schweizer Betrieb, Self-Hosting oder beidem sind freiwillig. Kein Spam, jederzeit abmeldbar; die ersten Einladungen werden schrittweise verschickt.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
-      { "@type": "ListItem", "position": 2, "name": "Warteliste", "item": "https://eucowork.ai/warteliste" }
+      { "@type": "ListItem", "position": 2, "name": "Früher Zugang", "item": "https://eucowork.ai/warteliste" }
     ]
   }
 }
