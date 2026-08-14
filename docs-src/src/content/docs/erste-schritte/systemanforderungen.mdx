@@ -18,6 +18,7 @@ ist für diejenigen gedacht, die eine VM bestellen oder eine bestehende Maschine
 | Arbeitsspeicher | 4 bis 16 GB, je nach Zahl der Nutzenden |
 | Plattenplatz | einige Dutzend GB, mit Reserve für hochgeladene Dateien |
 | Betriebssystem | eine verbreitete Linux-Distribution mit Langzeitunterstützung |
+| CPU-Befehlssatz | **AVX**, zwingend (siehe unten) |
 
 Der Plattenbedarf wächst vor allem mit den hochgeladenen Dateien; wer viel ablegt, plant von
 Anfang an grosszügiger. Kleine Instanzen sind ausdrücklich zulässig.
@@ -26,6 +27,36 @@ Die CPU-Last ist im Normalbetrieb gering, denn gerechnet wird beim Inferenz-Anbi
 entstehen nur bei einzelnen Zusatzfunktionen. Mit der Nutzerzahl wächst vor allem der
 Arbeitsspeicherbedarf der Anwendung; für eine grössere Belegschaft lohnt sich eine eigene VM je
 Instanz.
+
+## AVX: die einzige harte Voraussetzung
+
+Alle Werte oben sind Richtwerte: eine kleinere Maschine läuft langsamer, aber sie läuft. Bei
+einer Sache gibt es diese Abstufung nicht. Die verwendete Datenbank setzt den CPU-Befehlssatz
+**AVX** voraus. Fehlt er, startet sie überhaupt nicht, und zwar ohne eine Meldung, die den
+Grund nennt.
+
+So prüfen Sie es auf der Maschine:
+
+```bash title="Gibt es AVX?"
+grep -o -m1 avx /proc/cpuinfo
+```
+
+Kommt `avx` zurück, ist alles in Ordnung. Kommt nichts zurück, liegt es auf einer virtuellen
+Maschine fast nie an der Hardware, sondern am **CPU-Typ, den die Virtualisierung durchreicht**.
+Viele Hypervisoren stellen neue Maschinen auf ein generisches Modell ein, das unterhalb von AVX
+liegt.
+
+<Aside type="caution" title="Virtuelle Maschinen: CPU-Typ prüfen">
+Stellen Sie den CPU-Typ der Maschine auf **Durchreichen der Host-CPU** oder auf eine Grundlinie,
+die AVX enthält. Bei Proxmox heissen diese beiden Einstellungen `host` und `x86-64-v3`; die
+Vorgaben `kvm64` und `x86-64-v2-AES` reichen **nicht**.
+
+Danach die Maschine **stoppen und starten**. Ein Neustart von innen genügt nicht: der CPU-Typ
+wird beim Start des Virtualisierungsprozesses festgelegt, und dieser Prozess läuft weiter.
+</Aside>
+
+Jede gängige Server-CPU seit etwa 2011 beherrscht AVX. Meldet auch der Virtualisierungs-Wirt
+selbst kein AVX, ist die Hardware wirklich zu alt. Dann hilft nur eine andere Maschine.
 
 ## Betriebssystem und Container-Laufzeit
 

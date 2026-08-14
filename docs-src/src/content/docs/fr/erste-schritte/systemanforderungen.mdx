@@ -18,6 +18,7 @@ s’adresse à ceux qui commandent une VM ou évaluent une machine existante.
 | Mémoire vive | de 4 à 16 GB, selon le nombre d’utilisateurs |
 | Espace disque | quelques dizaines de GB, avec une réserve pour les fichiers téléversés |
 | Système d’exploitation | une distribution Linux répandue avec support à long terme |
+| Jeu d’instructions CPU | **AVX**, obligatoire (voir ci-dessous) |
 
 Le besoin en espace disque croît avant tout avec les fichiers téléversés ; qui en dépose beaucoup
 voit plus large dès le départ. Les petites instances sont expressément admises.
@@ -26,6 +27,37 @@ La charge CPU est faible en fonctionnement normal, car le calcul a lieu chez le 
 d’inférence. Des pointes ne surviennent qu’avec certaines fonctions supplémentaires. Ce qui croît
 avec le nombre d’utilisateurs, c’est avant tout le besoin en mémoire vive de l’application ; pour un
 effectif important, une VM dédiée par instance vaut la peine.
+
+## AVX : la seule exigence stricte
+
+Toutes les valeurs ci-dessus sont indicatives : une machine plus modeste sera plus lente, mais
+elle fonctionnera. Une chose n’admet pas ce compromis. La base de données utilisée exige le jeu
+d’instructions **AVX**. S’il est absent, elle ne démarre tout simplement pas, et sans message
+indiquant la cause.
+
+Pour le vérifier sur la machine :
+
+```bash title="AVX est-il présent ?"
+grep -o -m1 avx /proc/cpuinfo
+```
+
+Si `avx` s’affiche, tout va bien. Si rien ne s’affiche, sur une machine virtuelle la cause n’est
+presque jamais le matériel, mais le **type de CPU transmis par la virtualisation**. De nombreux
+hyperviseurs configurent les nouvelles machines sur un modèle générique situé en dessous d’AVX.
+
+<Aside type="caution" title="Machines virtuelles : vérifier le type de CPU">
+Réglez le type de CPU de la machine sur **transmission du CPU hôte**, ou sur une ligne de base
+incluant AVX. Sur Proxmox, ces deux réglages s’appellent `host` et `x86-64-v3` ; les valeurs par
+défaut `kvm64` et `x86-64-v2-AES` ne suffisent **pas**.
+
+Ensuite, **arrêtez puis redémarrez** la machine. Un redémarrage depuis l’intérieur ne suffit
+pas : le type de CPU est fixé au démarrage du processus de virtualisation, et celui-ci continue
+de tourner.
+</Aside>
+
+Tout processeur serveur courant depuis 2011 environ prend en charge AVX. Si l’hôte de
+virtualisation lui-même n’annonce pas AVX, le matériel est réellement trop ancien. Seule une
+autre machine peut alors aider.
 
 ## Système d’exploitation et environnement d’exécution de conteneurs
 

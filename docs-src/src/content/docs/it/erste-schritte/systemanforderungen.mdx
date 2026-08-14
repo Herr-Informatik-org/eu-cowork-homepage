@@ -18,6 +18,7 @@ pensata per chi ordina una VM o valuta una macchina esistente.
 | Memoria di lavoro | da 4 a 16 GB, secondo il numero di utenti |
 | Spazio su disco | alcune decine di GB, con riserva per i file caricati |
 | Sistema operativo | una distribuzione Linux diffusa con supporto a lungo termine |
+| Set di istruzioni CPU | **AVX**, obbligatorio (vedi sotto) |
 
 Il fabbisogno di disco cresce soprattutto con i file caricati; chi archivia molto pianifica con più
 generosità fin dall’inizio. Le istanze piccole sono espressamente ammesse.
@@ -26,6 +27,34 @@ Il carico della CPU è modesto nell’esercizio normale, perché il calcolo avvi
 di inferenza. I picchi nascono solo con singole funzioni aggiuntive. Con il numero di utenti cresce
 soprattutto il fabbisogno di memoria di lavoro dell’applicazione; per un organico più ampio conviene
 una VM propria per istanza.
+
+## AVX: l’unico requisito vincolante
+
+Tutti i valori sopra sono indicativi: una macchina più piccola sarà più lenta, ma funzionerà.
+Una cosa non ammette gradazioni. Il database utilizzato richiede il set di istruzioni CPU
+**AVX**. Se manca, non si avvia affatto, e senza alcun messaggio che ne indichi la causa.
+
+Come verificarlo sulla macchina:
+
+```bash title="AVX è presente?"
+grep -o -m1 avx /proc/cpuinfo
+```
+
+Se compare `avx`, va tutto bene. Se non compare nulla, su una macchina virtuale la causa quasi
+mai è l’hardware, bensì il **tipo di CPU trasmesso dalla virtualizzazione**. Molti hypervisor
+impostano le nuove macchine su un modello generico che sta al di sotto di AVX.
+
+<Aside type="caution" title="Macchine virtuali: controllare il tipo di CPU">
+Impostate il tipo di CPU della macchina sulla **trasmissione della CPU host** oppure su una
+linea di base che includa AVX. In Proxmox queste due impostazioni si chiamano `host` e
+`x86-64-v3`; i valori predefiniti `kvm64` e `x86-64-v2-AES` **non** bastano.
+
+Poi **arrestate e riavviate** la macchina. Un riavvio dall’interno non basta: il tipo di CPU
+viene fissato all’avvio del processo di virtualizzazione, che continua a funzionare.
+</Aside>
+
+Ogni CPU da server diffusa dal 2011 circa supporta AVX. Se nemmeno l’host di virtualizzazione
+segnala AVX, l’hardware è davvero troppo vecchio. In tal caso serve un’altra macchina.
 
 ## Sistema operativo e runtime per container
 

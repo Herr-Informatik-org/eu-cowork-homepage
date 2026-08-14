@@ -18,6 +18,7 @@ anyone who is ordering a VM or assessing an existing machine.
 | Memory | 4 to 16 GB, depending on the number of users |
 | Disk | a few dozen GB, with headroom for uploaded files |
 | Operating system | a common Linux distribution with long term support |
+| CPU instruction set | **AVX**, required (see below) |
 
 Disk demand grows above all with the uploaded files; if a lot is stored, plan generously from
 the start. Small instances are explicitly allowed.
@@ -26,6 +27,34 @@ CPU load in normal operation is low, because the computation happens at the infe
 Peaks only occur with individual additional features. What grows with the user count is above
 all the memory demand of the application; for a larger workforce a dedicated VM per instance
 pays off.
+
+## AVX: the one hard requirement
+
+Every figure above is a guide value: a smaller machine runs more slowly, but it runs. One thing
+has no such gradation. The database in use requires the **AVX** CPU instruction set. Without it
+it does not start at all, and it does so without any message naming the cause.
+
+Check it on the machine:
+
+```bash title="Is AVX present?"
+grep -o -m1 avx /proc/cpuinfo
+```
+
+If `avx` comes back, you are fine. If nothing comes back, on a virtual machine it is almost
+never the hardware. It is the **CPU type the hypervisor passes through**. Many hypervisors set
+new machines to a generic model that sits below AVX.
+
+<Aside type="caution" title="Virtual machines: check the CPU type">
+Set the machine's CPU type to **pass through the host CPU**, or to a baseline that includes AVX.
+On Proxmox those two settings are called `host` and `x86-64-v3`; the defaults `kvm64` and
+`x86-64-v2-AES` are **not** enough.
+
+Then **stop and start** the machine. A reboot from inside is not enough: the CPU type is fixed
+when the virtualization process starts, and that process keeps running.
+</Aside>
+
+Every common server CPU since roughly 2011 supports AVX. If the hypervisor host itself reports
+no AVX, the hardware really is too old. Then only a different machine helps.
 
 ## Operating system and container runtime
 
