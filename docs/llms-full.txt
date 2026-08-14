@@ -1,0 +1,2885 @@
+# EU Cowork AI — Dokumentation, Volltext
+
+> Der vollständige Text der Dokumentation von EU Cowork AI: Überblick, Installation und
+> Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration und der
+> Anschluss eigener Systeme über das Model Context Protocol.
+
+Diese Datei enthält die deutsche Fassung; sie ist die Quelle. Dieselben Seiten gibt es
+übersetzt auf Englisch, Französisch, Italienisch und Spanisch als HTML unter
+https://eucowork.ai/docs/en/…, https://eucowork.ai/docs/fr/…, https://eucowork.ai/docs/it/… und https://eucowork.ai/docs/es/….
+Eine reine Übersicht aller Seiten aller Sprachen steht unter https://eucowork.ai/docs/llms.txt,
+die Marketing-Website ist unter https://eucowork.ai/llms.txt beschrieben.
+
+EU Cowork AI ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a,
+5210 Windisch, Schweiz.
+
+Die Reihenfolge folgt der Gliederung der Dokumentation.
+
+---
+
+# Dokumentation
+Quelle: https://eucowork.ai/docs
+
+Dokumentation von EU Cowork AI. Überblick, Betrieb auf dem eigenen Server, Administration und der Anschluss an eigene Systeme.
+
+## Wo möchten Sie anfangen?
+
+## Die Dokumentation in sechs Teilen
+
+**Erste Schritte**
+
+Überblick, Architektur, Systemanforderungen und der Weg zu einer eigenen Instanz.
+Beginnen Sie hier, wenn Sie EU Cowork AI zum ersten Mal ansehen.
+
+**Installation und Betrieb**
+
+Was beim Aufsetzen und im Alltag zu bedenken ist: Domain und Zertifikat, Aktualisierungen,
+Sicherungen, Umzug und die Fehlerbilder, die wirklich auftreten.
+
+**Für Mitarbeitende**
+
+Was ein Mitarbeitender im Chat tun kann: Modelle wählen, Dateien auswerten,
+im Web suchen, Auswertungen und Tabellen erzeugen lassen, Agenten nutzen.
+
+**Administration**
+
+Benutzer und Gruppen, Rollen und Rechte, Modellkarten, Verbrauch und Budgets,
+Protokolle und Aufbewahrung.
+
+**Konnektoren und MCP**
+
+Wie die Plattform an Fremdsysteme kommt, wie die Rechteprüfung davorsteht
+und wie Sie eigene Konnektoren sicher anbinden.
+
+**Referenz**
+
+Begriffe, Lizenzen und die Stellen, an denen die Dokumentation von LibreChat
+weiterführt.
+
+## Diese Dokumentation und LibreChat
+
+EU Cowork AI baut auf [LibreChat](https://www.librechat.ai) auf, einer quelloffenen
+Chat-Plattform unter MIT-Lizenz. Die Chat-Oberfläche, das Agenten-System, die
+Dateiverarbeitung und die Modellanbindung stammen von dort. Ergänzt haben wir alles,
+was ein Unternehmen für den geregelten Betrieb braucht: Administration, Rechteverwaltung vor
+den Konnektoren, eine Verbrauchsübersicht mit Budgets und ein Installationspaket für den
+eigenen Server.
+
+Diese Dokumentation gibt den Überblick und sagt, woher ein Baustein kommt. Wo die
+Dokumentation von LibreChat tiefer geht, verweisen wir dorthin, statt sie schlechter
+nachzuerzählen. Die Unterlagen zur Einrichtung im Einzelnen liegen der Auslieferung bei.
+Welcher Baustein von wem stammt, steht unter
+[LibreChat und EU Cowork](/docs/referenz/librechat-und-eu-cowork).
+
+<div class="euc-footnote">
+Fehlt etwas oder stimmt eine Angabe nicht? Schreiben Sie an
+<a href="mailto:hallo@eucowork.ai">hallo@eucowork.ai</a>.
+</div>
+
+---
+
+# Kapitel: Erste Schritte
+
+---
+
+# Was ist EU Cowork AI?
+Quelle: https://eucowork.ai/docs/erste-schritte/ueberblick
+Kapitel: Erste Schritte
+
+Überblick über die Plattform, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob EU Cowork AI passt.
+
+EU Cowork AI ist eine KI-Chatplattform für Unternehmen, die auf einem eigenen Server läuft.
+Diese Seite sagt in wenigen Minuten, was das System ist, woraus es besteht, was es kann und
+was es bewusst nicht kann. Sie richtet sich an IT-Verantwortliche, die vor der Entscheidung
+stehen, ob sie die Plattform einsetzen.
+
+## Für wen die Plattform gedacht ist
+
+Es gibt drei Ausgangslagen. Sie unterscheiden sich darin, wer den Server betreibt, nicht darin,
+was die Plattform kann.
+
+| Ausgangslage | Wer betreibt den Server | Was Sie tun |
+|---|---|---|
+| **Sie nutzen die Plattform selbst** | Ihre eigene IT | Server aufsetzen, Instanz installieren, Mitarbeitende einladen |
+| **Sie sind KMU-Kunde und lassen betreiben** | Ihr IT-Dienstleister | Sie bekommen eine fertige Instanz und arbeiten im Chat und in der Administration |
+| **Sie sind IT-Dienstleister** | Sie, für mehrere Kunden | pro Kunde eine eigene Instanz, wahlweise auf eigener oder geteilter Maschine |
+
+Der dritte Fall ist der Grund für viele Design-Entscheidungen: Ein Kunde ist immer eine eigene,
+vollständig getrennte Instanz mit eigener Datenbank, eigenen Dateien und eigenem
+Inferenz-Schlüssel. Mehr dazu unter [Architektur](/docs/erste-schritte/architektur).
+
+## Woraus das System besteht
+
+Die Chat-Oberfläche ist [LibreChat](https://www.librechat.ai), eine quelloffene Plattform unter
+MIT-Lizenz. Von dort stammen Chat, Agenten, Dateiverarbeitung und Modellanbindung — also die
+Anwendung, die Ihre Mitarbeitenden sehen. Der Fork bleibt bewusst nah am Original, damit
+Aktualisierungen weiterhin möglich bleiben.
+
+Ergänzt haben wir alles, was ein Unternehmen für den geregelten Betrieb braucht: Administration
+von Benutzern, Rollen und Rechten, eine Rechteprüfung mit Protokoll vor jedem Zugriff auf ein
+Fremdsystem, eine Verbrauchsübersicht mit Budgets, einen Chat-Bereich in Outlook und ein
+Installationspaket für den eigenen Server.
+
+## Was die Plattform kann
+
+Nach der Installation stehen unter anderem bereit: Chat mit Streaming und Verlauf, ein
+Modell-Picker mit kuratierten Karten, Dateien als Kontext hochladen, Bilder verstehen auf den
+passenden Karten, Artifacts wie Diagramme und HTML direkt im Chat, Agenten nutzen, das Gerüst
+für Skills als Standard-Prozesse, deren Inhalte Sie selbst anlegen, ein Langzeitgedächtnis mit
+Opt-out und die Volltextsuche über frühere Konversationen.
+
+Drei Funktionen sind im Auslieferungszustand bewusst ausgeschaltet, weil sie zusätzliche
+Bausteine brauchen und sonst zu einem toten Knopf führen würden:
+
+| Funktion | Warum aus | Was nötig ist |
+|---|---|---|
+| Dateisuche über hochgeladene Dokumente | braucht zusätzliche Dienste | bei der Einrichtung zuschalten |
+| Code-Ausführung, etwa eine Excel-Datei erzeugen | braucht ein Code-Backend | bei der Einrichtung zuschalten |
+| Parameter-Panel für Temperatur und Ähnliches | für Nicht-Entwickler unnötig | pro Rolle wieder aktivierbar |
+
+## Was die Plattform bewusst nicht tut
+
+- **Keine Mandantenfähigkeit in der Anwendung.** Ein Kunde ist eine eigene Instanz. Das ist eine
+  bewusste Entscheidung, weil die Trennung dadurch unterhalb der Anwendung liegt.
+- **Nutzer legen keine eigenen Konnektoren an.** Welche Fremdsysteme erreichbar sind,
+  entscheidet ausschliesslich die Administration.
+- **Die mitgelieferten Beispiel-Konnektoren arbeiten ausschliesslich lesend.** Sie bringen
+  keine Werkzeuge mit, die im Fremdsystem etwas verändern. Ein Werkzeug, das nicht existiert,
+  kann nicht versehentlich aufgerufen werden.
+- **Das Outlook-Add-in sendet nie automatisch.** Ein Entwurf landet im normalen
+  Antwortfenster, das Absenden bleibt beim Menschen.
+
+## Was Open Source hier bedeutet
+
+Das Gesamtprodukt steht unter der MIT-Lizenz. Praktisch heisst das:
+
+- **Kein Per-Seat-Gating.** Die Nutzerzahl ist technisch nirgends begrenzt und wird nirgends
+  lizenzrechtlich gedeckelt.
+- **Kein Feature-Gating.** Es gibt keine Enterprise-Ausgabe mit zusätzlichen Funktionen. Was
+  im Repository liegt, ist der volle Funktionsumfang.
+- **Kein Branding-Zwang.** Name, Logo und Begrüssungstext sind Konfiguration.
+- **Selbst hosten ist kostenlos.** Bezahlt werden Betrieb, Support und Integration, wenn Sie
+  das von jemandem beziehen wollen.
+
+Das offizielle Admin-Panel von LibreChat steht unter der AGPL und wird deshalb bewusst
+**nicht** verwendet. Stattdessen gibt es eine eigene, permissiv lizenzierte Administration. So
+bleibt das Gesamtprodukt frei von Copyleft-Pflichten.
+
+## Wo die Daten liegen
+
+Konversationen, Nachrichten, Benutzer und Verbrauchsdaten liegen in der Datenbank Ihrer eigenen
+Instanz. Hochgeladene Dateien liegen daneben auf demselben Server. Es gibt keinen Rückkanal zu
+uns, Telemetrie ist ausgeschaltet.
+
+Für die Modellantworten selbst verlassen die Inhalte den Server, denn die Rechenlast liegt beim
+Inferenz-Anbieter. Standard ist **EuRouter**, dort wird in der EU verarbeitet. **OpenRouter**
+ist optional zuschaltbar und **nicht** EU-resident. Modellkarten ausserhalb der EU sind in der
+Oberfläche sichtbar gekennzeichnet.
+
+**Web-Suche und Datenresidenz**
+
+Die Suchmaschine läuft in Ihrer Instanz, leitet die Suchanfrage aber an externe Suchmaschinen
+weiter, ohne die Identität des Nutzers mitzuschicken. Die Aussage „alles bleibt in der EU" gilt
+für Speicherung und Inferenz, nicht für die Web-Suche.
+
+Es gibt eine gehostete Instanz in der Schweiz. Wo Ihre eigene Instanz liegt, entscheiden Sie mit
+der Wahl des Servers.
+
+## Umfang und Abgrenzung
+
+Damit Sie den Funktionsumfang sauber gegen Ihre Anforderungen halten können, hier die Bereiche,
+die nicht im Lieferumfang stehen oder bei der Einrichtung eine Entscheidung verlangen.
+
+| Bereich | Stand |
+|---|---|
+| Web-Suche | Die Suchmaschine läuft in der Instanz. Den Scraper wählen Sie nach Ihren Anforderungen an die Datenresidenz und hinterlegen ihn bei der Einrichtung |
+| Ausgehende Verbindungen der Code-Ausführung | werden bei der Einrichtung festgelegt. Im Auslieferungszustand ist die Code-Ausführung aus |
+| Benutzer-Bereitstellung über SCIM | nicht enthalten. Konten entstehen beim ersten Login über OIDC, das Entziehen läuft über den Identity Provider |
+| Automatische Abrechnung | Belege als CSV und PDF sind enthalten, eine Zahlungsanbindung nicht |
+| OCR, Bildgenerierung, Sprachein- und -ausgabe | nicht enthalten. Gescannte PDF-Dateien werden nicht als Text gelesen |
+
+## Weiter
+
+---
+
+# Architektur
+Quelle: https://eucowork.ai/docs/erste-schritte/architektur
+Kapitel: Erste Schritte
+
+Der Aufbau in groben Zügen — Zugang über einen Reverse-Proxy, die Anwendung dahinter, die Datenhaltung daneben und die Modellanbieter ausserhalb.
+
+EU Cowork AI läuft in Containern auf einer Linux-Maschine. Diese Seite zeigt den
+Aufbau in groben Zügen. Sie beschreibt, welchen Weg eine Anfrage nimmt und welche
+Entscheidungen dahinterstehen — nicht die Einrichtung im Einzelnen.
+
+## Der Datenfluss
+
+Zwei Dinge sind daran wesentlich. Erstens führt jeder Weg von aussen über den Reverse-Proxy;
+die übrigen Dienste nehmen keine Verbindungen aus dem Netz an. Zweitens bleiben Konten,
+Konversationen und Dateien auf Ihrem Server, während für die Modellantworten selbst der
+Anbieter angesprochen wird.
+
+## Die Schichten
+
+**Reverse-Proxy.** Der einzige Einstieg von aussen. Er beendet TLS, kümmert sich um das
+Zertifikat und verteilt die Anfragen an die Dienste dahinter.
+
+**Anwendung.** Das ist [LibreChat](https://www.librechat.ai). Der Dienst liefert die
+Oberfläche aus, spricht die Modell-Anbieter an, führt die Agenten aus und verarbeitet
+hochgeladene Dateien.
+
+**Datenhaltung.** Konten, Konversationen, Nachrichten, Agenten und Protokolle liegen in der
+Datenbank der Instanz, dazu kommen ein Suchindex über die eigenen Chats und die hochgeladenen
+Dateien auf demselben Server. Die Datenbank ist die Quelle der Wahrheit, der Suchindex lässt
+sich daraus jederzeit neu aufbauen.
+
+**Ergänzungen von EU Cowork AI.** Um LibreChat herum liegen eigene Dienste für Administration,
+Rechteverwaltung und Verbrauchsübersicht sowie die Anbindung an Fremdsysteme. Sie sind nur
+innerhalb der Instanz erreichbar und stehen nicht im Netz.
+
+**Ausserhalb der Instanz.** Für die Modellantworten wird der Inferenz-Anbieter angesprochen,
+für die Web-Suche externe Suchmaschinen. Wird die Code-Ausführung eingeschaltet, läuft sie in
+einer eigenen, abgetrennten Umgebung neben der Anwendung.
+
+**Was von LibreChat kommt**
+
+Chat, Agenten, Dateiverarbeitung und Modellanbindung stammen von LibreChat und sind dort
+öffentlich dokumentiert. Die Ergänzungen von EU Cowork AI setzen darauf auf, ohne den Kern zu
+verändern; deshalb bleiben Aktualisierungen von LibreChat möglich.
+
+## Warum eine Instanz je Kunde
+
+LibreChat kennt keine Mandanten. Die Trennung liegt deshalb unterhalb der Anwendung: Ein Kunde
+ist eine eigene Instanz mit eigener Datenbank, eigenem Suchindex, eigenen Dateien, eigener
+Konfiguration und eigenem Inferenz-Schlüssel. Ob zwei Instanzen sich eine Maschine teilen, ist
+danach eine reine Kosten- und Risikofrage.
+
+Geteilt werden dürfen allenfalls Betriebsmittel ohne Kundenbezug. Getrennt bleiben müssen in
+jedem Fall die Datenhaltung, die Konfiguration samt aller Schlüssel und die Umgebung der
+Code-Ausführung. Sonst lassen sich weder die Daten noch die Kosten sauber je Kunde
+auseinanderhalten.
+
+**Die Unterlagen zur Einrichtung**
+
+Welche Dienste eine Instanz im Einzelnen mitbringt, wie sie konfiguriert werden und was beim
+Betrieb zu beachten ist, beschreiben die Unterlagen, die der Auslieferung beiliegen.
+
+## Weiter
+
+---
+
+# Systemanforderungen
+Quelle: https://eucowork.ai/docs/erste-schritte/systemanforderungen
+Kapitel: Erste Schritte
+
+Was eine selbst betriebene Instanz an CPU, Arbeitsspeicher, Plattenplatz und Betriebssystem braucht.
+
+Diese Seite sagt in groben Zügen, was eine selbst betriebene Instanz an Hardware braucht. Sie
+ist für diejenigen gedacht, die eine VM bestellen oder eine bestehende Maschine bewerten.
+
+## Richtwerte
+
+| | Richtwert |
+|---|---|
+| CPU | 2 bis 4 vCPU |
+| Arbeitsspeicher | 4 bis 16 GB, je nach Zahl der Nutzenden |
+| Plattenplatz | einige Dutzend GB, mit Reserve für hochgeladene Dateien |
+| Betriebssystem | eine verbreitete Linux-Distribution mit Langzeitunterstützung |
+
+Der Plattenbedarf wächst vor allem mit den hochgeladenen Dateien; wer viel ablegt, plant von
+Anfang an grosszügiger. Kleine Instanzen sind ausdrücklich zulässig.
+
+Die CPU-Last ist im Normalbetrieb gering, denn gerechnet wird beim Inferenz-Anbieter. Spitzen
+entstehen nur bei einzelnen Zusatzfunktionen. Mit der Nutzerzahl wächst vor allem der
+Arbeitsspeicherbedarf der Anwendung; für eine grössere Belegschaft lohnt sich eine eigene VM je
+Instanz.
+
+## Betriebssystem und Container-Laufzeit
+
+Empfohlen ist eine verbreitete Linux-Distribution mit Langzeitunterstützung. Auf anderen
+Distributionen läuft die Installation weiter, kann aber abweichen.
+
+Zwingend ist eine **aktuelle Container-Laufzeit mit Compose-Unterstützung**. Beziehen Sie sie
+aus der offiziellen Paketquelle des Herstellers; die Pakete mancher Distributionen bringen nicht
+den nötigen Umfang mit.
+
+## Plattenplatz
+
+Die Container-Images belegen einmalig einige Gigabyte. Danach wachsen vor allem drei Dinge: die
+hochgeladenen Dateien, die Datenbank und die Protokolle.
+
+Der Plattenplatz ist die erste Grenze im Betrieb, nicht der Arbeitsspeicher. Überwachen Sie die
+Belegung und räumen Sie nicht mehr benötigte Images regelmässig auf.
+
+**Die Unterlagen zur Einrichtung**
+
+Die Anforderungen an Netz, Zugriff und Betriebssystem im Einzelnen beschreiben die Unterlagen,
+die der Auslieferung beiliegen. Sie gehören zum Installationspaket.
+
+---
+
+# Schnellstart
+Quelle: https://eucowork.ai/docs/erste-schritte/schnellstart
+Kapitel: Erste Schritte
+
+Der Weg zu einer eigenen Instanz in groben Zügen, von der Serverwahl bis zum ersten Konto.
+
+Es gibt zwei Wege zu einer eigenen Instanz. Entweder Sie nutzen eine gehostete Instanz in der
+Schweiz und bekommen einen fertigen Zugang, oder Sie betreiben die Plattform selbst auf einem
+eigenen Linux-Server. Diese Seite beschreibt den zweiten Weg in groben Zügen.
+
+1. **Server bereitstellen**
+
+   Eine Linux-Maschine mit einer aktuellen Container-Laufzeit. Wie gross sie sein sollte, steht
+   unter [Systemanforderungen](/docs/erste-schritte/systemanforderungen).
+
+2. **Domain eintragen**
+
+   Die Domain, unter der die Instanz erreichbar sein soll, zeigt per DNS auf den Server. Das
+   Zertifikat holt der Reverse-Proxy anschliessend selbständig, dafür muss der Server aus dem
+   Netz erreichbar sein.
+
+3. **Installieren**
+
+   Die Installation ist geführt und richtet Konfiguration und Dienste ein. Bereitliegen sollte
+   dabei der Zugang zu Ihrem Inferenz-Anbieter; im Auslieferungszustand ist das
+   [EuRouter](https://eurouter.ai), wo in der EU verarbeitet wird.
+
+4. **Zugang beschränken**
+
+   Bevor die Instanz an die ersten Personen geht, gehört festgelegt, welche E-Mail-Domänen
+   sich überhaupt registrieren dürfen. Diese Liste ist der massgebliche Zugangsschutz — nicht
+   die Frage, wer die Adresse kennt.
+
+5. **Erstes Konto anlegen**
+
+   Bei der Einrichtung entsteht das erste Administratorkonto, alle weiteren Konten sind
+   normale Benutzer. Legen Sie danach ein zweites Administratorkonto an, damit Sie sich nicht
+   aussperren.
+
+6. **Einrichten**
+
+   In der Administration richten Sie ein, was im Alltag gilt: Gruppen anlegen, Modelle je
+   Gruppe freigeben, Zugriffe auf Fremdsysteme regeln und Mitarbeitende einladen.
+
+**Die Anleitung im Einzelnen**
+
+Die vollständige Installationsanleitung liegt der Auslieferung bei. Sie gehört zum
+Installationspaket.
+
+## Weiter
+
+---
+
+# Kapitel: Installation und Betrieb
+
+---
+
+# Server vorbereiten
+Quelle: https://eucowork.ai/docs/betrieb/server-vorbereiten
+Kapitel: Installation und Betrieb
+
+Welche Grundlagen eine Maschine mitbringen muss, bevor EU Cowork AI darauf installiert wird.
+
+EU Cowork AI wird self-hosted betrieben und läuft als Docker-Compose-Anwendung, so wie
+LibreChat selbst es für den eigenen Betrieb vorsieht. Bevor die Anwendung installiert wird,
+muss die Maschine dafür vorbereitet sein.
+
+## Was der Server mitbringen muss
+
+- Eine aktuelle Linux-Distribution mit Langzeitunterstützung.
+- Docker mit aktuellem Compose-Plugin, so wie LibreChat es für den Self-Hosting-Betrieb
+  voraussetzt.
+- Genug Arbeitsspeicher, CPU und Plattenplatz für die geplante Nutzerzahl, siehe
+  [Systemanforderungen](/docs/erste-schritte/systemanforderungen).
+- Eine Firewall, die eingehende Verbindungen auf das Nötige beschränkt, sowie Zeitsynchronisation
+  und automatische Sicherheitsaktualisierungen des Betriebssystems.
+- Log-Rotation für Docker, damit die Container-Protokolle die Systemplatte nicht über Wochen
+  volllaufen lassen.
+
+## Vorbereitung der Maschine
+
+Diese Grundlagen werden eingerichtet, bevor die Anwendung dazukommt. Die Vorbereitung betrifft
+allein das Betriebssystem und die Container-Umgebung; Konfiguration und Anwendung folgen erst im
+nächsten Schritt, siehe [Installation](/docs/betrieb/installation). Für diesen Schritt liegen dem
+Auslieferungspaket entsprechende Hilfsmittel bei.
+
+**Detaillierte Anleitung im Betriebshandbuch**
+
+Der genaue Ablauf und die Prüfliste nach der Vorbereitung stehen im Betriebshandbuch,
+das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
+
+## Nächster Schritt
+
+---
+
+# Installation
+Quelle: https://eucowork.ai/docs/betrieb/installation
+Kapitel: Installation und Betrieb
+
+Wie eine Instanz von EU Cowork AI eingerichtet wird und welche Schritte nach dem ersten Start anstehen.
+
+Die Einrichtung erfolgt geführt anhand des Auslieferungspakets. Dabei entstehen die
+Konfiguration und die Geheimnisse der Instanz, danach startet die Anwendung. Voraussetzung
+ist ein vorbereiteter Server, siehe [Server vorbereiten](/docs/betrieb/server-vorbereiten).
+
+## Was die Einrichtung übernimmt
+
+- Sie prüft die Voraussetzungen auf der Maschine und bricht ab, wenn Grundlegendes fehlt.
+- Sie erzeugt die Konfiguration der Instanz und setzt alle Geheimnisse auf frisch erzeugte
+  Zufallswerte. Jede Instanz erhält dabei eigene Werte, und diese sind nur für den Betrieb der
+  Instanz lesbar.
+- Sie richtet die Ablagen der Instanz mit den nötigen Rechten ein und startet die Anwendung.
+- Sie meldet am Ende, welche Werte noch von Hand einzutragen sind. Gemeldet werden nur die Namen
+  der Werte, nie deren Inhalt.
+
+**Die erzeugten Geheimnisse sichern**
+
+Ein Teil der erzeugten Werte entschlüsselt, was verschlüsselt in der Datenbank liegt. Gehen
+diese Werte verloren oder werden sie bei einem Umzug neu erzeugt statt übernommen, sind die
+betroffenen Daten unwiederbringlich unlesbar, und jede Person müsste ihre Verbindungen neu
+aufbauen. Das reguläre Backup umfasst die Konfiguration und damit diese Werte, siehe
+[Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Der einzige Pflichtwert
+
+Für eine Standardinstallation tragen Sie genau einen Wert selbst ein: den Schlüssel des
+Inferenz-Anbieters mit EU-Verarbeitung. Die Einrichtung weist am Ende ausdrücklich darauf hin.
+Alles Weitere ist optional — eine Zweitoption für Modelle, die Konnektoren, der
+E-Mail-Versand und die Code-Ausführung.
+
+## Was manuell bleibt
+
+- DNS-Einträge setzen und die TLS-Variante wählen, siehe
+  [Domain und Zertifikat](/docs/betrieb/domain-und-tls).
+- Den Domain-Lock für die Registrierung setzen, siehe
+  [Konfiguration](/docs/betrieb/konfiguration#domain-lock).
+- Rollenrechte und Modellkarten im Admin-Panel festlegen.
+- Für jeden Konnektor im Panel den Zugriff bewusst freigeben statt offen zu lassen.
+- Backup einrichten, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Nach dem ersten Start
+
+1. **Chat öffnen.** Unter der Adresse, unter der die Instanz eingerichtet wurde.
+
+2. **Erstes Konto anlegen.** Registrieren Sie sich im Chat. Das erste Konto einer Instanz
+   erhält die Administrationsrechte.
+
+3. **Admin-Panel prüfen.** Der Zugang setzt ein Konto mit Administrationsrechten voraus.
+
+4. **Zugang schliessen.** Domain-Lock setzen, damit sich nur Personen aus Ihrer
+   E-Mail-Domäne registrieren können.
+
+5. **Zweites Admin-Konto anlegen.** Nicht nur das persönliche Konto, sonst sperren Sie sich
+   im Ernstfall selbst aus.
+
+6. **Backup einrichten.** Einmal von Hand sichern und die Sicherung anschliessend planen.
+
+**Detaillierte Anleitung im Betriebshandbuch**
+
+Der genaue Ablauf und die vollständige Liste der Konfigurationswerte stehen im
+Betriebshandbuch, das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem
+Zugang.
+
+## Weiter
+
+---
+
+# Konfiguration
+Quelle: https://eucowork.ai/docs/betrieb/konfiguration
+Kapitel: Installation und Betrieb
+
+Die drei Konfigurationsebenen von EU Cowork AI, welche Ebene bei einem Widerspruch gewinnt und wie der Domain-Lock gesetzt wird.
+
+EU Cowork AI wird an drei Stellen konfiguriert. Wer weiss, welche Stelle wofür zuständig ist
+und welche Ebene bei einem Widerspruch gewinnt, spart sich das Suchen.
+
+## Die drei Ebenen
+
+| Ebene | Ort | Inhalt | Wann es wirkt |
+|---|---|---|---|
+| Infrastruktur und Geheimnisse | Umgebungsdatei der Instanz | Adressen, Schlüssel, Betriebsparameter | nach einem Neustart der Anwendung |
+| Produktverhalten | `librechat.yaml` | Modellkarten, Oberfläche, Konnektoren, Registrierung | nach einem Neustart des Chat-Dienstes |
+| Laufzeit-Overrides | Admin-Panel, Seite **Konfiguration** | dieselben Produkteinstellungen, pro Instanz, Rolle oder Gruppe | sofort, ohne Neustart |
+
+Die Umgebungsdatei entsteht bei der Installation aus einer durchgehend kommentierten Vorlage.
+Dort steht zu jedem Wert, wofür er gebraucht wird.
+
+## Welche Ebene gewinnt
+
+Ein im Panel gesetzter Wert steht **über** der YAML. Das Panel schreibt seine Werte in die
+Datenbank, die Anwendung liest sie beim nächsten Aufruf und sie überleben einen Neustart. Die
+YAML bleibt der Ausgangszustand, der greift, solange kein Override existiert.
+
+Im Panel erkennen Sie das an zwei Details: Abschnitte mit aktivem Override tragen den Badge
+**aus DB-Override**, und neben jedem überschriebenen Feld gibt es ein Symbol zum Entfernen.
+
+**Ein Feld zu leeren entfernt den Override nicht**
+
+Wer ein überschriebenes Feld im Panel leert, speichert einen leeren Wert und behält den
+Override. Zurück zum YAML-Stand kommen Sie nur über das Rücksetz-Symbol neben dem Feld.
+
+Für Modellkarten gilt zusätzlich eine eigene Kaskade: **Gruppe vor Rolle vor Basis**. Die
+Rechte an Werkzeugen gehören dagegen in den Rollen-Editor und nicht in die Konfiguration, im
+Reiter Funktionen würden sie serverseitig verworfen.
+
+## Der `interface`-Block
+
+Der `interface`-Block in der YAML steuert, was in der Oberfläche sichtbar ist: der
+Modell-Picker, die Web-Suche, die Dateisuche, die Code-Ausführung, Voreinstellungen,
+Lesezeichen und das Parameter-Panel. Funktionen, deren Voraussetzungen nicht erfüllt sind, sind
+im Auslieferungszustand bewusst ausgeschaltet — ein sichtbarer Knopf ohne Wirkung ist schlechter
+als kein Knopf.
+
+Zwei Regeln sind dabei wichtig:
+
+- **Der Block ist global.** Die Werte werden beim Start in alle Rollen geschrieben. Ein
+  Unterschied zwischen Rollen lässt sich in der YAML deshalb nicht abbilden. Soll ein Werkzeug
+  nur für eine Rolle freigegeben werden, lassen Sie das Feld aus der YAML weg und setzen es im
+  Rollen-Editor des Admin-Panels.
+- **Fähigkeitslisten ersetzen, statt zu mischen.** Wer die Liste der Agenten-Fähigkeiten
+  anfasst, ersetzt die Standardliste vollständig. Es wird nichts zusammengeführt, alles
+  Behaltene muss also erneut aufgezählt werden.
+
+Für Unternehmen, die eine möglichst schlichte Oberfläche wollen, lassen sich die Bedienteile,
+die nur Poweruser brauchen, gesammelt abschalten.
+
+## Domain-Lock
+
+Der Domain-Lock ist der erste Schritt nach der Installation und gehört gesetzt, **bevor** die
+Instanz unter ihrer Domain erreichbar ist. Massgeblich ist die Liste der erlaubten
+E-Mail-Domänen: Sie entscheidet, wer überhaupt ein Konto anlegen kann.
+
+Die Liste wird in der Konfiguration der Instanz hinterlegt; dieselbe Liste pflegen Sie im Panel
+unter **Konfiguration** im Reiter Funktionen im Feld **Erlaubte E-Mail-Domains**. Sie gilt für
+die Selbstregistrierung und für Einladungen: eine Einladung an eine Adresse ausserhalb der Liste
+greift nicht.
+
+Prüfen lässt sich das mit einer Registrierung unter einer fremden Domäne, sie muss abgelehnt
+werden.
+
+**Vollständige Wertelisten im Betriebshandbuch**
+
+Welche Werte in der Konfiguration stehen und welche optionalen Bausteine sich zuschalten
+lassen, steht im Betriebshandbuch, das dem Auslieferungspaket beiliegt. Kunden erhalten es
+zusammen mit dem Zugang.
+
+## Weiter
+
+---
+
+# Domain und Zertifikat
+Quelle: https://eucowork.ai/docs/betrieb/domain-und-tls
+Kapitel: Installation und Betrieb
+
+Die drei TLS-Varianten von EU Cowork AI, also öffentliches Zertifikat, interne CA im LAN und Betrieb hinter einer bestehenden WAF.
+
+Der Zugriff auf eine Instanz läuft über einen mitgelieferten Reverse-Proxy. Er verteilt die
+Anfragen auf die Bestandteile der Anwendung und kümmert sich um das Zertifikat. Welche
+Zertifikatsvariante gilt, wird in der Konfiguration gewählt.
+
+## DNS
+
+Die Instanz braucht einen DNS-Namen, der auf den Server zeigt. Welche Einträge genau zu setzen
+sind, nennt das Betriebshandbuch. Für die automatische Zertifikatsausstellung muss der Server
+aus dem Internet über die üblichen Web-Ports erreichbar sein.
+
+## Variante 1: Öffentliches Zertifikat
+
+Der Normalfall für einen Server mit öffentlicher Adresse. Der Reverse-Proxy holt und erneuert
+das Zertifikat selbstständig über Let's Encrypt. Voraussetzung ist öffentlich auflösender DNS.
+In einem abgeschotteten Netz funktioniert diese Variante nicht.
+
+## Variante 2: Interne CA im LAN
+
+Für Server ohne öffentliche Erreichbarkeit. Der Reverse-Proxy stellt die Zertifikate aus einer
+eigenen, lokalen Zertifizierungsstelle aus. Die Geräte brauchen dafür einen internen
+DNS-Eintrag, und die Wurzel-Zertifizierungsstelle muss auf jedem Gerät als vertrauenswürdig
+hinterlegt werden — sonst erscheint eine Zertifikatswarnung.
+
+Der spätere Wechsel auf ein öffentliches Zertifikat ist einfach: Hostname, Links und
+Redirect-URIs bleiben gleich.
+
+**Fürs Outlook-Add-in reicht eine interne CA nicht**
+
+Die Webansicht in Office zeigt keine Zertifikatswarnung an, die man wegklicken könnte. Ohne
+installierte Wurzel-CA auf dem Gerät bleibt das Add-in-Fenster schlicht leer, ohne
+Fehlermeldung. Für einen breiten Rollout des Add-ins brauchen Sie ein öffentlich
+vertrauenswürdiges Zertifikat, also Variante 1 oder Variante 3.
+
+## Variante 3: Hinter einer bestehenden WAF
+
+Wenn eine vorgelagerte Appliance wie Sophos, F5, HAProxy oder nginx bereits HTTPS terminiert,
+soll der mitgelieferte Proxy kein zweites Zertifikat holen. In dieser Variante übernimmt er
+allein die Verteilung, die Terminierung bleibt bei der Appliance.
+
+Damit die Zuordnung greift, muss die Appliance den Host-Header durchreichen. In der
+Konfiguration der Anwendung wird die öffentliche Adresse so hinterlegt, wie Ihre Nutzenden sie
+aufrufen — sonst entstehen etwa Einladungslinks, die ins Leere führen.
+
+**WAF und Streaming**
+
+Viele Appliances puffern den Antwortstrom, um die Antwort zu prüfen. Der Chat schickt seine
+Antworten aber Stück für Stück. Ist die Pufferung aktiv, erscheint die Antwort erst am Ende
+auf einen Schlag oder bricht bei langen Antworten ab. Setzen Sie in der WAF eine Ausnahme für
+die betroffenen Pfade, damit der Antwortstrom nicht gepuffert wird, und schalten Sie dort die
+Kompression ab.
+
+**Konfiguration im Betriebshandbuch**
+
+Welche Einstellungen die jeweilige Variante verlangt, steht im Betriebshandbuch, das dem
+Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
+
+## Weiter
+
+---
+
+# Aktualisieren
+Quelle: https://eucowork.ai/docs/betrieb/aktualisieren
+Kapitel: Installation und Betrieb
+
+Wie eine laufende Instanz von EU Cowork AI auf einen neuen Stand kommt, warum vorher gesichert wird und wie der Rückweg aussieht.
+
+Ein Update besteht aus vier Handgriffen: neuen Stand holen, die eigene Konfiguration gegen die
+Vorlage vergleichen, sichern, installieren. Es läuft über denselben geführten Weg wie die
+Ersteinrichtung, nur im Update-Modus.
+
+## Der Vergleich mit der Vorlage
+
+Vor dem Update wird die Konfiguration der Instanz gegen die mitgelieferte Vorlage gehalten.
+Verglichen werden nur die **Namen** der Werte, keine Inhalte — Geheimnisse tauchen dabei also
+nicht auf. Zwei Dinge lesen Sie daraus ab:
+
+- Werte, die nur in der Vorlage stehen, sind neu hinzugekommen. Die Vorlage ist durchgehend
+  kommentiert, dort steht, wofür ein Wert gebraucht wird. Neue Werte sind fast immer optional.
+- Werte, die nur in Ihrer Konfiguration stehen, sind entweder instanzspezifisch oder stammen
+  aus einer alten Version und können weg.
+
+## Warum immer vorher ein Backup
+
+Ein Update wechselt Programmstände unter einer bestehenden Datenbank. Geht dabei etwas schief,
+ist der schnellste Weg zurück ein Archiv von vorher. Ein Backup dauert Sekunden, ein verlorener
+Datenbestand kostet Tage. Details unter [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Der Update-Modus
+
+Im Update-Modus bleibt die vorhandene Konfiguration unangetastet, und es entstehen keine neuen
+Geheimnisse. Genau das wollen Sie beim Update: Ihre Schlüssel und Adressen bleiben, wie sie
+sind. Gleichzeitig werden alle Bestandteile der Auslieferung gemeinsam erneuert.
+
+**Einzelne Bestandteile von Hand zu erneuern reicht nicht**
+
+Wer nur einen Teil der Auslieferung erneuert, lässt die übrigen Bestandteile auf dem alten Stand
+zurück. Nutzen Sie deshalb den vorgesehenen Update-Weg und keine Handgriffe daneben.
+
+## Warum Versionen fest gepinnt sind
+
+Die Images sind bewusst nicht auf `latest` gesetzt, sondern auf eine feste, unveränderliche
+Version. Der Grund: `latest` zieht auf jedem Server und bei jedem Abruf einen anderen Stand.
+Ein Release von EU Cowork AI ist aber eine **getestete Kombination** aus LibreChat-Version und
+den ergänzenden Bestandteilen. Nur mit einer festen Version fährt jeder Server genau die
+Kombination, die auch geprüft wurde.
+
+## Nach dem Update prüfen
+
+Vier Punkte: Anmeldung am Chat, Anmeldung am Admin-Panel, eine Testfrage im Chat und ein Blick
+darauf, ob alle Dienste stabil laufen. Konfigurationsfehler — etwa eine YAML-Datei, die nach
+einem Update nicht mehr zum Schema passt — werden dabei sichtbar.
+
+## Rollback
+
+Ein Rollback setzt den **gesamten Auslieferungsstand** auf die vorige Version zurück, nicht
+einzelne Dateien. Nur zusammen ergeben die Bestandteile wieder die Kombination, die vorher lief.
+Die Konfiguration der Instanz bleibt dabei unangetastet.
+
+Nur wenn auch Daten betroffen sind, kommt der Restore aus dem Archiv dazu. Er ist zerstörend,
+siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). Prüfen Sie den Rollback einmal auf
+einer Testinstanz, bevor Sie ihn im Ernstfall zum ersten Mal brauchen.
+
+**Ablauf im Betriebshandbuch**
+
+Der Update-Ablauf, der Versionswechsel und der Rückweg stehen im Betriebshandbuch, das dem
+Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
+
+## Weiter
+
+---
+
+# Backup und Umzug
+Quelle: https://eucowork.ai/docs/betrieb/backup-und-umzug
+Kapitel: Installation und Betrieb
+
+Was eine Sicherung von EU Cowork AI umfasst, wie ein Restore wirkt und worauf ein Umzug auf einen neuen Server hinausläuft.
+
+Sicherung und Umzug gehören zusammen: Ein Umzug ist technisch nichts anderes als eine Sicherung
+auf der alten Maschine und deren Wiederherstellung auf der neuen. Für beides liegen dem
+Auslieferungspaket die nötigen Hilfsmittel bei.
+
+## Was gesichert wird
+
+Eine Sicherung muss den gesamten Zustand einer Instanz umfassen — und nur den Zustand. Dazu
+gehören die Datenbank mit den Inhalten der Instanz, die hochgeladenen Dateien und die
+Konfiguration samt ihren Geheimnissen. Die Geheimnisse gehören zwingend dazu: Ohne sie bleibt
+ein Teil der Datenbank auch nach einer vollständigen Wiederherstellung unlesbar.
+
+Nicht gesichert werden muss, was sich aus diesem Zustand wieder herleiten lässt. Solche
+abgeleiteten Bestände bauen sich nach einer Wiederherstellung von selbst wieder auf.
+Laufzeitprotokolle sind ebenfalls kein Zustand.
+
+## Regelmässig sichern
+
+Die Sicherung wird einmal eingerichtet und läuft danach zeitgesteuert, mit einer
+Aufbewahrungsregel, die alte Stände nach einer festgelegten Frist verfallen lässt. Wie oft
+gesichert wird, ergibt sich aus einer einzigen Frage: Wie viel Arbeit darf im schlimmsten Fall
+verloren gehen?
+
+## Restore und seine Wirkung
+
+Eine Wiederherstellung ist **zerstörend**. Sie ersetzt den aktuellen Stand der Instanz durch den
+Stand aus der Sicherung; was seither entstanden ist, ist danach weg. Der Weg dorthin verlangt
+deshalb eine ausdrückliche Bestätigung. Behandeln Sie eine Wiederherstellung als bewussten
+Eingriff und nicht als Routinehandgriff.
+
+## Umzug auf einen neuen Server
+
+Ein Umzug führt über eine Sicherung der alten Instanz, die Einrichtung der neuen Maschine und
+das Einspielen dieses Standes. Drei Punkte entscheiden über das Gelingen:
+
+- Die Geheimnisse der bestehenden Instanz werden übernommen und nicht neu erzeugt.
+- Die neue Instanz wird geprüft, bevor umgeschaltet wird, nicht danach.
+- Zwischen der massgeblichen Sicherung und der Umschaltung darf nicht weitergearbeitet werden,
+  sonst fehlt genau diese Arbeit auf dem neuen Server.
+
+Die Kopie der Sicherung, die für den Umzug transportiert wird, enthält Geheimnisse und
+Kundeninhalte. Löschen Sie sie nach dem Umzug; bestehen bleibt allein die reguläre Sicherung.
+
+**Die Verschlüsselungsschlüssel übernehmen**
+
+Das ist der teuerste Fehler beim Umzug. Werden die Schlüssel, mit denen die Anwendung Daten in
+der Datenbank verschlüsselt, auf dem neuen Server neu erzeugt statt aus der bestehenden
+Konfiguration übernommen, sind die betroffenen Daten unlesbar — auch dann, wenn die Datenbank
+vollständig wiederhergestellt wurde. Jede Person müsste ihre Verbindungen neu aufbauen. Deshalb
+führt der Weg immer über die Konfiguration aus der Sicherung.
+
+## Zwei Empfehlungen, die wirklich zählen
+
+- **Die Wiederherstellung einmal testen, bevor Sie sich darauf verlassen.** Eine Sicherung, die
+  nie zurückgespielt wurde, ist eine Annahme, keine Sicherung. Der Test gehört auf eine
+  Testmaschine, nicht auf das Produktivsystem.
+- **Die Sicherung ausserhalb des Servers spiegeln.** Eine Kopie auf derselben Maschine schützt
+  gegen ein versehentliches Löschen, nicht gegen den Verlust der Maschine. Weil eine Sicherung
+  Geheimnisse enthält, gehört sie nur verschlüsselt in eine Cloud und nie in ein Repository.
+
+**Ablauf im Betriebshandbuch**
+
+Der Ablauf im Einzelnen — Sicherung, Wiederherstellung und Umzug Schritt für Schritt — steht im
+Betriebshandbuch, das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem
+Zugang.
+
+## Weiter
+
+---
+
+# Fehlerbehebung
+Quelle: https://eucowork.ai/docs/betrieb/fehlerbehebung
+Kapitel: Installation und Betrieb
+
+Wo Sie bei einer Störung zuerst hinschauen und welche Ursachengruppen im Betrieb von EU Cowork AI am häufigsten dahinterstecken.
+
+Die meisten Störungen lassen sich in wenigen Minuten einer Ursachengruppe zuordnen. Diese Seite
+zeigt, wo Sie dafür hinschauen. Die ausführliche Fehlerbehebung steht im Betriebshandbuch, das
+dem Auslieferungspaket beiliegt.
+
+## Wo schaue ich zuerst hin
+
+1. **Admin-Panel, Seite Logs.** Sie zeigt die einzelnen Anfragen mit Modell, Dauer und Kosten,
+   dieselben Anfragen pro Konversation zusammengefasst, die Fehler aus dem Outlook-Add-in und
+   die Serverprotokolle. Siehe
+   [Protokolle und Audit](/docs/administration/protokolle-und-audit).
+2. **Seite Zugriffe der betroffenen Person.** Für die Frage, warum jemand einen Konnektor nicht
+   sieht, ist das die schnellste Antwort: Sie nennt pro Konnektor die entscheidende Regelstufe.
+3. **Erst danach auf die Serverebene.** Was im Panel nicht sichtbar wird, sind Störungen, die
+   bereits beim Start der Anwendung auftreten.
+
+## Die häufigsten Ursachengruppen
+
+| Bild | Wo die Ursache meist liegt |
+|---|---|
+| Antworten bleiben aus oder laufen in Zeitüberschreitungen | Die Instanz erreicht das Internet nicht — typischerweise ein VPN-Client, ein Firmen-Proxy oder eine kollidierende Netzroute. Seltener ein ungültiger Schlüssel des Inferenz-Anbieters. |
+| Eine Funktion ist sichtbar, tut aber nichts | Der zugehörige optionale Bestandteil läuft nicht oder ist nicht konfiguriert. Betrifft vor allem Dateisuche, Code-Ausführung und Web-Suche. |
+| Ein Dienst startet nach der Installation wiederholt neu | Zugriffsrechte auf den Ablagen der Instanz. Beim regulären Einrichtungsweg tritt das nicht auf. |
+| Antworten erscheinen erst am Ende auf einen Schlag | Eine vorgelagerte Appliance puffert den Antwortstrom, siehe [Domain und Zertifikat](/docs/betrieb/domain-und-tls). |
+| Nach einem Umzug muss jede Person ihre Konnektoren neu verbinden | Die Verschlüsselungsschlüssel wurden neu erzeugt statt übernommen, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). |
+| Nach einem Update passt etwas in der Oberfläche nicht mehr | Die Konfiguration entspricht nicht mehr dem aktuellen Stand, oder ein neuer Wert fehlt darin. |
+
+**Wenn nichts davon passt**
+
+Notieren Sie, was zuletzt geändert wurde, und vergleichen Sie Ihre Konfiguration mit der
+mitgelieferten Vorlage. Ein Grossteil der übrigen Störungen geht auf einen fehlenden Wert oder
+auf eine Konfiguration zurück, die nach einem Update nicht mehr zum aktuellen Stand passt.
+Kommen Sie damit nicht weiter, hilft der Support-Weg aus Ihrem Vertrag weiter.
+
+## Weiter
+
+---
+
+# Kapitel: Für Mitarbeitende
+
+---
+
+# Chat und Modelle
+Quelle: https://eucowork.ai/docs/funktionen/chat-und-modelle
+Kapitel: Für Mitarbeitende
+
+Wie der Chat funktioniert, wie Modellkarten aufgebaut sind, wie Erinnerungen und die automatische Kompaktierung langer Gespräche arbeiten.
+
+Diese Seite beschreibt, was Mitarbeitende im Chat vorfinden: Verlauf, Suche, Modellkarten,
+Erinnerungen und das Verhalten bei sehr langen Gesprächen. Am Ende steht ein Abschnitt für
+Administratoren mit den Schaltern dazu.
+
+Die Chat-Oberfläche stammt von [LibreChat](https://www.librechat.ai/docs). Von uns kommen die
+Kuration der Modellkarten, der hinterlegte Systemprompt und die Rechteverwaltung darüber.
+
+**Vier Begriffe vorab**
+
+| Begriff | In einem Satz |
+|---|---|
+| **Token** | Die Recheneinheit der Sprachmodelle: ein Textstück von rund vier Zeichen, also grob ein halbes bis ein ganzes Wort. Alles, was Sie schreiben und was der Kollege antwortet, wird darin gezählt, und daran hängen Verbrauch, Budgets und Kontextgrenzen. |
+| **Modellkarte** | Ein fertiges Paket aus Anbieter, Modell und Voreinstellungen, das Sie im Picker unter einem verständlichen Namen auswählen, statt ein rohes Modell zu benennen. |
+| **Systemprompt** | Die Arbeitsanweisung, die dem Modell vor Ihrer Frage mitgegeben wird und Sprache, Ton und Verhalten festlegt. Sie hängt an der Karte und ist im Chat nicht sichtbar. |
+| **Kontext** | Alles, was das Modell bei einer Anfrage gleichzeitig lesen kann: Ihre Frage, der bisherige Verlauf, angehängte Dateien und Werkzeug-Ergebnisse. Der Platz dafür ist begrenzt und wird in Tokens gemessen. |
+
+## Der Alltag im Chat
+
+Sie schreiben eine Frage, die Antwort erscheint laufend, Wort für Wort. Jede Unterhaltung
+landet im Verlauf der linken Spalte und bekommt automatisch einen Titel, den ein Modell aus
+den ersten Nachrichten ableitet. Sie können den Titel jederzeit überschreiben.
+
+| Funktion | Was sie tut |
+|---|---|
+| Verlauf | Alle Unterhaltungen bleiben gespeichert, bis Sie sie löschen oder die Aufbewahrungsfrist greift |
+| Automatische Titel | Der Titel entsteht beim ersten Austausch, ohne Ihr Zutun |
+| Lesezeichen | Wichtige Unterhaltungen markieren und schneller wiederfinden |
+| Parallel-Antworten | Mehrere Chats nebeneinander laufen lassen und Antworten vergleichen |
+| Privater Chat | Eine Unterhaltung, die nicht gespeichert wird |
+| Abzweigen | Ab einer beliebigen Nachricht einen neuen Strang eröffnen, ohne das Original zu verändern |
+| Teilen | Eine Unterhaltung als Link freigeben |
+
+**Privater Chat** heisst im Rollen-Editor des Admin-Panels **Temporäre Chats** und trägt dort
+den Zusatz „Unterhaltungen ohne Speicherung". Wie lange eine solche Unterhaltung überhaupt
+aufbewahrt wird, legt der Admin fest.
+
+**Abzweigen** ist der richtige Weg, wenn ein Gespräch in zwei Richtungen weitergehen soll.
+Sie behalten den bisherigen Verlauf und probieren im Abzweig eine andere Variante, ohne die
+ursprüngliche Unterhaltung zu verlieren.
+
+**Teilen** erzeugt einen Link auf eine Momentaufnahme der Unterhaltung. Wer den Link hat,
+liest mit. Das Recht dazu ist ein eigenes Rollen-Recht und lässt sich entziehen.
+
+## Alte Chats durchsuchen
+
+In der Seitenleiste gibt es eine Suche über den vollen Text aller eigenen Unterhaltungen. Die
+Suche findet also auch eine Formulierung mitten in einer Antwort von vor drei Wochen.
+
+**Drei Suchen, die nicht dasselbe sind**
+
+Die Volltextsuche über Ihre Chats ist etwas anderes als die **Dateisuche** über einen
+Dokumentenbestand und etwas anderes als die **Web-Suche**. Was wofür zuständig ist, steht in
+[Dateien und Wissen](/docs/funktionen/dateien-und-wissen) und in
+[Web-Suche](/docs/funktionen/web-suche).
+
+## Was eine Modellkarte ist
+
+Eine Modellkarte ist ein fertig zusammengestelltes Preset. Sie bündelt drei Dinge:
+
+1. ein bestimmtes Modell bei einem bestimmten Anbieter,
+2. den hinterlegten Systemprompt, also die Arbeitsanweisung an das Modell,
+3. die Vorauswahl der Werkzeuge, die auf dieser Karte scharf sind.
+
+Der Systemprompt wird serverseitig eingefügt und gelangt nicht in den Browser. Die
+ausgelieferten Karten tragen denselben Prompt; er legt Sprache, Ton und den sorgfältigen
+Umgang mit Fakten fest.
+
+Neue Chats starten auf der Standardkarte. Sie dürfen die Karte wechseln, der Wechsel ist
+nicht gesperrt.
+
+## Welche Karten Sie vorfinden
+
+Welche Karten im Picker stehen, entscheidet der Admin. Zwei Unterscheidungen sind im Alltag
+wichtig:
+
+- **Text oder Text und Bilder.** Nicht jede Karte versteht Bilder. Screenshots und Fotos
+  gehören auf eine Karte, die als bildfähig gekennzeichnet ist; auf einer reinen Text-Karte
+  bleibt ein Bild wirkungslos.
+- **EU oder nicht EU.** Karten, deren Anfragen die EU verlassen, tragen die Kennzeichnung
+  ⚠ Nicht-EU im Namen.
+
+**Die Kennzeichnung ist Absicht**
+
+Das Zeichen ⚠ und der Zusatz „Nicht-EU" stehen im Kartennamen, damit im Moment der Auswahl
+sichtbar ist, dass diese Anfrage die EU verlässt. Die Kennzeichnung darf nicht entfernt
+werden, solange die Karte auf einen Anbieter ausserhalb der EU zeigt. Wer eine rein
+europäische Instanz will, bietet solche Karten gar nicht erst an.
+
+## Erinnerungen: das Langzeitgedächtnis
+
+Der KI-Kollege merkt sich über Unterhaltungen hinweg einige Dinge über Sie und zieht sie in
+jede neue Antwort ein. Das passiert von selbst, Sie müssen nicht „merk dir das" sagen.
+
+Gespeichert wird bewusst wenig und nur in vier Kategorien:
+
+| Kategorie | Inhalt |
+|---|---|
+| Präferenzen | Wie Sie Antworten wollen: Sprache, Format, Detailgrad, Ton, wiederkehrende Korrekturen |
+| Arbeitskontext | Rolle, Team, Zuständigkeiten, verwendete Systeme |
+| Projekte | Laufende Projekte, Kunden und Themen mit Kurzstand |
+| Notizen | Sonstige stabile Fakten, die künftige Antworten besser machen |
+
+Ausdrücklich **nicht** gespeichert werden Passwörter und Schlüssel, Gesundheits-, Religions-
+und politische Angaben, Lohndaten, sensible Fakten über Dritte und einmalige Details ohne
+Wiederverwendungswert.
+
+Der Speicher ist absichtlich klein gehalten. Läuft er voll, fasst der Kollege verwandte
+Einträge zusammen, statt beliebig weiter anzuhängen.
+
+**So schalten Sie es ab.** In den Einstellungen unter **Datenschutz & Sicherheit**, Abschnitt
+**Erinnerungen**, steht der Schalter **Gespeicherte Erinnerungen verwenden**. Aus bedeutet:
+Ihre Erinnerungen fliessen nicht mehr in die Antworten ein. Im selben Bereich können Sie
+Ihre Einträge ansehen, einzeln bearbeiten und löschen.
+
+## Sehr lange Gespräche
+
+Ein Modell kann pro Anfrage nur eine begrenzte Menge Text lesen. Wird eine Unterhaltung sehr
+lang, fasst ein separater Lauf die älteren Nachrichten automatisch zusammen und schickt
+künftig diese Zusammenfassung statt des vollen Verlaufs an das Modell.
+
+- Der Punkt, an dem das greift, hängt von der gewählten Karte ab: Karten mit kleinerem
+  Kontextfenster kompaktieren früher.
+
+Ihr sichtbarer Verlauf bleibt dabei vollständig. Zusammengefasst wird nur, was an das Modell
+geht.
+
+**Es gibt kein manuelles Kommando dafür**
+
+Ein Befehl wie `/compact`, mit dem Sie das Kompaktieren selbst auslösen, existiert nicht. Der
+Vorgang läuft ausschliesslich automatisch. Wollen Sie bewusst frisch starten, eröffnen Sie
+einen neuen Chat oder zweigen Sie an der passenden Stelle ab.
+
+## Für Admins
+
+### Modellkarten pro Rolle und Gruppe
+
+Welche Karten eine Person sieht, entscheidet das Admin-Panel. Die Kaskade lautet **Gruppe vor
+Rolle vor Basis**.
+
+- **Verwaltung → Rollen**: pro Rolle ein Schalter je Karte. Dazu der Schalter **Weitere
+  Modelle (Roh-Untermenü)** mit dem Zusatz „Aus = diese Rolle sieht NUR die oben aktivierten
+  Karten".
+- **Verwaltung → Gruppen**: pro Gruppe entweder **Erben** oder **Eigene Auswahl (übersteuert
+  die Rollen-Regel)**.
+
+Das ist der saubere Weg, um etwa der Geschäftsleitung zusätzliche Karten freizugeben und
+allen anderen nur die EU-Karten zu zeigen.
+
+### Modell-Picker ganz ausblenden
+
+Für ein bewusst einfaches Setup setzen Sie im Panel unter **Konfiguration → Funktionen** die
+**Modell-Auswahl anzeigen** auf **aus**. Dann arbeiten alle auf der Standardkarte und sehen
+gar keine Modellauswahl mehr.
+
+### Parameter-Panel
+
+Das Panel für Temperatur und ähnliche Feineinstellungen ist im Auslieferungszustand **aus**.
+Das ist bewusst so: Mitarbeitende ohne KI-Hintergrund verstellen sonst Werte, deren Wirkung
+sie nicht abschätzen können. Wieder einschalten geht pro Rolle über die
+Konfigurations-Kaskade im Panel; in der Praxis bekommt die Rolle ADMIN diesen Override, alle
+anderen Rollen erben das ausgeschaltete Verhalten.
+
+### Sinnvolle Reihenfolge beim Einrichten
+
+1. Preise und Kontextgrössen pflegen unter **Konfiguration → Preise**, damit die
+   Verbrauchsmessung stimmt. Ein leeres Preisfeld heisst nicht gratis, LibreChat rechnet dann
+   mit einer eingebauten Pauschale.
+
+2. Karten pro Rolle und Gruppe festlegen.
+
+3. Erst danach Mitarbeitende einladen.
+
+---
+
+# Dateien und Wissen
+Quelle: https://eucowork.ai/docs/funktionen/dateien-und-wissen
+Kapitel: Für Mitarbeitende
+
+Dateien an eine Nachricht anhängen, die Dateisuche über einen Dokumentenbestand und die Suche über eigene Chats. Was standardmässig an ist und was nicht.
+
+Diese Seite trennt drei Dinge, die im Alltag ständig verwechselt werden: eine Datei an eine
+Nachricht anhängen, einen ganzen Dokumentenbestand durchsuchbar machen und die eigenen
+Unterhaltungen durchsuchen. Zwei davon sind nach der Installation da, eines nicht.
+
+## Drei Dinge, ein Wort
+
+| Was Sie wollen | Wie es heisst | Auslieferungszustand |
+|---|---|---|
+| Diese eine Datei soll der Kollege jetzt lesen | Datei anhängen (Kontext) | **an** |
+| Ein Bestand aus vielen Dokumenten soll dauerhaft durchsuchbar sein | Dateisuche, auch RAG genannt, kurz für Retrieval-Augmented Generation, also Antworten aus nachgeschlagenen Textstellen | **aus**, wird vom Admin eingerichtet |
+| Ich suche eine Stelle in meinen alten Chats | Volltextsuche über Unterhaltungen | **an** |
+
+Die Dateiverarbeitung stammt von [LibreChat](https://www.librechat.ai/docs), ebenso die
+RAG-Schnittstelle dahinter.
+
+## Datei an eine Nachricht anhängen
+
+Das ist der Normalfall. Sie hängen ein Dokument an Ihre Nachricht, der Inhalt wandert in den
+Kontext dieser Unterhaltung, und Sie stellen Ihre Frage dazu. Anhängen geht über das Menü im
+Eingabefeld oder per Ziehen auf das Chat-Fenster.
+
+Sinnvoll ist das für einzelne Dokumente: einen Vertrag prüfen, ein Protokoll zusammenfassen,
+eine Tabelle auswerten lassen. Der Inhalt bleibt in dieser Unterhaltung und wird nicht zu
+einem durchsuchbaren Bestand.
+
+### Formate
+
+Verarbeitet werden die üblichen Büro- und Textformate, unter anderem PDF, Word (`.docx`),
+Excel (`.xlsx`), PowerPoint (`.pptx`), Text, Markdown, CSV, JSON und XML. Bilder in den
+Formaten JPEG, PNG, GIF und HEIC gehen ebenfalls, allerdings nur auf einer Modellkarte, die
+Bilder versteht. Auf der reinen Text-Karte bleibt ein Bild wirkungslos, siehe
+[Chat und Modelle](/docs/funktionen/chat-und-modelle).
+
+Die genaue Liste der erlaubten Dateitypen ist konfigurierbar. Wo, steht weiter unten im
+Abschnitt für Admins.
+
+### Grenzen
+
+Wie viele Dateien Sie pro Nachricht anhängen dürfen und wie gross eine Datei sein darf, legt
+der Admin fest. Die Voreinstellung ist grosszügig und selten die eigentliche Grenze.
+Praktisch wichtiger ist, wie viel Text ein Modell in einer Anfrage lesen kann. Ein Dokument
+mit mehreren hundert Seiten füllt den Kontext, verdrängt den Rest des Gesprächs und macht die
+Antwort schlechter. Für solche Bestände ist die Dateisuche da.
+
+**Gescannte Dokumente brauchen eine Textebene**
+
+Texterkennung ist nicht Teil des Lieferumfangs. Ein PDF, das nur aus Bildern besteht, etwa
+ein eingescannter Vertrag oder ein abfotografierter Beleg, enthält keinen auslesbaren Text.
+Das gilt im Web-Chat wie im [Outlook-Add-in](/docs/funktionen/outlook-add-in).
+
+Der übliche Weg: das Dokument vorher mit dem Werkzeug Ihrer Wahl in ein durchsuchbares
+Text-PDF wandeln — viele Scanner und Dokumentenmanagement-Systeme tun das ohnehin — oder den
+Text herauskopieren und in den Chat einfügen.
+
+## Dateisuche über einen Dokumentenbestand
+
+Die Dateisuche ist etwas anderes als das Anhängen. Hochgeladene Dokumente werden in
+Abschnitte zerlegt und so abgelegt, dass nicht nach Stichwörtern, sondern nach inhaltlicher
+Ähnlichkeit gesucht wird. Auf eine Frage hin holt der Kollege dann gezielt die passenden
+Abschnitte heraus, statt das ganze Dokument in den Kontext zu legen.
+
+Der Vorteil zeigt sich bei vielen und langen Dokumenten: eine Handvoll Handbücher, eine
+Sammlung von Richtlinien, ein Projektarchiv. Statt „lies diese 400 Seiten" heisst es dann
+„finde die drei Stellen, die meine Frage beantworten".
+
+**Im Auslieferungszustand ausgeschaltet**
+
+Die Dateisuche ist ab Werk aus, weil sie zusätzliche Bausteine und einen Anbieter für die
+Embeddings voraussetzt. So ist nach der Installation nur sichtbar, was auch funktioniert. Wie
+Sie sie einschalten, steht unten.
+
+## Volltextsuche über eigene Chats
+
+Die Suche in der Seitenleiste durchsucht Ihre Unterhaltungen, nicht Ihre Dokumente. Sie
+findet die Stelle, an der etwas besprochen wurde. Diese Suche ist immer an, sie braucht
+keinen Embeddings-Anbieter.
+
+## Für Admins
+
+### Dateisuche einschalten
+
+1. **Einen Anbieter für die Embeddings hinterlegen.** Ohne ihn lassen sich Dokumente nicht
+   für die inhaltliche Suche aufbereiten. Wer die EU-Positionierung halten will, wählt einen
+   Anbieter, der EU-resident verarbeitet.
+
+2. **Die dafür nötigen Zusatzbausteine bereitstellen.** Die Dateisuche bringt einen eigenen
+   Dienst für das Aufbereiten und Durchsuchen der Dokumente mit; er wird nur intern
+   angesprochen.
+
+3. **Oberfläche freischalten.** Erst danach erscheint der Schalter im Chat.
+
+4. **Rollen-Recht prüfen.** Im Rollen-Editor unter **Werkzeuge** steht das Recht
+   **Datei-Suche (RAG)** mit dem Zusatz „Hochgeladene Dokumente durchsuchen". Optional dazu
+   **Datei-Zitate** für Quellenangaben aus Dateien. Wer die Dateisuche nur einzelnen Rollen
+   geben will, pflegt das Recht ausschliesslich hier.
+
+5. **Anschliessend prüfen**, ob die Suche in einem frischen Chat wirklich Treffer aus dem
+   Bestand liefert.
+
+**Häufigstes Fehlerbild**
+
+Die Dateisuche bleibt wirkungslos, weil die zusätzlichen Bausteine gar nicht mitlaufen. Der
+Schalter ist dann sichtbar, jede Anfrage läuft aber ins Leere. Vor dem Freischalten also
+zuerst prüfen, ob der Suchdienst läuft.
+
+### Limits und erlaubte Dateitypen ändern
+
+Im Panel unter **Konfiguration → Dateien & Speicher**. Dort stehen die Obergrenzen für
+Uploads, das Limit für Profilbilder und die Liste der erlaubten Dateitypen.
+
+Ein sinnvoller Eingriff bei der Einrichtung ist, die Obergrenze pro Datei auf einen für Ihren
+Alltag realistischen Wert zu senken. Das hält versehentlich hochgeladene Videos und Archive
+aus dem Speicher heraus.
+
+### Was beim Löschen eines Kontos passiert
+
+Beim Löschen einer Person über das Admin-Panel werden auch deren Dateien entfernt und die
+Suchindizes aufgeräumt. Der Dialog bietet vorher ausdrücklich **Daten exportieren (JSON)**
+an, weil die Auskunft nach DSGVO vor der Löschung erfolgen muss.
+
+---
+
+# Web-Suche
+Quelle: https://eucowork.ai/docs/funktionen/web-suche
+Kapitel: Für Mitarbeitende
+
+Wie die Web-Suche im Chat funktioniert, aus welchen Bausteinen sie besteht und was bei der Einrichtung zu entscheiden ist.
+
+Die Web-Suche holt aktuelle Informationen aus dem Internet in den Chat: Preise, Nachrichten,
+Rechtsstand, Angaben zu fremden Firmen. Diese Seite erklärt, wie sie benutzt wird, aus
+welchen Bausteinen sie besteht und welche davon Sie bei der Einrichtung selbst wählen.
+
+Das Such-Gerüst stammt von [LibreChat](https://www.librechat.ai/docs). Von uns kommt die
+Vorkonfiguration.
+
+## So wird sie im Chat benutzt
+
+Im Eingabefeld gibt es einen Schalter für die Web-Suche. Ist er an und ist die Suche
+vollständig eingerichtet, entscheidet der Kollege selbst, wann er sucht. Sie müssen nicht
+„such im Internet" schreiben, eine Frage nach dem aktuellen Stand genügt.
+
+Die Antwort wird dann auf den gefundenen Seiten aufgebaut, mit Quellenangabe. Der hinterlegte
+Systemprompt verlangt das ausdrücklich.
+
+## Die drei Bausteine
+
+Eine funktionierende Web-Suche besteht aus mehr als einer Suchmaschine.
+
+| Baustein | Aufgabe | Pflicht |
+|---|---|---|
+| Suchmaschine | Liefert Treffer, also Links und kurze Textausschnitte | ja |
+| Scraper | Holt den Volltext der gefundenen Seiten | ja |
+| Reranker | Sortiert die Fundstellen nach Passgenauigkeit | nein |
+
+Ohne Scraper hätte der Kollege nur Überschriften und Zweizeiler, aus denen sich keine
+belastbare Antwort bauen lässt.
+
+**Die Web-Suche wird bei der Einrichtung fertiggestellt**
+
+Eine Suchmaschine ist bei der Auslieferung bereits hinterlegt. Den **Scraper wählen Sie
+selbst**, weil die Wahl des Anbieters davon abhängt, wie Sie es mit der Datenresidenz halten;
+ein Reranker ist optional und ab Werk nicht gesetzt.
+
+Planen Sie diesen Schritt fest mit ein: Das Such-Werkzeug wird dem Modell erst angeboten,
+wenn ein Scraper hinterlegt ist.
+
+## Für Admins: Scraper und Reranker konfigurieren
+
+Beides wird im Admin-Panel unter **Konfiguration → Funktionen** gepflegt, in den beiden Karten
+zur Web-Suche. Dort wählen Sie den Such-Provider, den Scraper und optional einen Reranker,
+dazu die SafeSearch-Stufe. LibreChat unterstützt für Scraper und Reranker jeweils mehrere
+Anbieter; welche in Frage kommen, steht in der
+[LibreChat-Dokumentation](https://www.librechat.ai/docs).
+
+Schlüssel gehören **nie im Klartext** in die Konfiguration. Tragen Sie sie als Referenz auf
+eine Variable ein und hinterlegen Sie den Wert an der dafür vorgesehenen Stelle.
+
+**Welcher Scraper passt zur EU-Positionierung**
+
+Der vorgesehene europäische Weg ist ein **selbst gehosteter Scraper**. Dann verlässt der
+Volltext-Abruf Ihre Infrastruktur nicht.
+
+Die gehosteten Varianten der Scraper-Anbieter sind schnell eingerichtet, verarbeiten aber
+nicht EU-resident. Wer sie einsetzt, sollte das genauso benennen wie die Nicht-EU-Modellkarten.
+
+### Damit der Kollege von selbst sucht
+
+Zwei weitere Stellschrauben entscheiden, ob gesucht wird:
+
+1. **Rollen-Recht.** Im Rollen-Editor unter **Werkzeuge** das Recht **Web-Suche** für die
+   betroffenen Rollen.
+
+2. **Karten-Flag.** Das Such-Werkzeug muss auf den Modellkarten aktiv sein, die Sie anbieten.
+   Erst dann hängt es an der Karte und das Modell entscheidet selbst über den Einsatz.
+
+3. Anschliessend in einem frischen Chat prüfen.
+
+### Wie viel Text beim Modell ankommt
+
+Wie viel Text aus den Suchergebnissen an das Modell geht, ist begrenzt und einstellbar. Mehr
+bedeutet mehr Kontext für die Antwort und mehr Tokens pro Anfrage, also höhere Kosten.
+Weniger bedeutet eine knappere Grundlage.
+
+## Datenschutz der Web-Suche
+
+Die Suche läuft in Ihrer Instanz, die Suchanfrage selbst geht aber nach draussen: Sie wird an
+externe Suchdienste gestellt. Was dabei passiert und was nicht:
+
+| | |
+|---|---|
+| Geht nach draussen | der Suchbegriff, sowie die abgerufenen Seiten beim Scraper |
+| Geht **nicht** nach draussen | wer gesucht hat. Die Identität der Person bleibt bei Ihnen |
+| Bleibt bei Ihnen | die Unterhaltung, die Dokumente, die Antwort |
+
+**Formulierung für Schulung und Datenschutzhinweis**
+
+Sauber formuliert lautet die Aussage: Speicherung und Inferenz laufen dort, wo Sie die Instanz
+betreiben; die Suchanfrage selbst geht an externe Suchdienste, und zwar ohne
+Nutzeridentität. Wer die Web-Suche in einer Datenschutzerklärung beschreibt, nimmt diese
+Unterscheidung am besten wörtlich auf.
+
+---
+
+# Auswertungen, Tabellen und Code
+Quelle: https://eucowork.ai/docs/funktionen/code-und-auswertungen
+Kapitel: Für Mitarbeitende
+
+Excel-Auswertungen und PDF als Download aus dem Chat, Diagramme und Oberflächen als Artefakte, und was die Code-Ausführung voraussetzt.
+
+„Mach mir aus diesen Zahlen eine Excel-Auswertung" ist eine der Aufgaben, für die
+Mitarbeitende eine KI am ehesten brauchen. Diese Seite beschreibt, was dabei passiert, was
+davon ohne zusätzliche Technik funktioniert und was ein Backend voraussetzt.
+
+Code-Ausführung und Artefakte kommen von [LibreChat](https://www.librechat.ai/docs). Von uns
+kommt die Auswahl und Vorbereitung des Ausführungs-Backends.
+
+## Was Sie davon haben
+
+Sie schreiben: „Aus dieser Liste bitte eine Excel-Datei mit einer Auswertung pro Monat."
+Der Kollege rechnet, erzeugt die Datei und legt sie als Download in den Chat. Sie klicken
+darauf und haben die Datei.
+
+Das gilt für Excel, CSV, Word und PDF gleichermassen, und auch für Auswertungen aus einer
+angehängten Tabelle. Wichtig ist nur eines: Sagen Sie, was in der Datei stehen soll, nicht
+wie sie technisch entstehen soll.
+
+Wenn Sie eine schon erzeugte Datei ändern wollen, sagen Sie das im selben Chat. Der Kollege
+lädt die vorhandene Datei und passt sie an, statt sie neu zu bauen. So bleibt erhalten, was
+Sie vorher abgesprochen haben.
+
+**Der Weg zum Code bleibt im Hintergrund**
+
+Skripte, Befehle und interne Pfade werden nicht angezeigt. Sie bekommen die Datei und eine
+kurze Zusammenfassung, was drin steht. Das ist Absicht: die Zielgruppe sind Fachleute, keine
+Entwickler.
+
+## Artefakte: Ergebnisse direkt im Chat
+
+Etwas anderes als die Code-Ausführung sind die **Artefakte**. Damit stellt der Kollege
+Inhalte direkt in einem Seitenbereich der Oberfläche dar, statt sie als Codeblock
+auszugeben:
+
+| Art | Beispiel |
+|---|---|
+| Mermaid | Ablaufdiagramm, Organigramm, Zeitachse |
+| SVG | einfache Grafiken und Schemata |
+| HTML | eine gestaltete Seite oder Tabelle zum Anschauen |
+| React | eine kleine, bedienbare Oberfläche, etwa ein Rechner |
+| Markdown | formatierte Dokumente |
+
+**Artefakte brauchen kein Ausführungs-Backend.** Sie sind auf den ausgelieferten Modellkarten
+aktiv und funktionieren nach der Installation sofort. Wer also nur ein Diagramm oder eine
+Übersicht möchte, braucht die Code-Ausführung nicht.
+
+**Vorschau braucht HTTPS**
+
+Die interaktive Vorschau läuft nur in einem sicheren Kontext. Ohne gültiges Zertifikat bleibt
+sie leer oder meldet einen Verbindungsfehler. Das ist kein Fehler des Backends, sondern eine
+Browser-Regel. Der saubere Weg ist ein echter Domainname mit gültigem Zertifikat.
+
+## Im Auslieferungszustand ist die Code-Ausführung aus
+
+Ab Werk ist die Code-Ausführung nicht freigeschaltet. Der Grund ist derselbe wie bei der
+Dateisuche: die Ausführung braucht ein eigenes, abgeschottetes Backend, das nicht Teil der
+Grundinstallation ist. Ohne Backend wäre der Knopf ein toter Knopf, und jeder Versuch endete
+in einem Fehler.
+
+Sie entscheiden also bewusst, ob Sie diese Funktion anbieten.
+
+## Für Admins
+
+Die Code-Ausführung ist die einzige Stelle, an der erzeugter Code auf Ihrer Maschine läuft.
+Entsprechend gehört sie in eine eigene, isolierte Umgebung, die getrennt von der übrigen
+Installation betrieben und nie zwischen Instanzen geteilt wird.
+
+Bei der Auswahl eines Backends sind drei Punkte entscheidend:
+
+- **Isolation.** Ausgeführter Code darf weder an die Daten der Instanz noch an das restliche
+  Netz herankommen.
+- **Erreichbarkeit.** Das Backend wird ausschliesslich intern angesprochen. Von aussen wird
+  dafür nichts gebraucht; Diagnosezugänge gehören auf die Loopback-Adresse oder in einen
+  SSH-Tunnel.
+- **Ausgehender Verkehr.** Welche Ziele ausgeführter Code im Internet erreichen darf, legen
+  Sie auf Host- oder Netzebene fest. Planen Sie diese Freigabeliste bei der Einrichtung mit
+  ein und halten Sie die erlaubten Ziele in Ihrem Betriebshandbuch fest.
+
+Wird die Code-Ausführung gar nicht gebraucht, lassen Sie das Backend weg: Im
+Auslieferungszustand ist sie ausgeschaltet.
+
+### Danach freischalten
+
+1. **Recht setzen.** Das Recht **Code-Interpreter** steht im Rollen-Editor unter
+   **Werkzeuge**. Wer die Ausführung nur einzelnen Rollen geben will, pflegt es
+   ausschliesslich dort.
+
+2. **Auf den Modellkarten aktivieren**, damit das Modell das Werkzeug von selbst benutzt,
+   ohne dass jemand klickt.
+
+3. **Prüfen**, ob in einem frischen Chat eine erzeugte Datei tatsächlich als Download
+   erscheint.
+
+---
+
+# Agenten und Skills
+Quelle: https://eucowork.ai/docs/funktionen/agenten-und-skills
+Kapitel: Für Mitarbeitende
+
+Was ein Agent ist, was ein Skill ist, wie beide zusammenspielen und warum Skills nie pauschal an alle ausgerollt werden.
+
+Agenten und Skills sind die beiden Werkzeuge, mit denen aus dem allgemeinen KI-Kollegen ein
+Kollege für Ihre Firma wird. Diese Seite erklärt den Unterschied, die Arbeitsteilung
+zwischen beiden und die Freigaberegeln, die dabei zwingend einzuhalten sind.
+
+Beide Funktionen stammen von [LibreChat](https://www.librechat.ai/docs). Von uns kommen die
+Freigabelogik im Admin-Panel und die Betriebsregeln.
+
+## Agent und Skill, der Unterschied
+
+| | Agent | Skill |
+|---|---|---|
+| Was es ist | eine Rolle mit fester Ausstattung | ein hinterlegter Standard-Prozess |
+| Enthält | Persona und Anweisungen, ein festgelegtes Modell, eine Auswahl an Werkzeugen | Schritt-für-Schritt-Wissen: welche Felder, welche Reihenfolge, welche Regeln |
+| Im Kontext | dauerhaft, solange Sie mit ihm sprechen | nur Name und Kurzbeschreibung. Der Inhalt wird erst bei Bedarf geladen |
+| Beispiel | „Outlook-Assistent", der Mails zusammenfasst und Antworten entwirft | „So erstellen wir eine Offerte", mit Pflichtfeldern und Reihenfolge |
+
+Der zweite Punkt ist der wichtige: Ein Skill kostet fast nichts, solange er nicht gebraucht
+wird. Das Modell sieht nur die Beschreibung und entscheidet daran, ob es den vollen Text
+nachladen soll. Deshalb kann ein Skill viel ausführlicher sein als ein Systemprompt.
+
+## Die Arbeitsteilung
+
+Prozesswissen gehört in **Skills**, nicht in den Agenten. Der Agent bleibt eine dünne Hülle:
+Persona, Modell, Werkzeuge.
+
+Der Grund ist praktisch. Skills sind reine Dateien, portabel und versionierbar. Ein Agent
+dagegen lebt in der Datenbank einer Instanz und lässt sich weder aus der Konfiguration
+anlegen noch bequem exportieren. Wer sein Wissen in Agenten steckt, baut es bei jeder neuen
+Instanz von Hand nach. Wer es in Skills steckt, kopiert eine Datei.
+
+Einen eigenen Agenten braucht es erst, wenn eine Modellkarte nicht ausreicht, etwa weil ein
+bestimmter Konnektor fest vorgesehen ist oder eine Rolle ein eigenes Werkzeug-Set bekommen
+soll.
+
+## Agenten nutzen
+
+Agenten stehen im Modell-Picker in einem eigenen Untermenü. Sie wählen den Agenten wie eine
+Modellkarte, danach läuft die Unterhaltung mit dessen Anweisungen und dessen Werkzeugen.
+
+Ein Agent darf mehrere Schritte hintereinander gehen, also nachschlagen, lesen, rechnen und
+erst dann antworten. Die Zahl der Schritte pro Durchlauf ist begrenzt.
+
+### Wer Agenten bauen darf
+
+Agenten **nutzen** ist im Auslieferungszustand für alle offen. Agenten **bauen** ist ein
+eigenes Recht und im Rollen-Editor unter **Erstellen & Teilen** hinterlegt:
+
+| Recht | Bedeutung |
+|---|---|
+| Agents nutzen | vorhandene Agenten auswählen und mit ihnen arbeiten |
+| Agents erstellen | eigene Agenten im Builder bauen |
+| Agents teilen | einen Agenten an Personen oder Gruppen freigeben |
+
+Üblich ist: normale Mitarbeitende nutzen, eine kleine Gruppe baut. Das hält die Zahl der
+Agenten überschaubar und verhindert, dass zwanzig halbfertige Varianten desselben Assistenten
+entstehen.
+
+Selbst gebaute Agenten laufen ab Werk ausschliesslich auf den EU-Karten. Das ist eine bewusste
+Grenze: ein selbst gebauter Agent soll nicht versehentlich Daten über einen Nicht-EU-Anbieter
+schicken.
+
+## Wie ein Skill wirkt
+
+Ein Skill ist ein Ordner mit einer Datei `SKILL.md`. Oben stehen Name und Beschreibung, darunter
+die Anweisungen.
+
+Die Beschreibung ist das wichtigste Feld. Sie entscheidet, ob der Skill überhaupt greift.
+Sie sollte die Formulierungen enthalten, mit denen Mitarbeitende die Aufgabe wirklich
+ansprechen („erstelle eine Offerte", „erfasse den Auftrag im ERP"). Eine vage Beschreibung
+führt dazu, dass der Skill nie feuert.
+
+Es gibt drei Wege, wie ein Skill zum Einsatz kommt:
+
+1. Das Modell wählt ihn selbst aus dem Katalog aus, anhand der Beschreibung.
+2. Sie rufen ihn im Chat manuell auf, über das `$`-Menü.
+3. Er ist als immer aktiv markiert. Das ist sparsam einzusetzen, weil sein Inhalt dann in
+   jeder Unterhaltung liegt.
+
+Der Systemprompt verpflichtet den Kollegen, einem hinterlegten Standard-Prozess **strikt** zu
+folgen und Abweichungen ausdrücklich zu benennen und bestätigen zu lassen. Der Skill liefert
+also das Wissen, der Prompt die Disziplin.
+
+## Skills freigeben
+
+Es gibt zwei Wege, einen Skill bereitzustellen, und sie verhalten sich unterschiedlich.
+
+| Weg | Wie | Für wen sichtbar |
+|---|---|---|
+| Upload in der Oberfläche | Admin lädt den Skill hoch und teilt ihn gezielt | nur die freigegebenen Personen und Gruppen |
+| Instanzweite Bereitstellung | Admin legt den Skill als Datei auf dem Server ab | die ganze Instanz, schreibgeschützt |
+
+Auf den Modellkarten ist der Skill-Katalog aktiv. Was darin steht, ist aber nicht „alles",
+sondern genau das, was der jeweiligen Person freigegeben ist. Dazu kommt das Rollen-Recht
+**Skills nutzen**, das im Panel den Zusatz „Freigabe pro Person/Rolle, nie pauschal
+ausrollen" trägt.
+
+**Skills nie pauschal ausrollen**
+
+Ein instanzweit bereitgestellter Skill **gewinnt gegen einen gleichnamigen Skill aus der
+Datenbank**. Legen Sie also einen Skill, der nur für den Verkauf gedacht ist, zusätzlich als
+Datei auf den Server, hebeln Sie damit die gezielte Freigabe aus. Der Skill ist danach für
+alle sichtbar, ohne dass jemand etwas geändert hat.
+
+Regel: Die instanzweite Bereitstellung ist ausschliesslich für Skills, die instanzweit gelten
+dürfen und keine vertraulichen Inhalte enthalten. Alles andere wird hochgeladen und gezielt
+geteilt.
+
+Aus demselben Grund steht in der Konfiguration **keine feste Skill-Liste**. Eine solche Liste
+würde die genannten Skills an alle Nutzer der Karte binden.
+
+**Geteilte Skills sind zunächst inaktiv**
+
+Ein an eine Person geteilter Skill ist bei dieser Person standardmässig **nicht** aktiv, sie
+müsste ihn erst selbst einschalten. Sollen freigegebene Skills sofort wirken, lässt sich das
+beim Einrichten im Panel umstellen. Diese Einstellung gehört ins Panel, sonst überschreibt
+der Start die im Rollen-Editor gepflegten Skill-Rechte bei jedem Neustart.
+
+## Was ausgeliefert wird
+
+Ein Gerüst, kein fertiger Agent.
+
+- Skill-Inhalte werden nicht mitgeliefert. Sie enthalten vertrauliche Angaben und interne
+  Prozesse und werden deshalb von Hand auf den Server gebracht.
+- Für Standard-Agenten gibt es Beispiel-Definitionen, mit denen sich ein Grundbestand einmalig
+  pro Instanz anlegen lässt. Sie sind ausdrücklich als Gerüst gekennzeichnet und gegen die
+  laufende Instanz zu prüfen.
+
+Der Grund dafür ist eine Eigenheit von LibreChat: Agenten lassen sich nicht in der
+Konfiguration definieren und es gibt keinen Export im Builder. Die Konfiguration kann einen
+Agenten nur über seine Kennung referenzieren.
+
+## Für Admins
+
+### Agent global als Viewer teilen
+
+**Sonst verschwindet die Karte bei normalen Nutzern**
+
+Wenn Sie eine Modellkarte auf einen Agenten zeigen lassen, müssen Sie den Agenten
+**global als Viewer teilen**. Sonst filtert die Zugriffsprüfung die Karte für alle heraus,
+die den Agenten nicht besitzen. Für Sie als Admin sieht dann alles richtig aus, während Ihre
+Mitarbeitenden die Karte schlicht nicht sehen.
+
+Das Teilen wird einmalig in der Agenten-Oberfläche gesetzt.
+
+Soll der Agent zusätzlich ausserhalb des Chats erreichbar sein, etwa im
+[Outlook-Add-in](/docs/funktionen/outlook-add-in), braucht er eine eigene Freigabe für den
+Fernzugriff. Welche Agenten das betrifft, sehen Sie im Panel unter **Verwaltung →
+Remote-Agenten**.
+
+### Skills auf dem Server pflegen
+
+1. Ordner mit `SKILL.md` in der dafür vorgesehenen Ablage auf dem Server hinterlegen.
+
+2. Anwendung neu starten, denn instanzweit bereitgestellte Skills werden beim Start gelesen.
+
+3. Testen, und zwar in beide Richtungen. Positiv: löst der Skill bei den Formulierungen aus,
+   die in seiner Beschreibung stehen? Negativ: hält er sich bei fremden Aufgaben heraus?
+
+### Katalog begrenzen
+
+Ab etwa fünf Skills lohnt es sich, den Katalog zu deckeln. Sonst wächst die Liste der
+Beschreibungen, die in jeder Unterhaltung mitgeführt wird, und kostet in jedem Chat Tokens.
+
+Dasselbe Prinzip gilt bei Konnektoren: wenige, klar beschriebene Werkzeuge schlagen viele.
+
+---
+
+# Outlook-Add-in
+Quelle: https://eucowork.ai/docs/funktionen/outlook-add-in
+Kapitel: Für Mitarbeitende
+
+Der KI-Kollege im Posteingang: Mails zusammenfassen, Antworten entwerfen, Aufgaben herausziehen. Mit Anhängen, Anmeldung und Verteilung.
+
+Das Outlook-Add-in bringt den KI-Kollegen als seitliches Fenster direkt in den Posteingang.
+Die geöffnete Nachricht dient dabei als Kontext. Diese Seite beschreibt den Funktionsumfang,
+den Umgang mit Anhängen, die Anmeldung und den Weg der Verteilung im Unternehmen.
+
+Das Add-in ist eine Eigenentwicklung.
+
+## Was es kann
+
+- Die geöffnete Mail zusammenfassen, auch lange Verläufe.
+- Einen Antwortentwurf schreiben, der im normalen Antwortfenster von Outlook landet.
+- Aufgaben und Fristen aus einer Nachricht herausziehen.
+- Dateien und Anhänge mitlesen, siehe unten.
+- Auf Wunsch Ihren Schreibstil übernehmen, wenn der Admin das eingerichtet hat.
+
+Es läuft in Outlook für Windows, für Mac, im Web und im neuen Outlook.
+
+**Es wird nie automatisch gesendet**
+
+Das Add-in liefert Text. Der Entwurf landet im nativen Antwortfenster, und abgeschickt wird
+er von Ihnen. Es gibt keinen Automatikversand, und die zugehörige Microsoft-Berechtigung zum
+Senden wird bewusst nicht angefragt.
+
+## Es ist kein Nebenweg an der Plattform vorbei
+
+Hinter dem Pane läuft ein echter Agent auf Ihrem Server, in derselben Instanz wie der
+Web-Chat. Das hat für Administratoren drei Folgen:
+
+| | |
+|---|---|
+| Rechte | Es gelten dieselben Rollen und dieselben Regeln für Konnektoren wie im Web-Chat |
+| Verbrauch | Jeder Turn wird gemessen und erscheint in Verbrauch und Abrechnung |
+| Protokoll | Konnektor-Aufrufe stehen im Audit-Log, wie sonst auch |
+
+Kein Modell-Verkehr läuft an der Plattform vorbei.
+
+## Dateien und Anhänge
+
+Das Pane liest Dateien **selbst aus** und schickt nur den Text weiter. Die Datei verlässt
+Ihren Rechner nicht.
+
+| Format | Was gelesen wird |
+|---|---|
+| PDF | Text pro Seite, **kein OCR** |
+| Word `.docx` | Absätze inklusive Tabellenzellen und Zeilenumbrüchen |
+| Excel `.xlsx` | Blattname und Zeilen, Spaltenlücken bleiben erhalten |
+| Text `.txt .md .csv .tsv .json .log .yml .xml` | roher Text |
+| Bilder JPEG und PNG | als Bild-Anhang, vor dem Senden verkleinert |
+
+Pro Nachricht gelten Obergrenzen für Anzahl, Grösse und Textmenge. Wird eine Grenze erreicht,
+sagt Ihnen das Pane das, statt still etwas wegzulassen.
+
+**Nicht gelesen** werden die alten Binärformate `.doc`, `.xls` und `.ppt`, PowerPoint,
+Archive, Cloud-Anhänge (dort kommt nur ein Link an) und angehängte E-Mails. Auch in diesen
+Fällen nennt das Pane den Grund.
+
+Dateien kommen auf drei Wegen ins Gespräch: über das Menü im Eingabefeld, per Ziehen auf den
+Chat-Bereich und, bei Bildern, über die Zwischenablage.
+
+**Gescannte Anhänge brauchen eine Textebene**
+
+Ein eingescanntes PDF ohne Textebene enthält keinen auslesbaren Text. Das Pane meldet das
+ausdrücklich, statt eine leere Zusammenfassung zu erzeugen.
+
+### Anhänge der offenen Mail
+
+Die Anhänge der geöffneten Nachricht werden **nie ungefragt** gelesen. Hat die Mail Anhänge,
+hält nach dem Absenden eine Karte den Vorgang an und lässt Sie einzeln auswählen, was gelesen
+werden darf. Auf Wunsch merkt sich das Pane die Auswahl für diese eine E-Mail.
+
+Dafür braucht der Outlook-Client eine ausreichend neue Version der Mailbox-Schnittstelle. Ist
+er zu alt, sagt die Karte das, und der Vorgang läuft ohne Anhänge weiter.
+
+## Persönliche Anweisungen
+
+In den Einstellungen des Panes gibt es ein Feld für persönliche Vorgaben, etwa „immer Sie,
+nie Gedankenstriche, Grussformel Freundliche Grüsse". Diese Vorgaben stehen in der Rangfolge
+**ganz oben**: sie schlagen Skills, das Schreibstil-Profil und die Anweisungen des Agenten.
+
+Sie werden bei jedem Senden frisch aus den Einstellungen gebildet und nicht im Verlauf
+gespeichert. Ändern Sie sie mitten im Gespräch, gilt sofort die neue Fassung.
+
+## Anmeldung ohne Passwort
+
+Das Pane fragt kein Passwort ab. Stattdessen läuft die Anmeldung über einen Gerätecode:
+
+1. Im Pane auf **Anmelden**. Es erscheint ein kurzer Code.
+
+2. **Im Browser fortfahren**. Dort öffnet sich eine Bestätigungsseite auf Ihrer eigenen
+   Chat-Domain, mit demselben Code.
+
+3. Auf **Verbinden** klicken. Die Seite nutzt Ihre bestehende Browser-Anmeldung. Sind Sie im
+   Browser nicht angemeldet, bietet die Seite den Login an, der Code bleibt gültig.
+
+4. Das Pane schliesst die Verbindung selbst ab.
+
+Der Vorgang verfällt nach kurzer Zeit. Am Ende bekommt das Pane genau einen Wert: Ihren
+persönlichen Schlüssel mit dem Namen **Outlook-Add-in**. Er ist zeitlich befristet und lässt
+sich jederzeit widerrufen, in den Einstellungen des Web-Chats unter **API-Schlüssel für
+Agenten**.
+
+Der Vorteil dieses Wegs: Zwei-Faktor-Anmeldung und später Entra-Anmeldung funktionieren ohne
+Zusatzarbeit, weil der Browser-Login das ohnehin abdeckt.
+
+## Eine Grenze, die Sie kennen sollten
+
+**Antworten aus dem Pane erscheinen nicht im Web-Chat**
+
+Was Sie im Outlook-Pane besprechen, taucht **nicht** im Verlauf des Web-Chats auf. Der
+Verlauf lebt im Pane. Das ist eine bekannte Einschränkung der Schnittstelle, über die
+externe Clients angebunden sind.
+
+Verbrauchsmessung und Protokollierung greifen trotzdem vollständig. Es entsteht also keine
+Lücke bei Kosten und Nachvollziehbarkeit, nur eben kein zweiter Gesprächsverlauf.
+
+## Für Admins: Voraussetzungen
+
+| Voraussetzung | Detail |
+|---|---|
+| Öffentlich gültiges TLS | Office lädt ausschliesslich öffentlich vertrauenswürdiges HTTPS. Eine **interne Zertifizierungsstelle reicht nicht**, das Pane bliebe leer |
+| Postfächer auf Exchange Online | POP3, IMAP und lokales Exchange werden von der Add-in-Plattform nicht unterstützt. Dafür gibt es keine Umgehung |
+| Adminrechte in Microsoft 365 | Rolle „Globaler Administrator" oder „Exchange-Administrator" |
+| Erreichbare Chat-Domain | Das Pane spricht dieselbe Domain an wie der Web-Chat |
+
+**Antworten müssen laufend gesendet werden**
+
+Wird der Antwortstrom gepuffert statt laufend gesendet, bricht das Anzeigefenster von Outlook
+nach kurzer Zeit mit „Keine Verbindung" ab, obwohl serverseitig alles korrekt läuft.
+Betroffen sind genau die langen, werkzeuglastigen Antworten, für die man das Add-in
+eigentlich haben will. Die Voreinstellung ist richtig gesetzt; sie sollte nicht verändert
+werden.
+
+## Für Admins: Einrichtung
+
+1. **Add-in bereitstellen**, sodass es unter Ihrer Chat-Domain ausgeliefert wird.
+
+2. **Agenten anlegen.** Im Chat einen Agenten erstellen, zum Beispiel mit dem Namen
+   `Outlook-Assistent`, mit dem Standardmodell des Kunden und zunächst ohne Konnektoren.
+
+3. **Agenten für den Fernzugriff freigeben.** Ohne diese Freigabe verweigert die
+   Schnittstelle den Zugriff. Zusätzlich muss das Rollen-Recht **Remote-Agenten** für die
+   Rollen gesetzt sein, die das Add-in nutzen sollen.
+
+4. **Standard-Agenten hinterlegen**, damit niemand ihn im Pane auswählen muss.
+
+5. **Manifest prüfen.** Es darf keinen Platzhalter mehr enthalten.
+
+### Verteilung im Microsoft-365-Admin-Center
+
+1. [admin.microsoft.com](https://admin.microsoft.com) öffnen, dann **Einstellungen →
+   Integrierte Apps**.
+
+2. **Benutzerdefinierte Apps hochladen**, danach *Office-Add-In* und *Manifestdatei
+   hochladen*.
+
+3. Zuweisen an **Nur ich** zum Testen, an einzelne **Benutzer/Gruppen** für einen Piloten
+   oder an die **Gesamte Organisation** für den Rollout. Berechtigungen bestätigen und
+   bereitstellen.
+
+**Rechnen Sie mit 24 Stunden**
+
+Bis das Add-in bei allen Nutzern im Menüband erscheint, vergehen laut Microsoft **bis zu 24
+Stunden**. Das klassische Outlook hat zusätzlich einen lokalen Zwischenspeicher.
+
+Für einen Piloten ist der Weg über [aka.ms/olksideload](https://aka.ms/olksideload) deutlich
+schneller. Er wirkt pro Postfach und sofort auf allen Clients dieses Postfachs.
+
+**Bei Updates** zählen Sie die Versionsnummer im Manifest hoch und aktualisieren es unter
+Integrierte Apps. Die **GUID bleibt dabei immer gleich**. Eine neue GUID gilt als fremdes
+Add-in und würde ein zweites Mal im Menüband erscheinen.
+
+### Optional: Schreibstil übernehmen
+
+Soll das Pane den persönlichen Schreibstil aus gesendeten Mails lernen, braucht es eine
+eigene App-Registrierung in Entra mit einer delegierten Leseberechtigung auf das Postfach.
+Ohne diesen Schritt funktioniert das Add-in vollständig, nur die Stil-Übernahme fehlt. Das
+Zugriffstoken bleibt dabei im Client und geht nicht an Ihren Server. Um eine Berechtigung zum
+Senden wird bewusst nicht gebeten.
+
+### Fehlersuche
+
+| Symptom | Ursache und Lösung |
+|---|---|
+| Add-in erscheint nicht im Menüband | Verteilung braucht bis zu 24 Stunden. Sofort testen über Sideload. Klassisches Outlook neu starten |
+| Pane bleibt weiss | Zertifikat prüfen. Es braucht ein öffentlich gültiges, keine interne Zertifizierungsstelle |
+| Pane leer nur in Outlook im Web | Das Pane darf nicht durch Framing-Header blockiert werden |
+| Zugriff auf den Agenten wird verweigert | Die Freigabe des Agenten für den Fernzugriff fehlt, oder das Rollen-Recht ist aus |
+| Anmeldung wird beim Chatten verlangt | Der persönliche Schlüssel ist abgelaufen. Im Pane abmelden und neu anmelden |
+| Abbruch bei langen Antworten | Der Antwortstrom wird gepuffert statt laufend gesendet |
+| Add-in fehlt bei einzelnen Personen | Deren Postfach liegt nicht auf Exchange Online |
+
+Fehler aus dem Pane landen zusätzlich im Admin-Panel unter **Logs**, Reiter **Client-Fehler**.
+Dort steht die technische Ursache mit Person, Plattform und Dateiname, nie ein Dateiinhalt.
+Die Einträge werden nach Ablauf der Aufbewahrungsfrist automatisch entfernt.
+
+---
+
+# Kapitel: Administration
+
+---
+
+# Admin-Panel
+Quelle: https://eucowork.ai/docs/administration/admin-panel
+Kapitel: Administration
+
+Was das Admin-Panel leistet und in welcher Reihenfolge eine neue Administratorin vorgeht.
+
+Das Admin-Panel ist die Oberfläche, über die EU Cowork AI verwaltet wird: Konten, Rollen, Gruppen, Konnektoren, Modelle, Verbrauch und Protokolle. Diese Seite gibt den Überblick, die einzelnen Bereiche sind in den folgenden Kapiteln beschrieben. Zielgruppe ist die Person, die die Instanz betreut.
+
+## Zugang
+
+Das Panel ist unter einer eigenen Adresse erreichbar, die zu Ihrer Installation gehört. Sie melden sich mit Ihrem Administratorkonto an. Wer die Administratorrolle hat, kommt hinein, alle anderen nicht. Wird ein Konto gesperrt oder die Rolle entzogen, wirkt das auch hier.
+
+**Empfohlen: Administratorzugänge zusätzlich absichern**
+
+Für Administratorkonten gelten die schärferen Anforderungen. Zwei Massnahmen gehören in jede produktive Einrichtung:
+
+- **Zwei-Faktor-Anmeldung für alle Administratorkonten** aktivieren.
+- **Den Zugang auf bekannte Netze begrenzen**, etwa auf Ihr VPN oder eine IP-Freigabeliste. Das Panel wird im Alltag von wenigen Personen gebraucht, eine Einschränkung kostet also nichts.
+
+Nehmen Sie beides in Ihre Abnahmeliste auf und prüfen Sie es nach dem Aufsetzen einmal aktiv nach.
+
+## Was Sie dort tun
+
+Die Oberfläche ist in vier Bereiche gegliedert:
+
+| Bereich | Wofür |
+| --- | --- |
+| Analyse | Kennzahlen zur Nutzung und die Protokolle |
+| Verwaltung | Benutzer, Rollen, Gruppen, Zugriff auf Konnektoren und Agenten |
+| Finanzen | Verbrauch pro Person, Budgets und Abrechnungsbelege |
+| System | Konfiguration, Audit-Log und die Einstellungen der Instanz |
+
+Zu jeder Person lassen sich zwei Detailansichten öffnen: der Verbrauch im Einzelnen und eine Übersicht, was diese Person darf und warum. Die zweite ist das erste Werkzeug, wenn jemand meldet, er sehe einen Konnektor oder ein Modell nicht.
+
+## Zwei Grundprinzipien
+
+**Speichern ist ausdrücklich.** Das Panel arbeitet mit einer Arbeitskopie und schreibt erst, wenn Sie speichern. Solange Änderungen offen sind, weist die Oberfläche darauf hin.
+
+**Es gibt keine Klartext-Geheimnisse.** Zugangsschlüssel werden nur als Referenz hinterlegt, nie im Klartext angezeigt und in Protokollen nur mit ihrem Namen erwähnt. Verbindungstests laufen serverseitig, der Schlüssel verlässt den Server nicht, auch nicht in Fehlermeldungen.
+
+## Reihenfolge für einen neuen Admin
+
+Wenn Sie eine frische Instanz übernehmen, ergibt diese Reihenfolge Sinn, weil die Schritte aufeinander aufbauen:
+
+1. Die Registrierung auf die E-Mail-Domains Ihrer Firma eingrenzen.
+2. Ein Monatsbudget setzen, zunächst ohne harte Durchsetzung, um einen Monat lang zu sehen, wo Sie landen.
+3. Gruppen anlegen, sie sind die Basis für Zugriffe und Modelle.
+4. Pro Gruppe festlegen, welche Modelle sichtbar sind.
+5. Konnektoren anbinden und den Zugriff darauf gezielt freigeben.
+6. Mitarbeitende einladen.
+7. Die Aufbewahrungsfrist passend zu Ihrem Löschkonzept festlegen.
+
+**Unterlagen zur Einrichtung**
+
+Die Schritt-für-Schritt-Anleitungen zur Einrichtung Ihrer Instanz gehören zur Auslieferung und werden Ihnen zusammen mit der Installation übergeben.
+
+## Weiter im Kapitel
+
+---
+
+# Benutzer, Gruppen und Rollen
+Quelle: https://eucowork.ai/docs/administration/benutzer-und-gruppen
+Kapitel: Administration
+
+Konten einladen und anlegen, Rechte über Rollen vergeben, Gruppen führen, Konten sperren und löschen.
+
+Wer Zugang hat und was er darf, wird an drei Stellen entschieden: am Konto, an der Rolle und an der Gruppe. Diese Seite beschreibt, was Ihnen als Administrator dafür zur Verfügung steht.
+
+## Konten
+
+Die Benutzerliste zeigt alle Konten mit Rolle, Anmeldeart, Status, letzter Aktivität und dem Anteil am Verbrauch. Von dort aus erreichen Sie alles Weitere zu einer Person: Verbrauch ansehen, Zugriffe ansehen, Daten exportieren, Rolle ändern, Guthaben aufladen, sperren und löschen.
+
+**Keine Minutenüberwachung**
+
+Die Aktivität wird taggenau angezeigt, nicht auf die Minute. Das ist eine bewusste Entwurfsentscheidung: für die Frage „wird das Werkzeug überhaupt genutzt" reicht der Tag, für eine Leistungskontrolle taugt die Angabe bewusst nicht.
+
+## Personen aufnehmen
+
+Es gibt zwei Wege:
+
+- **Einladen** ist der normale Weg. Die eingeladene Person setzt ihr Passwort selbst, Sie müssen nie eines übermitteln. Einladungen sind befristet und gelten nur für die angegebene Adresse. Optional wird die Person bei der Registrierung automatisch in eine oder mehrere Gruppen aufgenommen.
+- **Direkt anlegen** erzeugt ein Konto ohne Registrierung, samt Rolle und Gruppen. Ein Initial-Passwort lässt sich erzeugen und in die Zwischenablage legen, damit es nicht in Screenshots oder im Browser-Autofill landet.
+
+Damit eine Einladung zum Ziel führt, muss die E-Mail-Domain zu den für die Registrierung erlaubten Domains passen. Ist ein Mailversand eingerichtet, geht zusätzlich eine E-Mail raus, andernfalls verschicken Sie den Einladungslink selbst.
+
+## Rollen und Rechte
+
+Rollen bündeln Rechte. Neben den beiden Systemrollen für Benutzer und Administratoren können Sie eigene Rollen anlegen. Die Rechte sind thematisch gruppiert:
+
+| Gruppe | Worum es geht |
+| --- | --- |
+| Werkzeuge | Web-Suche, Code-Interpreter, Dateisuche und Zitate, Zugriff auf Konnektoren |
+| Chat-Funktionen | Parallel-Antworten, temporäre Chats, Lesezeichen, Memories |
+| Erstellen und Teilen | Agenten, Prompts, Skills und geteilte Links |
+| Remote-Agenten | Agenten ausserhalb des Chats, etwa im Outlook-Add-in |
+| Sichtbarkeit | ob Nutzer und Gruppen im Teilen-Dialog erscheinen |
+
+Zusätzlich legen Sie pro Rolle fest, welche Modellkarten sichtbar sind, siehe [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
+
+**Vorsicht bei der Administratorrolle**
+
+Änderungen an der Administratorrolle betreffen auch Ihr eigenes Konto und wirken sofort für alle Administratoren. Es gibt keine Ausnahme für die Person, die den Schalter umlegt. Prüfen Sie solche Änderungen deshalb doppelt.
+
+**Skills nie pauschal ausrollen**
+
+Skills sind hinterlegte Standard-Prozesse. Geben Sie sie gezielt frei, statt sie pauschal für alle zu öffnen.
+
+## Gruppen
+
+Gruppen sind die Basis für Zugriffe und Modellauswahl. Sie sind entweder lokal im Panel gepflegt oder kommen aus Ihrem Identity Provider und sind dann schreibgeschützt, ihre Mitglieder verwaltet der Identity Provider.
+
+Pro Gruppe lässt sich festlegen, welche Konnektoren erlaubt sind und welche Modellkarten sichtbar sind. Grundsatz: die engere Regel gewinnt.
+
+## Sperren und löschen
+
+Eine **Sperre** ist befristet oder unbefristet und jederzeit wieder aufhebbar.
+
+Das **Löschen** eines Kontos entfernt Konto, Konversationen, Nachrichten, Dateien, Schlüssel, Agenten und Guthaben und ist nicht rückgängig zu machen. Der Dialog verlangt deshalb eine ausdrückliche Bestätigung und bietet direkt davor den Datenexport an: Nach der Löschung lässt sich keine Auskunft mehr erteilen, die Auskunft nach DSGVO muss also vorher passieren. Optional lassen sich die Verbrauchs-Transaktionen mitlöschen; dann geht allerdings der Abrechnungsbeleg verloren. Mehr dazu unter [Datenschutz und Aufbewahrung](/docs/administration/datenschutz-und-aufbewahrung).
+
+## „Was darf diese Person, und warum"
+
+Zu jeder Person gibt es eine Übersicht ihrer Zugriffe: Rolle, Gruppen, erlaubte Konnektoren, sichtbare Modellkarten und Agenten-Freigaben. Zu jedem Eintrag steht, welche Ebene die Entscheidung getroffen hat, und der Weg dorthin ist verlinkt. Das ist der schnellste Weg, wenn jemand meldet, er sehe einen Konnektor oder ein Modell nicht.
+
+---
+
+# Modelle und Modellkarten
+Quelle: https://eucowork.ai/docs/administration/modelle-und-karten
+Kapitel: Administration
+
+Was Modellkarten sind und wie ihre Sichtbarkeit pro Rolle und Gruppe gesteuert wird.
+
+Nutzer wählen im Chat kein rohes Modell aus, sondern eine **Modellkarte**. Eine Karte bündelt einen Anbieter, ein Modell und die Voreinstellungen dazu unter einem verständlichen Namen. Diese Seite zeigt, was Sie als Administrator damit steuern.
+
+## Was eine Modellkarte ist
+
+Eine Karte ist ein kuratiertes Preset. Statt eines technischen Modellnamens liest die Person im Modell-Picker eine verständliche Bezeichnung und bekommt damit automatisch den passenden Systemprompt und die passenden Parameter. Das hat drei Vorteile: die Auswahl bleibt verständlich, der Systemprompt wird serverseitig eingefügt und landet nicht im Browser, und Sie können die Auswahl pro Rolle und Gruppe zuschneiden.
+
+Zu einer Karte gehören unter anderem ein sichtbares Label, eine kurze Beschreibung, die Position im Picker, der Anbieter und das Modell dahinter sowie Voreinstellungen wie Temperatur, Begrüssungstext und Systemprompt. Genau eine Karte ist die Standardkarte.
+
+Zusätzlich lässt sich einstellen, ob ausschliesslich Karten wählbar sind oder ob daneben auch die rohe Modellliste erscheint.
+
+## Anbieter
+
+Die Anbieter und die von ihnen bereitgestellten Modelle werden in der Konfiguration gepflegt. Ein Verbindungstest prüft die Anbindung, ohne das Geheimnis preiszugeben.
+
+**Schlüssel nur als Referenz**
+
+Ein Zugangsschlüssel wird nie im Klartext in der Konfiguration hinterlegt, sondern ausschliesslich als Referenz auf einen serverseitig gespeicherten Wert. Klartext wird abgelehnt. Alternativ hinterlegt jede Person ihren eigenen Schlüssel im Chat.
+
+## Sichtbarkeit pro Rolle und Gruppe
+
+Welche Karten jemand sieht, legen Sie auf Ebene der Rolle und der Gruppe fest. Wo es keine eigene Regel gibt, gilt die ausgelieferte Auswahl. Grundsatz: die engere Regel gewinnt.
+
+Im Rollen-Editor schalten Sie die Karten einzeln an oder aus und blenden bei Bedarf die rohe Modellliste aus; eine Gruppe bekommt bei Bedarf eine eigene Auswahl. Auf beiden Ebenen lässt sich die Auswahl in einem Schritt auf den Auslieferungsstand zurücksetzen.
+
+**Nach Kartenänderungen einmal neu speichern**
+
+Wenn Sie eine Karte umbenennen oder hinzufügen, speichern Sie die betroffenen Rollen- und Gruppenregeln einmal neu und prüfen Sie danach, dass die Sichtbarkeit noch so steht, wie Sie sie meinen.
+
+## Anbieter einschränken
+
+Läuft ein Endpunkt über einen Vermittler, der seinerseits mehrere Anbieter einsetzt, lässt sich einschränken, welche davon Ihre Anfragen bedienen dürfen: nur Anbieter ohne Speicherung und ohne Training der Prompts, und auf Wunsch nur Anbieter mit Sitz oder Rechenzentrum in EU, EWR und Schweiz.
+
+**Zwei Einschränkungen**
+
+Erstens: die Angaben zu Sitz und Rechenzentrum stammen vom Vermittler, und **der Sitz eines Anbieters ist keine Garantie für den Verarbeitungsort**. Behandeln Sie „Nur EU" als sinnvolle Einschränkung, nicht als Zusicherung.
+
+Zweitens: **Modelle ohne passenden Anbieter liefern danach einen Fehler.** Wenn Sie die Liste eng setzen, prüfen Sie jede Karte, die über diesen Endpunkt läuft.
+
+## Model-Router
+
+Neben den festen Karten gibt es die Möglichkeit, Anfragen automatisch auf ein passendes Modell zu verteilen, statt jede Frage vom teuersten Modell beantworten zu lassen. Fällt die Einordnung aus, geht die Anfrage an das stärkere Modell: im Zweifel entscheidet der Router für Qualität, nicht für die Ersparnis.
+
+**Im Auslieferungszustand nicht aktiv**
+
+Der Router ist im Kunden-Template **nicht** ausgerollt. Nach der Installation sehen Ihre Mitarbeitenden die ausgelieferten Modellkarten. Der Zusammenhang ist in [Chat und Modelle](/docs/funktionen/chat-und-modelle) beschrieben.
+
+---
+
+# Verbrauch, Budgets und Abrechnung
+Quelle: https://eucowork.ai/docs/administration/verbrauch-und-budgets
+Kapitel: Administration
+
+Wie der Verbrauch gemessen wird, wie Monatsbudget und persönliche Limits zusammenspielen und wie Belege entstehen.
+
+Die Verbrauchsmessung ist immer aktiv. Sie zeigt, was die Nutzung tatsächlich kostet, und ist die Grundlage für Budgets, Limits und Belege.
+
+## Was gemessen wird
+
+Grundlage sind die Tokens jeder einzelnen Anfrage, getrennt nach Eingabe und Ausgabe. Daraus entsteht ein Betrag pro Anfrage, den das Panel nach Person, Modell, Tag und Monat aufsummiert. Die Modellpreise sind in der Konfiguration hinterlegt und lassen sich aus dem Katalog des Anbieters übernehmen; abgerechnet wird in Euro zu einem Wechselkurs, der pro Abrechnungsmonat eingefroren wird. Abgeschlossene Monate und ihre Belege bleiben damit, wie sie waren.
+
+**Preise pflegen lohnt sich**
+
+Pflegen Sie zu jedem eingesetzten Modell den Preis und die Kontextgrösse. Fehlen diese Angaben, arbeitet die Auswertung mit Annahmen: sie sieht dann plausibel aus und ist trotzdem falsch, und lange Konversationen werden früher beschnitten als nötig.
+
+## Monatsbudget und persönliche Limits
+
+Für die Organisation lässt sich ein **gemeinsames Monatsbudget** in Euro setzen. Es ist ein gemeinsamer Monats-Tank, kein Betrag pro Person. Ohne Eintrag gibt es kein Budget. Auf der Übersicht wird der Stand gegen den realen Verbrauch gestellt, mit Warnung und Hochrechnung, bevor es knapp wird.
+
+Ob das Budget nur angezeigt oder auch durchgesetzt wird, entscheiden Sie mit einem Schalter:
+
+| Einstellung | Wirkung |
+| --- | --- |
+| aus | Das Budget ist reine Anzeige. Niemand wird ausgesperrt. |
+| an | Ist das Budget aufgebraucht, werden neue Anfragen abgelehnt, für **alle** Konten inklusive der Administratoren. Im Chat erscheint eine Hinweisleiste. Das Panel selbst bleibt bedienbar. |
+
+Eine Budget-Erhöhung, das Ausschalten des Schalters und der Monatswechsel heben die Sperre wieder auf.
+
+Zusätzlich lässt sich pro Person ein **Monatslimit** setzen.
+
+**Der Pool schlägt das persönliche Limit**
+
+Ist der gemeinsame Topf leer, stehen alle auf null, auch wer sein eigenes Limit noch längst nicht ausgeschöpft hat. Das persönliche Limit ist eine zusätzliche Bremse, keine Reservierung.
+
+## Guthaben: zwei Bedeutungen
+
+Das Wort „Guthaben" steht im Panel an zwei Stellen und meint zwei verschiedene Dinge:
+
+| | Guthaben einer Person | Guthaben der Organisation |
+| --- | --- | --- |
+| Was es ist | das individuelle Limit-Konto in Euro | der Kontostand aus erfassten Einzahlungen |
+| Wozu es dient | technische Durchsetzung von Sperren pro Konto | kaufmännischer Überblick über Einzahlungen und Verbrauch |
+| Wann es relevant ist | nur bei aktiver Durchsetzung | sobald Sie Einzahlungen erfassen |
+
+Kurz gefasst: das Guthaben pro Person ist ein Ventil, das Guthaben der Organisation ist eine Buchhaltung. Das Token-Guthaben selbst ist bewusst organisationsweit gepoolt, damit einzelne Personen nicht an einer künstlichen Grenze stehen, während anderswo Budget übrig ist.
+
+## Abrechnung und Belege
+
+Die Abrechnungsseite zeigt den gewählten Monat mit zwei Positionen: einer Plattformgebühr pro Nutzer und dem gemessenen Token-Verbrauch. Beides lässt sich als CSV und als PDF ausgeben. Einzahlungen werden in einem Ledger erfasst, der nur ergänzt wird: eine Korrektur passiert als Gegenbuchung, der Originaleintrag bleibt stehen. Vergangene Monate liegen in einem Archiv.
+
+**Lieber gesperrt als falsch**
+
+Fehlt eine Rechengrundlage, sperrt das Panel die Belege, statt still mit null zu rechnen. Ein Beleg, der ohne Fehlermeldung eine zu kleine Zahl ausweist, wäre schlimmer als gar kein Beleg.
+
+**Belege sind keine Steuerrechnungen**
+
+CSV und PDF sind Belege, keine Steuerrechnungen, und es gibt keine Zahlungsanbindung. Rechnungsstellung und Zahlungseingang laufen weiterhin über Ihre Buchhaltung.
+
+## Die Auswertungen
+
+Zwei Ansichten zeigen dieselben Zahlen aus unterschiedlichem Blickwinkel: eine **Monatssicht** auf den Kalendermonat mit Kennzahlen, Tagesverlauf und den Tabellen pro Nutzer und pro Modell, und eine **rollierende Sicht** über die letzten Wochen mit Vergleich zur Vorperiode.
+
+Für die Frage nach einer einzelnen Anfrage ist keine der beiden zuständig, dafür gibt es die [Protokolle](/docs/administration/protokolle-und-audit).
+
+---
+
+# Protokolle und Audit
+Quelle: https://eucowork.ai/docs/administration/protokolle-und-audit
+Kapitel: Administration
+
+Nutzungsprotokoll, Änderungshistorie und der Nachweis über Konnektor-Zugriffe.
+
+Es gibt zwei Protokollsichten mit zwei verschiedenen Aufgaben. Die eine beantwortet die Frage, **was das System getan hat**, also welche Anfragen liefen und was sie gekostet haben. Die andere beantwortet die Frage, **wer etwas verändert hat** und wer auf welche Daten zugegriffen hat.
+
+## Nutzungsprotokoll
+
+Hier steht jede einzelne Anfrage ans Modell mit Zeitpunkt, Modell, Anbieter, Person, Tokens und Kosten, dazu einige technische Kennzahlen zur Antwortqualität. Die Anfragen einer Konversation lassen sich gebündelt betrachten. Die Ansicht ist filter- und sortierbar, und was gefiltert angezeigt wird, lässt sich genau so als CSV exportieren.
+
+**Keine Gesprächsinhalte**
+
+Angezeigt wird nur die Kennung einer Konversation, nie deren Titel und nie ihr Inhalt. Das ist eine bewusste Datenschutzentscheidung: die Admin-Ansicht soll zeigen, was etwas gekostet hat, und nicht, worüber jemand geschrieben hat.
+
+Daneben gibt es eine Ansicht für technische Fehler und eine Diagnose-Ansicht für die Fehlersuche an Konnektoren.
+
+## Änderungshistorie und Konnektor-Nachweis
+
+Die zweite Sicht protokolliert **jede verändernde Aktion** im Panel, also alles, was anlegt, ändert oder löscht, samt Zeitpunkt, handelnder Person, betroffenem Ziel und Ergebnis. Zu einem Eintrag lässt sich der Zustand vorher und nachher vergleichen. Anmeldungen sind enthalten, auch fehlgeschlagene.
+
+Ebenfalls festgehalten wird **jeder Werkzeug-Aufruf über einen Konnektor**, mit dem Entscheid und der Begründung, welche Regel ihn erlaubt oder verweigert hat. Damit ist nachvollziehbar, warum ein Zugriff zustande kam, und nicht nur, dass es so war. Beide Trails lassen sich als CSV exportieren.
+
+**Geheimnisse werden redigiert**
+
+Ändern Sie einen Zugangsschlüssel, steht im Protokoll, dass der Schlüssel mit diesem Namen geändert wurde, nie der Wert. Werte, die nach einem Geheimnis aussehen, werden durch einen Platzhalter ersetzt. Ein Export ist damit auch dann unbedenklich, wenn der Empfänger keine Schlüssel sehen darf.
+
+Wie lange die Einträge aufbewahrt werden, legen Sie in Ihrem Löschkonzept fest, siehe [Datenschutz und Aufbewahrung](/docs/administration/datenschutz-und-aufbewahrung).
+
+## Wofür Sie das brauchen
+
+**Nachweispflicht.** Wenn jemand fragt, wer wann welche Einstellung geändert oder wer auf welche Daten aus einem angebundenen System zugegriffen hat, ist das ohne Protokoll nicht zu beantworten. Das gilt besonders für Konnektoren, die im Dienstkonto-Modus laufen.
+
+**Fehlersuche.** Meldet jemand „das Werkzeug antwortet nicht", trennen die Ansichten die Fälle sauber: ein verweigerter Aufruf ist eine Entscheidung und steht im Audit, ein technischer Fehler steht in der Diagnose. Das erspart Raten.
+
+**Kostenanalyse.** Das Nutzungsprotokoll zeigt, welches Modell, welche Person und welche Art von Konversation den Verbrauch treibt. Eine gefilterte Ansicht plus CSV-Export reicht meist aus, um die Frage „warum war letzter Monat teurer" zu beantworten. Die aggregierte Sicht dazu steht unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).
+
+---
+
+# Datenschutz und Aufbewahrung
+Quelle: https://eucowork.ai/docs/administration/datenschutz-und-aufbewahrung
+Kapitel: Administration
+
+Aufbewahrung, Auskunft und Löschung pro Person, Telemetrie und was die Instanz verlässt.
+
+Diese Seite beschreibt, wie Sie die Aufbewahrung festlegen, wie Sie eine Auskunft erteilen oder eine Löschung durchführen und was die Installation nach aussen sendet. Sie ist als Grundlage für Ihr eigenes Löschkonzept gedacht.
+
+## Die Aufbewahrungsfrist
+
+Sie legen in den Einstellungen eine Aufbewahrungsfrist in Tagen fest. Ohne Frist wird nichts automatisch gelöscht; setzen Sie sie bei der Einrichtung passend zu Ihrem Löschkonzept. Massgeblich ist die letzte Änderung an einer Konversation, nicht ihr Anlagedatum.
+
+Gelöscht werden **Konversationen samt ihren Nachrichten und den dazu erzeugten geteilten Links**, und zwar endgültig. Nicht gelöscht werden die **Abrechnungsdaten**. Der Verbrauch eines vergangenen Monats bleibt damit nachvollziehbar, auch wenn die zugehörigen Chats längst weg sind.
+
+**Jede Verkürzung fragt nach**
+
+Setzen oder verkürzen Sie die Frist, kommt eine Rückfrage mit alter und neuer Frist und dem Hinweis, dass die kürzere Frist zusätzliche, ältere Konversationen endgültig löscht. Eine spätere Verlängerung holt nichts zurück, bereits Gelöschtes bleibt gelöscht.
+
+Die Bereinigung läuft regelmässig von selbst und lässt sich zusätzlich von Hand anstossen. Wann sie zuletzt lief und was sie entfernt hat, steht daneben.
+
+## Auskunft und Löschung pro Person
+
+Beides erreichen Sie aus der Benutzerliste. Die Reihenfolge ist nicht beliebig.
+
+1. **Exportieren.** Der Datenexport liefert die Daten dieser Person als eine Datei: Konto, Gruppen, Guthaben, Konversationen, Nachrichten, Datei-Metadaten und Transaktionen. Dateien sind als Metadaten enthalten, nicht als Inhalt. Zugangsdaten sind bewusst nicht enthalten, also weder Passwort noch Zwei-Faktor-Geheimnisse noch hinterlegte Schlüssel.
+
+2. **Löschen.** Erst danach löschen. Nach der Löschung lässt sich keine Auskunft mehr erteilen, deshalb steht der Export-Knopf auch direkt im Lösch-Dialog.
+
+Beim Löschen entscheiden Sie über die Tiefe: entweder verschwinden Konto und Inhalte und die Transaktionen bleiben als Abrechnungsbeleg erhalten, oder es wird zusätzlich der Verbrauch gelöscht. Das ist die DSGVO-Volllöschung, und die Abrechnungsbelege gehen dabei verloren. Bestätigt wird in beiden Fällen durch exaktes Eintippen der E-Mail-Adresse.
+
+## Telemetrie
+
+Der Auslieferungszustand schaltet Telemetrie ab: die eingesetzten Komponenten senden keine Nutzungsdaten an ihre Hersteller, und Suchmaschinen indexieren die Oberfläche nicht. Wenn Sie eine bestehende Installation übernehmen, prüfen Sie das einmal nach.
+
+## Was die Instanz verlässt
+
+Die Installation läuft vollständig auf Ihrer Maschine, Konversationen, Suchindex und hochgeladene Dateien liegen dort. Wo diese Maschine physisch steht, entscheiden Sie mit der Wahl des Hosters.
+
+Zwei Dinge verlassen die Instanz zwangsläufig, und die sollten Sie kennen und intern kommunizieren:
+
+**Modellanfragen gehen an den konfigurierten Anbieter.** Ein Sprachmodell rechnet dort, wo es betrieben wird. Im Auslieferungszustand ist das ein Anbieter mit Verarbeitung in der EU. Wenn Sie zusätzlich Anbieter ausserhalb der EU zuschalten, gehen die Anfragen dieser Karten dorthin. Es gibt keinen Modus, in dem eine Cloud-Anfrage die Maschine nicht verlässt. Lokal betriebene Modelle sind die Ausnahme, sie brauchen aber passende Hardware.
+
+**Web-Suchanfragen gehen an externe Suchmaschinen.** Die Suche läuft über eine selbst gehostete Meta-Suche, die die Suchanfrage an externe Suchmaschinen weiterleitet, allerdings **ohne die Identität der suchenden Person**. Die Anfragen selbst verlassen also die Instanz.
+
+**Formulierung für Ihre Datenschutzhinweise**
+
+Sauber formuliert lautet die Aussage: Speicherung und Inferenz lassen sich in der EU beziehungsweise der Schweiz halten; bei der Web-Suche verlässt der Suchtext die Instanz, und zwar ohne Nutzerbezug. Wer diese Unterscheidung in Datenschutzhinweisen und Schulungen wörtlich übernimmt, ist auch bei kritischen Nachfragen auf der sicheren Seite.
+
+## Kennzeichnung von Anbietern ausserhalb der EU
+
+Anbieter, die nicht EU-resident sind, werden im Panel und im Chat als solche gekennzeichnet, damit die Wahl bewusst geschieht. Dieselbe Regel gilt für Konnektoren: ein Konnektor, dessen Zielsystem ausserhalb der EU betrieben wird, muss gekennzeichnet werden und gehört nicht ungefragt in ein Kundendeployment.
+
+Beachten Sie ausserdem, dass Herkunftsangaben zu Anbietern von diesen selbst stammen und der Sitz eines Anbieters keine Garantie für den Verarbeitungsort ist. Mehr dazu unter [Modelle und Modellkarten](/docs/administration/modelle-und-karten).
+
+## Abgrenzung
+
+**Bereitstellung ohne SCIM.** Konten entstehen beim ersten Login über OIDC. Die Deprovisionierung läuft über Ihren Identity Provider: Wer dort deaktiviert ist, kommt nicht mehr durch die Anmeldung und damit an keine Daten. Für den vollständigen Rückbau eines Kontos samt Daten nutzen Sie den Lösch-Dialog im Panel.
+
+**Belege statt Zahlungsanbindung.** Der Verbrauch wird vollständig erfasst und als CSV und PDF ausgegeben; die Zahlung selbst wickeln Sie in Ihrem eigenen System ab. Details unter [Verbrauch, Budgets und Abrechnung](/docs/administration/verbrauch-und-budgets).
+
+**Ausgehende Verbindungen der Code-Ausführung** regeln Sie auf Host- oder Netzebene, nicht in der Anwendung. Im Auslieferungszustand ist die Code-Ausführung ausgeschaltet.
+
+---
+
+# Kapitel: Konnektoren und MCP
+
+---
+
+# Was ist MCP
+Quelle: https://eucowork.ai/docs/konnektoren/was-ist-mcp
+Kapitel: Konnektoren und MCP
+
+Das Model Context Protocol von Grund auf erklärt, damit Sie verstehen, wie EU Cowork AI an Ihre eigenen Systeme angeschlossen wird.
+
+Diese Seite erklärt, wie ein Sprachmodell an Daten aus Ihren eigenen Systemen kommt. Sie richtet sich an IT-Verantwortliche, die den Begriff MCP noch nie gehört haben, und legt die Grundlage für alle weiteren Seiten dieses Kapitels.
+
+## Das Problem, das MCP löst
+
+Ein Sprachmodell kennt nur, was in seinem Trainingsmaterial stand, und was im laufenden Gespräch steht. Es weiss nichts über Ihre Kunden, Ihre Rechnungen oder Ihre Geräte. Damit es solche Fragen beantworten kann, braucht es einen Weg, während des Gesprächs bei einem Ihrer Fachsysteme nachzufragen.
+
+Genau dafür gibt es das **Model Context Protocol**, kurz MCP. Es ist eine gemeinsame Sprache dafür, wie ein Chat-System einem Fachsystem Fragen stellt und Antworten zurückbekommt. MCP ist ein **offener Standard mit öffentlicher Spezifikation**, ursprünglich von Anthropic veröffentlicht und inzwischen von vielen Herstellern übernommen. Es ist keine Erfindung von EU Cowork AI, und Sie binden sich damit nicht an uns.
+
+Für Sie heisst das zweierlei. Erstens: Für viele verbreitete Produkte existiert bereits ein fertiger MCP-Server, den Sie anschliessen können. Zweitens: Was Sie einmal für EU Cowork AI bauen, funktioniert auch mit anderer Software, die MCP spricht.
+
+## Drei Begriffe, die Sie brauchen
+
+**Werkzeug.** Ein Werkzeug ist eine einzelne, klar umrissene Fähigkeit. Es hat einen technischen Namen, eine Beschreibung in Prosa und eine Liste von Parametern. Eine Anbindung an ein Monitoring-System hätte zum Beispiel ein Werkzeug, dessen Aufgabe darin besteht, Geräte nach einigen wenigen Merkmalen zu suchen. Ein Werkzeug ist immer eine Aktion, nie ein ganzes System.
+
+**Konnektor, technisch MCP-Server.** Ein Konnektor ist ein kleiner Dienst, der eine Sammlung von Werkzeugen anbietet und dahinter mit dem eigentlichen Zielsystem spricht. In dieser Dokumentation nennen wir ihn Konnektor, weil das für Nicht-Entwickler verständlicher ist. In der Konfiguration und im Admin-Panel heisst er MCP-Server.
+
+**Client.** Der Client ist die Seite, der die Werkzeuge angeboten werden und die sie aufruft. Bei uns ist das LibreChat, die Chat-Schicht von EU Cowork AI.
+
+Ein Konnektor ist häufig eine **Brücke**: Das Zielsystem selbst spricht kein MCP, sondern hat nur eine gewöhnliche Programmierschnittstelle. Der Konnektor übersetzt dann zwischen beiden Welten. So funktionieren die meisten Anbindungen an ein ERP, ein Monitoring-System oder ein Ticketsystem.
+
+## Ein Beispiel: „Welche offenen Rechnungen hat Kunde X?"
+
+Ohne Konnektor kann das Modell diese Frage nicht beantworten. Es weiss nicht, wer Kunde X ist, und es hat keinen Zugang zu Ihrer Buchhaltung. Mit angebundenem ERP-Konnektor läuft Folgendes ab:
+
+1. Die Person stellt die Frage im Chat.
+2. Zusammen mit der Frage bekommt das Modell die Liste der freigegebenen Werkzeuge, jeweils mit Namen und Beschreibung. Darunter sind die Werkzeuge des ERP-Konnektors.
+3. Das Modell entscheidet, dass es die Frage nicht aus eigenem Wissen beantworten kann, und ruft ein Werkzeug auf, etwa „Datensätze suchen" mit dem Kundennamen als Filter.
+4. Bevor der Aufruf den Konnektor erreicht, wird geprüft, ob diese Person diesen Konnektor überhaupt benutzen darf. Die Entscheidung wird protokolliert.
+5. Ist der Aufruf erlaubt, fragt der Konnektor beim ERP nach und gibt das Ergebnis als Text zurück.
+6. Das Modell liest das Ergebnis, ruft bei Bedarf ein zweites Werkzeug auf, etwa „Datensatz lesen" mit der gefundenen Kundennummer, und formuliert daraus die Antwort.
+
+Wichtig an diesem Ablauf: Das Modell **entscheidet**, welches Werkzeug es aufruft, aber es **bestimmt nicht**, was es darf. Die Grenze zieht die Rechteprüfung davor und das Zielsystem dahinter. Ein Modell kann sich keine Rechte ausdenken, die es nicht hat.
+
+## Die zwei Verbindungsarten
+
+Jeder Konnektor muss sich beim Zielsystem anmelden. Dafür gibt es zwei grundsätzlich verschiedene Wege, und die Wahl entscheidet darüber, wo die Berechtigungsgrenze liegt.
+
+| | Anmeldung pro Person | Dienstkonto |
+|---|---|---|
+| Wer meldet sich an | jede Person mit dem eigenen Konto | ein einziges technisches Konto für alle |
+| Wer kennt die Rechte | das Zielsystem selbst | das Zielsystem kennt nur das Dienstkonto |
+| Berechtigungsgrenze | die Rechte der Person im Zielsystem | die Freigaben in EU Cowork AI plus die Rechte des Dienstkontos |
+| Feinheit | bis auf Dokument- und Feldebene | bis auf Konnektor- und Werkzeugebene |
+| Typisch für | Dateiablage, Dokumentenmanagement, Cloud-Speicher | ERP, Warenwirtschaft, Buchhaltung, Monitoring |
+
+**Anmeldung pro Person** bedeutet: Beim ersten Gebrauch wird die Person zum Anmeldedialog des Zielsystems geschickt, bestätigt dort den Zugriff, und der Konnektor arbeitet ab dann mit ihrem persönlichen Zugang. Wer in Ihrer Dateiablage einen Ordner nicht sehen darf, sieht ihn auch im Chat nicht. Das Zielsystem bleibt die massgebliche Instanz, und Sie müssen die Rechte nicht ein zweites Mal nachbauen.
+
+**Dienstkonto** bedeutet: Der Konnektor hält einen einzigen Schlüssel und meldet sich für alle gleich an. Das Zielsystem sieht nur dieses eine Konto und kann deshalb nicht zwischen Ihren Mitarbeitenden unterscheiden. Die Trennung muss dann davor passieren, über die Freigaben in EU Cowork AI.
+
+**Faustregel**
+
+Nehmen Sie **Anmeldung pro Person**, wann immer das Zielsystem das anbietet. Sie ist die sicherere Variante, weil die Rechte dort gepflegt werden, wo sie ohnehin gepflegt werden. Ein Dienstkonto ist die Notlösung für Systeme, die keinen personenbezogenen Zugang über eine Schnittstelle anbieten. Wenn Sie ein Dienstkonto brauchen, legen Sie lieber mehrere schmale Konten an als ein breites.
+
+## Was ein Konnektor kostet
+
+Ein Konnektor ist nicht gratis, auch wenn er nichts kostet. Der Werkzeug-Katalog, also Name, Beschreibung und Parameter jedes Werkzeugs, wird dem Modell **bei jeder einzelnen Nachricht** mitgeschickt. Er belegt also dauerhaft Platz im Kontext und wird bei jedem Aufruf mitbezahlt.
+
+Die Grössenordnung ist erheblich. Ein umfangreicher Konnektor kann leicht über hundert Werkzeuge anbieten und damit einen beträchtlichen Teil des verfügbaren Kontexts belegen, bevor die erste Frage gestellt ist. Auf die Werkzeuge beschränkt, die der Anwendungsfall tatsächlich braucht, bleibt davon oft nur ein kleiner Bruchteil übrig.
+
+Dazu kommt ein zweiter Effekt: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Wenige, klar benannte Werkzeuge liefern also nicht nur günstigere, sondern auch bessere Antworten.
+
+---
+
+# Rechte und Freigaben
+Quelle: https://eucowork.ai/docs/konnektoren/gateway-und-rechte
+Kapitel: Konnektoren und MCP
+
+Wie EU Cowork AI entscheidet, wer welchen Konnektor benutzen darf, und wo Sie die Freigaben pflegen.
+
+Vor den Konnektoren steht eine Rechteprüfung. Sie entscheidet, ob die anfragende Person einen Konnektor benutzen darf, und hält die Entscheidung fest. Diese Seite erklärt, warum es diese Schicht braucht, wonach sie entscheidet und wo Sie die Freigaben pflegen.
+
+## Warum es diese Schicht braucht
+
+Bindet man Konnektoren ohne eine eigene Rechteschicht an, lässt sich meist nur festlegen, ob jemand Konnektoren überhaupt benutzen darf, nicht welche. Wer MCP nutzen darf, sieht dann alle angebundenen Systeme, oder keines.
+
+Für ein Werkzeug wie eine Wetterabfrage ist das egal. Für ein ERP ist es das nicht: „Rechnungen darf die Buchhaltung sehen, Löhne nicht" ist auf dieser Ebene nicht abbildbar. Genau diese Lücke schliesst die Rechteprüfung.
+
+## Was die Rechteprüfung leistet
+
+- **Prüfung vor dem Aufruf.** Ein Werkzeug-Aufruf erreicht den Konnektor nur, wenn die anfragende Person dafür freigegeben ist. Andernfalls bekommt sie eine Klartext-Meldung im Chat, die auf den Admin verweist. Der Chat läuft normal weiter, es gibt keinen Absturz.
+- **Personenbezogene Werkzeugliste.** Wer für einen Konnektor keine Freigabe hat, bekommt dessen Werkzeuge gar nicht erst angeboten.
+- **Protokoll jedes Aufrufs.** Jede Entscheidung wird unveränderlich mitgeschrieben, Verweigerungen eingeschlossen. Wie lange diese Einträge aufbewahrt werden, legen Sie in Ihrem Löschkonzept fest, siehe [Datenschutz und Aufbewahrung](/docs/administration/datenschutz-und-aufbewahrung).
+- **Im Zweifel verweigern.** Bleibt eine Entscheidung unklar, wird verweigert statt erlaubt.
+- **Der Konnektor erfährt nicht, wer fragt.** Die Identität wird für die Entscheidung gebraucht und nicht an den Konnektor weitergereicht.
+
+## Der Weg einer Anfrage
+
+## Die Ebenen einer Freigabe
+
+Freigaben lassen sich für einzelne Personen, für Rollen und für Gruppen setzen, dazu kommt eine Standardregel je Konnektor. Widersprechen sich Angaben, ist die Auflösung bewusst restriktiv. Das ist Absicht: Eine Sicherheitsgrenze darf sich nicht dadurch aufheben lassen, dass jemand zusätzlich in einer harmlosen Gruppe ist.
+
+**Pflichtschritt: Standardregel vor der Freigabe setzen**
+
+Der erste Handgriff nach dem Anlegen eines Konnektors gehört der Standardregel: **Setzen Sie die Standardregel des Konnektors auf „verweigert" und geben Sie danach gezielt die Rollen, Gruppen und Personen frei, die den Konnektor brauchen.**
+
+So ist von der ersten Sekunde an definiert, wer hinter den Konnektor sieht, und die Freigabe ist eine bewusste Entscheidung statt eines Nebeneffekts. Nehmen Sie diesen Schritt in Ihre Abnahmeliste auf.
+
+Neben der Konnektor-Ebene lässt sich eine Freigabe auch auf einzelne Werkzeuge beziehen.
+
+**Schneiden Sie Konnektoren so, dass die Konnektor-Ebene genügt**
+
+Im Alltag trägt die Steuerung auf Konnektor-Ebene den grössten Teil der Fälle — und sie ist die robustere Grenze. Planen Sie Ihre Konnektoren deshalb entsprechend: lieber zwei schmale Konnektoren mit je eigenem Dienstkonto als einer mit vielen Werkzeugen, von denen die Hälfte gesperrt sein müsste. Wie das aussieht, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
+
+## Wo Sie die Freigaben pflegen
+
+Standardregeln, Freigaben für Rollen und Gruppen sowie Ausnahmen für einzelne Personen pflegen Sie im Admin-Panel. Ebenfalls dort liegt das Protokoll der Werkzeug-Aufrufe, das sich für die Ablage exportieren lässt. Umgekehrt lässt sich auch von einer einzelnen Person ausgehen und nachvollziehen, welche Konnektoren ihr offenstehen.
+
+Welche Ansicht wo liegt und wie sie bedient wird, beschreibt die Anleitung, die Ihrer Auslieferung beiliegt.
+
+## Was die Rechteprüfung nicht leistet
+
+- **Sie ersetzt die Rechte im Quellsystem nicht.** Ein Dienstkonto mit zu breiten Rechten bleibt ein Risiko, auch wenn eine Prüfung davor steht. Ziehen Sie die Datengrenze im Quellsystem, nicht im Prompt.
+- **Sie filtert keine Argumente und keine Inhalte.** Ein Werkzeug, das eine freie Abfragesprache entgegennimmt, lässt sich nicht sinnvoll auf „nur Rechnungen" einschränken. Bevorzugen Sie Konnektoren mit getrennten Werkzeugen oder mit einem Nur-Lese-Modus.
+- **Sie ist nicht die einzige Grenze.** Bei Konnektoren, die mit den Rechten der einzelnen Person arbeiten, zieht das Zielsystem selbst die massgebliche Grenze, siehe [Muster für Konnektoren](/docs/konnektoren/muster).
+
+---
+
+# Eigenen Konnektor anbinden
+Quelle: https://eucowork.ai/docs/konnektoren/eigenen-konnektor-anbinden
+Kapitel: Konnektoren und MCP
+
+Was Sie klären, bevor Sie ein eigenes System an EU Cowork AI anschliessen, und woran Sie einen fremden Konnektor messen.
+
+Ein eigenes System wird als Konnektor angebunden: ein Dienst, der eine überschaubare Zahl von Werkzeugen anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Angelegt und freigegeben wird er im Admin-Panel, ohne Zugriff auf den Server.
+
+**Die Anleitung kommt mit der Auslieferung**
+
+Mit Ihrer Instanz erhalten Sie eine Anleitung, die den Weg vom Anlegen bis zur Freigabe Schritt für Schritt beschreibt, passend zu Ihrer Installation. Diese Seite bleibt bewusst auf der Ebene davor: was Sie vorher klären, woran Sie einen Konnektor messen und was Sie beim Freigeben nicht vergessen dürfen.
+
+## Was Sie vorher klären
+
+- **Der technische Name.** Unter diesem Namen läuft der Konnektor in Ihrer Instanz. Er lässt sich später nicht ohne Weiteres ändern. Wählen Sie ihn also sprechend und dauerhaft.
+- **Die Adresse, unter der der Konnektor MCP spricht.** Der Dienst muss aus Ihrer Instanz heraus erreichbar sein.
+- **Die Zugangsdaten zum Zielsystem.** Sie gehören nie im Klartext in die Konfiguration, sondern ausschliesslich als Referenz auf einen hinterlegten Schlüssel.
+- **Das Konto hinter den Zugangsdaten.** Es ist die eigentliche Datengrenze. Geben Sie ihm im Zielsystem genau die Rechte und genau die Bereiche, die der Anwendungsfall braucht, siehe [Muster für Konnektoren](/docs/konnektoren/muster).
+- **Eine kurze Anleitung in Prosa** dazu, wann dieses Werkzeug benutzt werden soll und was es nicht kann. Sie wird nur eingefügt, wenn der Konnektor aktiv ist, und verbessert die Trefferquote spürbar.
+
+## Woher bekomme ich einen MCP-Server für mein System
+
+**Es gibt fertige Server für viele Produkte.** Weil MCP ein offener Standard ist, veröffentlichen Hersteller und Communities Konnektoren für gängige Software. Suchen Sie nach dem Produktnamen zusammen mit „MCP server". Für Systeme mit eigener Programmierschnittstelle ist die Chance gut, dass jemand die Brücke schon gebaut hat.
+
+**Sie können einen eigenen bauen.** Ein Konnektor ist ein kleiner Dienst, der eine Handvoll Werkzeuge anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Für einen begrenzten Zweck, etwa „fünf Leseabfragen auf unsere Fachanwendung", ist das überschaubar. Eine bewusst schmal gebaute Brücke ist im Kontext deutlich günstiger als ein fertiger Server mit hundert Werkzeugen.
+
+**Prüfen Sie einen fremden Server, bevor Sie ihn anschliessen.** Ein Konnektor bekommt Zugriff auf Ihre Daten, das ist keine Formalität. Vier Fragen:
+
+1. **Welche Werkzeuge exponiert er?** Lesen Sie die Liste vollständig. Schreibende Werkzeuge, die Sie nicht brauchen, sind reines Risiko und kosten dazu Kontext.
+2. **Gibt es einen Nur-Lese-Modus?** Ein Schalter, der Schreibzugriffe im Code abschaltet, ist deutlich mehr wert als der Vorsatz, sie nicht zu benutzen.
+3. **Ist er für mehrere Nutzer geeignet?** Konnektoren, die sich einen Zustand über mehrere Aufrufe merken, funktionieren im Mehrbenutzer-Betrieb nicht zuverlässig.
+4. **Wo liegen die Zugangsdaten und wie ist die Lizenz?** Ein Konnektor, der selbst Schlüssel hält, gehört ausschliesslich ins interne Netz.
+
+Das Ergebnis dieser Prüfung kann durchaus „wir bauen selbst" lauten, gerade wenn ein fertiger Server neben dem Lesen auch Neustarts, Skriptläufe oder schreibende Änderungen anbietet und sich das nicht abschalten lässt. Wie eine schmale Brücke zugeschnitten wird, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
+
+## Freigabe ist ein eigener Schritt
+
+Ein angelegter Konnektor ist noch kein freigegebener Konnektor.
+
+**Standardregel im selben Arbeitsschritt auf verweigert**
+
+Setzen Sie die **Standardregel** des Konnektors auf verweigert, bevor Sie irgendetwas anderes tun. Danach geben Sie gezielt die Rollen, Gruppen oder Personen frei, die den Konnektor brauchen. Wie die Entscheidung zustande kommt, steht unter [Rechte und Freigaben](/docs/konnektoren/gateway-und-rechte).
+
+Prüfen Sie die Freigabe zum Schluss mit zwei Testpersonen mit unterschiedlichen Rechten. Sehen beide dasselbe, greift Ihre Rechtegrenze nicht.
+
+## Wenn etwas nicht funktioniert
+
+- **Ein Werkzeug meldet „Zugriff verweigert".** Das ist kein Fehler, sondern die Rechteregel. Prüfen Sie die Freigaben für die betroffene Person, siehe [Rechte und Freigaben](/docs/konnektoren/gateway-und-rechte).
+- **Der Konnektor antwortet nicht.** Prüfen Sie zuerst, ob der Dienst aus Ihrer Instanz heraus erreichbar ist, und danach die hinterlegten Zugangsdaten zum Zielsystem.
+- **Die Prüfschritte im Einzelnen** beschreibt die Anleitung, die Ihrer Auslieferung beiliegt. Sie führt auch den Verbindungstest auf, der eine Anbindung unabhängig von den Rechten prüft.
+
+---
+
+# Muster für Konnektoren
+Quelle: https://eucowork.ai/docs/konnektoren/muster
+Kapitel: Konnektoren und MCP
+
+Drei bewährte Bauformen für Konnektoren, jeweils mit Einsatzgebiet, Verlauf der Rechte und den Punkten, auf die Sie im Betrieb achten müssen.
+
+Konnektoren unterscheiden sich weniger im Produkt dahinter als in der Art, wie sie sich am Zielsystem anmelden. Genau diese Art entscheidet darüber, wo die Datengrenze liegt und wie viel Arbeit Sie im Admin-Panel haben.
+
+Drei Bauformen decken praktisch alles ab, was in einem KMU anfällt. Diese Seite beschreibt jede davon mit denselben drei Fragen: wofür sie taugt, wie die Rechte laufen und worauf Sie achten müssen. Welches Produkt Sie tatsächlich anschliessen, spielt für die Bauform keine Rolle.
+
+## Muster A: Geschäftsanwendung über ein Dienstkonto
+
+**Wofür es taugt.** Ihr ERP, Ihre Warenwirtschaft, Ihre Buchhaltung, also die Systeme mit Kunden, Belegen, Projekten und Personaldaten. Solche Anwendungen bieten meist einen technischen Zugang über einen Schlüssel an, aber keinen personenbezogenen Zugang über eine Schnittstelle.
+
+**Wie die Rechte laufen.** Der Konnektor hält einen technischen Zugang und meldet sich für alle Personen gleich an. **Das Zielsystem kennt die anfragende Person nicht**, es sieht nur das Dienstkonto. Es kann Ihre Mitarbeitenden deshalb nicht auseinanderhalten.
+
+Die Antwort darauf ist nicht ein Filter im Prompt, sondern die Struktur der Konten: **pro Rechteprofil ein eigenes Dienstkonto und eine eigene Konnektor-Instanz**, statt eines Generalschlüssels für alle. Ein Zugangsschlüssel erbt vollständig die Rechte seines Kontos im Zielsystem. Damit ist das Konto hinter dem Schlüssel die eigentliche Datengrenze, nicht die Konfiguration und nicht der Prompt. Was das Konto nicht sehen darf, sieht auch der Chat nicht, unabhängig davon, was das Modell versucht.
+
+Die Freigaben in EU Cowork AI kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Ist eine Freigabe im Panel einmal zu weit gesetzt, trägt immer noch die Rechtegrenze des Dienstkontos.
+
+| Instanz mit eigenem Dienstkonto | Gedacht für |
+|---|---|
+| weitestes Rechteprofil | Geschäftsleitung |
+| kaufmännische Sicht | Finanzen und Administration |
+| technische Sicht ohne kaufmännische Daten | Service und Projekte |
+
+Welche Rechte diese Profile tatsächlich haben, legen Sie im Zielsystem fest, nicht bei uns.
+
+**Worauf Sie achten.**
+
+**Pro Person genau eine Instanz freigeben**
+
+Laufen mehrere Instanzen desselben Konnektors, exponieren sie **identische Werkzeugnamen**. Sind bei einer Person zwei davon freigegeben, landet derselbe Werkzeug-Katalog zweimal in jeder Konversation. Das kostet bei jeder Nachricht doppelte Kontext-Tokens, und das Modell muss zwischen zwei gleich benannten Werkzeugen raten, was zu falschen Aufrufen führt.
+
+Geben Sie deshalb pro Person **genau eine** Instanz frei. Braucht jemand ein anderes Profil, **wechseln** Sie die Freigabe, statt eine zweite hinzuzufügen.
+
+Dazu drei Punkte, die im Alltag zählen:
+
+- **Standardregel sofort auf verweigert.** Setzen Sie die Standardregel jeder Instanz auf verweigert, bevor Sie irgendjemanden freigeben.
+- **Halten Sie die Freigabe im Zielsystem lesend**, wo immer der Anwendungsfall das zulässt. Schreiben, Anlegen und Löschen schalten Sie nur für einzelne Objekte frei, für die Sie den Bedarf wirklich haben.
+- **Nutzen Sie das Protokoll.** Jede Entscheidung wird unveränderlich mitgeschrieben. Im Protokoll des Zielsystems ist zusätzlich erkennbar, aus welchem Profil eine Abfrage kam. Getrennte Dienstkonten zahlen sich hier ein zweites Mal aus.
+
+Brauchen Sie eine feinere Trennung, ist der Weg nicht ein zusätzlicher Filter im Chat, sondern ein weiteres Konto mit engeren Rechten und eine weitere Instanz des Konnektors.
+
+## Muster B: Dateiablage mit Anmeldung pro Person
+
+**Wofür es taugt.** Ihr Dokumentenmanagement, Ihr Cloud-Speicher, Ihre Team-Ablage. Also Systeme, in denen die Zugriffsrechte ohnehin schon fein und personenbezogen gepflegt sind und in denen es einen personenbezogenen Zugang über eine Schnittstelle gibt.
+
+**Wie die Rechte laufen.** Jede Person meldet sich **einmal selbst an**. Beim ersten Gebrauch wählt sie das Werkzeug im Chat und klickt auf Verbinden, landet im gewohnten Anmeldedialog des Zielsystems, bestätigt dort den Zugriff, und ab dann arbeitet der Konnektor mit ihrem persönlichen Zugang.
+
+Damit gilt: Wer einen Ordner im Zielsystem nicht sehen darf, sieht ihn auch im Chat nicht. Die Rechte werden dort gepflegt, wo sie ohnehin gepflegt werden, und müssen bei uns nicht nachgebaut werden. Ein Rechtewechsel im Quellsystem wirkt sofort auch im Chat.
+
+**Das ist der bevorzugte Weg.** Wenn ein System diese Anmeldeart anbietet, nehmen Sie sie. Die Rechte des Zielsystems sind bereits die Grenze, und sie sind feiner, als eine Regel davor je sein könnte: bis auf Dokument- und Feldebene statt nur bis auf Konnektor- und Werkzeugebene.
+
+**Die Steuerung liegt hier im Zielsystem**
+
+Weil die Rechte der Person bereits die Grenze sind, liegt die massgebliche Steuerung bei einem solchen Konnektor im Zielsystem. Pflegen Sie sie dort, und planen Sie nicht damit, eine feinere Abstufung davor nachzubauen.
+
+**Worauf Sie achten.**
+
+- **Der Abnahmetest ist ein Vergleich.** Zwei Testpersonen mit unterschiedlichen Rechten im Zielsystem müssen im Chat nachweislich unterschiedlich viel sehen. Sieht jede alles, arbeitet der Konnektor nicht mit den Rechten der Person.
+- **Nur lesend, wo das reicht.** Ein ausdrücklicher Nur-Lese-Schalter in der Brücke ist mehr wert als der Vorsatz, nicht zu schreiben. Bereiche, die der Anwendungsfall nicht braucht, etwa Mail, Kalender oder Chat-Verläufe, schalten Sie gar nicht erst frei. Jede zusätzliche Berechtigung verlangt ohnehin eine erneute Einwilligung.
+- **Der Zugang bleibt bestehen und muss erneuert werden können.** Fehlt die Berechtigung, die Verbindung im Hintergrund zu erneuern, stirbt sie nach kurzer Zeit, und jede Person muss neu verbinden.
+
+**Nach einem Umzug müssen die Schlüssel der Instanz mitkommen**
+
+Die persönlichen Zugänge gehören zum geschützten Datenbestand Ihrer Instanz. Ziehen Sie auf einen neuen Server um, müssen die zugehörigen Schlüssel der alten Instanz übernommen werden. Geschieht das nicht, sind alle gespeicherten Verbindungen unbrauchbar, und **jede Person muss ihren Zugang einmal neu aufbauen**. Es gehen dabei keine Daten verloren, aber es ist ein Support-Fall pro Mitarbeitendem. Nehmen Sie den Punkt in Ihren Umzugsplan auf, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+
+## Muster C: Nur lesende Brücke zu einem Fachsystem
+
+**Wofür es taugt.** Ihr Monitoring, Ihre Inventarisierung, Ihr Ticketsystem. Also Fachsysteme, aus denen Sie Auskunft wollen, in denen aber niemand aus dem Chat heraus etwas verändern soll.
+
+**Wie die Rechte laufen.** Technisch ist das ein Dienstkonto wie in Muster A. Der Unterschied liegt in der Absicht: Hier soll ausschliesslich gelesen werden. Und genau da lohnt sich der Aufwand, **das Lesen wirklich zu erzwingen, statt es zu versprechen**. Drei Ebenen tragen dazu bei, und jede würde für sich allein genügen:
+
+- Der technische Zugang im Zielsystem bekommt **nur Leserechte**. Damit lehnt das Zielsystem jeden schreibenden Aufruf selbst ab, unabhängig von unserer Software.
+- Die Brücke **bietet gar keine schreibenden Werkzeuge an**. Was nicht existiert, kann nicht aufgerufen werden.
+- Die **Freigabe** entscheidet, wer die Werkzeuge überhaupt sieht.
+
+**Die härteste Grenze ist eine andere.** Diese Ebenen verhindern, dass geschrieben wird. Sie sagen nichts darüber, **wie viel** gelesen werden darf. Standardmässig sieht ein technischer Zugang meist das ganze System.
+
+Geben Sie dem technischen Zugang deshalb im Zielsystem nur die Bereiche, die er wirklich braucht. Was er nicht sieht, existiert für den Chat schlicht nicht. Das ist die härteste verfügbare Grenze, sie liegt vollständig bei Ihnen im Fachsystem, und sie lässt sich weder durch einen Prompt noch durch einen Fehler in unserer Software umgehen. Brauchen Sie mehrere Sichten, ist der Weg derselbe wie in Muster A: ein zweiter technischer Zugang mit engerem Bereich, eine zweite Instanz der Brücke, und im Panel bekommt jede Person genau eine davon.
+
+**Die Regel dahinter**
+
+**Ein Werkzeug, das es nicht gibt, kann kein Modell versehentlich aufrufen.** Bauen Sie deshalb gar keine Werkzeuge für eingreifende Aktionen, etwa für Neustarts oder Skriptausführung. Dann braucht es auch nirgends eine Regel, die verhindern müsste, dass jemand einen Server aus dem Chat neu startet. Es geht schlicht nicht.
+
+Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, und gibt es einen Nur-Lese-Modus? Bietet ein fertiger Server neben dem Lesen auch eingreifende Aktionen an, und lässt sich das nicht abschalten, ist eine eigene schmale Brücke oft die schnellere Lösung als die Diskussion darüber, wer ihn benutzen darf.
+
+**Worauf Sie achten.**
+
+- **Ein Selbsttest ist die Mühe wert.** Ein kleines Prüfprogramm, das die Anmeldung, die tatsächlich gewährten Rechte und einen Lesezugriff nachweist, macht aus einer Zusicherung einen Beleg. Es lässt sich nach jeder Änderung erneut ausführen.
+- **Gestufte Antworten sparen bei jeder Frage.** Eine Detailabfrage sollte zuerst nur die Stammdaten laden und umfangreiche Abschnitte erst auf ausdrückliche Anforderung nachliefern.
+- **Für Fragen über viele Objekte ein Auswertungswerkzeug.** Zehn Einzelabfragen kosten zehn Ergebnisse im Kontext, eine Auswertung kostet eines.
+- **Alle sehen dasselbe.** Das Fachsystem kennt den einzelnen Chat-Nutzer nicht, es sieht nur den technischen Zugang. Die Trennung zwischen Ihren Mitarbeitenden macht ausschliesslich die Freigabe im Panel und der Bereich, den Sie dem Zugang gegeben haben.
+
+## Was der Werkzeug-Katalog kostet
+
+Alle drei Muster teilen eine Eigenschaft: Der Werkzeug-Katalog eines Konnektors, also Name, Beschreibung und Parameter jedes Werkzeugs, wird dem Modell **bei jeder einzelnen Nachricht** mitgeschickt. Er ist keine einmalige Investition, sondern eine laufende Miete auf jeden Chat.
+
+Die Grössenordnung ist erheblich: Ein umfangreicher Konnektor kann über hundert Werkzeuge anbieten und damit einen beträchtlichen Teil des verfügbaren Kontexts belegen, bevor die erste Frage gestellt ist. Auf den Anwendungsfall beschränkt, bleibt davon oft nur ein kleiner Bruchteil übrig.
+
+Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
+
+Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich.
+
+---
+
+# Best Practices für Konnektoren
+Quelle: https://eucowork.ai/docs/konnektoren/best-practices
+Kapitel: Konnektoren und MCP
+
+Zehn Regeln mit Begründung, dazu eine Checkliste vor der Freigabe eines neuen Konnektors.
+
+Diese Seite fasst zusammen, was sich im Betrieb bewährt hat. Die Regeln stehen nach Wichtigkeit, die erste ist die, die am häufigsten vergessen wird und am meisten kostet.
+
+## 1. Standardregel sofort auf verweigert
+
+Ein Konnektor ist erst dann sauber abgegrenzt, wenn seine Standardregel gesetzt ist. Solange das nicht geschehen ist, entscheidet nicht Ihre Absicht darüber, wer hinter den Konnektor sieht, sondern der Zufall des Konfigurationsstands. Bei einer ERP-Anbindung geht es dabei um sämtliche Kunden, Belege und Personaldaten, die das Dienstkonto sehen kann.
+
+Setzen Sie die **Standardregel** deshalb im selben Arbeitsschritt auf verweigert, in dem Sie den Konnektor anlegen, und geben Sie erst danach gezielt frei.
+
+## 2. Wenige Werkzeuge statt vieler
+
+Der Werkzeug-Katalog eines Konnektors wird dem Modell bei **jeder einzelnen Nachricht** mitgeschickt. Er ist keine einmalige Investition, sondern eine laufende Miete auf jeden Chat.
+
+Die Grössenordnung ist erheblich: Ein umfangreicher Konnektor kann über hundert Werkzeuge anbieten und damit einen beträchtlichen Teil des verfügbaren Kontexts belegen, bevor die erste Frage gestellt ist. Auf den Anwendungsfall beschränkt, bleibt davon oft nur ein kleiner Bruchteil übrig.
+
+Der zweite Effekt ist mindestens so wichtig: Je mehr ähnlich klingende Werkzeuge im Katalog stehen, desto häufiger greift das Modell zum falschen. Ein schmaler Katalog liefert nicht nur günstigere, sondern auch verlässlichere Antworten.
+
+Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich.
+
+## 3. Ein Werkzeug, das es nicht gibt, kann nicht aufgerufen werden
+
+Die verlässlichste Sicherheitsmassnahme ist Weglassen. Ein Modell kann kein Werkzeug versehentlich aufrufen, das gar nicht existiert, und keine Anweisung in einem Dokument kann eines herbeireden.
+
+Eine nur lesende Brücke zu einem Fachsystem führt das vor, siehe [Muster C](/docs/konnektoren/muster): Es gibt dort bewusst kein Werkzeug für eingreifende Aktionen. Deshalb steht auch nirgends eine Regel, die verhindern müsste, dass jemand einen Server aus dem Chat neu startet. Es geht schlicht nicht.
+
+Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, und gibt es einen Nur-Lese-Modus? Wenn ein fertiger Server neben dem Lesen auch eingreifende Aktionen anbietet und sich das nicht abschalten lässt, ist ein eigener schmaler Konnektor oft die schnellere Lösung als die Diskussion darüber, wer ihn benutzen darf.
+
+## 4. Getrennte Dienstkonten statt eines Generalschlüssels
+
+Ein Zugangsschlüssel erbt die Rechte seines Kontos im Quellsystem. Ein Schlüssel für alle bedeutet also: die weitesten Rechte für alle, und die Trennung hängt allein an unserer Software.
+
+Legen Sie stattdessen mehrere schmale Dienstkonten an, je eines pro Rechteprofil, und fahren Sie pro Konto eine eigene Instanz des Konnektors. Genau so ist [Muster A](/docs/konnektoren/muster) gebaut: mehrere Instanzen derselben Brücke, je ein eigenes Konto im Zielsystem, je ein eigenes Rechteprofil. Ist eine Freigabe im Panel einmal zu weit gesetzt, sieht eine Person immer noch nur das, was ihr Dienstkonto sehen darf.
+
+Der Nebeneffekt ist ebenfalls wertvoll: Im Protokoll des Quellsystems ist erkennbar, aus welchem Profil eine Abfrage kam.
+
+## 5. Die Datengrenze gehört ins Quellsystem
+
+Die Versuchung ist gross, eine Grenze im Prompt zu ziehen: „Frage keine Lohndaten ab." Das ist keine Grenze, das ist eine Bitte.
+
+Auch eine Filterung auf Argumentebene trägt nicht weit. Viele Werkzeuge nehmen freie Suchausdrücke oder Filterbedingungen entgegen. Was dort alles möglich ist, lässt sich von aussen nicht zuverlässig beurteilen, und jede Filterregel ist ein Wettlauf gegen Formulierungen, an die niemand gedacht hat.
+
+Verlässlich sind nur zwei Ebenen: die Rechte des Kontos im Quellsystem, also das, was das Konto hinter dem Schlüssel dort überhaupt sehen darf, und die Werkzeug-Ebene, weil ein nicht vorhandenes Werkzeug nichts liefern kann. Ziehen Sie die Grenze dort, und behandeln Sie den Prompt als Bequemlichkeit, nicht als Kontrolle.
+
+## 6. Anmeldung pro Person schlägt Dienstkonto
+
+Wenn ein System einen personenbezogenen Zugang über eine Schnittstelle anbietet, nehmen Sie ihn. Dann kennt das Zielsystem die anfragende Person, und ihre dortigen Rechte gelten unverändert. Sie müssen nichts nachbauen, nichts nachpflegen, und ein Rechtewechsel im Quellsystem wirkt sofort auch im Chat.
+
+Eine Anbindung an Ihre Dateiablage funktioniert typischerweise so, siehe [Muster B](/docs/konnektoren/muster). Der Preis dafür ist, dass jede Person sich einmal verbinden muss und dass die Abstufung dann im Zielsystem gepflegt wird. Das ist der richtige Tausch: Eine feinere Grenze im Zielsystem ist mehr wert als eine gröbere Grenze davor.
+
+Ein Dienstkonto ist die Notlösung für Systeme ohne diese Möglichkeit. Es ist nicht schlecht, aber es verlangt die Regeln 1, 4 und 8 mit Nachdruck.
+
+## 7. Schlüssel nur als Referenz
+
+Tragen Sie Zugangsdaten niemals im Klartext in die Konfiguration ein, sondern ausschliesslich als Referenz auf einen hinterlegten Schlüssel.
+
+Das ist keine Formsache. Ein Klartextwert in der Konfiguration wäre für jeden lesbar, der die Konfiguration einsehen darf, und würde in Exporten und Sicherungen der Einstellungen mitlaufen.
+
+Behandeln Sie einen einmal hinterlegten Schlüssel deshalb als nicht mehr einsehbar: Ändern heisst überschreiben, und wer den Wert braucht, holt ihn aus dem Quellsystem, nicht aus der Plattform.
+
+## 8. Pro Person genau eine Instanz desselben Konnektors
+
+Mehrere Instanzen desselben Konnektors exponieren identische Werkzeugnamen. Sind bei einer Person zwei davon freigegeben, passiert zweierlei: Der Katalog liegt doppelt im Kontext und kostet bei jeder Nachricht doppelt, und das Modell muss zwischen zwei gleich benannten Werkzeugen raten. Beides ist vermeidbar.
+
+Geben Sie deshalb pro Person genau eine Instanz frei. Braucht jemand ein anderes Rechteprofil, **wechseln** Sie die Freigabe, statt eine zweite hinzuzufügen. Prüfen Sie danach im Panel, was für diese Person tatsächlich anliegt.
+
+## 9. Kontextgrösse aktiv managen
+
+Der Werkzeug-Katalog ist nur die eine Hälfte. Die andere sind die **Ergebnisse** der Aufrufe. Eine unbedachte Abfrage über die ganze Gerätelandschaft oder eine ungefilterte Trefferliste aus dem ERP füllt den Kontext, verdrängt den Gesprächsverlauf und macht die Antwort schlechter, nicht besser.
+
+Vier Stellschrauben helfen:
+
+- **Obergrenzen für die Länge von Werkzeug-Ergebnissen setzen und stehen lassen.** Wirkt eine Antwort abgeschnitten, ist das der Schutz bei der Arbeit.
+- **Konnektoren mit gestuften Antworten bevorzugen.** Eine gut gebaute Detailabfrage lädt zuerst nur die Stammdaten und holt umfangreiche Abschnitte erst auf ausdrückliche Anforderung. Das spart bei jeder einzelnen Frage.
+- **Für Fragen über viele Objekte ein Auswertungswerkzeug statt vieler Einzelabfragen.** Zehn Einzelabfragen kosten zehn Ergebnisse im Kontext, eine Auswertung kostet eines.
+- **Bei werkzeugschweren Agenten den Katalog nicht komplett in jeden Prompt schreiben.** Werkzeug-Definitionen lassen sich auch erst bei Bedarf nachladen. Das lohnt sich erst bei sehr vielen Werkzeugen.
+
+## 10. Konnektoren ausserhalb der EU kennzeichnen
+
+Ein Konnektor führt Daten aus Ihrer Instanz zu einem Anbieter. Liegt dieser Anbieter ausserhalb der EU, ist das eine Aussage über Ihre Datenhaltung, die Sie nicht stillschweigend treffen sollten.
+
+Das gilt auch dann, wenn der Anbieter eine europäische Instanz betreibt: Sobald Daten Ihren eigenen Stack verlassen, ist das eine Verarbeitung bei einem Dritten, und die Rechtslage richtet sich nach dessen Sitz. Ein solcher Konnektor kann eine völlig richtige Entscheidung sein, aber es muss eine **bewusste** sein.
+
+Deshalb enthält der Auslieferungszustand einer neuen Installation **keinen vorkonfigurierten Konnektor**. Was angeschlossen wird, entscheiden Sie.
+
+Führen Sie eine kurze Liste, welcher Konnektor Daten wohin gibt, benennen Sie Nicht-EU-Anbindungen ausdrücklich gegenüber Ihren Nutzern und in Ihrer Datenschutzdokumentation, und behaupten Sie für solche Konnektoren nicht, alles bleibe in Europa.
+
+## Checkliste vor der Freigabe eines neuen Konnektors
+
+Gehen Sie diese Punkte durch, bevor die erste Person den Konnektor benutzt:
+
+- [ ] Die Liste der exponierten Werkzeuge ist vollständig gelesen und verstanden.
+- [ ] Alles, was nicht gebraucht wird, ist abgeschaltet oder gar nicht erst vorhanden.
+- [ ] Es gibt einen Nur-Lese-Modus, oder es ist begründet, warum Schreiben nötig ist.
+- [ ] Das Dienstkonto im Quellsystem hat genau die Rechte, die es braucht, und nicht mehr.
+- [ ] Die Datengrenze ist im Quellsystem gezogen, nicht im Prompt.
+- [ ] Zugangsdaten stehen ausschliesslich als Referenz in der Konfiguration, nie im Klartext.
+- [ ] Für den Konnektor greifen Freigaben pro Rolle und Gruppe, oder es ist begründet, warum die Rechte im Zielsystem genügen.
+- [ ] Die **Standardregel** steht auf verweigert.
+- [ ] Die Freigaben sind gesetzt, und pro Person ist nur eine Instanz freigegeben.
+- [ ] Die Verbindung zum Konnektor ist geprüft.
+- [ ] Eine Testperson mit engen Rechten sieht nachweislich weniger als eine mit weiten.
+- [ ] Bei einem Anbieter ausserhalb der EU ist das dokumentiert und kommuniziert.
+- [ ] Ein Blick ins Protokoll zeigt die erwarteten Aufrufe und Entscheide.
+
+---
+
+# Kapitel: Referenz
+
+---
+
+# Umgebungsvariablen
+Quelle: https://eucowork.ai/docs/referenz/umgebungsvariablen
+Kapitel: Referenz
+
+Wie eine Instanz konfiguriert wird, was Sie selbst setzen und wo die vollständige Referenz liegt.
+
+Wie bei LibreChat üblich wird eine Instanz über eine Umgebungsdatei konfiguriert. Der
+Auslieferung liegt eine kommentierte Vorlage bei, aus der der Installer beim ersten Lauf die
+tatsächliche Konfiguration erzeugt.
+
+**Die Konfigurationsdatei bleibt auf dem Server**
+
+Sie enthält sämtliche Zugangsdaten der Instanz. Sie gehört nie in ein Repository, nie in ein
+Ticket und nie in eine Support-Anfrage.
+
+## Was Sie selbst setzen
+
+Der weitaus grösste Teil der Vorlage ist so vorbelegt, dass eine Instanz startet. Selbst
+angeben müssen Sie im Wesentlichen drei Dinge:
+
+- **die Domain**, unter der die Instanz erreichbar ist. Solange hier der Vorgabewert steht,
+  laufen Einladungslinks nur auf dem Server selbst.
+- **den Zugangsschlüssel des Modell-Anbieters.** Ohne ihn startet die Instanz zwar, aber jede
+  Modellanfrage scheitert.
+- **optional die Zugangsdaten für den Mailversand.** Ohne sie gibt es keine Verifikations- und
+  Einladungsmails, eine Einladung liefert dann nur einen Link zum Kopieren.
+
+## Geheimnisse
+
+Die kryptografischen Geheimnisse einer Instanz erzeugt der Installer beim ersten Lauf selbst
+und legt sie geschützt ab. Sie müssen dafür nichts tun.
+
+**Beim Umzug auf einen neuen Server**
+
+Die bestehende Konfiguration muss übernommen werden. Wird sie stattdessen neu erzeugt, lassen
+sich zuvor verschlüsselt gespeicherte Zugangsdaten nicht mehr lesen, und alle Nutzer müssen
+ihre Konnektor-Verbindungen neu aufbauen. Das mitgelieferte Backup-Werkzeug nimmt die
+Konfiguration deshalb mit.
+
+## Vollständige Referenz
+
+Welche Einträge es im Einzelnen gibt, was sie bewirken und welche davon für eine bestimmte
+Ausbaustufe nötig sind, steht in den Betriebsunterlagen, die der Auslieferung beiliegen.
+Kunden erhalten sie zusammen mit dem Zugang. Die Vorlage selbst ist ebenfalls kommentiert.
+
+Für alles, was Standard von LibreChat ist, gilt zusätzlich die dortige Dokumentation unter
+[www.librechat.ai/docs](https://www.librechat.ai/docs).
+
+## Verwandte Seiten
+
+- [Konfiguration](/docs/betrieb/konfiguration) beschreibt, was stattdessen in der
+  `librechat.yaml` und was im Admin-Panel gesetzt wird.
+- [Fehlerbehebung](/docs/betrieb/fehlerbehebung) sammelt die häufigen Fehlerbilder.
+
+---
+
+# Dienste und Ports
+Quelle: https://eucowork.ai/docs/referenz/dienste-und-ports
+Kapitel: Referenz
+
+Wie der Stack grundsätzlich aufgebaut ist und was von aussen erreichbar ist.
+
+EU Cowork AI läuft als Docker-Compose-Stack. Die Chat-Anwendung und die Dienste, die sie
+benötigt, laufen jeweils in einem eigenen Container und sprechen untereinander über ein
+internes Netz.
+
+## Was von aussen erreichbar ist
+
+Nach aussen veröffentlicht wird nur ein Reverse-Proxy auf den üblichen Web-Ports, der TLS
+terminiert und alles Weitere intern verteilt. Sämtliche übrigen Dienste sind ausschliesslich im
+internen Netz erreichbar und werden auf dem Host nicht veröffentlicht.
+
+Welche Dienste eine Auslieferung im Einzelnen umfasst und wie sie zugeschaltet werden, steht in
+den Betriebsunterlagen.
+
+**Netzzugang planen**
+
+Zusätzlich zu den Web-Ports braucht die Instanz einen ausgehenden Weg zum Modell-Anbieter.
+Legen Sie vor der Inbetriebnahme fest, welche Ziele der Server nach aussen erreichen darf, und
+lassen Sie den Serverzugang selbst nur aus Ihrem Verwaltungsnetz zu.
+
+## Betriebsunterlagen
+
+Die Aufstellung der einzelnen Dienste mit ihren Aufgaben und Abhängigkeiten, die Netz- und
+Ausbauvarianten sowie die Prüfschritte für den Betrieb liegen der Auslieferung bei. Kunden
+erhalten diese Unterlagen zusammen mit dem Zugang.
+
+Wie der Stack im Alltag gestartet, gestoppt und beobachtet wird, steht in der
+[Befehlsübersicht](/docs/referenz/befehle). Die Lizenzen der beteiligten Bausteine stehen unter
+[Lizenzen und Herkunft](/docs/referenz/lizenzen).
+
+---
+
+# Befehlsübersicht
+Quelle: https://eucowork.ai/docs/referenz/befehle
+Kapitel: Referenz
+
+Womit eine Instanz im Alltag verwaltet wird und wo die ausführliche Anleitung liegt.
+
+Eine Instanz wird mit den üblichen Docker-Compose-Kommandos verwaltet. Es gibt dafür keine
+eigene Kommandozeile, die man erst lernen müsste.
+
+| Zweck | Befehl |
+|---|---|
+| Starten | `docker compose up -d` |
+| Status | `docker compose ps` |
+| Protokoll mitlesen | `docker compose logs -f` |
+| Neustart | `docker compose restart` |
+| Anhalten | `docker compose down` |
+
+Nicht jede Auslieferung startet mit demselben Umfang. Welche zusätzlichen Angaben ein Aufruf in
+Ihrer Auslieferung braucht, steht in den Betriebsunterlagen. Sie gehören dann bei **jedem**
+Aufruf dazu.
+
+## Mitgelieferte Hilfsskripte
+
+Für Installation, Aktualisierung, Sicherung und Umzug bringt die Auslieferung fertige Skripte
+mit, damit diese Abläufe nicht von Hand zusammengesetzt werden müssen. Ihre Aufrufe, Optionen
+und die passende Reihenfolge sind in den Betriebsunterlagen beschrieben, die der Auslieferung
+beiliegen. Kunden erhalten sie zusammen mit dem Zugang.
+
+**Vor jeder Aktualisierung sichern**
+
+Das gilt ohne Ausnahme. Zur Sicherung gehören neben der Datenbank auch die Konfiguration und
+die hochgeladenen Dateien; das mitgelieferte Backup-Werkzeug nimmt beides mit. Ein Archiv
+enthält Zugangsdaten und wird entsprechend geschützt aufbewahrt.
+
+## Verwandte Seiten
+
+- [Installation und Betrieb](/docs/betrieb/installation) beschreibt den Ablauf vom leeren
+  Server bis zur laufenden Instanz.
+- [Fehlerbehebung](/docs/betrieb/fehlerbehebung) sammelt die häufigen Fehlerbilder.
+
+---
+
+# Was von LibreChat kommt
+Quelle: https://eucowork.ai/docs/referenz/librechat-und-eu-cowork
+Kapitel: Referenz
+
+Einordnung, welche Teile der Plattform von LibreChat stammen und welche wir selbst gebaut haben, und warum der Fork bewusst dünn bleibt.
+
+EU Cowork AI ist keine Neuentwicklung von Grund auf. Die Chat-Oberfläche und ein grosser Teil
+der Anwendungslogik stammen aus einem bestehenden Open-Source-Projekt, unsere Arbeit liegt in
+der Schicht darum herum. Diese Seite trennt beides sauber, damit Sie wissen, wo Sie eine
+Antwort suchen müssen und wem Sie einen Fehler melden.
+
+## Was LibreChat ist
+
+[LibreChat](https://www.librechat.ai) ist eine quelloffene Chat-Plattform unter der
+**MIT-Lizenz**. Sie bringt die Oberfläche, die Anbindung an beliebige Modell-Anbieter, das
+Agenten- und Dateisystem sowie eine Administrations-Schnittstelle mit. Das Projekt ist
+ausgereift und wird aktiv weiterentwickelt.
+
+Eine Auslieferung setzt eine **geprüfte Fassung** von LibreChat ein, nicht einfach den jeweils
+neuesten Stand. Wer die Plattform nur betreiben will, baut LibreChat also nie aus dem
+Quellcode. Ein Versionssprung ist eine bewusste Handlung mit einer eigenen Prüfliste.
+
+## Was von LibreChat kommt
+
+| Bereich | Was es umfasst |
+|---|---|
+| **Chat** | Streaming, Verlauf, automatische Titel, Verzweigen von Konversationen, geteilte Links, temporäre Chats, Mehrfach-Chats |
+| **Agenten** | Agenten anlegen und nutzen, Werkzeug-Auswahl pro Agent, Agent-Marketplace |
+| **Skills** | hinterlegte Standard-Prozesse, die ein Modell auf Zuruf abarbeitet |
+| **Memory** | Langzeitgedächtnis über Konversationen hinweg, mit Opt-out im Chat |
+| **Artifacts** | React, HTML, Mermaid und SVG direkt im Chat, unabhängig von der Code-Ausführung |
+| **Dateien** | Upload als Kontext, Bildverständnis, die Dateisuche über hochgeladene Dokumente |
+| **Web-Suche** | das Gerüst dafür samt Anbindung einer Suchmaschine |
+| **Code-Ausführung** | die steckbare Schnittstelle zum Sandbox-Backend |
+| **MCP-Client** | die Fähigkeit, mit Konnektoren über das Model Context Protocol zu sprechen |
+| **Presets und Prompts** | Prompt-Bibliothek, Voreinstellungen, Lesezeichen |
+| **Volltextsuche** | Suche über frühere Konversationen |
+| **Administration** | die Administrations-Schnittstelle samt fortlaufender Audit-Kette |
+| **Identität** | OIDC inklusive Entra ID, LDAP und SAML, dazu der Rollen-Abgleich |
+| **Verbrauchsmessung** | Token-Erfassung und Guthaben pro Person |
+
+## Was wir gebaut haben
+
+| Baustein | Was es tut |
+|---|---|
+| **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu die Funktionen, die diese Schnittstelle nicht abdeckt: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto |
+| **MCP-Gateway** | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem, entlang der Kette Benutzer, Rolle, Gruppe, Standard. Fällt die Prüfung aus, wird verweigert |
+| **Model-Router** | verteilt Anfragen je nach Aufgabe auf unterschiedliche Modelle und Denkaufwände |
+| **Beispiel-Konnektor-Brücke** | ausschliesslich lesender Zugang zu einem Fachsystem, als Vorlage für eigene Anbindungen |
+| **Outlook-Add-in** | seitliches Chat-Pane in Outlook mit der geöffneten Mail als Kontext, gegen dieselbe Instanz und dieselben Rechte |
+| **Modellkarten und Systemprompt** | die kuratierte Auswahl im Modell-Picker und der deutsche Systemprompt, der serverseitig eingefügt wird |
+| **Installationspaket** | Server-Vorbereitung, Installer, Backup und Umzug, Branding |
+| **Konfigurationsprofile** | vorbereitete Varianten für die verschiedenen Ausbaustufen einer Instanz |
+
+**Code-Ausführung**
+
+Für die Code-Ausführung bindet EU Cowork AI etablierte Backends ein, statt einen eigenen Runner
+mitzuliefern. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf Host-
+oder Netzebene fest.
+
+## Warum der Fork dünn bleibt
+
+LibreChat ist geforkt, aber der Fork bleibt absichtlich nah am Original. Der Grund ist
+schlicht: je weiter ein Fork abdriftet, desto teurer wird jede Aktualisierung, und irgendwann
+findet sie nicht mehr statt. Eine Chat-Plattform, die zwei Jahre hinter dem Original
+zurückhängt, ist kein Vorteil, sondern ein Risiko.
+
+Daraus folgt eine feste Reihenfolge, in der eine Änderung versucht wird:
+
+1. **Konfiguration.** Lässt sich das in der `librechat.yaml`, in der Umgebungsdatei oder im
+   Admin-Panel lösen?
+2. **CSS.** Reicht eine Anpassung der Darstellung?
+3. **Kleiner Patch.** Eine eng begrenzte Änderung im Fork.
+4. **Eigene Komponente.** Erst wenn nichts anderes trägt.
+
+Alles, was ohne Eingriff in LibreChat lösbar ist, wird deshalb als eigener Dienst daneben
+gebaut. Diese Dienste heissen Sidecars: Sie haben einen eigenen Lebenszyklus und sprechen über
+normale Netzwerk-Schnittstellen mit LibreChat. Die eigenen Bausteine aus der Tabelle oben sind
+alle so gebaut.
+
+Praktisch heisst das für Sie: Ein Update von LibreChat berührt unsere Dienste nicht, und eine
+neue Fassung des Admin-Panels berührt LibreChat nicht. Beides wird getrennt aktualisiert. Eine
+Freigabe von EU Cowork AI ist immer ein gemeinsam getesteter Stand.
+
+## Die Datei `librechat.yaml`
+
+Die zentrale Konfigurationsdatei der Chat-Anwendung ist die `librechat.yaml`. Sie steuert,
+welche Modelle es gibt, wie die Oberfläche aussieht, welche Konnektoren eingebunden sind und
+wie die Web-Suche arbeitet.
+
+**Die vollständige Feldreferenz steht bei LibreChat**, unter
+[www.librechat.ai/docs](https://www.librechat.ai/docs). Wie die Datei in einer Auslieferung
+vorbelegt ist, steht in den mitgelieferten Betriebsunterlagen.
+
+Einzelne Felder wirken anders, als ihr Name vermuten lässt: manche gelten global statt pro
+Rolle, andere ersetzen eine Vorgabeliste, statt sie zu ergänzen. Die Bedeutung jedes Feldes
+steht in der Dokumentation von LibreChat. Prüfen Sie sie, bevor Sie einen Wert ändern.
+
+**Das Panel gewinnt gegen die Datei**
+
+Was Sie im Admin-Panel unter **Konfiguration** setzen, liegt als Override über der
+`librechat.yaml` und wirkt sofort, ohne Neustart. Betroffene Abschnitte tragen im Panel den
+Hinweis **aus DB-Override**. Wer eine Änderung in der Datei macht und sie nicht sieht, hat
+vermutlich einen Override darüber liegen.
+
+## Wo Sie weiterlesen
+
+Die Aufteilung ist einfach: Alles, was die Chat-Anwendung selbst betrifft, steht bei
+LibreChat. Alles, was mit Betrieb, Rechten, Verbrauch und Konnektoren zu tun hat, steht hier.
+
+### Bei LibreChat
+
+Für Chat-Funktionen im Detail, Agenten, Skills, Memory, Artifacts und die vollständige
+Feldreferenz der Konfiguration:
+**[www.librechat.ai/docs](https://www.librechat.ai/docs)**
+
+Dort finden Sie auch die Beschreibung von Feldern, die wir nicht setzen, sowie die Details zu
+OIDC, LDAP und SAML.
+
+### In dieser Dokumentation
+
+## Wohin mit einem Fehler
+
+| Der Fehler betrifft | Zuständig |
+|---|---|
+| Chat-Oberfläche, Agenten, Modell-Anbindung, Dateiverarbeitung | LibreChat |
+| Admin-Panel, Verbrauchsanzeige, Budget, Aufbewahrung | EU Cowork AI |
+| Rechte auf Konnektoren, Protokoll der Werkzeug-Aufrufe | EU Cowork AI |
+| Installation, Backup, Umzug, TLS | EU Cowork AI |
+| Outlook-Add-in | EU Cowork AI |
+
+Die Lizenzen aller beteiligten Bausteine stehen unter
+[Lizenzen und Herkunft](/docs/referenz/lizenzen).
+
+---
+
+# Lizenzen und Herkunft
+Quelle: https://eucowork.ai/docs/referenz/lizenzen
+Kapitel: Referenz
+
+Unter welcher Lizenz EU Cowork AI steht, was das für Sie als Kunde bedeutet und welche Lizenz jeder mitgelieferte Baustein trägt.
+
+EU Cowork AI ist echtes Open Source, und die mitgelieferten Fremdkomponenten stehen unter
+ihren eigenen Lizenzen. Diese Seite sagt, was das praktisch bedeutet, und listet jeden
+Baustein mit seiner Lizenz auf. Sie richtet sich an alle, die vor einer Beschaffung wissen
+müssen, worauf sie sich einlassen.
+
+## Die Lizenz des Gesamtprodukts
+
+Unser gesamter eigener Code steht unter der **MIT-Lizenz**. Das ist eine der freizügigsten
+Lizenzen überhaupt: Sie dürfen die Software nutzen, verändern, weitergeben und kommerziell
+einsetzen, solange der Lizenztext und der Urheberrechtshinweis erhalten bleiben.
+
+Was das für Sie als Kunde konkret heisst:
+
+| Zusage | Was dahintersteckt |
+|---|---|
+| **Selbst hosten ist kostenlos** | Für die Software zahlen Sie nichts. Bezahlt werden Betrieb, Support und Integration, wenn Sie das von jemandem beziehen wollen |
+| **Kein Per-Seat-Gating** | Die Nutzerzahl ist technisch nirgends begrenzt und lizenzrechtlich nirgends gedeckelt. Zehn Personen kosten dasselbe wie dreihundert, nämlich nichts |
+| **Kein Feature-Gating** | Es gibt keine Enterprise-Ausgabe mit zusätzlichen Funktionen. Was im Repository liegt, ist der volle Funktionsumfang |
+| **Keine Branding-Klausel** | Name, Logo, Favicon und Begrüssungstext sind Konfiguration. Sie dürfen die Oberfläche auf Ihr eigenes Unternehmen umbenennen, ohne eine Nutzerzahl oder eine Frist zu beachten |
+| **Kein Copyleft** | Sie sind nicht verpflichtet, eigene Erweiterungen zu veröffentlichen |
+
+Der Lizenztext liegt als Datei `LICENSE` im Repository, dort steht auch der Rechteinhaber.
+
+**Warum das ausdrücklich dasteht**
+
+Andere Projekte in diesem Bereich sind formal quelloffen, deckeln aber die Nutzerzahl für das
+Entfernen des Herstellerlogos oder verstecken Verwaltungsfunktionen hinter einer bezahlten
+Ausgabe. Das war der Anlass, die Lizenzfrage ganz an den Anfang zu stellen.
+
+## Die eigenen Bausteine
+
+| Komponente | Lizenz |
+|---|---|
+| Monorepo mit Distribution und Dokumentation | MIT |
+| Admin-Panel | MIT |
+| MCP-Gateway inklusive Model-Router | MIT |
+| Beispiel-Konnektor-Brücke | MIT |
+| Outlook-Add-in | MIT |
+
+## Die mitgelieferten Fremdkomponenten
+
+Die Distribution setzt unveränderte Fremdkomponenten unter deren eigenen Lizenzen ein. Unser
+Code bindet nichts davon ein, sondern spricht sie über ihre normalen Schnittstellen an. Es
+entsteht kein gemeinsames Werk.
+
+| Komponente | Aufgabe | Lizenz |
+|---|---|---|
+| [LibreChat](https://github.com/danny-avila/LibreChat) | die Chat-Anwendung selbst | MIT |
+| [MongoDB](https://github.com/mongodb/mongo) | Datenbank | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | Volltextsuche | MIT, einzelne Teile der Enterprise Edition unter BUSL-1.1 ² |
+| [SearXNG](https://github.com/searxng/searxng) | Metasuchmaschine für die Web-Suche | AGPL-3.0 ³ |
+| [pgvector](https://github.com/pgvector/pgvector) | Vektordatenbank | PostgreSQL-Lizenz |
+| [rag_api](https://github.com/danny-avila/rag_api) | Einbettung von Dateien | MIT |
+| [Caddy](https://github.com/caddyserver/caddy) | Reverse-Proxy | Apache-2.0 |
+| Konnektor-Brücken aus Fremdprojekten | Anbindung von Fremdsystemen. Welches Projekt hinter welcher Brücke steht, benennen die Betriebsunterlagen der Auslieferung | MPL-2.0 und MIT |
+
+Nicht alle dieser Komponenten kommen in jeder Auslieferung zum Einsatz. Zum Aufbau siehe
+[Dienste und Ports](/docs/referenz/dienste-und-ports).
+
+### Die Code-Ausführung
+
+Für die Code-Ausführung kommt wahlweise eines dieser beiden Backends zum Einsatz.
+
+| Backend | Rolle | Lizenz |
+|---|---|---|
+| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | gehärtete Variante mit microVM-Isolation | Apache-2.0 |
+| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | leichtere Variante | Apache-2.0 |
+
+Beide bringen aus ihren Projekten weitere Hilfsdienste mit. Deren Lizenzen stehen in den
+jeweiligen Projekten dokumentiert. Da sie je nach Fassung unterschiedlich ausfallen, prüfen
+Sie sie für die Fassung, die Sie tatsächlich einsetzen.
+
+### Diese Dokumentation
+
+Die Dokumentationsseite ist mit [Astro](https://astro.build) und
+[Starlight](https://starlight.astro.build) gebaut, beide unter der **MIT-Lizenz**. Die
+Volltextsuche läuft vollständig im Browser, es gibt keinen Suchdienst und kein Tracking.
+
+### Fussnoten
+
+**¹ MongoDB steht unter der SSPL-1.0.** Diese Lizenz greift, wenn jemand MongoDB selbst als
+Datenbank-Dienst an Dritte verkauft. Der Einsatz als interne Datenbank der eigenen
+Installation, wie hier, ist davon nicht berührt.
+
+**² Meilisearch** weist für die ausgelieferte Fassung `MIT AND BUSL-1.1` aus. Der weit
+überwiegende Teil steht unter MIT, einzelne Bestandteile der Enterprise Edition unter der
+Business Source License. Wir betreiben das offizielle Image unverändert.
+
+**³ SearXNG steht unter der AGPL-3.0.** Das benennen wir offen, statt es zu verstecken. Wir
+betreiben das offizielle Image unverändert und rufen es nur über seine normale Schnittstelle
+auf. Der Quellcode der eingesetzten, unveränderten Fassung ist öffentlich. Auf die
+MIT-Lizenzierung unseres Codes hat das keine Auswirkung, weil es weder eingebunden noch
+verändert wird und kein gemeinsames Werk entsteht.
+
+## Warum wir ein eigenes Admin-Panel gebaut haben
+
+LibreChat liefert seit einiger Zeit ein offizielles Admin-Panel mit. Dieses Panel steht unter
+der **AGPL-3.0**, also unter einer Copyleft-Lizenz mit Netzwerk-Klausel. Wer es einsetzt und
+verändert, muss den Quellcode auch dann offenlegen, wenn die Software nur über das Netz
+bereitgestellt und nie verteilt wird.
+
+Für ein Produkt, das ausdrücklich permissiv bleiben soll, ist das der falsche Weg. Deshalb:
+
+- **Das AGPL-Panel ist nicht Teil der Distribution.** Es war eine Übergangslösung für interne
+  Tests, bevor unser eigenes Panel fertig war.
+- **Unser Panel ist ein eigenständiger Neubau** unter MIT-Lizenz. Es arbeitet gegen dieselbe
+  Administrations-Schnittstelle von LibreChat, die selbst unter MIT steht.
+- **Es wurde kein Code aus dem AGPL-Panel übernommen.** Das Panel diente als Vorbild für die
+  Bedienung, nicht als Quelle. Dieselbe Regel gilt für Beiträge von aussen.
+
+Das Ergebnis: Sie können EU Cowork AI selbst hosten, verändern und weitergeben, ohne
+Copyleft-Pflichten. Das ist der eigentliche Grund für den Mehraufwand.
+
+## Beitragen
+
+Der Quellcode liegt im Repository **`eu-cowork`** auf GitHub. Die konkrete Adresse steht in
+Ihrer Bezugsquelle beziehungsweise wird Ihnen vom Anbieter mitgeteilt.
+
+Beiträge gehen als Pull Request gegen `main`. Vor dem ersten Beitrag lohnt ein Blick in die
+Datei `CONTRIBUTING.md` im Repository, dort steht der Ablauf. Die verbindlichen Konventionen
+zu Aufbau, Bauen, Prüfen, Commit-Format und Secret-Regeln stehen in `AGENTS.md`.
+
+Ein paar Punkte, die sich in der Praxis bewährt haben:
+
+- **Wohin die Änderung gehört.** Sidecars, Distribution und Dokumentation kommen in dieses
+  Repository. Änderungen an LibreChat selbst gehören in das Fork-Repository.
+- **Klein und auf ein Thema begrenzt.** Umformatierungen nicht mit inhaltlichen Änderungen
+  mischen.
+- **Keine Geheimnisse im Diff.** Schlüssel werden ausschliesslich als Variablen referenziert,
+  neue Variablen bekommen einen Platzhalter in der Konfigurationsvorlage.
+- **Beiträge stehen unter der MIT-Lizenz** dieses Projekts. Fremder Code darf nur mit
+  verträglicher Lizenz und Herkunftshinweis übernommen werden. **Kein Code aus AGPL-Quellen**,
+  insbesondere nicht aus dem AGPL-Admin-Panel von LibreChat.
+
+**Sicherheitsmeldungen**
+
+Sicherheitsrelevante Beobachtungen bitte nicht als öffentliches Issue melden, sondern
+vertraulich über den in `SECURITY.md` beschriebenen Weg oder direkt bei dem Anbieter, von dem
+Sie die Instanz beziehen.

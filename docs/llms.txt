@@ -1,0 +1,284 @@
+# EU Cowork AI — Dokumentation
+
+> Dokumentation von EU Cowork AI: Überblick, Installation und Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration sowie der Anschluss eigener Systeme über das Model Context Protocol.
+
+EU Cowork AI ist eine quelloffene KI-Arbeitsplattform für Unternehmen, ein Angebot der
+Herr Informatik GmbH, Windisch (CH). Die Dokumentation liegt in fünf Sprachen vor; die
+deutsche Fassung ist die Quelle, die übrigen sind Übersetzungen davon. Den Volltext der
+deutschen Fassung gibt es unter https://eucowork.ai/docs/llms-full.txt.
+Die Website selbst ist unter https://eucowork.ai/llms.txt beschrieben.
+
+## Deutsch (de-CH)
+
+- [Dokumentation](https://eucowork.ai/docs): Dokumentation von EU Cowork AI. Überblick, Betrieb auf dem eigenen Server, Administration und der Anschluss an eigene Systeme.
+
+### Erste Schritte
+
+- [Was ist EU Cowork AI?](https://eucowork.ai/docs/erste-schritte/ueberblick): Überblick über die Plattform, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob EU Cowork AI passt.
+- [Architektur](https://eucowork.ai/docs/erste-schritte/architektur): Der Aufbau in groben Zügen — Zugang über einen Reverse-Proxy, die Anwendung dahinter, die Datenhaltung daneben und die Modellanbieter ausserhalb.
+- [Systemanforderungen](https://eucowork.ai/docs/erste-schritte/systemanforderungen): Was eine selbst betriebene Instanz an CPU, Arbeitsspeicher, Plattenplatz und Betriebssystem braucht.
+- [Schnellstart](https://eucowork.ai/docs/erste-schritte/schnellstart): Der Weg zu einer eigenen Instanz in groben Zügen, von der Serverwahl bis zum ersten Konto.
+
+### Installation und Betrieb
+
+- [Server vorbereiten](https://eucowork.ai/docs/betrieb/server-vorbereiten): Welche Grundlagen eine Maschine mitbringen muss, bevor EU Cowork AI darauf installiert wird.
+- [Installation](https://eucowork.ai/docs/betrieb/installation): Wie eine Instanz von EU Cowork AI eingerichtet wird und welche Schritte nach dem ersten Start anstehen.
+- [Konfiguration](https://eucowork.ai/docs/betrieb/konfiguration): Die drei Konfigurationsebenen von EU Cowork AI, welche Ebene bei einem Widerspruch gewinnt und wie der Domain-Lock gesetzt wird.
+- [Domain und Zertifikat](https://eucowork.ai/docs/betrieb/domain-und-tls): Die drei TLS-Varianten von EU Cowork AI, also öffentliches Zertifikat, interne CA im LAN und Betrieb hinter einer bestehenden WAF.
+- [Aktualisieren](https://eucowork.ai/docs/betrieb/aktualisieren): Wie eine laufende Instanz von EU Cowork AI auf einen neuen Stand kommt, warum vorher gesichert wird und wie der Rückweg aussieht.
+- [Backup und Umzug](https://eucowork.ai/docs/betrieb/backup-und-umzug): Was eine Sicherung von EU Cowork AI umfasst, wie ein Restore wirkt und worauf ein Umzug auf einen neuen Server hinausläuft.
+- [Fehlerbehebung](https://eucowork.ai/docs/betrieb/fehlerbehebung): Wo Sie bei einer Störung zuerst hinschauen und welche Ursachengruppen im Betrieb von EU Cowork AI am häufigsten dahinterstecken.
+
+### Für Mitarbeitende
+
+- [Chat und Modelle](https://eucowork.ai/docs/funktionen/chat-und-modelle): Wie der Chat funktioniert, wie Modellkarten aufgebaut sind, wie Erinnerungen und die automatische Kompaktierung langer Gespräche arbeiten.
+- [Dateien und Wissen](https://eucowork.ai/docs/funktionen/dateien-und-wissen): Dateien an eine Nachricht anhängen, die Dateisuche über einen Dokumentenbestand und die Suche über eigene Chats. Was standardmässig an ist und was nicht.
+- [Web-Suche](https://eucowork.ai/docs/funktionen/web-suche): Wie die Web-Suche im Chat funktioniert, aus welchen Bausteinen sie besteht und was bei der Einrichtung zu entscheiden ist.
+- [Auswertungen, Tabellen und Code](https://eucowork.ai/docs/funktionen/code-und-auswertungen): Excel-Auswertungen und PDF als Download aus dem Chat, Diagramme und Oberflächen als Artefakte, und was die Code-Ausführung voraussetzt.
+- [Agenten und Skills](https://eucowork.ai/docs/funktionen/agenten-und-skills): Was ein Agent ist, was ein Skill ist, wie beide zusammenspielen und warum Skills nie pauschal an alle ausgerollt werden.
+- [Outlook-Add-in](https://eucowork.ai/docs/funktionen/outlook-add-in): Der KI-Kollege im Posteingang: Mails zusammenfassen, Antworten entwerfen, Aufgaben herausziehen. Mit Anhängen, Anmeldung und Verteilung.
+
+### Administration
+
+- [Admin-Panel](https://eucowork.ai/docs/administration/admin-panel): Was das Admin-Panel leistet und in welcher Reihenfolge eine neue Administratorin vorgeht.
+- [Benutzer, Gruppen und Rollen](https://eucowork.ai/docs/administration/benutzer-und-gruppen): Konten einladen und anlegen, Rechte über Rollen vergeben, Gruppen führen, Konten sperren und löschen.
+- [Modelle und Modellkarten](https://eucowork.ai/docs/administration/modelle-und-karten): Was Modellkarten sind und wie ihre Sichtbarkeit pro Rolle und Gruppe gesteuert wird.
+- [Verbrauch, Budgets und Abrechnung](https://eucowork.ai/docs/administration/verbrauch-und-budgets): Wie der Verbrauch gemessen wird, wie Monatsbudget und persönliche Limits zusammenspielen und wie Belege entstehen.
+- [Protokolle und Audit](https://eucowork.ai/docs/administration/protokolle-und-audit): Nutzungsprotokoll, Änderungshistorie und der Nachweis über Konnektor-Zugriffe.
+- [Datenschutz und Aufbewahrung](https://eucowork.ai/docs/administration/datenschutz-und-aufbewahrung): Aufbewahrung, Auskunft und Löschung pro Person, Telemetrie und was die Instanz verlässt.
+
+### Konnektoren und MCP
+
+- [Was ist MCP](https://eucowork.ai/docs/konnektoren/was-ist-mcp): Das Model Context Protocol von Grund auf erklärt, damit Sie verstehen, wie EU Cowork AI an Ihre eigenen Systeme angeschlossen wird.
+- [Rechte und Freigaben](https://eucowork.ai/docs/konnektoren/gateway-und-rechte): Wie EU Cowork AI entscheidet, wer welchen Konnektor benutzen darf, und wo Sie die Freigaben pflegen.
+- [Eigenen Konnektor anbinden](https://eucowork.ai/docs/konnektoren/eigenen-konnektor-anbinden): Was Sie klären, bevor Sie ein eigenes System an EU Cowork AI anschliessen, und woran Sie einen fremden Konnektor messen.
+- [Muster für Konnektoren](https://eucowork.ai/docs/konnektoren/muster): Drei bewährte Bauformen für Konnektoren, jeweils mit Einsatzgebiet, Verlauf der Rechte und den Punkten, auf die Sie im Betrieb achten müssen.
+- [Best Practices für Konnektoren](https://eucowork.ai/docs/konnektoren/best-practices): Zehn Regeln mit Begründung, dazu eine Checkliste vor der Freigabe eines neuen Konnektors.
+
+### Referenz
+
+- [Umgebungsvariablen](https://eucowork.ai/docs/referenz/umgebungsvariablen): Wie eine Instanz konfiguriert wird, was Sie selbst setzen und wo die vollständige Referenz liegt.
+- [Dienste und Ports](https://eucowork.ai/docs/referenz/dienste-und-ports): Wie der Stack grundsätzlich aufgebaut ist und was von aussen erreichbar ist.
+- [Befehlsübersicht](https://eucowork.ai/docs/referenz/befehle): Womit eine Instanz im Alltag verwaltet wird und wo die ausführliche Anleitung liegt.
+- [Was von LibreChat kommt](https://eucowork.ai/docs/referenz/librechat-und-eu-cowork): Einordnung, welche Teile der Plattform von LibreChat stammen und welche wir selbst gebaut haben, und warum der Fork bewusst dünn bleibt.
+- [Lizenzen und Herkunft](https://eucowork.ai/docs/referenz/lizenzen): Unter welcher Lizenz EU Cowork AI steht, was das für Sie als Kunde bedeutet und welche Lizenz jeder mitgelieferte Baustein trägt.
+
+## English (en)
+
+- [Documentation](https://eucowork.ai/docs/en): Documentation for EU Cowork AI. Overview, running it on your own server, administration and connecting it to your own systems.
+
+### Getting started
+
+- [What is EU Cowork AI?](https://eucowork.ai/docs/en/erste-schritte/ueberblick): Overview of the platform, its limits and its license. For IT decision makers evaluating whether EU Cowork AI fits.
+- [Architecture](https://eucowork.ai/docs/en/erste-schritte/architektur): The setup in broad strokes — access through a reverse proxy, the application behind it, the data storage next to it and the model providers outside.
+- [System requirements](https://eucowork.ai/docs/en/erste-schritte/systemanforderungen): What a self hosted instance needs in terms of CPU, memory, disk and operating system.
+- [Quickstart](https://eucowork.ai/docs/en/erste-schritte/schnellstart): The path to your own instance in broad strokes, from choosing the server to the first account.
+
+### Install and operate
+
+- [Prepare the server](https://eucowork.ai/docs/en/betrieb/server-vorbereiten): What a machine has to bring along before EU Cowork AI is installed on it.
+- [Installation](https://eucowork.ai/docs/en/betrieb/installation): How an instance of EU Cowork AI is set up and which steps follow after the first start.
+- [Configuration](https://eucowork.ai/docs/en/betrieb/konfiguration): The three configuration levels of EU Cowork AI, which level wins in a conflict and how the domain lock is set.
+- [Domain and certificate](https://eucowork.ai/docs/en/betrieb/domain-und-tls): The three TLS variants of EU Cowork AI, namely a public certificate, an internal CA on the LAN and operation behind an existing WAF.
+- [Updating](https://eucowork.ai/docs/en/betrieb/aktualisieren): How a running instance of EU Cowork AI is brought to a new state, why you back up first and what the way back looks like.
+- [Backup and migration](https://eucowork.ai/docs/en/betrieb/backup-und-umzug): What a backup of EU Cowork AI covers, how a restore behaves and what a migration to a new server amounts to.
+- [Troubleshooting](https://eucowork.ai/docs/en/betrieb/fehlerbehebung): Where to look first when something goes wrong and which groups of causes are most common in the operation of EU Cowork AI.
+
+### For your team
+
+- [Chat and models](https://eucowork.ai/docs/en/funktionen/chat-und-modelle): How the chat works, how model cards are put together, and how memories and the automatic compaction of long conversations behave.
+- [Files and knowledge](https://eucowork.ai/docs/en/funktionen/dateien-und-wissen): Attaching files to a message, file search across a document collection and search across your own chats. What is on by default and what is not.
+- [Web search](https://eucowork.ai/docs/en/funktionen/web-suche): How web search works in the chat, which building blocks it consists of and what has to be decided during setup.
+- [Analyses, spreadsheets and code](https://eucowork.ai/docs/en/funktionen/code-und-auswertungen): Excel analyses and PDFs as downloads from the chat, diagrams and interfaces as artifacts, and what code execution requires.
+- [Agents and skills](https://eucowork.ai/docs/en/funktionen/agenten-und-skills): What an agent is, what a skill is, how the two work together and why skills are never rolled out to everyone at once.
+- [Outlook add-in](https://eucowork.ai/docs/en/funktionen/outlook-add-in): The AI colleague in your inbox: summarize mail, draft replies, pull out tasks. Including attachments, sign-in and distribution.
+
+### Administration
+
+- [Admin panel](https://eucowork.ai/docs/en/administration/admin-panel): What the admin panel does and in which order a new admin should proceed.
+- [Users, groups and roles](https://eucowork.ai/docs/en/administration/benutzer-und-gruppen): Invite and create accounts, assign permissions through roles, run groups, block and delete accounts.
+- [Models and model cards](https://eucowork.ai/docs/en/administration/modelle-und-karten): What model cards are and how their visibility per role and group is controlled.
+- [Usage, budgets and billing](https://eucowork.ai/docs/en/administration/verbrauch-und-budgets): How usage is measured, how the monthly budget and personal limits work together and how receipts come into being.
+- [Logs and audit](https://eucowork.ai/docs/en/administration/protokolle-und-audit): Usage log, change history and the record of connector access.
+- [Data protection and retention](https://eucowork.ai/docs/en/administration/datenschutz-und-aufbewahrung): Retention, disclosure and deletion per person, telemetry and what leaves the instance.
+
+### Connectors and MCP
+
+- [What is MCP](https://eucowork.ai/docs/en/konnektoren/was-ist-mcp): The Model Context Protocol explained from the ground up, so you understand how EU Cowork AI is connected to your own systems.
+- [Permissions and grants](https://eucowork.ai/docs/en/konnektoren/gateway-und-rechte): How EU Cowork AI decides who may use which connector, and where you maintain the grants.
+- [Connecting your own connector](https://eucowork.ai/docs/en/konnektoren/eigenen-konnektor-anbinden): What to settle before you attach one of your own systems to EU Cowork AI, and how to measure a third party connector.
+- [Connector patterns](https://eucowork.ai/docs/en/konnektoren/muster): Three proven shapes for connectors, each with its use case, how the permissions flow, and what you have to watch out for in operation.
+- [Best practices for connectors](https://eucowork.ai/docs/en/konnektoren/best-practices): Ten rules with reasoning, plus a checklist to run before granting access to a new connector.
+
+### Reference
+
+- [Environment variables](https://eucowork.ai/docs/en/referenz/umgebungsvariablen): How an instance is configured, what you set yourself and where the complete reference lives.
+- [Services and ports](https://eucowork.ai/docs/en/referenz/dienste-und-ports): How the stack is structured in principle and what is reachable from the outside.
+- [Command reference](https://eucowork.ai/docs/en/referenz/befehle): What an instance is managed with day to day and where the detailed instructions live.
+- [What comes from LibreChat](https://eucowork.ai/docs/en/referenz/librechat-und-eu-cowork): A breakdown of which parts of the platform come from LibreChat and which we built ourselves, and why the fork deliberately stays thin.
+- [Licenses and origin](https://eucowork.ai/docs/en/referenz/lizenzen): Which license EU Cowork AI is released under, what that means for you as a customer, and which license every shipped building block carries.
+
+## Français (fr)
+
+- [Documentation](https://eucowork.ai/docs/fr): Documentation d’EU Cowork AI. Vue d’ensemble, exploitation sur votre propre serveur, administration et raccordement à vos propres systèmes.
+
+### Premiers pas
+
+- [Qu’est-ce qu’EU Cowork AI ?](https://eucowork.ai/docs/fr/erste-schritte/ueberblick): Vue d’ensemble de la plateforme, de ses limites et de sa licence. Pour les responsables informatiques qui décident si EU Cowork AI convient.
+- [Architecture](https://eucowork.ai/docs/fr/erste-schritte/architektur): La structure à grands traits — l’accès par un reverse proxy, l’application derrière, le stockage des données à côté et les fournisseurs de modèles à l’extérieur.
+- [Configuration requise](https://eucowork.ai/docs/fr/erste-schritte/systemanforderungen): Ce qu’une instance exploitée par vos soins demande en CPU, en mémoire vive, en espace disque et en système d’exploitation.
+- [Démarrage rapide](https://eucowork.ai/docs/fr/erste-schritte/schnellstart): Le chemin vers votre propre instance à grands traits, du choix du serveur jusqu’au premier compte.
+
+### Installation et exploitation
+
+- [Préparer le serveur](https://eucowork.ai/docs/fr/betrieb/server-vorbereiten): Les bases qu’une machine doit réunir avant qu’EU Cowork AI y soit installé.
+- [Installation](https://eucowork.ai/docs/fr/betrieb/installation): Comment une instance d’EU Cowork AI est mise en place et quelles étapes suivent le premier démarrage.
+- [Configuration](https://eucowork.ai/docs/fr/betrieb/konfiguration): Les trois niveaux de configuration d’EU Cowork AI, quel niveau l’emporte en cas de contradiction et comment le Domain-Lock est défini.
+- [Domaine et certificat](https://eucowork.ai/docs/fr/betrieb/domain-und-tls): Les trois variantes TLS d’EU Cowork AI, à savoir le certificat public, la CA interne dans le LAN et l’exploitation derrière un WAF existant.
+- [Mise à jour](https://eucowork.ai/docs/fr/betrieb/aktualisieren): Comment une instance en service d’EU Cowork AI passe à un nouvel état, pourquoi on sauvegarde au préalable et à quoi ressemble le chemin du retour.
+- [Sauvegarde et migration](https://eucowork.ai/docs/fr/betrieb/backup-und-umzug): Ce que couvre une sauvegarde d’EU Cowork AI, comment agit une restauration et à quoi revient une migration vers un nouveau serveur.
+- [Dépannage](https://eucowork.ai/docs/fr/betrieb/fehlerbehebung): Où regarder en premier en cas de panne et quels groupes de causes se cachent le plus souvent derrière les incidents rencontrés dans l’exploitation d’EU Cowork AI.
+
+### Pour vos équipes
+
+- [Chat et modèles](https://eucowork.ai/docs/fr/funktionen/chat-und-modelle): Le fonctionnement du chat, la composition des fiches de modèle, le rôle des souvenirs et le compactage automatique des conversations très longues.
+- [Fichiers et connaissances](https://eucowork.ai/docs/fr/funktionen/dateien-und-wissen): Joindre des fichiers à un message, la recherche de fichiers dans un fonds documentaire et la recherche dans ses propres chats. Ce qui est actif par défaut et ce qui ne l’est pas.
+- [Recherche web](https://eucowork.ai/docs/fr/funktionen/web-suche): Le fonctionnement de la recherche web dans le chat, les composants dont elle se compose et les choix à faire lors de la mise en place.
+- [Analyses, tableaux et code](https://eucowork.ai/docs/fr/funktionen/code-und-auswertungen): Analyses Excel et PDF à télécharger depuis le chat, diagrammes et interfaces sous forme d’artefacts, et ce que suppose l’exécution de code.
+- [Agents et compétences](https://eucowork.ai/docs/fr/funktionen/agenten-und-skills): Ce qu’est un agent, ce qu’est une compétence, comment les deux se complètent et pourquoi les compétences ne sont jamais déployées d’un bloc à tout le monde.
+- [Add-in Outlook](https://eucowork.ai/docs/fr/funktionen/outlook-add-in): Le collègue IA dans la boîte de réception : résumer les courriels, rédiger des réponses, extraire les tâches. Avec les pièces jointes, la connexion et la distribution.
+
+### Administration
+
+- [Panneau d’administration](https://eucowork.ai/docs/fr/administration/admin-panel): Ce que fait le panneau d’administration et dans quel ordre une nouvelle administratrice procède.
+- [Utilisateurs, groupes et rôles](https://eucowork.ai/docs/fr/administration/benutzer-und-gruppen): Inviter et créer des comptes, attribuer des droits par les rôles, gérer les groupes, bloquer et supprimer des comptes.
+- [Modèles et fiches de modèle](https://eucowork.ai/docs/fr/administration/modelle-und-karten): Ce que sont les fiches de modèle et comment leur visibilité est pilotée par rôle et par groupe.
+- [Consommation, budgets et facturation](https://eucowork.ai/docs/fr/administration/verbrauch-und-budgets): Comment la consommation est mesurée, comment le budget mensuel et les limites personnelles se combinent et comment naissent les justificatifs.
+- [Journaux et audit](https://eucowork.ai/docs/fr/administration/protokolle-und-audit): Journal d’utilisation, historique des modifications et preuve des accès par connecteur.
+- [Protection des données et conservation](https://eucowork.ai/docs/fr/administration/datenschutz-und-aufbewahrung): Conservation, droit d’accès et suppression par personne, télémétrie et ce qui quitte l’instance.
+
+### Connecteurs et MCP
+
+- [Qu’est-ce que MCP](https://eucowork.ai/docs/fr/konnektoren/was-ist-mcp): Le Model Context Protocol expliqué depuis la base, pour que vous compreniez comment EU Cowork AI est raccordé à vos propres systèmes.
+- [Droits et autorisations](https://eucowork.ai/docs/fr/konnektoren/gateway-und-rechte): Comment EU Cowork AI décide qui a le droit d’utiliser quel connecteur, et où vous gérez les autorisations.
+- [Raccorder votre propre connecteur](https://eucowork.ai/docs/fr/konnektoren/eigenen-konnektor-anbinden): Ce que vous clarifiez avant de raccorder l’un de vos systèmes à EU Cowork AI, et à quoi vous mesurez un connecteur tiers.
+- [Modèles de connecteurs](https://eucowork.ai/docs/fr/konnektoren/muster): Trois formes éprouvées de connecteurs, chacune avec son domaine d’emploi, le parcours des droits et les points auxquels vous devez veiller en exploitation.
+- [Bonnes pratiques pour les connecteurs](https://eucowork.ai/docs/fr/konnektoren/best-practices): Dix règles avec leur justification, plus une liste de contrôle avant l’autorisation d’un nouveau connecteur.
+
+### Référence
+
+- [Variables d’environnement](https://eucowork.ai/docs/fr/referenz/umgebungsvariablen): Comment une instance se configure, ce que vous définissez vous-même et où se trouve la référence complète.
+- [Services et ports](https://eucowork.ai/docs/fr/referenz/dienste-und-ports): Comment la pile est structurée dans ses grandes lignes et ce qui est joignable depuis l’extérieur.
+- [Aperçu des commandes](https://eucowork.ai/docs/fr/referenz/befehle): Avec quoi une instance s’administre au quotidien et où se trouvent les instructions détaillées.
+- [Ce qui vient de LibreChat](https://eucowork.ai/docs/fr/referenz/librechat-und-eu-cowork): La répartition entre les parties de la plateforme qui viennent de LibreChat et celles que nous avons construites nous-mêmes, et pourquoi le fork reste délibérément mince.
+- [Licences et origine](https://eucowork.ai/docs/fr/referenz/lizenzen): Sous quelle licence EU Cowork AI est publié, ce que cela signifie pour vous en tant que client et quelle licence porte chaque composant livré.
+
+## Italiano (it)
+
+- [Documentazione](https://eucowork.ai/docs/it): Documentazione di EU Cowork AI. Panoramica, esercizio su un server proprio, amministrazione e collegamento ai Suoi sistemi.
+
+### Primi passi
+
+- [Che cos’è EU Cowork AI?](https://eucowork.ai/docs/it/erste-schritte/ueberblick): Panoramica della piattaforma, dei suoi limiti e della sua licenza. Per i responsabili IT che decidono se EU Cowork AI sia adatta.
+- [Architettura](https://eucowork.ai/docs/it/erste-schritte/architektur): La struttura a grandi linee — l’accesso attraverso un reverse proxy, l’applicazione dietro, la gestione dei dati accanto e i fornitori di modelli all’esterno.
+- [Requisiti di sistema](https://eucowork.ai/docs/it/erste-schritte/systemanforderungen): Che cosa richiede un’istanza gestita in proprio in CPU, memoria di lavoro, spazio su disco e sistema operativo.
+- [Avvio rapido](https://eucowork.ai/docs/it/erste-schritte/schnellstart): Il percorso verso un’istanza propria a grandi linee, dalla scelta del server al primo account.
+
+### Installazione ed esercizio
+
+- [Preparare il server](https://eucowork.ai/docs/it/betrieb/server-vorbereiten): Quali basi deve avere una macchina prima che vi venga installato EU Cowork AI.
+- [Installazione](https://eucowork.ai/docs/it/betrieb/installation): Come viene predisposta un’istanza di EU Cowork AI e quali passi seguono dopo il primo avvio.
+- [Configurazione](https://eucowork.ai/docs/it/betrieb/konfiguration): I tre livelli di configurazione di EU Cowork AI, quale livello prevale in caso di conflitto e come si imposta il Domain-Lock.
+- [Dominio e certificato](https://eucowork.ai/docs/it/betrieb/domain-und-tls): Le tre varianti TLS di EU Cowork AI, ossia certificato pubblico, CA interna nella LAN ed esercizio dietro un WAF esistente.
+- [Aggiornamento](https://eucowork.ai/docs/it/betrieb/aktualisieren): Come un’istanza di EU Cowork AI in esercizio viene portata a uno stato nuovo, perché prima si esegue un backup e come si presenta la via del ritorno.
+- [Backup e migrazione](https://eucowork.ai/docs/it/betrieb/backup-und-umzug): Che cosa comprende un backup di EU Cowork AI, come agisce un restore e a che cosa si riduce una migrazione su un nuovo server.
+- [Risoluzione dei problemi](https://eucowork.ai/docs/it/betrieb/fehlerbehebung): Dove guardare per primo in caso di guasto e quali gruppi di cause stanno più spesso dietro ai problemi nell’esercizio di EU Cowork AI.
+
+### Per il personale
+
+- [Chat e modelli](https://eucowork.ai/docs/it/funktionen/chat-und-modelle): Come funziona la chat, come sono composte le schede dei modelli, come lavorano i ricordi e la compattazione automatica delle conversazioni lunghe.
+- [File e conoscenza](https://eucowork.ai/docs/it/funktionen/dateien-und-wissen): Allegare file a un messaggio, la ricerca nei file su un insieme di documenti e la ricerca nelle proprie chat. Che cosa è attivo di serie e che cosa no.
+- [Ricerca web](https://eucowork.ai/docs/it/funktionen/web-suche): Come funziona la ricerca web nella chat, di quali componenti è fatta e che cosa va deciso in fase di configurazione.
+- [Analisi, tabelle e codice](https://eucowork.ai/docs/it/funktionen/code-und-auswertungen): Analisi Excel e PDF scaricabili dalla chat, diagrammi e interfacce come artefatti, e che cosa presuppone l’esecuzione del codice.
+- [Agenti e competenze](https://eucowork.ai/docs/it/funktionen/agenten-und-skills): Che cos’è un agente, che cos’è una competenza, come i due si completano e perché le competenze non vengono mai distribuite in blocco a tutti.
+- [Add-in per Outlook](https://eucowork.ai/docs/it/funktionen/outlook-add-in): Il collega IA nella casella di posta: riassumere le e-mail, abbozzare le risposte, estrarre i compiti. Con allegati, accesso e distribuzione.
+
+### Amministrazione
+
+- [Pannello di amministrazione](https://eucowork.ai/docs/it/administration/admin-panel): Che cosa fa il pannello di amministrazione e in quale ordine procede una nuova amministratrice.
+- [Utenti, gruppi e ruoli](https://eucowork.ai/docs/it/administration/benutzer-und-gruppen): Invitare e creare account, assegnare diritti tramite i ruoli, gestire i gruppi, bloccare e cancellare account.
+- [Modelli e schede dei modelli](https://eucowork.ai/docs/it/administration/modelle-und-karten): Che cosa sono le schede dei modelli e come se ne governa la visibilità per ruolo e per gruppo.
+- [Consumo, budget e fatturazione](https://eucowork.ai/docs/it/administration/verbrauch-und-budgets): Come viene misurato il consumo, come budget mensile e limiti personali interagiscono e come nascono i giustificativi.
+- [Registri e audit](https://eucowork.ai/docs/it/administration/protokolle-und-audit): Registro di utilizzo, cronologia delle modifiche e prova degli accessi tramite connettore.
+- [Protezione dei dati e conservazione](https://eucowork.ai/docs/it/administration/datenschutz-und-aufbewahrung): Conservazione, riscontro e cancellazione per singola persona, telemetria e ciò che lascia l’istanza.
+
+### Connettori e MCP
+
+- [Che cos’è MCP](https://eucowork.ai/docs/it/konnektoren/was-ist-mcp): Il Model Context Protocol spiegato dalle basi, perché Lei capisca come EU Cowork AI viene collegato ai Suoi sistemi.
+- [Diritti e abilitazioni](https://eucowork.ai/docs/it/konnektoren/gateway-und-rechte): Come EU Cowork AI decide chi possa usare quale connettore e dove Lei cura le abilitazioni.
+- [Collegare un proprio connettore](https://eucowork.ai/docs/it/konnektoren/eigenen-konnektor-anbinden): Che cosa chiarire prima di collegare un proprio sistema a EU Cowork AI e in base a che cosa misurare un connettore altrui.
+- [Schemi per i connettori](https://eucowork.ai/docs/it/konnektoren/muster): Tre forme costruttive collaudate per i connettori, ciascuna con il campo di impiego, il percorso dei diritti e i punti a cui deve fare attenzione nell’esercizio.
+- [Buone pratiche per i connettori](https://eucowork.ai/docs/it/konnektoren/best-practices): Dieci regole con motivazione, oltre a una lista di controllo prima dell’abilitazione di un nuovo connettore.
+
+### Riferimento
+
+- [Variabili d’ambiente](https://eucowork.ai/docs/it/referenz/umgebungsvariablen): Come viene configurata un’istanza, che cosa imposta Lei stesso e dove si trova il riferimento completo.
+- [Servizi e porte](https://eucowork.ai/docs/it/referenz/dienste-und-ports): Com’è strutturato in linea di principio lo stack e che cosa è raggiungibile dall’esterno.
+- [Panoramica dei comandi](https://eucowork.ai/docs/it/referenz/befehle): Con che cosa si amministra un’istanza nella quotidianità e dove si trova la guida dettagliata.
+- [Che cosa viene da LibreChat](https://eucowork.ai/docs/it/referenz/librechat-und-eu-cowork): L’inquadramento di quali parti della piattaforma provengano da LibreChat e quali abbiamo costruito noi, e perché il fork resta di proposito sottile.
+- [Licenze e provenienza](https://eucowork.ai/docs/it/referenz/lizenzen): Sotto quale licenza si trova EU Cowork AI, che cosa significa per Lei come cliente e quale licenza porta ogni componente fornito.
+
+## Español (es)
+
+- [Documentación](https://eucowork.ai/docs/es): Documentación de EU Cowork AI. Visión general, funcionamiento en un servidor propio, administración y conexión con sus propios sistemas.
+
+### Primeros pasos
+
+- [¿Qué es EU Cowork AI?](https://eucowork.ai/docs/es/erste-schritte/ueberblick): Visión general de la plataforma, sus límites y su licencia. Para responsables de TI que deciden si EU Cowork AI encaja.
+- [Arquitectura](https://eucowork.ai/docs/es/erste-schritte/architektur): La estructura a grandes rasgos — el acceso a través de un proxy inverso, la aplicación por detrás, el almacenamiento de datos al lado y los proveedores de modelos fuera.
+- [Requisitos del sistema](https://eucowork.ai/docs/es/erste-schritte/systemanforderungen): Lo que una instancia gestionada por usted mismo necesita de CPU, memoria, espacio en disco y sistema operativo.
+- [Inicio rápido](https://eucowork.ai/docs/es/erste-schritte/schnellstart): El camino hacia una instancia propia a grandes rasgos, desde la elección del servidor hasta la primera cuenta.
+
+### Instalación y operación
+
+- [Preparar el servidor](https://eucowork.ai/docs/es/betrieb/server-vorbereiten): Qué bases debe reunir una máquina antes de que EU Cowork AI se instale en ella.
+- [Instalación](https://eucowork.ai/docs/es/betrieb/installation): Cómo se prepara una instancia de EU Cowork AI y qué pasos quedan pendientes tras el primer arranque.
+- [Configuración](https://eucowork.ai/docs/es/betrieb/konfiguration): Los tres niveles de configuración de EU Cowork AI, qué nivel gana en caso de contradicción y cómo se establece el Domain-Lock.
+- [Dominio y certificado](https://eucowork.ai/docs/es/betrieb/domain-und-tls): Las tres variantes de TLS de EU Cowork AI, es decir, certificado público, CA interna en la LAN y explotación detrás de un WAF ya existente.
+- [Actualización](https://eucowork.ai/docs/es/betrieb/aktualisieren): Cómo se lleva una instancia en marcha de EU Cowork AI a un estado nuevo, por qué se hace antes una copia de seguridad y qué aspecto tiene el camino de vuelta.
+- [Copia de seguridad y migración](https://eucowork.ai/docs/es/betrieb/backup-und-umzug): Qué abarca una copia de seguridad de EU Cowork AI, cómo actúa una restauración y en qué consiste una migración a un servidor nuevo.
+- [Resolución de problemas](https://eucowork.ai/docs/es/betrieb/fehlerbehebung): Dónde mirar primero ante una avería y qué grupos de causas hay detrás con más frecuencia en la explotación de EU Cowork AI.
+
+### Para su equipo
+
+- [Chat y modelos](https://eucowork.ai/docs/es/funktionen/chat-und-modelle): Cómo funciona el chat, cómo se componen las fichas del modelo, y cómo trabajan los recuerdos y la compactación automática de las conversaciones largas.
+- [Archivos y conocimiento](https://eucowork.ai/docs/es/funktionen/dateien-und-wissen): Adjuntar archivos a un mensaje, la búsqueda de archivos en un fondo documental y la búsqueda en los chats propios. Qué viene activado de serie y qué no.
+- [Búsqueda web](https://eucowork.ai/docs/es/funktionen/web-suche): Cómo funciona la búsqueda web en el chat, de qué componentes se compone y qué hay que decidir durante la implantación.
+- [Análisis, tablas y código](https://eucowork.ai/docs/es/funktionen/code-und-auswertungen): Análisis en Excel y PDF descargables desde el chat, diagramas e interfaces como artefactos, y qué requiere la ejecución de código.
+- [Agentes y capacidades](https://eucowork.ai/docs/es/funktionen/agenten-und-skills): Qué es un agente, qué es una capacidad, cómo se complementan ambos y por qué las capacidades nunca se despliegan de golpe a todo el mundo.
+- [Add-in de Outlook](https://eucowork.ai/docs/es/funktionen/outlook-add-in): El colega de IA en la bandeja de entrada: resumir correos, redactar respuestas, extraer tareas. Con los archivos adjuntos, el inicio de sesión y la distribución.
+
+### Administración
+
+- [Panel de administración](https://eucowork.ai/docs/es/administration/admin-panel): Qué ofrece el panel de administración y en qué orden procede una nueva administradora.
+- [Usuarios, grupos y roles](https://eucowork.ai/docs/es/administration/benutzer-und-gruppen): Invitar y crear cuentas, asignar permisos mediante roles, gestionar grupos, bloquear y eliminar cuentas.
+- [Modelos y fichas del modelo](https://eucowork.ai/docs/es/administration/modelle-und-karten): Qué son las fichas del modelo y cómo se controla su visibilidad por rol y por grupo.
+- [Consumo, presupuestos y facturación](https://eucowork.ai/docs/es/administration/verbrauch-und-budgets): Cómo se mide el consumo, cómo se combinan el presupuesto mensual y los límites personales y cómo se generan los justificantes.
+- [Registros y auditoría](https://eucowork.ai/docs/es/administration/protokolle-und-audit): Registro de uso, historial de cambios y la prueba de los accesos a través de conectores.
+- [Protección de datos y conservación](https://eucowork.ai/docs/es/administration/datenschutz-und-aufbewahrung): Conservación, información y eliminación por persona, telemetría y qué abandona la instancia.
+
+### Conectores y MCP
+
+- [Qué es MCP](https://eucowork.ai/docs/es/konnektoren/was-ist-mcp): El Model Context Protocol explicado desde cero, para que entienda cómo se conecta EU Cowork AI a sus propios sistemas.
+- [Permisos y habilitaciones](https://eucowork.ai/docs/es/konnektoren/gateway-und-rechte): Cómo decide EU Cowork AI quién puede utilizar qué conector, y dónde gestiona usted las habilitaciones.
+- [Conectar un conector propio](https://eucowork.ai/docs/es/konnektoren/eigenen-konnektor-anbinden): Qué aclarar antes de conectar uno de sus propios sistemas a EU Cowork AI, y con qué criterios medir un conector ajeno.
+- [Patrones de conectores](https://eucowork.ai/docs/es/konnektoren/muster): Tres formas constructivas acreditadas para conectores, cada una con su ámbito de uso, el recorrido de los permisos y los puntos a los que debe atender en la operación.
+- [Buenas prácticas para conectores](https://eucowork.ai/docs/es/konnektoren/best-practices): Diez reglas con su justificación, más una lista de comprobación antes de la habilitación de un conector nuevo.
+
+### Referencia
+
+- [Variables de entorno](https://eucowork.ai/docs/es/referenz/umgebungsvariablen): Cómo se configura una instancia, qué debe indicar usted mismo y dónde está la referencia completa.
+- [Servicios y puertos](https://eucowork.ai/docs/es/referenz/dienste-und-ports): Cómo está estructurada la pila en lo esencial y qué es accesible desde el exterior.
+- [Resumen de comandos](https://eucowork.ai/docs/es/referenz/befehle): Con qué se administra una instancia en el día a día y dónde están las instrucciones detalladas.
+- [Qué proviene de LibreChat](https://eucowork.ai/docs/es/referenz/librechat-und-eu-cowork): Delimitación de qué partes de la plataforma provienen de LibreChat y cuáles hemos construido nosotros mismos, y por qué el fork se mantiene deliberadamente delgado.
+- [Licencias y origen](https://eucowork.ai/docs/es/referenz/lizenzen): Bajo qué licencia está EU Cowork AI, qué significa eso para usted como cliente y qué licencia lleva cada componente entregado.

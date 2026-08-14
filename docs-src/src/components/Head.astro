@@ -1,0 +1,214 @@
+---
+/**
+ * Kopfbereich der Dokumentation.
+ *
+ * Diese Komponente überschreibt Starlights `Head`. Sie rendert die
+ * Standard-Komponente unverändert und hängt danach nur Angaben an, die im
+ * `<head>` stehen und deshalb niemand sieht: strukturierte Daten als JSON-LD,
+ * `og:locale:alternate` für die übrigen Sprachfassungen und auf der
+ * 404-Seite ein `noindex`. Am Aussehen der Seiten ändert sich dadurch nichts.
+ *
+ * Warum überhaupt JSON-LD: Suchmaschinen und Antwortmaschinen lesen zwar auch
+ * den Fliesstext, aber die Zuordnung einer Seite zu Herausgeber, Website und
+ * Sprache ist dort Auslegungssache. Im JSON-LD steht sie eindeutig.
+ *
+ * Die Bezeichner `#organization`, `#website` und `#software` sind dieselben,
+ * die die Marketing-Website in `Landing.dc.html` vergibt. Sie werden hier nur
+ * referenziert, nicht neu definiert — genau wie auf den Unterseiten der
+ * Website (siehe `governance/index.html`). So bleibt im Index eine einzige
+ * Organisation und eine einzige Website übrig statt zweier widersprüchlicher.
+ * Ausnahme ist die Doku-Startseite: dort werden `WebSite` und `Organization`
+ * ausgeschrieben, wortgleich zur Marketing-Website.
+ *
+ * Bewusst nicht enthalten: `datePublished` und `dateModified`. In
+ * `astro.config.mjs` ist `lastUpdated: false` gesetzt, es gibt also kein
+ * belegtes Datum. Ein erfundenes Datum wäre schlimmer als gar keines. Ebenso
+ * fehlt eine `SearchAction`: die Suche läuft über Pagefind vollständig im
+ * Browser, es gibt keine Suchadresse, die eine Suchmaschine aufrufen könnte.
+ */
+import Default from '@astrojs/starlight/components/Head.astro';
+import { getEntry } from 'astro:content';
+
+const { entry, id, lang, locale, head, sidebar } = Astro.locals.starlightRoute;
+
+/** Bezeichner der Marketing-Website, zeichengenau aus `Landing.dc.html`. */
+const ORGANISATION_ID = 'https://eucowork.ai/#organization';
+const WEBSITE_ID = 'https://eucowork.ai/#website';
+const SOFTWARE_ID = 'https://eucowork.ai/#software';
+
+/**
+ * Kanonische Adresse und Sprachalternativen nicht selbst ausrechnen, sondern
+ * aus den Angaben ablesen, die Starlight ohnehin schon in den Kopf schreibt.
+ * Damit können JSON-LD und `<link rel="canonical">` gar nicht auseinanderlaufen.
+ */
+type KopfEintrag = { tag: string; attrs?: Record<string, unknown>; content?: string };
+const kopf = head as unknown as KopfEintrag[];
+
+const kanonisch = kopf.find((t) => t.tag === 'link' && t.attrs?.rel === 'canonical')?.attrs?.href as
+  | string
+  | undefined;
+
+const sprachalternativen = kopf
+  .filter((t) => t.tag === 'link' && t.attrs?.rel === 'alternate' && t.attrs?.hreflang)
+  .map((t) => String(t.attrs?.hreflang))
+  .filter((h) => h !== 'x-default' && h !== lang);
+
+/**
+ * Die 404-Seite erzeugt Starlight selbst. Sie hat keinen Inhalt, den eine
+ * Suchmaschine anzeigen sollte, und bekommt deshalb `noindex` statt JSON-LD.
+ */
+const istFehlerseite = id === '404';
+
+/** Die Startseiten der fünf Sprachfassungen tragen `template: splash`. */
+const istStartseite = entry.data.template === 'splash';
+
+/**
+ * Titel der Doku-Startseite in der Sprache der aktuellen Seite. Er dient als
+ * mittlere Stufe der Brotkrume ("Dokumentation", "Documentation", …) und wird
+ * aus der Inhalts-Collection gelesen, damit er bei einer Umbenennung mitzieht.
+ * Die Startseite der deutschen Fassung hat die Kennung `index`, die der
+ * übrigen Sprachen schlicht `en`, `fr`, `it`, `es`.
+ */
+const startseite = await getEntry('docs', locale ?? 'index');
+const dokuTitel = startseite?.data.title ?? 'Dokumentation';
+const dokuUrl = locale ? `https://eucowork.ai/docs/${locale}` : 'https://eucowork.ai/docs';
+
+/**
+ * Erste Stufe der Brotkrume ist die Startseite der Website in derselben
+ * Sprache. Der Name "Start" ist derselbe, den die Marketing-Website in ihren
+ * Brotkrumen verwendet; er bleibt dort in allen Sprachen unübersetzt.
+ */
+const websiteUrl = locale ? `https://eucowork.ai/${locale}` : 'https://eucowork.ai/';
+
+/**
+ * Kapitel der aktuellen Seite, in der Sprache der Seite. Starlight hat die
+ * Seitenleiste an dieser Stelle bereits übersetzt, deshalb wird die Gruppe
+ * gesucht, die den Eintrag der aktuellen Seite enthält, statt die Kapitelnamen
+ * hier ein zweites Mal zu pflegen.
+ */
+function kapitelName(eintraege: any[]): string | undefined {
+  for (const e of eintraege) {
+    if (e.type === 'group') {
+      if (enthaeltAktuelle(e.entries)) return e.label;
+    }
+  }
+  return undefined;
+}
+function enthaeltAktuelle(eintraege: any[]): boolean {
+  return eintraege.some((e: any) =>
+    e.type === 'group' ? enthaeltAktuelle(e.entries) : e.isCurrent === true
+  );
+}
+const kapitel = istStartseite ? undefined : kapitelName(sidebar as any[]);
+
+/**
+ * Die Brotkrume bildet nur Stufen ab, die es als Seite wirklich gibt:
+ * Start → Dokumentation → Seite. Das Kapitel steht zwar in der Adresse,
+ * hat aber keine eigene Seite; eine Brotkrumen-Stufe ohne Adresse würde
+ * Google beanstanden. Das Kapitel steht deshalb als `articleSection` am
+ * Artikel, dem dafür vorgesehenen Feld.
+ */
+const brotkrume = {
+  '@type': 'BreadcrumbList',
+  '@id': `${kanonisch}#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Start', item: websiteUrl },
+    ...(istStartseite
+      ? [{ '@type': 'ListItem', position: 2, name: dokuTitel, item: dokuUrl }]
+      : [
+          { '@type': 'ListItem', position: 2, name: dokuTitel, item: dokuUrl },
+          { '@type': 'ListItem', position: 3, name: entry.data.title, item: kanonisch },
+        ]),
+  ],
+};
+
+/**
+ * Inhaltsseiten sind `TechArticle` und nicht das allgemeinere `Article`:
+ * Es sind Anleitungen und Nachschlagetexte zu einem Softwareprodukt, also
+ * genau der Fall, für den schema.org diesen Untertyp vorsieht. `Article`
+ * wäre nicht falsch, aber weniger genau.
+ */
+const artikel = {
+  '@type': 'TechArticle',
+  '@id': `${kanonisch}#article`,
+  headline: entry.data.title,
+  name: entry.data.title,
+  ...(entry.data.description ? { description: entry.data.description } : {}),
+  url: kanonisch,
+  inLanguage: lang,
+  ...(kapitel ? { articleSection: kapitel } : {}),
+  mainEntityOfPage: { '@id': kanonisch },
+  isPartOf: { '@id': WEBSITE_ID },
+  about: { '@id': SOFTWARE_ID },
+  publisher: { '@id': ORGANISATION_ID },
+  breadcrumb: { '@id': `${kanonisch}#breadcrumb` },
+};
+
+/**
+ * Startseite der Doku: `WebSite` und `Organization` ausgeschrieben, Feld für
+ * Feld wortgleich zu `Landing.dc.html`. Nur `inLanguage` folgt der Sprache der
+ * jeweiligen Fassung — so hält es die Marketing-Website auf ihren übersetzten
+ * Startseiten ebenfalls.
+ */
+const organisation = {
+  '@type': 'Organization',
+  '@id': ORGANISATION_ID,
+  name: 'EU Cowork AI',
+  alternateName: ['EU-Cowork', 'EU-Cowork AI'],
+  url: 'https://eucowork.ai/',
+  description:
+    'EU Cowork AI ist eine quelloffene KI-Arbeitsplattform für Unternehmen mit Datenresidenz in der Schweiz und Europa.',
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Herr Informatik GmbH',
+    url: 'https://herr-informatik.ch',
+    email: 'info@herr-informatik.ch',
+    identifier: 'CHE-112.168.836',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Klosterzelgstrasse 1a',
+      postalCode: '5210',
+      addressLocality: 'Windisch',
+      addressRegion: 'Aargau',
+      addressCountry: 'CH',
+    },
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: 'info@herr-informatik.ch',
+    availableLanguage: ['de', 'en'],
+  },
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  url: 'https://eucowork.ai/',
+  name: 'EU Cowork AI',
+  description:
+    'Ihr KI-Kollege. Bleibt in Europa. Open Source, self-hostbar ab 1 User oder gehostet in der Schweiz.',
+  inLanguage: lang,
+  publisher: { '@id': ORGANISATION_ID },
+};
+
+const graph = istStartseite ? [organisation, website, brotkrume] : [artikel, brotkrume];
+
+const strukturierteDaten =
+  kanonisch && !istFehlerseite
+    ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
+        // Ein `<` im JSON würde das umgebende `<script>` vorzeitig beenden.
+        // In den Texten kommt keines vor, die Absicherung kostet aber nichts.
+        .replace(/</g, '\\u003c')
+    : undefined;
+---
+
+<Default><slot /></Default>
+
+{
+  sprachalternativen.map((h) => (
+    <meta property="og:locale:alternate" content={h} />
+  ))
+}
+{istFehlerseite && <meta name="robots" content="noindex, follow" />}
+{strukturierteDaten && <script type="application/ld+json" set:html={strukturierteDaten} />}
