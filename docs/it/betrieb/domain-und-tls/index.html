@@ -89,8 +89,8 @@ pubblicamente. In una rete isolata questa variante non funziona.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="variante-2-ca-interna-nella-lan">Variante 2: CA interna nella LAN</h2><a class="sl-anchor-link" href="#variante-2-ca-interna-nella-lan"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Sezione intitolata “Variante 2: CA interna nella LAN”</span></a></div>
 <p>Per server senza raggiungibilità pubblica. Il reverse proxy rilascia i certificati da una propria
 autorità di certificazione locale. Per farlo i dispositivi hanno bisogno di un record DNS interno,
-e l’autorità di certificazione radice deve essere registrata come attendibile su ogni dispositivo
-— altrimenti compare un avviso relativo al certificato.</p>
+e l’autorità di certificazione radice deve essere registrata come attendibile su ogni
+dispositivo. Altrimenti compare un avviso relativo al certificato.</p>
 <p>Il passaggio a un certificato pubblico in un secondo momento è semplice: nome host, link e redirect URI
 restano invariati.</p>
 <aside aria-label="Per l’add-in di Outlook una CA interna non basta" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Per l’add-in di Outlook una CA interna non basta</p><div class="starlight-aside__content"><p>La visualizzazione web in Office non mostra alcun avviso relativo al certificato che si possa
@@ -102,8 +102,8 @@ certificato pubblicamente attendibile, quindi la variante 1 o la variante 3.</p>
 deve procurarsi un secondo certificato. In questa variante esso si occupa soltanto della
 distribuzione, mentre la terminazione resta all’appliance.</p>
 <p>Affinché l’assegnazione funzioni, l’appliance deve inoltrare l’header Host. Nella configurazione
-dell’applicazione l’indirizzo pubblico va depositato così come i Suoi utenti lo richiamano —
-altrimenti nascono, per esempio, link di invito che non portano da nessuna parte.</p>
+dell’applicazione l’indirizzo pubblico va depositato così come i Suoi utenti lo richiamano.
+Altrimenti nascono, per esempio, link di invito che non portano da nessuna parte.</p>
 <aside aria-label="WAF e streaming" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>WAF e streaming</p><div class="starlight-aside__content"><p>Molte appliance mettono in buffer il flusso di risposta per poterla esaminare. La chat, però,
 invia le sue risposte pezzo per pezzo. Se il buffering è attivo, la risposta compare solo alla
 fine tutta in una volta, oppure si interrompe con le risposte lunghe. Imposti nel WAF un’eccezione

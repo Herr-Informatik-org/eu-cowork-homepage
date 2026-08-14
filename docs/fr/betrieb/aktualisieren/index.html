@@ -80,7 +80,7 @@ configuration avec le modèle, sauvegarder, installer. Elle emprunte le même ch
 mise en place initiale, mais en mode mise à jour.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="la-comparaison-avec-le-modèle">La comparaison avec le modèle</h2><a class="sl-anchor-link" href="#la-comparaison-avec-le-modèle"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section intitulée « La comparaison avec le modèle »</span></a></div>
 <p>Avant la mise à jour, la configuration de l’instance est confrontée au modèle fourni. Seuls les
-<strong>noms</strong> des valeurs sont comparés, aucun contenu — les secrets n’apparaissent donc pas. Vous en
+<strong>noms</strong> des valeurs sont comparés, aucun contenu. Les secrets n’apparaissent donc pas. Vous en
 tirez deux enseignements :</p>
 <ul>
 <li>Les valeurs qui ne figurent que dans le modèle sont nouvelles. Le modèle est commenté de bout
@@ -109,8 +109,8 @@ exactement la combinaison qui a été vérifiée.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="vérifier-après-la-mise-à-jour">Vérifier après la mise à jour</h2><a class="sl-anchor-link" href="#vérifier-après-la-mise-à-jour"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section intitulée « Vérifier après la mise à jour »</span></a></div>
 <p>Quatre points : la connexion au chat, la connexion au panneau d’administration, une question de
 test dans le chat et un coup d’œil sur la stabilité de tous les services. Les erreurs de
-configuration — par exemple un fichier YAML qui ne correspond plus au schéma après une mise à
-jour — deviennent visibles à cette occasion.</p>
+configuration (par exemple un fichier YAML qui ne correspond plus au schéma après une mise à
+jour) deviennent visibles à cette occasion.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="rollback">Rollback</h2><a class="sl-anchor-link" href="#rollback"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section intitulée « Rollback »</span></a></div>
 <p>Un rollback ramène <strong>l’ensemble de l’état livré</strong> à la version précédente, et non des fichiers
 isolés. Ce n’est qu’ensemble que les composants reforment la combinaison qui tournait

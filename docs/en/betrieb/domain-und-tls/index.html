@@ -89,7 +89,7 @@ sealed-off network this variant does not work.</p>
 <div class="sl-heading-wrapper level-h2"><h2 id="variant-2-internal-ca-on-the-lan">Variant 2: Internal CA on the LAN</h2><a class="sl-anchor-link" href="#variant-2-internal-ca-on-the-lan"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “Variant 2: Internal CA on the LAN”</span></a></div>
 <p>For servers without public reachability. The reverse proxy issues the certificates from its own
 local certificate authority. For this the devices need an internal DNS record, and the root
-certificate authority has to be trusted on every device — otherwise a certificate warning
+certificate authority has to be trusted on every device. Otherwise a certificate warning
 appears.</p>
 <p>Switching to a public certificate later is easy: hostname, links and redirect URIs stay the
 same.</p>
@@ -102,7 +102,7 @@ variant 3.</p></div></aside>
 supplied proxy should not obtain a second certificate. In this variant it only handles the
 distribution, while termination stays with the appliance.</p>
 <p>For the mapping to work, the appliance has to pass through the host header. In the application
-configuration the public address is stored the way your users call it up — otherwise invitation
+configuration the public address is stored the way your users call it up. Otherwise invitation
 links, for instance, lead nowhere.</p>
 <aside aria-label="WAF and streaming" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>WAF and streaming</p><div class="starlight-aside__content"><p>Many appliances buffer the response stream in order to inspect the answer. The chat, however,
 sends its answers piece by piece. If buffering is active, the answer appears only at the end in

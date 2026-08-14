@@ -13,7 +13,7 @@ l’autre, le paquet de livraison contient les outils nécessaires.
 
 ## Ce qui est sauvegardé
 
-Une sauvegarde doit couvrir l’état complet d’une instance — et rien que l’état. En font partie la
+Une sauvegarde doit couvrir l’état complet d’une instance, et rien que l’état. En font partie la
 base de données avec les contenus de l’instance, les fichiers téléversés et la configuration avec
 ses secrets. Les secrets en font impérativement partie : sans eux, une partie de la base de
 données reste illisible même après une restauration complète.
@@ -52,7 +52,7 @@ clients. Supprimez-la après la migration ; seule la sauvegarde régulière subs
 <Aside type="danger" title="Reprendre les clés de chiffrement">
 C’est l’erreur la plus coûteuse lors d’une migration. Si les clés avec lesquelles l’application
 chiffre les données dans la base sont régénérées sur le nouveau serveur au lieu d’être reprises
-de la configuration existante, les données concernées sont illisibles — même lorsque la base de
+de la configuration existante, les données concernées sont illisibles, même lorsque la base de
 données a été entièrement restaurée. Chaque personne devrait rétablir ses connexions. C’est
 pourquoi le chemin passe toujours par la configuration issue de la sauvegarde.
 </Aside>
@@ -67,7 +67,7 @@ pourquoi le chemin passe toujours par la configuration issue de la sauvegarde.
   des secrets, elle n’a sa place dans un cloud que chiffrée, et jamais dans un dépôt.
 
 <Aside type="note" title="Déroulement dans le manuel d’exploitation">
-Le déroulement dans le détail — sauvegarde, restauration et migration pas à pas — figure dans le
+Le déroulement dans le détail (sauvegarde, restauration et migration pas à pas) figure dans le
 manuel d’exploitation, qui est fourni avec le paquet de livraison. Les clients le reçoivent en
 même temps que leur accès.
 </Aside>

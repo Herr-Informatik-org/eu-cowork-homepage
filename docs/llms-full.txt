@@ -1,4 +1,4 @@
-# EU Cowork AI — Dokumentation, Volltext
+# EU Cowork AI: Dokumentation im Volltext
 
 > Der vollständige Text der Dokumentation von EU Cowork AI: Überblick, Installation und
 > Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration und der
@@ -111,7 +111,7 @@ Inferenz-Schlüssel. Mehr dazu unter [Architektur](/docs/erste-schritte/architek
 ## Woraus das System besteht
 
 Die Chat-Oberfläche ist [LibreChat](https://www.librechat.ai), eine quelloffene Plattform unter
-MIT-Lizenz. Von dort stammen Chat, Agenten, Dateiverarbeitung und Modellanbindung — also die
+MIT-Lizenz. Von dort stammen Chat, Agenten, Dateiverarbeitung und Modellanbindung, also die
 Anwendung, die Ihre Mitarbeitenden sehen. Der Fork bleibt bewusst nah am Original, damit
 Aktualisierungen weiterhin möglich bleiben.
 
@@ -206,11 +206,11 @@ die nicht im Lieferumfang stehen oder bei der Einrichtung eine Entscheidung verl
 Quelle: https://eucowork.ai/docs/erste-schritte/architektur
 Kapitel: Erste Schritte
 
-Der Aufbau in groben Zügen — Zugang über einen Reverse-Proxy, die Anwendung dahinter, die Datenhaltung daneben und die Modellanbieter ausserhalb.
+Der Aufbau in groben Zügen. Zugang über einen Reverse-Proxy, die Anwendung dahinter, die Datenhaltung daneben und die Modellanbieter ausserhalb.
 
 EU Cowork AI läuft in Containern auf einer Linux-Maschine. Diese Seite zeigt den
 Aufbau in groben Zügen. Sie beschreibt, welchen Weg eine Anfrage nimmt und welche
-Entscheidungen dahinterstehen — nicht die Einrichtung im Einzelnen.
+Entscheidungen dahinterstehen, nicht die Einrichtung im Einzelnen.
 
 ## Der Datenfluss
 
@@ -348,7 +348,7 @@ eigenen Linux-Server. Diese Seite beschreibt den zweiten Weg in groben Zügen.
 4. **Zugang beschränken**
 
    Bevor die Instanz an die ersten Personen geht, gehört festgelegt, welche E-Mail-Domänen
-   sich überhaupt registrieren dürfen. Diese Liste ist der massgebliche Zugangsschutz — nicht
+   sich überhaupt registrieren dürfen. Diese Liste ist der massgebliche Zugangsschutz, nicht
    die Frage, wer die Adresse kennt.
 
 5. **Erstes Konto anlegen**
@@ -445,7 +445,7 @@ aufbauen. Das reguläre Backup umfasst die Konfiguration und damit diese Werte, 
 
 Für eine Standardinstallation tragen Sie genau einen Wert selbst ein: den Schlüssel des
 Inferenz-Anbieters mit EU-Verarbeitung. Die Einrichtung weist am Ende ausdrücklich darauf hin.
-Alles Weitere ist optional — eine Zweitoption für Modelle, die Konnektoren, der
+Alles Weitere ist optional: eine Zweitoption für Modelle, die Konnektoren, der
 E-Mail-Versand und die Code-Ausführung.
 
 ## Was manuell bleibt
@@ -528,7 +528,7 @@ Reiter Funktionen würden sie serverseitig verworfen.
 Der `interface`-Block in der YAML steuert, was in der Oberfläche sichtbar ist: der
 Modell-Picker, die Web-Suche, die Dateisuche, die Code-Ausführung, Voreinstellungen,
 Lesezeichen und das Parameter-Panel. Funktionen, deren Voraussetzungen nicht erfüllt sind, sind
-im Auslieferungszustand bewusst ausgeschaltet — ein sichtbarer Knopf ohne Wirkung ist schlechter
+im Auslieferungszustand bewusst ausgeschaltet. Ein sichtbarer Knopf ohne Wirkung ist schlechter
 als kein Knopf.
 
 Zwei Regeln sind dabei wichtig:
@@ -595,7 +595,7 @@ In einem abgeschotteten Netz funktioniert diese Variante nicht.
 Für Server ohne öffentliche Erreichbarkeit. Der Reverse-Proxy stellt die Zertifikate aus einer
 eigenen, lokalen Zertifizierungsstelle aus. Die Geräte brauchen dafür einen internen
 DNS-Eintrag, und die Wurzel-Zertifizierungsstelle muss auf jedem Gerät als vertrauenswürdig
-hinterlegt werden — sonst erscheint eine Zertifikatswarnung.
+hinterlegt werden. Sonst erscheint eine Zertifikatswarnung.
 
 Der spätere Wechsel auf ein öffentliches Zertifikat ist einfach: Hostname, Links und
 Redirect-URIs bleiben gleich.
@@ -615,7 +615,7 @@ allein die Verteilung, die Terminierung bleibt bei der Appliance.
 
 Damit die Zuordnung greift, muss die Appliance den Host-Header durchreichen. In der
 Konfiguration der Anwendung wird die öffentliche Adresse so hinterlegt, wie Ihre Nutzenden sie
-aufrufen — sonst entstehen etwa Einladungslinks, die ins Leere führen.
+aufrufen. Sonst entstehen etwa Einladungslinks, die ins Leere führen.
 
 **WAF und Streaming**
 
@@ -647,7 +647,7 @@ Ersteinrichtung, nur im Update-Modus.
 ## Der Vergleich mit der Vorlage
 
 Vor dem Update wird die Konfiguration der Instanz gegen die mitgelieferte Vorlage gehalten.
-Verglichen werden nur die **Namen** der Werte, keine Inhalte — Geheimnisse tauchen dabei also
+Verglichen werden nur die **Namen** der Werte, keine Inhalte. Geheimnisse tauchen dabei also
 nicht auf. Zwei Dinge lesen Sie daraus ab:
 
 - Werte, die nur in der Vorlage stehen, sind neu hinzugekommen. Die Vorlage ist durchgehend
@@ -683,8 +683,8 @@ Kombination, die auch geprüft wurde.
 ## Nach dem Update prüfen
 
 Vier Punkte: Anmeldung am Chat, Anmeldung am Admin-Panel, eine Testfrage im Chat und ein Blick
-darauf, ob alle Dienste stabil laufen. Konfigurationsfehler — etwa eine YAML-Datei, die nach
-einem Update nicht mehr zum Schema passt — werden dabei sichtbar.
+darauf, ob alle Dienste stabil laufen. Konfigurationsfehler (etwa eine YAML-Datei, die nach
+einem Update nicht mehr zum Schema passt) werden dabei sichtbar.
 
 ## Rollback
 
@@ -717,7 +717,7 @@ Auslieferungspaket die nötigen Hilfsmittel bei.
 
 ## Was gesichert wird
 
-Eine Sicherung muss den gesamten Zustand einer Instanz umfassen — und nur den Zustand. Dazu
+Eine Sicherung muss den gesamten Zustand einer Instanz umfassen, und nur den Zustand. Dazu
 gehören die Datenbank mit den Inhalten der Instanz, die hochgeladenen Dateien und die
 Konfiguration samt ihren Geheimnissen. Die Geheimnisse gehören zwingend dazu: Ohne sie bleibt
 ein Teil der Datenbank auch nach einer vollständigen Wiederherstellung unlesbar.
@@ -757,7 +757,7 @@ Kundeninhalte. Löschen Sie sie nach dem Umzug; bestehen bleibt allein die regul
 
 Das ist der teuerste Fehler beim Umzug. Werden die Schlüssel, mit denen die Anwendung Daten in
 der Datenbank verschlüsselt, auf dem neuen Server neu erzeugt statt aus der bestehenden
-Konfiguration übernommen, sind die betroffenen Daten unlesbar — auch dann, wenn die Datenbank
+Konfiguration übernommen, sind die betroffenen Daten unlesbar, selbst wenn die Datenbank
 vollständig wiederhergestellt wurde. Jede Person müsste ihre Verbindungen neu aufbauen. Deshalb
 führt der Weg immer über die Konfiguration aus der Sicherung.
 
@@ -772,7 +772,7 @@ führt der Weg immer über die Konfiguration aus der Sicherung.
 
 **Ablauf im Betriebshandbuch**
 
-Der Ablauf im Einzelnen — Sicherung, Wiederherstellung und Umzug Schritt für Schritt — steht im
+Der Ablauf im Einzelnen (Sicherung, Wiederherstellung und Umzug Schritt für Schritt) steht im
 Betriebshandbuch, das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem
 Zugang.
 
@@ -805,7 +805,7 @@ dem Auslieferungspaket beiliegt.
 
 | Bild | Wo die Ursache meist liegt |
 |---|---|
-| Antworten bleiben aus oder laufen in Zeitüberschreitungen | Die Instanz erreicht das Internet nicht — typischerweise ein VPN-Client, ein Firmen-Proxy oder eine kollidierende Netzroute. Seltener ein ungültiger Schlüssel des Inferenz-Anbieters. |
+| Antworten bleiben aus oder laufen in Zeitüberschreitungen | Die Instanz erreicht das Internet nicht: typischerweise ein VPN-Client, ein Firmen-Proxy oder eine kollidierende Netzroute. Seltener ein ungültiger Schlüssel des Inferenz-Anbieters. |
 | Eine Funktion ist sichtbar, tut aber nichts | Der zugehörige optionale Bestandteil läuft nicht oder ist nicht konfiguriert. Betrifft vor allem Dateisuche, Code-Ausführung und Web-Suche. |
 | Ein Dienst startet nach der Installation wiederholt neu | Zugriffsrechte auf den Ablagen der Instanz. Beim regulären Einrichtungsweg tritt das nicht auf. |
 | Antworten erscheinen erst am Ende auf einen Schlag | Eine vorgelagerte Appliance puffert den Antwortstrom, siehe [Domain und Zertifikat](/docs/betrieb/domain-und-tls). |
@@ -1064,7 +1064,7 @@ ein eingescannter Vertrag oder ein abfotografierter Beleg, enthält keinen ausle
 Das gilt im Web-Chat wie im [Outlook-Add-in](/docs/funktionen/outlook-add-in).
 
 Der übliche Weg: das Dokument vorher mit dem Werkzeug Ihrer Wahl in ein durchsuchbares
-Text-PDF wandeln — viele Scanner und Dokumentenmanagement-Systeme tun das ohnehin — oder den
+Text-PDF wandeln (viele Scanner und Dokumentenmanagement-Systeme tun das ohnehin) oder den
 Text herauskopieren und in den Chat einfügen.
 
 ## Dateisuche über einen Dokumentenbestand
@@ -2176,7 +2176,7 @@ Neben der Konnektor-Ebene lässt sich eine Freigabe auch auf einzelne Werkzeuge 
 
 **Schneiden Sie Konnektoren so, dass die Konnektor-Ebene genügt**
 
-Im Alltag trägt die Steuerung auf Konnektor-Ebene den grössten Teil der Fälle — und sie ist die robustere Grenze. Planen Sie Ihre Konnektoren deshalb entsprechend: lieber zwei schmale Konnektoren mit je eigenem Dienstkonto als einer mit vielen Werkzeugen, von denen die Hälfte gesperrt sein müsste. Wie das aussieht, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
+Im Alltag trägt die Steuerung auf Konnektor-Ebene den grössten Teil der Fälle; sie ist ausserdem die robustere Grenze. Planen Sie Ihre Konnektoren deshalb entsprechend: lieber zwei schmale Konnektoren mit je eigenem Dienstkonto als einer mit vielen Werkzeugen, von denen die Hälfte gesperrt sein müsste. Wie das aussieht, steht unter [Muster für Konnektoren](/docs/konnektoren/muster).
 
 ## Wo Sie die Freigaben pflegen
 

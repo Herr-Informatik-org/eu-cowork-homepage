@@ -90,7 +90,7 @@ publiquement. Dans un réseau cloisonné, cette variante ne fonctionne pas.</p>
 <p>Pour les serveurs sans accessibilité publique. Le reverse proxy délivre les certificats depuis
 sa propre autorité de certification locale. Les appareils ont pour cela besoin d’un
 enregistrement DNS interne, et l’autorité de certification racine doit être déclarée de confiance
-sur chaque appareil — sinon un avertissement de certificat apparaît.</p>
+sur chaque appareil. Sinon, un avertissement de certificat apparaît.</p>
 <p>Le passage ultérieur à un certificat public est simple : nom d’hôte, liens et URI de redirection
 restent identiques.</p>
 <aside aria-label="Pour le complément Outlook, une CA interne ne suffit pas" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Pour le complément Outlook, une CA interne ne suffit pas</p><div class="starlight-aside__content"><p>La vue web dans Office n’affiche aucun avertissement de certificat que l’on pourrait écarter d’un
@@ -103,7 +103,7 @@ fourni ne doit pas aller chercher un second certificat. Dans cette variante, il 
 répartition ; la terminaison reste du ressort de l’appliance.</p>
 <p>Pour que l’affectation fonctionne, l’appliance doit transmettre l’en-tête Host. Dans la
 configuration de l’application, l’adresse publique est déposée telle que vos utilisateurs
-l’appellent — sinon apparaissent par exemple des liens d’invitation qui ne mènent nulle part.</p>
+l’appellent. Sinon, il en résulte par exemple des liens d’invitation qui ne mènent nulle part.</p>
 <aside aria-label="WAF et streaming" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>WAF et streaming</p><div class="starlight-aside__content"><p>Beaucoup d’appliances mettent le flux de réponse en mémoire tampon afin de l’inspecter. Or le
 chat envoie ses réponses morceau par morceau. Si la mise en tampon est active, la réponse
 n’apparaît qu’à la fin, d’un seul coup, ou s’interrompt lors de réponses longues. Définissez dans

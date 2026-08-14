@@ -13,7 +13,7 @@ for both.
 
 ## What gets backed up
 
-A backup has to cover the entire state of an instance — and only the state. That includes the
+A backup has to cover the entire state of an instance, and only the state. That includes the
 database with the content of the instance, the uploaded files and the configuration together
 with its secrets. The secrets are indispensable: without them part of the database stays
 unreadable even after a complete restore.
@@ -49,7 +49,7 @@ Delete it after the migration; only the regular backup remains.
 <Aside type="danger" title="Carry over the encryption keys">
 This is the most expensive mistake in a migration. If the keys with which the application
 encrypts data in the database are regenerated on the new server instead of carried over from the
-existing configuration, the affected data becomes unreadable — even if the database was restored
+existing configuration, the affected data becomes unreadable, even if the database was restored
 completely. Every person would have to rebuild their connections. That is why the path always
 leads through the configuration from the backup.
 </Aside>
@@ -63,7 +63,7 @@ leads through the configuration from the backup.
   belongs in a cloud only encrypted, and never in a repository.
 
 <Aside type="note" title="Sequence in the operations manual">
-The sequence in detail — backup, restore and migration step by step — is described in the
+The sequence in detail (backup, restore and migration step by step) is described in the
 operations manual that comes with the delivery package. Customers receive it together with their
 access.
 </Aside>

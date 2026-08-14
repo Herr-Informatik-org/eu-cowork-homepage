@@ -28,7 +28,7 @@ In einem abgeschotteten Netz funktioniert diese Variante nicht.
 Für Server ohne öffentliche Erreichbarkeit. Der Reverse-Proxy stellt die Zertifikate aus einer
 eigenen, lokalen Zertifizierungsstelle aus. Die Geräte brauchen dafür einen internen
 DNS-Eintrag, und die Wurzel-Zertifizierungsstelle muss auf jedem Gerät als vertrauenswürdig
-hinterlegt werden — sonst erscheint eine Zertifikatswarnung.
+hinterlegt werden. Sonst erscheint eine Zertifikatswarnung.
 
 Der spätere Wechsel auf ein öffentliches Zertifikat ist einfach: Hostname, Links und
 Redirect-URIs bleiben gleich.
@@ -48,7 +48,7 @@ allein die Verteilung, die Terminierung bleibt bei der Appliance.
 
 Damit die Zuordnung greift, muss die Appliance den Host-Header durchreichen. In der
 Konfiguration der Anwendung wird die öffentliche Adresse so hinterlegt, wie Ihre Nutzenden sie
-aufrufen — sonst entstehen etwa Einladungslinks, die ins Leere führen.
+aufrufen. Sonst entstehen etwa Einladungslinks, die ins Leere führen.
 
 <Aside type="caution" title="WAF und Streaming">
 Viele Appliances puffern den Antwortstrom, um die Antwort zu prüfen. Der Chat schickt seine

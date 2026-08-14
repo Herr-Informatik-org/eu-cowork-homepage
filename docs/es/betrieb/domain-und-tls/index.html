@@ -90,7 +90,7 @@ pública. En una red aislada esta variante no funciona.</p>
 <p>Para servidores sin accesibilidad pública. El proxy inverso emite los certificados desde una
 autoridad de certificación propia y local. Para ello los dispositivos necesitan un registro DNS
 interno, y la autoridad de certificación raíz debe estar registrada como de confianza en cada
-dispositivo — de lo contrario aparece un aviso de certificado.</p>
+dispositivo. De lo contrario aparece un aviso de certificado.</p>
 <p>El cambio posterior a un certificado público es sencillo: el nombre de host, los enlaces y las
 URI de redirección siguen siendo los mismos.</p>
 <aside aria-label="Para el complemento de Outlook no basta una CA interna" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Para el complemento de Outlook no basta una CA interna</p><div class="starlight-aside__content"><p>La vista web de Office no muestra ningún aviso de certificado que se pueda descartar con un clic.
@@ -102,8 +102,8 @@ certificado de confianza pública, es decir, la variante 1 o la variante 3.</p><
 proxy suministrado no debe obtener un segundo certificado. En esta variante se encarga únicamente
 del reparto; la terminación se queda en el dispositivo.</p>
 <p>Para que la asignación funcione, el dispositivo debe transmitir la cabecera Host. En la
-configuración de la aplicación, la dirección pública se registra tal como la invocan sus usuarios
-— de lo contrario surgen, por ejemplo, enlaces de invitación que no llevan a ninguna parte.</p>
+configuración de la aplicación, la dirección pública se registra tal como la invocan sus usuarios.
+De lo contrario surgen, por ejemplo, enlaces de invitación que no llevan a ninguna parte.</p>
 <aside aria-label="WAF y streaming" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>WAF y streaming</p><div class="starlight-aside__content"><p>Muchos dispositivos almacenan en búfer el flujo de respuesta para poder inspeccionarla. El chat,
 en cambio, envía sus respuestas poco a poco. Si el almacenamiento en búfer está activo, la
 respuesta aparece solo al final y de golpe, o se interrumpe en las respuestas largas. Establezca

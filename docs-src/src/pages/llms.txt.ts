@@ -22,7 +22,7 @@ export const GET: APIRoute = async () => {
   const seiten = await getCollection('docs');
   const zeilen: string[] = [];
 
-  zeilen.push('# EU Cowork AI — Dokumentation');
+  zeilen.push('# EU Cowork AI: Dokumentation');
   zeilen.push('');
   zeilen.push(
     '> Dokumentation von EU Cowork AI: Überblick, Installation und Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration sowie der Anschluss eigener Systeme über das Model Context Protocol.'

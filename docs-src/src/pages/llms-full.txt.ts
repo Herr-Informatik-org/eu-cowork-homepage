@@ -133,7 +133,7 @@ export const GET: APIRoute = async () => {
 
   abschnitte.push(
     [
-      '# EU Cowork AI — Dokumentation, Volltext',
+      '# EU Cowork AI: Dokumentation im Volltext',
       '',
       '> Der vollständige Text der Dokumentation von EU Cowork AI: Überblick, Installation und',
       '> Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration und der',

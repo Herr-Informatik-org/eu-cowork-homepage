@@ -90,7 +90,7 @@ In einem abgeschotteten Netz funktioniert diese Variante nicht.</p>
 <p>Für Server ohne öffentliche Erreichbarkeit. Der Reverse-Proxy stellt die Zertifikate aus einer
 eigenen, lokalen Zertifizierungsstelle aus. Die Geräte brauchen dafür einen internen
 DNS-Eintrag, und die Wurzel-Zertifizierungsstelle muss auf jedem Gerät als vertrauenswürdig
-hinterlegt werden — sonst erscheint eine Zertifikatswarnung.</p>
+hinterlegt werden. Sonst erscheint eine Zertifikatswarnung.</p>
 <p>Der spätere Wechsel auf ein öffentliches Zertifikat ist einfach: Hostname, Links und
 Redirect-URIs bleiben gleich.</p>
 <aside aria-label="Fürs Outlook-Add-in reicht eine interne CA nicht" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>Fürs Outlook-Add-in reicht eine interne CA nicht</p><div class="starlight-aside__content"><p>Die Webansicht in Office zeigt keine Zertifikatswarnung an, die man wegklicken könnte. Ohne
@@ -103,7 +103,7 @@ soll der mitgelieferte Proxy kein zweites Zertifikat holen. In dieser Variante �
 allein die Verteilung, die Terminierung bleibt bei der Appliance.</p>
 <p>Damit die Zuordnung greift, muss die Appliance den Host-Header durchreichen. In der
 Konfiguration der Anwendung wird die öffentliche Adresse so hinterlegt, wie Ihre Nutzenden sie
-aufrufen — sonst entstehen etwa Einladungslinks, die ins Leere führen.</p>
+aufrufen. Sonst entstehen etwa Einladungslinks, die ins Leere führen.</p>
 <aside aria-label="WAF und Streaming" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg aria-hidden="true" class="starlight-aside__icon astro-n5k4ipy7" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm10.67 1.47-8.05-14a3 3 0 0 0-5.24 0l-8 14A3 3 0 0 0 3.94 22h16.12a3 3 0 0 0 2.61-4.53Zm-1.73 2a1 1 0 0 1-.88.51H3.94a1 1 0 0 1-.88-.51 1 1 0 0 1 0-1l8-14a1 1 0 0 1 1.78 0l8.05 14a1 1 0 0 1 .05 1.02v-.02ZM12 8a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1Z"/></svg>WAF und Streaming</p><div class="starlight-aside__content"><p>Viele Appliances puffern den Antwortstrom, um die Antwort zu prüfen. Der Chat schickt seine
 Antworten aber Stück für Stück. Ist die Pufferung aktiv, erscheint die Antwort erst am Ende
 auf einen Schlag oder bricht bei langen Antworten ab. Setzen Sie in der WAF eine Ausnahme für

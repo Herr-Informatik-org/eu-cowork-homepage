@@ -13,7 +13,7 @@ contiene gli strumenti necessari.
 
 ## Che cosa viene salvato
 
-Un backup deve comprendere l’intero stato di un’istanza — e soltanto lo stato. Ne fanno parte il
+Un backup deve comprendere l’intero stato di un’istanza, e soltanto lo stato. Ne fanno parte il
 database con i contenuti dell’istanza, i file caricati e la configurazione con i suoi segreti. I
 segreti ne fanno parte necessariamente: senza di essi una parte del database resta illeggibile
 anche dopo un ripristino completo.
@@ -50,7 +50,7 @@ clienti. La cancelli dopo la migrazione; resta soltanto il backup regolare.
 <Aside type="danger" title="Riprendere le chiavi di cifratura">
 È l’errore più costoso di una migrazione. Se le chiavi con cui l’applicazione cifra i dati nel
 database vengono rigenerate sul nuovo server anziché riprese dalla configurazione esistente, i
-dati interessati sono illeggibili — anche quando il database è stato ripristinato integralmente.
+dati interessati sono illeggibili, anche quando il database è stato ripristinato integralmente.
 Ogni persona dovrebbe ricostruire da capo le proprie connessioni. Per questo la strada passa
 sempre dalla configurazione contenuta nel backup.
 </Aside>
@@ -65,7 +65,7 @@ sempre dalla configurazione contenuta nel backup.
   può finire in un cloud soltanto cifrato e mai in un repository.
 
 <Aside type="note" title="Procedura nel manuale operativo">
-La procedura nel dettaglio — backup, ripristino e migrazione passo per passo — si trova nel
+La procedura nel dettaglio (backup, ripristino e migrazione passo per passo) si trova nel
 manuale operativo, che è allegato al pacchetto di fornitura. I clienti lo ricevono insieme al
 proprio accesso.
 </Aside>

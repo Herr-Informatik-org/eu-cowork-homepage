@@ -27,7 +27,7 @@ sealed-off network this variant does not work.
 
 For servers without public reachability. The reverse proxy issues the certificates from its own
 local certificate authority. For this the devices need an internal DNS record, and the root
-certificate authority has to be trusted on every device — otherwise a certificate warning
+certificate authority has to be trusted on every device. Otherwise a certificate warning
 appears.
 
 Switching to a public certificate later is easy: hostname, links and redirect URIs stay the
@@ -47,7 +47,7 @@ supplied proxy should not obtain a second certificate. In this variant it only h
 distribution, while termination stays with the appliance.
 
 For the mapping to work, the appliance has to pass through the host header. In the application
-configuration the public address is stored the way your users call it up — otherwise invitation
+configuration the public address is stored the way your users call it up. Otherwise invitation
 links, for instance, lead nowhere.
 
 <Aside type="caution" title="WAF and streaming">

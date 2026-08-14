@@ -14,7 +14,7 @@ in update mode.
 ## The comparison with the template
 
 Before the update, the configuration of the instance is held against the supplied template. Only
-the **names** of the values are compared, no contents — so secrets do not show up. Two things
+the **names** of the values are compared, no contents. Secrets therefore do not show up. Two things
 can be read from it:
 
 - Values that appear only in the template are new. The template is commented throughout and
@@ -49,8 +49,8 @@ with a fixed version does every server run exactly the combination that was veri
 ## Checking after the update
 
 Four points: sign-in to the chat, sign-in to the admin panel, a test question in the chat and a
-look at whether all services run stably. Configuration errors — for instance a YAML file that no
-longer matches the schema after an update — become visible in the process.
+look at whether all services run stably. Configuration errors (for instance a YAML file that no
+longer matches the schema after an update) become visible in the process.
 
 ## Rollback
 
