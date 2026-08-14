@@ -319,6 +319,16 @@
       if (href === '/' + urlLang || href.indexOf('/' + urlLang + '/') === 0) continue;
       var bare = href.split('#')[0].split('?')[0];
       if (ASSET_RE.test(bare)) continue;
+      /* Die Dokumentation zaehlt anders: sie ist ein eigenes Starlight-Projekt
+         und legt die Sprache HINTER /docs ab, nicht davor. Deutsch liegt dort
+         auf der Wurzel, die uebrigen vier unter /docs/<sprache>. */
+      if (href === '/docs' || href.indexOf('/docs/') === 0) {
+        var rest = href.slice(5);
+        if (rest !== '/' + urlLang && rest.indexOf('/' + urlLang + '/') !== 0) {
+          a.setAttribute('href', '/docs/' + urlLang + rest);
+        }
+        continue;
+      }
       var skip = false;
       for (var n = 0; n < NO_PREFIX.length; n++) {
         if (href === NO_PREFIX[n] || href.indexOf(NO_PREFIX[n]) === 0) { skip = true; break; }

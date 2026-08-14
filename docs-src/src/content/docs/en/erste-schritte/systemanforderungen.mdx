@@ -10,42 +10,38 @@ import { Aside } from '@astrojs/starlight/components';
 This page states in broad strokes what hardware a self hosted instance needs. It is written for
 anyone who is ordering a VM or assessing an existing machine.
 
-## Minimum and recommendation
+## Guide values
 
-| | Minimum | Recommended |
-|---|---|---|
-| CPU | 2 vCPU | 4 vCPU |
-| Memory | 4 GB | 16 GB |
-| Disk | 40 GB | 200 GB |
-| Operating system | Ubuntu 22.04 LTS | Ubuntu 24.04 LTS |
+| | Guide value |
+|---|---|
+| CPU | two to four vCPU |
+| Memory | four to sixteen GB, depending on the number of users |
+| Disk | a few dozen GB, with headroom for uploaded files |
+| Operating system | a common Linux distribution with long term support |
 
-For a single instance with few users, 80 GB is a comfortable figure. More pays off as soon as
-many files are uploaded, because uploads drive the growth. Small instances are explicitly
-allowed; the installation scripts warn on a thin machine but do not abort.
+Disk demand grows above all with the uploaded files; if a lot is stored, plan generously from
+the start. Small instances are explicitly allowed.
 
-CPU load in normal operation is close to zero, because the computation happens at the inference
-provider. Real peaks only occur when the search index is built, when the embeddings for file
-search are computed and during code runs. What grows with the user count is above all the
-memory of the application: up to around 15 people a small machine is enough, beyond that a
-dedicated VM per instance pays off.
+CPU load in normal operation is low, because the computation happens at the inference provider.
+Peaks only occur with individual additional features. What grows with the user count is above
+all the memory demand of the application; for a larger workforce a dedicated VM per instance
+pays off.
 
-## Operating system and Docker
+## Operating system and container runtime
 
-Tested are Ubuntu 22.04 and 24.04, recommended is 24.04 LTS. On other distributions the
+Recommended is a common Linux distribution with long term support. On other distributions the
 installation keeps working, but behavior may differ.
 
-Mandatory is **Docker Engine with Compose v2 as a plugin**. The Ubuntu package `docker.io` does
-**not** include Compose v2; installing from the official Docker package source is the reliable
-way.
+Mandatory is a **current container runtime with Compose support**. Obtain it from the vendor's
+official package source; the packages of some distributions do not include the required scope.
 
 ## Disk
 
-The Docker images occupy a few gigabytes once and are shared by all instances on the same
-machine. After that, three things grow above all: the uploaded files, the database and the
-container logs.
+The container images occupy a few gigabytes once. After that, three things grow above all: the
+uploaded files, the database and the logs.
 
-Disk is the first limit in operation, not memory. Set up an alert at 70 percent usage and clean
-up unused images and the build cache regularly.
+Disk is the first limit in operation, not memory. Monitor the usage and clean up images that
+are no longer needed on a regular basis.
 
 <Aside type="note" title="The setup documents">
 The requirements for network, access and operating system in detail are described in the

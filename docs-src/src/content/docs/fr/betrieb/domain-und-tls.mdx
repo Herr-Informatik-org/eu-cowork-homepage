@@ -1,0 +1,79 @@
+---
+title: Domaine et certificat
+description: Les trois variantes TLS d’EU Cowork AI, à savoir le certificat public, la CA interne dans le LAN et l’exploitation derrière un WAF existant.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+L’accès à une instance passe par un reverse proxy fourni avec le produit. Il répartit les
+requêtes entre les composants de l’application et s’occupe du certificat. La variante de
+certificat qui s’applique se choisit dans la configuration.
+
+## DNS
+
+L’instance a besoin d’un nom DNS qui pointe vers le serveur. Les enregistrements exacts à créer
+sont indiqués dans le manuel d’exploitation. Pour la délivrance automatique du
+certificat, le serveur doit être joignable depuis Internet sur les ports web habituels.
+
+## Variante 1 : certificat public
+
+Le cas normal pour un serveur ayant une adresse publique. Le reverse proxy obtient et renouvelle
+le certificat de lui-même via Let’s Encrypt. La condition préalable est un DNS résolvant
+publiquement. Dans un réseau cloisonné, cette variante ne fonctionne pas.
+
+## Variante 2 : CA interne dans le LAN
+
+Pour les serveurs sans accessibilité publique. Le reverse proxy délivre les certificats depuis
+sa propre autorité de certification locale. Les appareils ont pour cela besoin d’un
+enregistrement DNS interne, et l’autorité de certification racine doit être déclarée de confiance
+sur chaque appareil — sinon un avertissement de certificat apparaît.
+
+Le passage ultérieur à un certificat public est simple : nom d’hôte, liens et URI de redirection
+restent identiques.
+
+<Aside type="caution" title="Pour le complément Outlook, une CA interne ne suffit pas">
+La vue web dans Office n’affiche aucun avertissement de certificat que l’on pourrait écarter d’un
+clic. Sans CA racine installée sur l’appareil, la fenêtre du complément reste simplement vide,
+sans message d’erreur. Pour un déploiement large du complément, il vous faut un certificat
+publiquement approuvé, donc la variante 1 ou la variante 3.
+</Aside>
+
+## Variante 3 : derrière un WAF existant
+
+Lorsqu’une appliance en amont comme Sophos, F5, HAProxy ou nginx termine déjà le HTTPS, le proxy
+fourni ne doit pas aller chercher un second certificat. Dans cette variante, il n’assure que la
+répartition ; la terminaison reste du ressort de l’appliance.
+
+Pour que l’affectation fonctionne, l’appliance doit transmettre l’en-tête Host. Dans la
+configuration de l’application, l’adresse publique est déposée telle que vos utilisateurs
+l’appellent — sinon apparaissent par exemple des liens d’invitation qui ne mènent nulle part.
+
+<Aside type="caution" title="WAF et streaming">
+Beaucoup d’appliances mettent le flux de réponse en mémoire tampon afin de l’inspecter. Or le
+chat envoie ses réponses morceau par morceau. Si la mise en tampon est active, la réponse
+n’apparaît qu’à la fin, d’un seul coup, ou s’interrompt lors de réponses longues. Définissez dans
+le WAF une exception pour les chemins concernés, afin que le flux de réponse ne soit pas mis en
+tampon, et désactivez-y la compression.
+</Aside>
+
+<Aside type="note" title="Configuration dans le manuel d’exploitation">
+Quels réglages chaque variante exige est décrit dans le manuel d’exploitation, qui est fourni
+avec le paquet de livraison. Les clients le reçoivent en même temps que leur accès.
+</Aside>
+
+## Pour continuer
+
+<CardGrid>
+  <LinkCard
+    title="Mise à jour"
+    href="/docs/fr/betrieb/aktualisieren"
+    description="Pourquoi une version est une combinaison testée et à quoi ressemble le chemin du retour."
+  />
+  <LinkCard
+    title="Dépannage"
+    href="/docs/fr/betrieb/fehlerbehebung"
+    description="Où regarder en premier quand quelque chose coince en exploitation."
+  />
+</CardGrid>

@@ -1,0 +1,68 @@
+---
+title: Pannello di amministrazione
+description: Che cosa fa il pannello di amministrazione e in quale ordine procede una nuova amministratrice.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Il pannello di amministrazione è l’interfaccia attraverso la quale si amministra EU Cowork AI: account, ruoli, gruppi, connettori, modelli, consumo e registri. Questa pagina ne dà la panoramica; le singole aree sono descritte nei capitoli seguenti. Si rivolge alla persona che si occupa dell’istanza.
+
+## Accesso
+
+Il pannello è raggiungibile a un indirizzo proprio che appartiene alla Sua installazione. Lei accede con il Suo account di amministratore. Chi ha il ruolo di amministratore entra, nessun altro. Se un account viene bloccato o gli viene revocato il ruolo, l’effetto vale anche qui.
+
+<Aside type="caution" title="Consigliato: proteggere ulteriormente gli accessi di amministrazione">
+Agli account di amministratore si applicano i requisiti più severi. Due misure vanno previste in ogni installazione produttiva:
+
+- Attivare l'**autenticazione a due fattori per tutti gli account di amministratore**.
+- **Limitare l’accesso alle reti note**, ad esempio alla Sua VPN o a un elenco di indirizzi IP autorizzati. Nel lavoro quotidiano il pannello serve a poche persone: una restrizione non costa quindi nulla.
+
+Inserisca entrambi i punti nella Sua lista di collaudo e li verifichi attivamente una volta configurata l’istanza.
+</Aside>
+
+## Che cosa vi si fa
+
+L’interfaccia è suddivisa in quattro aree:
+
+| Area | A che cosa serve |
+| --- | --- |
+| **«Analyse»** (analisi) | Indicatori di utilizzo e registri |
+| **«Verwaltung»** (gestione) | Utenti, ruoli, gruppi, accesso ai connettori e agli agenti |
+| **«Finanzen»** (finanze) | Consumo per persona, budget e giustificativi di fatturazione |
+| **«System»** (sistema) | Configurazione, registro di audit e impostazioni dell’istanza |
+
+Per ogni persona si possono aprire due viste di dettaglio: il consumo nel dettaglio e una panoramica di ciò che quella persona può fare e perché. La seconda è il primo strumento a cui ricorrere quando qualcuno segnala di non vedere un connettore o un modello.
+
+## Due principi di fondo
+
+**Il salvataggio è esplicito.** Il pannello lavora su una copia di lavoro e scrive solo nel momento in cui Lei salva. Finché restano modifiche aperte, l’interfaccia lo segnala.
+
+**Non esistono segreti in chiaro.** Le chiavi di accesso sono depositate solo come riferimento, non vengono mai mostrate in chiaro e nei registri sono citate soltanto con il loro nome. I test di connessione vengono eseguiti lato server: la chiave non lascia il server, nemmeno nei messaggi di errore.
+
+## Ordine da seguire per un nuovo amministratore
+
+Quando Lei rileva un’istanza nuova, questo ordine ha senso, perché i passi si costruiscono l’uno sull’altro:
+
+1. Limitare la registrazione ai domini di posta della Sua azienda.
+2. Fissare un budget mensile, dapprima senza applicazione rigida, per vedere nell’arco di un mese dove si va a finire.
+3. Creare i gruppi; sono la base per gli accessi e per i modelli.
+4. Stabilire per ciascun gruppo quali modelli sono visibili.
+5. Collegare i connettori e abilitarne l’accesso in modo mirato.
+6. Invitare il personale.
+7. Fissare la durata di conservazione in accordo con la Sua politica di cancellazione.
+
+<Aside type="note" title="Documenti per la messa in esercizio">
+Le istruzioni passo per passo per la messa in esercizio della Sua istanza fanno parte della fornitura e Le vengono consegnate insieme all’installazione.
+</Aside>
+
+## Il seguito del capitolo
+
+<CardGrid>
+  <LinkCard title="Utenti, gruppi e ruoli" href="/docs/it/administration/benutzer-und-gruppen" description="Invitare e creare account, assegnare diritti, bloccare e cancellare." />
+  <LinkCard title="Modelli e schede dei modelli" href="/docs/it/administration/modelle-und-karten" description="Definire le schede e governarne la visibilità per ruolo e per gruppo." />
+  <LinkCard title="Consumo, budget e fatturazione" href="/docs/it/administration/verbrauch-und-budgets" description="Dai token agli euro: budget, limite mensile, giustificativi." />
+  <LinkCard title="Registri e audit" href="/docs/it/administration/protokolle-und-audit" description="Registro di utilizzo e cronologia delle modifiche." />
+  <LinkCard title="Protezione dei dati e conservazione" href="/docs/it/administration/datenschutz-und-aufbewahrung" description="Conservazione, diritto di accesso, telemetria e ciò che lascia l’istanza." />
+</CardGrid>

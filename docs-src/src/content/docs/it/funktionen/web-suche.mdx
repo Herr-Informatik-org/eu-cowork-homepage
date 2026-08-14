@@ -1,0 +1,107 @@
+---
+title: Ricerca web
+description: Come funziona la ricerca web nella chat, di quali componenti è fatta e che cosa va deciso in fase di configurazione.
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+La ricerca web porta nella chat informazioni aggiornate da internet: prezzi, notizie, stato della
+normativa, dati su altre aziende. Questa pagina spiega come si usa, di quali componenti è fatta e
+quali di essi sceglie Lei stesso in fase di configurazione.
+
+L’impianto di ricerca proviene da [LibreChat](https://www.librechat.ai/docs). Da parte nostra
+arriva la preconfigurazione.
+
+## Come si usa nella chat
+
+Nel campo di immissione c’è un interruttore per la ricerca web. Se è acceso e la ricerca è
+configurata per intero, è il collega stesso a decidere quando cercare. Non deve scrivere «cerca
+su internet»: basta una domanda sullo stato attuale di qualcosa.
+
+La risposta viene poi costruita sulle pagine trovate, con indicazione delle fonti. Il prompt di
+sistema memorizzato lo esige espressamente.
+
+## I tre componenti
+
+Una ricerca web funzionante è fatta di più di un semplice motore di ricerca.
+
+| Componente | Compito | Obbligatorio |
+|---|---|---|
+| Motore di ricerca | Fornisce i risultati, cioè link e brevi estratti di testo | sì |
+| Scraper | Recupera il testo integrale delle pagine trovate | sì |
+| Reranker | Ordina i riscontri per pertinenza | no |
+
+Senza scraper il collega avrebbe solo titoli e frasi di due righe, dai quali non si può costruire
+una risposta solida.
+
+<Aside type="caution" title="La ricerca web si completa in fase di configurazione">
+Un motore di ricerca è già impostato alla consegna. Lo **scraper lo sceglie Lei**, perché la scelta
+del fornitore dipende da come intende regolarsi con la residenza dei dati; un reranker è
+facoltativo e di fabbrica non è impostato.
+
+Metta in conto questo passaggio fin dall’inizio: lo strumento di ricerca viene offerto al modello
+soltanto quando è presente uno scraper.
+</Aside>
+
+## Per gli amministratori: configurare scraper e reranker
+
+Entrambi si curano nel pannello di amministrazione sotto **«Konfiguration → Funktionen»**
+(configurazione, funzioni), nelle due schede dedicate alla ricerca web. Lì si scelgono il fornitore
+della ricerca, lo scraper e facoltativamente un reranker, oltre al livello di SafeSearch. Per
+scraper e reranker LibreChat supporta rispettivamente più fornitori; quali entrino in
+considerazione è indicato nella
+[documentazione di LibreChat](https://www.librechat.ai/docs).
+
+Le chiavi **non vanno mai in chiaro** nella configurazione. Le inserisca come riferimento a una
+variabile e depositi il valore nel punto previsto a tal fine.
+
+<Aside type="note" title="Quale scraper si addice al posizionamento UE">
+La via europea prevista è uno **scraper ospitato in proprio**. In quel caso il recupero del testo
+integrale non lascia la Sua infrastruttura.
+
+Le varianti ospitate dai fornitori di scraper si configurano in fretta, ma non elaborano in
+territorio UE. Chi le impiega dovrebbe dirlo con la stessa chiarezza con cui vengono segnalate le
+schede dei modelli non UE.
+</Aside>
+
+### Perché il collega cerchi da sé
+
+Altri due punti di regolazione decidono se una ricerca avvenga o no:
+
+<Steps>
+
+1. **Diritto di ruolo.** Nell’editor dei ruoli, sotto **«Werkzeuge»** (strumenti), il diritto
+   **«Web-Suche»** (ricerca web) per i ruoli interessati.
+
+2. **Flag sulla scheda.** Lo strumento di ricerca deve essere attivo sulle schede dei modelli che
+   Lei offre. Solo allora è legato alla scheda ed è il modello a decidere da sé quando usarlo.
+
+3. Verificare poi in una chat nuova.
+
+</Steps>
+
+### Quanto testo arriva al modello
+
+Quanto testo dei risultati di ricerca vada al modello è limitato e regolabile. Di più significa più
+contesto per la risposta e più token per richiesta, quindi costi più alti. Di meno significa una
+base più esile.
+
+## Protezione dei dati nella ricerca web
+
+La ricerca gira nella Sua istanza, ma l’interrogazione stessa esce: viene inoltrata a servizi di
+ricerca esterni. Che cosa succede in questo passaggio e che cosa no:
+
+| | |
+|---|---|
+| Esce | il termine cercato, oltre alle pagine recuperate dallo scraper |
+| **Non** esce | chi ha cercato. L’identità della persona resta presso di Lei |
+| Resta presso di Lei | la conversazione, i documenti, la risposta |
+
+<Aside type="note" title="Formulazione per la formazione e per l’informativa privacy">
+Detta con precisione, l’affermazione suona così: archiviazione e inferenza avvengono là dove Lei
+gestisce l’istanza; l’interrogazione di ricerca vera e propria va a servizi di ricerca esterni, e
+lo fa senza identità dell’utente. Chi descrive la ricerca web in un’informativa sulla privacy fa
+bene a riprendere questa distinzione alla lettera.
+</Aside>

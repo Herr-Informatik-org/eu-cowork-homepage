@@ -1,0 +1,74 @@
+---
+title: Inicio rápido
+description: El camino hacia una instancia propia a grandes rasgos, desde la elección del servidor hasta la primera cuenta.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Hay dos caminos hacia una instancia propia. O bien utiliza una instancia alojada en Suiza y recibe
+un acceso ya listo, o bien opera la plataforma usted mismo en un servidor Linux propio. Esta página
+describe el segundo camino a grandes rasgos.
+
+<Steps>
+
+1. **Preparar el servidor**
+
+   Una máquina Linux con un entorno de ejecución de contenedores actual. El tamaño que debería
+   tener figura en [Requisitos del sistema](/docs/es/erste-schritte/systemanforderungen).
+
+2. **Registrar el dominio**
+
+   El dominio bajo el que la instancia debe ser accesible apunta por DNS al servidor. El
+   certificado lo obtiene después el proxy inverso por su cuenta; para ello el servidor debe ser
+   accesible desde la red.
+
+3. **Instalar**
+
+   La instalación es guiada y deja listos la configuración y los servicios. Conviene tener a mano
+   el acceso a su proveedor de inferencia; en el estado de entrega es
+   [EuRouter](https://eurouter.ai), donde se procesa en la UE.
+
+4. **Restringir el acceso**
+
+   Antes de que la instancia llegue a las primeras personas, hay que definir qué dominios de correo
+   pueden registrarse siquiera. Esa lista es la protección de acceso determinante, y no la cuestión
+   de quién conoce la dirección.
+
+5. **Crear la primera cuenta**
+
+   Durante la puesta en marcha nace la primera cuenta de administrador, todas las demás cuentas son
+   usuarios normales. Cree después una segunda cuenta de administrador para no quedarse fuera.
+
+6. **Configurar**
+
+   En la administración configura lo que rige en el día a día: crear grupos, habilitar modelos por
+   grupo, regular los accesos a sistemas ajenos e invitar al personal.
+
+</Steps>
+
+<Aside type="note" title="La guía en detalle">
+La guía de instalación completa se entrega junto con el producto. Forma parte del paquete de
+instalación.
+</Aside>
+
+## Continuar
+
+<CardGrid>
+  <LinkCard
+    title="Requisitos del sistema"
+    href="/docs/es/erste-schritte/systemanforderungen"
+    description="Lo que una instancia necesita de CPU, memoria y espacio en disco."
+  />
+  <LinkCard
+    title="Arquitectura"
+    href="/docs/es/erste-schritte/architektur"
+    description="Qué camino toma una petición y por qué cada cliente recibe una instancia propia."
+  />
+  <LinkCard
+    title="¿Qué es EU Cowork AI?"
+    href="/docs/es/erste-schritte/ueberblick"
+    description="La visión general de la plataforma, sus límites y su licencia."
+  />
+</CardGrid>

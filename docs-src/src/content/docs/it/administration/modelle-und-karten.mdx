@@ -1,0 +1,54 @@
+---
+title: Modelli e schede dei modelli
+description: Che cosa sono le schede dei modelli e come se ne governa la visibilità per ruolo e per gruppo.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Nella chat gli utenti non scelgono un modello grezzo, ma una **scheda del modello**. Una scheda raccoglie sotto un nome comprensibile un fornitore, un modello e le relative impostazioni predefinite. Questa pagina mostra che cosa Lei governa con essa in qualità di amministratore.
+
+## Che cos’è una scheda del modello
+
+Una scheda è un preset curato. Invece di un nome tecnico di modello, la persona legge nel selettore dei modelli una denominazione comprensibile e ottiene con essa automaticamente il prompt di sistema adeguato e i parametri adeguati. Ciò porta tre vantaggi: la scelta resta comprensibile, il prompt di sistema viene inserito lato server e non finisce nel browser, e Lei può ritagliare la selezione per ruolo e per gruppo.
+
+A una scheda appartengono, fra l’altro, un’etichetta visibile, una breve descrizione, la posizione nel selettore, il fornitore e il modello che vi stanno dietro, nonché impostazioni predefinite come temperatura, testo di benvenuto e prompt di sistema. Esattamente una scheda è la scheda predefinita.
+
+Si può inoltre impostare se siano selezionabili esclusivamente le schede oppure se accanto a esse compaia anche l’elenco grezzo dei modelli.
+
+## Fornitori
+
+I fornitori e i modelli che essi mettono a disposizione si gestiscono nella configurazione. Un test di connessione verifica il collegamento senza rivelare il segreto.
+
+<Aside type="danger" title="Le chiavi solo come riferimento">
+Una chiave di accesso non viene mai depositata in chiaro nella configurazione, ma esclusivamente come riferimento a un valore conservato lato server. Il testo in chiaro viene rifiutato. In alternativa ogni persona deposita la propria chiave nella chat.
+</Aside>
+
+## Visibilità per ruolo e per gruppo
+
+Quali schede qualcuno vede lo stabilisce Lei a livello di ruolo e di gruppo. Dove non esiste una regola propria vale la selezione fornita. Principio: vince la regola più stretta.
+
+Nell’editor dei ruoli Lei attiva o disattiva le schede una per una e, all’occorrenza, nasconde l’elenco grezzo dei modelli; un gruppo riceve, se serve, una selezione propria. Su entrambi i livelli la selezione si può riportare in un solo passo allo stato di fornitura.
+
+<Aside type="note" title="Dopo le modifiche alle schede, salvare ancora una volta">
+Se Lei rinomina o aggiunge una scheda, salvi ancora una volta le regole di ruolo e di gruppo interessate e verifichi poi che la visibilità sia ancora come Lei la intende.
+</Aside>
+
+## Limitare i fornitori
+
+Se un endpoint passa per un intermediario che a sua volta impiega più fornitori, si può limitare quali di essi possano servire le Sue richieste: solo fornitori senza memorizzazione e senza addestramento sui prompt e, a richiesta, solo fornitori con sede o centro di calcolo in UE, SEE e Svizzera.
+
+<Aside type="caution" title="Due limitazioni">
+Primo: le indicazioni su sede e centro di calcolo provengono dall’intermediario, e **la sede di un fornitore non è una garanzia sul luogo del trattamento**. Tratti **«Nur EU»** (solo UE) come una restrizione sensata, non come un’assicurazione.
+
+Secondo: **i modelli senza un fornitore corrispondente restituiranno poi un errore.** Se Lei imposta l’elenco in modo stretto, verifichi ogni scheda che passa per questo endpoint.
+</Aside>
+
+## Model router
+
+Accanto alle schede fisse esiste la possibilità di distribuire automaticamente le richieste su un modello adeguato, invece di far rispondere ogni domanda dal modello più costoso. Se la classificazione non riesce, la richiesta va al modello più forte: nel dubbio il router decide per la qualità, non per il risparmio.
+
+<Aside type="note" title="Non attivo allo stato di fornitura">
+Il router **non** è distribuito nel template per i clienti. Dopo l’installazione il Suo personale vede le schede dei modelli fornite. Il contesto è descritto in [Chat e modelli](/docs/it/funktionen/chat-und-modelle).
+</Aside>

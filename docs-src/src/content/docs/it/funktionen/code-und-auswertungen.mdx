@@ -1,0 +1,100 @@
+---
+title: Analisi, tabelle e codice
+description: Analisi Excel e PDF scaricabili dalla chat, diagrammi e interfacce come artefatti, e che cosa presuppone l’esecuzione del codice.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+«Da questi numeri mi faccia un’analisi in Excel» è uno dei compiti per cui il personale ha più
+facilmente bisogno di un’IA. Questa pagina descrive che cosa succede lungo il percorso, che cosa
+funziona senza tecnica aggiuntiva e che cosa presuppone invece un backend.
+
+L’esecuzione del codice e gli artefatti arrivano da [LibreChat](https://www.librechat.ai/docs). Da
+parte nostra arrivano la scelta e la preparazione del backend di esecuzione.
+
+## Che cosa ne ricava
+
+Lei scrive: «Da questa lista, per favore, un file Excel con un’analisi per ogni mese.» Il collega
+calcola, genera il file e lo deposita nella chat come download. Lei ci clicca sopra e ha il file.
+
+Vale allo stesso modo per Excel, CSV, Word e PDF, e anche per le analisi di una tabella allegata.
+Una cosa sola è importante: dica che cosa deve esserci nel file, non come debba nascere dal punto
+di vista tecnico.
+
+Se vuole modificare un file già generato, lo dica nella stessa chat. Il collega carica il file
+esistente e lo adatta invece di ricostruirlo. Così resta in piedi quanto era stato concordato
+prima.
+
+<Aside type="note" title="La strada verso il codice resta sullo sfondo">
+Script, comandi e percorsi interni non vengono mostrati. Lei riceve il file e un breve riepilogo
+di che cosa contiene. È voluto: il pubblico di riferimento sono professionisti, non sviluppatori.
+</Aside>
+
+## Artefatti: risultati direttamente nella chat
+
+Gli **artefatti** sono un’altra cosa rispetto all’esecuzione del codice. Con essi il collega
+presenta i contenuti direttamente in un riquadro laterale dell’interfaccia, invece di emetterli
+come blocco di codice:
+
+| Tipo | Esempio |
+|---|---|
+| Mermaid | diagramma di flusso, organigramma, linea del tempo |
+| SVG | grafiche e schemi semplici |
+| HTML | una pagina o una tabella impaginata da guardare |
+| React | una piccola interfaccia utilizzabile, per esempio un calcolatore |
+| Markdown | documenti formattati |
+
+**Gli artefatti non hanno bisogno di alcun backend di esecuzione.** Sono attivi sulle schede dei
+modelli fornite e funzionano subito dopo l’installazione. Chi quindi vuole solo un diagramma o un
+prospetto non ha bisogno dell’esecuzione del codice.
+
+<Aside type="caution" title="L’anteprima ha bisogno di HTTPS">
+L’anteprima interattiva gira solo in un contesto sicuro. Senza un certificato valido resta vuota
+oppure segnala un errore di connessione. Non è un difetto del backend, ma una regola del browser.
+La via pulita è un vero nome di dominio con un certificato valido.
+</Aside>
+
+## Alla consegna l’esecuzione del codice è disattivata
+
+Di fabbrica l’esecuzione del codice non è abilitata. Il motivo è lo stesso della ricerca nei file:
+l’esecuzione ha bisogno di un backend proprio e isolato, che non fa parte dell’installazione di
+base. Senza backend il pulsante sarebbe un pulsante morto e ogni tentativo finirebbe in un errore.
+
+Lei decide quindi consapevolmente se offrire questa funzione.
+
+## Per gli amministratori
+
+L’esecuzione del codice è l’unico punto in cui il codice generato gira sulla Sua macchina. Di
+conseguenza va collocata in un ambiente proprio e isolato, gestito separatamente dal resto
+dell’installazione e mai condiviso fra istanze.
+
+Nella scelta di un backend tre punti sono decisivi:
+
+- **Isolamento.** Il codice eseguito non deve poter arrivare né ai dati dell’istanza né al resto
+  della rete.
+- **Raggiungibilità.** Il backend viene interpellato esclusivamente per via interna. Dall’esterno
+  non serve nulla; gli accessi diagnostici vanno sull’indirizzo di loopback oppure in un tunnel
+  SSH.
+- **Traffico in uscita.** Quali destinazioni il codice eseguito possa raggiungere su internet lo
+  stabilisce Lei a livello di host o di rete. Preveda questo elenco di abilitazioni già in fase di
+  configurazione e annoti le destinazioni ammesse nel Suo manuale operativo.
+
+Se l’esecuzione del codice non serve affatto, rinunci al backend: alla consegna è
+disattivata.
+
+### Abilitarla in seguito
+
+<Steps>
+
+1. **Impostare il diritto.** Il diritto **«Code-Interpreter»** (interprete di codice) si trova
+   nell’editor dei ruoli sotto **«Werkzeuge»** (strumenti). Chi vuole dare l’esecuzione solo ad
+   alcuni ruoli lo cura esclusivamente lì.
+
+2. **Attivarla sulle schede dei modelli**, affinché il modello usi lo strumento da sé, senza che
+   qualcuno debba cliccare.
+
+3. **Verificare** che in una chat nuova un file generato compaia davvero come download.
+
+</Steps>

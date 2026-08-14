@@ -1,0 +1,40 @@
+---
+title: Journaux et audit
+description: Journal d’utilisation, historique des modifications et preuve des accès par connecteur.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Il existe deux vues de journal ayant deux tâches différentes. L’une répond à la question de **ce que le système a fait**, c’est-à-dire quelles requêtes ont eu lieu et ce qu’elles ont coûté. L’autre répond à la question de **qui a modifié quelque chose** et qui a accédé à quelles données.
+
+## Journal d’utilisation
+
+On y trouve chaque requête adressée au modèle, avec le moment, le modèle, le fournisseur, la personne, les tokens et les coûts, ainsi que quelques indicateurs techniques sur la qualité de la réponse. Les requêtes d’une même conversation peuvent être consultées de manière groupée. La vue peut être filtrée et triée, et ce qui est affiché après filtrage peut être exporté en CSV exactement tel quel.
+
+<Aside type="note" title="Aucun contenu de conversation">
+Seul l’identifiant d’une conversation est affiché, jamais son titre ni son contenu. C’est un choix délibéré en matière de protection des données : la vue d’administration doit montrer ce que quelque chose a coûté, et non de quoi quelqu’un a parlé.
+</Aside>
+
+À côté, il existe une vue pour les erreurs techniques et une vue de diagnostic pour la recherche de pannes sur les connecteurs.
+
+## Historique des modifications et preuve des connecteurs
+
+La seconde vue journalise **chaque action modifiante** dans le panneau, donc tout ce qui crée, modifie ou supprime, avec le moment, la personne qui agit, la cible concernée et le résultat. Pour une entrée, l’état avant et après peut être comparé. Les connexions y figurent, y compris celles qui ont échoué.
+
+Est également consigné **chaque appel d’outil passant par un connecteur**, avec la décision et la justification, c’est-à-dire quelle règle l’a autorisé ou refusé. On peut ainsi retracer pourquoi un accès a eu lieu, et pas seulement qu’il a eu lieu. Les deux pistes peuvent être exportées en CSV.
+
+<Aside type="caution" title="Les secrets sont caviardés">
+Si vous modifiez une clé d’accès, le journal indique que la clé portant ce nom a été modifiée, jamais sa valeur. Les valeurs qui ressemblent à un secret sont remplacées par un espace réservé. Un export est donc sans risque même lorsque le destinataire n’a pas le droit de voir de clés.
+</Aside>
+
+La durée de conservation des entrées, vous la fixez dans votre politique de suppression, voir [Protection des données et conservation](/docs/fr/administration/datenschutz-und-aufbewahrung).
+
+## À quoi cela vous sert
+
+**Obligation de preuve.** Lorsque quelqu’un demande qui a modifié quel réglage et quand, ou qui a accédé à quelles données d’un système raccordé, cela reste sans réponse en l’absence de journal. Cela vaut en particulier pour les connecteurs qui tournent en mode compte de service.
+
+**Recherche de pannes.** Lorsque quelqu’un signale « l’outil ne répond pas », les vues séparent proprement les cas : un appel refusé est une décision et figure dans l’audit, une erreur technique figure dans le diagnostic. Cela évite de deviner.
+
+**Analyse des coûts.** Le journal d’utilisation montre quel modèle, quelle personne et quel type de conversation tire la consommation. Une vue filtrée plus un export CSV suffisent le plus souvent à répondre à la question « pourquoi le mois dernier a-t-il coûté plus cher ». La vue agrégée correspondante se trouve sous [Consommation, budgets et facturation](/docs/fr/administration/verbrauch-und-budgets).

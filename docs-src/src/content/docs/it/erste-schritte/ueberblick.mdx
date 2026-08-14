@@ -1,0 +1,138 @@
+---
+title: Che cos’è EU Cowork AI?
+description: Panoramica della piattaforma, dei suoi limiti e della sua licenza. Per i responsabili IT che decidono se EU Cowork AI sia adatta.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI è una piattaforma di chat IA per le aziende, che gira su un server proprio.
+Questa pagina dice in pochi minuti che cosa sia il sistema, di che cosa si componga, che cosa sappia
+fare e che cosa deliberatamente non faccia. Si rivolge ai responsabili IT che devono decidere se
+adottare la piattaforma.
+
+## A chi è destinata la piattaforma
+
+Le situazioni di partenza sono tre. Si distinguono per chi gestisca il server, non per quello che la
+piattaforma sa fare.
+
+| Situazione di partenza | Chi gestisce il server | Che cosa fa Lei |
+|---|---|---|
+| **Usa la piattaforma per sé** | il Suo reparto IT | mettere in opera il server, installare l’istanza, invitare il personale |
+| **È cliente PMI e la fa gestire da altri** | il Suo fornitore di servizi IT | riceve un’istanza pronta e lavora nella chat e nell’amministrazione |
+| **È fornitore di servizi IT** | Lei, per più clienti | un’istanza propria per cliente, a scelta su macchina dedicata o condivisa |
+
+Il terzo caso è la ragione di molte decisioni di progettazione: un cliente è sempre un’istanza
+propria, completamente separata, con database proprio, file propri e chiave di inferenza propria.
+Maggiori dettagli sotto [Architettura](/docs/it/erste-schritte/architektur).
+
+## Di che cosa si compone il sistema
+
+L’interfaccia di chat è [LibreChat](https://www.librechat.ai), una piattaforma a codice aperto sotto
+licenza MIT. Da lì vengono chat, agenti, elaborazione dei file e collegamento ai modelli — cioè
+l’applicazione che il Suo personale vede. Il fork resta deliberatamente vicino all’originale, in modo
+che gli aggiornamenti restino possibili.
+
+Vi abbiamo aggiunto tutto ciò che un’azienda richiede per un esercizio ordinato: amministrazione di
+utenti, ruoli e diritti, una verifica dei diritti con registro prima di ogni accesso a un sistema di
+terzi, una panoramica del consumo con budget, un’area di chat in Outlook e un pacchetto di
+installazione per il server proprio.
+
+## Che cosa sa fare la piattaforma
+
+Dopo l’installazione sono disponibili, fra l’altro: chat con streaming e cronologia, un selettore di
+modelli con schede curate, caricamento di file come contesto, comprensione delle immagini sulle
+schede adatte, artifact come diagrammi e HTML direttamente nella chat, uso degli agenti, l’impalcatura
+per le competenze come processi standard, i cui contenuti crea Lei stesso, una memoria a lungo
+termine con opt-out e la ricerca full text sulle conversazioni precedenti.
+
+Tre funzioni sono deliberatamente disattivate allo stato di fornitura, perché richiedono componenti
+aggiuntivi e altrimenti porterebbero a un pulsante morto:
+
+| Funzione | Perché è disattivata | Che cosa serve |
+|---|---|---|
+| ricerca nei documenti caricati | richiede servizi aggiuntivi | attivarla durante la messa in opera |
+| esecuzione di codice, per esempio per generare un file Excel | richiede un backend di codice | attivarla durante la messa in opera |
+| pannello dei parametri per la temperatura e simili | superfluo per chi non sviluppa | riattivabile per singolo ruolo |
+
+## Che cosa la piattaforma deliberatamente non fa
+
+- **Nessuna multi-tenancy dentro l’applicazione.** Un cliente è un’istanza propria. È una decisione
+  deliberata, perché così la separazione si colloca al di sotto dell’applicazione.
+- **Gli utenti non creano connettori propri.** Quali sistemi di terzi siano raggiungibili lo decide
+  esclusivamente l’amministrazione.
+- **I connettori di esempio forniti lavorano esclusivamente in lettura.** Non portano con sé
+  strumenti che modifichino qualcosa nel sistema di terzi. Uno strumento che non esiste non può
+  essere richiamato per errore.
+- **Il componente aggiuntivo per Outlook non invia mai automaticamente.** Una bozza finisce nella
+  normale finestra di risposta, l’invio resta all’essere umano.
+
+## Che cosa significa qui open source
+
+Il prodotto complessivo è sotto licenza MIT. In pratica significa:
+
+- **Nessun per-seat gating.** Il numero di utenti non è limitato tecnicamente da nessuna parte e non
+  viene posto sotto tetto da alcuna licenza.
+- **Nessun feature gating.** Non esiste un’edizione enterprise con funzioni aggiuntive. Quello che
+  sta nel repository è l’intera dotazione di funzioni.
+- **Nessun branding obbligato.** Nome, logo e testo di benvenuto sono configurazione.
+- **Ospitare per sé è gratuito.** Si pagano esercizio, supporto e integrazione, se desidera
+  acquistarli da qualcuno.
+
+Il pannello di amministrazione ufficiale di LibreChat è sotto AGPL e per questo deliberatamente
+**non** viene usato. Al suo posto esiste un’amministrazione propria, con licenza permissiva. Così il
+prodotto complessivo resta libero da obblighi di copyleft.
+
+## Dove risiedono i dati
+
+Conversazioni, messaggi, utenti e dati di consumo risiedono nel database della Sua istanza. I file
+caricati risiedono accanto, sullo stesso server. Non esiste alcun canale di ritorno verso di noi, la
+telemetria è disattivata.
+
+Per le risposte dei modelli stesse i contenuti lasciano il server, perché il carico di calcolo sta
+presso il fornitore di inferenza. L’impostazione predefinita è **EuRouter**, dove l’elaborazione
+avviene nell’UE. **OpenRouter** è attivabile in opzione e **non** è residente nell’UE. Le schede dei
+modelli fuori dall’UE sono contrassegnate in modo visibile nell’interfaccia.
+
+<Aside type="note" title="Ricerca web e residenza dei dati">
+Il motore di ricerca gira nella Sua istanza, ma inoltra l’interrogazione a motori di ricerca esterni,
+senza trasmettere l’identità dell’utente. L’affermazione «tutto resta nell’UE» vale per la
+memorizzazione e per l’inferenza, non per la ricerca web.
+</Aside>
+
+Esiste un’istanza ospitata in Svizzera. Dove risieda la Sua istanza propria lo decide Lei con la
+scelta del server.
+
+## Portata e delimitazione
+
+Perché possa confrontare pulitamente la dotazione di funzioni con i Suoi requisiti, ecco gli ambiti
+che non rientrano nella fornitura o che richiedono una decisione durante la messa in opera.
+
+| Ambito | Stato |
+|---|---|
+| Ricerca web | Il motore di ricerca gira nell’istanza. Lo scraper lo sceglie secondo i Suoi requisiti di residenza dei dati e lo configura durante la messa in opera |
+| Connessioni in uscita dell’esecuzione di codice | vengono stabilite durante la messa in opera. Allo stato di fornitura l’esecuzione di codice è disattivata |
+| Provisioning degli utenti tramite SCIM | non compreso. Gli account nascono al primo login tramite OIDC, la revoca passa dall’identity provider |
+| Fatturazione automatica | i giustificativi come CSV e PDF sono compresi, un collegamento ai pagamenti no |
+| OCR, generazione di immagini, input e output vocale | non compresi. I file PDF scansionati non vengono letti come testo |
+
+## Avanti
+
+<CardGrid>
+  <LinkCard
+    title="Requisiti di sistema"
+    href="/docs/it/erste-schritte/systemanforderungen"
+    description="Che cosa richiede un’istanza in CPU, memoria di lavoro e spazio su disco."
+  />
+  <LinkCard
+    title="Avvio rapido"
+    href="/docs/it/erste-schritte/schnellstart"
+    description="Il percorso verso un’istanza propria, a grandi linee."
+  />
+  <LinkCard
+    title="Architettura"
+    href="/docs/it/erste-schritte/architektur"
+    description="Quale percorso prende una richiesta e perché ogni cliente riceve un’istanza propria."
+  />
+</CardGrid>

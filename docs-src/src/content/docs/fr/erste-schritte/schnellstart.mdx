@@ -1,0 +1,75 @@
+---
+title: Démarrage rapide
+description: Le chemin vers votre propre instance à grands traits, du choix du serveur jusqu’au premier compte.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Il existe deux chemins vers une instance à vous. Soit vous utilisez une instance hébergée en Suisse
+et recevez un accès prêt à l’emploi, soit vous exploitez la plateforme vous-même sur un serveur
+Linux dédié. Cette page décrit le second chemin à grands traits.
+
+<Steps>
+
+1. **Mettre un serveur à disposition**
+
+   Une machine Linux avec un environnement d’exécution de conteneurs récent. Quelle taille elle
+   doit avoir figure sous [Configuration requise](/docs/fr/erste-schritte/systemanforderungen).
+
+2. **Enregistrer le domaine**
+
+   Le domaine sous lequel l’instance doit être joignable pointe par DNS vers le serveur. Le reverse
+   proxy obtient ensuite le certificat de lui-même ; pour cela, le serveur doit être joignable
+   depuis le réseau.
+
+3. **Installer**
+
+   L’installation est guidée et met en place la configuration et les services. Gardez sous la main
+   l’accès à votre fournisseur d’inférence ; à la livraison, il s’agit d’[EuRouter](https://eurouter.ai),
+   où le traitement a lieu dans l’UE.
+
+4. **Restreindre l’accès**
+
+   Avant que l’instance ne soit remise aux premières personnes, il convient de définir quels
+   domaines de messagerie ont le droit de s’inscrire. Cette liste est la protection d’accès
+   déterminante — et non la question de savoir qui connaît l’adresse.
+
+5. **Créer le premier compte**
+
+   Lors de la mise en place naît le premier compte administrateur, tous les comptes suivants sont
+   des utilisateurs normaux. Créez ensuite un second compte administrateur, afin de ne pas vous
+   enfermer dehors.
+
+6. **Configurer**
+
+   Dans l’administration, vous réglez ce qui vaut au quotidien : créer des groupes, autoriser les
+   modèles par groupe, régir les accès aux systèmes tiers et inviter vos collaborateurs.
+
+</Steps>
+
+<Aside type="note" title="Le guide dans le détail">
+Le guide d’installation complet est fourni avec la livraison. Il fait partie du paquet
+d’installation.
+</Aside>
+
+## Pour aller plus loin
+
+<CardGrid>
+  <LinkCard
+    title="Configuration requise"
+    href="/docs/fr/erste-schritte/systemanforderungen"
+    description="Ce qu’une instance demande en CPU, en mémoire vive et en espace disque."
+  />
+  <LinkCard
+    title="Architecture"
+    href="/docs/fr/erste-schritte/architektur"
+    description="Le chemin que prend une requête et pourquoi chaque client reçoit une instance distincte."
+  />
+  <LinkCard
+    title="Qu’est-ce qu’EU Cowork AI ?"
+    href="/docs/fr/erste-schritte/ueberblick"
+    description="La vue d’ensemble de la plateforme, de ses limites et de sa licence."
+  />
+</CardGrid>

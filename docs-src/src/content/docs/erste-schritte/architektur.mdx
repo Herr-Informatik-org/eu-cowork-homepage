@@ -8,7 +8,7 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 import DiagrammArchitektur from '../../../components/DiagrammArchitektur.astro';
 
-EU Cowork AI läuft als Docker-Compose-Stack auf einer Linux-Maschine. Diese Seite zeigt den
+EU Cowork AI läuft in Containern auf einer Linux-Maschine. Diese Seite zeigt den
 Aufbau in groben Zügen. Sie beschreibt, welchen Weg eine Anfrage nimmt und welche
 Entscheidungen dahinterstehen — nicht die Einrichtung im Einzelnen.
 
@@ -56,12 +56,10 @@ ist eine eigene Instanz mit eigener Datenbank, eigenem Suchindex, eigenen Dateie
 Konfiguration und eigenem Inferenz-Schlüssel. Ob zwei Instanzen sich eine Maschine teilen, ist
 danach eine reine Kosten- und Risikofrage.
 
-| Darf geteilt werden | Darf nie geteilt werden |
-|---|---|
-| Docker-Images und deren Schichten | Datenbank, Suchindex, Dateien |
-| ein gemeinsamer Reverse-Proxy | Konfiguration und alle Secrets |
-| Überwachung, Backup-Zeitplan, Systemaktualisierungen | die Umgebung der Code-Ausführung |
-| | der Inferenz-Schlüssel, sonst sind die Kosten pro Kunde nicht auflösbar |
+Geteilt werden dürfen allenfalls Betriebsmittel ohne Kundenbezug. Getrennt bleiben müssen in
+jedem Fall die Datenhaltung, die Konfiguration samt aller Schlüssel und die Umgebung der
+Code-Ausführung. Sonst lassen sich weder die Daten noch die Kosten sauber je Kunde
+auseinanderhalten.
 
 <Aside type="note" title="Die Unterlagen zur Einrichtung">
 Welche Dienste eine Instanz im Einzelnen mitbringt, wie sie konfiguriert werden und was beim

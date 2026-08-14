@@ -1,0 +1,108 @@
+---
+title: Búsqueda web
+description: Cómo funciona la búsqueda web en el chat, de qué componentes se compone y qué hay que decidir durante la implantación.
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+La búsqueda web trae al chat información actual de internet: precios, noticias, el estado de la
+legislación, datos sobre otras empresas. Esta página explica cómo se utiliza, de qué componentes se
+compone y cuáles de ellos elige usted mismo durante la implantación.
+
+La estructura de búsqueda proviene de [LibreChat](https://www.librechat.ai/docs). Lo que aportamos
+nosotros es la configuración previa.
+
+## Así se utiliza en el chat
+
+En el campo de entrada hay un conmutador para la búsqueda web. Si está activado y la búsqueda está
+completamente configurada, el colega decide por sí mismo cuándo buscar. Usted no tiene que escribir
+«busca en internet»: basta con una pregunta sobre la situación actual de algo.
+
+La respuesta se construye entonces sobre las páginas encontradas, con indicación de las fuentes. El
+prompt del sistema almacenado lo exige expresamente.
+
+## Los tres componentes
+
+Una búsqueda web que funcione es algo más que un motor de búsqueda.
+
+| Componente | Cometido | Obligatorio |
+|---|---|---|
+| Motor de búsqueda | Entrega resultados, es decir, enlaces y breves fragmentos de texto | sí |
+| Scraper | Recupera el texto completo de las páginas encontradas | sí |
+| Reranker | Ordena los hallazgos según su grado de pertinencia | no |
+
+Sin scraper, el colega solo tendría titulares y frases sueltas, con los que no se puede construir
+una respuesta sólida.
+
+<Aside type="caution" title="La búsqueda web se termina de montar durante la implantación">
+En la entrega ya viene registrado un motor de búsqueda. **El scraper lo elige usted mismo**, porque
+la elección del proveedor depende de cómo quiera resolver la residencia de los datos; el reranker
+es opcional y no viene fijado de fábrica.
+
+Cuente con este paso desde el principio: la herramienta de búsqueda no se le ofrece al modelo hasta
+que hay un scraper registrado.
+</Aside>
+
+## Para administradores: configurar el scraper y el reranker
+
+Ambos se gestionan en el panel de administración, bajo **«Konfiguration → Funktionen»**
+(configuración, funciones), en las dos tarjetas dedicadas a la búsqueda web. Allí elige usted el
+proveedor de búsqueda, el scraper y, opcionalmente, un reranker, además del nivel de SafeSearch.
+LibreChat admite varios proveedores tanto para el scraper como para el reranker; cuáles entran en
+consideración figura en la
+[documentación de LibreChat](https://www.librechat.ai/docs).
+
+Las claves **nunca** deben ir en texto claro en la configuración. Indíquelas como referencia a una
+variable y guarde el valor en el lugar previsto para ello.
+
+<Aside type="note" title="Qué scraper encaja con el posicionamiento europeo">
+La vía europea prevista es un **scraper alojado por usted mismo**. Así, la recuperación del texto
+completo no sale de su infraestructura.
+
+Las variantes alojadas de los proveedores de scraping se configuran deprisa, pero no procesan
+dentro de la UE. Quien las emplee debería nombrarlo con la misma claridad que en las fichas del
+modelo situadas fuera de la UE.
+</Aside>
+
+### Para que el colega busque por sí mismo
+
+Hay otros dos ajustes que deciden si se busca o no:
+
+<Steps>
+
+1. **Permiso de rol.** En el editor de roles, bajo **«Werkzeuge»** (herramientas), el permiso
+   **«Web-Suche»** (búsqueda web) para los roles afectados.
+
+2. **Marca en la ficha.** La herramienta de búsqueda debe estar activa en las fichas del modelo que
+   usted ofrece. Solo entonces queda unida a la ficha y el modelo decide por sí mismo cuándo
+   usarla.
+
+3. A continuación, comprobarlo en un chat nuevo.
+
+</Steps>
+
+### Cuánto texto llega al modelo
+
+La cantidad de texto de los resultados de búsqueda que llega al modelo es limitada y ajustable. Más
+significa más contexto para la respuesta y más tokens por consulta, es decir, un coste mayor. Menos
+significa una base más escueta.
+
+## Protección de datos en la búsqueda web
+
+La búsqueda se ejecuta en su instancia, pero la consulta de búsqueda en sí sale al exterior: se
+dirige a servicios de búsqueda externos. Qué ocurre en ese proceso y qué no:
+
+| | |
+|---|---|
+| Sale al exterior | el término de búsqueda, así como las páginas recuperadas por el scraper |
+| **No** sale al exterior | quién ha buscado. La identidad de la persona se queda con usted |
+| Se queda con usted | la conversación, los documentos, la respuesta |
+
+<Aside type="note" title="Formulación para la formación y el aviso de protección de datos">
+Dicho con precisión, la afirmación es esta: el almacenamiento y la inferencia se ejecutan allí donde
+usted opera la instancia; la consulta de búsqueda en sí va a servicios de búsqueda externos, y lo
+hace sin la identidad del usuario. Quien describa la búsqueda web en una declaración de protección
+de datos hará bien en recoger esa distinción literalmente.
+</Aside>

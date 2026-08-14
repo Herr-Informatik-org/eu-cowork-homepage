@@ -1,0 +1,53 @@
+---
+title: Raccorder votre propre connecteur
+description: Ce que vous clarifiez avant de raccorder l’un de vos systèmes à EU Cowork AI, et à quoi vous mesurez un connecteur tiers.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+L’un de vos systèmes se raccorde sous la forme d’un connecteur : un service qui propose un nombre limité d’outils et qui, derrière eux, appelle l’interface de votre système. Il est créé et autorisé dans le panneau d’administration, sans accès au serveur.
+
+<Aside type="note" title="Le guide est fourni avec la livraison">
+Avec votre instance, vous recevez un guide qui décrit pas à pas le chemin de la création jusqu’à l’autorisation, adapté à votre installation. Cette page reste délibérément au niveau situé en amont : ce que vous clarifiez avant, à quoi vous mesurez un connecteur et ce que vous ne devez pas oublier au moment d’autoriser.
+</Aside>
+
+## Ce que vous clarifiez avant
+
+- **Le nom technique.** C’est sous ce nom que le connecteur tourne dans votre instance. Il ne se change pas facilement par la suite. Choisissez-le donc parlant et durable.
+- **L’adresse à laquelle le connecteur parle MCP.** Le service doit être joignable depuis votre instance.
+- **Les identifiants du système cible.** Ils n’ont jamais leur place en clair dans la configuration, mais uniquement sous forme de référence à une clé déposée.
+- **Le compte derrière les identifiants.** C’est lui la véritable limite des données. Donnez-lui dans le système cible exactement les droits et exactement les domaines dont le cas d’usage a besoin, voir [Modèles de connecteurs](/docs/fr/konnektoren/muster).
+- **Une courte notice en prose** indiquant quand cet outil doit être utilisé et ce qu’il ne sait pas faire. Elle n’est insérée que lorsque le connecteur est actif, et elle améliore sensiblement le taux de réussite.
+
+## Où trouver un serveur MCP pour mon système
+
+**Il existe des serveurs prêts à l’emploi pour beaucoup de produits.** Parce que MCP est une norme ouverte, éditeurs et communautés publient des connecteurs pour les logiciels courants. Cherchez le nom du produit avec « MCP server ». Pour les systèmes dotés de leur propre interface de programmation, il y a de bonnes chances que quelqu’un ait déjà construit le pont.
+
+**Vous pouvez en construire un vous-même.** Un connecteur est un petit service qui propose une poignée d’outils et qui, derrière eux, appelle l’interface de votre système. Pour un objectif limité, par exemple « cinq requêtes en lecture sur notre application métier », cela reste maîtrisable. Un pont construit délibérément étroit est nettement moins coûteux en contexte qu’un serveur tout fait avec cent outils.
+
+**Examinez un serveur tiers avant de le raccorder.** Un connecteur reçoit un accès à vos données, ce n’est pas une formalité. Quatre questions :
+
+1. **Quels outils expose-t-il ?** Lisez la liste en entier. Les outils d’écriture dont vous n’avez pas besoin sont un risque pur, et ils coûtent du contexte par-dessus le marché.
+2. **Existe-t-il un mode lecture seule ?** Un interrupteur qui désactive les accès en écriture dans le code vaut nettement plus que la ferme intention de ne pas les utiliser.
+3. **Convient-il à plusieurs utilisateurs ?** Les connecteurs qui retiennent un état d’un appel à l’autre ne fonctionnent pas de manière fiable en exploitation multi-utilisateurs.
+4. **Où se trouvent les identifiants et quelle est la licence ?** Un connecteur qui détient lui-même des clés n’a sa place que dans le réseau interne.
+
+Le résultat de cet examen peut tout à fait être « nous le construisons nous-mêmes », surtout lorsqu’un serveur tout fait propose, à côté de la lecture, des redémarrages, des exécutions de scripts ou des modifications en écriture, et que cela ne peut pas être désactivé. Comment se découpe un pont étroit, cela figure sous [Modèles de connecteurs](/docs/fr/konnektoren/muster).
+
+## L’autorisation est une étape à part entière
+
+Un connecteur créé n’est pas encore un connecteur autorisé.
+
+<Aside type="danger" title="Règle par défaut sur refusé dans le même geste">
+Placez la **règle par défaut** du connecteur sur refusé avant de faire quoi que ce soit d’autre. Ensuite, autorisez de façon ciblée les rôles, les groupes ou les personnes qui ont besoin du connecteur. Comment la décision se forme, cela figure sous [Droits et autorisations](/docs/fr/konnektoren/gateway-und-rechte).
+</Aside>
+
+Vérifiez l’autorisation pour finir avec deux personnes de test aux droits différents. Si les deux voient la même chose, votre limite de droits ne prend pas effet.
+
+## Quand quelque chose ne fonctionne pas
+
+- **Un outil signale « Zugriff verweigert » (accès refusé).** Ce n’est pas une erreur, c’est la règle de droits. Vérifiez les autorisations de la personne concernée, voir [Droits et autorisations](/docs/fr/konnektoren/gateway-und-rechte).
+- **Le connecteur ne répond pas.** Vérifiez d’abord si le service est joignable depuis votre instance, puis les identifiants déposés pour le système cible.
+- **Les étapes de vérification en détail** sont décrites dans le guide fourni avec votre livraison. Il mentionne également le test de connexion, qui vérifie un raccordement indépendamment des droits.

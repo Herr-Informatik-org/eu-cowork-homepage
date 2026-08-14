@@ -1,0 +1,86 @@
+---
+title: Backup e migrazione
+description: Che cosa comprende un backup di EU Cowork AI, come agisce un restore e a che cosa si riduce una migrazione su un nuovo server.
+sidebar:
+  order: 6
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Backup e migrazione vanno insieme: tecnicamente una migrazione non è altro che un backup sulla
+macchina vecchia e il suo ripristino su quella nuova. Per entrambi il pacchetto di fornitura
+contiene gli strumenti necessari.
+
+## Che cosa viene salvato
+
+Un backup deve comprendere l’intero stato di un’istanza — e soltanto lo stato. Ne fanno parte il
+database con i contenuti dell’istanza, i file caricati e la configurazione con i suoi segreti. I
+segreti ne fanno parte necessariamente: senza di essi una parte del database resta illeggibile
+anche dopo un ripristino completo.
+
+Non è necessario salvare ciò che si può ricavare di nuovo da questo stato. Tali dati derivati si
+ricostruiscono da soli dopo un ripristino. Nemmeno i registri di runtime sono uno stato.
+
+## Eseguire backup regolari
+
+Il backup si predispone una volta e in seguito procede a orari programmati, con una regola di
+conservazione che fa scadere i vecchi stati dopo un termine stabilito. Con quale frequenza si
+esegua il backup discende da una sola domanda: quanto lavoro può andare perso nel caso peggiore?
+
+## Il restore e i suoi effetti
+
+Un ripristino è **distruttivo**. Sostituisce lo stato attuale dell’istanza con lo stato del
+backup; tutto ciò che è nato da allora va perduto. Il percorso che vi conduce richiede perciò
+una conferma esplicita. Tratti un ripristino come un intervento consapevole e non come un gesto di
+routine.
+
+## Migrazione su un nuovo server
+
+Una migrazione passa attraverso un backup dell’istanza vecchia, la predisposizione della nuova
+macchina e l’applicazione di quello stato. Tre punti decidono la riuscita:
+
+- I segreti dell’istanza esistente vengono ripresi e non rigenerati.
+- La nuova istanza viene verificata prima della commutazione, non dopo.
+- Tra il backup determinante e la commutazione non si deve continuare a lavorare, altrimenti
+  proprio quel lavoro mancherà sul nuovo server.
+
+La copia del backup che viene trasportata per la migrazione contiene segreti e contenuti dei
+clienti. La cancelli dopo la migrazione; resta soltanto il backup regolare.
+
+<Aside type="danger" title="Riprendere le chiavi di cifratura">
+È l’errore più costoso di una migrazione. Se le chiavi con cui l’applicazione cifra i dati nel
+database vengono rigenerate sul nuovo server anziché riprese dalla configurazione esistente, i
+dati interessati sono illeggibili — anche quando il database è stato ripristinato integralmente.
+Ogni persona dovrebbe ricostruire da capo le proprie connessioni. Per questo la strada passa
+sempre dalla configurazione contenuta nel backup.
+</Aside>
+
+## Due raccomandazioni che contano davvero
+
+- **Provare una volta il ripristino, prima di farvi affidamento.** Un backup che non è mai stato
+  ripristinato è un’ipotesi, non un backup. La prova va fatta su una macchina di prova, non sul
+  sistema produttivo.
+- **Replicare il backup fuori dal server.** Una copia sulla stessa macchina protegge da una
+  cancellazione accidentale, non dalla perdita della macchina. Poiché un backup contiene segreti,
+  può finire in un cloud soltanto cifrato e mai in un repository.
+
+<Aside type="note" title="Procedura nel manuale operativo">
+La procedura nel dettaglio — backup, ripristino e migrazione passo per passo — si trova nel
+manuale operativo, che è allegato al pacchetto di fornitura. I clienti lo ricevono insieme al
+proprio accesso.
+</Aside>
+
+## Per continuare
+
+<CardGrid>
+  <LinkCard
+    title="Più istanze su un server"
+    href="/docs/it/betrieb/mehrere-instanzen"
+    description="Che cosa deve restare separato per ogni cliente e che cosa può essere condiviso."
+  />
+  <LinkCard
+    title="Risoluzione dei problemi"
+    href="/docs/it/betrieb/fehlerbehebung"
+    description="Se dopo la migrazione qualcosa si inceppa: dove guardare per primo."
+  />
+</CardGrid>

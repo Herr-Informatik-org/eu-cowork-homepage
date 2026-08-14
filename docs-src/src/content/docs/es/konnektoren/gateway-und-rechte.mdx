@@ -1,0 +1,57 @@
+---
+title: Permisos y habilitaciones
+description: Cómo decide EU Cowork AI quién puede utilizar qué conector, y dónde gestiona usted las habilitaciones.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import DiagrammGateway from '../../../../components/DiagrammGateway.astro';
+
+Delante de los conectores hay un control de permisos. Decide si la persona que hace la petición puede utilizar un conector y deja constancia de la decisión. Esta página explica por qué hace falta esta capa, con arreglo a qué decide y dónde gestiona usted las habilitaciones.
+
+## Por qué hace falta esta capa
+
+Si se conectan conectores sin una capa de permisos propia, por lo general solo puede establecerse si alguien puede utilizar conectores, no cuáles. Quien puede usar MCP ve entonces todos los sistemas conectados, o ninguno.
+
+Para una herramienta como una consulta meteorológica eso da igual. Para un ERP no: «la contabilidad puede ver las facturas, los salarios no» no es representable en ese nivel. Esa es exactamente la laguna que cierra el control de permisos.
+
+## Lo que aporta el control de permisos
+
+- **Comprobación antes de la llamada.** Una llamada a una herramienta solo llega al conector si la persona que hace la petición está habilitada para ello. En caso contrario recibe en el chat un mensaje en texto claro que la remite al administrador. El chat sigue funcionando con normalidad, no hay ninguna caída.
+- **Lista de herramientas personalizada.** A quien no tiene habilitación para un conector no se le llegan a ofrecer siquiera sus herramientas.
+- **Registro de cada llamada.** Toda decisión se anota de forma inalterable, denegaciones incluidas. Cuánto tiempo se conservan esas entradas lo fija usted en su concepto de borrado, véase [Protección de datos y conservación](/docs/es/administration/datenschutz-und-aufbewahrung).
+- **En caso de duda, denegar.** Si una decisión queda poco clara, se deniega en lugar de permitir.
+- **El conector no llega a saber quién pregunta.** La identidad se necesita para la decisión y no se transmite al conector.
+
+## El recorrido de una petición
+
+<DiagrammGateway />
+
+## Los niveles de una habilitación
+
+Las habilitaciones pueden fijarse para personas concretas, para roles y para grupos, y a ello se suma una regla predeterminada por conector. Cuando las indicaciones se contradicen, la resolución es deliberadamente restrictiva. Es intencionado: un límite de seguridad no puede quedar anulado por el mero hecho de que alguien pertenezca además a un grupo inofensivo.
+
+<Aside type="danger" title="Paso obligatorio: fijar la regla predeterminada antes de la habilitación">
+El primer gesto tras crear un conector corresponde a la regla predeterminada: **fije la regla predeterminada del conector en «denegado» y habilite después, de forma selectiva, los roles, los grupos y las personas que necesitan el conector.**
+
+Así queda definido desde el primer segundo quién ve detrás del conector, y la habilitación es una decisión consciente en lugar de un efecto secundario. Incluya este paso en su lista de aceptación.
+</Aside>
+
+Además del nivel de conector, una habilitación puede referirse también a herramientas concretas.
+
+<Aside type="tip" title="Recorte sus conectores de modo que baste el nivel de conector">
+En el día a día, el control a nivel de conector cubre la mayor parte de los casos, y es además el límite más robusto. Planifique por tanto sus conectores en consecuencia: mejor dos conectores estrechos, cada uno con su propia cuenta de servicio, que uno solo con muchas herramientas de las que habría que bloquear la mitad. Cómo se ve eso está en [Patrones de conectores](/docs/es/konnektoren/muster).
+</Aside>
+
+## Dónde gestiona usted las habilitaciones
+
+Las reglas predeterminadas, las habilitaciones para roles y grupos, así como las excepciones para personas concretas, se gestionan en el panel de administración. Allí se encuentra también el registro de las llamadas a herramientas, que puede exportarse para su archivo. A la inversa, también es posible partir de una sola persona y seguir qué conectores tiene abiertos.
+
+Qué vista está dónde y cómo se maneja lo describe la guía que se entrega junto con el producto.
+
+## Lo que el control de permisos no aporta
+
+- **No sustituye a los permisos en el sistema de origen.** Una cuenta de servicio con permisos demasiado amplios sigue siendo un riesgo, aunque tenga delante un control. Trace el límite de los datos en el sistema de origen, no en el prompt.
+- **No filtra argumentos ni contenidos.** Una herramienta que acepta un lenguaje de consulta libre no puede restringirse de forma razonable a «solo facturas». Prefiera conectores con herramientas separadas o con un modo de solo lectura.
+- **No es el único límite.** En los conectores que trabajan con los permisos de cada persona, el límite decisivo lo traza el propio sistema de destino, véase [Patrones de conectores](/docs/es/konnektoren/muster).

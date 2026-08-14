@@ -43,7 +43,7 @@ tab they would be discarded server-side.
 
 The `interface` block in the YAML controls what is visible in the interface: the model picker,
 web search, file search, code execution, presets, bookmarks and the parameter panel. Features
-whose backend is not running are deliberately switched off on delivery — a visible button
+whose prerequisites are not met are deliberately switched off on delivery — a visible button
 without effect is worse than no button.
 
 Two rules matter here:
@@ -56,8 +56,7 @@ Two rules matter here:
   has to be listed again.
 
 For companies that want the plainest possible interface, the controls that only power users need
-can be switched off as a group. The delivered file already contains the matching fields as a
-commented-out template.
+can be switched off as a group.
 
 ## Domain lock
 
@@ -65,21 +64,17 @@ The domain lock is the first step after the installation and belongs in place **
 instance is reachable under its domain. What matters is the list of allowed e-mail domains: it
 decides who can create an account at all.
 
-```yaml title="librechat.yaml"
-registration:
-  allowedDomains:
-    - 'your-company.com'
-```
-
-You maintain the same list in the panel under **Configuration** in the features tab in the field
-**Allowed e-mail domains**. It applies to self-registration and to invitations: an invitation to
-an address outside the list has no effect.
+The list is stored in the configuration of the instance; you maintain the same list in the panel
+under **Configuration** in the features tab in the field **Allowed e-mail domains**. It applies
+to self-registration and to invitations: an invitation to an address outside the list has no
+effect.
 
 You can verify this with a registration under a foreign domain; it has to be rejected.
 
 <Aside type="note" title="Complete value lists in the operations manual">
-Which values live in the environment file and which optional building blocks can be switched on
-is described in the operations manual that comes with the delivery package.
+Which values live in the configuration and which optional building blocks can be switched on
+is described in the operations manual that comes with the delivery package. Customers receive it
+together with their access.
 </Aside>
 
 ## Next

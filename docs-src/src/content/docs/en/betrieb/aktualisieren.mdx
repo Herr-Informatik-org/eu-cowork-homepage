@@ -8,8 +8,8 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 An update consists of four moves: fetch the new state, compare your own configuration against
-the template, back up, install. It is carried out with the same installation script as the
-initial setup, only in update mode.
+the template, back up, install. It runs along the same guided path as the initial setup, only
+in update mode.
 
 ## The comparison with the template
 
@@ -30,13 +30,13 @@ Details under [Backup and migration](/docs/en/betrieb/backup-und-umzug).
 
 ## Update mode
 
-In update mode the installer leaves the existing configuration untouched and generates no new
-secrets. That is exactly what you want for an update: your keys and addresses stay as they are.
-At the same time it renews all parts of the delivery.
+In update mode the existing configuration stays untouched and no new secrets are generated. That
+is exactly what you want for an update: your keys and addresses stay as they are. At the same
+time all parts of the delivery are renewed together.
 
-<Aside type="caution" title="Renewing individual containers by hand is not enough">
-Anyone who only recreates the chat container leaves the remaining supplied parts on their old
-state. Use the installer therefore, not individual commands by hand.
+<Aside type="caution" title="Renewing individual parts by hand is not enough">
+Anyone who renews only a part of the delivery leaves the remaining parts on their old state. Use
+the intended update path therefore, and no manual steps alongside it.
 </Aside>
 
 ## Why versions are pinned
@@ -63,8 +63,8 @@ destructive, see [Backup and migration](/docs/en/betrieb/backup-und-umzug). Try 
 on a test instance before you need it for the first time in an emergency.
 
 <Aside type="note" title="Sequence in the operations manual">
-The update chain with all commands, the version change and the way back are described in the
-operations manual that comes with the delivery package.
+The update sequence, the version change and the way back are described in the operations manual
+that comes with the delivery package. Customers receive it together with their access.
 </Aside>
 
 ## Next

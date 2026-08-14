@@ -1,0 +1,52 @@
+---
+title: Preparar el servidor
+description: Qué bases debe reunir una máquina antes de que EU Cowork AI se instale en ella.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI se explota en modo autoalojado y funciona como una aplicación Docker Compose, tal
+como el propio LibreChat lo prevé para su explotación. Antes de instalar la aplicación, la
+máquina debe estar preparada para ello.
+
+## Qué debe aportar el servidor
+
+- Una distribución de Linux actual con soporte a largo plazo.
+- Docker con un plugin Compose actual, tal como LibreChat lo exige para la explotación
+  autoalojada.
+- Suficiente memoria, CPU y espacio en disco para el número de usuarios previsto, véase
+  [Requisitos del sistema](/docs/es/erste-schritte/systemanforderungen).
+- Un cortafuegos que limite las conexiones entrantes a lo imprescindible, así como la
+  sincronización horaria y las actualizaciones de seguridad automáticas del sistema operativo.
+- Rotación de registros para Docker, para que los registros de los contenedores no llenen el
+  disco del sistema al cabo de unas semanas.
+
+## Preparación de la máquina
+
+Estas bases se establecen antes de que se añada la aplicación. La preparación afecta únicamente
+al sistema operativo y al entorno de contenedores; la configuración y la aplicación llegan en el
+paso siguiente, véase [Instalación](/docs/es/betrieb/installation). Para este paso, el paquete de
+entrega incluye los medios auxiliares correspondientes.
+
+<Aside type="note" title="Instrucciones detalladas en el manual de operación">
+El procedimiento exacto y la lista de comprobación posterior a la preparación figuran en el
+manual de operación, que se adjunta al paquete de entrega. Los clientes lo reciben junto con su
+acceso.
+</Aside>
+
+## Paso siguiente
+
+<CardGrid>
+  <LinkCard
+    title="Instalación"
+    href="/docs/es/betrieb/installation"
+    description="Cómo el paquete de entrega prepara una instancia y qué queda por hacer a mano después."
+  />
+  <LinkCard
+    title="Requisitos del sistema"
+    href="/docs/es/erste-schritte/systemanforderungen"
+    description="Cuánta memoria, CPU y espacio necesita realmente una instancia."
+  />
+</CardGrid>

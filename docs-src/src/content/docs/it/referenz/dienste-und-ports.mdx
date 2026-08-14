@@ -1,0 +1,37 @@
+---
+title: Servizi e porte
+description: Com’è strutturato in linea di principio lo stack e che cosa è raggiungibile dall’esterno.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+EU Cowork AI gira come stack Docker Compose. L’applicazione di chat e i servizi di cui ha
+bisogno girano ciascuno in un contenitore proprio e comunicano tra loro attraverso una rete
+interna.
+
+## Che cosa è raggiungibile dall’esterno
+
+Verso l’esterno viene pubblicato soltanto un reverse proxy sulle consuete porte web, che termina
+il TLS e distribuisce internamente tutto il resto. Tutti gli altri servizi sono raggiungibili
+esclusivamente nella rete interna e non vengono pubblicati sull’host.
+
+Quali servizi comprenda nel dettaglio una fornitura e come vengano attivati è descritto nella
+documentazione operativa.
+
+<Aside type="caution" title="Pianificare l’accesso alla rete">
+Oltre alle porte web, l’istanza ha bisogno di una via in uscita verso il fornitore del modello.
+Stabilisca prima della messa in opera quali destinazioni il server può raggiungere verso
+l’esterno, e consenta l’accesso al server stesso soltanto dalla Sua rete di amministrazione.
+</Aside>
+
+## Documentazione operativa
+
+L’elenco dei singoli servizi con i loro compiti e le loro dipendenze, le varianti di rete e di
+ampliamento nonché i passi di verifica per l’esercizio sono allegati alla fornitura. I clienti
+ricevono questi documenti insieme all’accesso.
+
+Come lo stack venga avviato, arrestato e osservato nella quotidianità è descritto nella
+[panoramica dei comandi](/docs/it/referenz/befehle). Le licenze dei componenti coinvolti si
+trovano sotto [Licenze e provenienza](/docs/it/referenz/lizenzen).

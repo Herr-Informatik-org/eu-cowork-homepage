@@ -1,0 +1,54 @@
+---
+title: Préparer le serveur
+description: Les bases qu’une machine doit réunir avant qu’EU Cowork AI y soit installé.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI s’exploite en auto-hébergement et fonctionne comme une application Docker Compose,
+comme LibreChat le prévoit lui-même pour sa propre exploitation. Avant d’installer
+l’application, la machine doit y être préparée.
+
+## Ce que le serveur doit apporter
+
+- Une distribution Linux récente avec support à long terme.
+- Docker avec un plugin Compose récent, tel que LibreChat l’exige pour une exploitation
+  auto-hébergée.
+- Assez de mémoire vive, de CPU et d’espace disque pour le nombre d’utilisateurs prévu, voir
+  [Configuration requise](/docs/fr/erste-schritte/systemanforderungen).
+- Un pare-feu qui limite les connexions entrantes au strict nécessaire, ainsi que la
+  synchronisation de l’heure et les mises à jour de sécurité automatiques du système
+  d’exploitation.
+- Une rotation des journaux pour Docker, afin que les journaux des conteneurs ne saturent pas le
+  disque système au fil des semaines.
+
+## Préparation de la machine
+
+Ces bases sont mises en place avant que l’application ne vienne s’y ajouter. La préparation ne
+concerne que le système d’exploitation et l’environnement de conteneurs ; la configuration et
+l’application ne viennent qu’à l’étape suivante, voir
+[Installation](/docs/fr/betrieb/installation). Pour cette étape, le paquet de livraison contient
+les outils correspondants.
+
+<Aside type="note" title="Instructions détaillées dans le manuel d’exploitation">
+Le déroulement exact et la liste de contrôle à passer après la préparation figurent dans le
+manuel d’exploitation, qui est fourni avec le paquet de livraison. Les clients le reçoivent en
+même temps que leur accès.
+</Aside>
+
+## Étape suivante
+
+<CardGrid>
+  <LinkCard
+    title="Installation"
+    href="/docs/fr/betrieb/installation"
+    description="Comment le paquet de livraison met en place une instance et ce qui reste à faire à la main ensuite."
+  />
+  <LinkCard
+    title="Configuration requise"
+    href="/docs/fr/erste-schritte/systemanforderungen"
+    description="De combien de mémoire vive, de CPU et d’espace une instance a réellement besoin."
+  />
+</CardGrid>

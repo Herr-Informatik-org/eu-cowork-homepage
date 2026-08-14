@@ -1,0 +1,67 @@
+---
+title: Consommation, budgets et facturation
+description: Comment la consommation est mesurée, comment le budget mensuel et les limites personnelles se combinent et comment naissent les justificatifs.
+sidebar:
+  order: 4
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+La mesure de la consommation est toujours active. Elle montre ce que l’utilisation coûte réellement et sert de base aux budgets, aux limites et aux justificatifs.
+
+## Ce qui est mesuré
+
+La base, ce sont les tokens de chaque requête, séparés en entrée et en sortie. Il en résulte un montant par requête, que le panneau additionne par personne, par modèle, par jour et par mois. Les prix des modèles sont déposés dans la configuration et peuvent être repris du catalogue du fournisseur ; la facturation se fait en euros, à un taux de change figé pour chaque mois de facturation. Les mois clôturés et leurs justificatifs restent ainsi tels qu’ils étaient.
+
+<Aside type="caution" title="Entretenir les prix en vaut la peine">
+Renseignez le prix et la taille de contexte pour chaque modèle en service. Si ces indications manquent, l’analyse travaille avec des hypothèses : elle paraît alors plausible et n’en est pas moins fausse, et les longues conversations sont tronquées plus tôt que nécessaire.
+</Aside>
+
+## Budget mensuel et limites personnelles
+
+Pour l’organisation, il est possible de fixer un **budget mensuel commun** en euros. C’est un réservoir mensuel commun, non un montant par personne. Sans saisie, il n’y a pas de budget. Sur la vue d’ensemble, l’état est confronté à la consommation réelle, avec avertissement et projection avant que cela ne devienne juste.
+
+Un interrupteur vous permet de décider si le budget est seulement affiché ou également appliqué :
+
+| Réglage | Effet |
+| --- | --- |
+| désactivé | Le budget est purement indicatif. Personne n’est bloqué. |
+| activé | Une fois le budget épuisé, les nouvelles requêtes sont refusées, pour **tous** les comptes, administrateurs compris. Un bandeau d’information apparaît dans le chat. Le panneau lui-même reste utilisable. |
+
+Une augmentation du budget, la désactivation de l’interrupteur et le passage au mois suivant lèvent le blocage.
+
+Il est en outre possible de fixer une **limite mensuelle** par personne.
+
+<Aside type="caution" title="Le pot commun l’emporte sur la limite personnelle">
+Si le pot commun est vide, tout le monde est à zéro, y compris celui qui est encore très loin d’avoir épuisé sa propre limite. La limite personnelle est un frein supplémentaire, pas une réservation.
+</Aside>
+
+## « Guthaben » : deux significations
+
+Le mot **« Guthaben »** (avoir) figure à deux endroits dans le panneau et désigne deux choses différentes :
+
+| | **« Guthaben »** d’une personne | **« Guthaben »** de l’organisation |
+| --- | --- | --- |
+| Ce que c’est | le compte de limite individuel, en euros | le solde issu des versements enregistrés |
+| À quoi cela sert | l’application technique des blocages par compte | la vue d’ensemble commerciale des versements et de la consommation |
+| Quand c’est pertinent | uniquement lorsque l’application est active | dès que vous enregistrez des versements |
+
+En bref : l’avoir par personne est une soupape, l’avoir de l’organisation est une comptabilité. L’avoir en tokens lui-même est délibérément mis en commun à l’échelle de l’organisation, afin que des personnes isolées ne se heurtent pas à une limite artificielle alors qu’il reste du budget ailleurs.
+
+## Facturation et justificatifs
+
+La page de facturation montre le mois choisi avec deux postes : des frais de plateforme par utilisateur et la consommation de tokens mesurée. Les deux peuvent être édités en CSV et en PDF. Les versements sont enregistrés dans un grand livre qui n’est jamais que complété : une correction se fait par écriture inverse, l’entrée d’origine reste en place. Les mois écoulés se trouvent dans une archive.
+
+<Aside type="note" title="Plutôt bloqué que faux">
+S’il manque une base de calcul, le panneau bloque les justificatifs au lieu de calculer silencieusement avec zéro. Un justificatif qui indiquerait un chiffre trop bas sans message d’erreur serait pire que pas de justificatif du tout.
+</Aside>
+
+<Aside type="caution" title="Les justificatifs ne sont pas des factures fiscales">
+Le CSV et le PDF sont des justificatifs, non des factures fiscales, et il n’y a pas de raccordement au paiement. La facturation et l’encaissement continuent de passer par votre comptabilité.
+</Aside>
+
+## Les analyses
+
+Deux vues montrent les mêmes chiffres sous des angles différents : une **vue mensuelle** du mois civil, avec indicateurs, évolution journalière et tableaux par utilisateur et par modèle, et une **vue glissante** sur les dernières semaines, avec comparaison à la période précédente.
+
+Pour la question portant sur une requête isolée, aucune des deux n’est compétente ; ce sont les [journaux](/docs/fr/administration/protokolle-und-audit) qui s’en chargent.

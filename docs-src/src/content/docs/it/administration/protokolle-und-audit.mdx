@@ -1,0 +1,40 @@
+---
+title: Registri e audit
+description: Registro di utilizzo, cronologia delle modifiche e prova degli accessi tramite connettore.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Esistono due viste di registro con due compiti diversi. L’una risponde alla domanda su **che cosa il sistema ha fatto**, ossia quali richieste sono state eseguite e quanto sono costate. L’altra risponde alla domanda su **chi ha modificato qualcosa** e chi ha avuto accesso a quali dati.
+
+## Registro di utilizzo
+
+Qui si trova ogni singola richiesta al modello con momento, modello, fornitore, persona, token e costi, oltre ad alcuni indicatori tecnici sulla qualità della risposta. Le richieste di una stessa conversazione si possono osservare raggruppate. La vista si può filtrare e ordinare, e ciò che viene mostrato filtrato si può esportare come CSV esattamente in quella forma.
+
+<Aside type="note" title="Nessun contenuto delle conversazioni">
+Viene mostrato solo l’identificativo di una conversazione, mai il suo titolo e mai il suo contenuto. È una scelta deliberata a tutela dei dati: la vista di amministrazione deve mostrare quanto qualcosa è costato, non di che cosa qualcuno ha scritto.
+</Aside>
+
+Accanto a essa c’è una vista per gli errori tecnici e una vista diagnostica per la ricerca dei guasti sui connettori.
+
+## Cronologia delle modifiche e prova sui connettori
+
+La seconda vista registra **ogni azione che modifica** nel pannello, quindi tutto ciò che crea, cambia o cancella, con momento, persona che agisce, oggetto interessato ed esito. Per una voce si possono confrontare lo stato precedente e quello successivo. Le autenticazioni sono comprese, anche quelle fallite.
+
+Viene parimenti annotata **ogni chiamata di strumento tramite un connettore**, con la decisione e la motivazione, ossia quale regola l’abbia permessa o negata. In questo modo è ricostruibile perché un accesso sia avvenuto, e non soltanto che sia avvenuto. Entrambe le tracce si possono esportare come CSV.
+
+<Aside type="caution" title="I segreti vengono oscurati">
+Se Lei modifica una chiave di accesso, nel registro compare che la chiave con quel nome è stata modificata, mai il valore. I valori che sembrano un segreto vengono sostituiti da un segnaposto. Un’esportazione è quindi innocua anche quando il destinatario non deve vedere alcuna chiave.
+</Aside>
+
+Per quanto tempo le voci vengano conservate lo stabilisce Lei nella Sua politica di cancellazione, si veda [Protezione dei dati e conservazione](/docs/it/administration/datenschutz-und-aufbewahrung).
+
+## A che cosa Le serve
+
+**Obbligo di prova.** Quando qualcuno chiede chi abbia modificato quale impostazione e quando, oppure chi abbia avuto accesso a quali dati di un sistema collegato, senza registro non si può rispondere. Questo vale in particolare per i connettori che funzionano in modalità account di servizio.
+
+**Ricerca dei guasti.** Se qualcuno segnala «lo strumento non risponde», le viste separano nettamente i casi: una chiamata negata è una decisione e figura nell’audit, un errore tecnico figura nella diagnostica. Ciò evita di tirare a indovinare.
+
+**Analisi dei costi.** Il registro di utilizzo mostra quale modello, quale persona e quale tipo di conversazione trainano il consumo. Una vista filtrata più un’esportazione CSV bastano di solito a rispondere alla domanda «perché il mese scorso è costato di più». La vista aggregata corrispondente si trova in [Consumo, budget e fatturazione](/docs/it/administration/verbrauch-und-budgets).

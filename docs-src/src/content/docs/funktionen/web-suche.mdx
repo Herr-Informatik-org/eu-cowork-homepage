@@ -12,7 +12,7 @@ Rechtsstand, Angaben zu fremden Firmen. Diese Seite erklärt, wie sie benutzt wi
 welchen Bausteinen sie besteht und welche davon Sie bei der Einrichtung selbst wählen.
 
 Das Such-Gerüst stammt von [LibreChat](https://www.librechat.ai/docs). Von uns kommt die
-selbst betriebene Suchinstanz und die Vorkonfiguration.
+Vorkonfiguration.
 
 ## So wird sie im Chat benutzt
 
@@ -37,10 +37,9 @@ Ohne Scraper hätte der Kollege nur Überschriften und Zweizeiler, aus denen sic
 belastbare Antwort bauen lässt.
 
 <Aside type="caution" title="Die Web-Suche wird bei der Einrichtung fertiggestellt">
-Die Suchmaschine bringt die Installation mit: Sie läuft als eigene Suchinstanz bei Ihnen und
-baut keine Nutzerprofile auf. Den **Scraper wählen Sie selbst**, weil die Wahl des Anbieters
-davon abhängt, wie Sie es mit der Datenresidenz halten; ein Reranker ist optional und ab Werk
-nicht gesetzt.
+Eine Suchmaschine ist bei der Auslieferung bereits hinterlegt. Den **Scraper wählen Sie
+selbst**, weil die Wahl des Anbieters davon abhängt, wie Sie es mit der Datenresidenz halten;
+ein Reranker ist optional und ab Werk nicht gesetzt.
 
 Planen Sie diesen Schritt fest mit ein: Das Such-Werkzeug wird dem Modell erst angeboten,
 wenn ein Scraper hinterlegt ist.
@@ -50,8 +49,8 @@ wenn ein Scraper hinterlegt ist.
 
 Beides wird im Admin-Panel unter **Konfiguration → Funktionen** gepflegt, in den beiden Karten
 zur Web-Suche. Dort wählen Sie den Such-Provider, den Scraper und optional einen Reranker,
-dazu die SafeSearch-Stufe und die Geduld beim Abholen einer Seite. LibreChat unterstützt für
-Scraper und Reranker jeweils mehrere Anbieter; welche in Frage kommen, steht in der
+dazu die SafeSearch-Stufe. LibreChat unterstützt für Scraper und Reranker jeweils mehrere
+Anbieter; welche in Frage kommen, steht in der
 [LibreChat-Dokumentation](https://www.librechat.ai/docs).
 
 Schlüssel gehören **nie im Klartext** in die Konfiguration. Tragen Sie sie als Referenz auf
@@ -89,8 +88,8 @@ Weniger bedeutet eine knappere Grundlage.
 
 ## Datenschutz der Web-Suche
 
-Die Suchinstanz läuft bei Ihnen, die Suchanfrage geht aber weiter: Sie fragt externe
-Suchmaschinen ab und führt deren Treffer zusammen. Was dabei passiert und was nicht:
+Die Suche läuft in Ihrer Instanz, die Suchanfrage selbst geht aber nach draussen: Sie wird an
+externe Suchdienste gestellt. Was dabei passiert und was nicht:
 
 | | |
 |---|---|
@@ -100,7 +99,7 @@ Suchmaschinen ab und führt deren Treffer zusammen. Was dabei passiert und was n
 
 <Aside type="note" title="Formulierung für Schulung und Datenschutzhinweis">
 Sauber formuliert lautet die Aussage: Speicherung und Inferenz laufen dort, wo Sie die Instanz
-betreiben; die Suchanfrage selbst geht an externe Suchmaschinen, und zwar ohne
+betreiben; die Suchanfrage selbst geht an externe Suchdienste, und zwar ohne
 Nutzeridentität. Wer die Web-Suche in einer Datenschutzerklärung beschreibt, nimmt diese
 Unterscheidung am besten wörtlich auf.
 </Aside>

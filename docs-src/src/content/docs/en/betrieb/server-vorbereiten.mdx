@@ -13,9 +13,9 @@ for it.
 
 ## What the server needs
 
-- A current Linux distribution with long-term support. Tested and recommended is Ubuntu LTS.
-- Docker Engine with Compose v2. The Compose plugin is a prerequisite; older Compose variants
-  from the distribution package sources are not sufficient.
+- A current Linux distribution with long-term support.
+- Docker with a current Compose plugin, the way LibreChat requires it for self-hosted
+  operation.
 - Enough memory, CPU and disk space for the planned number of users, see
   [System requirements](/docs/en/erste-schritte/systemanforderungen).
 - A firewall that limits incoming connections to what is needed, plus time synchronisation and
@@ -23,15 +23,15 @@ for it.
 - Log rotation for Docker, so that the container logs do not fill up the system disk over the
   course of weeks.
 
-## Preparation by script
+## Preparing the machine
 
-The delivery package includes a preparation script that sets up these basics on a fresh server
-and reports at the end what it changed. It can be run repeatedly and does not touch the
-application itself: configuration and containers only come in the next step, see
-[Installation](/docs/en/betrieb/installation).
+These basics are set up before the application is added. The preparation concerns only the
+operating system and the container environment; configuration and application follow in the next
+step, see [Installation](/docs/en/betrieb/installation). The delivery package includes the
+corresponding aids for this step.
 
 <Aside type="note" title="Detailed instructions in the operations manual">
-Invocation, options and the exact checklist after preparation are in the operations manual that
+The exact sequence and the checklist after preparation are in the operations manual that
 comes with the delivery package. Customers receive it together with their access.
 </Aside>
 

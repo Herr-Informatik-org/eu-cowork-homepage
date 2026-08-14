@@ -1,0 +1,125 @@
+---
+title: Modèles de connecteurs
+description: Trois formes éprouvées de connecteurs, chacune avec son domaine d’emploi, le parcours des droits et les points auxquels vous devez veiller en exploitation.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Les connecteurs se distinguent moins par le produit qui se trouve derrière eux que par la manière dont ils s’authentifient auprès du système cible. C’est précisément cette manière qui décide de l’endroit où se situe la limite des données et de la charge de travail que vous aurez dans le panneau d’administration.
+
+Trois formes couvrent pratiquement tout ce qui se présente dans une PME. Cette page décrit chacune d’elles avec les mêmes trois questions : à quoi elle sert, comment circulent les droits et à quoi vous devez veiller. Le produit que vous raccordez réellement ne joue aucun rôle pour la forme.
+
+## Modèle A : application de gestion via un compte de service
+
+**À quoi il sert.** Votre ERP, votre gestion commerciale, votre comptabilité, donc les systèmes qui contiennent clients, pièces comptables, projets et données du personnel. De telles applications offrent le plus souvent un accès technique par clé, mais aucun accès nominatif par une interface.
+
+**Comment circulent les droits.** Le connecteur détient un accès technique et s’authentifie de la même manière pour toutes les personnes. **Le système cible ne connaît pas la personne à l’origine de la demande**, il ne voit que le compte de service. Il ne peut donc pas distinguer vos collaborateurs les uns des autres.
+
+La réponse à cela n’est pas un filtre dans le prompt, mais la structure des comptes : **pour chaque profil de droits, un compte de service dédié et une instance de connecteur dédiée**, au lieu d’un passe-partout pour tout le monde. Une clé d’accès hérite intégralement des droits de son compte dans le système cible. Le compte derrière la clé est donc la véritable limite des données, pas la configuration et pas le prompt. Ce que le compte n’a pas le droit de voir, le chat ne le voit pas non plus, quoi que le modèle tente.
+
+Les autorisations dans EU Cowork AI viennent **en plus**. Elles décident qui se voit proposer quelle instance. Si une autorisation dans le panneau est un jour posée trop largement, la limite de droits du compte de service tient toujours.
+
+| Instance avec son propre compte de service | Prévue pour |
+|---|---|
+| profil de droits le plus large | direction |
+| vue commerciale | finances et administration |
+| vue technique sans données commerciales | service et projets |
+
+Quels droits ces profils portent réellement, vous le définissez dans le système cible, pas chez nous.
+
+**Ce à quoi vous veillez.**
+
+<Aside type="danger" title="N’autoriser qu’une seule instance par personne">
+Lorsque plusieurs instances du même connecteur tournent, elles exposent des **noms d’outils identiques**. Si deux d’entre elles sont autorisées pour une personne, le même catalogue d’outils atterrit deux fois dans chaque conversation. Cela coûte le double de tokens de contexte à chaque message, et le modèle doit deviner entre deux outils portant le même nom, ce qui conduit à des appels erronés.
+
+N’autorisez donc **exactement une** instance par personne. Si quelqu’un a besoin d’un autre profil, **changez** l’autorisation au lieu d’en ajouter une seconde.
+</Aside>
+
+À cela s’ajoutent trois points qui comptent au quotidien :
+
+- **Règle par défaut aussitôt sur refusé.** Placez la règle par défaut de chaque instance sur refusé avant d’autoriser qui que ce soit.
+- **Gardez l’autorisation en lecture dans le système cible**, partout où le cas d’usage le permet. L’écriture, la création et la suppression, vous ne les activez que pour les objets précis pour lesquels le besoin existe réellement.
+- **Utilisez le journal.** Chaque décision est consignée de façon inaltérable. Dans le journal du système cible, on reconnaît en plus de quel profil venait une requête. Des comptes de service séparés se révèlent payants une deuxième fois ici.
+
+Si vous avez besoin d’une séparation plus fine, la voie n’est pas un filtre supplémentaire dans le chat, mais un compte de plus aux droits plus étroits et une instance de plus du connecteur.
+
+## Modèle B : espace de stockage de fichiers avec authentification par personne
+
+**À quoi il sert.** Votre gestion documentaire, votre stockage cloud, votre espace d’équipe. Donc des systèmes dans lesquels les droits d’accès sont de toute façon déjà gérés finement et nominativement, et dans lesquels il existe un accès nominatif par une interface.
+
+**Comment circulent les droits.** Chaque personne s’authentifie **elle-même, une fois**. À la première utilisation, elle choisit l’outil dans le chat et clique sur connecter, arrive dans la boîte de dialogue de connexion habituelle du système cible, y confirme l’accès, et le connecteur travaille dès lors avec son accès personnel.
+
+Il s’ensuit ceci : qui n’a pas le droit de voir un dossier dans le système cible ne le voit pas non plus dans le chat. Les droits sont gérés là où ils sont gérés de toute façon, et n’ont pas à être reconstruits chez nous. Un changement de droits dans le système source agit immédiatement dans le chat.
+
+**C’est la voie à privilégier.** Lorsqu’un système propose ce mode d’authentification, prenez-le. Les droits du système cible sont déjà la limite, et ils sont plus fins qu’une règle en amont ne pourrait jamais l’être : jusqu’au niveau du document et du champ au lieu du seul niveau du connecteur et de l’outil.
+
+<Aside type="note" title="Le pilotage se trouve ici dans le système cible">
+Parce que les droits de la personne sont déjà la limite, le pilotage de référence d’un tel connecteur se trouve dans le système cible. Gérez-les là-bas, et ne comptez pas reconstruire en amont une gradation plus fine.
+</Aside>
+
+**Ce à quoi vous veillez.**
+
+- **Le test de réception est une comparaison.** Deux personnes de test aux droits différents dans le système cible doivent, de façon démontrable, voir des quantités différentes dans le chat. Si chacune voit tout, le connecteur ne travaille pas avec les droits de la personne.
+- **En lecture seule, là où cela suffit.** Un interrupteur explicite de lecture seule dans le pont vaut plus que la ferme intention de ne pas écrire. Les domaines dont le cas d’usage n’a pas besoin, par exemple la messagerie, l’agenda ou les historiques de chat, vous ne les activez pas du tout. Chaque autorisation supplémentaire exige de toute façon un nouveau consentement.
+- **L’accès subsiste et doit pouvoir être renouvelé.** S’il manque le droit de renouveler la connexion en arrière-plan, elle meurt au bout de peu de temps, et chaque personne doit se reconnecter.
+
+<Aside type="caution" title="Après une migration, les clés de l’instance doivent suivre">
+Les accès personnels font partie des données protégées de votre instance. Si vous migrez vers un nouveau serveur, les clés correspondantes de l’ancienne instance doivent être reprises. Si cela n’arrive pas, toutes les connexions enregistrées sont inutilisables, et **chaque personne doit reconstruire son accès une fois**. Aucune donnée n’est perdue au passage, mais cela fait un cas de support par collaborateur. Inscrivez ce point dans votre plan de migration, voir [Sauvegarde et migration](/docs/fr/betrieb/backup-und-umzug).
+</Aside>
+
+## Modèle C : pont en lecture seule vers un système métier
+
+**À quoi il sert.** Votre supervision, votre inventaire, votre système de tickets. Donc des systèmes métier dont vous voulez obtenir des renseignements, mais dans lesquels personne ne doit rien modifier depuis le chat.
+
+**Comment circulent les droits.** Techniquement, c’est un compte de service comme dans le modèle A. La différence tient à l’intention : ici, il ne doit s’agir que de lire. Et c’est précisément là que l’effort de **rendre la lecture seule contraignante au lieu de la promettre** en vaut la peine. Trois niveaux y contribuent, et chacun suffirait à lui seul :
+
+- L’accès technique dans le système cible ne reçoit **que des droits de lecture**. Le système cible refuse ainsi lui-même tout appel en écriture, indépendamment de notre logiciel.
+- Le pont **ne propose aucun outil d’écriture**. Ce qui n’existe pas ne peut pas être appelé.
+- L'**autorisation** décide qui voit les outils.
+
+**La limite la plus dure est ailleurs.** Ces niveaux empêchent d’écrire. Ils ne disent rien sur **la quantité** qui peut être lue. Par défaut, un accès technique voit le plus souvent tout le système.
+
+Ne donnez donc à l’accès technique, dans le système cible, que les domaines dont il a réellement besoin. Ce qu’il ne voit pas n’existe tout simplement pas pour le chat. C’est la limite la plus dure dont vous disposez, elle se trouve entièrement chez vous dans le système métier, et elle ne se contourne ni par un prompt ni par une erreur dans notre logiciel. Si vous avez besoin de plusieurs vues, la voie est la même que dans le modèle A : un deuxième accès technique au domaine plus étroit, une deuxième instance du pont, et dans le panneau chaque personne en reçoit exactement une.
+
+<Aside type="tip" title="La règle qui se cache derrière">
+**Un outil qui n’existe pas, aucun modèle ne peut l’appeler par mégarde.** Ne construisez donc aucun outil pour des actions qui interviennent sur le système, par exemple pour des redémarrages ou des exécutions de scripts. Il n’est alors besoin nulle part d’une règle qui devrait empêcher quelqu’un de redémarrer un serveur depuis le chat. Cela n’est tout simplement pas possible.
+
+C’est exactement à cela que vous mesurez un connecteur tiers : quels outils expose-t-il, et existe-t-il un mode lecture seule ? Si un serveur tout fait propose, à côté de la lecture, des actions qui interviennent sur le système, et que cela ne peut pas être désactivé, un pont étroit développé par vos soins est souvent une solution plus rapide que la discussion sur qui a le droit de l’utiliser.
+</Aside>
+
+**Ce à quoi vous veillez.**
+
+- **Un autotest vaut la peine.** Un petit programme de vérification qui atteste l’authentification, les droits réellement accordés et un accès en lecture transforme une assurance en preuve. Il peut être relancé après chaque modification.
+- **Des réponses graduées font des économies à chaque question.** Une requête de détail devrait d’abord ne charger que les données de base et ne livrer les sections volumineuses que sur demande expresse.
+- **Pour les questions portant sur beaucoup d’objets, un outil d’analyse.** Dix requêtes isolées coûtent dix résultats dans le contexte, une analyse en coûte un.
+- **Tous voient la même chose.** Le système métier ne connaît pas l’utilisateur individuel du chat, il ne voit que l’accès technique. La séparation entre vos collaborateurs est faite uniquement par l’autorisation dans le panneau et par le domaine que vous avez donné à cet accès.
+
+## Ce que coûte le catalogue d’outils
+
+Les trois modèles partagent une propriété : le catalogue d’outils d’un connecteur, c’est-à-dire le nom, la description et les paramètres de chaque outil, est transmis au modèle **à chaque message**. Ce n’est pas un investissement unique, c’est un loyer permanent sur chaque chat.
+
+L’ordre de grandeur est considérable : un connecteur volumineux peut proposer plus de cent outils et occuper ainsi une part notable du contexte disponible avant même que la première question ne soit posée. Limité au cas d’usage, le catalogue se réduit souvent à une petite fraction.
+
+Le second effet est au moins aussi important : plus le catalogue contient d’outils aux noms voisins, plus le modèle se trompe souvent d’outil. Un catalogue étroit donne non seulement des réponses moins coûteuses, mais aussi des réponses plus fiables.
+
+Activez donc les outils un par un et à la demande, non par précaution.
+
+<CardGrid>
+  <LinkCard
+    title="Droits et autorisations"
+    href="/docs/fr/konnektoren/gateway-und-rechte"
+    description="Sur quoi se prononce le contrôle des droits et où vous gérez les autorisations."
+  />
+  <LinkCard
+    title="Raccorder votre propre connecteur"
+    href="/docs/fr/konnektoren/eigenen-konnektor-anbinden"
+    description="Ce que vous clarifiez avant, à quoi vous mesurez un connecteur tiers et ce qui compte au moment d’autoriser."
+  />
+  <LinkCard
+    title="Bonnes pratiques pour les connecteurs"
+    href="/docs/fr/konnektoren/best-practices"
+    description="Dix règles avec leur justification, plus une liste de contrôle avant l’autorisation."
+  />
+</CardGrid>

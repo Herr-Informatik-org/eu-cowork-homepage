@@ -1,0 +1,68 @@
+---
+title: Protection des données et conservation
+description: Conservation, droit d’accès et suppression par personne, télémétrie et ce qui quitte l’instance.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Cette page décrit comment vous fixez la conservation, comment vous répondez à une demande d’accès ou procédez à une suppression, et ce que l’installation envoie vers l’extérieur. Elle est pensée comme base de votre propre politique de suppression.
+
+## La durée de conservation
+
+Vous fixez dans les paramètres une durée de conservation en jours. Sans durée, rien n’est supprimé automatiquement ; fixez-la lors de la mise en service, en accord avec votre politique de suppression. Ce qui compte, c’est la dernière modification apportée à une conversation, non sa date de création.
+
+Sont supprimées les **conversations avec leurs messages et les liens partagés créés pour elles**, et ce définitivement. Ne sont pas supprimées les **données de facturation**. La consommation d’un mois écoulé reste ainsi traçable, même si les chats correspondants ont disparu depuis longtemps.
+
+<Aside type="caution" title="Tout raccourcissement demande confirmation">
+Si vous fixez ou raccourcissez la durée, une demande de confirmation apparaît avec l’ancienne et la nouvelle durée et la mention que la durée plus courte supprimera définitivement des conversations supplémentaires, plus anciennes. Une prolongation ultérieure ne ramène rien, ce qui est déjà supprimé reste supprimé.
+</Aside>
+
+Le nettoyage s’exécute régulièrement de lui-même et peut en plus être déclenché à la main. Quand il a tourné pour la dernière fois et ce qu’il a retiré figure à côté.
+
+## Droit d’accès et suppression par personne
+
+Vous atteignez les deux depuis la liste des utilisateurs. L’ordre n’est pas indifférent.
+
+<Steps>
+
+1. **Exporter.** L’export de données livre les données de cette personne dans un seul fichier : compte, groupes, avoir, conversations, messages, métadonnées des fichiers et transactions. Les fichiers y sont sous forme de métadonnées, non de contenu. Les données d’accès en sont délibérément absentes : ni mot de passe, ni secrets à deux facteurs, ni clés déposées.
+
+2. **Supprimer.** Ne supprimer qu’ensuite. Après la suppression, plus aucun renseignement ne peut être donné ; c’est pourquoi le bouton d’export se trouve aussi directement dans la boîte de dialogue de suppression.
+
+</Steps>
+
+Lors de la suppression, vous décidez de la profondeur : soit le compte et les contenus disparaissent et les transactions subsistent comme justificatif de facturation, soit la consommation est supprimée en plus. C’est la suppression complète au sens du RGPD, et les justificatifs de facturation sont alors perdus. Dans les deux cas, la confirmation passe par la saisie exacte de l’adresse électronique.
+
+## Télémétrie
+
+L’état de livraison désactive la télémétrie : les composants employés n’envoient aucune donnée d’utilisation à leurs fabricants, et les moteurs de recherche n’indexent pas l’interface. Si vous reprenez une installation existante, vérifiez-le une fois.
+
+## Ce qui quitte l’instance
+
+L’installation tourne entièrement sur votre machine ; les conversations, l’index de recherche et les fichiers téléversés s’y trouvent. L’endroit où cette machine se trouve physiquement, c’est vous qui en décidez par le choix de l’hébergeur.
+
+Deux choses quittent l’instance de manière inévitable, et vous devriez les connaître et les communiquer en interne :
+
+**Les requêtes aux modèles partent vers le fournisseur configuré.** Un modèle de langue calcule là où il est exploité. À l’état de livraison, il s’agit d’un fournisseur dont le traitement a lieu dans l’UE. Si vous ajoutez en plus des fournisseurs hors de l’UE, les requêtes de ces fiches partent là-bas. Il n’existe aucun mode dans lequel une requête vers le cloud ne quitte pas la machine. Les modèles exploités localement font exception, mais ils exigent du matériel adapté.
+
+**Les requêtes de recherche web partent vers des moteurs de recherche externes.** La recherche passe par un méta-moteur hébergé par vos soins, qui transmet la requête à des moteurs de recherche externes, mais **sans l’identité de la personne qui cherche**. Les requêtes elles-mêmes quittent donc l’instance.
+
+<Aside type="note" title="Formulation pour vos informations sur la protection des données">
+Formulée proprement, l’affirmation est la suivante : le stockage et l’inférence peuvent être maintenus dans l’UE, respectivement en Suisse ; pour la recherche web, le texte recherché quitte l’instance, et ce sans lien avec l’utilisateur. Qui reprend cette distinction mot pour mot dans ses informations sur la protection des données et dans ses formations reste du bon côté, même face à des questions critiques.
+</Aside>
+
+## Signalement des fournisseurs hors de l’UE
+
+Les fournisseurs qui ne sont pas résidents dans l’UE sont signalés comme tels dans le panneau et dans le chat, afin que le choix se fasse en connaissance de cause. La même règle vaut pour les connecteurs : un connecteur dont le système cible est exploité hors de l’UE doit être signalé et n’a pas sa place dans un déploiement client sans qu’on ait posé la question.
+
+Notez en outre que les indications de provenance relatives aux fournisseurs émanent de ces derniers et que le siège d’un fournisseur n’est pas une garantie quant au lieu de traitement. Vous en saurez plus sous [Modèles et fiches de modèle](/docs/fr/administration/modelle-und-karten).
+
+## Délimitation
+
+**Provisionnement sans SCIM.** Les comptes naissent lors de la première connexion via OIDC. Le déprovisionnement passe par votre fournisseur d’identité : qui y est désactivé ne passe plus la connexion et n’atteint donc aucune donnée. Pour le démantèlement complet d’un compte et de ses données, utilisez la boîte de dialogue de suppression dans le panneau.
+
+**Des justificatifs plutôt qu’un raccordement au paiement.** La consommation est enregistrée intégralement et éditée en CSV et en PDF ; le paiement lui-même, vous le traitez dans votre propre système. Détails sous [Consommation, budgets et facturation](/docs/fr/administration/verbrauch-und-budgets).
+
+**Les connexions sortantes de l’exécution de code** se règlent au niveau de l’hôte ou du réseau, non dans l’application. À l’état de livraison, l’exécution de code est désactivée.

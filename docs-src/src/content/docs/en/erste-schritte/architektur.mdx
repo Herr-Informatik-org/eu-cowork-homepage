@@ -8,7 +8,7 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 import DiagrammArchitektur from '../../../../components/DiagrammArchitektur.astro';
 
-EU Cowork AI runs as a Docker Compose stack on a Linux machine. This page shows the setup in
+EU Cowork AI runs in containers on a Linux machine. This page shows the setup in
 broad strokes. It describes the path a request takes and the decisions behind it — not the
 setup in detail.
 
@@ -54,12 +54,10 @@ customer is one instance with its own database, its own search index, its own fi
 configuration and its own inference key. Whether two instances share a machine is after that a
 pure question of cost and risk.
 
-| May be shared | Must never be shared |
-|---|---|
-| Docker images and their layers | database, search index, files |
-| a shared reverse proxy | configuration and all secrets |
-| monitoring, backup schedule, system updates | the environment for code execution |
-| | the inference key, otherwise the cost per customer cannot be attributed |
+At most, operating resources without any customer reference may be shared. What has to stay
+separate in every case is the data storage, the configuration including all keys, and the
+environment for code execution. Otherwise neither the data nor the cost can be attributed
+cleanly per customer.
 
 <Aside type="note" title="The setup documents">
 Which services an instance brings along in detail, how they are configured and what to watch

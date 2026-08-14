@@ -1,0 +1,68 @@
+---
+title: Protección de datos y conservación
+description: Conservación, información y eliminación por persona, telemetría y qué abandona la instancia.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Esta página describe cómo fija usted la conservación, cómo facilita información o lleva a cabo una eliminación y qué envía la instalación hacia fuera. Está pensada como base de su propia política de eliminación.
+
+## El plazo de conservación
+
+Usted fija en los ajustes un plazo de conservación en días. Sin plazo no se elimina nada automáticamente; fíjelo en la puesta en marcha, en consonancia con su política de eliminación. Lo que cuenta es la última modificación de una conversación, no su fecha de creación.
+
+Se eliminan las **conversaciones junto con sus mensajes y los enlaces compartidos generados para ellas**, y además de forma definitiva. No se eliminan los **datos de facturación**. El consumo de un mes pasado sigue siendo así reconstruible, aunque los chats correspondientes hayan desaparecido hace tiempo.
+
+<Aside type="caution" title="Cada acortamiento pide confirmación">
+Si usted fija o acorta el plazo, aparece una consulta con el plazo antiguo y el nuevo y la advertencia de que el plazo más corto eliminará definitivamente conversaciones adicionales, más antiguas. Una prolongación posterior no recupera nada, lo ya eliminado sigue eliminado.
+</Aside>
+
+La limpieza se ejecuta con regularidad por sí sola y además puede lanzarse a mano. Cuándo se ejecutó por última vez y qué retiró figura al lado.
+
+## Información y eliminación por persona
+
+A ambos llega usted desde la lista de usuarios. El orden no es indiferente.
+
+<Steps>
+
+1. **Exportar.** La exportación de datos entrega los datos de esa persona en un solo archivo: cuenta, grupos, saldo, conversaciones, mensajes, metadatos de los archivos y transacciones. Los archivos van incluidos como metadatos, no como contenido. Los datos de acceso quedan deliberadamente fuera: ni la contraseña, ni los secretos de dos factores, ni las claves depositadas.
+
+2. **Eliminar.** Eliminar solo después. Tras la eliminación ya no puede darse ninguna información, y por eso el botón de exportación está también directamente en el diálogo de eliminación.
+
+</Steps>
+
+Al eliminar decide usted sobre la profundidad: o bien desaparecen la cuenta y los contenidos y las transacciones se conservan como justificante de facturación, o bien se elimina además el consumo. Esa es la eliminación completa según el RGPD, y en ella se pierden los justificantes de facturación. En ambos casos se confirma tecleando exactamente la dirección de correo electrónico.
+
+## Telemetría
+
+El estado de entrega desactiva la telemetría: los componentes empleados no envían datos de uso a sus fabricantes, y los buscadores no indexan la interfaz. Si usted se hace cargo de una instalación existente, compruébelo una vez.
+
+## Qué abandona la instancia
+
+La instalación funciona íntegramente en su máquina; las conversaciones, el índice de búsqueda y los archivos subidos están ahí. Dónde se encuentra físicamente esa máquina lo decide usted con la elección del alojador.
+
+Dos cosas abandonan la instancia de forma inevitable, y usted debería conocerlas y comunicarlas internamente:
+
+**Las solicitudes a los modelos van al proveedor configurado.** Un modelo de lenguaje calcula allí donde se opera. En el estado de entrega se trata de un proveedor con tratamiento en la UE. Si usted añade además proveedores fuera de la UE, las solicitudes de esas fichas van allí. No existe ningún modo en el que una solicitud a la nube no abandone la máquina. Los modelos operados localmente son la excepción, pero necesitan el hardware adecuado.
+
+**Las consultas de búsqueda web van a buscadores externos.** La búsqueda pasa por un metabuscador alojado por usted mismo que reenvía la consulta a buscadores externos, eso sí, **sin la identidad de la persona que busca**. Las consultas en sí abandonan por tanto la instancia.
+
+<Aside type="note" title="Formulación para sus avisos de protección de datos">
+Formulada con limpieza, la afirmación reza así: el almacenamiento y la inferencia pueden mantenerse en la UE o bien en Suiza; en la búsqueda web el texto de búsqueda abandona la instancia, y lo hace sin vínculo con el usuario. Quien recoja esa distinción palabra por palabra en sus avisos de protección de datos y en sus formaciones estará del lado seguro incluso ante preguntas críticas.
+</Aside>
+
+## Señalización de proveedores fuera de la UE
+
+Los proveedores que no son residentes en la UE se señalan como tales en el panel y en el chat, para que la elección se haga de forma consciente. La misma regla vale para los conectores: un conector cuyo sistema de destino se opera fuera de la UE tiene que señalarse y no debe entrar sin preguntar en un despliegue de cliente.
+
+Tenga además en cuenta que los datos de procedencia sobre los proveedores provienen de ellos mismos y que la sede de un proveedor no es garantía del lugar de tratamiento. Más al respecto en [Modelos y fichas del modelo](/docs/es/administration/modelle-und-karten).
+
+## Delimitación
+
+**Aprovisionamiento sin SCIM.** Las cuentas nacen en el primer inicio de sesión mediante OIDC. El desaprovisionamiento pasa por su proveedor de identidad: quien esté desactivado allí ya no pasa el inicio de sesión y por tanto no llega a ningún dato. Para el desmontaje completo de una cuenta junto con sus datos, utilice el diálogo de eliminación del panel.
+
+**Justificantes en lugar de conexión de pago.** El consumo se registra íntegramente y se emite como CSV y PDF; el pago en sí lo tramita usted en su propio sistema. Detalles en [Consumo, presupuestos y facturación](/docs/es/administration/verbrauch-und-budgets).
+
+**Las conexiones salientes de la ejecución de código** se regulan a nivel de host o de red, no en la aplicación. En el estado de entrega la ejecución de código está desactivada.

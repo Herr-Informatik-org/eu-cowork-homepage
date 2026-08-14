@@ -13,9 +13,9 @@ certificate variant applies is chosen in the configuration.
 
 ## DNS
 
-The instance needs a DNS name pointing at the server; a further name is added for the admin
-panel. Which records exactly have to be set is stated in the operations manual. For automatic
-certificate issuance the usual HTTP and HTTPS ports have to be reachable from outside.
+The instance needs a DNS name pointing at the server. Which records exactly have to be set is
+stated in the operations manual. For automatic certificate issuance the server has to be
+reachable from the internet over the usual web ports.
 
 ## Variant 1: Public certificate
 
@@ -46,20 +46,20 @@ If an upstream appliance such as Sophos, F5, HAProxy or nginx already terminates
 supplied proxy should not obtain a second certificate. In this variant it only handles the
 distribution, while termination stays with the appliance.
 
-For the mapping to work, the appliance has to pass through the host header. The public address
-stays on `https://` in the application configuration, even though the application is addressed
-unencrypted internally — otherwise invitation links are built with the wrong scheme.
+For the mapping to work, the appliance has to pass through the host header. In the application
+configuration the public address is stored the way your users call it up — otherwise invitation
+links, for instance, lead nowhere.
 
 <Aside type="caution" title="WAF and streaming">
 Many appliances buffer the response stream in order to inspect the answer. The chat, however,
 sends its answers piece by piece. If buffering is active, the answer appears only at the end in
-one go, or breaks off with long answers. Set an exception in the WAF for the interface paths so
-the answer is not scanned, and switch off compression there.
+one go, or breaks off with long answers. Set an exception in the WAF for the affected paths so
+the response stream is not buffered, and switch off compression there.
 </Aside>
 
 <Aside type="note" title="Configuration in the operations manual">
-Which values are set for each variant and how the reverse proxy is wired in is described in the
-operations manual that comes with the delivery package.
+Which settings each variant requires is described in the operations manual that comes with the
+delivery package. Customers receive it together with their access.
 </Aside>
 
 ## Next

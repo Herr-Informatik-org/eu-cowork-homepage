@@ -1,0 +1,181 @@
+---
+title: Agentes y capacidades
+description: Qué es un agente, qué es una capacidad, cómo se complementan ambos y por qué las capacidades nunca se despliegan de golpe a todo el mundo.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Los agentes y las capacidades (skills) son las dos herramientas que convierten al colega de IA
+generalista en un colega hecho a la medida de su empresa. Esta página explica la diferencia, el
+reparto de tareas entre ambos y las reglas de habilitación que hay que respetar sin excepción.
+
+Ambas funciones provienen de [LibreChat](https://www.librechat.ai/docs). Lo que aportamos nosotros
+es la lógica de habilitación en el panel de administración y las reglas de operación.
+
+## Agente y capacidad, la diferencia
+
+| | Agente | Capacidad |
+|---|---|---|
+| Qué es | un rol con un equipamiento fijo | un proceso estándar consignado |
+| Contiene | una persona y unas instrucciones, un modelo determinado, una selección de herramientas | conocimiento paso a paso: qué campos, en qué orden, con qué reglas |
+| En el contexto | de forma permanente, mientras usted hable con él | solo el nombre y una breve descripción. El contenido se carga únicamente cuando hace falta |
+| Ejemplo | «Outlook-Assistent», que resume los correos y redacta borradores de respuesta | «Así elaboramos una oferta», con los campos obligatorios y su orden |
+
+El segundo punto es el importante: una capacidad no cuesta casi nada mientras no se necesita. El
+modelo solo ve la descripción y decide a partir de ella si debe cargar el texto completo. Por eso
+una capacidad puede ser mucho más extensa que un prompt del sistema.
+
+## El reparto de tareas
+
+El conocimiento sobre procesos va en las **capacidades**, no en el agente. El agente sigue siendo
+una envoltura fina: persona, modelo, herramientas.
+
+La razón es práctica. Las capacidades son simples archivos, portables y versionables. Un agente, en
+cambio, vive en la base de datos de una instancia y no se puede crear desde la configuración ni
+exportar cómodamente. Quien mete su conocimiento en agentes lo reconstruye a mano en cada instancia
+nueva. Quien lo mete en capacidades copia un archivo.
+
+Un agente propio solo hace falta cuando una ficha del modelo ya no basta, por ejemplo porque hay un
+conector concreto previsto de antemano o porque un rol debe recibir su propio juego de herramientas.
+
+## Utilizar los agentes
+
+Los agentes figuran en el selector de modelos, en un submenú propio. Usted elige el agente igual que
+una ficha del modelo y, a partir de ahí, la conversación transcurre con sus instrucciones y sus
+herramientas.
+
+Un agente puede dar varios pasos seguidos: consultar, leer, calcular y responder solo entonces. El
+número de pasos por ejecución es limitado.
+
+### Quién puede construir agentes
+
+**Utilizar** agentes está abierto a todo el mundo en el estado de entrega. **Construir** agentes es
+un permiso aparte y está consignado en el editor de roles, bajo **«Erstellen & Teilen»** (crear y
+compartir):
+
+| Permiso | Significado |
+|---|---|
+| **«Agents nutzen»** (utilizar agentes) | seleccionar los agentes existentes y trabajar con ellos |
+| **«Agents erstellen»** (crear agentes) | construir agentes propios en el constructor |
+| **«Agents teilen»** (compartir agentes) | habilitar un agente a personas o grupos |
+
+Lo habitual es: el personal utiliza y un grupo reducido construye. Eso mantiene el número de agentes
+en un tamaño manejable y evita que aparezcan veinte variantes a medio terminar del mismo asistente.
+
+Los agentes construidos por usted mismo funcionan de fábrica exclusivamente sobre las fichas de la
+UE. Es un límite deliberado: un agente de construcción propia no debe enviar datos por descuido a
+través de un proveedor situado fuera de la UE.
+
+## Cómo actúa una capacidad
+
+Una capacidad es una carpeta con un archivo `SKILL.md`. Arriba están el nombre y la descripción y,
+debajo, las instrucciones.
+
+La descripción es el campo más importante. Es la que decide si la capacidad llega siquiera a
+activarse. Debería contener las formulaciones con las que el personal plantea realmente la tarea
+(«erstelle eine Offerte», es decir, «elabora una oferta», o «erfasse den Auftrag im ERP», es
+decir, «registra el pedido en el ERP»). Una descripción vaga hace que la capacidad no se dispare
+nunca.
+
+Hay tres vías por las que una capacidad entra en juego:
+
+1. El modelo la elige por sí mismo del catálogo, guiándose por la descripción.
+2. Usted la invoca manualmente en el chat, a través del menú `$`.
+3. Está marcada como siempre activa. Esto debe usarse con moderación, porque su contenido queda
+   entonces presente en todas las conversaciones.
+
+El prompt del sistema obliga al colega a seguir **estrictamente** un proceso estándar consignado y a
+nombrar expresamente cualquier desviación y hacer que se confirme. La capacidad aporta, pues, el
+conocimiento, y el prompt, la disciplina.
+
+## Habilitar capacidades
+
+Hay dos formas de poner una capacidad a disposición, y se comportan de manera distinta.
+
+| Vía | Cómo | Para quién es visible |
+|---|---|---|
+| Subida desde la interfaz | el administrador sube la capacidad y la comparte de forma selectiva | solo las personas y los grupos habilitados |
+| Provisión para toda la instancia | el administrador deja la capacidad como archivo en el servidor | toda la instancia, en modo de solo lectura |
+
+En las fichas del modelo, el catálogo de capacidades está activo. Pero lo que hay en él no es
+«todo», sino exactamente lo que se ha habilitado a cada persona. A eso se añade el permiso de rol
+**«Skills nutzen»** (utilizar capacidades), que en el panel lleva la indicación «Freigabe pro
+Person/Rolle, nie pauschal ausrollen» (habilitación por persona o por rol, nunca desplegar de
+golpe).
+
+<Aside type="danger" title="Nunca despliegue capacidades de golpe">
+Una capacidad provista para toda la instancia **gana frente a una capacidad del mismo nombre
+procedente de la base de datos**. Así que, si además deja en el servidor como archivo una capacidad
+pensada solo para el departamento comercial, está anulando la habilitación selectiva. Después, la
+capacidad queda a la vista de todos sin que nadie haya cambiado nada.
+
+Regla: la provisión para toda la instancia es exclusivamente para capacidades que puedan regir en
+toda la instancia y que no contengan material confidencial. Todo lo demás se sube y se comparte de
+forma selectiva.
+
+Por el mismo motivo, la configuración no contiene **ninguna lista fija de capacidades**. Una lista
+así ataría las capacidades mencionadas a todos los usuarios de la ficha.
+</Aside>
+
+<Aside type="note" title="Las capacidades compartidas están inactivas al principio">
+Una capacidad compartida con una persona **no** está activa de forma predeterminada para esa
+persona: tendría que activarla ella misma primero. Si se quiere que las capacidades habilitadas
+surtan efecto de inmediato, esto se puede cambiar en el panel durante la implantación. Ese ajuste
+corresponde al panel; de lo contrario, el arranque sobrescribe en cada reinicio los permisos de
+capacidades gestionados en el editor de roles.
+</Aside>
+
+## Qué se entrega
+
+Un armazón, no un agente terminado.
+
+- Los contenidos de las capacidades no se entregan. Contienen información confidencial y procesos
+  internos, y por eso se llevan al servidor a mano.
+- Para los agentes estándar existen definiciones de ejemplo con las que puede crearse un juego
+  básico una sola vez por instancia. Están marcadas expresamente como armazón y deben contrastarse
+  con la instancia en funcionamiento.
+
+El motivo es una particularidad de LibreChat: los agentes no se pueden definir en la configuración y
+en el constructor no hay exportación. La configuración solo puede referenciar un agente por su
+identificador.
+
+## Para administradores
+
+### Compartir un agente globalmente como lector
+
+<Aside type="caution" title="De lo contrario, la ficha desaparece para los usuarios normales">
+Si hace que una ficha del modelo apunte a un agente, tiene que **compartir el agente globalmente
+como lector**. De lo contrario, el control de acceso filtra la ficha y la retira a todos los que no
+sean propietarios del agente. A usted, como administrador, todo le parecerá correcto, mientras que
+su personal sencillamente no ve la ficha.
+
+Esta acción de compartir se fija una sola vez en la interfaz de agentes.
+</Aside>
+
+Si el agente debe además ser accesible fuera del chat, por ejemplo en el
+[Add-in de Outlook](/docs/es/funktionen/outlook-add-in), necesita una habilitación propia para el
+acceso remoto. Qué agentes están afectados lo verá en el panel, bajo **«Verwaltung →
+Remote-Agenten»** (administración, agentes remotos).
+
+### Mantener las capacidades en el servidor
+
+<Steps>
+
+1. Depositar la carpeta con `SKILL.md` en la ubicación prevista para ello en el servidor.
+
+2. Reiniciar la aplicación, porque las capacidades provistas para toda la instancia se leen en el
+   arranque.
+
+3. Probar, y hacerlo en ambos sentidos. En positivo: ¿se dispara la capacidad con las formulaciones
+   que figuran en su descripción? En negativo: ¿se mantiene al margen de las tareas ajenas?
+
+</Steps>
+
+### Limitar el catálogo
+
+A partir de unas cinco capacidades merece la pena poner un tope al catálogo. De lo contrario crece
+la lista de descripciones que se arrastra en cada conversación y cuesta tokens en todos los chats.
+
+El mismo principio vale para los conectores: pocas herramientas bien descritas ganan a muchas.

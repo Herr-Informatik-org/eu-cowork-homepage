@@ -31,7 +31,7 @@ Architekturfrage mehr.
 | Konfiguration und alle Geheimnisse | Ein gemeinsames Geheimnis hebt jede Trennung auf |
 | Backend für die Code-Ausführung | Die einzige Stelle, an der Code von Nutzenden läuft |
 | Inferenz-Schlüssel | Mit einem geteilten Schlüssel sind die Kosten pro Kunde nicht mehr auflösbar |
-| Eigene Metasuchmaschine | Sieht die Suchanfragen und damit Nutzerinhalte |
+| Eigener Dienst für die Web-Suche | Sieht die Suchanfragen und damit Nutzerinhalte |
 
 ## Was geteilt werden darf
 
@@ -46,17 +46,17 @@ Kunden der Maschine.
 
 <Aside type="caution" title="Die Code-Ausführung ist der harte Punkt">
 Überall sonst führt die Plattform nur eigenen Code aus, Nutzende haben keinen Zugang zur
-Kommandozeile. Die Ausnahme ist die Code-Ausführung. Sie bekommt deshalb pro Instanz ein
-eigenes, getrenntes Backend. Auf einer geteilten Maschine ist zudem die gehärtete Variante die
-bessere Wahl.
+Kommandozeile. Die Ausnahme ist die Code-Ausführung. Sie bekommt deshalb pro Instanz eine
+eigene, getrennte Umgebung. Auf einer geteilten Maschine ist zudem die stärker abgeschottete
+Betriebsart die bessere Wahl.
 </Aside>
 
 ## Was pro Instanz eindeutig sein muss
 
 Mehrere Instanzen auf einer Maschine kollidieren, wenn sie sich Namen oder Adressen teilen.
-Jede Instanz braucht deshalb einen eigenen Projekt- und Datenbereich sowie eigene
-Netzwerk- und Portzuweisungen. Welche Werte das im Einzelnen sind und wie sie gesetzt werden,
-steht im Betriebshandbuch. Bleiben sie auf den Standardwerten, startet die zweite Instanz nicht.
+Jede Instanz braucht deshalb durchgehend eigene Bezeichner und eigene Ablagen. Welche Werte das
+im Einzelnen sind und wie sie gesetzt werden, steht im Betriebshandbuch, das dem
+Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 
 ## Wann eine eigene Maschine
 

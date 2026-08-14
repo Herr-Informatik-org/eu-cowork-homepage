@@ -1,0 +1,67 @@
+---
+title: Consumo, budget e fatturazione
+description: Come viene misurato il consumo, come budget mensile e limiti personali interagiscono e come nascono i giustificativi.
+sidebar:
+  order: 4
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+La misurazione del consumo è sempre attiva. Mostra quanto l’utilizzo costa realmente ed è la base per budget, limiti e giustificativi.
+
+## Che cosa viene misurato
+
+La base sono i token di ogni singola richiesta, distinti fra ingresso e uscita. Ne deriva un importo per richiesta, che il pannello somma per persona, modello, giorno e mese. I prezzi dei modelli sono depositati nella configurazione e si possono riprendere dal catalogo del fornitore; la fatturazione avviene in euro a un tasso di cambio che viene congelato per ciascun mese di fatturazione. I mesi chiusi e i loro giustificativi restano così come erano.
+
+<Aside type="caution" title="Curare i prezzi conviene">
+Curi per ogni modello impiegato il prezzo e la dimensione del contesto. Se questi dati mancano, l’analisi lavora con ipotesi: appare allora plausibile ed è ugualmente sbagliata, e le conversazioni lunghe vengono troncate prima del necessario.
+</Aside>
+
+## Budget mensile e limiti personali
+
+Per l’organizzazione si può fissare un **budget mensile comune** in euro. È un serbatoio mensile comune, non un importo per persona. Senza un valore inserito non c’è budget. Nella panoramica lo stato viene messo a confronto con il consumo reale, con avviso e proiezione prima che si faccia stretto.
+
+Se il budget sia solo mostrato oppure anche applicato lo decide Lei con un interruttore:
+
+| Impostazione | Effetto |
+| --- | --- |
+| disattivato | Il budget è puramente indicativo. Nessuno viene escluso. |
+| attivato | Una volta esaurito il budget, le nuove richieste vengono rifiutate, per **tutti** gli account, amministratori compresi. Nella chat compare una barra informativa. Il pannello stesso resta utilizzabile. |
+
+Un aumento del budget, lo spegnimento dell’interruttore e il passaggio al mese successivo revocano di nuovo il blocco.
+
+Inoltre si può fissare un **limite mensile** per persona.
+
+<Aside type="caution" title="Il fondo comune batte il limite personale">
+Se il serbatoio comune è vuoto, tutti sono a zero, anche chi è ben lontano dall’aver esaurito il proprio limite. Il limite personale è un freno aggiuntivo, non una prenotazione.
+</Aside>
+
+## «Guthaben»: due significati
+
+La parola **«Guthaben»** (credito) compare nel pannello in due punti e designa due cose diverse:
+
+| | **«Guthaben»** di una persona | **«Guthaben»** dell’organizzazione |
+| --- | --- | --- |
+| Che cos’è | il conto di limite individuale, in euro | il saldo derivante dai versamenti registrati |
+| A che cosa serve | applicazione tecnica dei blocchi per account | visione d’insieme commerciale di versamenti e consumo |
+| Quando è rilevante | solo con applicazione attiva | non appena Lei registra dei versamenti |
+
+In breve: il credito per persona è una valvola, il credito dell’organizzazione è una contabilità. Il credito di token in sé è deliberatamente messo in comune a livello di organizzazione, affinché singole persone non si trovino davanti a un limite artificiale mentre altrove resta del budget.
+
+## Fatturazione e giustificativi
+
+La pagina di fatturazione mostra il mese scelto con due voci: una tariffa di piattaforma per utente e il consumo di token misurato. Entrambe si possono emettere come CSV e come PDF. I versamenti sono registrati in un ledger a cui si può solo aggiungere: una correzione avviene come scrittura di segno opposto, la voce originale resta. I mesi passati si trovano in un archivio.
+
+<Aside type="note" title="Meglio bloccato che sbagliato">
+Se manca una base di calcolo, il pannello blocca i giustificativi invece di calcolare in silenzio con zero. Un giustificativo che, senza messaggio di errore, indica una cifra troppo bassa sarebbe peggio di nessun giustificativo.
+</Aside>
+
+<Aside type="caution" title="I giustificativi non sono fatture fiscali">
+CSV e PDF sono giustificativi, non fatture fiscali, e non c’è alcun collegamento ai pagamenti. Emissione delle fatture e incasso continuano a passare dalla Sua contabilità.
+</Aside>
+
+## Le analisi
+
+Due viste mostrano le stesse cifre da angolazioni diverse: una **vista mensile** sul mese di calendario con indicatori, andamento giornaliero e le tabelle per utente e per modello, e una **vista mobile** sulle ultime settimane con confronto rispetto al periodo precedente.
+
+Per la domanda su una singola richiesta non è competente nessuna delle due; a questo servono i [registri](/docs/it/administration/protokolle-und-audit).

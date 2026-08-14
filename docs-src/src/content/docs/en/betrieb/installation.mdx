@@ -7,35 +7,35 @@ sidebar:
 
 import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-The setup is carried out by an installation script from the delivery package. It creates the
-configuration, generates the required secrets and starts the application. The prerequisite is a
-prepared server, see [Prepare the server](/docs/en/betrieb/server-vorbereiten).
+The setup is carried out in a guided manner on the basis of the delivery package. In the course
+of it the configuration and the secrets of the instance are created, then the application starts.
+The prerequisite is a prepared server, see [Prepare the server](/docs/en/betrieb/server-vorbereiten).
 
-## What the installer takes care of
+## What the setup takes care of
 
 - It checks the prerequisites on the machine and aborts if something fundamental is missing.
-- It creates the configuration file from the supplied template and sets all secrets to freshly
-  generated random values. The file is readable only by the service user.
-- It sets up the directories for uploads, logs and data with the correct permissions.
-- It fetches the images and starts the application.
+- It creates the configuration of the instance and sets all secrets to freshly generated random
+  values. Every instance receives its own values, and these are readable only for the operation
+  of the instance.
+- It sets up the storage areas of the instance with the necessary permissions and starts the
+  application.
 - It reports at the end which values still have to be entered by hand. Only the names of the
   values are reported, never their contents.
 
 <Aside type="danger" title="Secure the generated secrets">
-Some of the generated values decrypt what is stored encrypted in the database: the OAuth tokens
-with which your staff connected a connector, and the API keys stored in the panel. If these
-values are lost, or regenerated during a migration instead of carried over, the affected data
-is irretrievably unreadable. Every person would then have to rebuild every connection. The
-regular backup contains the configuration file and therefore these values, see
+Some of the generated values decrypt what is stored encrypted in the database. If these values
+are lost, or regenerated during a migration instead of carried over, the affected data is
+irretrievably unreadable, and every person would have to rebuild their connections. The regular
+backup covers the configuration and therefore these values, see
 [Backup and migration](/docs/en/betrieb/backup-und-umzug).
 </Aside>
 
 ## The only mandatory value
 
 For a standard installation you enter exactly one value yourself: the key of the inference
-provider with EU processing. The installer explicitly points this out at the end. Everything
-else is optional — a second option for models, the connectors, e-mail delivery and the backend
-for code execution.
+provider with EU processing. The setup explicitly points this out at the end. Everything
+else is optional — a second option for models, the connectors, e-mail delivery and code
+execution.
 
 ## What remains manual
 
@@ -51,13 +51,12 @@ for code execution.
 
 <Steps>
 
-1. **Open the chat.** At the address the installer prints at the end.
+1. **Open the chat.** At the address under which the instance was set up.
 
-2. **Create the first account.** Register in the chat. The first registered account of an
-   instance automatically receives the ADMIN role.
+2. **Create the first account.** Register in the chat. The first account of an instance
+   receives the administration rights.
 
-3. **Check the admin panel.** You sign in with the account you just created. The panel has no
-   user management and no password of its own.
+3. **Check the admin panel.** Access requires an account with administration rights.
 
 4. **Close off access.** Set the domain lock so that only people from your e-mail domain can
    register.
@@ -70,8 +69,8 @@ for code execution.
 </Steps>
 
 <Aside type="note" title="Detailed instructions in the operations manual">
-The invocation, the options and the complete list of configuration values are in the operations
-manual that comes with the delivery package.
+The exact sequence and the complete list of configuration values are in the operations
+manual that comes with the delivery package. Customers receive it together with their access.
 </Aside>
 
 ## Next

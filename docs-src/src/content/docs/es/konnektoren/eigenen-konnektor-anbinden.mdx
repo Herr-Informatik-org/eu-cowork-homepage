@@ -1,0 +1,53 @@
+---
+title: Conectar un conector propio
+description: Qué aclarar antes de conectar uno de sus propios sistemas a EU Cowork AI, y con qué criterios medir un conector ajeno.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Un sistema propio se conecta como conector: un servicio que ofrece un número abarcable de herramientas y que, por detrás, llama a la interfaz de su sistema. Se crea y se habilita en el panel de administración, sin acceso al servidor.
+
+<Aside type="note" title="La guía se entrega junto con el producto">
+Con su instancia recibe usted una guía que describe paso a paso el camino desde la creación hasta la habilitación, adaptada a su instalación. Esta página se queda deliberadamente en el nivel anterior: qué aclarar de antemano, con qué criterios medir un conector y qué no debe olvidar al habilitarlo.
+</Aside>
+
+## Qué aclarar de antemano
+
+- **El nombre técnico.** Con ese nombre funciona el conector en su instancia. Más adelante no se cambia sin más. Elíjalo, por tanto, expresivo y duradero.
+- **La dirección en la que el conector habla MCP.** El servicio tiene que ser alcanzable desde su instancia.
+- **Las credenciales del sistema de destino.** Nunca deben figurar en texto claro en la configuración, sino exclusivamente como referencia a una clave depositada.
+- **La cuenta que hay detrás de las credenciales.** Es el verdadero límite de los datos. Déle en el sistema de destino exactamente los permisos y exactamente las áreas que el caso de uso necesita, véase [Patrones de conectores](/docs/es/konnektoren/muster).
+- **Una breve indicación en prosa** sobre cuándo debe usarse esta herramienta y qué no puede hacer. Solo se inserta cuando el conector está activo y mejora la tasa de acierto de forma perceptible.
+
+## De dónde saco un servidor MCP para mi sistema
+
+**Hay servidores terminados para muchos productos.** Como MCP es un estándar abierto, fabricantes y comunidades publican conectores para el software habitual. Busque el nombre del producto junto con «MCP server». Para sistemas con interfaz de programación propia, es bastante probable que alguien haya construido ya el puente.
+
+**Puede construir uno propio.** Un conector es un pequeño servicio que ofrece un puñado de herramientas y que, por detrás, llama a la interfaz de su sistema. Para un objetivo acotado, por ejemplo «cinco consultas de lectura sobre nuestra aplicación de negocio», eso es perfectamente abarcable. Un puente deliberadamente estrecho resulta, en el contexto, claramente más barato que un servidor terminado con cien herramientas.
+
+**Revise un servidor ajeno antes de conectarlo.** Un conector recibe acceso a sus datos, eso no es una formalidad. Cuatro preguntas:
+
+1. **¿Qué herramientas expone?** Lea la lista completa. Las herramientas de escritura que usted no necesita son puro riesgo y encima cuestan contexto.
+2. **¿Existe un modo de solo lectura?** Un interruptor que desactiva los accesos de escritura en el código vale claramente más que el propósito de no utilizarlos.
+3. **¿Es apto para varios usuarios?** Los conectores que recuerdan un estado a lo largo de varias llamadas no funcionan de forma fiable en operación multiusuario.
+4. **¿Dónde están las credenciales y cómo es la licencia?** Un conector que guarda claves él mismo pertenece exclusivamente a la red interna.
+
+El resultado de esta revisión puede ser perfectamente «lo construimos nosotros», sobre todo cuando un servidor terminado ofrece, además de la lectura, reinicios, ejecuciones de scripts o modificaciones de escritura y eso no se puede desactivar. Cómo se recorta un puente estrecho está en [Patrones de conectores](/docs/es/konnektoren/muster).
+
+## La habilitación es un paso propio
+
+Un conector creado no es todavía un conector habilitado.
+
+<Aside type="danger" title="La regla predeterminada en denegado en el mismo paso de trabajo">
+Fije la **regla predeterminada** del conector en denegado antes de hacer ninguna otra cosa. Después habilite de forma selectiva los roles, grupos o personas que necesitan el conector. Cómo se llega a la decisión está en [Permisos y habilitaciones](/docs/es/konnektoren/gateway-und-rechte).
+</Aside>
+
+Compruebe la habilitación al final con dos personas de prueba con permisos distintos. Si ambas ven lo mismo, su límite de permisos no está actuando.
+
+## Cuando algo no funciona
+
+- **Una herramienta informa de «Zugriff verweigert» (acceso denegado).** Eso no es un error, es la regla de permisos. Compruebe las habilitaciones de la persona afectada, véase [Permisos y habilitaciones](/docs/es/konnektoren/gateway-und-rechte).
+- **El conector no responde.** Compruebe primero si el servicio es alcanzable desde su instancia y después las credenciales depositadas para el sistema de destino.
+- **Los pasos de comprobación en detalle** los describe la guía que se entrega junto con el producto. Recoge también la prueba de conexión, que verifica un enlace con independencia de los permisos.

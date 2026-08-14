@@ -1,0 +1,125 @@
+---
+title: Schemi per i connettori
+description: Tre forme costruttive collaudate per i connettori, ciascuna con il campo di impiego, il percorso dei diritti e i punti a cui deve fare attenzione nell’esercizio.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+I connettori si distinguono meno per il prodotto che sta dietro di essi che per il modo in cui si autenticano presso il sistema di destinazione. È proprio questo modo a decidere dove si collochi il confine dei dati e quanto lavoro Le tocchi nel pannello di amministrazione.
+
+Tre forme costruttive coprono praticamente tutto ciò che si presenta in una PMI. Questa pagina descrive ciascuna di esse con le stesse tre domande: a che cosa serve, come funzionano i diritti e a che cosa deve fare attenzione. Quale prodotto colleghi effettivamente non ha alcuna importanza per la forma costruttiva.
+
+## Schema A: applicazione aziendale tramite un account di servizio
+
+**A che cosa serve.** Il Suo ERP, il Suo gestionale di magazzino, la Sua contabilità, ossia i sistemi con clienti, documenti contabili, progetti e dati del personale. Applicazioni di questo tipo offrono di norma un accesso tecnico tramite una chiave, ma nessun accesso personale tramite un’interfaccia.
+
+**Come funzionano i diritti.** Il connettore detiene un accesso tecnico e si autentica allo stesso modo per tutte le persone. **Il sistema di destinazione non conosce la persona che pone la richiesta**, vede solo l’account di servizio. Non è quindi in grado di distinguere le persone del Suo personale.
+
+La risposta a questo non è un filtro nel prompt, bensì la struttura degli account: **un account di servizio proprio e un’istanza di connettore propria per ogni profilo di diritti**, invece di una chiave universale per tutti. Una chiave di accesso eredita integralmente i diritti del suo account nel sistema di destinazione. Con ciò è l’account dietro la chiave il vero confine dei dati, non la configurazione e non il prompt. Ciò che l’account non può vedere non lo vede nemmeno la chat, indipendentemente da quello che il modello tenta.
+
+Le abilitazioni in EU Cowork AI arrivano **in aggiunta**. Esse decidono chi arrivi anche solo a vedere quale istanza. Se un’abilitazione nel pannello è stata impostata una volta troppo larga, regge comunque il confine dei diritti dell’account di servizio.
+
+| Istanza con account di servizio proprio | Pensata per |
+|---|---|
+| profilo di diritti più ampio | direzione aziendale |
+| vista commerciale | finanze e amministrazione |
+| vista tecnica senza dati commerciali | assistenza e progetti |
+
+Quali diritti abbiano effettivamente questi profili lo stabilisce Lei nel sistema di destinazione, non da noi.
+
+**A che cosa deve fare attenzione.**
+
+<Aside type="danger" title="Abilitare esattamente un’istanza per persona">
+Se sono in funzione più istanze dello stesso connettore, esse espongono **nomi di strumenti identici**. Se per una persona ne sono abilitate due, lo stesso catalogo degli strumenti finisce due volte in ogni conversazione. Questo costa a ogni messaggio il doppio dei token di contesto, e il modello deve tirare a indovinare fra due strumenti dallo stesso nome, il che porta a chiamate sbagliate.
+
+Abiliti quindi per ogni persona **esattamente una** istanza. Se qualcuno ha bisogno di un altro profilo, **cambi** l’abilitazione invece di aggiungerne una seconda.
+</Aside>
+
+A ciò si aggiungono tre punti che contano nella quotidianità:
+
+- **Regola predefinita subito su negato.** Imposti su negato la regola predefinita di ogni istanza prima di abilitare chiunque.
+- **Mantenga in sola lettura l’abilitazione nel sistema di destinazione**, ovunque il caso d’uso lo consenta. Scrittura, creazione ed eliminazione le abiliti solo per i singoli oggetti per i quali ne ha davvero bisogno.
+- **Usi il registro.** Ogni decisione viene annotata in modo inalterabile. Nel registro del sistema di destinazione è inoltre riconoscibile da quale profilo provenisse una richiesta. Account di servizio separati si ripagano qui una seconda volta.
+
+Se Le serve una separazione più fine, la via non è un filtro aggiuntivo nella chat, bensì un ulteriore account con diritti più ristretti e un’ulteriore istanza del connettore.
+
+## Schema B: archivio dei file con autenticazione per persona
+
+**A che cosa serve.** La Sua gestione documentale, la Sua archiviazione cloud, l'archivio del Suo team. Quindi sistemi nei quali i diritti di accesso sono comunque già curati in modo fine e per singola persona e nei quali esiste un accesso personale tramite un’interfaccia.
+
+**Come funzionano i diritti.** Ogni persona **si autentica una volta da sé**. Al primo utilizzo sceglie lo strumento nella chat e fa clic per collegarsi, arriva nella consueta finestra di accesso del sistema di destinazione, lì conferma l’accesso, e da quel momento il connettore lavora con il suo accesso personale.
+
+Vale quindi questo: chi non può vedere una cartella nel sistema di destinazione non la vede nemmeno nella chat. I diritti vengono curati là dove vengono curati comunque e non devono essere ricostruiti da noi. Un cambiamento dei diritti nel sistema di origine ha effetto immediato anche nella chat.
+
+**È questa la via da preferire.** Se un sistema offre questo tipo di autenticazione, la prenda. I diritti del sistema di destinazione sono già il confine, e sono più fini di quanto una regola davanti potrebbe mai essere: fino al livello di documento e di campo invece che solo fino al livello di connettore e di strumento.
+
+<Aside type="note" title="Qui il controllo sta nel sistema di destinazione">
+Poiché i diritti della persona sono già il confine, in un connettore di questo tipo il controllo di riferimento sta nel sistema di destinazione. Lo curi là e non conti di poter ricostruire davanti una graduazione più fine.
+</Aside>
+
+**A che cosa deve fare attenzione.**
+
+- **Il test di collaudo è un confronto.** Due persone di prova con diritti diversi nel sistema di destinazione devono vedere nella chat quantità dimostrabilmente diverse. Se ciascuna vede tutto, il connettore non lavora con i diritti della persona.
+- **Solo in lettura, dove questo basta.** Un esplicito interruttore di sola lettura nel ponte vale più del proposito di non scrivere. Gli ambiti di cui il caso d’uso non ha bisogno, per esempio posta, calendario o cronologie delle chat, non li abiliti nemmeno. Ogni autorizzazione aggiuntiva richiede comunque un nuovo consenso.
+- **L’accesso resta in essere e deve poter essere rinnovato.** Se manca l’autorizzazione a rinnovare il collegamento in secondo piano, esso muore dopo poco tempo e ogni persona deve collegarsi di nuovo.
+
+<Aside type="caution" title="Dopo una migrazione le chiavi dell’istanza devono venire con essa">
+Gli accessi personali fanno parte del patrimonio di dati protetto della Sua istanza. Se migra su un nuovo server, le chiavi corrispondenti della vecchia istanza devono essere riprese. Se ciò non avviene, tutti i collegamenti memorizzati sono inutilizzabili e **ogni persona deve ricostruire una volta il proprio accesso**. Non vanno perduti dati, ma è un caso di assistenza per ogni membro del personale. Inserisca questo punto nel Suo piano di migrazione, vedere [Backup e migrazione](/docs/it/betrieb/backup-und-umzug).
+</Aside>
+
+## Schema C: ponte di sola lettura verso un sistema gestionale
+
+**A che cosa serve.** Il Suo monitoraggio, il Suo inventario, il Suo sistema di ticketing. Quindi sistemi gestionali dai quali Lei vuole informazioni, ma nei quali nessuno deve modificare qualcosa dalla chat.
+
+**Come funzionano i diritti.** Tecnicamente si tratta di un account di servizio come nello schema A. La differenza sta nell’intenzione: qui si deve soltanto leggere. Ed è proprio qui che vale la pena di **imporre davvero la sola lettura invece di prometterla**. Tre livelli contribuiscono a questo, e ciascuno basterebbe da solo:
+
+- L’accesso tecnico nel sistema di destinazione riceve **solo diritti di lettura**. Con ciò il sistema di destinazione respinge da sé ogni chiamata in scrittura, indipendentemente dal nostro software.
+- Il ponte **non offre affatto strumenti di scrittura**. Ciò che non esiste non può essere richiamato.
+- L'**abilitazione** decide chi arrivi anche solo a vedere gli strumenti.
+
+**Il confine più duro è un altro.** Questi livelli impediscono che si scriva. Non dicono nulla su **quanto** sia permesso leggere. Per impostazione predefinita un accesso tecnico vede di norma l’intero sistema.
+
+Dia quindi all’accesso tecnico, nel sistema di destinazione, solo gli ambiti di cui ha davvero bisogno. Ciò che non vede semplicemente non esiste per la chat. È questo il confine più duro a disposizione, sta interamente da Lei nel sistema gestionale e non si lascia aggirare né da un prompt né da un errore nel nostro software. Se Le servono più viste, la via è la stessa dello schema A: un secondo accesso tecnico con un ambito più ristretto, una seconda istanza del ponte, e nel pannello ogni persona ne riceve esattamente una.
+
+<Aside type="tip" title="La regola che sta dietro">
+**Uno strumento che non esiste, nessun modello può richiamarlo per errore.** Non costruisca quindi affatto strumenti per azioni invasive, per esempio per riavvii o per l’esecuzione di script. Allora non serve da nessuna parte una regola che debba impedire a qualcuno di riavviare un server dalla chat. Semplicemente non è possibile.
+
+È esattamente questo il metro con cui misura un connettore altrui: quali strumenti espone, ed esiste una modalità di sola lettura? Se un server pronto all’uso offre, oltre alla lettura, anche azioni invasive e questo non si lascia disattivare, un ponte stretto costruito da Lei è spesso più rapido della discussione su chi possa usarlo.
+</Aside>
+
+**A che cosa deve fare attenzione.**
+
+- **Un autotest vale la fatica.** Un piccolo programma di verifica che dimostri l’autenticazione, i diritti effettivamente concessi e un accesso in lettura trasforma un’assicurazione in una prova. Si lascia eseguire di nuovo dopo ogni modifica.
+- **Le risposte a più livelli fanno risparmiare a ogni domanda.** Una richiesta di dettaglio dovrebbe caricare dapprima solo i dati anagrafici e fornire le sezioni voluminose solo su richiesta esplicita.
+- **Per domande su molti oggetti, uno strumento di analisi.** Dieci richieste singole costano dieci risultati nel contesto, un’analisi ne costa uno.
+- **Tutti vedono la stessa cosa.** Il sistema gestionale non conosce il singolo utente della chat, vede solo l’accesso tecnico. La separazione fra le persone del Suo personale la fanno esclusivamente l’abilitazione nel pannello e l’ambito che Lei ha dato all’accesso.
+
+## Quanto costa il catalogo degli strumenti
+
+Tutti e tre gli schemi condividono una proprietà: il catalogo degli strumenti di un connettore, ossia nome, descrizione e parametri di ogni strumento, viene trasmesso al modello **a ogni singolo messaggio**. Non è un investimento una tantum, bensì un affitto corrente su ogni chat.
+
+L’ordine di grandezza è considerevole: un connettore esteso può offrire oltre cento strumenti e occupare così una parte notevole del contesto disponibile, prima ancora che sia posta la prima domanda. Limitato al caso d’uso, spesso ne resta soltanto una piccola frazione.
+
+Il secondo effetto è almeno altrettanto importante: più sono gli strumenti dal nome simile presenti nel catalogo, più spesso il modello sceglie quello sbagliato. Un catalogo ristretto fornisce risposte non solo più economiche, ma anche più affidabili.
+
+Abiliti quindi gli strumenti singolarmente e su richiesta, non in via precauzionale.
+
+<CardGrid>
+  <LinkCard
+    title="Diritti e abilitazioni"
+    href="/docs/it/konnektoren/gateway-und-rechte"
+    description="In base a che cosa decide la verifica dei diritti e dove Lei cura le abilitazioni."
+  />
+  <LinkCard
+    title="Collegare un proprio connettore"
+    href="/docs/it/konnektoren/eigenen-konnektor-anbinden"
+    description="Che cosa chiarire prima, in base a che cosa misurare un connettore altrui e che cosa conta al momento dell’abilitazione."
+  />
+  <LinkCard
+    title="Buone pratiche per i connettori"
+    href="/docs/it/konnektoren/best-practices"
+    description="Dieci regole con motivazione, oltre a una lista di controllo prima dell’abilitazione."
+  />
+</CardGrid>

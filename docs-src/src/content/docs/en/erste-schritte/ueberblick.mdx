@@ -14,8 +14,8 @@ whether to adopt the platform.
 
 ## Who the platform is for
 
-There are three starting points, and all three use the same technical build. There is no
-separate hosting build.
+There are three starting points. They differ in who runs the server, not in what the platform
+can do.
 
 | Your situation | Who runs the server | What you do |
 |---|---|---|
@@ -80,9 +80,8 @@ The overall product is released under the MIT license. In practice that means:
   those from someone.
 
 The official LibreChat admin panel is released under the AGPL and is therefore deliberately
-**not** used. Instead there is a separate, permissively licensed administration that works
-against the MIT licensed administration interface of LibreChat. This keeps the overall product
-free of copyleft obligations.
+**not** used. Instead there is a separate, permissively licensed administration. This keeps the
+overall product free of copyleft obligations.
 
 ## Where the data lives
 
@@ -112,7 +111,7 @@ not part of the delivery or that call for a decision during setup.
 | Area | Status |
 |---|---|
 | web search | The search engine runs inside the instance. You choose the scraper according to your data residency requirements and configure it during setup |
-| outbound connections from code execution | granted outside the application. Code execution is switched off out of the box |
+| outbound connections from code execution | are decided during setup. Code execution is switched off out of the box |
 | user provisioning via SCIM | not included. Accounts are created on first sign-in via OIDC, revoking access runs through the identity provider |
 | automatic billing | receipts as CSV and PDF are included, a payment integration is not |
 | OCR, image generation, speech input and output | not included. Scanned PDF files are not read as text |

@@ -6,10 +6,11 @@
  * DiagrammArchitektur.astro. Die Beschriftungen haengen an der Sprache der
  * Seite, die Stilklassen liegen global in src/styles/eucowork.css.
  */
-const en = Astro.url.pathname.startsWith('/docs/en');
+const segment = Astro.url.pathname.replace(/^\/docs\/?/, '').split('/')[0];
+const sprache = ['en', 'fr', 'it', 'es'].includes(segment) ? segment : 'de';
 
-const t = en
-  ? {
+const T = {
+    en: {
       titel: 'How a tool request travels through the permission check',
       beschreibung:
         'A person asks a question and the model decides to call a tool. The call is checked against the permission rules before it reaches the connector. If access is denied, the person gets a plain text message and the target system never sees the request. If access is allowed, the connector queries the target system and the result goes back to the model. Either way the decision is logged.',
@@ -26,8 +27,62 @@ const t = en
       ziel: 'Target system',
       zielSub: 'its own permissions apply on top',
       ergebnis: 'Result returned to the model',
-    }
-  : {
+    },
+    fr: {
+      titel: 'Le parcours d’une requête d’outil à travers le contrôle des droits',
+      beschreibung:
+        'Une personne pose une question et le modèle décide d’appeler un outil. L’appel est vérifié contre les règles de droits avant d’atteindre le connecteur. En cas de refus, la personne reçoit un message en clair et le système cible ne voit jamais la requête. En cas d’autorisation, le connecteur interroge le système cible et le résultat retourne au modèle. Dans les deux cas, la décision est journalisée.',
+      frage: 'Question dans le chat',
+      frageSub: 'le modèle décide d’utiliser un outil',
+      pruefung: 'Contrôle des droits',
+      pruefungSub: 'chaque appel est vérifié et journalisé',
+      verweigert: 'refusé',
+      erlaubt: 'autorisé',
+      meldung: 'Message dans le chat',
+      meldungSub: 'le système cible ne voit pas la requête',
+      konnektor: 'Connecteur',
+      konnektorSub: 'propose les outils d’un système cible',
+      ziel: 'Système cible',
+      zielSub: 'ses propres droits s’appliquent en plus',
+      ergebnis: 'Résultat renvoyé au modèle',
+    },
+    it: {
+      titel: 'Percorso di una richiesta di strumento attraverso la verifica dei diritti',
+      beschreibung:
+        'Una persona pone una domanda e il modello decide di richiamare uno strumento. La chiamata viene verificata rispetto alle regole dei diritti prima di raggiungere il connettore. In caso di rifiuto la persona riceve un messaggio in chiaro e il sistema di destinazione non vede mai la richiesta. In caso di autorizzazione il connettore interroga il sistema di destinazione e il risultato torna al modello. In entrambi i casi la decisione viene registrata.',
+      frage: 'Domanda nella chat',
+      frageSub: 'il modello decide di usare uno strumento',
+      pruefung: 'Verifica dei diritti',
+      pruefungSub: 'ogni chiamata viene verificata e registrata',
+      verweigert: 'negato',
+      erlaubt: 'consentito',
+      meldung: 'Messaggio nella chat',
+      meldungSub: 'il sistema di destinazione non vede la richiesta',
+      konnektor: 'Connettore',
+      konnektorSub: 'offre gli strumenti di un sistema di destinazione',
+      ziel: 'Sistema di destinazione',
+      zielSub: 'valgono in aggiunta i suoi diritti',
+      ergebnis: 'Risultato di ritorno al modello',
+    },
+    es: {
+      titel: 'Recorrido de una petición de herramienta por el control de permisos',
+      beschreibung:
+        'Una persona formula una pregunta y el modelo decide llamar a una herramienta. La llamada se comprueba contra las reglas de permisos antes de llegar al conector. Si se deniega, la persona recibe un mensaje en texto claro y el sistema de destino nunca ve la petición. Si se permite, el conector consulta el sistema de destino y el resultado vuelve al modelo. En ambos casos la decisión queda registrada.',
+      frage: 'Pregunta en el chat',
+      frageSub: 'el modelo decide usar una herramienta',
+      pruefung: 'Control de permisos',
+      pruefungSub: 'cada llamada se comprueba y se registra',
+      verweigert: 'denegado',
+      erlaubt: 'permitido',
+      meldung: 'Mensaje en el chat',
+      meldungSub: 'el sistema de destino no ve la petición',
+      konnektor: 'Conector',
+      konnektorSub: 'ofrece las herramientas de un sistema de destino',
+      ziel: 'Sistema de destino',
+      zielSub: 'sus propios permisos se aplican además',
+      ergebnis: 'Resultado de vuelta al modelo',
+    },
+    de: {
       titel: 'Weg einer Werkzeug-Anfrage durch die Rechteprüfung',
       beschreibung:
         'Eine Person stellt eine Frage, das Modell ruft ein Werkzeug auf. Der Aufruf wird gegen die Rechteregeln geprüft, bevor er den Konnektor erreicht. Bei Verweigerung erhält die Person eine Klartext-Meldung, das Zielsystem sieht die Anfrage nie. Bei Erlaubnis fragt der Konnektor das Zielsystem ab und das Ergebnis geht zurück an das Modell. In beiden Fällen wird die Entscheidung protokolliert.',
@@ -44,7 +99,10 @@ const t = en
       ziel: 'Zielsystem',
       zielSub: 'dessen eigene Rechte gelten zusätzlich',
       ergebnis: 'Ergebnis zurück an das Modell',
-    };
+    },
+};
+
+const t = T[sprache];
 ---
 
 <figure class="euc-diagramm">

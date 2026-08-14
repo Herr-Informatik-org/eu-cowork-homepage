@@ -1,0 +1,140 @@
+---
+title: ¿Qué es EU Cowork AI?
+description: Visión general de la plataforma, sus límites y su licencia. Para responsables de TI que deciden si EU Cowork AI encaja.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI es una plataforma de chat con IA para empresas que se ejecuta en un servidor propio.
+Esta página explica en pocos minutos qué es el sistema, de qué se compone, qué sabe hacer y qué
+no hace deliberadamente. Se dirige a los responsables de TI que están ante la decisión de adoptar
+la plataforma.
+
+## Para quién está pensada la plataforma
+
+Hay tres situaciones de partida. Se diferencian en quién opera el servidor, no en lo que la
+plataforma sabe hacer.
+
+| Situación de partida | Quién opera el servidor | Qué hace usted |
+|---|---|---|
+| **Usted usa la plataforma por su cuenta** | su propio departamento de TI | montar el servidor, instalar la instancia, invitar al personal |
+| **Es cliente pyme y delega la operación** | su proveedor de servicios de TI | recibe una instancia lista y trabaja en el chat y en la administración |
+| **Es proveedor de servicios de TI** | usted, para varios clientes | una instancia propia por cliente, en una máquina propia o compartida |
+
+El tercer caso es el motivo de muchas decisiones de diseño: un cliente es siempre una instancia
+propia, completamente separada, con su propia base de datos, sus propios archivos y su propia clave
+de inferencia. Más sobre ello en [Arquitectura](/docs/es/erste-schritte/architektur).
+
+## De qué se compone el sistema
+
+La interfaz de chat es [LibreChat](https://www.librechat.ai), una plataforma de código abierto bajo
+licencia MIT. De ahí proceden el chat, los agentes, el procesamiento de archivos y la conexión con
+los modelos, es decir, la aplicación que ve su personal. El fork se mantiene deliberadamente cerca
+del original para que las actualizaciones sigan siendo posibles.
+
+Nosotros hemos añadido todo lo que una empresa necesita para una operación ordenada: administración
+de usuarios, roles y permisos, un control de permisos con registro antes de cada acceso a un
+sistema ajeno, una vista del consumo con presupuestos, un área de chat en Outlook y un paquete de
+instalación para el servidor propio.
+
+## Qué sabe hacer la plataforma
+
+Tras la instalación están disponibles, entre otras cosas: chat con streaming e historial, un
+selector de modelos con fichas curadas, subir archivos como contexto, comprensión de imágenes en
+las fichas adecuadas, Artifacts como diagramas y HTML directamente en el chat, uso de agentes, el
+armazón para capacidades como procesos estándar cuyos contenidos crea usted mismo, una memoria a
+largo plazo con opción de desactivarla y la búsqueda de texto completo en conversaciones
+anteriores.
+
+Tres funciones están deliberadamente desactivadas en el estado de entrega, porque necesitan piezas
+adicionales y de lo contrario llevarían a un botón muerto:
+
+| Función | Por qué está desactivada | Qué hace falta |
+|---|---|---|
+| Búsqueda de archivos sobre los documentos subidos | necesita servicios adicionales | activarla durante la puesta en marcha |
+| Ejecución de código, por ejemplo para generar un archivo Excel | necesita un backend de código | activarla durante la puesta en marcha |
+| Panel de parámetros para la temperatura y similares | innecesario para quien no programa | se puede reactivar por rol |
+
+## Qué no hace la plataforma deliberadamente
+
+- **Sin multitenencia dentro de la aplicación.** Un cliente es una instancia propia. Es una
+  decisión deliberada, porque así la separación queda por debajo de la aplicación.
+- **Los usuarios no crean sus propios conectores.** Qué sistemas ajenos son alcanzables lo decide
+  exclusivamente la administración.
+- **Los conectores de ejemplo incluidos trabajan exclusivamente en modo de lectura.** No traen
+  herramientas que modifiquen algo en el sistema ajeno. Una herramienta que no existe no puede
+  invocarse por descuido.
+- **El complemento de Outlook nunca envía automáticamente.** Un borrador aparece en la ventana de
+  respuesta habitual; el envío sigue en manos de la persona.
+
+## Qué significa aquí código abierto
+
+El producto en su conjunto se publica bajo la licencia MIT. En la práctica eso significa:
+
+- **Sin restricción por puestos.** El número de usuarios no está limitado técnicamente en ninguna
+  parte ni tiene tope alguno por la licencia.
+- **Sin restricción de funciones.** No hay una edición Enterprise con funciones adicionales. Lo que
+  está en el repositorio es el conjunto completo de funciones.
+- **Sin marca impuesta.** Nombre, logotipo y texto de bienvenida son configuración.
+- **El autoalojamiento es gratuito.** Se pagan la operación, el soporte y la integración, si
+  quiere obtenerlos de alguien.
+
+El panel de administración oficial de LibreChat está bajo la AGPL y por eso deliberadamente **no**
+se utiliza. En su lugar hay una administración propia con licencia permisiva. Así el producto en su
+conjunto queda libre de obligaciones de copyleft.
+
+## Dónde están los datos
+
+Las conversaciones, los mensajes, los usuarios y los datos de consumo están en la base de datos de
+su propia instancia. Los archivos subidos están al lado, en el mismo servidor. No hay ningún canal
+de retorno hacia nosotros y la telemetría está desactivada.
+
+Para las respuestas del modelo, en cambio, los contenidos salen del servidor, porque la carga de
+cálculo recae en el proveedor de inferencia. El valor predeterminado es **EuRouter**, donde el
+procesamiento se realiza en la UE. **OpenRouter** se puede activar opcionalmente y **no** es
+residente en la UE. Las fichas de modelo fuera de la UE están señaladas de forma visible en la
+interfaz.
+
+<Aside type="note" title="Búsqueda web y residencia de los datos">
+El motor de búsqueda se ejecuta en su instancia, pero reenvía la consulta a motores de búsqueda
+externos sin transmitir la identidad del usuario. La afirmación «todo se queda en la UE» vale para
+el almacenamiento y la inferencia, no para la búsqueda web.
+</Aside>
+
+Hay una instancia alojada en Suiza. Dónde está su propia instancia lo decide usted con la elección
+del servidor.
+
+## Alcance y delimitación
+
+Para que pueda contrastar limpiamente el alcance funcional con sus requisitos, aquí están las áreas
+que no forman parte del suministro o que exigen una decisión durante la puesta en marcha.
+
+| Área | Estado |
+|---|---|
+| Búsqueda web | El motor de búsqueda se ejecuta en la instancia. El scraper lo elige usted según sus exigencias de residencia de los datos y lo registra durante la puesta en marcha |
+| Conexiones salientes de la ejecución de código | se definen durante la puesta en marcha. En el estado de entrega la ejecución de código está desactivada |
+| Aprovisionamiento de usuarios mediante SCIM | no incluido. Las cuentas nacen con el primer inicio de sesión mediante OIDC, la retirada del acceso se gestiona a través del proveedor de identidad |
+| Facturación automática | los justificantes en CSV y PDF están incluidos, una integración de pagos no |
+| OCR, generación de imágenes, entrada y salida de voz | no incluido. Los archivos PDF escaneados no se leen como texto |
+
+## Continuar
+
+<CardGrid>
+  <LinkCard
+    title="Requisitos del sistema"
+    href="/docs/es/erste-schritte/systemanforderungen"
+    description="Lo que una instancia necesita de CPU, memoria y espacio en disco."
+  />
+  <LinkCard
+    title="Inicio rápido"
+    href="/docs/es/erste-schritte/schnellstart"
+    description="El camino hacia una instancia propia, a grandes rasgos."
+  />
+  <LinkCard
+    title="Arquitectura"
+    href="/docs/es/erste-schritte/architektur"
+    description="Qué camino toma una petición y por qué cada cliente recibe una instancia propia."
+  />
+</CardGrid>

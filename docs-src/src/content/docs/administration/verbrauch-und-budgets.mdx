@@ -14,18 +14,18 @@ Die Verbrauchsmessung ist immer aktiv. Sie zeigt, was die Nutzung tatsächlich k
 Grundlage sind die Tokens jeder einzelnen Anfrage, getrennt nach Eingabe und Ausgabe. Daraus entsteht ein Betrag pro Anfrage, den das Panel nach Person, Modell, Tag und Monat aufsummiert. Die Modellpreise sind in der Konfiguration hinterlegt und lassen sich aus dem Katalog des Anbieters übernehmen; abgerechnet wird in Euro zu einem Wechselkurs, der pro Abrechnungsmonat eingefroren wird. Abgeschlossene Monate und ihre Belege bleiben damit, wie sie waren.
 
 <Aside type="caution" title="Preise pflegen lohnt sich">
-Fehlt für ein Modell der Preis, wird mit einem Pauschalwert gerechnet. Die Auswertung sieht dann plausibel aus und ist trotzdem falsch. Gleiches gilt für die Kontextgrösse: ohne gepflegten Wert wird konservativ angenommen, und lange Konversationen werden früher beschnitten, als das Modell es nötig hätte.
+Pflegen Sie zu jedem eingesetzten Modell den Preis und die Kontextgrösse. Fehlen diese Angaben, arbeitet die Auswertung mit Annahmen: sie sieht dann plausibel aus und ist trotzdem falsch, und lange Konversationen werden früher beschnitten als nötig.
 </Aside>
 
 ## Monatsbudget und persönliche Limits
 
 Für die Organisation lässt sich ein **gemeinsames Monatsbudget** in Euro setzen. Es ist ein gemeinsamer Monats-Tank, kein Betrag pro Person. Ohne Eintrag gibt es kein Budget. Auf der Übersicht wird der Stand gegen den realen Verbrauch gestellt, mit Warnung und Hochrechnung, bevor es knapp wird.
 
-Ob das Budget nur angezeigt oder auch durchgesetzt wird, entscheidet ein Schalter. Im Auslieferungszustand ist er **aus**:
+Ob das Budget nur angezeigt oder auch durchgesetzt wird, entscheiden Sie mit einem Schalter:
 
 | Einstellung | Wirkung |
 | --- | --- |
-| aus (Standard) | Das Budget ist reine Anzeige. Niemand wird ausgesperrt. |
+| aus | Das Budget ist reine Anzeige. Niemand wird ausgesperrt. |
 | an | Ist das Budget aufgebraucht, werden neue Anfragen abgelehnt, für **alle** Konten inklusive der Administratoren. Im Chat erscheint eine Hinweisleiste. Das Panel selbst bleibt bedienbar. |
 
 Eine Budget-Erhöhung, das Ausschalten des Schalters und der Monatswechsel heben die Sperre wieder auf.
@@ -33,7 +33,7 @@ Eine Budget-Erhöhung, das Ausschalten des Schalters und der Monatswechsel heben
 Zusätzlich lässt sich pro Person ein **Monatslimit** setzen.
 
 <Aside type="caution" title="Der Pool schlägt das persönliche Limit">
-Persönliche Limits greifen nur bei eingeschalteter Durchsetzung, es ist derselbe Schalter. Und wichtiger: ist der gemeinsame Topf leer, stehen alle auf null, auch wer sein eigenes Limit noch längst nicht ausgeschöpft hat. Das persönliche Limit ist eine zusätzliche Bremse, keine Reservierung.
+Ist der gemeinsame Topf leer, stehen alle auf null, auch wer sein eigenes Limit noch längst nicht ausgeschöpft hat. Das persönliche Limit ist eine zusätzliche Bremse, keine Reservierung.
 </Aside>
 
 ## Guthaben: zwei Bedeutungen

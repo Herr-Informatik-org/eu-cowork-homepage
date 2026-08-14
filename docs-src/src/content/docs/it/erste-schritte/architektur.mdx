@@ -1,0 +1,80 @@
+---
+title: Architettura
+description: La struttura a grandi linee — l’accesso attraverso un reverse proxy, l’applicazione dietro, la gestione dei dati accanto e i fornitori di modelli all’esterno.
+sidebar:
+  order: 2
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import DiagrammArchitektur from '../../../../components/DiagrammArchitektur.astro';
+
+EU Cowork AI gira in container su una macchina Linux. Questa pagina mostra la
+struttura a grandi linee. Descrive quale percorso prenda una richiesta e quali decisioni ci stiano
+dietro — non la messa in opera nel dettaglio.
+
+## Il flusso dei dati
+
+<DiagrammArchitektur />
+
+Due cose sono essenziali. Primo, ogni via dall’esterno passa dal reverse proxy; gli altri servizi non
+accettano connessioni dalla rete. Secondo, account, conversazioni e file restano sul Suo server,
+mentre per le risposte dei modelli stesse viene interpellato il fornitore.
+
+## Gli strati
+
+**Reverse proxy.** L’unico ingresso dall’esterno. Termina il TLS, si occupa del certificato e
+distribuisce le richieste ai servizi dietro di esso.
+
+**Applicazione.** È [LibreChat](https://www.librechat.ai). Il servizio consegna l’interfaccia,
+interpella i fornitori di modelli, esegue gli agenti ed elabora i file caricati.
+
+**Gestione dei dati.** Account, conversazioni, messaggi, agenti e registri risiedono nel database
+dell’istanza, cui si aggiungono un indice di ricerca sulle proprie chat e i file caricati sullo
+stesso server. Il database è la fonte della verità, l’indice di ricerca si può ricostruire da lì
+in qualsiasi momento.
+
+**Le aggiunte di EU Cowork AI.** Attorno a LibreChat stanno servizi propri per amministrazione,
+gestione dei diritti e panoramica del consumo, oltre al collegamento ai sistemi di terzi. Sono
+raggiungibili soltanto all’interno dell’istanza e non stanno in rete.
+
+**Fuori dall’istanza.** Per le risposte dei modelli viene interpellato il fornitore di inferenza, per
+la ricerca web i motori di ricerca esterni. Se l’esecuzione di codice viene attivata, gira in un
+ambiente proprio e separato accanto all’applicazione.
+
+<Aside type="note" title="Che cosa viene da LibreChat">
+Chat, agenti, elaborazione dei file e collegamento ai modelli vengono da LibreChat e sono lì
+documentati pubblicamente. Le aggiunte di EU Cowork AI vi si appoggiano sopra senza modificare il
+nucleo; per questo gli aggiornamenti di LibreChat restano possibili.
+</Aside>
+
+## Perché un’istanza per cliente
+
+LibreChat non conosce i tenant. La separazione si colloca perciò al di sotto dell’applicazione: un
+cliente è un’istanza propria, con database proprio, indice di ricerca proprio, file propri,
+configurazione propria e chiave di inferenza propria. Se poi due istanze condividano una macchina è
+una pura questione di costi e di rischio.
+
+Condivisi possono essere tutt’al più mezzi d’esercizio senza riferimento al cliente. Separati devono
+restare in ogni caso la gestione dei dati, la configurazione con tutte le chiavi e l’ambiente
+dell’esecuzione di codice. Altrimenti né i dati né i costi si possono distinguere pulitamente
+per cliente.
+
+<Aside type="note" title="La documentazione sulla messa in opera">
+Quali servizi porti con sé un’istanza nel dettaglio, come vadano configurati e che cosa considerare
+durante l’esercizio lo descrive la documentazione allegata alla fornitura.
+</Aside>
+
+## Avanti
+
+<CardGrid>
+  <LinkCard
+    title="Requisiti di sistema"
+    href="/docs/it/erste-schritte/systemanforderungen"
+    description="Che cosa richiede un’istanza in CPU, memoria di lavoro e spazio su disco."
+  />
+  <LinkCard
+    title="Che cos’è EU Cowork AI?"
+    href="/docs/it/erste-schritte/ueberblick"
+    description="La panoramica della piattaforma, dei suoi limiti e della sua licenza."
+  />
+</CardGrid>

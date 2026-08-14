@@ -1,0 +1,89 @@
+---
+title: Copia de seguridad y migración
+description: Qué abarca una copia de seguridad de EU Cowork AI, cómo actúa una restauración y en qué consiste una migración a un servidor nuevo.
+sidebar:
+  order: 6
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Copia de seguridad y migración van juntas: técnicamente, una migración no es otra cosa que una
+copia de seguridad en la máquina antigua y su restauración en la nueva. Para ambas, el paquete de
+entrega incluye los medios auxiliares necesarios.
+
+## Qué se guarda
+
+Una copia de seguridad debe abarcar todo el estado de una instancia — y solo el estado. De ello
+forman parte la base de datos con los contenidos de la instancia, los archivos subidos y la
+configuración junto con sus secretos. Los secretos son imprescindibles: sin ellos, una parte de la
+base de datos sigue siendo ilegible incluso después de una restauración completa.
+
+No hace falta guardar lo que se puede derivar de nuevo de ese estado. Esos datos derivados se
+reconstruyen solos tras una restauración. Los registros de tiempo de ejecución tampoco son estado.
+
+## Guardar con regularidad
+
+La copia de seguridad se configura una vez y a partir de entonces se ejecuta de forma programada,
+con una regla de conservación que hace caducar los estados antiguos tras un plazo establecido. La
+frecuencia con la que se guarda se desprende de una sola pregunta: ¿cuánto trabajo puede perderse
+en el peor de los casos?
+
+## La restauración y su efecto
+
+Una restauración es **destructiva**. Sustituye el estado actual de la instancia por el estado de
+la copia de seguridad; lo que haya surgido desde entonces desaparece. Por eso el camino hasta ahí
+exige una confirmación expresa. Trate una restauración como una intervención deliberada y no como
+un gesto rutinario.
+
+## Migración a un servidor nuevo
+
+Una migración pasa por una copia de seguridad de la instancia antigua, la preparación de la
+máquina nueva y la aplicación de ese estado. Tres puntos deciden si sale bien:
+
+- Los secretos de la instancia existente se conservan y no se vuelven a generar.
+- La instancia nueva se comprueba antes de la conmutación, no después.
+- Entre la copia de seguridad determinante y la conmutación no se debe seguir trabajando; de lo
+  contrario, es justamente ese trabajo el que falta en el servidor nuevo.
+
+La copia de la copia de seguridad que se transporta para la migración contiene secretos y
+contenidos de clientes. Bórrela después de la migración; solo permanece la copia de seguridad
+periódica.
+
+<Aside type="danger" title="Conservar las claves de cifrado">
+Es el error más caro de una migración. Si las claves con las que la aplicación cifra los datos en
+la base de datos se vuelven a generar en el servidor nuevo en lugar de conservarse de la
+configuración existente, los datos afectados quedan ilegibles — también en el caso de que la base
+de datos se haya restaurado por completo. Cada persona tendría que volver a establecer sus
+conexiones. Por eso el camino pasa siempre por la configuración procedente de la copia de
+seguridad.
+</Aside>
+
+## Dos recomendaciones que de verdad cuentan
+
+- **Probar la restauración una vez antes de confiar en ella.** Una copia de seguridad que nunca se
+  ha restaurado es una suposición, no una copia de seguridad. La prueba corresponde a una máquina
+  de pruebas, no al sistema productivo.
+- **Duplicar la copia de seguridad fuera del servidor.** Una copia en la misma máquina protege
+  contra un borrado accidental, no contra la pérdida de la máquina. Como una copia de seguridad
+  contiene secretos, solo debe ir cifrada a una nube y nunca a un repositorio.
+
+<Aside type="note" title="Procedimiento en el manual de operación">
+El procedimiento en detalle — copia de seguridad, restauración y migración paso a paso — figura en
+el manual de operación, que se adjunta al paquete de entrega. Los clientes lo reciben junto con su
+acceso.
+</Aside>
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Varias instancias en un servidor"
+    href="/docs/es/betrieb/mehrere-instanzen"
+    description="Qué debe permanecer separado por cliente y qué se puede compartir."
+  />
+  <LinkCard
+    title="Resolución de problemas"
+    href="/docs/es/betrieb/fehlerbehebung"
+    description="Si algo se atasca después de la migración: dónde mirar primero."
+  />
+</CardGrid>

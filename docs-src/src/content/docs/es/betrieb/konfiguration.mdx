@@ -1,0 +1,96 @@
+---
+title: Configuración
+description: Los tres niveles de configuración de EU Cowork AI, qué nivel gana en caso de contradicción y cómo se establece el Domain-Lock.
+sidebar:
+  order: 3
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI se configura en tres sitios. Quien sabe de qué se ocupa cada sitio y qué nivel gana
+en caso de contradicción se ahorra la búsqueda.
+
+## Los tres niveles
+
+| Nivel | Sitio | Contenido | Cuándo surte efecto |
+|---|---|---|---|
+| Infraestructura y secretos | Archivo de entorno de la instancia | Direcciones, claves, parámetros de explotación | tras un reinicio de la aplicación |
+| Comportamiento del producto | `librechat.yaml` | Fichas de modelo, interfaz, conectores, registro | tras un reinicio del servicio de chat |
+| Sobrescrituras en tiempo de ejecución | Panel de administración, página **«Konfiguration»** (configuración) | los mismos ajustes de producto, por instancia, rol o grupo | de inmediato, sin reinicio |
+
+El archivo de entorno nace durante la instalación a partir de una plantilla comentada de principio
+a fin. Allí se indica, para cada valor, para qué se necesita.
+
+## Qué nivel gana
+
+Un valor establecido en el panel se sitúa **por encima** del YAML. El panel escribe sus valores en
+la base de datos, la aplicación los lee en la siguiente llamada y sobreviven a un reinicio. El
+YAML sigue siendo el estado de partida, que se aplica mientras no exista ninguna sobrescritura.
+
+En el panel usted lo reconoce por dos detalles: las secciones con una sobrescritura activa llevan
+la etiqueta **«aus DB-Override»** (procedente de una sobrescritura en la base de datos), y junto
+a cada campo sobrescrito hay un icono para eliminarla.
+
+<Aside type="caution" title="Vaciar un campo no elimina la sobrescritura">
+Quien vacía en el panel un campo sobrescrito guarda un valor vacío y conserva la sobrescritura.
+Al estado del YAML solo se vuelve a través del icono de restablecimiento junto al campo.
+</Aside>
+
+Para las fichas de modelo rige además una cascada propia: **grupo antes que rol antes que base**.
+Los permisos sobre las herramientas, en cambio, corresponden al editor de roles y no a la
+configuración; en la pestaña «Funktionen» (funciones) se descartarían del lado del servidor.
+
+## El bloque `interface`
+
+El bloque `interface` del YAML controla qué se ve en la interfaz: el selector de modelos, la
+búsqueda web, la búsqueda de archivos, la ejecución de código, los preajustes, los marcadores y el
+panel de parámetros. Las funciones cuyos requisitos no se cumplen están desactivadas
+deliberadamente en el estado de entrega — un botón visible y sin efecto es peor que ningún botón.
+
+Aquí son importantes dos reglas:
+
+- **El bloque es global.** Los valores se escriben en todos los roles al arrancar. Por eso una
+  diferencia entre roles no se puede representar en el YAML. Si una herramienta solo debe
+  habilitarse para un rol, deje el campo fuera del YAML y establézcalo en el editor de roles del
+  panel de administración.
+- **Las listas de capacidades sustituyen en lugar de mezclar.** Quien toca la lista de capacidades
+  de los agentes sustituye por completo la lista estándar. No se fusiona nada, así que todo lo que
+  se quiera conservar debe enumerarse de nuevo.
+
+Para las empresas que quieren una interfaz lo más sobria posible, los controles que solo necesitan
+los usuarios avanzados se pueden desactivar en bloque.
+
+## Domain-Lock
+
+El Domain-Lock es el primer paso después de la instalación y debe estar establecido **antes** de
+que la instancia sea accesible bajo su dominio. Lo determinante es la lista de dominios de correo
+electrónico permitidos: ella decide quién puede crear una cuenta siquiera.
+
+La lista se deposita en la configuración de la instancia; esa misma lista la mantiene usted en el
+panel, en **«Konfiguration»** (configuración), en la pestaña «Funktionen» (funciones), en el
+campo **«Erlaubte E-Mail-Domains»** (dominios de correo electrónico permitidos). Vale tanto para
+el autorregistro como para las invitaciones: una invitación a una dirección fuera de la lista no
+surte efecto.
+
+Se puede comprobar con un registro bajo un dominio ajeno; debe ser rechazado.
+
+<Aside type="note" title="Listas de valores completas en el manual de operación">
+Qué valores figuran en la configuración y qué componentes opcionales se pueden activar está
+descrito en el manual de operación, que se adjunta al paquete de entrega. Los clientes lo reciben
+junto con su acceso.
+</Aside>
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Dominio y certificado"
+    href="/docs/es/betrieb/domain-und-tls"
+    description="Las tres variantes de TLS y cuándo necesita usted cada una."
+  />
+  <LinkCard
+    title="Varias instancias en un servidor"
+    href="/docs/es/betrieb/mehrere-instanzen"
+    description="Qué debe permanecer separado por cliente y qué se puede compartir."
+  />
+</CardGrid>

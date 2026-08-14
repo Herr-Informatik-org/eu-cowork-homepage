@@ -1,0 +1,50 @@
+---
+title: Requisitos del sistema
+description: Lo que una instancia gestionada por usted mismo necesita de CPU, memoria, espacio en disco y sistema operativo.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Esta página indica a grandes rasgos qué hardware necesita una instancia gestionada por usted
+mismo. Está pensada para quienes encargan una VM o valoran una máquina existente.
+
+## Valores orientativos
+
+| | Valor orientativo |
+|---|---|
+| CPU | de dos a cuatro vCPU |
+| Memoria | de cuatro a dieciséis GB, según el número de usuarios |
+| Espacio en disco | unas cuantas docenas de GB, con reserva para los archivos subidos |
+| Sistema operativo | una distribución de Linux extendida con soporte a largo plazo |
+
+La necesidad de disco crece sobre todo con los archivos subidos; quien almacena mucho planifica con
+holgura desde el principio. Las instancias pequeñas son expresamente admisibles.
+
+La carga de CPU es baja en operación normal, porque el cálculo se realiza en el proveedor de
+inferencia. Los picos surgen solo con algunas funciones adicionales. Con el número de usuarios
+crece sobre todo la necesidad de memoria de la aplicación; para una plantilla mayor merece la pena
+una VM propia por instancia.
+
+## Sistema operativo y entorno de ejecución de contenedores
+
+Se recomienda una distribución de Linux extendida con soporte a largo plazo. En otras
+distribuciones la instalación sigue funcionando, pero puede comportarse de otro modo.
+
+Es obligatorio un **entorno de ejecución de contenedores actual con soporte de Compose**. Obténgalo
+de la fuente de paquetes oficial del fabricante; los paquetes de algunas distribuciones no traen el
+alcance necesario.
+
+## Espacio en disco
+
+Las imágenes de contenedor ocupan una sola vez unos cuantos gigabytes. Después crecen sobre todo
+tres cosas: los archivos subidos, la base de datos y los registros.
+
+El espacio en disco es el primer límite en la operación, no la memoria. Vigile la ocupación y
+limpie con regularidad las imágenes que ya no se necesiten.
+
+<Aside type="note" title="La documentación sobre la puesta en marcha">
+Los requisitos de red, acceso y sistema operativo en detalle los describe la documentación que se
+entrega junto con el producto. Forma parte del paquete de instalación.
+</Aside>

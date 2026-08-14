@@ -1,0 +1,57 @@
+---
+title: Dépannage
+description: Où regarder en premier en cas de panne et quels groupes de causes se cachent le plus souvent derrière les incidents rencontrés dans l’exploitation d’EU Cowork AI.
+sidebar:
+  order: 8
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+La plupart des pannes se laissent rattacher à un groupe de causes en quelques minutes. Cette page
+montre où regarder pour cela. Le dépannage détaillé figure dans le manuel d’exploitation, qui est
+fourni avec le paquet de livraison.
+
+## Où regarder en premier
+
+1. **Panneau d’administration, page « Logs » (journaux).** Elle montre les requêtes une à une
+   avec le modèle, la durée et le coût, ces mêmes requêtes regroupées par conversation, les
+   erreurs du complément Outlook et les journaux du serveur. Voir
+   [Journaux et audit](/docs/fr/administration/protokolle-und-audit).
+2. **Page « Zugriffe » (accès) de la personne concernée.** Pour savoir pourquoi quelqu’un ne voit
+   pas un connecteur, c’est la réponse la plus rapide : elle indique, par connecteur, le niveau de
+   règle déterminant.
+3. **Le niveau serveur seulement ensuite.** Ce qui ne devient pas visible dans le panneau, ce sont
+   les pannes qui surviennent déjà au démarrage de l’application.
+
+## Les groupes de causes les plus fréquents
+
+| Symptôme | Où se situe la cause la plupart du temps |
+|---|---|
+| Les réponses n’arrivent pas ou tombent en dépassement de délai | L’instance n’atteint pas Internet — typiquement un client VPN, un proxy d’entreprise ou une route réseau en conflit. Plus rarement une clé non valable du fournisseur d’inférence. |
+| Une fonction est visible mais ne fait rien | Le composant facultatif correspondant ne tourne pas ou n’est pas configuré. Concerne surtout la recherche de fichiers, l’exécution de code et la recherche web. |
+| Un service redémarre à répétition après l’installation | Les droits d’accès sur les espaces de stockage de l’instance. Sur le chemin d’installation régulier, cela ne se produit pas. |
+| Les réponses n’apparaissent qu’à la fin, d’un seul coup | Une appliance en amont met le flux de réponse en mémoire tampon, voir [Domaine et certificat](/docs/fr/betrieb/domain-und-tls). |
+| Après une migration, chaque personne doit reconnecter ses connecteurs | Les clés de chiffrement ont été régénérées au lieu d’être reprises, voir [Sauvegarde et migration](/docs/fr/betrieb/backup-und-umzug). |
+| Après une mise à jour, quelque chose ne va plus dans l’interface | La configuration ne correspond plus à l’état actuel, ou il y manque une nouvelle valeur. |
+
+<Aside type="tip" title="Si rien de tout cela ne correspond">
+Notez ce qui a été modifié en dernier et comparez votre configuration avec le modèle fourni. Une
+grande partie des pannes restantes tient à une valeur manquante ou à une configuration qui, après
+une mise à jour, ne correspond plus à l’état actuel. Si cela ne vous mène pas plus loin, la voie
+de support prévue dans votre contrat prend le relais.
+</Aside>
+
+## Pour continuer
+
+<CardGrid>
+  <LinkCard
+    title="Configuration"
+    href="/docs/fr/betrieb/konfiguration"
+    description="Quel niveau l’emporte et où chaque réglage est entretenu."
+  />
+  <LinkCard
+    title="Sauvegarde et migration"
+    href="/docs/fr/betrieb/backup-und-umzug"
+    description="Sauvegarder, restaurer et déménager vers un nouveau serveur."
+  />
+</CardGrid>

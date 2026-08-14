@@ -15,9 +15,9 @@ Mit Ihrer Instanz erhalten Sie eine Anleitung, die den Weg vom Anlegen bis zur F
 
 ## Was Sie vorher klären
 
-- **Der technische Name.** Unter diesem Namen läuft der Konnektor in Ihrer Instanz. Er ist später nicht umbenennbar, weil die Rechteregeln daran hängen. Wählen Sie ihn also sprechend und dauerhaft, zum Beispiel `crm-lesen`.
+- **Der technische Name.** Unter diesem Namen läuft der Konnektor in Ihrer Instanz. Er lässt sich später nicht ohne Weiteres ändern. Wählen Sie ihn also sprechend und dauerhaft.
 - **Die Adresse, unter der der Konnektor MCP spricht.** Der Dienst muss aus Ihrer Instanz heraus erreichbar sein.
-- **Die Zugangsdaten zum Zielsystem.** Sie gehören ausschliesslich als Referenz auf eine Umgebungsvariable in die Konfiguration, nie im Klartext. Den Wert selbst hinterlegen Sie unter **Einstellungen → API-Schlüssel**. Gespeicherte Schlüssel sind write-only, sie werden nie wieder angezeigt, anpassen heisst überschreiben.
+- **Die Zugangsdaten zum Zielsystem.** Sie gehören nie im Klartext in die Konfiguration, sondern ausschliesslich als Referenz auf einen hinterlegten Schlüssel.
 - **Das Konto hinter den Zugangsdaten.** Es ist die eigentliche Datengrenze. Geben Sie ihm im Zielsystem genau die Rechte und genau die Bereiche, die der Anwendungsfall braucht, siehe [Muster für Konnektoren](/docs/konnektoren/muster).
 - **Eine kurze Anleitung in Prosa** dazu, wann dieses Werkzeug benutzt werden soll und was es nicht kann. Sie wird nur eingefügt, wenn der Konnektor aktiv ist, und verbessert die Trefferquote spürbar.
 
@@ -38,18 +38,16 @@ Das Ergebnis dieser Prüfung kann durchaus „wir bauen selbst" lauten, gerade w
 
 ## Freigabe ist ein eigener Schritt
 
-Ein angelegter Konnektor ist noch kein freigegebener Konnektor, und ohne gesetzte Regel wird nicht automatisch gesperrt.
+Ein angelegter Konnektor ist noch kein freigegebener Konnektor.
 
-<Aside type="danger" title="Server-Standard im selben Arbeitsschritt auf verweigert">
-Setzen Sie den **Server-Standard** auf verweigert und speichern Sie, bevor Sie irgendetwas anderes tun. Danach geben Sie gezielt die Rollen, Gruppen oder Personen frei, die den Konnektor brauchen. Wie die Entscheidung zustande kommt, steht unter [Rechte und Freigaben](/docs/konnektoren/gateway-und-rechte).
+<Aside type="danger" title="Standardregel im selben Arbeitsschritt auf verweigert">
+Setzen Sie die **Standardregel** des Konnektors auf verweigert, bevor Sie irgendetwas anderes tun. Danach geben Sie gezielt die Rollen, Gruppen oder Personen frei, die den Konnektor brauchen. Wie die Entscheidung zustande kommt, steht unter [Rechte und Freigaben](/docs/konnektoren/gateway-und-rechte).
 </Aside>
 
 Prüfen Sie die Freigabe zum Schluss mit zwei Testpersonen mit unterschiedlichen Rechten. Sehen beide dasselbe, greift Ihre Rechtegrenze nicht.
 
 ## Wenn etwas nicht funktioniert
 
-- **Der Verbindungstest im Panel** baut vom Server aus eine echte MCP-Verbindung auf und meldet, an welcher Stelle es scheitert. Getestet wird der aktuelle Formularstand, auch noch nicht gespeicherte Änderungen. Der Schlüssel verlässt den Server dabei nicht. Der Test prüft die Verbindung, **nicht die Rechte**.
-- **Ein Werkzeug meldet „Zugriff verweigert".** Das ist kein Fehler, sondern die Rechteregel. Prüfen Sie **Verwaltung → MCP-Zugriff** und die Unterseite **Zugriffe** der betroffenen Person.
-- **Der Konnektor bleibt im Chat unsichtbar, obwohl der Test grün ist.** Der Werkzeug-Katalog wird pro Person zwischengespeichert. Nach einem Neustart der Instanz ist er wieder aktuell.
-- **Der Dienst ist nicht erreichbar.** Verbindungen zu internen Hosts und privaten Adressen sind standardmässig blockiert. Der Host muss unter **Konfiguration → Funktionen → Erlaubte MCP-Hosts** eingetragen sein.
-- **Die referenzierte Variable ist leer.** Dann bekommt der Konnektor einen leeren Schlüssel und das Zielsystem lehnt ab. Prüfen Sie den hinterlegten Wert.
+- **Ein Werkzeug meldet „Zugriff verweigert".** Das ist kein Fehler, sondern die Rechteregel. Prüfen Sie die Freigaben für die betroffene Person, siehe [Rechte und Freigaben](/docs/konnektoren/gateway-und-rechte).
+- **Der Konnektor antwortet nicht.** Prüfen Sie zuerst, ob der Dienst aus Ihrer Instanz heraus erreichbar ist, und danach die hinterlegten Zugangsdaten zum Zielsystem.
+- **Die Prüfschritte im Einzelnen** beschreibt die Anleitung, die Ihrer Auslieferung beiliegt. Sie führt auch den Verbindungstest auf, der eine Anbindung unabhängig von den Rechten prüft.

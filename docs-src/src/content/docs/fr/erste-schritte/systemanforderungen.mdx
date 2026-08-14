@@ -1,0 +1,50 @@
+---
+title: Configuration requise
+description: Ce qu’une instance exploitée par vos soins demande en CPU, en mémoire vive, en espace disque et en système d’exploitation.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Cette page dit à grands traits ce qu’une instance exploitée par vos soins demande en matériel. Elle
+s’adresse à ceux qui commandent une VM ou évaluent une machine existante.
+
+## Valeurs indicatives
+
+| | Valeur indicative |
+|---|---|
+| CPU | deux à quatre vCPU |
+| Mémoire vive | quatre à seize GB, selon le nombre d’utilisateurs |
+| Espace disque | quelques dizaines de GB, avec une réserve pour les fichiers téléversés |
+| Système d’exploitation | une distribution Linux répandue avec support à long terme |
+
+Le besoin en espace disque croît avant tout avec les fichiers téléversés ; qui en dépose beaucoup
+voit plus large dès le départ. Les petites instances sont expressément admises.
+
+La charge CPU est faible en fonctionnement normal, car le calcul a lieu chez le fournisseur
+d’inférence. Des pointes ne surviennent qu’avec certaines fonctions supplémentaires. Ce qui croît
+avec le nombre d’utilisateurs, c’est avant tout le besoin en mémoire vive de l’application ; pour un
+effectif important, une VM dédiée par instance vaut la peine.
+
+## Système d’exploitation et environnement d’exécution de conteneurs
+
+Il est recommandé d’utiliser une distribution Linux répandue avec support à long terme. Sur d’autres
+distributions, l’installation continue de fonctionner, mais peut diverger.
+
+Un **environnement d’exécution de conteneurs récent avec prise en charge de Compose** est
+impératif. Procurez-vous-le depuis la source de paquets officielle du fabricant ; les paquets de
+certaines distributions n’apportent pas l’étendue nécessaire.
+
+## Espace disque
+
+Les images de conteneurs occupent quelques gigaoctets une fois pour toutes. Ensuite, trois choses
+croissent avant tout : les fichiers téléversés, la base de données et les journaux.
+
+L’espace disque est la première limite en exploitation, non la mémoire vive. Surveillez l’occupation
+et faites régulièrement le ménage des images dont vous n’avez plus besoin.
+
+<Aside type="note" title="La documentation de mise en place">
+Les exigences en matière de réseau, d’accès et de système d’exploitation sont décrites dans le
+détail par les documents fournis avec la livraison. Ils font partie du paquet d’installation.
+</Aside>

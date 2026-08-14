@@ -1,0 +1,137 @@
+---
+title: Fichiers et connaissances
+description: Joindre des fichiers à un message, la recherche de fichiers dans un fonds documentaire et la recherche dans ses propres chats. Ce qui est actif par défaut et ce qui ne l’est pas.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Cette page distingue trois choses que l’on confond sans cesse au quotidien : joindre un fichier à
+un message, rendre tout un fonds documentaire consultable et rechercher dans ses propres
+conversations. Deux d’entre elles sont disponibles dès l’installation, la troisième non.
+
+## Trois choses, un seul mot
+
+| Ce que vous voulez | Comment cela s’appelle | État à la livraison |
+|---|---|---|
+| Le collègue doit lire ce fichier précis, maintenant | Joindre un fichier (contexte) | **activé** |
+| Un fonds de nombreux documents doit rester consultable durablement | Recherche de fichiers, aussi appelée RAG, abréviation de retrieval-augmented generation, soit des réponses construites à partir de passages retrouvés | **désactivé**, mis en place par l’administrateur |
+| Je cherche un passage dans mes anciens chats | Recherche en texte intégral dans les conversations | **activé** |
+
+Le traitement des fichiers provient de [LibreChat](https://www.librechat.ai/docs), tout comme
+l’interface RAG qui se trouve derrière.
+
+## Joindre un fichier à un message
+
+C’est le cas normal. Vous joignez un document à votre message, son contenu passe dans le contexte
+de cette conversation et vous posez votre question à son sujet. On joint un fichier par le menu
+du champ de saisie ou en le faisant glisser sur la fenêtre de chat.
+
+C’est indiqué pour des documents isolés : vérifier un contrat, résumer un procès-verbal, faire
+analyser un tableau. Le contenu reste dans cette conversation et ne devient pas un fonds
+consultable.
+
+### Formats
+
+Les formats bureautiques et textuels habituels sont traités, entre autres PDF, Word (`.docx`),
+Excel (`.xlsx`), PowerPoint (`.pptx`), texte, Markdown, CSV, JSON et XML. Les images aux formats
+JPEG, PNG, GIF et HEIC passent également, mais uniquement sur une fiche de modèle qui comprend
+les images. Sur une fiche purement textuelle, une image reste sans effet, voir
+[Chat et modèles](/docs/fr/funktionen/chat-und-modelle).
+
+La liste exacte des types de fichiers autorisés est configurable. Où, c’est expliqué plus bas dans
+la section destinée aux administrateurs.
+
+### Limites
+
+Le nombre de fichiers que vous pouvez joindre par message et la taille maximale d’un fichier sont
+fixés par l’administrateur. Le réglage par défaut est généreux et constitue rarement la véritable
+limite. Ce qui compte davantage en pratique, c’est la quantité de texte qu’un modèle peut lire en
+une requête. Un document de plusieurs centaines de pages remplit le contexte, chasse le reste de
+la conversation et dégrade la réponse. C’est pour de tels fonds qu’existe la recherche de
+fichiers.
+
+<Aside type="caution" title="Les documents numérisés ont besoin d’une couche de texte">
+La reconnaissance de texte ne fait pas partie de la livraison. Un PDF composé uniquement d’images,
+par exemple un contrat numérisé ou un justificatif photographié, ne contient aucun texte
+exploitable. Cela vaut pour le chat web comme pour l'[Add-in Outlook](/docs/fr/funktionen/outlook-add-in).
+
+La voie habituelle : convertir au préalable le document en PDF texte consultable avec l’outil de
+votre choix — beaucoup de scanners et de systèmes de gestion documentaire le font de toute façon
+— ou copier le texte et le coller dans le chat.
+</Aside>
+
+## Recherche de fichiers dans un fonds documentaire
+
+La recherche de fichiers est autre chose que le fait de joindre un fichier. Les documents
+téléversés sont découpés en sections et stockés de façon à être trouvés non par mots-clés, mais
+par proximité de sens. En réponse à une question, le collègue va alors chercher précisément les
+sections pertinentes au lieu de placer le document entier dans le contexte.
+
+L’avantage apparaît avec des documents nombreux et longs : une poignée de manuels, un recueil de
+directives, les archives d’un projet. Au lieu de « lis ces 400 pages », la consigne devient
+« trouve les trois passages qui répondent à ma question ».
+
+<Aside type="note" title="Désactivée à la livraison">
+La recherche de fichiers est désactivée d’origine, car elle suppose des composants
+supplémentaires et un fournisseur pour les embeddings. Ainsi, après l’installation, seul ce qui
+fonctionne réellement est visible. Comment l’activer est expliqué ci-dessous.
+</Aside>
+
+## Recherche en texte intégral dans ses propres chats
+
+La recherche de la barre latérale porte sur vos conversations, pas sur vos documents. Elle trouve
+l’endroit où quelque chose a été discuté. Cette recherche est toujours active, elle n’a besoin
+d’aucun fournisseur d’embeddings.
+
+## Pour les administrateurs
+
+### Activer la recherche de fichiers
+
+<Steps>
+
+1. **Renseigner un fournisseur pour les embeddings.** Sans lui, les documents ne peuvent pas être
+   préparés pour la recherche par le sens. Qui veut tenir le positionnement UE choisit un
+   fournisseur dont le traitement reste résident dans l’UE.
+
+2. **Mettre à disposition les composants supplémentaires nécessaires.** La recherche de fichiers
+   apporte son propre service pour préparer et interroger les documents ; il n’est sollicité qu’en
+   interne.
+
+3. **Activer l’interface.** Le commutateur n’apparaît dans le chat qu’après cela.
+
+4. **Vérifier le droit de rôle.** Dans l’éditeur de rôles, sous **« Werkzeuge »** (outils), figure
+   le droit **« Datei-Suche (RAG) »** (recherche de fichiers) accompagné de la mention
+   « Hochgeladene Dokumente durchsuchen » (rechercher dans les documents téléversés). En option, à
+   côté, **« Datei-Zitate »** (citations de fichiers) pour les références de sources issues des
+   fichiers. Qui ne veut donner la recherche de fichiers qu’à certains rôles gère ce droit
+   exclusivement ici.
+
+5. **Vérifier ensuite** que la recherche renvoie réellement des résultats du fonds dans un chat
+   tout neuf.
+
+</Steps>
+
+<Aside type="note" title="Le symptôme le plus fréquent">
+La recherche de fichiers reste sans effet parce que les composants supplémentaires ne tournent
+pas du tout. Le commutateur est alors visible, mais chaque requête reste vaine. Avant d’activer la
+fonction, vérifiez donc d’abord que le service de recherche tourne.
+</Aside>
+
+### Modifier les limites et les types de fichiers autorisés
+
+Dans le panneau, sous **« Konfiguration → Dateien & Speicher »** (configuration, fichiers et
+stockage). On y trouve les plafonds pour les téléversements, la limite pour les photos de profil
+et la liste des types de fichiers autorisés.
+
+Une intervention judicieuse lors de la mise en place consiste à abaisser le plafond par fichier à
+une valeur réaliste pour votre quotidien. Cela tient les vidéos et les archives téléversées par
+mégarde à l’écart du stockage.
+
+### Ce qui se passe quand un compte est supprimé
+
+Lorsqu’une personne est supprimée depuis le panneau d’administration, ses fichiers sont retirés
+eux aussi et les index de recherche sont nettoyés. Le dialogue propose expressément au préalable
+**« Daten exportieren (JSON) »** (exporter les données au format JSON), car le droit
+d’information prévu par le RGPD doit être satisfait avant la suppression.

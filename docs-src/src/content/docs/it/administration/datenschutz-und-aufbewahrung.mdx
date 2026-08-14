@@ -1,0 +1,68 @@
+---
+title: Protezione dei dati e conservazione
+description: Conservazione, riscontro e cancellazione per singola persona, telemetria e ciò che lascia l’istanza.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Questa pagina descrive come Lei stabilisce la conservazione, come fornisce un riscontro o esegue una cancellazione e che cosa l’installazione invia verso l’esterno. È pensata come base per la Sua politica di cancellazione.
+
+## La durata di conservazione
+
+Nelle impostazioni Lei stabilisce una durata di conservazione in giorni. Senza una durata non viene cancellato nulla automaticamente; la imposti in fase di messa in esercizio in accordo con la Sua politica di cancellazione. Fa fede l’ultima modifica a una conversazione, non la sua data di creazione.
+
+Vengono cancellate le **conversazioni con i relativi messaggi e i link condivisi generati per esse**, e in via definitiva. Non vengono cancellati i **dati di fatturazione**. Il consumo di un mese passato resta così ricostruibile, anche quando le chat corrispondenti sono sparite da tempo.
+
+<Aside type="caution" title="Ogni accorciamento chiede conferma">
+Se Lei imposta o accorcia la durata, compare una richiesta di conferma con la vecchia e la nuova durata e l’avvertenza che la durata più breve cancellerà definitivamente ulteriori conversazioni, più vecchie. Un successivo prolungamento non recupera nulla: ciò che è già cancellato resta cancellato.
+</Aside>
+
+La pulizia viene eseguita regolarmente da sé e si può inoltre avviare a mano. Quando è stata eseguita l’ultima volta e che cosa ha rimosso è indicato accanto.
+
+## Riscontro e cancellazione per singola persona
+
+A entrambi Lei accede dall’elenco degli utenti. L’ordine non è indifferente.
+
+<Steps>
+
+1. **Esportare.** L’esportazione dei dati fornisce i dati di quella persona in un unico file: account, gruppi, credito, conversazioni, messaggi, metadati dei file e transazioni. I file sono compresi come metadati, non come contenuto. Le credenziali di accesso sono deliberatamente escluse, quindi né la password né i segreti a due fattori né le chiavi depositate.
+
+2. **Cancellare.** Cancellare solo dopo. Dopo la cancellazione non è più possibile fornire alcuna informazione: per questo il pulsante di esportazione si trova anche direttamente nella finestra di dialogo di cancellazione.
+
+</Steps>
+
+Al momento della cancellazione Lei decide sulla profondità: o spariscono l’account e i contenuti e le transazioni restano come giustificativo di fatturazione, oppure viene cancellato anche il consumo. Questa è la cancellazione completa ai sensi del GDPR, e i giustificativi di fatturazione vanno in tal caso perduti. In entrambi i casi si conferma digitando esattamente l’indirizzo e-mail.
+
+## Telemetria
+
+Lo stato di fornitura disattiva la telemetria: i componenti impiegati non inviano dati di utilizzo ai loro produttori e i motori di ricerca non indicizzano l’interfaccia. Se Lei rileva un’installazione esistente, lo verifichi una volta.
+
+## Che cosa lascia l’istanza
+
+L’installazione gira interamente sulla Sua macchina; conversazioni, indice di ricerca e file caricati stanno lì. Dove questa macchina si trovi fisicamente lo decide Lei con la scelta dell’hoster.
+
+Due cose lasciano necessariamente l’istanza, e queste Lei dovrebbe conoscerle e comunicarle all’interno:
+
+**Le richieste ai modelli vanno al fornitore configurato.** Un modello linguistico calcola là dove viene fatto funzionare. Allo stato di fornitura si tratta di un fornitore con trattamento nell’UE. Se Lei aggiunge anche fornitori al di fuori dell’UE, le richieste di quelle schede andranno lì. Non esiste una modalità in cui una richiesta al cloud non lasci la macchina. I modelli eseguiti localmente sono l’eccezione, ma richiedono hardware adeguato.
+
+**Le richieste di ricerca web vanno a motori di ricerca esterni.** La ricerca passa da una meta-ricerca ospitata in proprio, che inoltra l’interrogazione a motori di ricerca esterni, tuttavia **senza l’identità della persona che cerca**. Le richieste in sé lasciano dunque l’istanza.
+
+<Aside type="note" title="Formulazione per le Sue informative sulla protezione dei dati">
+Formulata con precisione, l’affermazione suona così: memorizzazione e inferenza si possono mantenere nell’UE o in Svizzera; con la ricerca web il testo cercato lascia l’istanza, e lo fa senza riferimento all’utente. Chi riprende alla lettera questa distinzione nelle informative sulla protezione dei dati e nella formazione è al sicuro anche di fronte a domande critiche.
+</Aside>
+
+## Contrassegno dei fornitori al di fuori dell’UE
+
+I fornitori che non sono residenti nell’UE vengono contrassegnati come tali nel pannello e nella chat, affinché la scelta avvenga consapevolmente. La stessa regola vale per i connettori: un connettore il cui sistema di destinazione è gestito al di fuori dell’UE deve essere contrassegnato e non va inserito senza domande in un deployment presso un cliente.
+
+Tenga inoltre presente che le indicazioni di provenienza sui fornitori provengono dai fornitori stessi e che la sede di un fornitore non è una garanzia sul luogo del trattamento. Maggiori dettagli in [Modelli e schede dei modelli](/docs/it/administration/modelle-und-karten).
+
+## Delimitazione
+
+**Provisioning senza SCIM.** Gli account nascono al primo accesso tramite OIDC. Il deprovisioning passa dal Suo identity provider: chi è disattivato lì non supera più l’accesso e quindi non arriva ad alcun dato. Per lo smantellamento completo di un account con i suoi dati usi la finestra di dialogo di cancellazione nel pannello.
+
+**Giustificativi invece del collegamento ai pagamenti.** Il consumo viene rilevato integralmente ed emesso come CSV e PDF; il pagamento in sé Lei lo gestisce nel Suo sistema. Dettagli in [Consumo, budget e fatturazione](/docs/it/administration/verbrauch-und-budgets).
+
+**Le connessioni in uscita dell’esecuzione di codice** si regolano a livello di host o di rete, non nell’applicazione. Allo stato di fornitura l’esecuzione di codice è disattivata.

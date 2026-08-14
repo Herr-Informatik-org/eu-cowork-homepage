@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
 In the chat, users do not select a raw model but a **model card**. A card bundles a provider, a model and the presets that go with it under a comprehensible name. This page shows what you control with that as an administrator.
 
@@ -27,22 +27,12 @@ An access key is never stored in the configuration in plain text, only as a refe
 
 ## Visibility per role and group
 
-Which card is seen by whom is decided by a cascade. The winner is: **group › role › base**.
+Which cards somebody sees is defined at the level of the role and of the group. Where there is no rule of its own, the shipped selection applies. The principle: the narrower rule wins.
 
-<Steps>
-
-1. **Base** is the shipped configuration. It applies to everyone for whom there is no narrower rule.
-
-2. **Role** overrides the base. In the role editor you switch the cards on or off individually and hide the raw model list if you want to.
-
-3. **Group** overrides the role. A group either inherits the rule of the role or gets a selection of its own.
-
-</Steps>
-
-On both levels the selection can be reset to the shipped state in one step.
+In the role editor you switch the cards on or off individually and hide the raw model list if you want to; a group gets a selection of its own where needed. On both levels the selection can be reset to the shipped state in one step.
 
 <Aside type="note" title="Save once more after changing cards">
-The selection stores a copy of the card names. If you afterwards rename or add a card, save the affected role and group rules once more. Cards that no longer exist are removed in the process and shown as a warning beforehand.
+If you rename or add a card, save the affected role and group rules once more and then check that the visibility still stands as you intend it.
 </Aside>
 
 ## Restricting providers

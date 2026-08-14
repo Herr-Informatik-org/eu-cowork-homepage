@@ -1,0 +1,67 @@
+---
+title: Consumo, presupuestos y facturación
+description: Cómo se mide el consumo, cómo se combinan el presupuesto mensual y los límites personales y cómo se generan los justificantes.
+sidebar:
+  order: 4
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+La medición del consumo está siempre activa. Muestra lo que el uso cuesta realmente y es la base de los presupuestos, los límites y los justificantes.
+
+## Qué se mide
+
+La base son los tokens de cada solicitud, separados en entrada y salida. De ahí resulta un importe por solicitud que el panel suma por persona, por modelo, por día y por mes. Los precios de los modelos están depositados en la configuración y pueden tomarse del catálogo del proveedor; se factura en euros a un tipo de cambio que se congela para cada mes de facturación. Los meses cerrados y sus justificantes quedan así tal como estaban.
+
+<Aside type="caution" title="Mantener los precios merece la pena">
+Mantenga el precio y el tamaño de contexto de cada modelo en uso. Si faltan esos datos, el análisis trabaja con suposiciones: parece entonces plausible y no por ello deja de ser falso, y las conversaciones largas se recortan antes de lo necesario.
+</Aside>
+
+## Presupuesto mensual y límites personales
+
+Para la organización puede fijarse un **presupuesto mensual común** en euros. Es un depósito mensual común, no un importe por persona. Sin una entrada no hay presupuesto. En la visión general el estado se contrasta con el consumo real, con aviso y proyección antes de que la cosa se ponga justa.
+
+Con un interruptor decide usted si el presupuesto solo se muestra o si además se aplica:
+
+| Ajuste | Efecto |
+| --- | --- |
+| desactivado | El presupuesto es puramente informativo. No se deja fuera a nadie. |
+| activado | Una vez agotado el presupuesto, las nuevas solicitudes se rechazan, para **todas** las cuentas, administradores incluidos. En el chat aparece una barra de aviso. El panel en sí sigue siendo utilizable. |
+
+Un aumento del presupuesto, la desactivación del interruptor y el cambio de mes vuelven a levantar el bloqueo.
+
+Además puede fijarse un **límite mensual** por persona.
+
+<Aside type="caution" title="El fondo común se impone al límite personal">
+Si el fondo común está vacío, todo el mundo está a cero, incluido quien no ha agotado ni de lejos su propio límite. El límite personal es un freno adicional, no una reserva.
+</Aside>
+
+## «Guthaben»: dos significados
+
+La palabra **«Guthaben»** (saldo) figura en dos sitios del panel y designa dos cosas distintas:
+
+| | **«Guthaben»** de una persona | **«Guthaben»** de la organización |
+| --- | --- | --- |
+| Qué es | la cuenta de límite individual en euros | el saldo resultante de los ingresos registrados |
+| Para qué sirve | aplicación técnica de los bloqueos por cuenta | visión comercial de los ingresos y del consumo |
+| Cuándo es relevante | solo cuando la aplicación está activa | en cuanto usted registra ingresos |
+
+En pocas palabras: el saldo por persona es una válvula, el saldo de la organización es una contabilidad. El saldo de tokens en sí está deliberadamente mancomunado en toda la organización, para que ninguna persona se quede parada ante un límite artificial mientras en otro sitio sobra presupuesto.
+
+## Facturación y justificantes
+
+La página de facturación muestra el mes elegido con dos partidas: una tarifa de plataforma por usuario y el consumo de tokens medido. Ambas pueden emitirse como CSV y como PDF. Los ingresos se registran en un libro mayor al que solo se añade: una corrección se hace como asiento inverso, la entrada original se mantiene. Los meses pasados quedan en un archivo.
+
+<Aside type="note" title="Mejor bloqueado que falso">
+Si falta una base de cálculo, el panel bloquea los justificantes en lugar de calcular en silencio con cero. Un justificante que indicara una cifra demasiado baja sin mensaje de error sería peor que ningún justificante.
+</Aside>
+
+<Aside type="caution" title="Los justificantes no son facturas fiscales">
+El CSV y el PDF son justificantes, no facturas fiscales, y no hay ninguna conexión de pago. La facturación y el cobro siguen pasando por su contabilidad.
+</Aside>
+
+## Los análisis
+
+Dos vistas muestran las mismas cifras desde ángulos distintos: una **vista mensual** del mes natural, con indicadores, evolución diaria y las tablas por usuario y por modelo, y una **vista deslizante** sobre las últimas semanas, con comparación respecto al periodo anterior.
+
+Para la pregunta referida a una solicitud concreta no es competente ninguna de las dos; de eso se ocupan los [registros](/docs/es/administration/protokolle-und-audit).

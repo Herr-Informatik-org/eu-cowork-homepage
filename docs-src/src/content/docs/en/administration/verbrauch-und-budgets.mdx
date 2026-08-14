@@ -14,18 +14,18 @@ Usage metering is always active. It shows what the usage actually costs and is t
 The basis is the tokens of every single request, separated into input and output. From that comes an amount per request, which the panel adds up by person, model, day and month. Model prices are held in the configuration and can be taken over from the provider's catalog; billing is in euros at an exchange rate that is frozen per billing month. Closed months and their receipts therefore stay as they were.
 
 <Aside type="caution" title="Maintaining prices pays off">
-If the price for a model is missing, a flat rate is used instead. Your analysis then looks plausible and is wrong all the same. The same goes for the context size: without a maintained value a conservative assumption is made, and long conversations are truncated earlier than the model would require.
+Maintain the price and the context size for every model in use. If these figures are missing, the analysis works with assumptions: it then looks plausible and is wrong all the same, and long conversations are truncated earlier than necessary.
 </Aside>
 
 ## Monthly budget and personal limits
 
 A **shared monthly budget** in euros can be set for the organization. It is a shared monthly tank, not an amount per person. Without an entry there is no budget. On the overview the status is set against real usage, with a warning and a projection before it gets tight.
 
-A switch decides whether the budget is merely displayed or also enforced. In the shipped state it is **off**:
+You decide with a switch whether the budget is merely displayed or also enforced:
 
 | Setting | Effect |
 | --- | --- |
-| off (default) | The budget is display only. Nobody gets locked out. |
+| off | The budget is display only. Nobody gets locked out. |
 | on | Once the budget is used up, new requests are rejected, for **all** accounts including the administrators. A notice bar appears in the chat. The panel itself stays operable. |
 
 Raising the budget, switching the toggle off and the change of month all lift the block again.
@@ -33,7 +33,7 @@ Raising the budget, switching the toggle off and the change of month all lift th
 In addition a **monthly limit** can be set per person.
 
 <Aside type="caution" title="The pool beats the personal limit">
-Personal limits only take effect when enforcement is switched on, it is the same switch. And more importantly: if the shared pot is empty, everyone is at zero, including anyone who is nowhere near exhausting their own limit. The personal limit is an additional brake, not a reservation.
+If the shared pot is empty, everyone is at zero, including anyone who is nowhere near exhausting their own limit. The personal limit is an additional brake, not a reservation.
 </Aside>
 
 ## Credit balance: two meanings

@@ -1,0 +1,65 @@
+---
+title: Utilisateurs, groupes et rôles
+description: Inviter et créer des comptes, attribuer des droits par les rôles, gérer les groupes, bloquer et supprimer des comptes.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Qui a accès et ce qu’il a le droit de faire se décide à trois endroits : sur le compte, sur le rôle et sur le groupe. Cette page décrit ce dont vous disposez pour cela en tant qu’administrateur.
+
+## Comptes
+
+La liste des utilisateurs montre tous les comptes avec leur rôle, leur mode de connexion, leur statut, leur dernière activité et leur part de consommation. De là, vous atteignez tout le reste concernant une personne : consulter la consommation, consulter les accès, exporter les données, changer le rôle, recharger l’avoir, bloquer et supprimer.
+
+<Aside type="tip" title="Pas de surveillance à la minute">
+L’activité est affichée au jour près, pas à la minute. C’est un choix de conception délibéré : pour la question « l’outil est-il seulement utilisé », le jour suffit ; pour un contrôle de performance, l’indication est délibérément inutilisable.
+</Aside>
+
+## Faire entrer des personnes
+
+Il existe deux voies :
+
+- **L’invitation** est la voie normale. La personne invitée définit elle-même son mot de passe, vous n’avez jamais à en transmettre un. Les invitations sont limitées dans le temps et ne valent que pour l’adresse indiquée. En option, la personne est automatiquement rattachée à un ou plusieurs groupes lors de l’inscription.
+- **La création directe** produit un compte sans inscription, rôle et groupes compris. Un mot de passe initial peut être généré et placé dans le presse-papiers, afin qu’il n’atterrisse ni dans des captures d’écran ni dans la saisie automatique du navigateur.
+
+Pour qu’une invitation aboutisse, le domaine de messagerie doit correspondre aux domaines autorisés pour l’inscription. Si un envoi de courriel est configuré, un message part en plus ; sinon, vous transmettez vous-même le lien d’invitation.
+
+## Rôles et droits
+
+Les rôles regroupent des droits. À côté des deux rôles système pour les utilisateurs et les administrateurs, vous pouvez créer vos propres rôles. Les droits sont regroupés par thème :
+
+| Groupe | De quoi il s’agit |
+| --- | --- |
+| **« Werkzeuge »** (outils) | Recherche web, interpréteur de code, recherche dans les fichiers et citations, accès aux connecteurs |
+| **« Chat-Funktionen »** (fonctions de chat) | Réponses en parallèle, chats temporaires, signets, mémoires |
+| **« Erstellen und Teilen »** (créer et partager) | Agents, prompts, compétences et liens partagés |
+| **« Remote-Agenten »** (agents distants) | Agents en dehors du chat, par exemple dans le complément Outlook |
+| **« Sichtbarkeit »** (visibilité) | si les utilisateurs et les groupes apparaissent dans la boîte de dialogue de partage |
+
+Vous définissez en outre par rôle quelles fiches de modèle sont visibles, voir [Modèles et fiches de modèle](/docs/fr/administration/modelle-und-karten).
+
+<Aside type="danger" title="Prudence avec le rôle d’administrateur">
+Les modifications du rôle d’administrateur concernent aussi votre propre compte et prennent effet immédiatement pour tous les administrateurs. Il n’y a pas d’exception pour la personne qui actionne l’interrupteur. Vérifiez donc ces modifications à deux reprises.
+</Aside>
+
+<Aside type="caution" title="Ne jamais déployer les compétences en bloc">
+Les compétences sont des processus standard déposés à l’avance. Autorisez-les de manière ciblée au lieu de les ouvrir en bloc à tout le monde.
+</Aside>
+
+## Groupes
+
+Les groupes sont la base des accès et de la sélection des modèles. Ils sont soit gérés localement dans le panneau, soit issus de votre fournisseur d’identité ; ils sont alors protégés en écriture et leurs membres sont administrés par le fournisseur d’identité.
+
+Par groupe, vous pouvez définir quels connecteurs sont autorisés et quelles fiches de modèle sont visibles. Principe : la règle la plus étroite l’emporte.
+
+## Bloquer et supprimer
+
+Un **blocage** est limité ou illimité dans le temps et peut être levé à tout moment.
+
+La **suppression** d’un compte efface le compte, les conversations, les messages, les fichiers, les clés, les agents et l’avoir, et elle est irréversible. La boîte de dialogue exige donc une confirmation explicite et propose juste avant l’export des données : après la suppression, plus aucun renseignement ne peut être donné ; le droit d’accès prévu par le RGPD doit donc être honoré au préalable. En option, les transactions de consommation sont supprimées en même temps ; le justificatif de facturation est alors perdu. Vous en saurez plus sous [Protection des données et conservation](/docs/fr/administration/datenschutz-und-aufbewahrung).
+
+## « Que peut faire cette personne, et pourquoi »
+
+Pour chaque personne, il existe un aperçu de ses accès : rôle, groupes, connecteurs autorisés, fiches de modèle visibles et autorisations d’agents. Chaque entrée indique quel niveau a pris la décision, et le chemin qui y mène est en lien. C’est la voie la plus rapide lorsque quelqu’un signale qu’il ne voit pas un connecteur ou un modèle.

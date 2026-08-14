@@ -1,0 +1,58 @@
+---
+title: Variables d’environnement
+description: Comment une instance se configure, ce que vous définissez vous-même et où se trouve la référence complète.
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Comme il est d’usage avec LibreChat, une instance se configure au moyen d’un fichier
+d’environnement. Un modèle commenté est fourni avec la livraison ; c’est à partir de lui que
+l’installeur crée la configuration effective lors du premier lancement.
+
+<Aside type="danger" title="Le fichier de configuration reste sur le serveur">
+Il contient l’ensemble des identifiants de l’instance. Il n’a sa place ni dans un dépôt, ni dans
+un ticket, ni dans une demande de support.
+</Aside>
+
+## Ce que vous définissez vous-même
+
+La plus grande partie du modèle est préremplie de telle sorte qu’une instance démarre. Pour
+l’essentiel, trois éléments sont à indiquer vous-même :
+
+- **le domaine** sous lequel l’instance est joignable. Tant que la valeur par défaut reste en
+  place, les liens d’invitation ne fonctionnent que sur le serveur lui-même.
+- **la clé d’accès du fournisseur de modèles.** Sans elle, l’instance démarre certes, mais toute
+  requête vers un modèle échoue.
+- **facultativement les identifiants pour l’envoi des courriels.** Sans eux, il n’y a ni courriel
+  de vérification ni courriel d’invitation, et une invitation ne produit alors qu’un lien à
+  copier.
+
+## Secrets
+
+L’installeur génère lui-même les secrets cryptographiques d’une instance lors du premier
+lancement et les stocke de manière protégée. Vous n’avez rien à faire pour cela.
+
+<Aside type="caution" title="Lors d’une migration vers un nouveau serveur">
+La configuration existante doit être reprise. Si elle est régénérée à la place, les identifiants
+stockés chiffrés auparavant ne peuvent plus être lus et tous les utilisateurs doivent rétablir
+leurs connexions aux connecteurs. C’est pourquoi l’outil de sauvegarde fourni emporte aussi la
+configuration.
+</Aside>
+
+## Référence complète
+
+Les entrées qui existent dans le détail, leur effet et celles qui sont nécessaires pour un
+niveau de déploiement donné figurent dans la documentation d’exploitation, qui est fournie avec
+la livraison. Les clients la reçoivent en même temps que leur accès. Le modèle lui-même est
+également commenté.
+
+Pour tout ce qui relève du standard LibreChat, la documentation de ce projet s’applique en
+complément : [www.librechat.ai/docs](https://www.librechat.ai/docs).
+
+## Pages associées
+
+- [Configuration](/docs/fr/betrieb/konfiguration) décrit ce qui se règle à la place dans le
+  `librechat.yaml` et ce qui se règle dans le panneau d’administration.
+- [Dépannage](/docs/fr/betrieb/fehlerbehebung) rassemble les cas d’erreur les plus fréquents.

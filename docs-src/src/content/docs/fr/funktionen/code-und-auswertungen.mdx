@@ -1,0 +1,104 @@
+---
+title: Analyses, tableaux et code
+description: Analyses Excel et PDF à télécharger depuis le chat, diagrammes et interfaces sous forme d’artefacts, et ce que suppose l’exécution de code.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+« Fais-moi une analyse Excel à partir de ces chiffres » est l’une des tâches pour lesquelles les
+collaborateurs ont le plus volontiers recours à une IA. Cette page décrit ce qui se passe alors,
+ce qui fonctionne sans technique supplémentaire et ce qui suppose un backend.
+
+L’exécution de code et les artefacts viennent de [LibreChat](https://www.librechat.ai/docs). Ce
+que nous y ajoutons, c’est le choix et la préparation du backend d’exécution.
+
+## Ce que cela vous apporte
+
+Vous écrivez : « À partir de cette liste, un fichier Excel avec une analyse par mois, s’il te
+plaît. » Le collègue calcule, produit le fichier et le dépose dans le chat sous forme de
+téléchargement. Vous cliquez dessus et vous avez le fichier.
+
+Cela vaut pour Excel, CSV, Word et PDF de la même manière, ainsi que pour les analyses tirées d’un
+tableau joint. Une seule chose importe : dites ce que le fichier doit contenir, pas comment il
+doit techniquement voir le jour.
+
+Si vous voulez modifier un fichier déjà produit, dites-le dans le même chat. Le collègue charge le
+fichier existant et l’adapte au lieu de le reconstruire. Ce qui a été convenu auparavant est ainsi
+préservé.
+
+<Aside type="note" title="Le chemin jusqu’au code reste en arrière-plan">
+Les scripts, les commandes et les chemins internes ne sont pas affichés. Vous recevez le fichier
+et un bref résumé de son contenu. C’est voulu : le public visé, ce sont des professionnels du
+métier, pas des développeurs.
+</Aside>
+
+## Les artefacts : des résultats directement dans le chat
+
+Les **artefacts** sont autre chose que l’exécution de code. Ils permettent au collègue de
+présenter des contenus directement dans une zone latérale de l’interface au lieu de les restituer
+sous forme de bloc de code :
+
+| Type | Exemple |
+|---|---|
+| Mermaid | logigramme, organigramme, frise chronologique |
+| SVG | graphiques et schémas simples |
+| HTML | une page ou un tableau mis en forme, à consulter |
+| React | une petite interface utilisable, par exemple une calculatrice |
+| Markdown | documents formatés |
+
+**Les artefacts n’ont besoin d’aucun backend d’exécution.** Ils sont actifs sur les fiches de
+modèle livrées et fonctionnent immédiatement après l’installation. Qui souhaite seulement un
+diagramme ou une vue d’ensemble n’a donc pas besoin de l’exécution de code.
+
+<Aside type="caution" title="L’aperçu a besoin de HTTPS">
+L’aperçu interactif ne fonctionne que dans un contexte sécurisé. Sans certificat valide, il reste
+vide ou signale une erreur de connexion. Ce n’est pas un défaut du backend, mais une règle du
+navigateur. La voie propre est un vrai nom de domaine avec un certificat valide.
+</Aside>
+
+## À la livraison, l’exécution de code est désactivée
+
+D’origine, l’exécution de code n’est pas activée. La raison est la même que pour la recherche de
+fichiers : l’exécution a besoin d’un backend dédié et cloisonné, qui ne fait pas partie de
+l’installation de base. Sans backend, le bouton serait un bouton mort et chaque tentative
+finirait par une erreur.
+
+Vous décidez donc en connaissance de cause si vous proposez cette fonction.
+
+## Pour les administrateurs
+
+L’exécution de code est le seul endroit où du code généré s’exécute sur votre machine. Elle a donc
+sa place dans un environnement isolé qui lui est propre, exploité séparément du reste de
+l’installation et jamais partagé entre plusieurs instances.
+
+Trois points sont déterminants au moment de choisir un backend :
+
+- **Isolation.** Le code exécuté ne doit atteindre ni les données de l’instance, ni le reste du
+  réseau.
+- **Accessibilité.** Le backend n’est sollicité qu’en interne. Rien n’est nécessaire depuis
+  l’extérieur pour cela ; les accès de diagnostic ont leur place sur l’adresse de bouclage ou dans
+  un tunnel SSH.
+- **Trafic sortant.** Les destinations qu’un code exécuté peut atteindre sur Internet se
+  définissent au niveau de l’hôte ou du réseau. Prévoyez cette liste d’autorisations dès la mise en
+  place et consignez les destinations autorisées dans votre manuel d’exploitation.
+
+Si l’exécution de code n’est pas nécessaire, renoncez au backend : à la livraison, elle est
+désactivée.
+
+### Activer la fonction ensuite
+
+<Steps>
+
+1. **Attribuer le droit.** Le droit **« Code-Interpreter »** (interpréteur de code) se trouve dans
+   l’éditeur de rôles, sous **« Werkzeuge »** (outils). Qui ne veut donner l’exécution qu’à
+   certains rôles gère ce droit exclusivement là.
+
+2. **Activer la fonction sur les fiches de modèle**, afin que le modèle utilise l’outil de
+   lui-même, sans que personne ait à cliquer.
+
+3. **Vérifier** que, dans un chat tout neuf, un fichier produit apparaît effectivement sous forme
+   de téléchargement.
+
+</Steps>

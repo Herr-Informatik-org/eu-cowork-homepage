@@ -1,0 +1,50 @@
+---
+title: Requisiti di sistema
+description: Che cosa richiede un’istanza gestita in proprio in CPU, memoria di lavoro, spazio su disco e sistema operativo.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Questa pagina dice a grandi linee di quale hardware abbia bisogno un’istanza gestita in proprio. È
+pensata per chi ordina una VM o valuta una macchina esistente.
+
+## Valori indicativi
+
+| | Valore indicativo |
+|---|---|
+| CPU | da due a quattro vCPU |
+| Memoria di lavoro | da quattro a sedici GB, secondo il numero di utenti |
+| Spazio su disco | alcune decine di GB, con riserva per i file caricati |
+| Sistema operativo | una distribuzione Linux diffusa con supporto a lungo termine |
+
+Il fabbisogno di disco cresce soprattutto con i file caricati; chi archivia molto pianifica con più
+generosità fin dall’inizio. Le istanze piccole sono espressamente ammesse.
+
+Il carico della CPU è modesto nell’esercizio normale, perché il calcolo avviene presso il fornitore
+di inferenza. I picchi nascono solo con singole funzioni aggiuntive. Con il numero di utenti cresce
+soprattutto il fabbisogno di memoria di lavoro dell’applicazione; per un organico più ampio conviene
+una VM propria per istanza.
+
+## Sistema operativo e runtime per container
+
+È raccomandata una distribuzione Linux diffusa con supporto a lungo termine. Su altre distribuzioni
+l’installazione continua a funzionare, ma può discostarsi.
+
+È obbligatorio un **runtime per container aggiornato con supporto di Compose**. Lo prenda dalla fonte
+di pacchetti ufficiale del produttore; i pacchetti di alcune distribuzioni non portano con sé la
+dotazione necessaria.
+
+## Spazio su disco
+
+Le immagini dei container occupano una volta sola alcuni gigabyte. Dopodiché crescono soprattutto tre
+cose: i file caricati, il database e i registri.
+
+Lo spazio su disco è il primo limite nell’esercizio, non la memoria di lavoro. Sorvegli l’occupazione
+e rimuova con regolarità le immagini non più necessarie.
+
+<Aside type="note" title="La documentazione sulla messa in opera">
+I requisiti di rete, accesso e sistema operativo nel dettaglio li descrive la documentazione allegata
+alla fornitura. Fa parte del pacchetto di installazione.
+</Aside>

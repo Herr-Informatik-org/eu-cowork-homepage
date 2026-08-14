@@ -1,0 +1,125 @@
+---
+title: Patrones de conectores
+description: Tres formas constructivas acreditadas para conectores, cada una con su ámbito de uso, el recorrido de los permisos y los puntos a los que debe atender en la operación.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Los conectores se diferencian menos por el producto que hay detrás que por la manera en que se autentican en el sistema de destino. Es justamente esa manera la que decide dónde queda el límite de los datos y cuánto trabajo tendrá usted en el panel de administración.
+
+Tres formas constructivas cubren prácticamente todo lo que se presenta en una pyme. Esta página describe cada una de ellas con las mismas tres preguntas: para qué sirve, cómo circulan los permisos y a qué debe atender. Qué producto conecte usted realmente no influye en la forma constructiva.
+
+## Patrón A: aplicación de negocio a través de una cuenta de servicio
+
+**Para qué sirve.** Su ERP, su gestión de mercancías, su contabilidad; es decir, los sistemas con clientes, documentos, proyectos y datos de personal. Estas aplicaciones ofrecen por lo general un acceso técnico mediante una clave, pero ningún acceso personal a través de una interfaz.
+
+**Cómo circulan los permisos.** El conector mantiene un acceso técnico y se autentica igual para todas las personas. **El sistema de destino no conoce a la persona que hace la petición**, solo ve la cuenta de servicio. Por eso no puede distinguir entre los miembros de su personal.
+
+La respuesta a esto no es un filtro en el prompt, sino la estructura de las cuentas: **una cuenta de servicio propia y una instancia de conector propia por cada perfil de permisos**, en lugar de una llave maestra para todos. Una clave de acceso hereda íntegramente los permisos de su cuenta en el sistema de destino. Con ello, la cuenta que hay detrás de la clave es el verdadero límite de los datos, no la configuración ni el prompt. Lo que la cuenta no puede ver tampoco lo ve el chat, con independencia de lo que intente el modelo.
+
+Las habilitaciones en EU Cowork AI vienen **por añadidura**. Deciden quién llega siquiera a ver qué instancia. Si alguna vez una habilitación en el panel queda fijada de forma demasiado amplia, el límite de permisos de la cuenta de servicio sigue sosteniéndose.
+
+| Instancia con cuenta de servicio propia | Pensada para |
+|---|---|
+| perfil de permisos más amplio | dirección |
+| vista comercial | finanzas y administración |
+| vista técnica sin datos comerciales | servicio técnico y proyectos |
+
+Qué permisos tienen realmente esos perfiles lo establece usted en el sistema de destino, no de nuestro lado.
+
+**A qué debe atender.**
+
+<Aside type="danger" title="Habilitar exactamente una instancia por persona">
+Si funcionan varias instancias del mismo conector, todas exponen **nombres de herramienta idénticos**. Si a una persona se le habilitan dos de ellas, el mismo catálogo de herramientas acaba dos veces en cada conversación. Eso cuesta tokens de contexto por partida doble en cada mensaje, y el modelo tiene que adivinar entre dos herramientas con el mismo nombre, lo que lleva a llamadas equivocadas.
+
+Habilite por tanto **exactamente una** instancia por persona. Si alguien necesita otro perfil, **cambie** la habilitación en lugar de añadir una segunda.
+</Aside>
+
+A esto se suman tres puntos que cuentan en el día a día:
+
+- **Regla predeterminada en denegado de inmediato.** Fije la regla predeterminada de cada instancia en denegado antes de habilitar a nadie.
+- **Mantenga la habilitación en el sistema de destino en solo lectura** siempre que el caso de uso lo permita. Escribir, crear y borrar solo debe habilitarlo para objetos concretos en los que la necesidad exista realmente.
+- **Aproveche el registro.** Toda decisión se anota de forma inalterable. En el registro del sistema de destino se reconoce además de qué perfil provino una consulta. Las cuentas de servicio separadas se rentabilizan aquí por segunda vez.
+
+Si necesita una separación más fina, el camino no es un filtro adicional en el chat, sino otra cuenta con permisos más estrechos y otra instancia del conector.
+
+## Patrón B: almacenamiento de archivos con autenticación por persona
+
+**Para qué sirve.** Su gestión documental, su almacenamiento en la nube, el archivo de su equipo. Es decir, sistemas en los que los derechos de acceso ya se mantienen de forma fina y personalizada y en los que existe un acceso personal a través de una interfaz.
+
+**Cómo circulan los permisos.** Cada persona **se autentica una vez ella misma**. En el primer uso elige la herramienta en el chat y hace clic en conectar, va a parar al diálogo de acceso habitual del sistema de destino, confirma allí el acceso y, a partir de ahí, el conector trabaja con su acceso personal.
+
+Con ello vale lo siguiente: quien no puede ver una carpeta en el sistema de destino tampoco la ve en el chat. Los permisos se mantienen allí donde de todos modos se mantienen y no hay que reconstruirlos de nuestro lado. Un cambio de permisos en el sistema de origen surte efecto de inmediato también en el chat.
+
+**Este es el camino preferible.** Si un sistema ofrece esta forma de autenticación, tómela. Los permisos del sistema de destino ya son el límite, y son más finos de lo que jamás podría serlo una regla puesta delante: hasta el nivel de documento y de campo, en lugar de solo hasta el nivel de conector y de herramienta.
+
+<Aside type="note" title="Aquí el control está en el sistema de destino">
+Como los permisos de la persona ya son el límite, en un conector así el control decisivo está en el sistema de destino. Manténgalo allí y no cuente con reconstruir delante una gradación más fina.
+</Aside>
+
+**A qué debe atender.**
+
+- **La prueba de aceptación es una comparación.** Dos personas de prueba con permisos distintos en el sistema de destino tienen que ver en el chat, de forma demostrable, cantidades distintas. Si cada una lo ve todo, el conector no está trabajando con los permisos de la persona.
+- **Solo lectura donde eso baste.** Un interruptor explícito de solo lectura en el puente vale más que el propósito de no escribir. Las áreas que el caso de uso no necesita, por ejemplo correo, calendario o historiales de chat, no las habilite siquiera. Cada permiso adicional exige de todos modos un nuevo consentimiento.
+- **El acceso se mantiene y tiene que poder renovarse.** Si falta el permiso para renovar la conexión en segundo plano, esta muere al poco tiempo y cada persona tiene que volver a conectarse.
+
+<Aside type="caution" title="Tras una migración, las claves de la instancia tienen que ir con ella">
+Los accesos personales forman parte del conjunto de datos protegido de su instancia. Si se traslada a un servidor nuevo, hay que llevarse consigo las claves correspondientes de la instancia antigua. Si eso no ocurre, todas las conexiones guardadas quedan inservibles y **cada persona tiene que volver a establecer su acceso una vez**. En el proceso no se pierde ningún dato, pero es un caso de soporte por cada empleado. Incluya este punto en su plan de migración, véase [Copia de seguridad y migración](/docs/es/betrieb/backup-und-umzug).
+</Aside>
+
+## Patrón C: puente de solo lectura hacia un sistema especializado
+
+**Para qué sirve.** Su monitorización, su inventario, su sistema de tickets. Es decir, sistemas especializados de los que quiere obtener información, pero en los que nadie debe modificar nada desde el chat.
+
+**Cómo circulan los permisos.** Técnicamente esto es una cuenta de servicio como en el patrón A. La diferencia está en la intención: aquí se trata exclusivamente de leer. Y justo ahí merece la pena el esfuerzo de **imponer la lectura de verdad, en lugar de prometerla**. Tres niveles contribuyen a ello, y cada uno bastaría por sí solo:
+
+- El acceso técnico en el sistema de destino recibe **únicamente permisos de lectura**. Con ello, el sistema de destino rechaza por sí mismo cualquier llamada de escritura, con independencia de nuestro software.
+- El puente **no ofrece herramienta de escritura alguna**. Lo que no existe no se puede llamar.
+- La **habilitación** decide quién llega siquiera a ver las herramientas.
+
+**El límite más duro es otro.** Estos niveles impiden que se escriba. No dicen nada sobre **cuánto** puede leerse. Por defecto, un acceso técnico suele ver el sistema entero.
+
+Déle por eso al acceso técnico en el sistema de destino solo las áreas que realmente necesita. Lo que no ve sencillamente no existe para el chat. Ese es el límite más duro disponible, está por completo en sus manos en el sistema especializado y no puede eludirse ni mediante un prompt ni mediante un fallo en nuestro software. Si necesita varias vistas, el camino es el mismo que en el patrón A: un segundo acceso técnico con un área más estrecha, una segunda instancia del puente y, en el panel, exactamente una de ellas para cada persona.
+
+<Aside type="tip" title="La regla que hay detrás">
+**Una herramienta que no existe no puede ser llamada por error por ningún modelo.** No construya por tanto herramienta alguna para acciones que intervienen en el sistema, por ejemplo para reinicios o para la ejecución de scripts. Entonces tampoco hará falta en ninguna parte una regla que tuviera que impedir que alguien reiniciase un servidor desde el chat. Sencillamente no se puede.
+
+Es exactamente con eso con lo que mide usted un conector ajeno: qué herramientas expone y si existe un modo de solo lectura. Si un servidor terminado ofrece, además de la lectura, acciones que intervienen en el sistema, y eso no se puede desactivar, un puente estrecho propio suele ser una solución más rápida que la discusión sobre quién puede utilizarlo.
+</Aside>
+
+**A qué debe atender.**
+
+- **Una autocomprobación merece el esfuerzo.** Un pequeño programa de verificación que acredite la autenticación, los permisos realmente concedidos y un acceso de lectura convierte una promesa en una prueba. Puede ejecutarse de nuevo tras cada cambio.
+- **Las respuestas escalonadas ahorran en cada pregunta.** Una consulta de detalle debería cargar primero solo los datos maestros y entregar las secciones voluminosas únicamente cuando se pidan de forma expresa.
+- **Para preguntas sobre muchos objetos, una herramienta de análisis.** Diez consultas sueltas cuestan diez resultados en el contexto, un análisis cuesta uno.
+- **Todos ven lo mismo.** El sistema especializado no conoce al usuario concreto del chat, solo ve el acceso técnico. La separación entre los miembros de su personal la hacen exclusivamente la habilitación en el panel y el área que usted le haya dado a ese acceso.
+
+## Lo que cuesta el catálogo de herramientas
+
+Los tres patrones comparten una propiedad: el catálogo de herramientas de un conector, es decir, el nombre, la descripción y los parámetros de cada herramienta, se envía al modelo **con cada uno de los mensajes**. No es una inversión única, sino un alquiler corriente sobre cada chat.
+
+El orden de magnitud es considerable: un conector amplio puede ofrecer más de cien herramientas y ocupar así una parte notable del contexto disponible antes de que se haya planteado la primera pregunta. Limitado al caso de uso, de todo eso suele quedar solo una pequeña fracción.
+
+El segundo efecto es al menos igual de importante: cuantas más herramientas de nombre parecido haya en el catálogo, más a menudo el modelo echa mano de la equivocada. Un catálogo estrecho da respuestas no solo más baratas, sino también más fiables.
+
+Habilite por eso las herramientas una a una y a demanda, no de forma preventiva.
+
+<CardGrid>
+  <LinkCard
+    title="Permisos y habilitaciones"
+    href="/docs/es/konnektoren/gateway-und-rechte"
+    description="Con arreglo a qué decide el control de permisos y dónde gestiona usted las habilitaciones."
+  />
+  <LinkCard
+    title="Conectar un conector propio"
+    href="/docs/es/konnektoren/eigenen-konnektor-anbinden"
+    description="Qué aclarar de antemano, con qué criterios medir un conector ajeno y qué cuenta al habilitarlo."
+  />
+  <LinkCard
+    title="Buenas prácticas para conectores"
+    href="/docs/es/konnektoren/best-practices"
+    description="Diez reglas con su justificación, más una lista de comprobación antes de la habilitación."
+  />
+</CardGrid>

@@ -75,8 +75,7 @@ A model card is a ready made preset. It bundles three things:
 3. the preselection of tools that are armed on this card.
 
 The system prompt is inserted server side and never reaches the browser. The shipped cards
-carry the same German prompt: answer in German, factual tone, no invented facts, ask back when
-a request is unclear.
+carry the same prompt; it sets the language, the tone and the careful handling of facts.
 
 New chats start on the default card. You are allowed to switch cards, the switch is not
 locked.
@@ -132,8 +131,6 @@ summary to the model instead of the full history.
 
 - The point at which this kicks in depends on the card you chose: cards with a smaller context
   window compact earlier.
-- Old tool results are cleared out first, for example long hit lists from a business system.
-  Only after that do actual messages get their turn.
 
 Your visible history stays complete throughout. Only what goes to the model is summarized.
 

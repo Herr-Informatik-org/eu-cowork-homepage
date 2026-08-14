@@ -1,0 +1,57 @@
+---
+title: Risoluzione dei problemi
+description: Dove guardare per primo in caso di guasto e quali gruppi di cause stanno più spesso dietro ai problemi nell’esercizio di EU Cowork AI.
+sidebar:
+  order: 8
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+La maggior parte dei guasti si lascia attribuire a un gruppo di cause in pochi minuti. Questa
+pagina mostra dove guardare per farlo. La risoluzione dei problemi dettagliata si trova nel
+manuale operativo, che è allegato al pacchetto di fornitura.
+
+## Dove guardo per primo
+
+1. **Pannello di amministrazione, pagina «Logs» (registri).** Mostra le singole richieste con
+   modello, durata e costi, le stesse richieste raggruppate per conversazione, gli errori
+   dell’add-in di Outlook e i registri del server. Vedere
+   [Registri e audit](/docs/it/administration/protokolle-und-audit).
+2. **Pagina «Zugriffe» (accessi) della persona interessata.** Per la domanda sul perché qualcuno
+   non veda un connettore, è la risposta più rapida: indica per ciascun connettore il livello di
+   regola determinante.
+3. **Soltanto dopo il livello del server.** Ciò che non diventa visibile nel pannello sono i
+   guasti che si presentano già all’avvio dell’applicazione.
+
+## I gruppi di cause più frequenti
+
+| Quadro | Dove sta di solito la causa |
+|---|---|
+| Le risposte non arrivano o vanno in timeout | L’istanza non raggiunge internet — tipicamente un client VPN, un proxy aziendale o una rotta di rete in conflitto. Più raramente una chiave non valida del fornitore di inferenza. |
+| Una funzione è visibile ma non fa nulla | Il relativo componente facoltativo non è in esecuzione oppure non è configurato. Riguarda soprattutto la ricerca nei file, l’esecuzione di codice e la ricerca web. |
+| Un servizio si riavvia ripetutamente dopo l’installazione | I diritti di accesso sugli archivi dell’istanza. Con il percorso di messa in servizio regolare questo non si verifica. |
+| Le risposte compaiono solo alla fine tutte in una volta | Un’appliance a monte mette in buffer il flusso di risposta, vedere [Dominio e certificato](/docs/it/betrieb/domain-und-tls). |
+| Dopo una migrazione ogni persona deve ricollegare i propri connettori | Le chiavi di cifratura sono state rigenerate anziché riprese, vedere [Backup e migrazione](/docs/it/betrieb/backup-und-umzug). |
+| Dopo un aggiornamento qualcosa nell’interfaccia non torna più | La configurazione non corrisponde più allo stato attuale, oppure vi manca un nuovo valore. |
+
+<Aside type="tip" title="Se nulla di tutto ciò corrisponde">
+Annoti che cosa è stato modificato per ultimo e confronti la Sua configurazione con il modello
+fornito. Gran parte dei restanti guasti si riconduce a un valore mancante oppure a una
+configurazione che dopo un aggiornamento non corrisponde più allo stato attuale. Se così non
+arriva a una soluzione, La aiuta il canale di supporto previsto dal Suo contratto.
+</Aside>
+
+## Per continuare
+
+<CardGrid>
+  <LinkCard
+    title="Configurazione"
+    href="/docs/it/betrieb/konfiguration"
+    description="Quale livello prevale e dove viene gestita ciascuna impostazione."
+  />
+  <LinkCard
+    title="Backup e migrazione"
+    href="/docs/it/betrieb/backup-und-umzug"
+    description="Salvare, ripristinare e trasferire su un nuovo server."
+  />
+</CardGrid>

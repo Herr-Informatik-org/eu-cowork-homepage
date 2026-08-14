@@ -1,0 +1,188 @@
+---
+title: Agents et compétences
+description: Ce qu’est un agent, ce qu’est une compétence, comment les deux se complètent et pourquoi les compétences ne sont jamais déployées d’un bloc à tout le monde.
+sidebar:
+  order: 5
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Les agents et les compétences (skills) sont les deux outils qui transforment le collègue IA
+généraliste en un collègue fait pour votre entreprise. Cette page explique la différence, la
+répartition des tâches entre les deux et les règles d’autorisation qu’il faut impérativement
+respecter.
+
+Les deux fonctions proviennent de [LibreChat](https://www.librechat.ai/docs). Ce que nous y
+ajoutons, c’est la logique d’autorisation dans le panneau d’administration et les règles
+d’exploitation.
+
+## Agent et compétence, la différence
+
+| | Agent | Compétence |
+|---|---|---|
+| Ce que c’est | un rôle doté d’un équipement fixe | un processus standard consigné |
+| Contient | une persona et des instructions, un modèle défini, une sélection d’outils | un savoir pas à pas : quels champs, quel ordre, quelles règles |
+| Dans le contexte | en permanence, tant que vous lui parlez | uniquement le nom et une brève description. Le contenu n’est chargé qu’en cas de besoin |
+| Exemple | « Outlook-Assistent », qui résume les courriels et rédige des projets de réponse | « Voici comment nous établissons une offre », avec les champs obligatoires et leur ordre |
+
+Le deuxième point est le point important : une compétence ne coûte presque rien tant qu’elle n’est
+pas utilisée. Le modèle ne voit que la description et décide sur cette base s’il doit charger le
+texte complet. C’est pourquoi une compétence peut être bien plus détaillée qu’un prompt système.
+
+## La répartition des tâches
+
+Le savoir sur les processus a sa place dans les **compétences**, pas dans l’agent. L’agent reste
+une enveloppe mince : persona, modèle, outils.
+
+La raison est pratique. Les compétences sont de simples fichiers, portables et versionnables. Un
+agent, en revanche, vit dans la base de données d’une instance et ne peut être ni créé depuis la
+configuration ni exporté commodément. Qui met son savoir dans des agents le reconstruit à la main
+sur chaque nouvelle instance. Qui le met dans des compétences copie un fichier.
+
+Un agent dédié ne devient nécessaire que lorsqu’une fiche de modèle ne suffit plus, par exemple
+parce qu’un connecteur précis est prévu d’emblée ou qu’un rôle doit recevoir son propre jeu
+d’outils.
+
+## Utiliser les agents
+
+Les agents figurent dans le sélecteur de modèles, dans un sous-menu qui leur est propre. Vous
+choisissez l’agent comme une fiche de modèle ; la conversation se déroule ensuite avec ses
+instructions et ses outils.
+
+Un agent a le droit d’enchaîner plusieurs étapes : consulter, lire, calculer et ne répondre
+qu’ensuite. Le nombre d’étapes par exécution est limité.
+
+### Qui a le droit de construire des agents
+
+**Utiliser** des agents est ouvert à tous à la livraison. **Construire** des agents est un droit
+distinct, consigné dans l’éditeur de rôles sous **« Erstellen & Teilen »** (créer et partager) :
+
+| Droit | Signification |
+|---|---|
+| **« Agents nutzen »** (utiliser les agents) | choisir des agents existants et travailler avec eux |
+| **« Agents erstellen »** (créer des agents) | construire ses propres agents dans le générateur |
+| **« Agents teilen »** (partager des agents) | autoriser un agent pour des personnes ou des groupes |
+
+L’usage courant : les collaborateurs ordinaires utilisent, un petit groupe construit. Cela
+maintient le nombre d’agents à un niveau raisonnable et évite que naissent vingt variantes à
+moitié terminées du même assistant.
+
+Les agents construits par vos soins tournent d’origine exclusivement sur les fiches UE. C’est une
+limite voulue : un agent construit sur place ne doit pas envoyer par mégarde des données via un
+fournisseur hors UE.
+
+## Comment agit une compétence
+
+Une compétence est un dossier contenant un fichier `SKILL.md`. En haut figurent le nom et la
+description, en dessous les instructions.
+
+La description est le champ le plus important. C’est elle qui décide si la compétence se déclenche
+tout court. Elle devrait contenir les formulations avec lesquelles les collaborateurs abordent
+réellement la tâche (« erstelle eine Offerte », soit « établis une offre », ou « erfasse den
+Auftrag im ERP », soit « saisis la commande dans l’ERP »). Une description vague fait qu’une
+compétence ne se déclenche jamais.
+
+Il existe trois façons pour une compétence d’entrer en jeu :
+
+1. Le modèle la choisit lui-même dans le catalogue, sur la base de la description.
+2. Vous l’appelez manuellement dans le chat, par le menu `$`.
+3. Elle est marquée comme toujours active. À utiliser avec parcimonie, car son contenu est alors
+   présent dans chaque conversation.
+
+Le prompt système oblige le collègue à suivre **strictement** un processus standard consigné, ainsi
+qu’à nommer expressément les écarts et à les faire confirmer. La compétence fournit donc le savoir,
+le prompt la discipline.
+
+## Autoriser des compétences
+
+Il y a deux façons de mettre une compétence à disposition, et elles ne se comportent pas de la
+même manière.
+
+| Voie | Comment | Visible par qui |
+|---|---|---|
+| Téléversement dans l’interface | l’administrateur téléverse la compétence et la partage de façon ciblée | uniquement les personnes et les groupes autorisés |
+| Mise à disposition sur toute l’instance | l’administrateur dépose la compétence sous forme de fichier sur le serveur | toute l’instance, en lecture seule |
+
+Sur les fiches de modèle, le catalogue de compétences est actif. Mais ce qui s’y trouve n’est pas
+« tout » : c’est exactement ce qui a été autorisé pour la personne concernée. À cela s’ajoute le
+droit de rôle **« Skills nutzen »** (utiliser les compétences), qui porte dans le panneau la
+mention « Freigabe pro Person/Rolle, nie pauschal ausrollen » (autorisation par personne ou par
+rôle, ne jamais déployer d’un bloc).
+
+<Aside type="danger" title="Ne jamais déployer les compétences d’un bloc">
+Une compétence mise à disposition sur toute l’instance **l’emporte sur une compétence du même nom
+issue de la base de données**. Si vous déposez en plus sur le serveur, sous forme de fichier, une
+compétence destinée aux seules ventes, vous court-circuitez donc l’autorisation ciblée. La
+compétence est ensuite visible par tout le monde, sans que personne ait rien modifié.
+
+Règle : la mise à disposition sur toute l’instance est réservée aux compétences qui peuvent
+s’appliquer à toute l’instance et ne contiennent aucun contenu confidentiel. Tout le reste est
+téléversé et partagé de façon ciblée.
+
+Pour la même raison, la configuration ne comporte **aucune liste fixe de compétences**. Une telle
+liste lierait les compétences nommées à tous les utilisateurs de la fiche.
+</Aside>
+
+<Aside type="note" title="Les compétences partagées sont d’abord inactives">
+Une compétence partagée avec une personne n’est par défaut **pas** active chez cette personne :
+elle devrait d’abord l’activer elle-même. Si les compétences autorisées doivent agir
+immédiatement, cela se change dans le panneau lors de la mise en place. Ce réglage a sa place dans
+le panneau, faute de quoi le démarrage écrase à chaque redémarrage les droits sur les compétences
+gérés dans l’éditeur de rôles.
+</Aside>
+
+## Ce qui est livré
+
+Une ossature, pas un agent fini.
+
+- Les contenus des compétences ne sont pas livrés. Ils comportent des indications confidentielles
+  et des processus internes et sont donc déposés à la main sur le serveur.
+- Pour les agents standard, il existe des définitions d’exemple qui permettent de créer un fonds
+  de base une fois par instance. Elles sont expressément signalées comme une ossature et doivent
+  être vérifiées face à l’instance en service.
+
+La raison en est une particularité de LibreChat : les agents ne peuvent pas être définis dans la
+configuration et il n’existe pas d’export dans le générateur. La configuration ne peut référencer
+un agent que par son identifiant.
+
+## Pour les administrateurs
+
+### Partager un agent globalement en tant que lecteur
+
+<Aside type="caution" title="Sinon la fiche disparaît chez les utilisateurs ordinaires">
+Si vous faites pointer une fiche de modèle vers un agent, vous devez **partager cet agent
+globalement en tant que lecteur**. Sinon, le contrôle d’accès filtre la fiche pour tous ceux qui
+ne possèdent pas l’agent. Pour vous, administrateur, tout paraît alors correct, tandis que vos
+collaborateurs, eux, ne voient tout simplement pas la fiche.
+
+Le partage se règle une fois pour toutes dans l’interface des agents.
+</Aside>
+
+Si l’agent doit en outre être joignable en dehors du chat, par exemple dans
+l'[Add-in Outlook](/docs/fr/funktionen/outlook-add-in), il lui faut une autorisation propre pour
+l’accès distant. Les agents concernés se voient dans le panneau, sous
+**« Verwaltung → Remote-Agenten »** (administration, agents distants).
+
+### Gérer les compétences sur le serveur
+
+<Steps>
+
+1. Déposer le dossier contenant `SKILL.md` à l’emplacement prévu à cet effet sur le serveur.
+
+2. Redémarrer l’application, car les compétences mises à disposition sur toute l’instance sont
+   lues au démarrage.
+
+3. Tester, et ce dans les deux sens. Côté positif : la compétence se déclenche-t-elle sur les
+   formulations qui figurent dans sa description ? Côté négatif : reste-t-elle à l’écart des
+   tâches qui ne la concernent pas ?
+
+</Steps>
+
+### Limiter le catalogue
+
+À partir d’environ cinq compétences, il vaut la peine de plafonner le catalogue. Sinon, la liste
+des descriptions transportée dans chaque conversation s’allonge et coûte des tokens dans chaque
+chat.
+
+Le même principe vaut pour les connecteurs : quelques outils clairement décrits valent mieux que
+beaucoup.

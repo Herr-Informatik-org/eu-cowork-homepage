@@ -1,0 +1,129 @@
+---
+title: Bonnes pratiques pour les connecteurs
+description: Dix règles avec leur justification, plus une liste de contrôle avant l’autorisation d’un nouveau connecteur.
+sidebar:
+  order: 7
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Cette page résume ce qui a fait ses preuves en exploitation. Les règles sont classées par importance ; la première est celle que l’on oublie le plus souvent et qui coûte le plus cher.
+
+## 1. Règle par défaut aussitôt sur refusé
+
+Un connecteur n’est proprement délimité qu’une fois sa règle par défaut posée. Tant que cela n’est pas fait, ce n’est pas votre intention qui décide qui voit derrière le connecteur, mais le hasard de l’état de configuration. Dans le cas d’un raccordement ERP, il s’agit alors de l’ensemble des clients, des pièces comptables et des données du personnel que le compte de service peut voir.
+
+Placez donc la **règle par défaut** sur refusé dans le même geste que celui où vous créez le connecteur, et n’autorisez de façon ciblée qu’ensuite.
+
+## 2. Peu d’outils plutôt que beaucoup
+
+Le catalogue d’outils d’un connecteur est transmis au modèle **à chaque message**. Ce n’est pas un investissement unique, c’est un loyer permanent sur chaque chat.
+
+L’ordre de grandeur est considérable : un connecteur volumineux peut proposer plus de cent outils et occuper ainsi une part notable du contexte disponible avant même que la première question ne soit posée. Limité au cas d’usage, le catalogue se réduit souvent à une petite fraction.
+
+Le second effet est au moins aussi important : plus le catalogue contient d’outils aux noms voisins, plus le modèle se trompe souvent d’outil. Un catalogue étroit donne non seulement des réponses moins coûteuses, mais aussi des réponses plus fiables.
+
+Activez donc les outils un par un et à la demande, non par précaution.
+
+## 3. Un outil qui n’existe pas ne peut pas être appelé
+
+La mesure de sécurité la plus fiable est l’omission. Un modèle ne peut pas appeler par mégarde un outil qui n’existe pas du tout, et aucune instruction dans un document ne peut en faire apparaître un.
+
+Un pont en lecture seule vers un système métier le démontre, voir [modèle C](/docs/fr/konnektoren/muster) : il n’y a là, délibérément, aucun outil pour des actions qui interviennent sur le système. C’est pourquoi il n’existe nulle part de règle qui devrait empêcher quelqu’un de redémarrer un serveur depuis le chat. Cela n’est tout simplement pas possible.
+
+C’est exactement à cela que vous mesurez un connecteur tiers : quels outils expose-t-il, et existe-t-il un mode lecture seule ? Lorsqu’un serveur tout fait propose, à côté de la lecture, des actions qui interviennent sur le système et que cela ne peut pas être désactivé, un connecteur étroit développé par vos soins est souvent une solution plus rapide que la discussion sur qui a le droit de l’utiliser.
+
+## 4. Des comptes de service séparés plutôt qu’un passe-partout
+
+Une clé d’accès hérite des droits de son compte dans le système source. Une clé pour tous signifie donc les droits les plus larges pour tous, et la séparation ne tient plus qu’à notre logiciel.
+
+Créez plutôt plusieurs comptes de service étroits, un par profil de droits, et faites tourner une instance dédiée du connecteur par compte. C’est exactement ainsi qu’est construit le [modèle A](/docs/fr/konnektoren/muster) : plusieurs instances du même pont, chacune avec son propre compte dans le système cible, chacune avec son propre profil de droits. Si une autorisation dans le panneau est un jour posée trop largement, une personne ne voit toujours que ce que son compte de service a le droit de voir.
+
+L’effet secondaire est précieux lui aussi : dans le journal du système source, on reconnaît de quel profil venait une requête.
+
+## 5. La limite des données appartient au système source
+
+La tentation est grande de tracer une limite dans le prompt : « ne demande pas de données salariales ». Ce n’est pas une limite, c’est une prière.
+
+Un filtrage au niveau des arguments ne porte pas loin non plus. Beaucoup d’outils acceptent des expressions de recherche libres ou des conditions de filtrage. Ce qui y est possible ne peut pas être apprécié de façon fiable depuis l’extérieur, et chaque règle de filtrage est une course contre des formulations auxquelles personne n’a pensé.
+
+Seuls deux niveaux sont fiables : les droits du compte dans le système source, c’est-à-dire ce que le compte derrière la clé a effectivement le droit d’y voir, et le niveau de l’outil, parce qu’un outil qui n’existe pas ne peut rien livrer. Tracez la limite là, et traitez le prompt comme un confort, non comme un contrôle.
+
+## 6. L’authentification par personne l’emporte sur le compte de service
+
+Lorsqu’un système propose un accès nominatif par une interface, prenez-le. Le système cible connaît alors la personne à l’origine de la demande, et ses droits sur place s’appliquent tels quels. Vous n’avez rien à reconstruire, rien à entretenir en plus, et un changement de droits dans le système source agit immédiatement dans le chat.
+
+Un raccordement à votre espace de stockage de fichiers fonctionne typiquement ainsi, voir [modèle B](/docs/fr/konnektoren/muster). Le prix à payer est que chaque personne doit se connecter une fois et que la gradation est ensuite gérée dans le système cible. C’est le bon échange : une limite plus fine dans le système cible vaut mieux qu’une limite plus grossière en amont.
+
+Un compte de service est la solution de repli pour les systèmes dépourvus de cette possibilité. Il n’est pas mauvais, mais il exige les règles 1, 4 et 8 avec insistance.
+
+## 7. Les clés uniquement sous forme de référence
+
+N’inscrivez jamais d’identifiants en clair dans la configuration, mais uniquement sous forme de référence à une clé déposée.
+
+Ce n’est pas une question de forme. Une valeur en clair dans la configuration serait lisible par quiconque a le droit de consulter la configuration, et elle circulerait dans les exports et les sauvegardes des réglages.
+
+Traitez donc une clé une fois déposée comme n’étant plus consultable : la modifier signifie l’écraser, et qui a besoin de la valeur la récupère dans le système source, pas dans la plateforme.
+
+## 8. Exactement une instance du même connecteur par personne
+
+Plusieurs instances du même connecteur exposent des noms d’outils identiques. Si deux d’entre elles sont autorisées pour une personne, il se passe deux choses : le catalogue se trouve en double dans le contexte et coûte le double à chaque message, et le modèle doit deviner entre deux outils portant le même nom. Les deux sont évitables.
+
+N’autorisez donc **exactement une** instance par personne. Si quelqu’un a besoin d’un autre profil de droits, **changez** l’autorisation au lieu d’en ajouter une seconde. Vérifiez ensuite dans le panneau ce qui s’applique réellement à cette personne.
+
+## 9. Gérer activement la taille du contexte
+
+Le catalogue d’outils n’est qu’une moitié. L’autre, ce sont les **résultats** des appels. Une requête inconsidérée sur tout le parc d’appareils ou une liste de résultats non filtrée venue de l’ERP remplit le contexte, chasse le fil de la conversation et rend la réponse moins bonne, pas meilleure.
+
+Quatre leviers aident :
+
+- **Poser des limites supérieures à la longueur des résultats d’outils et les laisser en place.** Si une réponse paraît tronquée, c’est la protection à l’œuvre.
+- **Préférer les connecteurs à réponses graduées.** Une requête de détail bien construite ne charge d’abord que les données de base et ne va chercher les sections volumineuses que sur demande expresse. Cela fait des économies à chaque question.
+- **Pour les questions portant sur beaucoup d’objets, un outil d’analyse plutôt que de nombreuses requêtes isolées.** Dix requêtes isolées coûtent dix résultats dans le contexte, une analyse en coûte un.
+- **Pour les agents lourds en outils, ne pas écrire tout le catalogue dans chaque prompt.** Les définitions d’outils peuvent aussi être chargées seulement en cas de besoin. Cela ne devient rentable qu’avec un très grand nombre d’outils.
+
+## 10. Signaler les connecteurs hors de l’UE
+
+Un connecteur conduit des données de votre instance vers un prestataire. Si ce prestataire se trouve hors de l’UE, c’est une affirmation sur votre gestion des données que vous ne devriez pas faire tacitement.
+
+Cela vaut aussi lorsque le prestataire exploite une instance européenne : dès que des données quittent votre propre pile, il s’agit d’un traitement chez un tiers, et la situation juridique dépend du siège de celui-ci. Un tel connecteur peut être une décision tout à fait juste, mais ce doit être une décision **consciente**.
+
+C’est pourquoi l’état de livraison d’une nouvelle installation ne contient **aucun connecteur préconfiguré**. Ce qui est raccordé, c’est vous qui en décidez.
+
+Tenez une courte liste indiquant quel connecteur transmet des données et vers où, nommez expressément les raccordements hors UE auprès de vos utilisateurs et dans votre documentation de protection des données, et n’affirmez pas, pour de tels connecteurs, que tout reste en Europe.
+
+## Liste de contrôle avant l’autorisation d’un nouveau connecteur
+
+Parcourez ces points avant que la première personne n’utilise le connecteur :
+
+- [ ] La liste des outils exposés a été lue en entier et comprise.
+- [ ] Tout ce qui n’est pas nécessaire est désactivé ou n’existe même pas.
+- [ ] Il existe un mode lecture seule, ou la nécessité d’écrire est justifiée.
+- [ ] Le compte de service dans le système source a exactement les droits dont il a besoin, et pas davantage.
+- [ ] La limite des données est tracée dans le système source, pas dans le prompt.
+- [ ] Les identifiants figurent dans la configuration uniquement sous forme de référence, jamais en clair.
+- [ ] Pour le connecteur, des autorisations par rôle et par groupe s’appliquent, ou une justification existe indiquant que les droits dans le système cible suffisent.
+- [ ] La **règle par défaut** est sur refusé.
+- [ ] Les autorisations sont posées, et une seule instance est autorisée par personne.
+- [ ] La connexion au connecteur est vérifiée.
+- [ ] Une personne de test aux droits étroits voit de façon démontrable moins qu’une personne aux droits larges.
+- [ ] Dans le cas d’un prestataire hors de l’UE, cela est documenté et communiqué.
+- [ ] Un coup d’œil au journal montre les appels et les décisions attendus.
+
+<CardGrid>
+  <LinkCard
+    title="Modèles de connecteurs"
+    href="/docs/fr/konnektoren/muster"
+    description="Trois formes éprouvées : compte de service, authentification par personne et pont en lecture seule, avec le parcours des droits."
+  />
+  <LinkCard
+    title="Droits et autorisations"
+    href="/docs/fr/konnektoren/gateway-und-rechte"
+    description="Sur quoi se prononce le contrôle des droits et où vous gérez les autorisations."
+  />
+  <LinkCard
+    title="Raccorder votre propre connecteur"
+    href="/docs/fr/konnektoren/eigenen-konnektor-anbinden"
+    description="Ce que vous clarifiez avant, à quoi vous mesurez un connecteur tiers et ce qui compte au moment d’autoriser."
+  />
+</CardGrid>

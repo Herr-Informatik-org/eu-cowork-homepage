@@ -7,19 +7,18 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-EU Cowork AI läuft als Docker-Compose-Stack. Die Chat-Anwendung ist dabei nur einer von
-mehreren Containern: Datenbank, Suchindex und die weiteren Dienste laufen jeweils in einem
-eigenen Container und sprechen untereinander über ein internes Netz.
+EU Cowork AI läuft als Docker-Compose-Stack. Die Chat-Anwendung und die Dienste, die sie
+benötigt, laufen jeweils in einem eigenen Container und sprechen untereinander über ein
+internes Netz.
 
 ## Was von aussen erreichbar ist
 
 Nach aussen veröffentlicht wird nur ein Reverse-Proxy auf den üblichen Web-Ports, der TLS
-terminiert und alles Weitere intern verteilt. Sämtliche übrigen Dienste — Datenbank,
-Suchindex, Konnektoren und die eigenen Zusatzdienste — sind ausschliesslich im internen Netz
-erreichbar und werden auf dem Host nicht veröffentlicht.
+terminiert und alles Weitere intern verteilt. Sämtliche übrigen Dienste sind ausschliesslich im
+internen Netz erreichbar und werden auf dem Host nicht veröffentlicht.
 
-Je nach Ausbaustufe kommen weitere Container hinzu, etwa für die Dateisuche oder für
-Konnektoren. Welche das sind und wie sie zugeschaltet werden, steht in den Betriebsunterlagen.
+Welche Dienste eine Auslieferung im Einzelnen umfasst und wie sie zugeschaltet werden, steht in
+den Betriebsunterlagen.
 
 <Aside type="caution" title="Netzzugang planen">
 Zusätzlich zu den Web-Ports braucht die Instanz einen ausgehenden Weg zum Modell-Anbieter.

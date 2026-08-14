@@ -1,0 +1,37 @@
+---
+title: Servicios y puertos
+description: Cómo está estructurada la pila en lo esencial y qué es accesible desde el exterior.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+EU Cowork AI funciona como una pila de Docker Compose. La aplicación de chat y los servicios que
+necesita se ejecutan cada uno en su propio contenedor y se comunican entre sí a través de una
+red interna.
+
+## Qué es accesible desde el exterior
+
+Hacia el exterior solo se publica un proxy inverso en los puertos web habituales, que termina
+TLS y reparte todo lo demás internamente. El resto de los servicios son accesibles
+exclusivamente en la red interna y no se publican en el host.
+
+Qué servicios comprende una entrega en detalle y cómo se activan figura en la documentación de
+operación.
+
+<Aside type="caution" title="Planificar el acceso a la red">
+Además de los puertos web, la instancia necesita una vía de salida hacia el proveedor de
+modelos. Determine antes de la puesta en marcha qué destinos puede alcanzar el servidor hacia el
+exterior, y permita el acceso al servidor mismo únicamente desde su red de administración.
+</Aside>
+
+## Documentación de operación
+
+La relación de los distintos servicios con sus tareas y dependencias, las variantes de red y de
+despliegue, así como los pasos de comprobación para la operación se entregan junto con el
+producto. Los clientes reciben esta documentación junto con su acceso.
+
+Cómo se arranca, se detiene y se observa la pila en el día a día figura en el [Resumen de
+comandos](/docs/es/referenz/befehle). Las licencias de los componentes implicados están en
+[Licencias y origen](/docs/es/referenz/lizenzen).

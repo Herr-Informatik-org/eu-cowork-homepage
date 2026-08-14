@@ -1,0 +1,192 @@
+---
+title: Chat et modèles
+description: Le fonctionnement du chat, la composition des fiches de modèle, le rôle des souvenirs et le compactage automatique des conversations très longues.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Cette page décrit ce que vos collaborateurs trouvent dans le chat : l’historique, la recherche,
+les fiches de modèle, les souvenirs et le comportement des conversations très longues. Une
+section finale s’adresse aux administrateurs et présente les réglages correspondants.
+
+L’interface de chat provient de [LibreChat](https://www.librechat.ai/docs). Ce que nous y
+ajoutons, c’est la sélection des fiches de modèle, le prompt système enregistré et la gestion
+des droits par-dessus.
+
+<Aside type="tip" title="Quatre notions pour commencer">
+
+| Notion | En une phrase |
+|---|---|
+| **Token** | L’unité de calcul des modèles de langage : un fragment de texte d’environ quatre caractères, soit à peu près la moitié d’un mot ou un mot entier. Tout ce que vous écrivez et tout ce que le collègue répond se compte en tokens, et c’est de là que dépendent la consommation, les budgets et les limites de contexte. |
+| **Fiche de modèle** | Un ensemble prêt à l’emploi composé d’un fournisseur, d’un modèle et de préréglages, que vous choisissez dans le sélecteur sous un nom compréhensible au lieu de désigner un modèle brut. |
+| **Prompt système** | La consigne de travail transmise au modèle avant votre question, qui fixe la langue, le ton et le comportement. Elle est attachée à la fiche et n’est pas visible dans le chat. |
+| **Contexte** | Tout ce que le modèle peut lire en même temps pour une requête : votre question, l’historique de la conversation, les fichiers joints et les résultats des outils. La place disponible est limitée et se mesure en tokens. |
+
+</Aside>
+
+## Le chat au quotidien
+
+Vous écrivez une question, la réponse apparaît au fil de l’eau, mot après mot. Chaque
+conversation se range dans l’historique de la colonne de gauche et reçoit automatiquement un
+titre qu’un modèle déduit des premiers messages. Vous pouvez remplacer ce titre à tout moment.
+
+| Fonction | Ce qu’elle fait |
+|---|---|
+| Historique | Toutes les conversations restent enregistrées jusqu’à ce que vous les supprimiez ou que le délai de conservation s’applique |
+| Titres automatiques | Le titre naît dès le premier échange, sans que vous ayez à intervenir |
+| Signets | Marquer les conversations importantes et les retrouver plus vite |
+| Réponses en parallèle | Faire tourner plusieurs chats côte à côte et comparer les réponses |
+| Chat privé | Une conversation qui n’est pas enregistrée |
+| Bifurquer | Ouvrir une nouvelle branche à partir de n’importe quel message, sans modifier l’original |
+| Partager | Publier une conversation sous forme de lien |
+
+Le **« Privater Chat »** (chat privé) s’appelle **« Temporäre Chats »** (chats temporaires) dans
+l’éditeur de rôles du panneau d’administration, où il porte la mention
+« Unterhaltungen ohne Speicherung » (conversations sans enregistrement). La durée pendant
+laquelle une telle conversation est conservée est fixée par l’administrateur.
+
+**Bifurquer** est la bonne manœuvre lorsqu’une conversation doit se poursuivre dans deux
+directions. Vous conservez l’historique existant et essayez une autre variante dans la branche,
+sans perdre la conversation d’origine.
+
+**Partager** crée un lien vers un instantané de la conversation. Quiconque a le lien peut la
+lire. Ce droit est un droit de rôle distinct et peut être retiré.
+
+## Rechercher dans les anciens chats
+
+La barre latérale propose une recherche sur le texte intégral de toutes vos conversations. Elle
+retrouve donc aussi une formulation au milieu d’une réponse datant de trois semaines.
+
+<Aside type="note" title="Trois recherches qui ne sont pas la même chose">
+La recherche en texte intégral dans vos chats est autre chose que la **recherche de fichiers**
+dans un fonds documentaire, et autre chose encore que la **recherche web**. Qui fait quoi est
+expliqué dans
+[Fichiers et connaissances](/docs/fr/funktionen/dateien-und-wissen) et dans
+[Recherche web](/docs/fr/funktionen/web-suche).
+</Aside>
+
+## Ce qu’est une fiche de modèle
+
+Une fiche de modèle est un préréglage complet. Elle réunit trois choses :
+
+1. un modèle précis chez un fournisseur précis,
+2. le prompt système enregistré, c’est-à-dire la consigne de travail donnée au modèle,
+3. la présélection des outils actifs sur cette fiche.
+
+Le prompt système est inséré côté serveur et n’arrive jamais jusqu’au navigateur. Les fiches
+livrées portent le même prompt ; il fixe la langue, le ton et le traitement rigoureux des faits.
+
+Les nouveaux chats démarrent sur la fiche par défaut. Vous avez le droit de changer de fiche, ce
+changement n’est pas bloqué.
+
+## Les fiches que vous trouverez
+
+Les fiches présentes dans le sélecteur sont décidées par l’administrateur. Deux distinctions
+comptent au quotidien :
+
+- **Texte, ou texte et images.** Toutes les fiches ne comprennent pas les images. Les captures
+  d’écran et les photos ont leur place sur une fiche signalée comme compatible avec les images ;
+  sur une fiche purement textuelle, une image reste sans effet.
+- **UE ou hors UE.** Les fiches dont les requêtes quittent l’UE portent la mention ⚠ Nicht-EU
+  (hors UE) dans leur nom.
+
+<Aside type="caution" title="Cette mention est voulue">
+Le signe ⚠ et la mention « Nicht-EU » (hors UE) figurent dans le nom de la fiche afin que l’on
+voie, au moment même du choix, que cette requête quitte l’UE. La mention ne doit pas être
+supprimée tant que la fiche pointe vers un fournisseur situé hors de l’UE. Qui veut une instance
+purement européenne ne propose tout simplement pas de telles fiches.
+</Aside>
+
+## Les souvenirs : la mémoire à long terme
+
+Le collègue IA retient quelques éléments à votre sujet d’une conversation à l’autre et les
+intègre à chaque nouvelle réponse. Cela se fait tout seul, vous n’avez pas besoin de dire
+« retiens ceci ».
+
+Ce qui est enregistré est volontairement peu de chose, et seulement dans quatre catégories :
+
+| Catégorie | Contenu |
+|---|---|
+| Préférences | La façon dont vous voulez les réponses : langue, format, niveau de détail, ton, corrections récurrentes |
+| Contexte de travail | Fonction, équipe, domaines de responsabilité, systèmes utilisés |
+| Projets | Projets, clients et sujets en cours, avec un bref état d’avancement |
+| Notes | Autres faits stables qui améliorent les réponses futures |
+
+Ne sont expressément **pas** enregistrés : les mots de passe et les clés, les données de santé,
+religieuses et politiques, les données salariales, les faits sensibles concernant des tiers et
+les détails ponctuels sans valeur de réutilisation.
+
+La mémoire est volontairement de petite taille. Lorsqu’elle est pleine, le collègue regroupe les
+entrées apparentées au lieu d’ajouter indéfiniment.
+
+**Comment désactiver la fonction.** Dans les réglages, sous **« Datenschutz & Sicherheit »**
+(protection des données et sécurité), section **« Erinnerungen »** (souvenirs), se trouve le
+commutateur **« Gespeicherte Erinnerungen verwenden »** (utiliser les souvenirs enregistrés).
+Désactivé signifie : vos souvenirs n’alimentent plus les réponses. Au même endroit, vous pouvez
+consulter vos entrées, les modifier une à une et les supprimer.
+
+## Conversations très longues
+
+Un modèle ne peut lire qu’une quantité limitée de texte par requête. Lorsqu’une conversation
+devient très longue, un traitement distinct résume automatiquement les messages les plus anciens
+et envoie désormais ce résumé au modèle à la place de l’historique complet.
+
+- Le seuil à partir duquel cela se déclenche dépend de la fiche choisie : les fiches dotées d’une
+  fenêtre de contexte plus petite compactent plus tôt.
+
+Votre historique visible reste entier. Seul ce qui part vers le modèle est résumé.
+
+<Aside type="note" title="Il n’existe aucune commande manuelle pour cela">
+Une commande comme `/compact`, qui vous permettrait de déclencher vous-même le compactage,
+n’existe pas. L’opération est exclusivement automatique. Si vous voulez délibérément repartir de
+zéro, ouvrez un nouveau chat ou bifurquez à l’endroit qui convient.
+</Aside>
+
+## Pour les administrateurs
+
+### Fiches de modèle par rôle et par groupe
+
+Les fiches qu’une personne voit sont décidées dans le panneau d’administration. La cascade est
+**groupe avant rôle avant base**.
+
+- **« Verwaltung → Rollen »** (administration, rôles) : un commutateur par fiche et par rôle.
+  À cela s’ajoute le commutateur **« Weitere Modelle (Roh-Untermenü) »** (autres modèles, sous-menu
+  brut) accompagné de la mention « Aus = diese Rolle sieht NUR die oben aktivierten Karten »
+  (désactivé signifie que ce rôle voit UNIQUEMENT les fiches activées ci-dessus).
+- **« Verwaltung → Gruppen »** (administration, groupes) : par groupe, soit **« Erben »** (hériter),
+  soit **« Eigene Auswahl (übersteuert die Rollen-Regel) »** (sélection propre, prime sur la règle
+  du rôle).
+
+C’est la manière propre de donner par exemple des fiches supplémentaires à la direction et de ne
+montrer à tous les autres que les fiches UE.
+
+### Masquer complètement le sélecteur de modèles
+
+Pour une configuration délibérément simple, réglez **« Modell-Auswahl anzeigen »** (afficher la
+sélection de modèles) sur désactivé dans le panneau, sous **« Konfiguration → Funktionen »**
+(configuration, fonctions). Tout le monde travaille alors sur la fiche par défaut et ne voit plus
+aucune sélection de modèles.
+
+### Panneau des paramètres
+
+Le panneau réservé à la température et aux autres réglages fins est **désactivé** à la livraison.
+C’est voulu : sans bagage en matière d’IA, les collaborateurs modifieraient des valeurs dont ils
+ne peuvent pas évaluer l’effet. La réactivation se fait par rôle, via la cascade de configuration
+du panneau ; en pratique, c’est le rôle ADMIN qui reçoit cette dérogation, tous les autres rôles
+héritant du comportement désactivé.
+
+### Un ordre de mise en place judicieux
+
+<Steps>
+
+1. Renseigner les prix et les tailles de contexte sous **« Konfiguration → Preise »**
+   (configuration, prix), afin que la mesure de la consommation soit juste. Un champ de prix vide
+   ne veut pas dire gratuit : LibreChat calcule alors avec un forfait intégré.
+
+2. Définir les fiches par rôle et par groupe.
+
+3. Inviter les collaborateurs seulement après cela.
+
+</Steps>

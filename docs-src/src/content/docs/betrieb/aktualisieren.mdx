@@ -8,8 +8,8 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 Ein Update besteht aus vier Handgriffen: neuen Stand holen, die eigene Konfiguration gegen die
-Vorlage vergleichen, sichern, installieren. Ausgeführt wird es mit demselben Installationsskript
-wie die Ersteinrichtung, nur im Update-Modus.
+Vorlage vergleichen, sichern, installieren. Es läuft über denselben geführten Weg wie die
+Ersteinrichtung, nur im Update-Modus.
 
 ## Der Vergleich mit der Vorlage
 
@@ -30,13 +30,13 @@ Datenbestand kostet Tage. Details unter [Backup und Umzug](/docs/betrieb/backup-
 
 ## Der Update-Modus
 
-Im Update-Modus lässt der Installer die vorhandene Konfiguration unangetastet und erzeugt keine
-neuen Geheimnisse. Genau das wollen Sie beim Update: Ihre Schlüssel und Adressen bleiben, wie
-sie sind. Gleichzeitig erneuert er alle Bestandteile der Auslieferung.
+Im Update-Modus bleibt die vorhandene Konfiguration unangetastet, und es entstehen keine neuen
+Geheimnisse. Genau das wollen Sie beim Update: Ihre Schlüssel und Adressen bleiben, wie sie
+sind. Gleichzeitig werden alle Bestandteile der Auslieferung gemeinsam erneuert.
 
-<Aside type="caution" title="Einzelne Container von Hand zu erneuern reicht nicht">
-Wer nur den Chat-Container neu erzeugt, lässt die übrigen mitgelieferten Bestandteile auf dem
-alten Stand zurück. Nutzen Sie deshalb den Installer und nicht einzelne Befehle von Hand.
+<Aside type="caution" title="Einzelne Bestandteile von Hand zu erneuern reicht nicht">
+Wer nur einen Teil der Auslieferung erneuert, lässt die übrigen Bestandteile auf dem alten Stand
+zurück. Nutzen Sie deshalb den vorgesehenen Update-Weg und keine Handgriffe daneben.
 </Aside>
 
 ## Warum Versionen fest gepinnt sind
@@ -64,8 +64,8 @@ siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). Prüfen Sie den Rollba
 einer Testinstanz, bevor Sie ihn im Ernstfall zum ersten Mal brauchen.
 
 <Aside type="note" title="Ablauf im Betriebshandbuch">
-Die Update-Kette mit allen Befehlen, der Versionswechsel und der Rückweg stehen im
-Betriebshandbuch, das dem Auslieferungspaket beiliegt.
+Der Update-Ablauf, der Versionswechsel und der Rückweg stehen im Betriebshandbuch, das dem
+Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 </Aside>
 
 ## Weiter

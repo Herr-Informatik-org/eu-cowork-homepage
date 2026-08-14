@@ -1,0 +1,42 @@
+---
+title: Aperçu des commandes
+description: Avec quoi une instance s’administre au quotidien et où se trouvent les instructions détaillées.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Une instance s’administre avec les commandes Docker Compose habituelles. Il n’existe pas de
+ligne de commande propre qu’il faudrait d’abord apprendre.
+
+| Objectif | Commande |
+|---|---|
+| Démarrer | `docker compose up -d` |
+| État | `docker compose ps` |
+| Suivre le journal | `docker compose logs -f` |
+| Redémarrer | `docker compose restart` |
+| Arrêter | `docker compose down` |
+
+Toutes les livraisons ne démarrent pas avec la même étendue. Les indications supplémentaires
+dont un appel a besoin dans votre livraison figurent dans la documentation d’exploitation. Elles
+font alors partie de **chaque** appel.
+
+## Scripts d’aide fournis
+
+Pour l’installation, la mise à jour, la sauvegarde et la migration, la livraison apporte des
+scripts prêts à l’emploi, afin que ces procédures n’aient pas à être assemblées à la main. Leurs
+appels, leurs options et l’ordre approprié sont décrits dans la documentation d’exploitation,
+qui est fournie avec la livraison. Les clients la reçoivent en même temps que leur accès.
+
+<Aside type="caution" title="Sauvegarder avant chaque mise à jour">
+Cela vaut sans exception. Outre la base de données, une sauvegarde comprend aussi la
+configuration et les fichiers téléversés ; l’outil de sauvegarde fourni emporte les deux. Une
+archive contient des identifiants et se conserve protégée en conséquence.
+</Aside>
+
+## Pages associées
+
+- [Installation et exploitation](/docs/fr/betrieb/installation) décrit le déroulement, du
+  serveur vide à l’instance en fonctionnement.
+- [Dépannage](/docs/fr/betrieb/fehlerbehebung) rassemble les cas d’erreur les plus fréquents.

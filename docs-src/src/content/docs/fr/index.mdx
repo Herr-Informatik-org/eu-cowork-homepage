@@ -1,0 +1,104 @@
+---
+title: Documentation
+description: Documentation d’EU Cowork AI. Vue d’ensemble, exploitation sur votre propre serveur, administration et raccordement à vos propres systèmes.
+template: splash
+editUrl: false
+hero:
+  title: EU Cowork AI
+  tagline: Le collègue IA qui tourne sur votre propre serveur. Cette documentation montre ce que la plateforme sait faire, comment elle s’exploite et comment elle rejoint vos systèmes.
+  actions:
+    - text: Démarrage rapide
+      link: /docs/fr/erste-schritte/schnellstart
+      icon: right-arrow
+      variant: primary
+    - text: Configuration requise
+      link: /docs/fr/erste-schritte/systemanforderungen
+      icon: document
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Par où souhaitez-vous commencer ?
+
+<CardGrid>
+  <LinkCard
+    title="Qu’est-ce qu’EU Cowork AI ?"
+    href="/docs/fr/erste-schritte/ueberblick"
+    description="La vue d’ensemble en cinq minutes : ce que la plateforme sait faire et ce qui vient de LibreChat."
+  />
+  <LinkCard
+    title="Démarrage rapide"
+    href="/docs/fr/erste-schritte/schnellstart"
+    description="Le chemin vers votre propre instance, à grands traits."
+  />
+  <LinkCard
+    title="Configuration requise"
+    href="/docs/fr/erste-schritte/systemanforderungen"
+    description="Ce qu’une instance demande en mémoire vive, en CPU et en espace disque."
+  />
+  <LinkCard
+    title="Raccorder votre propre connecteur"
+    href="/docs/fr/konnektoren/eigenen-konnektor-anbinden"
+    description="Votre ERP, votre système de tickets, votre espace de stockage de fichiers — avec un contrôle des droits en amont."
+  />
+</CardGrid>
+
+## La documentation en six parties
+
+<CardGrid>
+  <Card title="Premiers pas" icon="rocket">
+    Vue d’ensemble, architecture, configuration requise et le chemin vers votre propre instance.
+    Commencez ici si vous découvrez EU Cowork AI.
+  </Card>
+
+  <Card title="Installation et exploitation" icon="setting">
+    Ce à quoi il faut penser lors de la mise en place et au quotidien : domaine et certificat, mises à jour,
+    sauvegardes, migration et les pannes qui surviennent réellement.
+  </Card>
+
+  <Card title="Pour vos équipes" icon="approve-check">
+    Ce qu’un collaborateur peut faire dans le chat : choisir des modèles, exploiter des fichiers,
+    chercher sur le web, faire produire des analyses et des tableaux, utiliser des agents.
+  </Card>
+
+  <Card title="Administration" icon="seti:config">
+    Utilisateurs et groupes, rôles et droits, fiches de modèle, consommation et budgets,
+    journaux et conservation.
+  </Card>
+
+  <Card title="Connecteurs et MCP" icon="puzzle">
+    Comment la plateforme rejoint les systèmes tiers, comment le contrôle des droits se place devant eux
+    et comment raccorder vos propres connecteurs en toute sécurité.
+  </Card>
+
+  <Card title="Référence" icon="list-format">
+    Termes, licences et les endroits où la documentation de LibreChat prend le relais.
+  </Card>
+</CardGrid>
+
+## Une remarque sur les libellés allemands
+
+L’administration et l’interface de chat ne sont livrées pour l’instant qu’en allemand. Partout où
+cette documentation nomme un point de menu, un onglet, un champ ou un bouton, elle cite donc
+littéralement la chaîne allemande que vous verrez à l’écran et ajoute une explication en français,
+ainsi : ouvrez **« Konfiguration »** (configuration). Rien ici ne décrit une interface française qui
+n’existe pas.
+
+## Cette documentation et LibreChat
+
+EU Cowork AI s’appuie sur [LibreChat](https://www.librechat.ai), une plateforme de chat à code
+ouvert sous licence MIT. L’interface de chat, le système d’agents, le traitement des fichiers et
+la connexion aux modèles viennent de là. Nous y avons ajouté tout ce qu’une entreprise demande pour
+une exploitation maîtrisée : administration, gestion des droits devant les connecteurs, un aperçu de
+la consommation avec budgets et un paquet d’installation pour votre propre serveur.
+
+Cette documentation donne la vue d’ensemble et indique d’où vient chaque brique. Là où la
+documentation de LibreChat va plus loin, nous y renvoyons plutôt que de la raconter moins bien. Les
+documents détaillés sur la mise en place sont fournis avec la livraison. Quelle brique vient de qui
+est exposé sous [LibreChat et EU Cowork](/docs/fr/referenz/librechat-und-eu-cowork).
+
+<div class="euc-footnote">
+Il manque quelque chose ou une indication est inexacte ? Écrivez à
+<a href="mailto:hallo@eucowork.ai">hallo@eucowork.ai</a>.
+</div>

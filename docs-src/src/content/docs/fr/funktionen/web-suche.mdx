@@ -1,0 +1,110 @@
+---
+title: Recherche web
+description: Le fonctionnement de la recherche web dans le chat, les composants dont elle se compose et les choix à faire lors de la mise en place.
+sidebar:
+  order: 3
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+La recherche web fait entrer dans le chat des informations actuelles venues d’Internet : prix,
+actualités, état du droit, renseignements sur d’autres entreprises. Cette page explique comment
+elle s’utilise, de quels composants elle se compose et lesquels vous choisissez vous-même lors de
+la mise en place.
+
+L’ossature de recherche provient de [LibreChat](https://www.librechat.ai/docs). Ce que nous y
+ajoutons, c’est la préconfiguration.
+
+## Comment elle s’utilise dans le chat
+
+Le champ de saisie comporte un commutateur pour la recherche web. S’il est activé et que la
+recherche est entièrement configurée, le collègue décide lui-même quand chercher. Vous n’avez pas
+besoin d’écrire « cherche sur Internet », une question sur l’état actuel des choses suffit.
+
+La réponse est alors construite à partir des pages trouvées, avec indication des sources. Le
+prompt système enregistré l’exige expressément.
+
+## Les trois composants
+
+Une recherche web qui fonctionne, c’est plus qu’un moteur de recherche.
+
+| Composant | Rôle | Obligatoire |
+|---|---|---|
+| Moteur de recherche | Fournit des résultats, c’est-à-dire des liens et de courts extraits de texte | oui |
+| Scraper | Récupère le texte intégral des pages trouvées | oui |
+| Reranker | Trie les passages trouvés selon leur pertinence | non |
+
+Sans scraper, le collègue n’aurait que des titres et des résumés de deux lignes, à partir desquels
+aucune réponse solide ne peut être construite.
+
+<Aside type="caution" title="La configuration de la recherche web s’achève lors de la mise en place">
+Un moteur de recherche est déjà configuré à la livraison. Le **scraper, c’est vous qui le
+choisissez**, car le choix du fournisseur dépend de votre position sur la résidence des données ;
+un reranker est facultatif et n’est pas défini d’origine.
+
+Prévoyez impérativement cette étape : l’outil de recherche n’est proposé au modèle qu’une fois qu’un
+scraper est configuré.
+</Aside>
+
+## Pour les administrateurs : configurer le scraper et le reranker
+
+Les deux se gèrent dans le panneau d’administration, sous **« Konfiguration → Funktionen »**
+(configuration, fonctions), dans les deux cartes consacrées à la recherche web. Vous y choisissez
+le fournisseur de recherche, le scraper et, en option, un reranker, ainsi que le niveau de
+SafeSearch. LibreChat prend en charge plusieurs fournisseurs pour les scrapers comme pour les
+rerankers ; lesquels entrent en ligne de compte est indiqué dans la
+[documentation LibreChat](https://www.librechat.ai/docs).
+
+Les clés n’ont **jamais** leur place en clair dans la configuration. Inscrivez-les sous forme de
+référence à une variable et déposez la valeur à l’endroit prévu à cet effet.
+
+<Aside type="note" title="Quel scraper convient au positionnement UE">
+La voie européenne prévue est un **scraper hébergé par vos soins**. La récupération du texte
+intégral ne quitte alors pas votre infrastructure.
+
+Les variantes hébergées des fournisseurs de scrapers sont vite mises en place, mais leur
+traitement n’est pas résident dans l’UE. Qui y recourt devrait le nommer aussi clairement que les
+fiches de modèle hors UE.
+</Aside>
+
+### Pour que le collègue cherche de lui-même
+
+Deux autres réglages décident si une recherche a lieu :
+
+<Steps>
+
+1. **Droit de rôle.** Dans l’éditeur de rôles, sous **« Werkzeuge »** (outils), le droit
+   **« Web-Suche »** (recherche web) pour les rôles concernés.
+
+2. **Indicateur sur la fiche.** L’outil de recherche doit être actif sur les fiches de modèle que
+   vous proposez. Ce n’est qu’alors qu’il est rattaché à la fiche et que le modèle décide lui-même
+   de son usage.
+
+3. Vérifier ensuite dans un chat tout neuf.
+
+</Steps>
+
+### Quelle quantité de texte arrive au modèle
+
+La quantité de texte issue des résultats de recherche qui part vers le modèle est limitée et
+réglable. Davantage, cela signifie plus de contexte pour la réponse et plus de tokens par
+requête, donc des coûts plus élevés. Moins, cela signifie une base plus maigre.
+
+## Protection des données dans la recherche web
+
+La recherche s’exécute dans votre instance, mais la requête de recherche, elle, part vers
+l’extérieur : elle est adressée à des services de recherche externes. Ce qui se passe alors, et ce
+qui ne se passe pas :
+
+| | |
+|---|---|
+| Part vers l’extérieur | le terme recherché, ainsi que les pages récupérées par le scraper |
+| Ne part **pas** vers l’extérieur | qui a cherché. L’identité de la personne reste chez vous |
+| Reste chez vous | la conversation, les documents, la réponse |
+
+<Aside type="note" title="Une formulation pour la formation et la notice de confidentialité">
+Formulé proprement, l’énoncé est le suivant : le stockage et l’inférence s’exécutent là où vous
+exploitez l’instance ; la requête de recherche elle-même part vers des services de recherche
+externes, et ce sans identité d’utilisateur. Qui décrit la recherche web dans une déclaration de
+confidentialité a tout intérêt à reprendre cette distinction mot pour mot.
+</Aside>

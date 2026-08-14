@@ -1,0 +1,57 @@
+---
+title: Variables de entorno
+description: Cómo se configura una instancia, qué debe indicar usted mismo y dónde está la referencia completa.
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Como es habitual en LibreChat, una instancia se configura mediante un archivo de entorno. La
+entrega incluye una plantilla comentada a partir de la cual el instalador genera la
+configuración real en la primera ejecución.
+
+<Aside type="danger" title="El archivo de configuración se queda en el servidor">
+Contiene todas las credenciales de la instancia. No debe acabar nunca en un repositorio, nunca
+en un ticket y nunca en una solicitud de soporte.
+</Aside>
+
+## Lo que indica usted mismo
+
+La mayor parte de la plantilla viene preconfigurada de modo que una instancia arranca. En lo
+esencial, solo hay tres cosas que debe indicar usted mismo:
+
+- **el dominio** en el que la instancia es accesible. Mientras aquí figure el valor
+  predeterminado, los enlaces de invitación solo funcionan en el propio servidor.
+- **la clave de acceso del proveedor de modelos.** Sin ella la instancia sí arranca, pero
+  cualquier consulta a un modelo falla.
+- **opcionalmente, las credenciales para el envío de correo.** Sin ellas no hay correos de
+  verificación ni de invitación; una invitación produce entonces solo un enlace para copiar.
+
+## Secretos
+
+Los secretos criptográficos de una instancia los genera el propio instalador en la primera
+ejecución y los guarda protegidos. Usted no tiene que hacer nada para ello.
+
+<Aside type="caution" title="Al migrar a un servidor nuevo">
+La configuración existente debe conservarse. Si en su lugar se genera de nuevo, las credenciales
+guardadas antes de forma cifrada ya no se pueden leer, y todos los usuarios tienen que volver a
+establecer sus conexiones de conectores. Por eso la herramienta de copia de seguridad incluida
+se lleva consigo la configuración.
+</Aside>
+
+## Referencia completa
+
+Qué entradas existen en detalle, qué efecto tienen y cuáles de ellas son necesarias para un
+determinado nivel de despliegue figura en la documentación de operación que se entrega junto con
+el producto. Los clientes la reciben junto con su acceso. La propia plantilla también está
+comentada.
+
+Para todo lo que es estándar de LibreChat rige además la documentación de ese proyecto en
+[www.librechat.ai/docs](https://www.librechat.ai/docs).
+
+## Páginas relacionadas
+
+- [Configuración](/docs/es/betrieb/konfiguration) describe qué se define en su lugar en el
+  `librechat.yaml` y qué en el panel de administración.
+- [Resolución de problemas](/docs/es/betrieb/fehlerbehebung) reúne los fallos más frecuentes.

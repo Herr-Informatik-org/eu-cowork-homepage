@@ -5,10 +5,10 @@ sidebar:
   order: 2
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 import DiagrammGateway from '../../../../components/DiagrammGateway.astro';
 
-A permission check sits in front of the connectors. On every tool call it decides whether the person making the request may use this connector, and it records the decision. This page explains why this layer is needed, what it decides on, and where you maintain the grants.
+A permission check sits in front of the connectors. It decides whether the person making the request may use a connector, and it records the decision. This page explains why this layer is needed, what it decides on, and where you maintain the grants.
 
 ## Why this layer is needed
 
@@ -18,57 +18,40 @@ For a tool like a weather lookup that does not matter. For an ERP it does: "acco
 
 ## What the permission check does
 
-- **A check before the call.** On every tool call the rule is checked first. If access is denied, the connector is never contacted at all. The person making the request gets a plain text message in the chat that points them at the admin. The chat carries on normally, there is no crash.
+- **A check before the call.** A tool call only reaches the connector if the person making the request has been granted access to it. Otherwise they get a plain text message in the chat that points them at the admin. The chat carries on normally, there is no crash.
 - **A per-person tool list.** Anyone without a grant for a connector is not offered its tools in the first place.
 - **A log of every call.** Every decision is written down immutably, denials included. How long these entries are kept is defined in your own deletion policy, see [Data protection and retention](/docs/en/administration/datenschutz-und-aufbewahrung).
-- **Deny when in doubt.** If the rule cannot be evaluated, or the person making the request cannot be established, access is denied rather than allowed.
+- **Deny when in doubt.** If a decision remains unclear, access is denied rather than allowed.
 - **The connector does not learn who is asking.** The identity is needed for the decision and is not passed on to the connector.
 
 ## The path of a request
 
 <DiagrammGateway />
 
-## The permission cascade
+## The levels of a grant
 
-Exactly one decision chain applies per connector. It is evaluated from top to bottom, and the first stage that makes a statement wins:
+Grants can be set for individual people, for roles, and for groups, and there is a default rule per connector on top of that. Where statements contradict each other, the resolution is deliberately restrictive. That is intentional: a security boundary must not be liftable just because someone is additionally in a harmless group.
 
-<Steps>
-1. **User.** If there is an explicit exception for this person, that is what applies. Full stop.
-2. **Role.** Otherwise the rule for the person's role counts.
-3. **Group.** Otherwise the rules of the groups the person is a member of count. If the person is in several groups with contradictory rules, **"denied" wins**. That is intentional: a security boundary must not be liftable just because someone is additionally in a harmless group.
-4. **The "Server-Standard" setting** (server default). Otherwise the default you set for this connector applies.
-</Steps>
-
-In the admin panel this chain appears as a legend above the cards: **"Es gewinnt: Benutzer › Rolle › Gruppe › Standard"** (the winner is: user › role › group › default).
-
-<Aside type="danger" title="Required step: set the server default before granting access">
-The first thing to do after creating a connector is the default: **set "Server-Standard" (server default) to denied, then deliberately grant access to the roles, groups and people who need the connector.**
+<Aside type="danger" title="Required step: set the default rule before granting access">
+The first thing to do after creating a connector is the default rule: **set the connector's default rule to denied, then deliberately grant access to the roles, groups and people who need the connector.**
 
 That way it is defined from the first second who can see behind the connector, and access is a deliberate decision rather than a side effect. Put this step on your acceptance checklist.
 </Aside>
 
-Above the connector level, individual tools can be controlled on top of that. A tool without a rule of its own simply inherits the decision of the connector, and one rule is absolute here: **a denied connector beats any tool level grant.**
+Besides the connector level, a grant can also be applied to individual tools.
 
 <Aside type="tip" title="Cut your connectors so that the connector level is enough">
 In day to day work, control at connector level carries most cases — and it is the more robust boundary. So plan your connectors accordingly: better two narrow connectors, each with its own service account, than one with many tools, half of which would have to be blocked. [Connector patterns](/docs/en/konnektoren/muster) shows what that looks like.
 </Aside>
 
-## When a change takes effect
+## Where you maintain the grants
 
-Permission changes take effect on **calls** quickly: a connector taken away is blocked within a short time. The **tool catalog**, meaning what the model is offered at all, is cached per person and can lag behind briefly. In practice that means a tool may still be in the menu although the call is already denied, and a newly granted connector does not show up in the very same second. After a restart of the instance the catalog is current again.
+Default rules, grants for roles and groups, and exceptions for individual people are maintained in the admin panel. The log of tool calls lives there as well and can be exported for your records. You can also work the other way round, starting from a single person and following which connectors are open to them.
 
-## Where you maintain this in the panel
-
-Everything about permissions lives under **"Verwaltung → MCP-Zugriff"** (administration → MCP access). At the very top is the master switch per role: if it is off for a role, that role sees no connectors at all and every further rule is meaningless. Below it you find one card per connector, with the **"Server-Standard"** (server default), the grants for groups, and the user exceptions.
-
-**Saving is explicit.** Every card keeps a working copy, your switches only take effect after you click **"Speichern"** (save). As long as something is still open, a notice under the card says that the changes are not in force yet.
-
-You find the log under **"System → Audit-Log"** (system → audit log), tab **"MCP-Tool-Calls"**. The view can be exported as CSV.
-
-If you want to work the other way round, starting from a person, open the subpage **"Zugriffe"** (access) from the user list. It answers "what may this person do, and why", names the deciding stage for each row, and links to the place where you change it.
+Which view sits where and how it is operated is described in the guide that ships with your instance.
 
 ## What the permission check does not do
 
 - **It does not replace the permissions in the source system.** A service account with permissions that are too broad remains a risk, even with a check in front of it. Draw the data boundary in the source system, not in the prompt.
 - **It does not filter arguments and it does not filter content.** A tool that accepts a free form query language cannot sensibly be restricted to "invoices only". Prefer connectors with separate tools or with a read only mode.
-- **It does not apply to connectors that work with the permissions of the individual person.** There the target system itself is the boundary, see [connector patterns](/docs/en/konnektoren/muster).
+- **It is not the only boundary.** With connectors that work with the permissions of the individual person, the target system itself draws the authoritative boundary, see [connector patterns](/docs/en/konnektoren/muster).

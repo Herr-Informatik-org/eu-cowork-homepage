@@ -1,0 +1,218 @@
+---
+title: Add-in per Outlook
+description: 'Il collega IA nella casella di posta: riassumere le e-mail, abbozzare le risposte, estrarre i compiti. Con allegati, accesso e distribuzione.'
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+L’add-in per Outlook porta il collega IA direttamente nella casella di posta, sotto forma di
+riquadro laterale. Il messaggio aperto fa da contesto. Questa pagina descrive le funzioni, la
+gestione degli allegati, l’accesso e la via della distribuzione all’interno dell’azienda.
+
+L’add-in è uno sviluppo nostro.
+
+## Che cosa sa fare
+
+- Riassumere l’e-mail aperta, anche conversazioni lunghe.
+- Scrivere una bozza di risposta che finisce nella normale finestra di risposta di Outlook.
+- Estrarre da un messaggio compiti e scadenze.
+- Leggere anche file e allegati, si veda più sotto.
+- Su richiesta riprendere il Suo stile di scrittura, se l’amministratore lo ha predisposto.
+
+Gira in Outlook per Windows, per Mac, sul web e nel nuovo Outlook.
+
+<Aside type="caution" title="Non invia mai in automatico">
+L’add-in fornisce testo. La bozza finisce nella finestra di risposta nativa, e a spedirla è Lei.
+Non esiste un invio automatico, e la relativa autorizzazione Microsoft per l’invio non viene
+richiesta di proposito.
+</Aside>
+
+## Non è una via laterale che aggira la piattaforma
+
+Dietro il riquadro gira un vero agente sul Suo server, nella stessa istanza della chat web. Per gli
+amministratori questo ha tre conseguenze:
+
+| | |
+|---|---|
+| Diritti | Valgono gli stessi ruoli e le stesse regole per i connettori che valgono nella chat web |
+| Consumo | Ogni turno viene misurato e compare nel consumo e nella fatturazione |
+| Registro | Le chiamate ai connettori stanno nel registro di audit, come del resto sempre |
+
+Nessun traffico verso i modelli aggira la piattaforma.
+
+## File e allegati
+
+Il riquadro legge i file **da sé** e inoltra soltanto il testo. Il file non lascia il Suo computer.
+
+| Formato | Che cosa viene letto |
+|---|---|
+| PDF | Testo per pagina, **nessun OCR** |
+| Word `.docx` | Paragrafi comprese celle di tabella e interruzioni di riga |
+| Excel `.xlsx` | Nome del foglio e righe, i vuoti fra le colonne restano |
+| Testo `.txt .md .csv .tsv .json .log .yml .xml` | testo grezzo |
+| Immagini JPEG e PNG | come allegato immagine, rimpicciolito prima dell’invio |
+
+Per ogni messaggio valgono limiti massimi per numero, dimensione e quantità di testo. Quando un
+limite viene raggiunto, il riquadro glielo dice, invece di tralasciare qualcosa in silenzio.
+
+**Non vengono letti** i vecchi formati binari `.doc`, `.xls` e `.ppt`, PowerPoint, gli archivi, gli
+allegati in cloud (lì arriva solo un link) e le e-mail allegate. Anche in questi casi il riquadro
+ne indica il motivo.
+
+I file entrano nella conversazione per tre vie: dal menu del campo di immissione, trascinandoli
+sull’area della chat e, per le immagini, dagli appunti.
+
+<Aside type="caution" title="Gli allegati scansionati hanno bisogno di uno strato di testo">
+Un PDF scansionato senza strato di testo non contiene testo leggibile. Il riquadro lo segnala
+espressamente, invece di produrre un riassunto vuoto.
+</Aside>
+
+### Gli allegati dell’e-mail aperta
+
+Gli allegati del messaggio aperto non vengono **mai letti senza chiedere**. Se l’e-mail ha
+allegati, dopo l’invio una scheda ferma il procedimento e Le fa scegliere uno per uno che cosa
+possa essere letto. Su richiesta il riquadro si ricorda la scelta per quella singola e-mail.
+
+Per questo il client Outlook ha bisogno di una versione sufficientemente recente dell’interfaccia
+della cassetta postale. Se è troppo vecchia, la scheda lo dice e il procedimento prosegue senza
+allegati.
+
+## Istruzioni personali
+
+Nelle impostazioni del riquadro c’è un campo per le indicazioni personali, per esempio
+«immer Sie, nie Gedankenstriche, Grussformel Freundliche Grüsse» (dare sempre del Lei, mai
+lineette, formula di saluto Freundliche Grüsse). Queste indicazioni stanno nella
+gerarchia **al primo posto**:
+battono le competenze, il profilo di stile di scrittura e le istruzioni dell’agente.
+
+Vengono ricomposte dalle impostazioni a ogni invio e non vengono salvate nella cronologia. Se le
+cambia nel mezzo di una conversazione, vale subito la nuova versione.
+
+## Accesso senza password
+
+Il riquadro non chiede alcuna password. L’accesso avviene invece tramite un codice di dispositivo:
+
+<Steps>
+
+1. Nel riquadro su **«Anmelden»** (accedere). Compare un codice breve.
+
+2. **«Im Browser fortfahren»** (proseguire nel browser). Lì si apre una pagina di conferma sul
+   Suo stesso dominio di chat, con lo stesso codice.
+
+3. Cliccare su **«Verbinden»** (collegare). La pagina usa il Suo accesso già attivo nel browser.
+   Se nel browser non è connesso, la pagina Le propone il login e il codice resta valido.
+
+4. Il riquadro conclude il collegamento da sé.
+
+</Steps>
+
+Il procedimento scade dopo poco tempo. Alla fine il riquadro riceve esattamente un valore: la Sua
+chiave personale con il nome **«Outlook-Add-in»**. È limitata nel tempo e si può revocare in
+qualsiasi momento, nelle impostazioni della chat web sotto **«API-Schlüssel für Agenten»**
+(chiavi API per gli agenti).
+
+Il vantaggio di questa via: l’accesso a due fattori e, più avanti, l’accesso con Entra funzionano
+senza lavoro aggiuntivo, perché il login nel browser lo copre comunque già.
+
+## Un limite che dovrebbe conoscere
+
+<Aside type="caution" title="Le risposte dal riquadro non compaiono nella chat web">
+Ciò di cui parla nel riquadro di Outlook **non** compare nella cronologia della chat web. La
+cronologia vive nel riquadro. È una limitazione nota dell’interfaccia attraverso cui vengono
+collegati i client esterni.
+
+La misurazione del consumo e la registrazione funzionano comunque per intero. Non nasce quindi
+alcuna lacuna sui costi e sulla tracciabilità, semplicemente non c’è una seconda cronologia della
+conversazione.
+</Aside>
+
+## Per gli amministratori: presupposti
+
+| Presupposto | Dettaglio |
+|---|---|
+| TLS valido pubblicamente | Office carica esclusivamente HTTPS attendibile pubblicamente. Un'**autorità di certificazione interna non basta**, il riquadro resterebbe vuoto |
+| Cassette postali su Exchange Online | POP3, IMAP ed Exchange locale non sono supportati dalla piattaforma degli add-in. Non c’è modo di aggirarlo |
+| Diritti di amministratore in Microsoft 365 | Ruolo «Amministratore globale» o «Amministratore di Exchange» |
+| Dominio di chat raggiungibile | Il riquadro interpella lo stesso dominio della chat web |
+
+<Aside type="caution" title="Le risposte devono essere inviate in continuo">
+Se il flusso di risposta viene messo in buffer invece che inviato in continuo, la finestra di
+visualizzazione di Outlook si interrompe dopo poco tempo con «nessuna connessione», benché lato
+server tutto funzioni correttamente. Ne sono colpite proprio le risposte lunghe e ricche di
+strumenti, quelle per cui in fondo si vuole l’add-in. La preimpostazione è corretta; non andrebbe
+modificata.
+</Aside>
+
+## Per gli amministratori: configurazione
+
+<Steps>
+
+1. **Mettere a disposizione l’add-in**, in modo che venga distribuito sotto il Suo dominio di chat.
+
+2. **Creare l’agente.** Creare nella chat un agente, per esempio con il nome
+   `Outlook-Assistent`, con il modello standard del cliente e dapprima senza connettori.
+
+3. **Abilitare l’agente per l’accesso remoto.** Senza questa abilitazione l’interfaccia nega
+   l’accesso. Inoltre il diritto di ruolo **«Remote-Agenten»** (agenti remoti) deve essere
+   impostato per i ruoli che devono usare l’add-in.
+
+4. **Indicare l’agente predefinito**, così nessuno deve selezionarlo nel riquadro.
+
+5. **Verificare il manifesto.** Non deve più contenere alcun segnaposto.
+
+</Steps>
+
+### Distribuzione nell’interfaccia di amministrazione di Microsoft 365
+
+<Steps>
+
+1. Aprire [admin.microsoft.com](https://admin.microsoft.com), poi **Impostazioni → App
+   integrate**.
+
+2. **Carica app personalizzate**, quindi *Componente aggiuntivo di Office* e *Carica file
+   manifesto*.
+
+3. Assegnare a **Solo io** per fare prove, a singoli **Utenti/gruppi** per un pilota oppure
+   all'**Intera organizzazione** per il rollout. Confermare le autorizzazioni e distribuire.
+
+</Steps>
+
+<Aside type="note" title="Metta in conto 24 ore">
+Finché l’add-in non compare nella barra multifunzione di tutti gli utenti passano, secondo
+Microsoft, **fino a 24 ore**. Outlook classico ha in più una cache locale.
+
+Per un pilota la via che passa da [aka.ms/olksideload](https://aka.ms/olksideload) è nettamente più
+rapida. Agisce per singola cassetta postale e ha effetto immediato su tutti i client di quella
+cassetta.
+</Aside>
+
+**In caso di aggiornamenti** alzi il numero di versione nel manifesto e lo aggiorni sotto App
+integrate. Il **GUID resta sempre lo stesso**. Un GUID nuovo vale come add-in estraneo e
+comparirebbe una seconda volta nella barra multifunzione.
+
+### Facoltativo: riprendere lo stile di scrittura
+
+Se il riquadro deve imparare lo stile di scrittura personale dalle e-mail inviate, serve una
+propria registrazione dell'app in Entra, con un'autorizzazione di lettura delegata sulla cassetta
+postale. Senza questo passaggio l’add-in funziona per intero, manca solo la ripresa dello stile. Il
+token di accesso resta nel client e non va al Suo server. Un’autorizzazione all’invio non viene
+richiesta di proposito.
+
+### Ricerca degli errori
+
+| Sintomo | Causa e soluzione |
+|---|---|
+| L’add-in non compare nella barra multifunzione | La distribuzione richiede fino a 24 ore. Per provare subito, sideload. Riavviare Outlook classico |
+| Il riquadro resta bianco | Verificare il certificato. Ne serve uno valido pubblicamente, non un’autorità di certificazione interna |
+| Riquadro vuoto solo in Outlook sul web | Il riquadro non deve essere bloccato da header di framing |
+| L’accesso all’agente viene negato | Manca l’abilitazione dell’agente per l’accesso remoto, oppure il diritto di ruolo è spento |
+| Durante la chat viene chiesto di accedere | La chiave personale è scaduta. Disconnettersi nel riquadro e accedere di nuovo |
+| Interruzione con le risposte lunghe | Il flusso di risposta viene messo in buffer invece che inviato in continuo |
+| L’add-in manca ad alcune persone | La loro cassetta postale non è su Exchange Online |
+
+Gli errori del riquadro finiscono anche nel pannello di amministrazione sotto **«Logs»**, scheda
+**«Client-Fehler»** (errori del client). Lì sta la causa tecnica con persona, piattaforma e nome
+del file, mai il contenuto di un file. Le voci vengono rimosse automaticamente allo scadere del
+termine di conservazione.

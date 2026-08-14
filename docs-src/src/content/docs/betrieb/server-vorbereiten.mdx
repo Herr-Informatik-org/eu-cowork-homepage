@@ -13,10 +13,9 @@ muss die Maschine dafür vorbereitet sein.
 
 ## Was der Server mitbringen muss
 
-- Eine aktuelle Linux-Distribution mit Langzeitunterstützung. Getestet und empfohlen ist
-  Ubuntu LTS.
-- Docker Engine mit Compose v2. Das Compose-Plugin ist Voraussetzung, ältere Compose-Varianten
-  aus den Distributions-Paketquellen reichen nicht.
+- Eine aktuelle Linux-Distribution mit Langzeitunterstützung.
+- Docker mit aktuellem Compose-Plugin, so wie LibreChat es für den Self-Hosting-Betrieb
+  voraussetzt.
 - Genug Arbeitsspeicher, CPU und Plattenplatz für die geplante Nutzerzahl, siehe
   [Systemanforderungen](/docs/erste-schritte/systemanforderungen).
 - Eine Firewall, die eingehende Verbindungen auf das Nötige beschränkt, sowie Zeitsynchronisation
@@ -24,15 +23,15 @@ muss die Maschine dafür vorbereitet sein.
 - Log-Rotation für Docker, damit die Container-Protokolle die Systemplatte nicht über Wochen
   volllaufen lassen.
 
-## Vorbereitung per Skript
+## Vorbereitung der Maschine
 
-Dem Auslieferungspaket liegt ein Vorbereitungsskript bei, das diese Grundlagen auf einem
-frischen Server einrichtet und am Ende meldet, was es verändert hat. Es ist wiederholbar
-ausführbar und fasst die Anwendung selbst nicht an: Konfiguration und Container kommen erst im
-nächsten Schritt dazu, siehe [Installation](/docs/betrieb/installation).
+Diese Grundlagen werden eingerichtet, bevor die Anwendung dazukommt. Die Vorbereitung betrifft
+allein das Betriebssystem und die Container-Umgebung; Konfiguration und Anwendung folgen erst im
+nächsten Schritt, siehe [Installation](/docs/betrieb/installation). Für diesen Schritt liegen dem
+Auslieferungspaket entsprechende Hilfsmittel bei.
 
 <Aside type="note" title="Detaillierte Anleitung im Betriebshandbuch">
-Aufruf, Optionen und die genaue Prüfliste nach der Vorbereitung stehen im Betriebshandbuch,
+Der genaue Ablauf und die Prüfliste nach der Vorbereitung stehen im Betriebshandbuch,
 das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 </Aside>
 

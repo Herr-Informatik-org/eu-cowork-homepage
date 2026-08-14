@@ -1,0 +1,74 @@
+---
+title: Avvio rapido
+description: Il percorso verso un’istanza propria a grandi linee, dalla scelta del server al primo account.
+sidebar:
+  order: 4
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Le vie verso un’istanza propria sono due. O usa un’istanza ospitata in Svizzera e riceve un accesso
+già pronto, oppure gestisce la piattaforma per conto proprio su un server Linux proprio. Questa pagina
+descrive la seconda via a grandi linee.
+
+<Steps>
+
+1. **Predisporre il server**
+
+   Una macchina Linux con un runtime per container aggiornato. Quanto debba essere grande è indicato
+   in [Requisiti di sistema](/docs/it/erste-schritte/systemanforderungen).
+
+2. **Registrare il dominio**
+
+   Il dominio sotto cui l’istanza deve essere raggiungibile punta al server tramite DNS. Il
+   certificato lo ottiene poi il reverse proxy da sé, e per questo il server deve essere
+   raggiungibile dalla rete.
+
+3. **Installare**
+
+   L’installazione è guidata e predispone configurazione e servizi. Conviene tenere pronto l’accesso
+   al Suo fornitore di inferenza; allo stato di fornitura è [EuRouter](https://eurouter.ai), dove
+   l’elaborazione avviene nell’UE.
+
+4. **Limitare l’accesso**
+
+   Prima che l’istanza arrivi alle prime persone, va stabilito quali domini di posta elettronica
+   possano registrarsi. Questo elenco è la protezione d’accesso determinante — non la questione di
+   chi conosca l’indirizzo.
+
+5. **Creare il primo account**
+
+   Durante la messa in opera nasce il primo account di amministratore, tutti gli account successivi
+   sono utenti normali. Crei poi un secondo account di amministratore, per non chiudersi fuori.
+
+6. **Configurare**
+
+   Nell’amministrazione configura ciò che vale nella quotidianità: creare i gruppi, abilitare i
+   modelli per gruppo, regolare gli accessi ai sistemi di terzi e invitare il personale.
+
+</Steps>
+
+<Aside type="note" title="Le istruzioni nel dettaglio">
+Le istruzioni di installazione complete sono allegate alla fornitura. Fanno parte del pacchetto di
+installazione.
+</Aside>
+
+## Avanti
+
+<CardGrid>
+  <LinkCard
+    title="Requisiti di sistema"
+    href="/docs/it/erste-schritte/systemanforderungen"
+    description="Che cosa richiede un’istanza in CPU, memoria di lavoro e spazio su disco."
+  />
+  <LinkCard
+    title="Architettura"
+    href="/docs/it/erste-schritte/architektur"
+    description="Quale percorso prende una richiesta e perché ogni cliente riceve un’istanza propria."
+  />
+  <LinkCard
+    title="Che cos’è EU Cowork AI?"
+    href="/docs/it/erste-schritte/ueberblick"
+    description="La panoramica della piattaforma, dei suoi limiti e della sua licenza."
+  />
+</CardGrid>

@@ -1,0 +1,54 @@
+---
+title: Modèles et fiches de modèle
+description: Ce que sont les fiches de modèle et comment leur visibilité est pilotée par rôle et par groupe.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Dans le chat, les utilisateurs ne choisissent pas un modèle brut, mais une **fiche de modèle**. Une fiche réunit un fournisseur, un modèle et les réglages associés sous un nom compréhensible. Cette page montre ce que vous pilotez avec cela en tant qu’administrateur.
+
+## Ce qu’est une fiche de modèle
+
+Une fiche est un préréglage sélectionné. Au lieu d’un nom de modèle technique, la personne lit dans le sélecteur de modèles une désignation compréhensible et obtient ainsi automatiquement le prompt système et les paramètres qui conviennent. Cela présente trois avantages : le choix reste compréhensible, le prompt système est inséré côté serveur et n’atterrit pas dans le navigateur, et vous pouvez tailler la sélection par rôle et par groupe.
+
+Une fiche comporte notamment un libellé visible, une brève description, sa position dans le sélecteur, le fournisseur et le modèle qui se trouvent derrière, ainsi que des réglages comme la température, le texte d’accueil et le prompt système. Exactement une fiche est la fiche par défaut.
+
+Il est en outre possible de régler si seules les fiches sont sélectionnables ou si la liste brute des modèles apparaît également à côté.
+
+## Fournisseurs
+
+Les fournisseurs et les modèles qu’ils mettent à disposition sont entretenus dans la configuration. Un test de connexion vérifie le raccordement sans divulguer le secret.
+
+<Aside type="danger" title="Les clés uniquement comme référence">
+Une clé d’accès n’est jamais déposée en clair dans la configuration, mais exclusivement sous forme de référence à une valeur enregistrée côté serveur. Le texte en clair est refusé. En alternative, chaque personne dépose sa propre clé dans le chat.
+</Aside>
+
+## Visibilité par rôle et par groupe
+
+Les fiches que quelqu’un voit se définissent au niveau du rôle et du groupe. Là où il n’existe pas de règle propre, la sélection livrée s’applique. Principe : la règle la plus étroite l’emporte.
+
+Dans l’éditeur de rôles, vous activez ou désactivez les fiches une par une et masquez au besoin la liste brute des modèles ; un groupe reçoit au besoin une sélection qui lui est propre. Aux deux niveaux, la sélection peut être ramenée en une seule étape à l’état de livraison.
+
+<Aside type="note" title="Réenregistrer une fois après avoir modifié des fiches">
+Lorsque vous renommez ou ajoutez une fiche, réenregistrez une fois les règles de rôle et de groupe concernées, puis vérifiez que la visibilité correspond toujours à ce que vous entendez.
+</Aside>
+
+## Restreindre les fournisseurs
+
+Si un point de terminaison passe par un intermédiaire qui, de son côté, fait appel à plusieurs fournisseurs, il est possible de restreindre lesquels d’entre eux ont le droit de servir vos requêtes : uniquement des fournisseurs sans stockage et sans entraînement sur les prompts, et sur demande uniquement des fournisseurs ayant leur siège ou leur centre de calcul dans l’UE, l’EEE et la Suisse.
+
+<Aside type="caution" title="Deux restrictions">
+Premièrement : les indications sur le siège et le centre de calcul proviennent de l’intermédiaire, et **le siège d’un fournisseur n’est pas une garantie quant au lieu de traitement**. Traitez **« Nur EU »** (UE uniquement) comme une restriction judicieuse, non comme une assurance.
+
+Deuxièmement : **les modèles sans fournisseur correspondant renverront ensuite une erreur.** Si vous resserrez la liste, vérifiez chaque fiche qui passe par ce point de terminaison.
+</Aside>
+
+## Routeur de modèles
+
+À côté des fiches fixes, il existe la possibilité de répartir automatiquement les requêtes sur un modèle approprié, au lieu de laisser le modèle le plus cher répondre à chaque question. Si le classement échoue, la requête part vers le modèle le plus puissant : dans le doute, le routeur tranche pour la qualité, non pour l’économie.
+
+<Aside type="note" title="Pas actif à l’état de livraison">
+Le routeur n’est **pas** déployé dans le gabarit client. Après l’installation, vos collaborateurs voient les fiches de modèle livrées. Le contexte est décrit sous [Chat et modèles](/docs/fr/funktionen/chat-und-modelle).
+</Aside>

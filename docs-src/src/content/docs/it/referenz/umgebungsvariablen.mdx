@@ -1,0 +1,57 @@
+---
+title: Variabili d’ambiente
+description: Come viene configurata un’istanza, che cosa imposta Lei stesso e dove si trova il riferimento completo.
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Come è consueto in LibreChat, un’istanza viene configurata attraverso un file d’ambiente. Alla
+fornitura è allegato un modello commentato, dal quale l’installer genera al primo avvio la
+configurazione effettiva.
+
+<Aside type="danger" title="Il file di configurazione resta sul server">
+Contiene tutte le credenziali dell’istanza. Non va mai in un repository, mai in un ticket e mai
+in una richiesta di assistenza.
+</Aside>
+
+## Che cosa imposta Lei stesso
+
+La parte di gran lunga maggiore del modello è precompilata in modo che un’istanza si avvii. Le
+cose da indicare Lei stesso sono in sostanza tre:
+
+- **il dominio** sotto il quale l’istanza è raggiungibile. Finché qui resta il valore
+  predefinito, i link d’invito funzionano soltanto sul server stesso.
+- **la chiave di accesso del fornitore del modello.** Senza di essa l’istanza si avvia comunque,
+  ma ogni richiesta al modello fallisce.
+- **facoltativamente le credenziali per l’invio della posta.** Senza di esse non esistono
+  messaggi di verifica e d’invito, e un invito produce allora soltanto un link da copiare.
+
+## Segreti
+
+I segreti crittografici di un’istanza vengono generati dall’installer stesso al primo avvio e
+depositati in modo protetto. Per questo Lei non deve fare nulla.
+
+<Aside type="caution" title="In caso di migrazione su un nuovo server">
+La configurazione esistente deve essere ripresa. Se al suo posto ne viene generata una nuova, le
+credenziali salvate in precedenza in forma cifrata non sono più leggibili e tutti gli utenti
+devono ricostruire le proprie connessioni ai connettori. Per questo lo strumento di backup
+fornito porta con sé anche la configurazione.
+</Aside>
+
+## Riferimento completo
+
+Quali voci esistano nel dettaglio, che effetto abbiano e quali di esse servano per un
+determinato livello di ampliamento è descritto nella documentazione operativa allegata alla
+fornitura. I clienti la ricevono insieme all’accesso. Anche il modello stesso è commentato.
+
+Per tutto ciò che è standard di LibreChat vale inoltre la documentazione del progetto, su
+[www.librechat.ai/docs](https://www.librechat.ai/docs).
+
+## Pagine correlate
+
+- [Configurazione](/docs/it/betrieb/konfiguration) descrive che cosa viene invece impostato nel
+  `librechat.yaml` e che cosa nel pannello di amministrazione.
+- [Risoluzione dei problemi](/docs/it/betrieb/fehlerbehebung) raccoglie i quadri d’errore più
+  frequenti.

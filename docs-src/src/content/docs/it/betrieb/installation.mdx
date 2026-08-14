@@ -1,0 +1,92 @@
+---
+title: Installazione
+description: Come viene predisposta un’istanza di EU Cowork AI e quali passi seguono dopo il primo avvio.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+La messa in servizio avviene in modo guidato sulla base del pacchetto di fornitura. Nel corso di
+essa nascono la configurazione e i segreti dell’istanza, poi l’applicazione si avvia. Il
+presupposto è un server preparato, vedere
+[Preparare il server](/docs/it/betrieb/server-vorbereiten).
+
+## Di che cosa si occupa la messa in servizio
+
+- Verifica i presupposti sulla macchina e si interrompe se manca qualcosa di fondamentale.
+- Crea la configurazione dell’istanza e imposta tutti i segreti su valori casuali generati ex
+  novo. Ogni istanza riceve così valori propri, leggibili soltanto per l’esercizio dell’istanza
+  stessa.
+- Predispone gli archivi dell’istanza con i diritti necessari e avvia l’applicazione.
+- Al termine segnala quali valori devono ancora essere inseriti a mano. Vengono segnalati
+  soltanto i nomi dei valori, mai il loro contenuto.
+
+<Aside type="danger" title="Mettere al sicuro i segreti generati">
+Una parte dei valori generati decifra ciò che è archiviato cifrato nel database. Se questi valori
+vanno persi, oppure se in occasione di una migrazione vengono rigenerati anziché ripresi, i dati
+interessati sono irrimediabilmente illeggibili e ogni persona dovrebbe ricostruire da capo le
+proprie connessioni. Il backup regolare comprende la configurazione e quindi anche questi valori,
+vedere [Backup e migrazione](/docs/it/betrieb/backup-und-umzug).
+</Aside>
+
+## L’unico valore obbligatorio
+
+Per un’installazione standard Lei inserisce personalmente esattamente un valore: la chiave del
+fornitore di inferenza con elaborazione nell’UE. Al termine la messa in servizio lo segnala
+espressamente. Tutto il resto è facoltativo — una seconda opzione per i modelli, i connettori,
+l’invio di e-mail e l’esecuzione di codice.
+
+## Che cosa resta manuale
+
+- Impostare i record DNS e scegliere la variante TLS, vedere
+  [Dominio e certificato](/docs/it/betrieb/domain-und-tls).
+- Impostare il Domain-Lock per la registrazione, vedere
+  [Configurazione](/docs/it/betrieb/konfiguration#domain-lock).
+- Definire i diritti dei ruoli e le schede dei modelli nel pannello di amministrazione.
+- Per ogni connettore abilitare consapevolmente l’accesso nel pannello, invece di lasciarlo
+  aperto.
+- Predisporre il backup, vedere [Backup e migrazione](/docs/it/betrieb/backup-und-umzug).
+
+## Dopo il primo avvio
+
+<Steps>
+
+1. **Aprire la chat.** All’indirizzo sotto il quale l’istanza è stata predisposta.
+
+2. **Creare il primo account.** Si registri nella chat. Il primo account di un’istanza riceve i
+   diritti di amministrazione.
+
+3. **Verificare il pannello di amministrazione.** L’accesso presuppone un account con diritti di
+   amministrazione.
+
+4. **Chiudere l’accesso.** Impostare il Domain-Lock, in modo che possano registrarsi soltanto le
+   persone del Suo dominio di posta elettronica.
+
+5. **Creare un secondo account di amministrazione.** Non soltanto quello personale, altrimenti
+   nel momento critico Lei si chiude fuori da solo.
+
+6. **Predisporre il backup.** Eseguire una volta un backup a mano e pianificarlo in seguito.
+
+</Steps>
+
+<Aside type="note" title="Istruzioni dettagliate nel manuale operativo">
+La procedura esatta e l’elenco completo dei valori di configurazione si trovano nel manuale
+operativo, che è allegato al pacchetto di fornitura. I clienti lo ricevono insieme al proprio
+accesso.
+</Aside>
+
+## Per continuare
+
+<CardGrid>
+  <LinkCard
+    title="Configurazione"
+    href="/docs/it/betrieb/konfiguration"
+    description="I tre livelli: ambiente, librechat.yaml e le sovrascritture nel pannello di amministrazione."
+  />
+  <LinkCard
+    title="Dominio e certificato"
+    href="/docs/it/betrieb/domain-und-tls"
+    description="Certificato pubblico, CA interna nella LAN o esercizio dietro un WAF esistente."
+  />
+</CardGrid>

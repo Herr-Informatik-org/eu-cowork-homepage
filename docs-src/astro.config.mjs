@@ -26,7 +26,10 @@ export default defineConfig({
     // Eigene Sitemap unter /docs/sitemap-index.xml. Die Haupt-sitemap.xml der
     // Website bleibt handgepflegt; beide sind in robots.txt eingetragen.
     sitemap({
-      i18n: { defaultLocale: 'de', locales: { de: 'de-CH', en: 'en' } },
+      i18n: {
+        defaultLocale: 'de',
+        locales: { de: 'de-CH', en: 'en', fr: 'fr', it: 'it', es: 'es' },
+      },
     }),
     starlight({
       title: 'EU Cowork AI',
@@ -56,6 +59,9 @@ export default defineConfig({
       locales: {
         root: { label: 'Deutsch', lang: 'de-CH' },
         en: { label: 'English', lang: 'en' },
+        fr: { label: 'Français', lang: 'fr' },
+        it: { label: 'Italiano', lang: 'it' },
+        es: { label: 'Español', lang: 'es' },
       },
       // Bewusst keine überschriebenen Komponenten. Die Kopfleiste, die
       // Seitenleiste und das Suchfeld kommen unverändert von Starlight;
@@ -77,32 +83,62 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Erste Schritte',
-          translations: { en: 'Getting started' },
+          translations: {
+            en: 'Getting started',
+            fr: 'Premiers pas',
+            it: 'Primi passi',
+            es: 'Primeros pasos',
+          },
           items: [{ autogenerate: { directory: 'erste-schritte' } }],
         },
         {
           label: 'Installation und Betrieb',
-          translations: { en: 'Install and operate' },
+          translations: {
+            en: 'Install and operate',
+            fr: 'Installation et exploitation',
+            it: 'Installazione ed esercizio',
+            es: 'Instalación y operación',
+          },
           items: [{ autogenerate: { directory: 'betrieb' } }],
         },
         {
           label: 'Für Mitarbeitende',
-          translations: { en: 'For your team' },
+          translations: {
+            en: 'For your team',
+            fr: 'Pour vos équipes',
+            it: 'Per il personale',
+            es: 'Para su equipo',
+          },
           items: [{ autogenerate: { directory: 'funktionen' } }],
         },
         {
           label: 'Administration',
-          translations: { en: 'Administration' },
+          translations: {
+            en: 'Administration',
+            fr: 'Administration',
+            it: 'Amministrazione',
+            es: 'Administración',
+          },
           items: [{ autogenerate: { directory: 'administration' } }],
         },
         {
           label: 'Konnektoren und MCP',
-          translations: { en: 'Connectors and MCP' },
+          translations: {
+            en: 'Connectors and MCP',
+            fr: 'Connecteurs et MCP',
+            it: 'Connettori e MCP',
+            es: 'Conectores y MCP',
+          },
           items: [{ autogenerate: { directory: 'konnektoren' } }],
         },
         {
           label: 'Referenz',
-          translations: { en: 'Reference' },
+          translations: {
+            en: 'Reference',
+            fr: 'Référence',
+            it: 'Riferimento',
+            es: 'Referencia',
+          },
           items: [{ autogenerate: { directory: 'referenz' } }],
         },
       ],

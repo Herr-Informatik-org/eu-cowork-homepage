@@ -19,10 +19,9 @@ Antwort suchen müssen und wem Sie einen Fehler melden.
 Agenten- und Dateisystem sowie eine Administrations-Schnittstelle mit. Das Projekt ist
 ausgereift und wird aktiv weiterentwickelt.
 
-Unser laufender Stack verwendet das **offizielle LibreChat-Image in einer festgelegten, von uns
-getesteten Fassung**, nicht einfach den jeweils neuesten Stand. Wer die Plattform nur betreiben
-will, baut LibreChat also nie aus dem Quellcode. Ein Versionssprung ist eine bewusste Handlung
-mit einer eigenen Prüfliste.
+Eine Auslieferung setzt eine **geprüfte Fassung** von LibreChat ein, nicht einfach den jeweils
+neuesten Stand. Wer die Plattform nur betreiben will, baut LibreChat also nie aus dem
+Quellcode. Ein Versionssprung ist eine bewusste Handlung mit einer eigenen Prüfliste.
 
 ## Was von LibreChat kommt
 
@@ -47,20 +46,19 @@ mit einer eigenen Prüfliste.
 
 | Baustein | Was es tut |
 |---|---|
-| **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu ein begleitender Dienst für alles, was diese Schnittstelle nicht kann: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto |
+| **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu die Funktionen, die diese Schnittstelle nicht abdeckt: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto |
 | **MCP-Gateway** | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem, entlang der Kette Benutzer, Rolle, Gruppe, Standard. Fällt die Prüfung aus, wird verweigert |
 | **Model-Router** | verteilt Anfragen je nach Aufgabe auf unterschiedliche Modelle und Denkaufwände |
 | **Beispiel-Konnektor-Brücke** | ausschliesslich lesender Zugang zu einem Fachsystem, als Vorlage für eigene Anbindungen |
 | **Outlook-Add-in** | seitliches Chat-Pane in Outlook mit der geöffneten Mail als Kontext, gegen dieselbe Instanz und dieselben Rechte |
 | **Modellkarten und Systemprompt** | die kuratierte Auswahl im Modell-Picker und der deutsche Systemprompt, der serverseitig eingefügt wird |
-| **Installationspaket** | Compose-Stack, Server-Vorbereitung, Installer, Backup und Umzug, Reverse-Proxy, Branding |
-| **Konfigurationsprofile** | Kunden-Template gegenüber einer Instanz mit Konnektoren, dazu die Ausbaustufen für Dateisuche, Konnektoren und TLS |
+| **Installationspaket** | Server-Vorbereitung, Installer, Backup und Umzug, Branding |
+| **Konfigurationsprofile** | vorbereitete Varianten für die verschiedenen Ausbaustufen einer Instanz |
 
 <Aside type="note" title="Code-Ausführung">
 Für die Code-Ausführung bindet EU Cowork AI etablierte Backends ein, statt einen eigenen Runner
-mitzuliefern — wahlweise eine gehärtete Variante mit microVM-Isolation oder eine leichtere
-Übergangsvariante. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf
-Host- oder Netzebene fest.
+mitzuliefern. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf Host-
+oder Netzebene fest.
 </Aside>
 
 ## Warum der Fork dünn bleibt
@@ -79,14 +77,13 @@ Daraus folgt eine feste Reihenfolge, in der eine Änderung versucht wird:
 4. **Eigene Komponente.** Erst wenn nichts anderes trägt.
 
 Alles, was ohne Eingriff in LibreChat lösbar ist, wird deshalb als eigener Dienst daneben
-gebaut. Diese Dienste heissen Sidecars: eigenständige Container mit eigenem Lebenszyklus, die
-über normale Netzwerk-Schnittstellen mit LibreChat sprechen. Das Admin-Panel, das
-MCP-Gateway, die mitgelieferte Konnektor-Brücke und das Outlook-Add-in sind alle so gebaut.
+gebaut. Diese Dienste heissen Sidecars: Sie haben einen eigenen Lebenszyklus und sprechen über
+normale Netzwerk-Schnittstellen mit LibreChat. Die eigenen Bausteine aus der Tabelle oben sind
+alle so gebaut.
 
 Praktisch heisst das für Sie: Ein Update von LibreChat berührt unsere Dienste nicht, und eine
 neue Fassung des Admin-Panels berührt LibreChat nicht. Beides wird getrennt aktualisiert. Eine
-Freigabe von EU Cowork AI ist immer ein getestetes Paar aus einer bestimmten LibreChat-Fassung
-und bestimmten Sidecar-Ständen.
+Freigabe von EU Cowork AI ist immer ein gemeinsam getesteter Stand.
 
 ## Die Datei `librechat.yaml`
 
@@ -98,13 +95,9 @@ wie die Web-Suche arbeitet.
 [www.librechat.ai/docs](https://www.librechat.ai/docs). Wie die Datei in einer Auslieferung
 vorbelegt ist, steht in den mitgelieferten Betriebsunterlagen.
 
-Zwei Mechanikregeln, die immer wieder für Überraschungen sorgen:
-
-- **Der `interface`-Block ist global.** Seine Werte werden beim Start in alle Rollen
-  geschrieben und bei jedem Neustart erneut gesetzt. Unterschiede pro Rolle gehören deshalb in
-  den Rollen-Editor des Admin-Panels, nicht in die Datei.
-- **`endpoints.agents.capabilities` ersetzt die Standardliste**, es mischt sich nicht mit ihr.
-  Wer dort etwas einträgt, muss alles aufzählen, was erhalten bleiben soll.
+Einzelne Felder wirken anders, als ihr Name vermuten lässt: manche gelten global statt pro
+Rolle, andere ersetzen eine Vorgabeliste, statt sie zu ergänzen. Die Bedeutung jedes Feldes
+steht in der Dokumentation von LibreChat. Prüfen Sie sie, bevor Sie einen Wert ändern.
 
 <Aside type="tip" title="Das Panel gewinnt gegen die Datei">
 Was Sie im Admin-Panel unter **Konfiguration** setzen, liegt als Override über der
@@ -169,7 +162,7 @@ OIDC, LDAP und SAML.
 | Chat-Oberfläche, Agenten, Modell-Anbindung, Dateiverarbeitung | LibreChat |
 | Admin-Panel, Verbrauchsanzeige, Budget, Aufbewahrung | EU Cowork AI |
 | Rechte auf Konnektoren, Protokoll der Werkzeug-Aufrufe | EU Cowork AI |
-| Installation, Backup, Umzug, Compose-Stack, TLS | EU Cowork AI |
+| Installation, Backup, Umzug, TLS | EU Cowork AI |
 | Outlook-Add-in | EU Cowork AI |
 
 Die Lizenzen aller beteiligten Bausteine stehen unter

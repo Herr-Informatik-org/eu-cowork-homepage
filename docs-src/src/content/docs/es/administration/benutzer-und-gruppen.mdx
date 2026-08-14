@@ -1,0 +1,65 @@
+---
+title: Usuarios, grupos y roles
+description: Invitar y crear cuentas, asignar permisos mediante roles, gestionar grupos, bloquear y eliminar cuentas.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Quién tiene acceso y qué puede hacer se decide en tres sitios: en la cuenta, en el rol y en el grupo. Esta página describe de qué dispone usted para ello como administrador.
+
+## Cuentas
+
+La lista de usuarios muestra todas las cuentas con su rol, su modo de inicio de sesión, su estado, su última actividad y su parte del consumo. Desde ahí llega usted a todo lo demás relativo a una persona: consultar el consumo, consultar los accesos, exportar los datos, cambiar el rol, recargar el saldo, bloquear y eliminar.
+
+<Aside type="tip" title="Sin vigilancia al minuto">
+La actividad se muestra con precisión de día, no de minuto. Es una decisión de diseño deliberada: para la pregunta «¿se está usando siquiera la herramienta?» basta el día; para un control del rendimiento el dato es deliberadamente inservible.
+</Aside>
+
+## Dar de alta a personas
+
+Hay dos vías:
+
+- **Invitar** es la vía normal. La persona invitada establece ella misma su contraseña, usted nunca tiene que transmitir ninguna. Las invitaciones tienen plazo y solo valen para la dirección indicada. De forma opcional, la persona se incorpora automáticamente a uno o varios grupos al registrarse.
+- **Crear directamente** genera una cuenta sin registro, incluidos rol y grupos. Puede generarse una contraseña inicial y colocarse en el portapapeles, para que no acabe en capturas de pantalla ni en el autorrelleno del navegador.
+
+Para que una invitación llegue a su destino, el dominio de correo debe coincidir con los dominios permitidos para el registro. Si hay configurado un envío de correo, sale además un mensaje; en caso contrario, el enlace de invitación lo envía usted mismo.
+
+## Roles y permisos
+
+Los roles agrupan permisos. Junto a los dos roles de sistema para usuarios y administradores, usted puede crear roles propios. Los permisos están agrupados por temas:
+
+| Grupo | De qué se trata |
+| --- | --- |
+| **«Werkzeuge»** (herramientas) | Búsqueda web, intérprete de código, búsqueda en archivos y citas, acceso a conectores |
+| **«Chat-Funktionen»** (funciones de chat) | Respuestas en paralelo, chats temporales, marcadores, memorias |
+| **«Erstellen und Teilen»** (crear y compartir) | Agentes, prompts, capacidades y enlaces compartidos |
+| **«Remote-Agenten»** (agentes remotos) | Agentes fuera del chat, por ejemplo en el complemento de Outlook |
+| **«Sichtbarkeit»** (visibilidad) | si los usuarios y los grupos aparecen en el diálogo de compartir |
+
+Además, usted define por rol qué fichas del modelo son visibles, véase [Modelos y fichas del modelo](/docs/es/administration/modelle-und-karten).
+
+<Aside type="danger" title="Cuidado con el rol de administrador">
+Los cambios en el rol de administrador afectan también a su propia cuenta y surten efecto de inmediato para todos los administradores. No hay excepción para la persona que acciona el interruptor. Compruebe por eso dos veces esos cambios.
+</Aside>
+
+<Aside type="caution" title="Nunca desplegar capacidades de forma indiscriminada">
+Las capacidades son procesos estándar ya depositados. Habilítelas de forma selectiva en lugar de abrirlas indiscriminadamente a todo el mundo.
+</Aside>
+
+## Grupos
+
+Los grupos son la base de los accesos y de la selección de modelos. O bien se mantienen localmente en el panel, o bien proceden de su proveedor de identidad y están entonces protegidos contra escritura: sus miembros los administra el proveedor de identidad.
+
+Por grupo se puede definir qué conectores están permitidos y qué fichas del modelo son visibles. Principio: gana la regla más restrictiva.
+
+## Bloquear y eliminar
+
+Un **bloqueo** es temporal o indefinido y puede levantarse de nuevo en cualquier momento.
+
+La **eliminación** de una cuenta borra la cuenta, las conversaciones, los mensajes, los archivos, las claves, los agentes y el saldo, y no se puede deshacer. Por eso el diálogo exige una confirmación expresa y ofrece justo antes la exportación de datos: después de la eliminación ya no puede darse ninguna información, así que la información prevista en el RGPD debe facilitarse antes. De forma opcional pueden eliminarse a la vez las transacciones de consumo; entonces, eso sí, se pierde el justificante de facturación. Más al respecto en [Protección de datos y conservación](/docs/es/administration/datenschutz-und-aufbewahrung).
+
+## «Qué puede hacer esta persona, y por qué»
+
+De cada persona existe un resumen de sus accesos: rol, grupos, conectores permitidos, fichas del modelo visibles y habilitaciones de agentes. En cada entrada consta qué nivel tomó la decisión, y el camino hasta allí está enlazado. Es la vía más rápida cuando alguien comunica que no ve un conector o un modelo.

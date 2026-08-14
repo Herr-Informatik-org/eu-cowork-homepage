@@ -1,0 +1,171 @@
+---
+title: Che cosa viene da LibreChat
+description: L’inquadramento di quali parti della piattaforma provengano da LibreChat e quali abbiamo costruito noi, e perché il fork resta di proposito sottile.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI non è uno sviluppo realizzato da zero. L’interfaccia di chat e gran parte della
+logica applicativa provengono da un progetto open source esistente; il nostro lavoro sta nello
+strato che gli sta attorno. Questa pagina separa nettamente le due cose, affinché Lei sappia
+dove cercare una risposta e a chi segnalare un errore.
+
+## Che cos’è LibreChat
+
+[LibreChat](https://www.librechat.ai) è una piattaforma di chat a codice aperto sotto **licenza
+MIT**. Porta con sé l’interfaccia, il collegamento a qualsiasi fornitore di modelli, il sistema
+di agenti e di file nonché un’interfaccia di amministrazione. Il progetto è maturo e viene
+sviluppato attivamente.
+
+Una fornitura impiega una **versione verificata** di LibreChat, non semplicemente lo stato più
+recente. Chi vuole soltanto far funzionare la piattaforma non compila dunque mai LibreChat dal
+codice sorgente. Un salto di versione è un atto deliberato, con una propria lista di controllo.
+
+## Che cosa viene da LibreChat
+
+| Ambito | Che cosa comprende |
+|---|---|
+| **Chat** | streaming, cronologia, titoli automatici, ramificazione delle conversazioni, link condivisi, chat temporanee, chat multiple |
+| **Agenti** | creare e usare agenti, selezione degli strumenti per agente, marketplace degli agenti |
+| **Competenze** | processi standard memorizzati che un modello esegue su richiesta |
+| **Memory** | memoria a lungo termine attraverso le conversazioni, con possibilità di rinuncia nella chat |
+| **Artifacts** | React, HTML, Mermaid e SVG direttamente nella chat, indipendentemente dall’esecuzione di codice |
+| **File** | caricamento come contesto, comprensione delle immagini, la ricerca di file nei documenti caricati |
+| **Ricerca web** | l’impalcatura necessaria, compreso il collegamento di un motore di ricerca |
+| **Esecuzione di codice** | l’interfaccia innestabile verso il backend sandbox |
+| **Client MCP** | la capacità di dialogare con i connettori attraverso il Model Context Protocol |
+| **Preset e prompt** | libreria dei prompt, preimpostazioni, segnalibri |
+| **Ricerca a testo integrale** | ricerca nelle conversazioni precedenti |
+| **Amministrazione** | l’interfaccia di amministrazione, con la sua catena di audit continua |
+| **Identità** | OIDC compreso Entra ID, LDAP e SAML, più l’allineamento dei ruoli |
+| **Misurazione del consumo** | conteggio dei token e credito per persona |
+
+## Che cosa abbiamo costruito noi
+
+| Componente | Che cosa fa |
+|---|---|
+| **Pannello di amministrazione** | un pannello nostro, con licenza permissiva, sviluppato contro l’interfaccia MIT di LibreChat, più le funzioni che quell’interfaccia non copre: consumo in euro, budget mensile comune, conservazione, esportazione e cancellazione dei dati per singolo account |
+| **MCP-Gateway** | verifica dei diritti e registro prima di ogni accesso a un sistema di terzi, lungo la catena utente, ruolo, gruppo, impostazione predefinita. Se la verifica non riesce, l’accesso viene negato |
+| **Model-Router** | distribuisce le richieste su modelli diversi e su diversi livelli di ragionamento a seconda del compito |
+| **Ponte di connettore d’esempio** | accesso esclusivamente in lettura a un sistema gestionale, come modello per collegamenti propri |
+| **Outlook-Add-in** | riquadro di chat laterale in Outlook con il messaggio aperto come contesto, contro la stessa istanza e gli stessi diritti |
+| **Schede dei modelli e prompt di sistema** | la selezione curata nel selettore dei modelli e il prompt di sistema tedesco, inserito lato server |
+| **Pacchetto di installazione** | preparazione del server, installer, backup e migrazione, personalizzazione grafica |
+| **Profili di configurazione** | varianti preparate per i diversi livelli di ampliamento di un’istanza |
+
+<Aside type="note" title="Esecuzione di codice">
+Per l’esecuzione di codice EU Cowork AI integra backend consolidati, invece di fornire un
+esecutore proprio. Quali destinazioni il codice eseguito possa raggiungere verso l’esterno lo
+stabilisce Lei a livello di host o di rete.
+</Aside>
+
+## Perché il fork resta sottile
+
+LibreChat è stato forkato, ma il fork resta di proposito vicino all’originale. La ragione è
+semplice: più un fork si allontana, più costoso diventa ogni aggiornamento, e a un certo punto
+non ha più luogo. Una piattaforma di chat che resta indietro di due anni rispetto all’originale
+non è un vantaggio, ma un rischio.
+
+Ne deriva un ordine fisso con cui si tenta una modifica:
+
+1. **Configurazione.** Si può risolvere nel `librechat.yaml`, nel file d’ambiente o nel pannello
+   di amministrazione?
+2. **CSS.** Basta un adattamento della resa grafica?
+3. **Piccola patch.** Una modifica strettamente delimitata nel fork.
+4. **Componente proprio.** Soltanto quando nient’altro regge.
+
+Tutto ciò che è risolvibile senza intervenire in LibreChat viene perciò costruito accanto, come
+servizio a sé. Questi servizi si chiamano sidecar: hanno un ciclo di vita proprio e parlano con
+LibreChat attraverso normali interfacce di rete. I componenti nostri della tabella qui sopra
+sono costruiti tutti così.
+
+In pratica per Lei questo significa: un aggiornamento di LibreChat non tocca i nostri servizi, e
+una nuova versione del pannello di amministrazione non tocca LibreChat. I due vengono aggiornati
+separatamente. Una release di EU Cowork AI è sempre uno stato testato nel suo insieme.
+
+## Il file `librechat.yaml`
+
+Il file di configurazione centrale dell’applicazione di chat è il `librechat.yaml`. Governa
+quali modelli esistano, come si presenti l’interfaccia, quali connettori siano integrati e come
+lavori la ricerca web.
+
+**Il riferimento completo dei campi si trova presso LibreChat**, su
+[www.librechat.ai/docs](https://www.librechat.ai/docs). Come il file sia precompilato in una
+fornitura è descritto nella documentazione operativa fornita.
+
+Singoli campi agiscono diversamente da quanto il loro nome lasci supporre: alcuni valgono
+globalmente invece che per ruolo, altri sostituiscono un elenco predefinito invece di
+integrarlo. Il significato di ogni campo è documentato da LibreChat. Lo verifichi prima di
+modificare un valore.
+
+<Aside type="tip" title="Il pannello vince sul file">
+Ciò che imposta nel pannello di amministrazione sotto **«Konfiguration»** (configurazione) si
+colloca come override sopra il `librechat.yaml` e ha effetto subito, senza riavvio. Le sezioni
+interessate portano nel pannello l’indicazione **«aus DB-Override»** (da un override nel
+database). Chi apporta una modifica nel file e non la vede ha probabilmente un override sopra di
+essa.
+</Aside>
+
+## Dove proseguire la lettura
+
+La ripartizione è semplice: tutto ciò che riguarda l’applicazione di chat in sé sta presso
+LibreChat. Tutto ciò che ha a che fare con esercizio, diritti, consumo e connettori sta qui.
+
+### Presso LibreChat
+
+Per le funzioni di chat nel dettaglio, gli agenti, le competenze, Memory, Artifacts e il
+riferimento completo dei campi della configurazione:
+**[www.librechat.ai/docs](https://www.librechat.ai/docs)**
+
+Là trova anche la descrizione dei campi che noi non impostiamo, nonché i dettagli su OIDC, LDAP
+e SAML.
+
+### In questa documentazione
+
+<CardGrid>
+  <LinkCard
+    title="Installazione ed esercizio"
+    href="/docs/it/betrieb/installation"
+    description="Dal server vuoto all’istanza in funzione, aggiornamento, backup e migrazione."
+  />
+  <LinkCard
+    title="Diritti e Gateway"
+    href="/docs/it/konnektoren/gateway-und-rechte"
+    description="Chi può vedere quale connettore, come agisce la cascata dei diritti e che cosa viene registrato."
+  />
+  <LinkCard
+    title="Consumo e budget"
+    href="/docs/it/administration/verbrauch-und-budgets"
+    description="I token in euro, il budget mensile comune, i limiti personali e i giustificativi."
+  />
+  <LinkCard
+    title="Collegare un connettore proprio"
+    href="/docs/it/konnektoren/eigenen-konnektor-anbinden"
+    description="Creare un server MCP, instradarlo attraverso il Gateway e abilitarlo in modo mirato."
+  />
+  <LinkCard
+    title="Pannello di amministrazione"
+    href="/docs/it/administration/admin-panel"
+    description="La struttura del pannello, pagina per pagina, e l’ordine da seguire per un nuovo amministratore."
+  />
+  <LinkCard
+    title="Variabili d’ambiente"
+    href="/docs/it/referenz/umgebungsvariablen"
+    description="Come viene configurata un’istanza e che cosa imposta Lei stesso."
+  />
+</CardGrid>
+
+## Dove segnalare un errore
+
+| L’errore riguarda | Competente |
+|---|---|
+| interfaccia di chat, agenti, collegamento dei modelli, elaborazione dei file | LibreChat |
+| pannello di amministrazione, visualizzazione del consumo, budget, conservazione | EU Cowork AI |
+| diritti sui connettori, registro delle chiamate agli strumenti | EU Cowork AI |
+| installazione, backup, migrazione, TLS | EU Cowork AI |
+| Outlook-Add-in | EU Cowork AI |
+
+Le licenze di tutti i componenti coinvolti si trovano sotto
+[Licenze e provenienza](/docs/it/referenz/lizenzen).

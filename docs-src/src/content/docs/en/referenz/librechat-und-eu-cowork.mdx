@@ -19,9 +19,9 @@ license**. It brings the interface, the connectivity to arbitrary model provider
 and file system as well as an administration interface. The project is mature and is actively
 developed further.
 
-Our running stack uses the **official LibreChat image in a fixed version that we tested**, not
-simply the latest state. So anyone who only wants to operate the platform never builds
-LibreChat from source. A version jump is a deliberate act with a checklist of its own.
+A delivery uses a **tested version** of LibreChat, not simply the latest state. So anyone who
+only wants to operate the platform never builds LibreChat from source. A version jump is a
+deliberate act with a checklist of its own.
 
 ## What comes from LibreChat
 
@@ -46,19 +46,19 @@ LibreChat from source. A version jump is a deliberate act with a checklist of it
 
 | Building block | What it does |
 |---|---|
-| **Admin panel** | our own, permissively licensed panel against the MIT interface of LibreChat, plus an accompanying service for everything that interface cannot do: usage in euros, shared monthly budget, retention, data export and deletion per account |
+| **Admin panel** | our own, permissively licensed panel against the MIT interface of LibreChat, plus the functions that interface does not cover: usage in euros, shared monthly budget, retention, data export and deletion per account |
 | **MCP gateway** | permission check and log before every access to a third party system, along the chain user, role, group, default. If the check fails, access is denied |
 | **Model router** | distributes requests across different models and reasoning efforts depending on the task |
 | **Example connector bridge** | read only access to a line of business system, as a template for your own integrations |
 | **Outlook add-in** | side chat pane in Outlook with the open mail as context, against the same instance and the same permissions |
 | **Model cards and system prompt** | the curated selection in the model picker and the German system prompt that is inserted on the server side |
-| **Installation package** | Compose stack, server preparation, installer, backup and migration, reverse proxy, branding |
-| **Configuration profiles** | customer template versus an instance with connectors, plus the deployment stages for file search, connectors and TLS |
+| **Installation package** | server preparation, installer, backup and migration, branding |
+| **Configuration profiles** | prepared variants for the different deployment stages of an instance |
 
 <Aside type="note" title="Code execution">
 For code execution EU Cowork AI integrates established backends rather than shipping a runner
-of its own — either a hardened variant with microVM isolation or a lighter transitional one.
-Which destinations executed code may reach on the outside is defined at host or network level.
+of its own. Which destinations executed code may reach on the outside is defined at host or
+network level.
 </Aside>
 
 ## Why the fork stays thin
@@ -77,14 +77,13 @@ From this follows a fixed order in which a change is attempted:
 4. **Own component.** Only when nothing else carries.
 
 Everything that can be solved without touching LibreChat is therefore built as a separate
-service next to it. These services are called sidecars: standalone containers with their own
-lifecycle that talk to LibreChat through normal network interfaces. The admin panel, the MCP
-gateway, the bundled connector bridge and the Outlook add-in are all built that way.
+service next to it. These services are called sidecars: they have a lifecycle of their own and
+talk to LibreChat through normal network interfaces. The building blocks of our own from the
+table above are all built that way.
 
 In practice that means for you: an update of LibreChat does not touch our services, and a new
 version of the admin panel does not touch LibreChat. Both are updated separately. A release of
-EU Cowork AI is always a tested pair of one specific LibreChat version and specific sidecar
-versions.
+EU Cowork AI is always a state tested as a whole.
 
 ## The file `librechat.yaml`
 
@@ -96,13 +95,9 @@ works.
 [www.librechat.ai/docs](https://www.librechat.ai/docs). How the file is preset in a delivery is
 described in the bundled operating documentation.
 
-Two mechanics that keep causing surprises:
-
-- **The `interface` block is global.** Its values are written into all roles at startup and set
-  again on every restart. Differences per role therefore belong in the role editor of the admin
-  panel, not in the file.
-- **`endpoints.agents.capabilities` replaces the default list**, it does not merge with it.
-  Anyone who enters something there has to list everything that should be preserved.
+Individual fields behave differently from what their name suggests: some apply globally instead
+of per role, others replace a default list instead of extending it. The meaning of every field
+is documented by LibreChat. Check it there before you change a value.
 
 <Aside type="tip" title="The panel wins over the file">
 What you set in the admin panel under **Konfiguration** (configuration) sits as an override on
@@ -167,7 +162,7 @@ LDAP and SAML.
 | chat interface, agents, model connectivity, file handling | LibreChat |
 | admin panel, usage display, budget, retention | EU Cowork AI |
 | permissions on connectors, log of the tool calls | EU Cowork AI |
-| installation, backup, migration, Compose stack, TLS | EU Cowork AI |
+| installation, backup, migration, TLS | EU Cowork AI |
 | Outlook add-in | EU Cowork AI |
 
 The licenses of all building blocks involved are on the

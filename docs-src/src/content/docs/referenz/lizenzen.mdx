@@ -40,45 +40,42 @@ Ausgabe. Das war der Anlass, die Lizenzfrage ganz an den Anfang zu stellen.
 
 | Komponente | Lizenz |
 |---|---|
-| Monorepo mit Distribution, Skripten und Dokumentation | MIT |
-| Admin-Panel samt begleitendem Dienst und Frontend | MIT |
+| Monorepo mit Distribution und Dokumentation | MIT |
+| Admin-Panel | MIT |
 | MCP-Gateway inklusive Model-Router | MIT |
 | Beispiel-Konnektor-Brücke | MIT |
 | Outlook-Add-in | MIT |
 
 ## Die mitgelieferten Fremdkomponenten
 
-Die Distribution startet unveränderte Fremd-Images unter deren eigenen Lizenzen. Diese Dienste
-laufen als eigenständige Container. Unser Code bindet nichts davon ein, sondern spricht sie
-über ihre normalen Netzwerk-Schnittstellen an.
+Die Distribution setzt unveränderte Fremdkomponenten unter deren eigenen Lizenzen ein. Unser
+Code bindet nichts davon ein, sondern spricht sie über ihre normalen Schnittstellen an. Es
+entsteht kein gemeinsames Werk.
 
 | Komponente | Aufgabe | Lizenz |
 |---|---|---|
 | [LibreChat](https://github.com/danny-avila/LibreChat) | die Chat-Anwendung selbst | MIT |
-| [MongoDB](https://github.com/mongodb/mongo) | Datenbank für Konversationen, Nutzer und Verbrauch | SSPL-1.0 ¹ |
-| [Meilisearch](https://github.com/meilisearch/meilisearch) | Volltextsuche über frühere Konversationen | MIT, einzelne Teile der Enterprise Edition unter BUSL-1.1 ² |
-| [SearXNG](https://github.com/searxng/searxng) | eigene Metasuchmaschine für die Web-Suche | AGPL-3.0 ³ |
-| [pgvector](https://github.com/pgvector/pgvector) | Vektordatenbank für die Dateisuche | PostgreSQL-Lizenz |
-| [rag_api](https://github.com/danny-avila/rag_api) | Einbettung hochgeladener Dateien für die Dateisuche | MIT |
-| [Caddy](https://github.com/caddyserver/caddy) | Reverse-Proxy mit automatischem TLS | Apache-2.0 |
-| Konnektor-Brücken aus Fremdprojekten | übersetzen zwischen der Chat-Schicht und einem Fremdsystem. Welches Projekt hinter welcher Brücke steht, benennen die Betriebsunterlagen der Auslieferung | MPL-2.0 und MIT |
+| [MongoDB](https://github.com/mongodb/mongo) | Datenbank | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | Volltextsuche | MIT, einzelne Teile der Enterprise Edition unter BUSL-1.1 ² |
+| [SearXNG](https://github.com/searxng/searxng) | Metasuchmaschine für die Web-Suche | AGPL-3.0 ³ |
+| [pgvector](https://github.com/pgvector/pgvector) | Vektordatenbank | PostgreSQL-Lizenz |
+| [rag_api](https://github.com/danny-avila/rag_api) | Einbettung von Dateien | MIT |
+| [Caddy](https://github.com/caddyserver/caddy) | Reverse-Proxy | Apache-2.0 |
+| Konnektor-Brücken aus Fremdprojekten | Anbindung von Fremdsystemen. Welches Projekt hinter welcher Brücke steht, benennen die Betriebsunterlagen der Auslieferung | MPL-2.0 und MIT |
 
-Von diesen Komponenten startet nur ein Teil im Grundzustand. Die Bausteine für die Dateisuche,
-die Konnektor-Brücken und der Reverse-Proxy kommen erst mit der jeweiligen Ausbaustufe dazu.
-Zum Aufbau siehe [Dienste und Ports](/docs/referenz/dienste-und-ports).
+Nicht alle dieser Komponenten kommen in jeder Auslieferung zum Einsatz. Zum Aufbau siehe
+[Dienste und Ports](/docs/referenz/dienste-und-ports).
 
 ### Die Code-Ausführung
 
-Die beiden Backends für die Code-Ausführung laufen getrennt vom übrigen Stack. Aktiv ist immer
-nur eines.
+Für die Code-Ausführung kommt wahlweise eines dieser beiden Backends zum Einsatz.
 
 | Backend | Rolle | Lizenz |
 |---|---|---|
 | [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | gehärtete Variante mit microVM-Isolation | Apache-2.0 |
-| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | leichtere Übergangsvariante mit vorgebautem Image | Apache-2.0 |
+| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | leichtere Variante | Apache-2.0 |
 
-Beide bringen aus den Compose-Dateien ihrer Projekte weitere Hilfsdienste mit, etwa
-einen Zwischenspeicher und einen S3-kompatiblen Objektspeicher. Deren Lizenzen stehen in den
+Beide bringen aus ihren Projekten weitere Hilfsdienste mit. Deren Lizenzen stehen in den
 jeweiligen Projekten dokumentiert. Da sie je nach Fassung unterschiedlich ausfallen, prüfen
 Sie sie für die Fassung, die Sie tatsächlich einsetzen.
 
@@ -98,12 +95,11 @@ Installation, wie hier, ist davon nicht berührt.
 überwiegende Teil steht unter MIT, einzelne Bestandteile der Enterprise Edition unter der
 Business Source License. Wir betreiben das offizielle Image unverändert.
 
-**³ SearXNG steht unter der AGPL-3.0 und läuft im Grundzustand mit.** Das benennen wir offen,
-statt es zu verstecken. Wir betreiben das offizielle Image unverändert als eigenständigen
-Dienst, gemountet wird nur die Konfigurationsdatei, LibreChat ruft es über HTTP auf. Der
-Quellcode der eingesetzten, unveränderten Fassung ist öffentlich. Auf die MIT-Lizenzierung
-unseres Codes hat das keine Auswirkung, weil es weder eingebunden noch verändert wird und kein
-gemeinsames Werk entsteht.
+**³ SearXNG steht unter der AGPL-3.0.** Das benennen wir offen, statt es zu verstecken. Wir
+betreiben das offizielle Image unverändert und rufen es nur über seine normale Schnittstelle
+auf. Der Quellcode der eingesetzten, unveränderten Fassung ist öffentlich. Auf die
+MIT-Lizenzierung unseres Codes hat das keine Auswirkung, weil es weder eingebunden noch
+verändert wird und kein gemeinsames Werk entsteht.
 
 ## Warum wir ein eigenes Admin-Panel gebaut haben
 
@@ -114,9 +110,8 @@ bereitgestellt und nie verteilt wird.
 
 Für ein Produkt, das ausdrücklich permissiv bleiben soll, ist das der falsche Weg. Deshalb:
 
-- **Das AGPL-Panel ist nicht Teil der Distribution.** Es startet nie von selbst mit, sondern
-  nur auf ausdrückliche Anforderung. Es war eine Übergangslösung für interne Tests, bevor
-  unser eigenes Panel fertig war.
+- **Das AGPL-Panel ist nicht Teil der Distribution.** Es war eine Übergangslösung für interne
+  Tests, bevor unser eigenes Panel fertig war.
 - **Unser Panel ist ein eigenständiger Neubau** unter MIT-Lizenz. Es arbeitet gegen dieselbe
   Administrations-Schnittstelle von LibreChat, die selbst unter MIT steht.
 - **Es wurde kein Code aus dem AGPL-Panel übernommen.** Das Panel diente als Vorbild für die

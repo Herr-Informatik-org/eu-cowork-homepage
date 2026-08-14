@@ -1,0 +1,133 @@
+---
+title: Archivos y conocimiento
+description: Adjuntar archivos a un mensaje, la búsqueda de archivos en un fondo documental y la búsqueda en los chats propios. Qué viene activado de serie y qué no.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Esta página separa tres cosas que en el día a día se confunden constantemente: adjuntar un archivo
+a un mensaje, hacer que todo un fondo documental sea consultable y buscar en las conversaciones
+propias. Dos de ellas están disponibles tras la instalación, una no.
+
+## Tres cosas, una sola palabra
+
+| Lo que usted quiere | Cómo se llama | Estado de entrega |
+|---|---|---|
+| Quiero que el colega lea ahora este archivo concreto | Adjuntar un archivo (contexto) | **activado** |
+| Un fondo con muchos documentos debe ser consultable de forma permanente | Búsqueda de archivos, también llamada RAG, abreviatura de retrieval-augmented generation, es decir, respuestas construidas a partir de pasajes localizados | **desactivado**, lo configura el administrador |
+| Busco un pasaje en mis chats antiguos | Búsqueda de texto completo en las conversaciones | **activado** |
+
+El tratamiento de archivos proviene de [LibreChat](https://www.librechat.ai/docs), al igual que la
+interfaz RAG que hay detrás.
+
+## Adjuntar un archivo a un mensaje
+
+Este es el caso normal. Usted adjunta un documento a su mensaje, el contenido pasa al contexto de
+esa conversación y usted formula su pregunta al respecto. Adjuntar se hace desde el menú del campo
+de entrada o arrastrando el archivo sobre la ventana de chat.
+
+Tiene sentido para documentos sueltos: revisar un contrato, resumir un acta, hacer que se analice
+una tabla. El contenido se queda en esa conversación y no pasa a formar un fondo consultable.
+
+### Formatos
+
+Se procesan los formatos habituales de oficina y de texto, entre ellos PDF, Word (`.docx`), Excel
+(`.xlsx`), PowerPoint (`.pptx`), texto, Markdown, CSV, JSON y XML. Las imágenes en formato JPEG,
+PNG, GIF y HEIC también funcionan, aunque solo en una ficha del modelo que entienda imágenes. En
+una ficha de solo texto, una imagen no surte efecto; véase
+[Chat y modelos](/docs/es/funktionen/chat-und-modelle).
+
+La lista exacta de los tipos de archivo permitidos es configurable. Dónde, se explica más abajo, en
+la sección para administradores.
+
+### Límites
+
+Cuántos archivos puede adjuntar por mensaje y qué tamaño puede tener un archivo lo decide el
+administrador. El valor predeterminado es generoso y rara vez es el límite real. En la práctica es
+más determinante cuánto texto puede leer un modelo en una sola consulta. Un documento de varios
+cientos de páginas llena el contexto, desplaza el resto de la conversación y empeora la respuesta.
+Para fondos así existe la búsqueda de archivos.
+
+<Aside type="caution" title="Los documentos escaneados necesitan una capa de texto">
+El reconocimiento de texto no forma parte del suministro. Un PDF compuesto únicamente de imágenes,
+por ejemplo un contrato escaneado o un justificante fotografiado, no contiene texto legible. Esto
+vale tanto en el chat web como en el [Add-in de Outlook](/docs/es/funktionen/outlook-add-in).
+
+La vía habitual: convertir antes el documento en un PDF de texto consultable con la herramienta que
+prefiera —muchos escáneres y sistemas de gestión documental ya lo hacen de todos modos— o copiar el
+texto e insertarlo en el chat.
+</Aside>
+
+## Búsqueda de archivos en un fondo documental
+
+La búsqueda de archivos es algo distinto de adjuntar. Los documentos que se suben se dividen en
+fragmentos y se almacenan de manera que la búsqueda no se haga por palabras clave, sino por
+similitud de contenido. Ante una pregunta, el colega extrae entonces justo los fragmentos
+pertinentes, en lugar de meter el documento entero en el contexto.
+
+La ventaja se nota con documentos numerosos y largos: un puñado de manuales, una colección de
+directrices, un archivo de proyecto. En lugar de «lee estas 400 páginas», se convierte en
+«encuentra los tres pasajes que responden a mi pregunta».
+
+<Aside type="note" title="Desactivada en el estado de entrega">
+La búsqueda de archivos viene desactivada de fábrica, porque requiere componentes adicionales y un
+proveedor para los embeddings. Así, tras la instalación, solo se ve lo que realmente
+funciona. Cómo activarla se explica más abajo.
+</Aside>
+
+## Búsqueda de texto completo en los chats propios
+
+La búsqueda de la barra lateral recorre sus conversaciones, no sus documentos. Encuentra el punto
+en el que se habló de algo. Esta búsqueda está siempre activada y no necesita ningún proveedor de
+embeddings.
+
+## Para administradores
+
+### Activar la búsqueda de archivos
+
+<Steps>
+
+1. **Registrar un proveedor para los embeddings.** Sin él, los documentos no pueden prepararse para
+   la búsqueda por contenido. Quien quiera mantener el posicionamiento europeo elegirá un proveedor
+   que procese los datos dentro de la UE.
+
+2. **Poner a disposición los componentes adicionales necesarios.** La búsqueda de archivos trae su
+   propio servicio para preparar y consultar los documentos; solo se le llama internamente.
+
+3. **Habilitar la interfaz.** Solo entonces aparece el conmutador en el chat.
+
+4. **Comprobar el permiso de rol.** En el editor de roles, bajo **«Werkzeuge»** (herramientas),
+   está el permiso **«Datei-Suche (RAG)»** (búsqueda de archivos) con la indicación
+   «Hochgeladene Dokumente durchsuchen» (buscar en los documentos subidos). Opcionalmente, junto a
+   él, **«Datei-Zitate»** (citas de archivos) para las referencias de fuentes procedentes de
+   archivos. Quien quiera dar la búsqueda de archivos solo a determinados roles debe gestionar el
+   permiso exclusivamente aquí.
+
+5. **Comprobar después** que la búsqueda devuelve realmente resultados del fondo en un chat nuevo.
+
+</Steps>
+
+<Aside type="note" title="El fallo más frecuente">
+La búsqueda de archivos no surte efecto porque los componentes adicionales sencillamente no están
+en marcha. El conmutador se ve, pero cada consulta se queda en nada. Así que, antes de habilitarla,
+compruebe que el servicio de búsqueda está funcionando.
+</Aside>
+
+### Cambiar los límites y los tipos de archivo permitidos
+
+En el panel, bajo **«Konfiguration → Dateien & Speicher»** (configuración, archivos y
+almacenamiento). Allí están los límites máximos para las subidas, el límite para las imágenes de
+perfil y la lista de los tipos de archivo permitidos.
+
+Una intervención sensata durante la implantación es bajar el límite máximo por archivo a un valor
+realista para su día a día. Eso mantiene fuera del almacenamiento los vídeos y archivos comprimidos
+subidos por descuido.
+
+### Qué ocurre al borrar una cuenta
+
+Al borrar a una persona desde el panel de administración se eliminan también sus archivos y se
+limpian los índices de búsqueda. Antes, el diálogo ofrece expresamente
+**«Daten exportieren (JSON)»** (exportar los datos en JSON), porque la información exigida por el
+RGPD debe facilitarse antes del borrado.

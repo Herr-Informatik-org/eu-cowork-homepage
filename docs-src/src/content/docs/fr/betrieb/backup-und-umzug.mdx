@@ -1,0 +1,88 @@
+---
+title: Sauvegarde et migration
+description: Ce que couvre une sauvegarde d’EU Cowork AI, comment agit une restauration et à quoi revient une migration vers un nouveau serveur.
+sidebar:
+  order: 6
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Sauvegarde et migration vont de pair : techniquement, une migration n’est rien d’autre qu’une
+sauvegarde sur l’ancienne machine et sa restauration sur la nouvelle. Pour l’une comme pour
+l’autre, le paquet de livraison contient les outils nécessaires.
+
+## Ce qui est sauvegardé
+
+Une sauvegarde doit couvrir l’état complet d’une instance — et rien que l’état. En font partie la
+base de données avec les contenus de l’instance, les fichiers téléversés et la configuration avec
+ses secrets. Les secrets en font impérativement partie : sans eux, une partie de la base de
+données reste illisible même après une restauration complète.
+
+Il n’est pas nécessaire de sauvegarder ce qui peut être reconstitué à partir de cet état. De tels contenus
+dérivés se reconstruisent d’eux-mêmes après une restauration. Les journaux d’exécution ne sont
+pas non plus un état.
+
+## Sauvegarder régulièrement
+
+La sauvegarde est mise en place une fois, puis s’exécute selon une planification, avec une règle
+de conservation qui fait expirer les anciens états après un délai défini. La fréquence des
+sauvegardes découle d’une seule question : combien de travail peut-on se permettre de perdre dans
+le pire des cas ?
+
+## La restauration et son effet
+
+Une restauration est **destructrice**. Elle remplace l’état actuel de l’instance par l’état issu
+de la sauvegarde ; ce qui est apparu depuis est ensuite perdu. Le chemin qui y mène exige donc
+une confirmation explicite. Traitez une restauration comme une intervention délibérée et non
+comme un geste de routine.
+
+## Migration vers un nouveau serveur
+
+Une migration passe par une sauvegarde de l’ancienne instance, la mise en place de la nouvelle
+machine et l’injection de cet état. Trois points décident de la réussite :
+
+- Les secrets de l’instance existante sont repris et non régénérés.
+- La nouvelle instance est vérifiée avant la bascule, et non après.
+- Entre la sauvegarde de référence et la bascule, il ne faut plus travailler, sinon c’est
+  précisément ce travail qui manquera sur le nouveau serveur.
+
+La copie de la sauvegarde transportée pour la migration contient des secrets et des contenus
+clients. Supprimez-la après la migration ; seule la sauvegarde régulière subsiste.
+
+<Aside type="danger" title="Reprendre les clés de chiffrement">
+C’est l’erreur la plus coûteuse lors d’une migration. Si les clés avec lesquelles l’application
+chiffre les données dans la base sont régénérées sur le nouveau serveur au lieu d’être reprises
+de la configuration existante, les données concernées sont illisibles — même lorsque la base de
+données a été entièrement restaurée. Chaque personne devrait rétablir ses connexions. C’est
+pourquoi le chemin passe toujours par la configuration issue de la sauvegarde.
+</Aside>
+
+## Deux recommandations qui comptent vraiment
+
+- **Testez la restauration une fois avant de vous y fier.** Une sauvegarde qui n’a jamais été
+  restaurée est une hypothèse, pas une sauvegarde. Ce test a sa place sur une machine de test,
+  pas sur le système de production.
+- **Répliquez la sauvegarde en dehors du serveur.** Une copie sur la même machine protège contre
+  une suppression accidentelle, pas contre la perte de la machine. Comme une sauvegarde contient
+  des secrets, elle n’a sa place dans un cloud que chiffrée, et jamais dans un dépôt.
+
+<Aside type="note" title="Déroulement dans le manuel d’exploitation">
+Le déroulement dans le détail — sauvegarde, restauration et migration pas à pas — figure dans le
+manuel d’exploitation, qui est fourni avec le paquet de livraison. Les clients le reçoivent en
+même temps que leur accès.
+</Aside>
+
+## Pour continuer
+
+<CardGrid>
+  <LinkCard
+    title="Plusieurs instances sur un serveur"
+    href="/docs/fr/betrieb/mehrere-instanzen"
+    description="Ce qui doit rester séparé par client et ce qui peut être partagé."
+  />
+  <LinkCard
+    title="Dépannage"
+    href="/docs/fr/betrieb/fehlerbehebung"
+    description="Si quelque chose coince après la migration : où regarder en premier."
+  />
+</CardGrid>

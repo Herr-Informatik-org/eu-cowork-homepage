@@ -36,7 +36,7 @@ has three consequences for administrators:
 
 | | |
 |---|---|
-| Permissions | The same roles and the same gateway rule for connectors apply as in the web chat |
+| Permissions | The same roles and the same rules for connectors apply as in the web chat |
 | Usage | Every turn is metered and appears in usage and billing |
 | Log | Connector calls appear in the audit log, as everywhere else |
 
@@ -55,9 +55,8 @@ machine.
 | Text `.txt .md .csv .tsv .json .log .yml .xml` | raw text |
 | Images JPEG and PNG | as an image attachment, scaled down before sending |
 
-Upper limits for number, size and amount of text apply per message. Documents and images are
-counted separately and the two counters run independently of each other. When a limit is
-reached, the pane tells you instead of silently leaving something out.
+Upper limits for number, size and amount of text apply per message. When a limit is reached,
+the pane tells you instead of silently leaving something out.
 
 **Not read** are the old binary formats `.doc`, `.xls` and `.ppt`, PowerPoint, archives, cloud
 attachments (only a link arrives there) and attached emails. In these cases too the pane names
@@ -153,8 +152,8 @@ for in the first place. The default is set correctly; it should not be changed.
    `Outlook-Assistent`, with the customer's default model and initially without connectors.
 
 3. **Grant the agent remote access.** Without that grant the interface refuses access. In
-   addition the role permission **"Remote-Agenten"** (remote agents) has to be set; out of the
-   box it is set globally, because the add-in is distributed to everyone.
+   addition the role permission **"Remote-Agenten"** (remote agents) has to be set for the
+   roles that are meant to use the add-in.
 
 4. **Store the default agent** so that nobody has to select it in the pane.
 

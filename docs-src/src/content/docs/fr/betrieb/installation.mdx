@@ -1,0 +1,95 @@
+---
+title: Installation
+description: Comment une instance d’EU Cowork AI est mise en place et quelles étapes suivent le premier démarrage.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+La mise en place se fait de manière guidée, sur la base du paquet de livraison. Elle produit la
+configuration et les secrets de l’instance, puis l’application démarre. La condition préalable
+est un serveur préparé, voir [Préparer le serveur](/docs/fr/betrieb/server-vorbereiten).
+
+## Ce dont la mise en place se charge
+
+- Elle vérifie les conditions préalables sur la machine et s’interrompt s’il manque quelque chose
+  d’essentiel.
+- Elle crée la configuration de l’instance et fixe tous les secrets à des valeurs aléatoires
+  générées à neuf. Chaque instance reçoit ainsi ses propres valeurs, et celles-ci ne sont
+  lisibles que pour l’exploitation de l’instance.
+- Elle met en place les espaces de stockage de l’instance avec les droits nécessaires et démarre
+  l’application.
+- Elle indique à la fin quelles valeurs restent à saisir à la main. Seuls les noms des valeurs
+  sont indiqués, jamais leur contenu.
+
+<Aside type="danger" title="Sauvegarder les secrets générés">
+Une partie des valeurs générées déchiffre ce qui est stocké chiffré dans la base de données. Si
+ces valeurs sont perdues, ou si elles sont régénérées lors d’une migration au lieu d’être
+reprises, les données concernées sont irrémédiablement illisibles, et chaque personne devrait
+rétablir ses connexions. La sauvegarde régulière couvre la configuration et donc ces valeurs,
+voir [Sauvegarde et migration](/docs/fr/betrieb/backup-und-umzug).
+</Aside>
+
+## La seule valeur obligatoire
+
+Pour une installation standard, vous saisissez vous-même exactement une valeur : la clé du
+fournisseur d’inférence avec traitement dans l’UE. La mise en place le signale expressément à la
+fin. Tout le reste est facultatif — une deuxième option pour les modèles, les connecteurs,
+l’envoi d’e-mails et l’exécution de code.
+
+## Ce qui reste manuel
+
+- Créer les enregistrements DNS et choisir la variante TLS, voir
+  [Domaine et certificat](/docs/fr/betrieb/domain-und-tls).
+- Définir le Domain-Lock pour l’inscription, voir
+  [Configuration](/docs/fr/betrieb/konfiguration#domain-lock).
+- Fixer les droits des rôles et les fiches de modèle dans le panneau d’administration.
+- Pour chaque connecteur, autoriser l’accès délibérément dans le panneau plutôt que de le laisser
+  ouvert.
+- Mettre en place la sauvegarde, voir
+  [Sauvegarde et migration](/docs/fr/betrieb/backup-und-umzug).
+
+## Après le premier démarrage
+
+<Steps>
+
+1. **Ouvrir le chat.** À l’adresse sous laquelle l’instance a été mise en place.
+
+2. **Créer le premier compte.** Inscrivez-vous dans le chat. Le premier compte d’une instance
+   reçoit les droits d’administration.
+
+3. **Vérifier le panneau d’administration.** L’accès suppose un compte disposant des droits
+   d’administration.
+
+4. **Fermer l’accès.** Définir le Domain-Lock, afin que seules les personnes de votre domaine de
+   messagerie puissent s’inscrire.
+
+5. **Créer un deuxième compte administrateur.** Pas uniquement le compte personnel, sinon vous
+   vous verrouillez vous-même le jour où cela compte.
+
+6. **Mettre en place la sauvegarde.** Sauvegarder une fois à la main, puis planifier la
+   sauvegarde.
+
+</Steps>
+
+<Aside type="note" title="Instructions détaillées dans le manuel d’exploitation">
+Le déroulement exact et la liste complète des valeurs de configuration figurent dans le manuel
+d’exploitation, qui est fourni avec le paquet de livraison. Les clients le reçoivent en même
+temps que leur accès.
+</Aside>
+
+## Pour continuer
+
+<CardGrid>
+  <LinkCard
+    title="Configuration"
+    href="/docs/fr/betrieb/konfiguration"
+    description="Les trois niveaux : environnement, librechat.yaml et les surcharges dans le panneau d’administration."
+  />
+  <LinkCard
+    title="Domaine et certificat"
+    href="/docs/fr/betrieb/domain-und-tls"
+    description="Certificat public, CA interne dans le LAN ou exploitation derrière un WAF existant."
+  />
+</CardGrid>

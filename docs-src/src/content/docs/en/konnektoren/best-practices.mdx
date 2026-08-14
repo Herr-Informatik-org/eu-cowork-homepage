@@ -9,13 +9,11 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 This page sums up what has proven itself in operation. The rules are ordered by importance, and the first one is the one that gets forgotten most often and costs the most.
 
-## 1. Set the server default to denied right away
+## 1. Set the default rule to denied right away
 
-Without a rule in place a connector is not blocked automatically. A freshly created connector is therefore visible to every person who may use MCP at all.
+A connector is only cleanly bounded once its default rule is set. Until that has happened, it is not your intention that decides who can see behind the connector, but the accident of the current configuration state. With an ERP connection that means every customer, every document, and all the personnel data the service account can see.
 
-This is deliberate, because a configuration mistake should not paralyze the whole chat. For you it means that the period between "connector created" and "permissions set" is an open window. With an ERP connection, that window covers every customer, every document, and all the personnel data the service account can see.
-
-So set **"Server-Standard"** (server default) to denied in the same work step in which you create the connector, and only grant access afterwards. Remember to save, the panel only writes when you press the button.
+So set the **default rule** to denied in the same work step in which you create the connector, and only grant access afterwards.
 
 ## 2. Few tools rather than many
 
@@ -31,15 +29,15 @@ So enable tools one at a time and on request, not as a precaution.
 
 The most reliable security measure is leaving things out. A model cannot call a tool by accident that does not exist at all, and no instruction inside a document can talk one into being.
 
-A read-only bridge to a specialist system demonstrates this, see [pattern C](/docs/en/konnektoren/muster): there is deliberately no tool for reboot, script execution, software deployment, maintenance windows, alert acknowledgement, or ticket changes. That is also why there is no rule anywhere that would have to prevent someone from restarting a customer server from the chat. It simply is not possible.
+A read-only bridge to a specialist system demonstrates this, see [pattern C](/docs/en/konnektoren/muster): there is deliberately no tool for intervening actions. That is also why there is no rule anywhere that would have to prevent someone from restarting a server from the chat. It simply is not possible.
 
-That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers reboots and script runs alongside reading and that cannot be switched off, a narrow connector of your own is often the faster solution than the discussion about who is allowed to use it.
+That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers intervening actions alongside reading and that cannot be switched off, a narrow connector of your own is often the faster solution than the discussion about who is allowed to use it.
 
 ## 4. Separate service accounts instead of one master key
 
 An access key inherits the permissions of its account in the source system. So one key for everyone means the widest permissions for everyone, and the separation then hangs on our software alone.
 
-Instead, create several narrow service accounts, one per permission profile, and run a separate instance of the connector per account. That is exactly how [pattern A](/docs/en/konnektoren/muster) is built: several instances of the same bridge, each with its own account in the target system, each with its own permission profile. If the rule in the panel ever fails, a person still only sees what their service account is allowed to see.
+Instead, create several narrow service accounts, one per permission profile, and run a separate instance of the connector per account. That is exactly how [pattern A](/docs/en/konnektoren/muster) is built: several instances of the same bridge, each with its own account in the target system, each with its own permission profile. If a grant in the panel is ever set too widely, a person still only sees what their service account is allowed to see.
 
 The side effect is valuable too: in the log of the source system you can tell which profile a query came from.
 
@@ -49,29 +47,29 @@ The temptation to draw a boundary in the prompt is strong: "do not query salary 
 
 Filtering at argument level does not carry far either. Many tools accept free search expressions or filter conditions. What is possible in there cannot be judged reliably from the outside, and every filter rule is a race against phrasings nobody thought of.
 
-Only two levels are reliable: the permissions of the account in the source system, so for example the record rules of the user behind the key or the restricted organization access of their role, and the tool level, because a tool that does not exist cannot deliver anything. Draw the boundary there, and treat the prompt as a convenience, not as a control.
+Only two levels are reliable: the permissions of the account in the source system, meaning what the account behind the key is allowed to see there at all, and the tool level, because a tool that does not exist cannot deliver anything. Draw the boundary there, and treat the prompt as a convenience, not as a control.
 
 ## 6. Per-user sign-in beats a service account
 
 If a system offers per-person access through an interface, take it. Then the target system knows the person making the request, and their permissions there apply unchanged. You have to rebuild nothing and maintain nothing on top, and a permission change in the source system takes effect in the chat right away.
 
-A connection to your file storage typically works this way, see [pattern B](/docs/en/konnektoren/muster). The price for it is that every person has to connect once, and that no grants per role or group apply to such a connector. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
+A connection to your file storage typically works this way, see [pattern B](/docs/en/konnektoren/muster). The price for it is that every person has to connect once and that the gradation is then maintained in the target system. That is the right trade: a finer boundary in the target system is worth more than a coarser boundary in front of it.
 
 A service account is the fallback for systems without this option. It is not bad, but it demands rules 1, 4, and 8 with some insistence.
 
-## 7. Keys only as a variable reference
+## 7. Keys only as a reference
 
-Never enter credentials into the configuration in plain text, only ever as a reference to an environment variable, so in the form `${MEIN_SCHLUESSEL}`. You store the value itself in the panel under **"Einstellungen → API-Schlüssel"** (settings → API keys).
+Never enter credentials into the configuration in plain text, only ever as a reference to a stored key.
 
-This is not a formality. A plain text value in the configuration would be readable through the configuration view and would come along in exports and backups of the settings. That is why the panel explicitly rejects plain text for provider keys.
+This is not a formality. A plain text value in the configuration would be readable by anyone allowed to view the configuration and would come along in exports and backups of the settings.
 
-The rest of the system is built on the same assumption: saved keys are write only and are never displayed again, the connection test resolves the reference server side and does not let the value out, and the change log records only the **name** of a variable, never the value.
+So treat a key that has been stored as no longer viewable: changing it means overwriting it, and whoever needs the value gets it from the source system, not from the platform.
 
 ## 8. Exactly one instance of the same connector per person
 
 Several instances of the same connector expose identical tool names. If two of them are granted to one person, two things happen: the catalog sits in the context twice and costs double on every message, and the model has to guess between two identically named tools. Both are avoidable.
 
-So grant exactly one instance per person. If someone needs a different permission profile, **switch** the grant instead of adding a second one. The **"Zugriffe"** (access) subpage of a person shows at a glance what actually applies and through which stage.
+So grant exactly one instance per person. If someone needs a different permission profile, **switch** the grant instead of adding a second one. Afterwards check in the panel what actually applies to that person.
 
 ## 9. Manage context size actively
 
@@ -79,12 +77,10 @@ The tool catalog is only one half. The other half is the **results** of the call
 
 Four levers help:
 
-- **Upper limits are set and should stay that way.** Tool results are capped in length, and so is the character budget that web search passes on to the model. If a response looks truncated, that is the protection doing its job.
-- **Prefer connectors with staged responses.** A well built detail query loads only the master data first and fetches expensive sections such as software inventory, services, or patch levels only on explicit request. That saves on every single question.
+- **Set upper limits on the length of tool results and leave them in place.** If a response looks truncated, that is the protection doing its job.
+- **Prefer connectors with staged responses.** A well built detail query loads only the master data first and fetches extensive sections only on explicit request. That saves on every single question.
 - **For questions about many objects, use an evaluation tool instead of many individual queries.** Ten individual queries cost ten results in the context, one evaluation costs one.
 - **With tool heavy agents, do not write the whole catalog into every prompt.** Tool definitions can also be loaded only when needed. That only pays off with a large number of tools.
-
-What you do not have to handle yourself: if a conversation runs very long, the history is compacted automatically.
 
 ## 10. Flag connectors outside the EU
 
@@ -105,14 +101,14 @@ Work through these points before the first person uses the connector:
 - [ ] There is a read only mode, or there is a reason why writing is necessary.
 - [ ] The service account in the source system has exactly the permissions it needs, and no more.
 - [ ] The data boundary is drawn in the source system, not in the prompt.
-- [ ] Credentials appear in the configuration only as a variable reference.
+- [ ] Credentials appear in the configuration only as a reference, never in plain text.
 - [ ] Grants per role and group apply to the connector, or there is a reason why the permissions in the target system are enough.
-- [ ] **"Server-Standard"** (server default) is set to denied and has been saved.
+- [ ] The **default rule** is set to denied.
 - [ ] The grants are set, and only one instance is granted per person.
-- [ ] The connection test is green, and the instance has been restarted.
+- [ ] The connection to the connector has been checked.
 - [ ] A test user with narrow permissions demonstrably sees less than one with wide permissions.
 - [ ] For a vendor outside the EU this is documented and communicated.
-- [ ] A look at the log under **"Audit-Log → MCP-Tool-Calls"** (audit log) shows the expected calls and decisions.
+- [ ] A look at the log shows the expected calls and decisions.
 
 <CardGrid>
   <LinkCard
@@ -123,7 +119,7 @@ Work through these points before the first person uses the connector:
   <LinkCard
     title="Permissions and grants"
     href="/docs/en/konnektoren/gateway-und-rechte"
-    description="The permission cascade and where you maintain the grants."
+    description="What the permission check decides on and where you maintain the grants."
   />
   <LinkCard
     title="Connecting your own connector"

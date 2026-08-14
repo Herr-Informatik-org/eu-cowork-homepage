@@ -1,0 +1,129 @@
+---
+title: Buenas prácticas para conectores
+description: Diez reglas con su justificación, más una lista de comprobación antes de la habilitación de un conector nuevo.
+sidebar:
+  order: 7
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Esta página resume lo que se ha acreditado en la operación. Las reglas están ordenadas por importancia; la primera es la que más a menudo se olvida y la que más cuesta.
+
+## 1. Regla predeterminada en denegado de inmediato
+
+Un conector no queda limpiamente delimitado hasta que su regla predeterminada está fijada. Mientras eso no haya ocurrido, quien decide quién ve detrás del conector no es su intención, sino el azar del estado de configuración. En una conexión a un ERP, lo que está en juego son todos los clientes, todos los documentos y todos los datos de personal que la cuenta de servicio puede ver.
+
+Fije por eso la **regla predeterminada** en denegado en el mismo paso de trabajo en el que crea el conector, y habilite de forma selectiva solo después.
+
+## 2. Pocas herramientas en lugar de muchas
+
+El catálogo de herramientas de un conector se envía al modelo **con cada uno de los mensajes**. No es una inversión única, sino un alquiler corriente sobre cada chat.
+
+El orden de magnitud es considerable: un conector amplio puede ofrecer más de cien herramientas y ocupar así una parte notable del contexto disponible antes de que se haya planteado la primera pregunta. Limitado al caso de uso, de todo eso suele quedar solo una pequeña fracción.
+
+El segundo efecto es al menos igual de importante: cuantas más herramientas de nombre parecido haya en el catálogo, más a menudo el modelo echa mano de la equivocada. Un catálogo estrecho da respuestas no solo más baratas, sino también más fiables.
+
+Habilite por eso las herramientas una a una y a demanda, no de forma preventiva.
+
+## 3. Una herramienta que no existe no se puede llamar
+
+La medida de seguridad más fiable es la omisión. Un modelo no puede llamar por error a una herramienta que no existe en absoluto, y ninguna instrucción dentro de un documento puede hacer aparecer una.
+
+Un puente de solo lectura hacia un sistema especializado lo demuestra, véase [patrón C](/docs/es/konnektoren/muster): allí, deliberadamente, no hay ninguna herramienta para acciones que intervienen en el sistema. Por eso tampoco figura en ninguna parte una regla que tuviera que impedir que alguien reiniciase un servidor desde el chat. Sencillamente no se puede.
+
+Es exactamente con eso con lo que mide usted un conector ajeno: qué herramientas expone y si existe un modo de solo lectura. Cuando un servidor terminado ofrece, además de la lectura, acciones que intervienen en el sistema y eso no se puede desactivar, un conector estrecho propio suele ser una solución más rápida que la discusión sobre quién puede utilizarlo.
+
+## 4. Cuentas de servicio separadas en lugar de una llave maestra
+
+Una clave de acceso hereda los permisos de su cuenta en el sistema de origen. Una clave para todos significa por tanto los permisos más amplios para todos, y la separación pende únicamente de nuestro software.
+
+Cree en su lugar varias cuentas de servicio estrechas, una por perfil de permisos, y haga funcionar una instancia propia del conector por cada cuenta. Exactamente así está construido el [patrón A](/docs/es/konnektoren/muster): varias instancias del mismo puente, cada una con su propia cuenta en el sistema de destino, cada una con su propio perfil de permisos. Si alguna vez una habilitación en el panel queda fijada de forma demasiado amplia, una persona seguirá viendo solo lo que su cuenta de servicio puede ver.
+
+El efecto secundario es igualmente valioso: en el registro del sistema de origen se reconoce de qué perfil provino una consulta.
+
+## 5. El límite de los datos pertenece al sistema de origen
+
+La tentación de trazar un límite en el prompt es grande: «No consultes datos salariales». Eso no es un límite, es un ruego.
+
+Tampoco un filtrado a nivel de argumentos llega muy lejos. Muchas herramientas aceptan expresiones de búsqueda libres o condiciones de filtro. Lo que allí es posible no puede valorarse de forma fiable desde fuera, y cada regla de filtro es una carrera contra formulaciones en las que nadie ha pensado.
+
+Solo dos niveles son fiables: los permisos de la cuenta en el sistema de origen, es decir, lo que la cuenta que hay detrás de la clave puede ver allí, y el nivel de la herramienta, porque una herramienta inexistente no puede entregar nada. Trace ahí el límite y trate el prompt como una comodidad, no como un control.
+
+## 6. La autenticación por persona gana a la cuenta de servicio
+
+Cuando un sistema ofrece un acceso personal a través de una interfaz, tómelo. Entonces el sistema de destino conoce a la persona que hace la petición, y sus permisos allí valen sin cambios. Usted no tiene que reconstruir nada ni mantener nada adicional, y un cambio de permisos en el sistema de origen surte efecto de inmediato también en el chat.
+
+Una conexión a su almacenamiento de archivos funciona típicamente así, véase [patrón B](/docs/es/konnektoren/muster). El precio es que cada persona tiene que conectarse una vez y que la gradación se mantiene después en el sistema de destino. Es el intercambio correcto: un límite más fino en el sistema de destino vale más que un límite más grueso puesto delante.
+
+Una cuenta de servicio es la solución de emergencia para sistemas sin esta posibilidad. No es mala, pero exige las reglas 1, 4 y 8 con especial insistencia.
+
+## 7. Las claves, únicamente como referencia
+
+No introduzca nunca credenciales en texto claro en la configuración, sino exclusivamente como referencia a una clave depositada.
+
+Esto no es una cuestión de forma. Un valor en texto claro en la configuración sería legible para cualquiera que pueda consultarla y viajaría en las exportaciones y en las copias de seguridad de los ajustes.
+
+Trate por eso una clave ya depositada como no consultable: cambiarla significa sobrescribirla, y quien necesite el valor lo obtiene del sistema de origen, no de la plataforma.
+
+## 8. Exactamente una instancia del mismo conector por persona
+
+Varias instancias del mismo conector exponen nombres de herramienta idénticos. Si a una persona se le habilitan dos de ellas, ocurren dos cosas: el catálogo queda por duplicado en el contexto y cuesta el doble en cada mensaje, y el modelo tiene que adivinar entre dos herramientas con el mismo nombre. Ambas cosas son evitables.
+
+Habilite por eso exactamente una instancia por persona. Si alguien necesita otro perfil de permisos, **cambie** la habilitación en lugar de añadir una segunda. Compruebe después en el panel qué se aplica realmente a esa persona.
+
+## 9. Gestionar activamente el tamaño del contexto
+
+El catálogo de herramientas es solo una mitad. La otra son los **resultados** de las llamadas. Una consulta desconsiderada sobre todo el parque de equipos o una lista de resultados sin filtrar procedente del ERP llena el contexto, desplaza el hilo de la conversación y empeora la respuesta, no la mejora.
+
+Cuatro palancas ayudan:
+
+- **Fijar límites máximos para la longitud de los resultados de las herramientas y dejarlos puestos.** Si una respuesta parece cortada, esa es la protección haciendo su trabajo.
+- **Preferir conectores con respuestas escalonadas.** Una consulta de detalle bien construida carga primero solo los datos maestros y recoge las secciones voluminosas únicamente cuando se piden de forma expresa. Eso ahorra en cada una de las preguntas.
+- **Para preguntas sobre muchos objetos, una herramienta de análisis en lugar de muchas consultas sueltas.** Diez consultas sueltas cuestan diez resultados en el contexto, un análisis cuesta uno.
+- **En agentes con muchas herramientas, no escribir el catálogo completo en cada prompt.** Las definiciones de herramientas también pueden cargarse solo cuando hacen falta. Esto solo merece la pena con un número muy elevado de herramientas.
+
+## 10. Señalar los conectores fuera de la UE
+
+Un conector lleva datos de su instancia hacia un proveedor. Si ese proveedor está fuera de la UE, eso es una afirmación sobre su gestión de datos que no debería hacer de forma tácita.
+
+Esto vale también cuando el proveedor opera una instancia europea: en cuanto los datos abandonan su propia pila, se trata de un tratamiento en un tercero, y la situación jurídica se rige por la sede de este. Un conector así puede ser una decisión completamente correcta, pero tiene que ser una decisión **consciente**.
+
+Por eso el estado de entrega de una instalación nueva no contiene **ningún conector preconfigurado**. Qué se conecta lo decide usted.
+
+Lleve una lista breve de qué conector da qué datos y a quién, mencione expresamente las conexiones fuera de la UE ante sus usuarios y en su documentación de protección de datos, y no afirme, para tales conectores, que todo se queda en Europa.
+
+## Lista de comprobación antes de la habilitación de un conector nuevo
+
+Repase estos puntos antes de que la primera persona utilice el conector:
+
+- [ ] La lista de las herramientas expuestas se ha leído por completo y se ha entendido.
+- [ ] Todo lo que no se necesita está desactivado o directamente no existe.
+- [ ] Existe un modo de solo lectura, o está justificado por qué es necesario escribir.
+- [ ] La cuenta de servicio en el sistema de origen tiene exactamente los permisos que necesita, y no más.
+- [ ] El límite de los datos está trazado en el sistema de origen, no en el prompt.
+- [ ] Las credenciales figuran en la configuración exclusivamente como referencia, nunca en texto claro.
+- [ ] Para el conector se aplican habilitaciones por rol y por grupo, o está justificado por qué bastan los permisos en el sistema de destino.
+- [ ] La **regla predeterminada** está en denegado.
+- [ ] Las habilitaciones están puestas, y por persona solo hay una instancia habilitada.
+- [ ] La conexión con el conector está comprobada.
+- [ ] Una persona de prueba con permisos estrechos ve, de forma demostrable, menos que una con permisos amplios.
+- [ ] En el caso de un proveedor fuera de la UE, esto está documentado y comunicado.
+- [ ] Un vistazo al registro muestra las llamadas y las decisiones esperadas.
+
+<CardGrid>
+  <LinkCard
+    title="Patrones de conectores"
+    href="/docs/es/konnektoren/muster"
+    description="Tres formas constructivas acreditadas: cuenta de servicio, autenticación por persona y puente de solo lectura, con el recorrido de los permisos."
+  />
+  <LinkCard
+    title="Permisos y habilitaciones"
+    href="/docs/es/konnektoren/gateway-und-rechte"
+    description="Con arreglo a qué decide el control de permisos y dónde gestiona usted las habilitaciones."
+  />
+  <LinkCard
+    title="Conectar un conector propio"
+    href="/docs/es/konnektoren/eigenen-konnektor-anbinden"
+    description="Qué aclarar de antemano, con qué criterios medir un conector ajeno y qué cuenta al habilitarlo."
+  />
+</CardGrid>

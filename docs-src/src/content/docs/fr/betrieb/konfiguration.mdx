@@ -1,0 +1,97 @@
+---
+title: Configuration
+description: Les trois niveaux de configuration d’EU Cowork AI, quel niveau l’emporte en cas de contradiction et comment le Domain-Lock est défini.
+sidebar:
+  order: 3
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI se configure à trois endroits. Savoir quel endroit est responsable de quoi, et quel
+niveau l’emporte en cas de contradiction, vous épargne bien des recherches.
+
+## Les trois niveaux
+
+| Niveau | Endroit | Contenu | Quand cela prend effet |
+|---|---|---|---|
+| Infrastructure et secrets | Fichier d’environnement de l’instance | Adresses, clés, paramètres d’exploitation | après un redémarrage de l’application |
+| Comportement du produit | `librechat.yaml` | Fiches de modèle, interface, connecteurs, inscription | après un redémarrage du service de chat |
+| Surcharges d’exécution | Panneau d’administration, page **« Konfiguration »** (configuration) | les mêmes réglages de produit, par instance, rôle ou groupe | immédiatement, sans redémarrage |
+
+Le fichier d’environnement naît lors de l’installation à partir d’un modèle commenté de bout en
+bout. Pour chaque valeur, il y est indiqué à quoi elle sert.
+
+## Quel niveau l’emporte
+
+Une valeur définie dans le panneau se place **au-dessus** du YAML. Le panneau écrit ses valeurs
+dans la base de données, l’application les lit au prochain appel et elles survivent à un
+redémarrage. Le YAML reste l’état de départ, qui s’applique tant qu’aucune surcharge n’existe.
+
+Dans le panneau, vous le reconnaissez à deux détails : les sections dont une surcharge est active
+portent le badge **« aus DB-Override »** (issu d’une surcharge en base de données), et à côté de
+chaque champ surchargé se trouve une icône permettant de la supprimer.
+
+<Aside type="caution" title="Vider un champ ne supprime pas la surcharge">
+Vider un champ surchargé dans le panneau enregistre une valeur vide et conserve la surcharge.
+Vous ne revenez à l’état du YAML que par l’icône de réinitialisation à côté du champ.
+</Aside>
+
+Pour les fiches de modèle s’ajoute une cascade propre : **groupe avant rôle avant base**. Les
+droits sur les outils, en revanche, relèvent de l’éditeur de rôles et non de la configuration ;
+dans l’onglet « Funktionen » (fonctions), ils seraient rejetés côté serveur.
+
+## Le bloc `interface`
+
+Le bloc `interface` dans le YAML détermine ce qui est visible dans l’interface : le sélecteur de
+modèles, la recherche web, la recherche de fichiers, l’exécution de code, les préréglages, les
+signets et le panneau de paramètres. Les fonctions dont les conditions préalables ne sont pas
+remplies sont délibérément désactivées à la livraison — un bouton visible et sans effet est pire
+que pas de bouton du tout.
+
+Deux règles sont importantes ici :
+
+- **Le bloc est global.** Les valeurs sont écrites dans tous les rôles au démarrage. Une
+  différence entre les rôles ne peut donc pas être représentée dans le YAML. Si un outil ne doit
+  être autorisé que pour un seul rôle, laissez le champ hors du YAML et définissez-le dans
+  l’éditeur de rôles du panneau d’administration.
+- **Les listes de capacités remplacent au lieu de fusionner.** Toucher à la liste des capacités
+  des agents remplace intégralement la liste par défaut. Rien n’est fusionné : tout ce qui doit
+  être conservé doit donc être énuméré à nouveau.
+
+Pour les entreprises qui souhaitent une interface aussi sobre que possible, les commandes dont
+seuls les utilisateurs avancés ont besoin peuvent être désactivées d’un bloc.
+
+## Domain-Lock
+
+Le Domain-Lock est la première étape après l’installation et doit être défini **avant** que
+l’instance ne soit joignable sous son domaine. Ce qui compte, c’est la liste des domaines de
+messagerie autorisés : elle décide qui peut créer un compte, tout simplement.
+
+La liste est déposée dans la configuration de l’instance ; vous entretenez la même liste dans le
+panneau, sous **« Konfiguration »** (configuration), dans l’onglet « Funktionen » (fonctions),
+dans le champ **« Erlaubte E-Mail-Domains »** (domaines de messagerie autorisés). Elle vaut pour
+l’auto-inscription comme pour les invitations : une invitation adressée en dehors de la liste
+reste sans effet.
+
+Vous pouvez le vérifier par une inscription sous un domaine étranger ; elle doit être refusée.
+
+<Aside type="note" title="Listes de valeurs complètes dans le manuel d’exploitation">
+Quelles valeurs figurent dans la configuration et quels composants facultatifs peuvent être
+activés est décrit dans le manuel d’exploitation, qui est fourni avec le paquet de livraison. Les
+clients le reçoivent en même temps que leur accès.
+</Aside>
+
+## Pour continuer
+
+<CardGrid>
+  <LinkCard
+    title="Domaine et certificat"
+    href="/docs/fr/betrieb/domain-und-tls"
+    description="Les trois variantes TLS et quand vous avez besoin de laquelle."
+  />
+  <LinkCard
+    title="Plusieurs instances sur un serveur"
+    href="/docs/fr/betrieb/mehrere-instanzen"
+    description="Ce qui doit rester séparé par client et ce qui peut être partagé."
+  />
+</CardGrid>

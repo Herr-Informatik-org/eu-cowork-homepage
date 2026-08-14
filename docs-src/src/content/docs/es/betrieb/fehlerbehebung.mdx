@@ -1,0 +1,57 @@
+---
+title: Resolución de problemas
+description: Dónde mirar primero ante una avería y qué grupos de causas hay detrás con más frecuencia en la explotación de EU Cowork AI.
+sidebar:
+  order: 8
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+La mayoría de las averías se pueden atribuir a un grupo de causas en pocos minutos. Esta página
+muestra dónde mirar para ello. La resolución de problemas detallada figura en el manual de
+operación, que se adjunta al paquete de entrega.
+
+## Dónde miro primero
+
+1. **Panel de administración, página «Logs» (registros).** Muestra las peticiones una a una con
+   modelo, duración y coste, esas mismas peticiones agrupadas por conversación, los errores del
+   complemento de Outlook y los registros del servidor. Véase
+   [Registros y auditoría](/docs/es/administration/protokolle-und-audit).
+2. **Página «Zugriffe» (accesos) de la persona afectada.** Para la pregunta de por qué alguien no
+   ve un conector, esa es la respuesta más rápida: indica, por conector, el nivel de regla
+   determinante.
+3. **Solo después, al nivel del servidor.** Lo que no se hace visible en el panel son las averías
+   que se producen ya al arrancar la aplicación.
+
+## Los grupos de causas más frecuentes
+
+| Síntoma | Dónde suele estar la causa |
+|---|---|
+| Las respuestas no llegan o acaban en tiempos de espera agotados | La instancia no alcanza Internet — típicamente un cliente VPN, un proxy corporativo o una ruta de red en conflicto. Más raramente, una clave no válida del proveedor de inferencia. |
+| Una función se ve, pero no hace nada | El componente opcional correspondiente no está en marcha o no está configurado. Afecta sobre todo a la búsqueda de archivos, la ejecución de código y la búsqueda web. |
+| Un servicio se reinicia repetidamente tras la instalación | Los permisos de acceso a los almacenamientos de la instancia. Por el camino de instalación regular esto no ocurre. |
+| Las respuestas aparecen solo al final y de golpe | Un dispositivo situado por delante almacena en búfer el flujo de respuesta, véase [Dominio y certificado](/docs/es/betrieb/domain-und-tls). |
+| Después de una migración, cada persona debe volver a conectar sus conectores | Las claves de cifrado se volvieron a generar en lugar de conservarse, véase [Copia de seguridad y migración](/docs/es/betrieb/backup-und-umzug). |
+| Después de una actualización, algo ya no encaja en la interfaz | La configuración ya no se corresponde con el estado actual, o le falta un valor nuevo. |
+
+<Aside type="tip" title="Si no encaja nada de esto">
+Anote qué se modificó en último lugar y compare su configuración con la plantilla suministrada. Una
+gran parte de las averías restantes se debe a un valor que falta o a una configuración que,
+después de una actualización, ya no encaja con el estado actual. Si con eso no avanza, la vía de
+soporte prevista en su contrato le ayudará.
+</Aside>
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Configuración"
+    href="/docs/es/betrieb/konfiguration"
+    description="Qué nivel gana y dónde se mantiene cada ajuste."
+  />
+  <LinkCard
+    title="Copia de seguridad y migración"
+    href="/docs/es/betrieb/backup-und-umzug"
+    description="Guardar, restaurar y trasladarse a un servidor nuevo."
+  />
+</CardGrid>

@@ -10,44 +10,39 @@ import { Aside } from '@astrojs/starlight/components';
 Diese Seite sagt in groben Zügen, was eine selbst betriebene Instanz an Hardware braucht. Sie
 ist für diejenigen gedacht, die eine VM bestellen oder eine bestehende Maschine bewerten.
 
-## Minimum und Empfehlung
+## Richtwerte
 
-| | Minimum | Empfohlen |
-|---|---|---|
-| CPU | 2 vCPU | 4 vCPU |
-| Arbeitsspeicher | 4 GB | 16 GB |
-| Plattenplatz | 40 GB | 200 GB |
-| Betriebssystem | Ubuntu 22.04 LTS | Ubuntu 24.04 LTS |
+| | Richtwert |
+|---|---|
+| CPU | zwei bis vier vCPU |
+| Arbeitsspeicher | vier bis sechzehn GB, je nach Zahl der Nutzenden |
+| Plattenplatz | einige Dutzend GB, mit Reserve für hochgeladene Dateien |
+| Betriebssystem | eine verbreitete Linux-Distribution mit Langzeitunterstützung |
 
-Für eine einzelne Instanz mit wenigen Nutzern sind 80 GB ein bequemer Wert. Mehr lohnt sich,
-sobald viele Dateien hochgeladen werden, denn die Uploads bestimmen das Wachstum. Kleine
-Instanzen sind ausdrücklich zulässig; die Installationsskripte warnen bei knapper Ausstattung,
-brechen aber nicht ab.
+Der Plattenbedarf wächst vor allem mit den hochgeladenen Dateien; wer viel ablegt, plant von
+Anfang an grosszügiger. Kleine Instanzen sind ausdrücklich zulässig.
 
-Die CPU-Last ist im Normalbetrieb nahe null, denn gerechnet wird beim Inferenz-Anbieter. Echte
-Spitzen gibt es nur beim Aufbau des Suchindex, beim Berechnen der Einbettungen für die
-Dateisuche und bei Code-Läufen. Mit der Nutzerzahl wächst vor allem der Arbeitsspeicher der
-Anwendung: Bis etwa 15 Personen ist eine kleine Maschine ausreichend, darüber lohnt sich eine
-eigene VM je Instanz.
+Die CPU-Last ist im Normalbetrieb gering, denn gerechnet wird beim Inferenz-Anbieter. Spitzen
+entstehen nur bei einzelnen Zusatzfunktionen. Mit der Nutzerzahl wächst vor allem der
+Arbeitsspeicherbedarf der Anwendung; für eine grössere Belegschaft lohnt sich eine eigene VM je
+Instanz.
 
-## Betriebssystem und Docker
+## Betriebssystem und Container-Laufzeit
 
-Getestet ist Ubuntu 22.04 und 24.04, empfohlen ist 24.04 LTS. Auf anderen Distributionen läuft
-die Installation weiter, kann aber abweichen.
+Empfohlen ist eine verbreitete Linux-Distribution mit Langzeitunterstützung. Auf anderen
+Distributionen läuft die Installation weiter, kann aber abweichen.
 
-Zwingend ist **Docker Engine mit Compose v2 als Plugin**. Das Ubuntu-Paket `docker.io` bringt
-Compose v2 **nicht** mit; die Installation aus der offiziellen Docker-Paketquelle ist der
-verlässliche Weg.
+Zwingend ist eine **aktuelle Container-Laufzeit mit Compose-Unterstützung**. Beziehen Sie sie
+aus der offiziellen Paketquelle des Herstellers; die Pakete mancher Distributionen bringen nicht
+den nötigen Umfang mit.
 
 ## Plattenplatz
 
-Die Docker-Images belegen einmalig einige Gigabyte und werden von allen Instanzen auf derselben
-Maschine geteilt. Danach wachsen vor allem drei Dinge: die hochgeladenen Dateien, die Datenbank
-und die Container-Protokolle.
+Die Container-Images belegen einmalig einige Gigabyte. Danach wachsen vor allem drei Dinge: die
+hochgeladenen Dateien, die Datenbank und die Protokolle.
 
-Der Plattenplatz ist die erste Grenze im Betrieb, nicht der Arbeitsspeicher. Richten Sie einen
-Alarm bei 70 Prozent Belegung ein und räumen Sie ungenutzte Images und den Build-Cache
-regelmässig auf.
+Der Plattenplatz ist die erste Grenze im Betrieb, nicht der Arbeitsspeicher. Überwachen Sie die
+Belegung und räumen Sie nicht mehr benötigte Images regelmässig auf.
 
 <Aside type="note" title="Die Unterlagen zur Einrichtung">
 Die Anforderungen an Netz, Zugriff und Betriebssystem im Einzelnen beschreiben die Unterlagen,

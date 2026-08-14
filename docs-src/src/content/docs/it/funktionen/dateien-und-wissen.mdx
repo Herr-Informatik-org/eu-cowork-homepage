@@ -1,0 +1,134 @@
+---
+title: File e conoscenza
+description: Allegare file a un messaggio, la ricerca nei file su un insieme di documenti e la ricerca nelle proprie chat. Che cosa è attivo di serie e che cosa no.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Questa pagina separa tre cose che nel lavoro di tutti i giorni vengono continuamente confuse:
+allegare un file a un messaggio, rendere consultabile un intero insieme di documenti e cercare
+nelle proprie conversazioni. Due di esse ci sono già dopo l’installazione, una no.
+
+## Tre cose, una parola sola
+
+| Che cosa vuole | Come si chiama | Stato alla consegna |
+|---|---|---|
+| Il collega deve leggere adesso questo singolo file | Allegare un file (contesto) | **attivo** |
+| Un insieme di molti documenti deve essere consultabile in modo duraturo | Ricerca nei file, detta anche RAG, abbreviazione di Retrieval-Augmented Generation, cioè risposte costruite su passaggi di testo consultati | **disattivo**, viene predisposta dall’amministratore |
+| Cerco un passaggio nelle mie vecchie chat | Ricerca a testo integrale nelle conversazioni | **attivo** |
+
+L’elaborazione dei file proviene da [LibreChat](https://www.librechat.ai/docs), così come
+l’interfaccia RAG che vi sta dietro.
+
+## Allegare un file a un messaggio
+
+È il caso normale. Lei allega un documento al Suo messaggio, il contenuto passa nel contesto di
+questa conversazione e Lei fa la Sua domanda al riguardo. Si allega dal menu del campo di
+immissione oppure trascinando il file sulla finestra della chat.
+
+Ha senso per singoli documenti: verificare un contratto, riassumere un verbale, far analizzare
+una tabella. Il contenuto resta in questa conversazione e non diventa un insieme consultabile.
+
+### Formati
+
+Vengono elaborati i consueti formati d’ufficio e di testo, tra cui PDF, Word (`.docx`), Excel
+(`.xlsx`), PowerPoint (`.pptx`), testo, Markdown, CSV, JSON e XML. Vanno bene anche le immagini
+nei formati JPEG, PNG, GIF e HEIC, ma soltanto su una scheda del modello che capisce le immagini.
+Sulla scheda di solo testo un’immagine resta senza effetto, si veda
+[Chat e modelli](/docs/it/funktionen/chat-und-modelle).
+
+L’elenco esatto dei tipi di file ammessi è configurabile. Dove, è spiegato più sotto nella sezione
+per gli amministratori.
+
+### Limiti
+
+Quanti file Lei possa allegare a un messaggio e quanto grande possa essere un file lo stabilisce
+l’amministratore. La preimpostazione è generosa e raramente è il limite vero. Nella pratica conta
+di più quanto testo un modello riesce a leggere in una richiesta. Un documento di diverse centinaia
+di pagine riempie il contesto, scaccia il resto della conversazione e peggiora la risposta. Per
+insiemi di questo genere esiste la ricerca nei file.
+
+<Aside type="caution" title="I documenti scansionati hanno bisogno di uno strato di testo">
+Il riconoscimento del testo non fa parte della fornitura. Un PDF composto solo da immagini, per
+esempio un contratto scansionato o una ricevuta fotografata, non contiene testo leggibile. Vale
+nella chat web esattamente come nell'[add-in per Outlook](/docs/it/funktionen/outlook-add-in).
+
+La via consueta: convertire prima il documento in un PDF di testo consultabile con lo strumento
+che preferisce — molti scanner e sistemi di gestione documentale lo fanno comunque già — oppure
+copiare il testo e incollarlo nella chat.
+</Aside>
+
+## Ricerca nei file su un insieme di documenti
+
+La ricerca nei file è un’altra cosa rispetto all’allegare. I documenti caricati vengono suddivisi
+in sezioni e archiviati in modo che la ricerca non avvenga per parole chiave, ma per somiglianza
+di contenuto. In risposta a una domanda il collega estrae poi in modo mirato le sezioni pertinenti,
+invece di mettere l’intero documento nel contesto.
+
+Il vantaggio si vede con documenti numerosi e lunghi: una manciata di manuali, una raccolta di
+direttive, l’archivio di un progetto. Invece di «legga queste 400 pagine» diventa «trovi i tre
+passaggi che rispondono alla mia domanda».
+
+<Aside type="note" title="Alla consegna è disattivata">
+La ricerca nei file è disattivata di fabbrica, perché presuppone componenti aggiuntivi e un
+fornitore per gli embedding. In questo modo dopo l’installazione è visibile solo ciò che funziona
+davvero. Come attivarla è spiegato più sotto.
+</Aside>
+
+## Ricerca a testo integrale nelle proprie chat
+
+La ricerca nella barra laterale cerca nelle Sue conversazioni, non nei Suoi documenti. Trova il
+punto in cui una cosa è stata discussa. Questa ricerca è sempre attiva, non ha bisogno di alcun
+fornitore di embedding.
+
+## Per gli amministratori
+
+### Attivare la ricerca nei file
+
+<Steps>
+
+1. **Indicare un fornitore per gli embedding.** Senza di esso i documenti non si possono
+   preparare per la ricerca per contenuto. Chi vuole tenere il posizionamento UE sceglie un
+   fornitore che elabora in territorio UE.
+
+2. **Mettere a disposizione i componenti aggiuntivi necessari.** La ricerca nei file porta con sé
+   un proprio servizio per la preparazione e la consultazione dei documenti; viene interpellato
+   soltanto internamente.
+
+3. **Abilitare l’interfaccia.** Solo a quel punto l’interruttore compare nella chat.
+
+4. **Verificare il diritto di ruolo.** Nell’editor dei ruoli, sotto **«Werkzeuge»** (strumenti),
+   si trova il diritto **«Datei-Suche (RAG)»** (ricerca nei file) con la nota «Hochgeladene
+   Dokumente durchsuchen» (cercare nei documenti caricati). Facoltativamente, accanto,
+   **«Datei-Zitate»** (citazioni dai file) per le indicazioni di fonte tratte dai file. Chi vuole
+   dare la ricerca nei file solo ad alcuni ruoli cura il diritto esclusivamente qui.
+
+5. **Verificare poi** che in una chat nuova la ricerca restituisca davvero risultati tratti
+   dall’insieme dei documenti.
+
+</Steps>
+
+<Aside type="note" title="L’errore più frequente">
+La ricerca nei file resta senza effetto perché i componenti aggiuntivi non sono affatto in
+esecuzione. L’interruttore è visibile, ma ogni richiesta cade nel vuoto. Prima di abilitarla,
+quindi, si controlli che il servizio di ricerca sia in funzione.
+</Aside>
+
+### Modificare i limiti e i tipi di file ammessi
+
+Nel pannello, sotto **«Konfiguration → Dateien & Speicher»** (configurazione, file e
+archiviazione). Lì si trovano i limiti massimi per i caricamenti, il limite per le immagini del
+profilo e l’elenco dei tipi di file ammessi.
+
+Un intervento sensato in fase di installazione è abbassare il limite massimo per file a un valore
+realistico per il Suo lavoro quotidiano. Così i video e gli archivi caricati per sbaglio restano
+fuori dall’archiviazione.
+
+### Che cosa succede quando si elimina un account
+
+Quando una persona viene eliminata dal pannello di amministrazione, vengono rimossi anche i suoi
+file e gli indici di ricerca vengono ripuliti. Prima di procedere, il dialogo offre
+esplicitamente **«Daten exportieren (JSON)»** (esportare i dati in JSON), perché l’informativa
+prevista dal GDPR deve avvenire prima della cancellazione.

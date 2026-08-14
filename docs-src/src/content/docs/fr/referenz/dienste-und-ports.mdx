@@ -1,0 +1,38 @@
+---
+title: Services et ports
+description: Comment la pile est structurée dans ses grandes lignes et ce qui est joignable depuis l’extérieur.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+EU Cowork AI fonctionne comme une pile Docker Compose. L’application de chat et les services
+dont elle a besoin s’exécutent chacun dans leur propre conteneur et communiquent entre eux par
+un réseau interne.
+
+## Ce qui est joignable depuis l’extérieur
+
+Le seul élément publié vers l’extérieur est un reverse proxy sur les ports web habituels ; il
+termine TLS et distribue tout le reste en interne. Tous les autres services ne sont joignables
+que sur le réseau interne et ne sont pas publiés sur l’hôte.
+
+Les services que comporte une livraison dans le détail et la manière de les activer figurent
+dans la documentation d’exploitation.
+
+<Aside type="caution" title="Planifier l’accès réseau">
+Outre les ports web, l’instance a besoin d’un chemin sortant vers le fournisseur de modèles.
+Déterminez avant la mise en service quelles destinations le serveur a le droit d’atteindre vers
+l’extérieur, et n’autorisez l’accès au serveur lui-même que depuis votre réseau
+d’administration.
+</Aside>
+
+## Documentation d’exploitation
+
+La liste des différents services avec leurs tâches et leurs dépendances, les variantes de réseau
+et de déploiement ainsi que les étapes de contrôle pour l’exploitation sont fournies avec la
+livraison. Les clients reçoivent ces documents en même temps que leur accès.
+
+La manière de démarrer, d’arrêter et de surveiller la pile au quotidien figure dans l'[aperçu
+des commandes](/docs/fr/referenz/befehle). Les licences des composants concernés se trouvent
+sous [Licences et origine](/docs/fr/referenz/lizenzen).

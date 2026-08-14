@@ -1,0 +1,140 @@
+---
+title: Qu’est-ce qu’EU Cowork AI ?
+description: Vue d’ensemble de la plateforme, de ses limites et de sa licence. Pour les responsables informatiques qui décident si EU Cowork AI convient.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI est une plateforme de chat IA pour les entreprises, qui tourne sur un serveur dédié.
+Cette page dit en quelques minutes ce qu’est le système, de quoi il se compose, ce qu’il sait faire
+et ce qu’il ne fait délibérément pas. Elle s’adresse aux responsables informatiques qui doivent
+décider s’ils adoptent la plateforme.
+
+## À qui la plateforme s’adresse
+
+Il existe trois situations de départ. Elles diffèrent par la question de savoir qui exploite le
+serveur, non par ce que la plateforme sait faire.
+
+| Situation de départ | Qui exploite le serveur | Ce que vous faites |
+|---|---|---|
+| **Vous utilisez la plateforme vous-même** | votre propre informatique | mettre en place le serveur, installer l’instance, inviter vos collaborateurs |
+| **Vous êtes un client PME et faites exploiter la plateforme** | votre prestataire informatique | vous recevez une instance prête à l’emploi et travaillez dans le chat et dans l’administration |
+| **Vous êtes prestataire informatique** | vous, pour plusieurs clients | une instance distincte par client, au choix sur une machine dédiée ou partagée |
+
+Le troisième cas est la raison de bien des décisions de conception : un client est toujours une
+instance distincte et entièrement séparée, avec sa propre base de données, ses propres fichiers et
+sa propre clé d’inférence. Voir à ce sujet [Architecture](/docs/fr/erste-schritte/architektur).
+
+## De quoi le système se compose
+
+L’interface de chat est [LibreChat](https://www.librechat.ai), une plateforme à code ouvert sous
+licence MIT. De là viennent le chat, les agents, le traitement des fichiers et la connexion aux
+modèles — c’est-à-dire l’application que vos collaborateurs voient. Le fork reste délibérément
+proche de l’original, afin que les mises à jour restent possibles.
+
+Nous y avons ajouté tout ce qu’une entreprise demande pour une exploitation maîtrisée :
+administration des utilisateurs, des rôles et des droits, un contrôle des droits avec journal avant
+chaque accès à un système tiers, un aperçu de la consommation avec budgets, un espace de chat dans
+Outlook et un paquet d’installation pour votre propre serveur.
+
+## Ce que la plateforme sait faire
+
+Après l’installation sont notamment disponibles : le chat avec streaming et historique, un sélecteur
+de modèles avec des fiches choisies, le téléversement de fichiers comme contexte, la compréhension
+d’images sur les fiches qui s’y prêtent, des artifacts tels que diagrammes et HTML directement dans
+le chat, l’usage d’agents, l’ossature des compétences comme processus standard dont vous créez
+vous-même le contenu, une mémoire à long terme avec option de retrait et la recherche en texte
+intégral dans les conversations passées.
+
+Trois fonctions sont délibérément désactivées à la livraison, parce qu’elles demandent des briques
+supplémentaires et mèneraient sinon à un bouton mort :
+
+| Fonction | Pourquoi elle est désactivée | Ce qui est nécessaire |
+|---|---|---|
+| Recherche de fichiers dans les documents téléversés | demande des services supplémentaires | à activer lors de la mise en place |
+| Exécution de code, par exemple produire un fichier Excel | demande un backend de code | à activer lors de la mise en place |
+| Panneau de paramètres pour la température et autres réglages | inutile pour les non-développeurs | réactivable par rôle |
+
+## Ce que la plateforme ne fait délibérément pas
+
+- **Pas de multi-tenance dans l’application.** Un client est une instance distincte. C’est une
+  décision délibérée, car la séparation se situe ainsi en dessous de l’application.
+- **Les utilisateurs ne créent pas leurs propres connecteurs.** Quels systèmes tiers sont
+  joignables relève exclusivement de l’administration.
+- **Les connecteurs d’exemple fournis travaillent exclusivement en lecture.** Ils n’apportent
+  aucun outil qui modifie quoi que ce soit dans le système tiers. Un outil qui n’existe pas ne peut
+  pas être appelé par mégarde.
+- **Le complément Outlook n’envoie jamais de lui-même.** Un brouillon arrive dans la fenêtre de
+  réponse habituelle, l’envoi reste l’affaire de l’humain.
+
+## Ce qu’open source signifie ici
+
+Le produit dans son ensemble est sous licence MIT. En pratique, cela signifie :
+
+- **Pas de limitation par siège.** Le nombre d’utilisateurs n’est techniquement limité nulle part
+  et n’est plafonné nulle part par la licence.
+- **Pas de limitation par fonction.** Il n’existe pas d’édition entreprise avec des fonctions
+  supplémentaires. Ce qui se trouve dans le dépôt, c’est l’étendue complète des fonctions.
+- **Pas de marque imposée.** Nom, logo et texte d’accueil sont de la configuration.
+- **L’hébergement chez soi est gratuit.** Ce qui se paie, c’est l’exploitation, le support et
+  l’intégration, si vous souhaitez les acheter à quelqu’un.
+
+Le panneau d’administration officiel de LibreChat est sous AGPL et n’est donc délibérément **pas**
+utilisé. À la place, il existe une administration propre, sous licence permissive. Le produit dans
+son ensemble reste ainsi exempt d’obligations de copyleft.
+
+## Où se trouvent les données
+
+Les conversations, les messages, les utilisateurs et les données de consommation se trouvent dans la
+base de données de votre propre instance. Les fichiers téléversés se trouvent à côté, sur le même
+serveur. Il n’existe aucun canal de retour vers nous, la télémétrie est désactivée.
+
+Pour les réponses des modèles elles-mêmes, les contenus quittent le serveur, car la charge de calcul
+revient au fournisseur d’inférence. La valeur par défaut est **EuRouter**, où le traitement a lieu
+dans l’UE. **OpenRouter** peut être activé en option et n’est **pas** résident dans l’UE. Les fiches
+de modèle hors de l’UE sont signalées de façon visible dans l’interface.
+
+<Aside type="note" title="Recherche web et résidence des données">
+Le moteur de recherche tourne dans votre instance, mais transmet la requête à des moteurs de
+recherche externes, sans joindre l’identité de l’utilisateur. L’affirmation « tout reste dans l’UE »
+vaut pour le stockage et l’inférence, pas pour la recherche web.
+</Aside>
+
+Il existe une instance hébergée en Suisse. Où se trouve votre propre instance, c’est vous qui en
+décidez par le choix du serveur.
+
+## Étendue et délimitation
+
+Pour que vous puissiez confronter proprement l’étendue des fonctions à vos exigences, voici les
+domaines qui ne figurent pas dans la livraison ou qui demandent une décision lors de la mise en
+place.
+
+| Domaine | État |
+|---|---|
+| Recherche web | Le moteur de recherche tourne dans l’instance. Le scraper, vous le choisissez selon vos exigences de résidence des données et l’enregistrez lors de la mise en place |
+| Connexions sortantes de l’exécution de code | sont définies lors de la mise en place. À la livraison, l’exécution de code est désactivée |
+| Provisionnement des utilisateurs par SCIM | non compris. Les comptes naissent à la première connexion via OIDC, le retrait passe par le fournisseur d’identité |
+| Facturation automatique | les justificatifs en CSV et PDF sont compris, une connexion de paiement ne l’est pas |
+| OCR, génération d’images, entrée et sortie vocales | non compris. Les fichiers PDF numérisés ne sont pas lus comme du texte |
+
+## Pour aller plus loin
+
+<CardGrid>
+  <LinkCard
+    title="Configuration requise"
+    href="/docs/fr/erste-schritte/systemanforderungen"
+    description="Ce qu’une instance demande en CPU, en mémoire vive et en espace disque."
+  />
+  <LinkCard
+    title="Démarrage rapide"
+    href="/docs/fr/erste-schritte/schnellstart"
+    description="Le chemin vers votre propre instance, à grands traits."
+  />
+  <LinkCard
+    title="Architecture"
+    href="/docs/fr/erste-schritte/architektur"
+    description="Le chemin que prend une requête et pourquoi chaque client reçoit une instance distincte."
+  />
+</CardGrid>

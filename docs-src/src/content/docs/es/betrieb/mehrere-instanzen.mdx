@@ -1,0 +1,101 @@
+---
+title: Varias instancias en un servidor
+description: Por qué la frontera entre clientes es la instancia, qué debe permanecer separado por cliente y cuándo tiene sentido una máquina propia.
+sidebar:
+  order: 7
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Para un cliente con pocas personas, una máquina virtual propia es un derroche: la carga base de
+una instancia es reducida. Por eso varias instancias pueden compartir una máquina. Esta página
+describe por dónde pasa la línea divisoria. Se dirige a los proveedores de servicios informáticos
+que explotan varios clientes.
+
+## La frontera entre clientes es la instancia, no la máquina
+
+Un cliente es exactamente **una instancia**: base de datos propia, búsqueda de texto completo
+propia, subidas propias, configuración propia, secretos propios, backend propio para la ejecución
+de código. Eso no es negociable y se desprende directamente de la arquitectura: la aplicación en
+sí no conoce clientes separados. Por eso la separación debe situarse por debajo de la aplicación,
+y ahí queda limpia.
+
+Que dos instancias compartan la misma máquina es, a partir de ahí, una cuestión de costes y de
+riesgo, ya no una cuestión de arquitectura.
+
+## Qué no se comparte nunca
+
+| Ámbito | Motivo |
+|---|---|
+| Base de datos | Contiene las cuentas, las conversaciones y los apuntes de un cliente |
+| Subidas e imágenes | Contenidos de clientes |
+| Configuración y todos los secretos | Un secreto compartido anula cualquier separación |
+| Backend para la ejecución de código | El único sitio en el que se ejecuta código de los usuarios |
+| Clave de inferencia | Con una clave compartida, los costes por cliente ya no se pueden desglosar |
+| Servicio propio para la búsqueda web | Ve las consultas de búsqueda y, con ellas, contenidos de los usuarios |
+
+## Qué se puede compartir
+
+- **Las imágenes de Docker y sus capas.** Ese es el mayor efecto de ahorro: las imágenes se
+  mantienen una sola vez.
+- **Un proxy inverso situado por delante** como único servicio que ocupa los puertos públicos.
+- **La supervisión del host, la planificación de las copias de seguridad y las actualizaciones de
+  seguridad automáticas.**
+
+Forzosamente se comparten también el kernel, el servicio de Docker y los recursos de hardware. Ese
+es el verdadero límite de esta forma de explotación: un reinicio por una actualización del kernel
+afecta a todos los clientes de la máquina.
+
+<Aside type="caution" title="La ejecución de código es el punto duro">
+En todo lo demás, la plataforma solo ejecuta código propio; los usuarios no tienen acceso a la
+línea de comandos. La excepción es la ejecución de código. Por eso recibe un entorno propio y
+separado por instancia. En una máquina compartida, además, la forma de explotación más aislada es
+la mejor opción.
+</Aside>
+
+## Qué debe ser unívoco por instancia
+
+Varias instancias en una máquina colisionan si comparten nombres o direcciones. Por eso cada
+instancia necesita identificadores propios y almacenamientos propios de principio a fin. Qué
+valores son esos en detalle y cómo se establecen figura en el manual de operación, que se adjunta
+al paquete de entrega. Los clientes lo reciben junto con su acceso.
+
+## Cuándo una máquina propia
+
+- **Clientela pequeña:** varias instancias en una máquina común, según el tamaño de tres a cinco
+  clientes.
+- **Clientela mediana:** una máquina propia por cliente.
+- **Clientela grande, sector regulado, infraestructura dedicada garantizada por contrato o
+  conexión propia a un ERP:** una máquina propia, dimensionada en consecuencia.
+
+Los valores orientativos concretos de memoria, CPU y espacio en disco figuran en
+[Requisitos del sistema](/docs/es/erste-schritte/systemanforderungen).
+
+## Explotación con varias instancias
+
+- **Copia de seguridad por instancia.** Cada instancia guarda exactamente sus propios datos, con
+  horarios escalonados.
+- **Actualización por instancia.** Los clientes pueden ejecutar versiones distintas. Justamente
+  para eso están fijadas las versiones, véase
+  [Actualización](/docs/es/betrieb/aktualisieren).
+- **Supervisión.** El primer límite es el espacio en disco, no la memoria. Una alarma a partir del
+  70 por ciento de ocupación tiene sentido, igual que la vigilancia de los servicios que se
+  reinician.
+- **Baja del cliente.** Detener la instancia, extraer el archivo, borrar los datos. Ninguna
+  intervención en otras instancias, ninguna labor de limpieza en una base de datos común. Esa es
+  la verdadera ganancia de la frontera por instancia.
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Configuración"
+    href="/docs/es/betrieb/konfiguration"
+    description="Los tres niveles de configuración y cuál gana en caso de contradicción."
+  />
+  <LinkCard
+    title="Copia de seguridad y migración"
+    href="/docs/es/betrieb/backup-und-umzug"
+    description="Copia de seguridad por instancia, restauración y la migración completa."
+  />
+</CardGrid>

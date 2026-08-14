@@ -1,0 +1,68 @@
+---
+title: Panneau d’administration
+description: Ce que fait le panneau d’administration et dans quel ordre une nouvelle administratrice procède.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Le panneau d’administration est l’interface par laquelle EU Cowork AI est administré : comptes, rôles, groupes, connecteurs, modèles, consommation et journaux. Cette page en donne la vue d’ensemble ; les différentes zones sont décrites dans les chapitres suivants. Elle s’adresse à la personne qui s’occupe de l’instance.
+
+## Accès
+
+Le panneau est accessible à une adresse propre qui appartient à votre installation. Vous vous connectez avec votre compte d’administrateur. Qui possède le rôle d’administrateur entre, personne d’autre. Si un compte est bloqué ou si son rôle lui est retiré, cela vaut ici aussi.
+
+<Aside type="caution" title="Recommandé : sécuriser davantage les accès d’administration">
+Ce sont les exigences les plus strictes qui s’appliquent aux comptes d’administrateur. Deux mesures ont leur place dans toute installation productive :
+
+- Activer **l’authentification à deux facteurs pour tous les comptes d’administrateur**.
+- **Limiter l’accès aux réseaux connus**, par exemple à votre VPN ou à une liste d’adresses IP autorisées. Au quotidien, le panneau ne sert qu’à quelques personnes : une restriction ne coûte donc rien.
+
+Inscrivez ces deux points dans votre liste de réception et vérifiez-les activement une fois l’instance en place.
+</Aside>
+
+## Ce que vous y faites
+
+L’interface est divisée en quatre zones :
+
+| Zone | À quoi elle sert |
+| --- | --- |
+| **« Analyse »** (analyse) | Indicateurs d’utilisation et journaux |
+| **« Verwaltung »** (gestion) | Utilisateurs, rôles, groupes, accès aux connecteurs et aux agents |
+| **« Finanzen »** (finances) | Consommation par personne, budgets et justificatifs de facturation |
+| **« System »** (système) | Configuration, journal d’audit et paramètres de l’instance |
+
+Pour chaque personne, deux vues de détail peuvent être ouvertes : sa consommation dans le détail, et un aperçu de ce que cette personne a le droit de faire et pourquoi. La seconde est le premier outil à saisir lorsque quelqu’un signale qu’il ne voit pas un connecteur ou un modèle.
+
+## Deux principes de base
+
+**L’enregistrement est explicite.** Le panneau travaille sur une copie de travail et n’écrit qu’au moment où vous enregistrez. Tant que des modifications restent ouvertes, l’interface le signale.
+
+**Il n’y a pas de secrets en clair.** Les clés d’accès ne sont déposées que sous forme de référence, ne sont jamais affichées en clair et ne sont mentionnées dans les journaux que par leur nom. Les tests de connexion s’exécutent côté serveur : la clé ne quitte pas le serveur, pas même dans les messages d’erreur.
+
+## Ordre à suivre pour un nouvel administrateur
+
+Lorsque vous reprenez une instance neuve, cet ordre a du sens, car les étapes s’appuient les unes sur les autres :
+
+1. Restreindre l’inscription aux domaines de messagerie de votre entreprise.
+2. Fixer un budget mensuel, d’abord sans application stricte, afin de voir pendant un mois où vous aboutissez.
+3. Créer les groupes ; ils sont la base des accès et des modèles.
+4. Définir par groupe quels modèles sont visibles.
+5. Raccorder les connecteurs et en autoriser l’accès de manière ciblée.
+6. Inviter vos collaborateurs.
+7. Fixer la durée de conservation en accord avec votre politique de suppression.
+
+<Aside type="note" title="Documents de mise en service">
+Les instructions pas à pas pour la mise en service de votre instance font partie de la livraison et vous sont remises avec l’installation.
+</Aside>
+
+## La suite du chapitre
+
+<CardGrid>
+  <LinkCard title="Utilisateurs, groupes et rôles" href="/docs/fr/administration/benutzer-und-gruppen" description="Inviter et créer des comptes, attribuer des droits, bloquer et supprimer." />
+  <LinkCard title="Modèles et fiches de modèle" href="/docs/fr/administration/modelle-und-karten" description="Définir les fiches et piloter leur visibilité par rôle et par groupe." />
+  <LinkCard title="Consommation, budgets et facturation" href="/docs/fr/administration/verbrauch-und-budgets" description="Des tokens aux euros : budget, limite mensuelle, justificatifs." />
+  <LinkCard title="Journaux et audit" href="/docs/fr/administration/protokolle-und-audit" description="Journal d’utilisation et historique des modifications." />
+  <LinkCard title="Protection des données et conservation" href="/docs/fr/administration/datenschutz-und-aufbewahrung" description="Conservation, droit d’accès, télémétrie et ce qui quitte l’instance." />
+</CardGrid>

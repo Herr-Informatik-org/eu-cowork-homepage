@@ -1,0 +1,89 @@
+---
+title: Mise à jour
+description: Comment une instance en service d’EU Cowork AI passe à un nouvel état, pourquoi on sauvegarde au préalable et à quoi ressemble le chemin du retour.
+sidebar:
+  order: 5
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Une mise à jour tient en quatre gestes : récupérer le nouvel état, comparer sa propre
+configuration avec le modèle, sauvegarder, installer. Elle emprunte le même chemin guidé que la
+mise en place initiale, mais en mode mise à jour.
+
+## La comparaison avec le modèle
+
+Avant la mise à jour, la configuration de l’instance est confrontée au modèle fourni. Seuls les
+**noms** des valeurs sont comparés, aucun contenu — les secrets n’apparaissent donc pas. Vous en
+tirez deux enseignements :
+
+- Les valeurs qui ne figurent que dans le modèle sont nouvelles. Le modèle est commenté de bout
+  en bout : il y est indiqué à quoi sert une valeur. Les nouvelles valeurs sont presque toujours
+  facultatives.
+- Les valeurs qui ne figurent que dans votre configuration sont soit propres à l’instance, soit
+  héritées d’une ancienne version et peuvent disparaître.
+
+## Pourquoi toujours une sauvegarde au préalable
+
+Une mise à jour change les états du programme sous une base de données existante. Si quelque
+chose tourne mal, le chemin de retour le plus rapide est une archive antérieure. Une sauvegarde
+prend quelques secondes, un jeu de données perdu coûte des journées. Détails sous
+[Sauvegarde et migration](/docs/fr/betrieb/backup-und-umzug).
+
+## Le mode mise à jour
+
+En mode mise à jour, la configuration existante reste intacte et aucun nouveau secret n’est créé.
+C’est exactement ce que vous voulez lors d’une mise à jour : vos clés et vos adresses restent
+telles quelles. En même temps, tous les composants de la livraison sont renouvelés ensemble.
+
+<Aside type="caution" title="Renouveler certains composants à la main ne suffit pas">
+Ne renouveler qu’une partie de la livraison laisse les autres composants dans leur ancien état.
+Utilisez donc le chemin de mise à jour prévu, et pas des gestes à côté.
+</Aside>
+
+## Pourquoi les versions sont figées
+
+Les images ne sont délibérément pas fixées sur `latest`, mais sur une version fixe et immuable.
+La raison : `latest` amène un état différent sur chaque serveur et à chaque récupération. Or une
+version d’EU Cowork AI est une **combinaison testée** entre la version de LibreChat et les
+composants complémentaires. Seule une version fixe garantit que chaque serveur fasse tourner
+exactement la combinaison qui a été vérifiée.
+
+## Vérifier après la mise à jour
+
+Quatre points : la connexion au chat, la connexion au panneau d’administration, une question de
+test dans le chat et un coup d’œil sur la stabilité de tous les services. Les erreurs de
+configuration — par exemple un fichier YAML qui ne correspond plus au schéma après une mise à
+jour — deviennent visibles à cette occasion.
+
+## Rollback
+
+Un rollback ramène **l’ensemble de l’état livré** à la version précédente, et non des fichiers
+isolés. Ce n’est qu’ensemble que les composants reforment la combinaison qui tournait
+auparavant. La configuration de l’instance reste intacte.
+
+Ce n’est que si des données sont également concernées que la restauration depuis l’archive
+s’ajoute. Elle est destructrice, voir
+[Sauvegarde et migration](/docs/fr/betrieb/backup-und-umzug). Testez le rollback une fois sur une
+instance de test, avant d’en avoir besoin pour la première fois en situation réelle.
+
+<Aside type="note" title="Déroulement dans le manuel d’exploitation">
+Le déroulement de la mise à jour, le changement de version et le chemin du retour figurent dans
+le manuel d’exploitation, qui est fourni avec le paquet de livraison. Les clients le reçoivent en
+même temps que leur accès.
+</Aside>
+
+## Pour continuer
+
+<CardGrid>
+  <LinkCard
+    title="Sauvegarde et migration"
+    href="/docs/fr/betrieb/backup-und-umzug"
+    description="Ce qui est sauvegardé, comment agit une restauration et comment une instance déménage vers un nouveau serveur."
+  />
+  <LinkCard
+    title="Dépannage"
+    href="/docs/fr/betrieb/fehlerbehebung"
+    description="Où regarder en premier quand quelque chose coince en exploitation."
+  />
+</CardGrid>

@@ -1,0 +1,220 @@
+---
+title: Add-in de Outlook
+description: "El colega de IA en la bandeja de entrada: resumir correos, redactar respuestas, extraer tareas. Con los archivos adjuntos, el inicio de sesión y la distribución."
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+El add-in de Outlook lleva al colega de IA directamente a la bandeja de entrada, en forma de panel
+lateral. El mensaje abierto sirve entonces de contexto. Esta página describe el alcance de sus
+funciones, el tratamiento de los archivos adjuntos, el inicio de sesión y la vía de distribución
+dentro de la empresa.
+
+El add-in es un desarrollo propio.
+
+## Qué sabe hacer
+
+- Resumir el correo abierto, incluidos los hilos largos.
+- Redactar un borrador de respuesta que aparece en la ventana de respuesta habitual de Outlook.
+- Extraer de un mensaje las tareas y los plazos.
+- Leer también los archivos y los adjuntos, véase más abajo.
+- Adoptar su estilo de redacción si así lo desea, siempre que el administrador lo haya configurado.
+
+Funciona en Outlook para Windows, para Mac, en la web y en el nuevo Outlook.
+
+<Aside type="caution" title="Nunca se envía nada automáticamente">
+El add-in entrega texto. El borrador aparece en la ventana de respuesta nativa, y quien lo envía es
+usted. No hay envío automático, y el permiso de Microsoft correspondiente para enviar no se solicita
+deliberadamente.
+</Aside>
+
+## No es una vía paralela que esquive la plataforma
+
+Detrás del panel se ejecuta un agente real en su servidor, en la misma instancia que el chat web.
+Esto tiene tres consecuencias para los administradores:
+
+| | |
+|---|---|
+| Permisos | Rigen los mismos roles y las mismas reglas para los conectores que en el chat web |
+| Consumo | Cada turno se mide y aparece en el consumo y en la facturación |
+| Registro | Las llamadas a los conectores constan en el registro de auditoría, como en todo lo demás |
+
+Ningún tráfico de modelo circula al margen de la plataforma.
+
+## Archivos y adjuntos
+
+El panel lee los archivos **por sí mismo** y solo transmite el texto. El archivo no sale de su
+ordenador.
+
+| Formato | Qué se lee |
+|---|---|
+| PDF | el texto de cada página, **sin OCR** |
+| Word `.docx` | los párrafos, incluidas las celdas de las tablas y los saltos de línea |
+| Excel `.xlsx` | el nombre de la hoja y las filas; los huecos entre columnas se conservan |
+| Texto `.txt .md .csv .tsv .json .log .yml .xml` | texto en bruto |
+| Imágenes JPEG y PNG | como imagen adjunta, reducida antes del envío |
+
+Por mensaje rigen límites máximos de número, tamaño y cantidad de texto. Cuando se alcanza un
+límite, el panel se lo dice en lugar de omitir algo en silencio.
+
+**No se leen** los antiguos formatos binarios `.doc`, `.xls` y `.ppt`, PowerPoint, los archivos
+comprimidos, los adjuntos en la nube (allí solo llega un enlace) y los correos electrónicos
+adjuntos. También en estos casos el panel indica el motivo.
+
+Los archivos llegan a la conversación por tres vías: desde el menú del campo de entrada,
+arrastrándolos sobre la zona de chat y, en el caso de las imágenes, a través del portapapeles.
+
+<Aside type="caution" title="Los adjuntos escaneados necesitan una capa de texto">
+Un PDF escaneado sin capa de texto no contiene texto legible. El panel lo señala expresamente en
+lugar de generar un resumen vacío.
+</Aside>
+
+### Los adjuntos del correo abierto
+
+Los adjuntos del mensaje abierto **nunca se leen sin preguntar**. Si el correo tiene adjuntos, una
+tarjeta detiene el proceso después del envío y le permite elegir uno a uno qué puede leerse. Si lo
+desea, el panel recuerda esa elección para ese correo concreto.
+
+Para ello, el cliente de Outlook necesita una versión suficientemente reciente de la interfaz de
+buzón. Si es demasiado antigua, la tarjeta lo indica y el proceso continúa sin los adjuntos.
+
+## Instrucciones personales
+
+En los ajustes del panel hay un campo para las indicaciones personales, por ejemplo «immer Sie,
+nie Gedankenstriche, Grussformel Freundliche Grüsse» (siempre el tratamiento formal, nunca guiones,
+fórmula de despedida Freundliche Grüsse). Estas indicaciones ocupan **el primer lugar** en el orden
+de prioridad: prevalecen sobre las capacidades, sobre el perfil de estilo de redacción y sobre las
+instrucciones del agente.
+
+Se componen de nuevo a partir de los ajustes en cada envío y no se guardan en el historial. Si las
+cambia en mitad de una conversación, la nueva versión rige de inmediato.
+
+## Inicio de sesión sin contraseña
+
+El panel no pide ninguna contraseña. En su lugar, el inicio de sesión se realiza mediante un código
+de dispositivo:
+
+<Steps>
+
+1. En el panel, pulse **«Anmelden»** (iniciar sesión). Aparece un código corto.
+
+2. **«Im Browser fortfahren»** (continuar en el navegador). Allí se abre una página de
+   confirmación en su propio dominio de chat, con ese mismo código.
+
+3. Haga clic en **«Verbinden»** (conectar). La página utiliza su sesión existente en el navegador.
+   Si no ha iniciado sesión en el navegador, la página le ofrece el acceso y el código sigue siendo
+   válido.
+
+4. El panel completa la conexión por sí mismo.
+
+</Steps>
+
+El proceso caduca al cabo de poco tiempo. Al final, el panel recibe exactamente un valor: su clave
+personal con el nombre **«Outlook-Add-in»**. Está limitada en el tiempo y puede revocarse en
+cualquier momento, en los ajustes del chat web, bajo **«API-Schlüssel für Agenten»** (claves de
+API para agentes).
+
+La ventaja de esta vía: la autenticación en dos factores y, más adelante, el inicio de sesión con
+Entra funcionan sin trabajo adicional, porque el acceso desde el navegador ya lo cubre.
+
+## Un límite que conviene conocer
+
+<Aside type="caution" title="Las respuestas del panel no aparecen en el chat web">
+Lo que usted trate en el panel de Outlook **no** aparece en el historial del chat web. El historial
+vive en el panel. Es una limitación conocida de la interfaz a través de la cual se conectan los
+clientes externos.
+
+Aun así, la medición del consumo y el registro se aplican por completo. Por tanto, no se abre
+ninguna laguna en los costes ni en la trazabilidad; sencillamente, no hay un segundo historial de
+conversación.
+</Aside>
+
+## Para administradores: requisitos
+
+| Requisito | Detalle |
+|---|---|
+| TLS con validez pública | Office solo carga HTTPS de confianza pública. Una **entidad de certificación interna no basta**: el panel se quedaría vacío |
+| Buzones en Exchange Online | POP3, IMAP y Exchange local no están soportados por la plataforma de add-ins. Para eso no hay ningún rodeo posible |
+| Derechos de administración en Microsoft 365 | Rol «Administrador global» o «Administrador de Exchange» |
+| Dominio de chat accesible | El panel se dirige al mismo dominio que el chat web |
+
+<Aside type="caution" title="Las respuestas deben enviarse de forma continua">
+Si el flujo de respuesta se almacena en búfer en lugar de enviarse de forma continua, la ventana de
+visualización de Outlook se interrumpe al cabo de poco tiempo con un «sin conexión», aunque en el
+lado del servidor todo funcione correctamente. Se ven afectadas justo las respuestas largas y con
+mucho uso de herramientas, que son precisamente para las que uno quiere el add-in. El valor
+predeterminado está bien fijado; no debería modificarse.
+</Aside>
+
+## Para administradores: implantación
+
+<Steps>
+
+1. **Poner el add-in a disposición**, de modo que se sirva bajo su dominio de chat.
+
+2. **Crear el agente.** Crear en el chat un agente, por ejemplo con el nombre
+   `Outlook-Assistent`, con el modelo predeterminado del cliente y, de momento, sin conectores.
+
+3. **Habilitar el agente para el acceso remoto.** Sin esa habilitación, la interfaz deniega el
+   acceso. Además, el permiso de rol **«Remote-Agenten»** (agentes remotos) debe estar activado
+   para los roles que vayan a usar el add-in.
+
+4. **Registrar el agente predeterminado**, para que nadie tenga que seleccionarlo en el panel.
+
+5. **Revisar el manifiesto.** Ya no debe contener ningún marcador de posición.
+
+</Steps>
+
+### Distribución en el centro de administración de Microsoft 365
+
+<Steps>
+
+1. Abrir [admin.microsoft.com](https://admin.microsoft.com) y luego **Configuración → Aplicaciones
+   integradas**.
+
+2. **Cargar aplicaciones personalizadas** y, a continuación, *Complemento de Office* y *Cargar
+   archivo de manifiesto*.
+
+3. Asignar a **Solo yo** para las pruebas, a determinados **Usuarios/grupos** para un piloto o a
+   **Toda la organización** para el despliegue. Confirmar los permisos e implementar.
+
+</Steps>
+
+<Aside type="note" title="Cuente con 24 horas">
+Según Microsoft, hasta que el add-in aparece en la cinta de opciones de todos los usuarios pasan
+**hasta 24 horas**. El Outlook clásico tiene además una caché local.
+
+Para un piloto, la vía de [aka.ms/olksideload](https://aka.ms/olksideload) es bastante más rápida.
+Actúa por buzón y de forma inmediata en todos los clientes de ese buzón.
+</Aside>
+
+**En las actualizaciones**, incremente el número de versión del manifiesto y actualícelo en
+Aplicaciones integradas. El **GUID se mantiene siempre igual**. Un GUID nuevo cuenta como un add-in
+ajeno y aparecería una segunda vez en la cinta de opciones.
+
+### Opcional: adoptar el estilo de redacción
+
+Si se quiere que el panel aprenda el estilo de redacción personal a partir de los correos enviados,
+hace falta un registro de aplicación propio en Entra con un permiso delegado de lectura sobre el
+buzón. Sin este paso el add-in funciona por completo, solo falta la adopción del estilo. El token de
+acceso se queda en el cliente y no llega a su servidor. El permiso para enviar no se solicita
+deliberadamente.
+
+### Localización de errores
+
+| Síntoma | Causa y solución |
+|---|---|
+| El add-in no aparece en la cinta de opciones | La distribución tarda hasta 24 horas. Probar de inmediato mediante sideload. Reiniciar el Outlook clásico |
+| El panel se queda en blanco | Revisar el certificado. Hace falta uno con validez pública, no una entidad de certificación interna |
+| El panel está vacío solo en Outlook en la web | El panel no debe quedar bloqueado por las cabeceras de framing |
+| Se deniega el acceso al agente | Falta la habilitación del agente para el acceso remoto, o el permiso de rol está desactivado |
+| Se pide iniciar sesión mientras se chatea | La clave personal ha caducado. Cerrar sesión en el panel y volver a iniciarla |
+| Interrupción en las respuestas largas | El flujo de respuesta se almacena en búfer en lugar de enviarse de forma continua |
+| El add-in falta en algunas personas | Su buzón no está en Exchange Online |
+
+Los errores del panel llegan además al panel de administración, bajo **«Logs»** (registros),
+pestaña **«Client-Fehler»** (errores de cliente). Allí figura la causa técnica con la persona, la
+plataforma y el nombre del archivo, nunca el contenido de un archivo. Las entradas se eliminan
+automáticamente una vez transcurrido el plazo de conservación.

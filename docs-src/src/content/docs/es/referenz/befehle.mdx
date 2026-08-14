@@ -1,0 +1,43 @@
+---
+title: Resumen de comandos
+description: Con qué se administra una instancia en el día a día y dónde están las instrucciones detalladas.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Una instancia se administra con los comandos habituales de Docker Compose. No existe para ello
+una línea de comandos propia que haya que aprender primero.
+
+| Propósito | Comando |
+|---|---|
+| Arrancar | `docker compose up -d` |
+| Estado | `docker compose ps` |
+| Seguir el registro | `docker compose logs -f` |
+| Reiniciar | `docker compose restart` |
+| Detener | `docker compose down` |
+
+No todas las entregas arrancan con el mismo alcance. Qué indicaciones adicionales necesita una
+llamada en su entrega figura en la documentación de operación. A partir de ahí forman parte de
+**cada** llamada.
+
+## Scripts auxiliares incluidos
+
+Para la instalación, la actualización, la copia de seguridad y la migración, la entrega trae
+scripts ya preparados, de modo que estos procesos no tengan que componerse a mano. Sus llamadas,
+sus opciones y el orden adecuado están descritos en la documentación de operación que se entrega
+junto con el producto. Los clientes la reciben junto con su acceso.
+
+<Aside type="caution" title="Haga una copia de seguridad antes de cada actualización">
+Esto vale sin excepción. Además de la base de datos, una copia de seguridad comprende también la
+configuración y los archivos subidos; la herramienta de copia de seguridad incluida se lleva
+ambas cosas. Un archivo comprimido contiene credenciales y se conserva protegido en
+consecuencia.
+</Aside>
+
+## Páginas relacionadas
+
+- [Instalación y operación](/docs/es/betrieb/installation) describe el recorrido desde el
+  servidor vacío hasta la instancia en marcha.
+- [Resolución de problemas](/docs/es/betrieb/fehlerbehebung) reúne los fallos más frecuentes.

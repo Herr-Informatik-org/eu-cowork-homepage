@@ -12,7 +12,7 @@ of the law, details about other companies. This page explains how it is used, wh
 blocks it consists of and which of them you choose yourself during setup.
 
 The search framework comes from [LibreChat](https://www.librechat.ai/docs). What we add is the
-self operated search instance and the preconfiguration.
+preconfiguration.
 
 ## How it is used in the chat
 
@@ -37,9 +37,9 @@ Without a scraper the colleague would only have headlines and two liners, and no
 answer can be built from those.
 
 <Aside type="caution" title="Web search is completed during setup">
-The installation brings the search engine along: it runs as a search instance of your own and
-builds no user profiles. You **choose the scraper yourself**, because which provider fits
-depends on how you handle data residency; a reranker is optional and not set out of the box.
+A search engine is already configured on delivery. You **choose the scraper yourself**, because
+which provider fits depends on how you handle data residency; a reranker is optional and not
+set out of the box.
 
 Plan this step in firmly: the search tool is only offered to the model once a scraper is
 configured.
@@ -49,9 +49,9 @@ configured.
 
 Both are maintained in the admin panel under **"Konfiguration → Funktionen"** (configuration,
 features tab), in the two cards for web search. There you choose the search provider, the
-scraper and optionally a reranker, plus the SafeSearch level and the patience when fetching a
-page. LibreChat supports several providers for scrapers and rerankers; which ones qualify is
-listed in the [LibreChat documentation](https://www.librechat.ai/docs).
+scraper and optionally a reranker, plus the SafeSearch level. LibreChat supports several
+providers for scrapers and rerankers; which ones qualify is listed in the
+[LibreChat documentation](https://www.librechat.ai/docs).
 
 Keys **never** belong in the configuration in plain text. Enter them as a reference to a
 variable and store the value in the place provided for it.
@@ -88,8 +88,8 @@ basis.
 
 ## Data protection in web search
 
-The search instance runs on your side, but the search query still goes out: it queries external
-search engines and merges their hits. What happens in the process and what does not:
+The search runs in your instance, but the search query itself goes out: it is sent to external
+search services. What happens in the process and what does not:
 
 | | |
 |---|---|
@@ -99,7 +99,7 @@ search engines and merges their hits. What happens in the process and what does 
 
 <Aside type="note" title="Wording for training and privacy notices">
 Put precisely, the statement reads: storage and inference run where you operate the instance;
-the search query itself goes to external search engines, and it does so without user identity.
+the search query itself goes to external search services, and it does so without user identity.
 Anyone describing web search in a privacy notice is best served by taking that distinction
 over verbatim.
 </Aside>

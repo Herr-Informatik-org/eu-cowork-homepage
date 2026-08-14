@@ -1,0 +1,68 @@
+---
+title: Panel de administración
+description: Qué ofrece el panel de administración y en qué orden procede una nueva administradora.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+El panel de administración es la interfaz a través de la cual se administra EU Cowork AI: cuentas, roles, grupos, conectores, modelos, consumo y registros. Esta página ofrece la visión general; cada una de las áreas se describe en los capítulos siguientes. Está dirigida a la persona que se ocupa de la instancia.
+
+## Acceso
+
+El panel es accesible en una dirección propia que pertenece a su instalación. Usted inicia sesión con su cuenta de administrador. Quien tiene el rol de administrador entra, nadie más. Si una cuenta se bloquea o se le retira el rol, eso surte efecto también aquí.
+
+<Aside type="caution" title="Recomendado: proteger adicionalmente los accesos de administración">
+A las cuentas de administrador se les aplican los requisitos más estrictos. Dos medidas forman parte de toda instalación productiva:
+
+- Activar el **inicio de sesión de dos factores para todas las cuentas de administrador**.
+- **Limitar el acceso a redes conocidas**, por ejemplo a su VPN o a una lista de direcciones IP autorizadas. En el día a día el panel lo usan pocas personas: una restricción no cuesta nada.
+
+Incluya ambos puntos en su lista de recepción y compruébelos activamente una vez montada la instancia.
+</Aside>
+
+## Qué hace usted allí
+
+La interfaz está dividida en cuatro áreas:
+
+| Área | Para qué sirve |
+| --- | --- |
+| **«Analyse»** (análisis) | Indicadores de uso y los registros |
+| **«Verwaltung»** (gestión) | Usuarios, roles, grupos, acceso a conectores y agentes |
+| **«Finanzen»** (finanzas) | Consumo por persona, presupuestos y justificantes de facturación |
+| **«System»** (sistema) | Configuración, registro de auditoría y los ajustes de la instancia |
+
+De cada persona se pueden abrir dos vistas de detalle: su consumo en detalle y un resumen de lo que esa persona puede hacer y por qué. La segunda es la primera herramienta a la que recurrir cuando alguien comunica que no ve un conector o un modelo.
+
+## Dos principios básicos
+
+**Guardar es explícito.** El panel trabaja con una copia de trabajo y solo escribe cuando usted guarda. Mientras haya cambios pendientes, la interfaz lo advierte.
+
+**No hay secretos en texto claro.** Las claves de acceso se depositan únicamente como referencia, nunca se muestran en texto claro y en los registros solo se mencionan por su nombre. Las pruebas de conexión se ejecutan en el servidor: la clave no abandona el servidor, ni siquiera en los mensajes de error.
+
+## Orden para un administrador nuevo
+
+Cuando usted se hace cargo de una instancia nueva, este orden tiene sentido, porque los pasos se apoyan unos en otros:
+
+1. Restringir el registro a los dominios de correo de su empresa.
+2. Fijar un presupuesto mensual, al principio sin aplicación estricta, para ver durante un mes en qué cifras acaba.
+3. Crear grupos; son la base de los accesos y de los modelos.
+4. Definir por grupo qué modelos son visibles.
+5. Conectar los conectores y habilitar su acceso de forma selectiva.
+6. Invitar al personal.
+7. Fijar el plazo de conservación en consonancia con su política de eliminación.
+
+<Aside type="note" title="Documentación de puesta en marcha">
+Las instrucciones paso a paso para la puesta en marcha de su instancia forman parte de la entrega y se le entregan junto con la instalación.
+</Aside>
+
+## Continuación del capítulo
+
+<CardGrid>
+  <LinkCard title="Usuarios, grupos y roles" href="/docs/es/administration/benutzer-und-gruppen" description="Invitar y crear cuentas, asignar permisos, bloquear y eliminar." />
+  <LinkCard title="Modelos y fichas del modelo" href="/docs/es/administration/modelle-und-karten" description="Definir fichas y controlar su visibilidad por rol y por grupo." />
+  <LinkCard title="Consumo, presupuestos y facturación" href="/docs/es/administration/verbrauch-und-budgets" description="De los tokens a los euros: presupuesto, límite mensual, justificantes." />
+  <LinkCard title="Registros y auditoría" href="/docs/es/administration/protokolle-und-audit" description="Registro de uso e historial de cambios." />
+  <LinkCard title="Protección de datos y conservación" href="/docs/es/administration/datenschutz-und-aufbewahrung" description="Conservación, información, telemetría y qué abandona la instancia." />
+</CardGrid>

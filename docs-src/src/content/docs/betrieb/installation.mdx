@@ -7,35 +7,34 @@ sidebar:
 
 import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-Die Einrichtung führt ein Installationsskript aus dem Auslieferungspaket. Es legt die
-Konfiguration an, erzeugt die benötigten Geheimnisse und startet die Anwendung. Voraussetzung
+Die Einrichtung erfolgt geführt anhand des Auslieferungspakets. Dabei entstehen die
+Konfiguration und die Geheimnisse der Instanz, danach startet die Anwendung. Voraussetzung
 ist ein vorbereiteter Server, siehe [Server vorbereiten](/docs/betrieb/server-vorbereiten).
 
-## Was der Installer übernimmt
+## Was die Einrichtung übernimmt
 
-- Er prüft die Voraussetzungen auf der Maschine und bricht ab, wenn Grundlegendes fehlt.
-- Er erzeugt die Konfigurationsdatei aus der mitgelieferten Vorlage und setzt alle Geheimnisse
-  auf frisch erzeugte Zufallswerte. Die Datei ist nur für den Dienstbenutzer lesbar.
-- Er richtet die Verzeichnisse für Uploads, Protokolle und Daten mit den richtigen Rechten ein.
-- Er holt die Images und startet die Anwendung.
-- Er meldet am Ende, welche Werte noch von Hand einzutragen sind. Gemeldet werden nur die Namen
+- Sie prüft die Voraussetzungen auf der Maschine und bricht ab, wenn Grundlegendes fehlt.
+- Sie erzeugt die Konfiguration der Instanz und setzt alle Geheimnisse auf frisch erzeugte
+  Zufallswerte. Jede Instanz erhält dabei eigene Werte, und diese sind nur für den Betrieb der
+  Instanz lesbar.
+- Sie richtet die Ablagen der Instanz mit den nötigen Rechten ein und startet die Anwendung.
+- Sie meldet am Ende, welche Werte noch von Hand einzutragen sind. Gemeldet werden nur die Namen
   der Werte, nie deren Inhalt.
 
 <Aside type="danger" title="Die erzeugten Geheimnisse sichern">
-Ein Teil der erzeugten Werte entschlüsselt, was verschlüsselt in der Datenbank liegt: die
-OAuth-Token, mit denen Ihre Mitarbeitenden einen Konnektor verbunden haben, und die im Panel
-hinterlegten API-Schlüssel. Gehen diese Werte verloren oder werden sie bei einem Umzug neu
-erzeugt statt übernommen, sind die betroffenen Daten unwiederbringlich unlesbar. Jede Person
-müsste dann jede Verbindung neu aufbauen. Das reguläre Backup enthält die Konfigurationsdatei
-und damit diese Werte, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+Ein Teil der erzeugten Werte entschlüsselt, was verschlüsselt in der Datenbank liegt. Gehen
+diese Werte verloren oder werden sie bei einem Umzug neu erzeugt statt übernommen, sind die
+betroffenen Daten unwiederbringlich unlesbar, und jede Person müsste ihre Verbindungen neu
+aufbauen. Das reguläre Backup umfasst die Konfiguration und damit diese Werte, siehe
+[Backup und Umzug](/docs/betrieb/backup-und-umzug).
 </Aside>
 
 ## Der einzige Pflichtwert
 
 Für eine Standardinstallation tragen Sie genau einen Wert selbst ein: den Schlüssel des
-Inferenz-Anbieters mit EU-Verarbeitung. Der Installer weist am Ende ausdrücklich darauf hin.
+Inferenz-Anbieters mit EU-Verarbeitung. Die Einrichtung weist am Ende ausdrücklich darauf hin.
 Alles Weitere ist optional — eine Zweitoption für Modelle, die Konnektoren, der
-E-Mail-Versand und das Backend für die Code-Ausführung.
+E-Mail-Versand und die Code-Ausführung.
 
 ## Was manuell bleibt
 
@@ -51,13 +50,12 @@ E-Mail-Versand und das Backend für die Code-Ausführung.
 
 <Steps>
 
-1. **Chat öffnen.** Unter der Adresse, die der Installer am Ende ausgibt.
+1. **Chat öffnen.** Unter der Adresse, unter der die Instanz eingerichtet wurde.
 
-2. **Erstes Konto anlegen.** Registrieren Sie sich im Chat. Das erste registrierte Konto einer
-   Instanz bekommt automatisch die Rolle ADMIN.
+2. **Erstes Konto anlegen.** Registrieren Sie sich im Chat. Das erste Konto einer Instanz
+   erhält die Administrationsrechte.
 
-3. **Admin-Panel prüfen.** Die Anmeldung erfolgt mit dem eben angelegten Konto. Das Panel hat
-   keine eigene Nutzerverwaltung und kein eigenes Passwort.
+3. **Admin-Panel prüfen.** Der Zugang setzt ein Konto mit Administrationsrechten voraus.
 
 4. **Zugang schliessen.** Domain-Lock setzen, damit sich nur Personen aus Ihrer
    E-Mail-Domäne registrieren können.
@@ -70,8 +68,9 @@ E-Mail-Versand und das Backend für die Code-Ausführung.
 </Steps>
 
 <Aside type="note" title="Detaillierte Anleitung im Betriebshandbuch">
-Aufrufform, Optionen und die vollständige Liste der Konfigurationswerte stehen im
-Betriebshandbuch, das dem Auslieferungspaket beiliegt.
+Der genaue Ablauf und die vollständige Liste der Konfigurationswerte stehen im
+Betriebshandbuch, das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem
+Zugang.
 </Aside>
 
 ## Weiter

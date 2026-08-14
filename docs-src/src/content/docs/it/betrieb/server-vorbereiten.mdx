@@ -1,0 +1,52 @@
+---
+title: Preparare il server
+description: Quali basi deve avere una macchina prima che vi venga installato EU Cowork AI.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI viene gestito in self-hosting e funziona come applicazione Docker Compose, così come
+LibreChat stesso lo prevede per il proprio esercizio. Prima che l’applicazione venga installata,
+la macchina deve essere preparata.
+
+## Che cosa deve avere il server
+
+- Una distribuzione Linux attuale con supporto a lungo termine.
+- Docker con un plugin Compose attuale, così come LibreChat lo richiede per l’esercizio in
+  self-hosting.
+- Memoria, CPU e spazio su disco sufficienti per il numero di utenti previsto, vedere
+  [Requisiti di sistema](/docs/it/erste-schritte/systemanforderungen).
+- Un firewall che limiti le connessioni in entrata allo stretto necessario, oltre alla
+  sincronizzazione dell’ora e agli aggiornamenti di sicurezza automatici del sistema operativo.
+- La rotazione dei registri per Docker, affinché i registri dei container non riempiano il disco
+  di sistema nel giro di qualche settimana.
+
+## Preparazione della macchina
+
+Queste basi vengono predisposte prima che si aggiunga l’applicazione. La preparazione riguarda
+soltanto il sistema operativo e l’ambiente dei container; la configurazione e l’applicazione
+seguono solo nel passo successivo, vedere [Installazione](/docs/it/betrieb/installation). Per
+questo passo il pacchetto di fornitura contiene gli strumenti corrispondenti.
+
+<Aside type="note" title="Istruzioni dettagliate nel manuale operativo">
+La procedura esatta e la lista di controllo dopo la preparazione si trovano nel manuale
+operativo, che è allegato al pacchetto di fornitura. I clienti lo ricevono insieme al proprio
+accesso.
+</Aside>
+
+## Prossimo passo
+
+<CardGrid>
+  <LinkCard
+    title="Installazione"
+    href="/docs/it/betrieb/installation"
+    description="Come il pacchetto di fornitura predispone un’istanza e che cosa resta da fare a mano."
+  />
+  <LinkCard
+    title="Requisiti di sistema"
+    href="/docs/it/erste-schritte/systemanforderungen"
+    description="Quanta memoria, quanta CPU e quanto spazio servono realmente a un’istanza."
+  />
+</CardGrid>

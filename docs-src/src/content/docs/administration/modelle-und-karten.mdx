@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
 Nutzer wählen im Chat kein rohes Modell aus, sondern eine **Modellkarte**. Eine Karte bündelt einen Anbieter, ein Modell und die Voreinstellungen dazu unter einem verständlichen Namen. Diese Seite zeigt, was Sie als Administrator damit steuern.
 
@@ -27,22 +27,12 @@ Ein Zugangsschlüssel wird nie im Klartext in der Konfiguration hinterlegt, sond
 
 ## Sichtbarkeit pro Rolle und Gruppe
 
-Welche Karte wer sieht, entscheidet eine Kaskade. Es gewinnt: **Gruppe › Rolle › Basis**.
+Welche Karten jemand sieht, legen Sie auf Ebene der Rolle und der Gruppe fest. Wo es keine eigene Regel gibt, gilt die ausgelieferte Auswahl. Grundsatz: die engere Regel gewinnt.
 
-<Steps>
-
-1. **Basis** ist die Auslieferungskonfiguration. Sie gilt für alle, für die es keine engere Regel gibt.
-
-2. **Rolle** übersteuert die Basis. Im Rollen-Editor schalten Sie die Karten einzeln an oder aus und blenden bei Bedarf die rohe Modellliste aus.
-
-3. **Gruppe** übersteuert die Rolle. Eine Gruppe erbt entweder die Regel der Rolle oder bekommt eine eigene Auswahl.
-
-</Steps>
-
-Auf beiden Ebenen lässt sich die Auswahl in einem Schritt auf den Auslieferungsstand zurücksetzen.
+Im Rollen-Editor schalten Sie die Karten einzeln an oder aus und blenden bei Bedarf die rohe Modellliste aus; eine Gruppe bekommt bei Bedarf eine eigene Auswahl. Auf beiden Ebenen lässt sich die Auswahl in einem Schritt auf den Auslieferungsstand zurücksetzen.
 
 <Aside type="note" title="Nach Kartenänderungen einmal neu speichern">
-Die Auswahl speichert eine Kopie der Kartennamen. Wenn Sie danach eine Karte umbenennen oder hinzufügen, speichern Sie die betroffenen Rollen- und Gruppenregeln einmal neu. Karten, die es nicht mehr gibt, werden dabei entfernt und vorher als Warnung angezeigt.
+Wenn Sie eine Karte umbenennen oder hinzufügen, speichern Sie die betroffenen Rollen- und Gruppenregeln einmal neu und prüfen Sie danach, dass die Sichtbarkeit noch so steht, wie Sie sie meinen.
 </Aside>
 
 ## Anbieter einschränken

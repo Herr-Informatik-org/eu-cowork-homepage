@@ -8,8 +8,8 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 Die meisten Störungen lassen sich in wenigen Minuten einer Ursachengruppe zuordnen. Diese Seite
-zeigt, wo Sie dafür hinschauen. Die ausführliche Fehlerbehebung mit den konkreten Befehlen steht
-im Betriebshandbuch.
+zeigt, wo Sie dafür hinschauen. Die ausführliche Fehlerbehebung steht im Betriebshandbuch, das
+dem Auslieferungspaket beiliegt.
 
 ## Wo schaue ich zuerst hin
 
@@ -19,8 +19,8 @@ im Betriebshandbuch.
    [Protokolle und Audit](/docs/administration/protokolle-und-audit).
 2. **Seite Zugriffe der betroffenen Person.** Für die Frage, warum jemand einen Konnektor nicht
    sieht, ist das die schnellste Antwort: Sie nennt pro Konnektor die entscheidende Regelstufe.
-3. **Erst danach auf die Kommandozeile.** Was im Panel nicht sichtbar wird, sind Startfehler
-   der Dienste.
+3. **Erst danach auf die Serverebene.** Was im Panel nicht sichtbar wird, sind Störungen, die
+   bereits beim Start der Anwendung auftreten.
 
 ## Die häufigsten Ursachengruppen
 
@@ -28,16 +28,16 @@ im Betriebshandbuch.
 |---|---|
 | Antworten bleiben aus oder laufen in Zeitüberschreitungen | Die Instanz erreicht das Internet nicht — typischerweise ein VPN-Client, ein Firmen-Proxy oder eine kollidierende Netzroute. Seltener ein ungültiger Schlüssel des Inferenz-Anbieters. |
 | Eine Funktion ist sichtbar, tut aber nichts | Der zugehörige optionale Bestandteil läuft nicht oder ist nicht konfiguriert. Betrifft vor allem Dateisuche, Code-Ausführung und Web-Suche. |
-| Ein Dienst startet nach der Installation wiederholt neu | Rechte auf den eingebundenen Datenverzeichnissen. Beim regulären Weg über den Installer tritt das nicht auf. |
+| Ein Dienst startet nach der Installation wiederholt neu | Zugriffsrechte auf den Ablagen der Instanz. Beim regulären Einrichtungsweg tritt das nicht auf. |
 | Antworten erscheinen erst am Ende auf einen Schlag | Eine vorgelagerte Appliance puffert den Antwortstrom, siehe [Domain und Zertifikat](/docs/betrieb/domain-und-tls). |
 | Nach einem Umzug muss jede Person ihre Konnektoren neu verbinden | Die Verschlüsselungsschlüssel wurden neu erzeugt statt übernommen, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug). |
-| Nach einem Update passt etwas in der Oberfläche nicht mehr | Die YAML-Konfiguration entspricht nicht mehr dem aktuellen Schema, oder ein neuer Wert fehlt in der Konfiguration. |
+| Nach einem Update passt etwas in der Oberfläche nicht mehr | Die Konfiguration entspricht nicht mehr dem aktuellen Stand, oder ein neuer Wert fehlt darin. |
 
 <Aside type="tip" title="Wenn nichts davon passt">
 Notieren Sie, was zuletzt geändert wurde, und vergleichen Sie Ihre Konfiguration mit der
 mitgelieferten Vorlage. Ein Grossteil der übrigen Störungen geht auf einen fehlenden Wert oder
-eine YAML-Datei zurück, die nach einem Update nicht mehr zum Schema passt. Kommen Sie damit
-nicht weiter, hilft der Support-Weg aus Ihrem Vertrag weiter.
+auf eine Konfiguration zurück, die nach einem Update nicht mehr zum aktuellen Stand passt.
+Kommen Sie damit nicht weiter, hilft der Support-Weg aus Ihrem Vertrag weiter.
 </Aside>
 
 ## Weiter

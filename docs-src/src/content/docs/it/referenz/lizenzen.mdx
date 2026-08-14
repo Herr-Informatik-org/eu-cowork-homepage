@@ -1,0 +1,151 @@
+---
+title: Licenze e provenienza
+description: Sotto quale licenza si trova EU Cowork AI, che cosa significa per Lei come cliente e quale licenza porta ogni componente fornito.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+EU Cowork AI è vero open source, e i componenti di terzi forniti insieme a esso si trovano sotto
+le loro licenze. Questa pagina dice che cosa ciò significhi in pratica ed elenca ogni componente
+con la sua licenza. Si rivolge a tutti coloro che, prima di un acquisto, devono sapere a che
+cosa vanno incontro.
+
+## La licenza del prodotto nel suo insieme
+
+Tutto il nostro codice si trova sotto la **licenza MIT**. È una delle licenze più permissive in
+assoluto: può utilizzare, modificare, ridistribuire e impiegare commercialmente il software,
+purché il testo della licenza e l’avviso di diritto d’autore restino conservati.
+
+Che cosa significa concretamente per Lei come cliente:
+
+| Impegno | Che cosa c’è dietro |
+|---|---|
+| **Ospitare in proprio è gratuito** | Per il software non paga nulla. Si pagano esercizio, supporto e integrazione, se desidera acquistarli da qualcuno |
+| **Nessun limite per postazione** | Il numero di utenti non è limitato tecnicamente da nessuna parte né posto sotto tetto dalla licenza. Dieci persone costano quanto trecento, cioè nulla |
+| **Nessuna funzione riservata** | Non esiste un’edizione enterprise con funzioni aggiuntive. Ciò che si trova nel repository è l’intera dotazione di funzioni |
+| **Nessuna clausola di marchio** | Nome, logo, favicon e testo di benvenuto sono configurazione. Può rinominare l’interfaccia con il nome della Sua azienda, senza dover rispettare un numero di utenti o un termine |
+| **Nessun copyleft** | Non è tenuto a pubblicare le estensioni che sviluppa |
+
+Il testo della licenza si trova come file `LICENSE` nel repository, dove è indicato anche il
+titolare dei diritti.
+
+<Aside type="note" title="Perché lo diciamo espressamente">
+Altri progetti di questo ambito sono formalmente a codice aperto, ma pongono un tetto al numero
+di utenti per la rimozione del logo del produttore, oppure nascondono funzioni di
+amministrazione dietro un’edizione a pagamento. È stato questo il motivo per mettere la
+questione della licenza proprio all’inizio.
+</Aside>
+
+## I componenti propri
+
+| Componente | Licenza |
+|---|---|
+| Monorepo con distribuzione e documentazione | MIT |
+| Pannello di amministrazione | MIT |
+| MCP-Gateway, Model-Router compreso | MIT |
+| Ponte di connettore d’esempio | MIT |
+| Outlook-Add-in | MIT |
+
+## I componenti di terzi forniti
+
+La distribuzione impiega componenti di terzi non modificati, sotto le loro licenze. Il nostro
+codice non ne incorpora nessuno, ma li interpella attraverso le loro normali interfacce. Non
+nasce alcuna opera comune.
+
+| Componente | Compito | Licenza |
+|---|---|---|
+| [LibreChat](https://github.com/danny-avila/LibreChat) | l’applicazione di chat stessa | MIT |
+| [MongoDB](https://github.com/mongodb/mongo) | database | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | ricerca a testo integrale | MIT, singole parti della Enterprise Edition sotto BUSL-1.1 ² |
+| [SearXNG](https://github.com/searxng/searxng) | motore di metaricerca per la ricerca web | AGPL-3.0 ³ |
+| [pgvector](https://github.com/pgvector/pgvector) | database vettoriale | licenza PostgreSQL |
+| [rag_api](https://github.com/danny-avila/rag_api) | incorporazione dei file | MIT |
+| [Caddy](https://github.com/caddyserver/caddy) | reverse proxy | Apache-2.0 |
+| Ponti di connettore da progetti di terzi | collegamento di sistemi di terzi. Quale progetto stia dietro quale ponte lo indica la documentazione operativa della fornitura | MPL-2.0 e MIT |
+
+Non tutti questi componenti vengono impiegati in ogni fornitura. Sulla struttura si veda
+[Servizi e porte](/docs/it/referenz/dienste-und-ports).
+
+### L’esecuzione di codice
+
+Per l’esecuzione di codice viene impiegato, a scelta, uno di questi due backend.
+
+| Backend | Ruolo | Licenza |
+|---|---|---|
+| [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | variante irrobustita con isolamento microVM | Apache-2.0 |
+| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | variante più leggera | Apache-2.0 |
+
+Entrambi portano con sé ulteriori servizi ausiliari dai rispettivi progetti. Le loro licenze
+sono documentate nei progetti stessi. Poiché variano a seconda della versione, le verifichi per
+la versione che impiega effettivamente.
+
+### Questa documentazione
+
+Il sito della documentazione è costruito con [Astro](https://astro.build) e
+[Starlight](https://starlight.astro.build), entrambi sotto **licenza MIT**. La ricerca a testo
+integrale gira interamente nel browser: non c’è alcun servizio di ricerca e nessun tracciamento.
+
+### Note a piè di pagina
+
+**¹ MongoDB si trova sotto la SSPL-1.0.** Questa licenza interviene quando qualcuno vende
+MongoDB stesso a terzi come servizio di database. L’impiego come database interno della propria
+installazione, come qui, non ne è toccato.
+
+**² Meilisearch** dichiara `MIT AND BUSL-1.1` per la versione fornita. La parte di gran lunga
+prevalente si trova sotto MIT, singoli componenti della Enterprise Edition sotto la Business
+Source License. Facciamo girare l’immagine ufficiale senza modifiche.
+
+**³ SearXNG si trova sotto la AGPL-3.0.** Lo diciamo apertamente, invece di nasconderlo.
+Facciamo girare l’immagine ufficiale senza modifiche e la richiamiamo soltanto attraverso la sua
+normale interfaccia. Il codice sorgente della versione impiegata, non modificata, è pubblico.
+Sulla licenza MIT del nostro codice ciò non ha alcun effetto, perché non viene né incorporato né
+modificato e non nasce alcuna opera comune.
+
+## Perché abbiamo costruito un pannello di amministrazione proprio
+
+Da qualche tempo LibreChat fornisce un pannello di amministrazione ufficiale. Quel pannello si
+trova sotto la **AGPL-3.0**, dunque sotto una licenza copyleft con clausola di rete. Chi lo
+impiega e lo modifica deve divulgare il codice sorgente anche quando il software viene messo a
+disposizione soltanto attraverso la rete e mai distribuito.
+
+Per un prodotto che deve restare espressamente permissivo, questa è la strada sbagliata. Perciò:
+
+- **Il pannello AGPL non fa parte della distribuzione.** Era una soluzione transitoria per prove
+  interne, prima che il nostro pannello fosse pronto.
+- **Il nostro pannello è una costruzione nuova e autonoma** sotto licenza MIT. Lavora contro la
+  stessa interfaccia di amministrazione di LibreChat, che è essa stessa sotto MIT.
+- **Non è stato ripreso alcun codice dal pannello AGPL.** Il pannello è servito da modello per
+  l’uso, non da fonte. La stessa regola vale per i contributi esterni.
+
+Il risultato: può ospitare in proprio EU Cowork AI, modificarlo e ridistribuirlo, senza obblighi
+di copyleft. È questa la vera ragione del lavoro in più.
+
+## Contribuire
+
+Il codice sorgente si trova nel repository **`eu-cowork`** su GitHub. L’indirizzo preciso è
+indicato dalla Sua fonte di approvvigionamento, oppure Le viene comunicato dal fornitore.
+
+I contributi arrivano come pull request contro `main`. Prima del primo contributo vale la pena
+dare un’occhiata al file `CONTRIBUTING.md` nel repository, dove è descritto il procedimento. Le
+convenzioni vincolanti su struttura, compilazione, verifica, formato dei commit e regole sui
+segreti si trovano in `AGENTS.md`.
+
+Alcuni punti che nella pratica si sono rivelati utili:
+
+- **Dove va la modifica.** Sidecar, distribuzione e documentazione vanno in questo repository.
+  Le modifiche a LibreChat stesso vanno nel repository del fork.
+- **Piccola e limitata a un solo tema.** Non mescolare le riformattazioni con le modifiche di
+  contenuto.
+- **Nessun segreto nel diff.** Le chiavi vengono referenziate esclusivamente come variabili, le
+  nuove variabili ricevono un segnaposto nel modello di configurazione.
+- **I contributi si trovano sotto la licenza MIT** di questo progetto. Il codice di terzi può
+  essere ripreso soltanto con una licenza compatibile e un’indicazione di provenienza. **Nessun
+  codice da fonti AGPL**, in particolare non dal pannello di amministrazione AGPL di LibreChat.
+
+<Aside type="caution" title="Segnalazioni di sicurezza">
+Le osservazioni rilevanti per la sicurezza non vanno segnalate come issue pubblica, ma in via
+riservata attraverso il percorso descritto in `SECURITY.md`, oppure direttamente presso il
+fornitore da cui ottiene l’istanza.
+</Aside>

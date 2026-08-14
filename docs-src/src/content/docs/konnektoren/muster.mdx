@@ -19,7 +19,7 @@ Drei Bauformen decken praktisch alles ab, was in einem KMU anfällt. Diese Seite
 
 Die Antwort darauf ist nicht ein Filter im Prompt, sondern die Struktur der Konten: **pro Rechteprofil ein eigenes Dienstkonto und eine eigene Konnektor-Instanz**, statt eines Generalschlüssels für alle. Ein Zugangsschlüssel erbt vollständig die Rechte seines Kontos im Zielsystem. Damit ist das Konto hinter dem Schlüssel die eigentliche Datengrenze, nicht die Konfiguration und nicht der Prompt. Was das Konto nicht sehen darf, sieht auch der Chat nicht, unabhängig davon, was das Modell versucht.
 
-Die Freigaben in EU Cowork AI kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Fällt eine Regel im Panel einmal aus, trägt immer noch die Rechtegrenze des Dienstkontos.
+Die Freigaben in EU Cowork AI kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Ist eine Freigabe im Panel einmal zu weit gesetzt, trägt immer noch die Rechtegrenze des Dienstkontos.
 
 | Instanz mit eigenem Dienstkonto | Gedacht für |
 |---|---|
@@ -39,7 +39,7 @@ Geben Sie deshalb pro Person **genau eine** Instanz frei. Braucht jemand ein and
 
 Dazu drei Punkte, die im Alltag zählen:
 
-- **Server-Standard sofort auf verweigert.** Solange der Standard nicht auf verweigert steht, sehen alle Personen alle Instanzen und damit alles, was die Dienstkonten sehen.
+- **Standardregel sofort auf verweigert.** Setzen Sie die Standardregel jeder Instanz auf verweigert, bevor Sie irgendjemanden freigeben.
 - **Halten Sie die Freigabe im Zielsystem lesend**, wo immer der Anwendungsfall das zulässt. Schreiben, Anlegen und Löschen schalten Sie nur für einzelne Objekte frei, für die Sie den Bedarf wirklich haben.
 - **Nutzen Sie das Protokoll.** Jede Entscheidung wird unveränderlich mitgeschrieben. Im Protokoll des Zielsystems ist zusätzlich erkennbar, aus welchem Profil eine Abfrage kam. Getrennte Dienstkonten zahlen sich hier ein zweites Mal aus.
 
@@ -56,7 +56,7 @@ Damit gilt: Wer einen Ordner im Zielsystem nicht sehen darf, sieht ihn auch im C
 **Das ist der bevorzugte Weg.** Wenn ein System diese Anmeldeart anbietet, nehmen Sie sie. Die Rechte des Zielsystems sind bereits die Grenze, und sie sind feiner, als eine Regel davor je sein könnte: bis auf Dokument- und Feldebene statt nur bis auf Konnektor- und Werkzeugebene.
 
 <Aside type="note" title="Die Steuerung liegt hier im Zielsystem">
-Weil die Rechte der Person bereits die Grenze sind, brächte eine zusätzliche Rechteregel davor keinen Sicherheitsgewinn. Für einen solchen Konnektor gibt es deshalb keine Regeln pro Rolle, Gruppe oder Person; steuerbar ist nur, ob eine Rolle Konnektoren überhaupt benutzen darf. Wer den Konnektor gar nicht haben soll, wird über die Modell- und Agentenkonfiguration gesteuert.
+Weil die Rechte der Person bereits die Grenze sind, liegt die massgebliche Steuerung bei einem solchen Konnektor im Zielsystem. Pflegen Sie sie dort, und planen Sie nicht damit, eine feinere Abstufung davor nachzubauen.
 </Aside>
 
 **Worauf Sie achten.**
@@ -66,7 +66,7 @@ Weil die Rechte der Person bereits die Grenze sind, brächte eine zusätzliche R
 - **Der Zugang bleibt bestehen und muss erneuert werden können.** Fehlt die Berechtigung, die Verbindung im Hintergrund zu erneuern, stirbt sie nach kurzer Zeit, und jede Person muss neu verbinden.
 
 <Aside type="caution" title="Nach einem Umzug müssen die Schlüssel der Instanz mitkommen">
-Die persönlichen Zugriffstoken liegen verschlüsselt in der Datenbank Ihrer Instanz. Ziehen Sie auf einen neuen Server um, müssen die zugehörigen Schlüssel der alten Instanz übernommen werden. Geschieht das nicht, sind alle gespeicherten Verbindungen unbrauchbar, und **jede Person muss ihren Zugang einmal neu aufbauen**. Es gehen dabei keine Daten verloren, aber es ist ein Support-Fall pro Mitarbeitendem. Nehmen Sie den Punkt in Ihren Umzugsplan auf, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
+Die persönlichen Zugänge gehören zum geschützten Datenbestand Ihrer Instanz. Ziehen Sie auf einen neuen Server um, müssen die zugehörigen Schlüssel der alten Instanz übernommen werden. Geschieht das nicht, sind alle gespeicherten Verbindungen unbrauchbar, und **jede Person muss ihren Zugang einmal neu aufbauen**. Es gehen dabei keine Daten verloren, aber es ist ein Support-Fall pro Mitarbeitendem. Nehmen Sie den Punkt in Ihren Umzugsplan auf, siehe [Backup und Umzug](/docs/betrieb/backup-und-umzug).
 </Aside>
 
 ## Muster C: Nur lesende Brücke zu einem Fachsystem
@@ -84,15 +84,15 @@ Die persönlichen Zugriffstoken liegen verschlüsselt in der Datenbank Ihrer Ins
 Geben Sie dem technischen Zugang deshalb im Zielsystem nur die Bereiche, die er wirklich braucht. Was er nicht sieht, existiert für den Chat schlicht nicht. Das ist die härteste verfügbare Grenze, sie liegt vollständig bei Ihnen im Fachsystem, und sie lässt sich weder durch einen Prompt noch durch einen Fehler in unserer Software umgehen. Brauchen Sie mehrere Sichten, ist der Weg derselbe wie in Muster A: ein zweiter technischer Zugang mit engerem Bereich, eine zweite Instanz der Brücke, und im Panel bekommt jede Person genau eine davon.
 
 <Aside type="tip" title="Die Regel dahinter">
-**Ein Werkzeug, das es nicht gibt, kann kein Modell versehentlich aufrufen.** Bauen Sie deshalb gar keine Werkzeuge für Neustart, Skriptausführung, Verteilung von Software, Wartungsfenster oder schreibende Ticket-Änderungen. Dann braucht es auch nirgends eine Regel, die verhindern müsste, dass jemand einen Kundenserver aus dem Chat neu startet. Es geht schlicht nicht.
+**Ein Werkzeug, das es nicht gibt, kann kein Modell versehentlich aufrufen.** Bauen Sie deshalb gar keine Werkzeuge für eingreifende Aktionen, etwa für Neustarts oder Skriptausführung. Dann braucht es auch nirgends eine Regel, die verhindern müsste, dass jemand einen Server aus dem Chat neu startet. Es geht schlicht nicht.
 
-Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, und gibt es einen Nur-Lese-Modus? Bietet ein fertiger Server neben dem Lesen auch Neustarts und Skriptläufe an, und lässt sich das nicht abschalten, ist eine eigene schmale Brücke oft die schnellere Lösung als die Diskussion darüber, wer ihn benutzen darf.
+Genau daran messen Sie einen fremden Konnektor: Welche Werkzeuge exponiert er, und gibt es einen Nur-Lese-Modus? Bietet ein fertiger Server neben dem Lesen auch eingreifende Aktionen an, und lässt sich das nicht abschalten, ist eine eigene schmale Brücke oft die schnellere Lösung als die Diskussion darüber, wer ihn benutzen darf.
 </Aside>
 
 **Worauf Sie achten.**
 
 - **Ein Selbsttest ist die Mühe wert.** Ein kleines Prüfprogramm, das die Anmeldung, die tatsächlich gewährten Rechte und einen Lesezugriff nachweist, macht aus einer Zusicherung einen Beleg. Es lässt sich nach jeder Änderung erneut ausführen.
-- **Gestufte Antworten sparen bei jeder Frage.** Eine Detailabfrage sollte zuerst nur die Stammdaten laden und teure Abschnitte wie Softwareinventar, Dienste oder Patch-Stände erst auf ausdrückliche Anforderung nachliefern.
+- **Gestufte Antworten sparen bei jeder Frage.** Eine Detailabfrage sollte zuerst nur die Stammdaten laden und umfangreiche Abschnitte erst auf ausdrückliche Anforderung nachliefern.
 - **Für Fragen über viele Objekte ein Auswertungswerkzeug.** Zehn Einzelabfragen kosten zehn Ergebnisse im Kontext, eine Auswertung kostet eines.
 - **Alle sehen dasselbe.** Das Fachsystem kennt den einzelnen Chat-Nutzer nicht, es sieht nur den technischen Zugang. Die Trennung zwischen Ihren Mitarbeitenden macht ausschliesslich die Freigabe im Panel und der Bereich, den Sie dem Zugang gegeben haben.
 
@@ -110,7 +110,7 @@ Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich
   <LinkCard
     title="Rechte und Freigaben"
     href="/docs/konnektoren/gateway-und-rechte"
-    description="Die Rechtekaskade und wo Sie die Freigaben pflegen."
+    description="Wonach die Rechteprüfung entscheidet und wo Sie die Freigaben pflegen."
   />
   <LinkCard
     title="Eigenen Konnektor anbinden"

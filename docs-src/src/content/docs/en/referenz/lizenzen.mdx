@@ -41,45 +41,42 @@ reason for putting the license question right at the beginning.
 
 | Component | License |
 |---|---|
-| monorepo with distribution, scripts and documentation | MIT |
-| admin panel with its accompanying service and frontend | MIT |
+| monorepo with distribution and documentation | MIT |
+| admin panel | MIT |
 | MCP gateway including the model router | MIT |
 | example connector bridge | MIT |
 | Outlook add-in | MIT |
 
 ## The shipped third party components
 
-The distribution starts unmodified third party images under their own licenses. These services
-run as standalone containers. Our code does not link any of them in, it talks to them through
-their normal network interfaces.
+The distribution deploys unmodified third party components under their own licenses. Our code
+does not link any of them in, it talks to them through their normal interfaces. No combined
+work comes into being.
 
 | Component | Task | License |
 |---|---|---|
 | [LibreChat](https://github.com/danny-avila/LibreChat) | the chat application itself | MIT |
-| [MongoDB](https://github.com/mongodb/mongo) | database for conversations, users and usage | SSPL-1.0 ¹ |
-| [Meilisearch](https://github.com/meilisearch/meilisearch) | full text search across earlier conversations | MIT, individual parts of the Enterprise Edition under BUSL-1.1 ² |
-| [SearXNG](https://github.com/searxng/searxng) | own metasearch engine for web search | AGPL-3.0 ³ |
-| [pgvector](https://github.com/pgvector/pgvector) | vector database for file search | PostgreSQL license |
-| [rag_api](https://github.com/danny-avila/rag_api) | embedding of uploaded files for file search | MIT |
-| [Caddy](https://github.com/caddyserver/caddy) | reverse proxy with automatic TLS | Apache-2.0 |
-| connector bridges from third party projects | translate between the chat layer and a third party system. Which project sits behind which bridge is named in the operating documentation included with the delivery | MPL-2.0 and MIT |
+| [MongoDB](https://github.com/mongodb/mongo) | database | SSPL-1.0 ¹ |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | full text search | MIT, individual parts of the Enterprise Edition under BUSL-1.1 ² |
+| [SearXNG](https://github.com/searxng/searxng) | metasearch engine for web search | AGPL-3.0 ³ |
+| [pgvector](https://github.com/pgvector/pgvector) | vector database | PostgreSQL license |
+| [rag_api](https://github.com/danny-avila/rag_api) | embedding of files | MIT |
+| [Caddy](https://github.com/caddyserver/caddy) | reverse proxy | Apache-2.0 |
+| connector bridges from third party projects | connection of third party systems. Which project sits behind which bridge is named in the operating documentation included with the delivery | MPL-2.0 and MIT |
 
-Only some of these components start in the base state. The building blocks for file search, the
-connector bridges and the reverse proxy are added with the respective deployment stage. On the
-structure, see the [services and ports](/docs/en/referenz/dienste-und-ports) page.
+Not all of these components are used in every delivery. On the structure, see the
+[services and ports](/docs/en/referenz/dienste-und-ports) page.
 
 ### Code execution
 
-The two backends for code execution run separately from the rest of the stack. Only one is ever
-active.
+For code execution either one of these two backends is used.
 
 | Backend | Role | License |
 |---|---|---|
 | [ClickHouse code-interpreter](https://github.com/ClickHouse/code-interpreter) | hardened variant with microVM isolation | Apache-2.0 |
-| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | lighter transitional variant with a prebuilt image | Apache-2.0 |
+| [LibreCodeInterpreter](https://github.com/usnavy13/LibreCodeInterpreter) | lighter variant | Apache-2.0 |
 
-Both bring further helper services from the Compose files of their projects, for
-example a cache and an S3 compatible object store. Their licenses are documented in the
+Both bring further helper services from their projects. Their licenses are documented in the
 respective projects. Since they differ depending on the version, check them for the version
 you actually deploy.
 
@@ -99,11 +96,10 @@ installation, as is the case here, is not affected by it.
 is under MIT, individual components of the Enterprise Edition are under the Business Source
 License. We run the official image unmodified.
 
-**³ SearXNG is released under the AGPL-3.0 and runs in the base state.** We name that openly
-instead of hiding it. We run the official image unmodified as a standalone service, only the
-configuration file is mounted, and LibreChat calls it over HTTP. This has no effect on the MIT
-licensing of our code, because it is neither linked in nor modified and no combined work comes
-into being.
+**³ SearXNG is released under the AGPL-3.0.** We name that openly instead of hiding it. We run
+the official image unmodified and call it only through its normal interface. The source code of
+the unmodified version deployed is public. This has no effect on the MIT licensing of our code,
+because it is neither linked in nor modified and no combined work comes into being.
 
 ## Why we built our own admin panel
 
@@ -114,9 +110,8 @@ network and never distributed.
 
 For a product that is meant to stay explicitly permissive, that is the wrong path. Therefore:
 
-- **The AGPL panel is not part of the distribution.** It never starts on its own, only on
-  explicit request. It was a transitional solution for internal tests, before our own panel was
-  finished.
+- **The AGPL panel is not part of the distribution.** It was a transitional solution for
+  internal tests, before our own panel was finished.
 - **Our panel is an independent new build** under the MIT license. It works against the same
   administration interface of LibreChat, which is itself under MIT.
 - **No code was taken from the AGPL panel.** The panel served as a model for the interaction

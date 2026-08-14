@@ -1,0 +1,40 @@
+---
+title: Registros y auditoría
+description: Registro de uso, historial de cambios y la prueba de los accesos a través de conectores.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Hay dos vistas de registro con dos tareas distintas. Una responde a la pregunta de **qué ha hecho el sistema**, es decir, qué solicitudes se ejecutaron y cuánto costaron. La otra responde a la pregunta de **quién ha cambiado algo** y quién ha accedido a qué datos.
+
+## Registro de uso
+
+Aquí figura cada solicitud al modelo con su momento, el modelo, el proveedor, la persona, los tokens y los costes, además de algunos indicadores técnicos sobre la calidad de la respuesta. Las solicitudes de una misma conversación pueden consultarse agrupadas. La vista se puede filtrar y ordenar, y lo que se muestra filtrado puede exportarse como CSV exactamente así.
+
+<Aside type="note" title="Sin contenidos de conversación">
+Solo se muestra el identificador de una conversación, nunca su título ni su contenido. Es una decisión deliberada en materia de protección de datos: la vista de administración debe mostrar cuánto costó algo, y no sobre qué escribió alguien.
+</Aside>
+
+Junto a ella hay una vista para los errores técnicos y una vista de diagnóstico para la localización de fallos en los conectores.
+
+## Historial de cambios y prueba de los conectores
+
+La segunda vista registra **cada acción que modifica algo** en el panel, es decir, todo lo que crea, cambia o elimina, junto con el momento, la persona que actúa, el destino afectado y el resultado. De una entrada puede compararse el estado anterior y el posterior. Los inicios de sesión están incluidos, también los fallidos.
+
+También queda constancia de **cada llamada a una herramienta a través de un conector**, con la decisión y el motivo, es decir, qué regla la permitió o la denegó. Así puede reconstruirse por qué se produjo un acceso, y no solo que se produjo. Ambos rastros pueden exportarse como CSV.
+
+<Aside type="caution" title="Los secretos se enmascaran">
+Si usted cambia una clave de acceso, en el registro consta que se cambió la clave con ese nombre, nunca el valor. Los valores que parecen un secreto se sustituyen por un marcador de posición. Una exportación es por tanto inocua incluso cuando el destinatario no puede ver ninguna clave.
+</Aside>
+
+Cuánto tiempo se conservan las entradas lo fija usted en su política de eliminación, véase [Protección de datos y conservación](/docs/es/administration/datenschutz-und-aufbewahrung).
+
+## Para qué necesita usted esto
+
+**Obligación de prueba.** Cuando alguien pregunta quién cambió qué ajuste y cuándo, o quién accedió a qué datos de un sistema conectado, eso no puede responderse sin un registro. Vale en especial para los conectores que funcionan en modo de cuenta de servicio.
+
+**Localización de fallos.** Cuando alguien comunica que «la herramienta no responde», las vistas separan los casos con nitidez: una llamada denegada es una decisión y figura en la auditoría, un error técnico figura en el diagnóstico. Eso ahorra adivinanzas.
+
+**Análisis de costes.** El registro de uso muestra qué modelo, qué persona y qué tipo de conversación impulsa el consumo. Una vista filtrada más una exportación CSV suele bastar para responder a la pregunta de «¿por qué el mes pasado salió más caro?». La visión agregada correspondiente está en [Consumo, presupuestos y facturación](/docs/es/administration/verbrauch-und-budgets).

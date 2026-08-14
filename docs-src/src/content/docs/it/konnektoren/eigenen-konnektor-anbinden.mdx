@@ -1,0 +1,53 @@
+---
+title: Collegare un proprio connettore
+description: Che cosa chiarire prima di collegare un proprio sistema a EU Cowork AI e in base a che cosa misurare un connettore altrui.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Un proprio sistema viene collegato come connettore: un servizio che offre un numero contenuto di strumenti e dietro di essi richiama l’interfaccia del Suo sistema. Viene creato e abilitato nel pannello di amministrazione, senza accesso al server.
+
+<Aside type="note" title="La guida arriva con la fornitura">
+Insieme alla Sua istanza riceve una guida che descrive passo per passo il percorso dalla creazione fino all’abilitazione, adatta alla Sua installazione. Questa pagina resta deliberatamente al livello precedente: che cosa chiarire prima, in base a che cosa misurare un connettore e che cosa non deve dimenticare al momento dell’abilitazione.
+</Aside>
+
+## Che cosa chiarire prima
+
+- **Il nome tecnico.** Con questo nome il connettore funziona nella Sua istanza. In seguito non si lascia cambiare tanto facilmente. Lo scelga quindi parlante e duraturo.
+- **L’indirizzo al quale il connettore parla MCP.** Il servizio deve essere raggiungibile dalla Sua istanza.
+- **Le credenziali di accesso al sistema di destinazione.** Non vanno mai in chiaro nella configurazione, bensì esclusivamente come riferimento a una chiave depositata.
+- **L’account dietro le credenziali di accesso.** È il vero confine dei dati. Nel sistema di destinazione gli dia esattamente i diritti ed esattamente gli ambiti di cui il caso d’uso ha bisogno, vedere [Schemi per i connettori](/docs/it/konnektoren/muster).
+- **Una breve istruzione in prosa** su quando questo strumento debba essere usato e su che cosa non sappia fare. Viene inserita solo quando il connettore è attivo e migliora sensibilmente la percentuale di successo.
+
+## Dove trovo un server MCP per il mio sistema
+
+**Esistono server pronti all’uso per molti prodotti.** Poiché MCP è uno standard aperto, produttori e comunità pubblicano connettori per il software più diffuso. Cerchi il nome del prodotto insieme a «MCP server». Per i sistemi con una propria interfaccia di programmazione è probabile che qualcuno abbia già costruito il ponte.
+
+**Può costruirsene uno.** Un connettore è un piccolo servizio che offre una manciata di strumenti e dietro di essi richiama l’interfaccia del Suo sistema. Per uno scopo limitato, per esempio «cinque interrogazioni in lettura sulla nostra applicazione gestionale», è un compito gestibile. Un ponte costruito deliberatamente stretto pesa sul contesto molto meno di un server pronto all'uso con cento strumenti.
+
+**Verifichi un server altrui prima di collegarlo.** Un connettore ottiene accesso ai Suoi dati, non è una formalità. Quattro domande:
+
+1. **Quali strumenti espone?** Legga l’elenco per intero. Gli strumenti di scrittura di cui non ha bisogno sono puro rischio e costano per giunta contesto.
+2. **Esiste una modalità di sola lettura?** Un interruttore che disattiva nel codice gli accessi in scrittura vale nettamente di più del proposito di non usarli.
+3. **È adatto a più utenti?** I connettori che si ricordano uno stato attraverso più chiamate non funzionano in modo affidabile nell’esercizio multiutente.
+4. **Dove stanno le credenziali di accesso e com’è la licenza?** Un connettore che detiene esso stesso delle chiavi appartiene esclusivamente alla rete interna.
+
+Il risultato di questa verifica può benissimo essere «lo costruiamo noi», soprattutto quando un server pronto all’uso offre, oltre alla lettura, anche riavvii, esecuzioni di script o modifiche in scrittura e questo non si lascia disattivare. Come si ritagli un ponte stretto è descritto sotto [Schemi per i connettori](/docs/it/konnektoren/muster).
+
+## L’abilitazione è un passo a sé
+
+Un connettore creato non è ancora un connettore abilitato.
+
+<Aside type="danger" title="Regola predefinita su negato nello stesso passo di lavoro">
+Imposti la **regola predefinita** del connettore su negato prima di fare qualsiasi altra cosa. Dopodiché abiliti in modo mirato i ruoli, i gruppi o le persone che hanno bisogno del connettore. Come si arrivi alla decisione è descritto sotto [Diritti e abilitazioni](/docs/it/konnektoren/gateway-und-rechte).
+</Aside>
+
+Verifichi l’abilitazione alla fine con due persone di prova con diritti diversi. Se entrambe vedono la stessa cosa, il Suo confine dei diritti non sta funzionando.
+
+## Se qualcosa non funziona
+
+- **Uno strumento segnala «accesso negato».** Non è un errore, è la regola dei diritti. Verifichi le abilitazioni per la persona interessata, vedere [Diritti e abilitazioni](/docs/it/konnektoren/gateway-und-rechte).
+- **Il connettore non risponde.** Verifichi anzitutto se il servizio sia raggiungibile dalla Sua istanza, e poi le credenziali di accesso depositate per il sistema di destinazione.
+- **I singoli passi di verifica** sono descritti nella guida allegata alla Sua fornitura. Essa riporta anche il test di collegamento, che verifica un collegamento indipendentemente dai diritti.

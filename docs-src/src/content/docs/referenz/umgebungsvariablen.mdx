@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-Wie bei LibreChat üblich wird eine Instanz über eine Umgebungsdatei (`.env`) konfiguriert. Der
+Wie bei LibreChat üblich wird eine Instanz über eine Umgebungsdatei konfiguriert. Der
 Auslieferung liegt eine kommentierte Vorlage bei, aus der der Installer beim ersten Lauf die
 tatsächliche Konfiguration erzeugt.
 
@@ -30,15 +30,14 @@ angeben müssen Sie im Wesentlichen drei Dinge:
 
 ## Geheimnisse
 
-Die kryptografischen Geheimnisse — etwa für die Sitzungs-Token und für die verschlüsselt
-gespeicherten Zugangsdaten der Nutzer — erzeugt der Installer beim ersten Lauf selbst und legt
-sie mit eingeschränkten Dateirechten ab. Sie müssen dafür nichts tun.
+Die kryptografischen Geheimnisse einer Instanz erzeugt der Installer beim ersten Lauf selbst
+und legt sie geschützt ab. Sie müssen dafür nichts tun.
 
 <Aside type="caution" title="Beim Umzug auf einen neuen Server">
-Die Schlüssel für die gespeicherten Zugangsdaten müssen aus der bestehenden Konfiguration
-übernommen werden. Werden sie neu erzeugt, lassen sich die verschlüsselten Zugangsdaten in der
-Datenbank nicht mehr entschlüsseln, und alle Nutzer müssen ihre Konnektor-Verbindungen neu
-aufbauen. Das mitgelieferte Backup-Werkzeug nimmt die Konfiguration deshalb mit.
+Die bestehende Konfiguration muss übernommen werden. Wird sie stattdessen neu erzeugt, lassen
+sich zuvor verschlüsselt gespeicherte Zugangsdaten nicht mehr lesen, und alle Nutzer müssen
+ihre Konnektor-Verbindungen neu aufbauen. Das mitgelieferte Backup-Werkzeug nimmt die
+Konfiguration deshalb mit.
 </Aside>
 
 ## Vollständige Referenz

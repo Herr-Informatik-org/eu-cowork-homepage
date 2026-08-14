@@ -1,0 +1,92 @@
+---
+title: Che cos’è MCP
+description: Il Model Context Protocol spiegato dalle basi, perché Lei capisca come EU Cowork AI viene collegato ai Suoi sistemi.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Questa pagina spiega come un modello linguistico arriva ai dati dei Suoi sistemi. Si rivolge ai responsabili IT che non hanno mai sentito il termine MCP e getta le basi per tutte le altre pagine di questo capitolo.
+
+## Il problema che MCP risolve
+
+Un modello linguistico conosce soltanto ciò che era contenuto nel suo materiale di addestramento e ciò che si trova nella conversazione in corso. Non sa nulla dei Suoi clienti, delle Sue fatture o dei Suoi apparecchi. Perché possa rispondere a domande di questo tipo, gli serve un modo per interrogare uno dei Suoi sistemi gestionali mentre la conversazione è in corso.
+
+Esattamente per questo esiste il **Model Context Protocol**, in breve MCP. È un linguaggio comune con cui un sistema di chat pone domande a un sistema gestionale e ne riceve le risposte. MCP è uno **standard aperto con specifica pubblica**, pubblicato in origine da Anthropic e nel frattempo adottato da molti produttori. Non è un’invenzione di EU Cowork AI e non La lega a noi.
+
+Per Lei questo significa due cose. Primo: per molti prodotti diffusi esiste già un server MCP pronto all'uso che Lei può collegare. Secondo: ciò che costruisce una volta per EU Cowork AI funziona anche con altro software che parla MCP.
+
+## Tre termini che Le servono
+
+**Strumento.** Uno strumento è una singola capacità chiaramente delimitata. Ha un nome tecnico, una descrizione in prosa e un elenco di parametri. Un collegamento a un sistema di monitoraggio avrebbe per esempio uno strumento il cui compito consiste nel cercare apparecchi in base a poche caratteristiche. Uno strumento è sempre un’azione, mai un intero sistema.
+
+**Connettore, tecnicamente server MCP.** Un connettore è un piccolo servizio che offre una raccolta di strumenti e dietro di essi parla con il vero sistema di destinazione. In questa documentazione lo chiamiamo connettore, perché è più comprensibile per chi non sviluppa. Nella configurazione e nel pannello di amministrazione si chiama **«MCP-Server»** (server MCP).
+
+**Client.** Il client è la parte alla quale gli strumenti vengono offerti e che li richiama. Da noi è LibreChat, il livello di chat di EU Cowork AI.
+
+Un connettore è spesso un **ponte**: il sistema di destinazione stesso non parla MCP, ma dispone soltanto di una normale interfaccia di programmazione. Il connettore traduce allora fra i due mondi. Così funziona la maggior parte dei collegamenti a un ERP, a un sistema di monitoraggio o a un sistema di ticketing.
+
+## Un esempio: «Quali fatture aperte ha il cliente X?»
+
+Senza connettore il modello non può rispondere a questa domanda. Non sa chi sia il cliente X e non ha accesso alla Sua contabilità. Con un connettore ERP collegato si svolge quanto segue:
+
+1. La persona pone la domanda nella chat.
+2. Insieme alla domanda il modello riceve l’elenco degli strumenti abilitati, ciascuno con nome e descrizione. Fra questi ci sono gli strumenti del connettore ERP.
+3. Il modello stabilisce di non poter rispondere alla domanda con le proprie conoscenze e richiama uno strumento, per esempio «cercare record» con il nome del cliente come filtro.
+4. Prima che la chiamata raggiunga il connettore, si verifica se questa persona sia effettivamente autorizzata a usare questo connettore. La decisione viene registrata.
+5. Se la chiamata è consentita, il connettore interroga l’ERP e restituisce il risultato come testo.
+6. Il modello legge il risultato, all’occorrenza richiama un secondo strumento, per esempio «leggere record» con il numero cliente trovato, e ne formula la risposta.
+
+Importante in questo svolgimento: il modello **decide** quale strumento richiamare, ma non **stabilisce** che cosa gli sia permesso. Il confine lo tracciano la verifica dei diritti che sta davanti e il sistema di destinazione che sta dietro. Un modello non può inventarsi diritti che non ha.
+
+## I due tipi di collegamento
+
+Ogni connettore deve autenticarsi presso il sistema di destinazione. Per farlo esistono due vie fondamentalmente diverse, e la scelta decide dove si collochi il confine delle autorizzazioni.
+
+| | Autenticazione per persona | Account di servizio |
+|---|---|---|
+| Chi si autentica | ogni persona con il proprio account | un unico account tecnico per tutti |
+| Chi conosce i diritti | il sistema di destinazione stesso | il sistema di destinazione conosce solo l’account di servizio |
+| Confine delle autorizzazioni | i diritti della persona nel sistema di destinazione | le abilitazioni in EU Cowork AI più i diritti dell’account di servizio |
+| Granularità | fino al livello di documento e di campo | fino al livello di connettore e di strumento |
+| Tipico per | archivio dei file, gestione documentale, archiviazione cloud | ERP, gestione merci, contabilità, monitoraggio |
+
+**Autenticazione per persona** significa: al primo utilizzo la persona viene indirizzata alla finestra di accesso del sistema di destinazione, lì conferma l’accesso, e da quel momento il connettore lavora con il suo accesso personale. Chi nel Suo archivio dei file non può vedere una cartella, non la vede nemmeno nella chat. Il sistema di destinazione resta l’autorità di riferimento e Lei non deve ricostruire i diritti una seconda volta.
+
+**Account di servizio** significa: il connettore detiene un’unica chiave e si autentica allo stesso modo per tutti. Il sistema di destinazione vede solo questo unico account e non è quindi in grado di distinguere le persone del Suo personale. La separazione deve allora avvenire prima, tramite le abilitazioni in EU Cowork AI.
+
+<Aside type="tip" title="Regola pratica">
+Scelga l'**autenticazione per persona** ogni volta che il sistema di destinazione la offre. È la variante più sicura, perché i diritti vengono curati là dove vengono curati comunque. Un account di servizio è il ripiego per i sistemi che non offrono un accesso personale tramite un’interfaccia. Se Le serve un account di servizio, crei piuttosto più account ristretti che uno solo ampio.
+</Aside>
+
+## Quanto costa un connettore
+
+Un connettore non è gratuito, anche quando non costa nulla. Il catalogo degli strumenti, ossia nome, descrizione e parametri di ogni strumento, viene trasmesso al modello **a ogni singolo messaggio**. Occupa quindi stabilmente spazio nel contesto e viene pagato a ogni chiamata.
+
+L’ordine di grandezza è considerevole. Un connettore esteso può facilmente offrire oltre cento strumenti e occupare così una parte notevole del contesto disponibile, prima ancora che sia posta la prima domanda. Limitato agli strumenti di cui il caso d’uso ha effettivamente bisogno, spesso ne resta soltanto una piccola frazione.
+
+A ciò si aggiunge un secondo effetto: più sono gli strumenti dal nome simile presenti nel catalogo, più spesso il modello sceglie quello sbagliato. Pochi strumenti, dal nome chiaro, forniscono quindi risposte non solo più economiche, ma anche migliori.
+
+<CardGrid>
+  <LinkCard
+    title="Diritti e abilitazioni"
+    href="/docs/it/konnektoren/gateway-und-rechte"
+    description="Come EU Cowork AI applica le regole su chi possa usare quale connettore e perché questo livello serva."
+  />
+  <LinkCard
+    title="Collegare un proprio connettore"
+    href="/docs/it/konnektoren/eigenen-konnektor-anbinden"
+    description="Che cosa chiarire prima di collegare, come verificare un connettore altrui e che cosa arriva con la fornitura."
+  />
+  <LinkCard
+    title="Schemi per i connettori"
+    href="/docs/it/konnektoren/muster"
+    description="Tre forme costruttive collaudate: account di servizio, autenticazione per persona e ponte di sola lettura, con il percorso dei diritti."
+  />
+  <LinkCard
+    title="Buone pratiche per i connettori"
+    href="/docs/it/konnektoren/best-practices"
+    description="Dieci regole con motivazione, oltre a una lista di controllo prima dell’abilitazione."
+  />
+</CardGrid>

@@ -30,7 +30,7 @@ architectural one.
 | Configuration and all secrets | A shared secret cancels out every separation |
 | Backend for code execution | The only place where code from users runs |
 | Inference key | With a shared key, costs per customer can no longer be broken out |
-| Own meta search engine | Sees the search queries and thereby user content |
+| Own service for web search | Sees the search queries and thereby user content |
 
 ## What may be shared
 
@@ -44,16 +44,16 @@ machine.
 
 <Aside type="caution" title="Code execution is the hard part">
 Everywhere else the platform only runs its own code; users have no access to the command line.
-The exception is code execution. It therefore gets its own separate backend per instance. On a
-shared machine the hardened variant is the better choice as well.
+The exception is code execution. It therefore gets its own separate environment per instance. On
+a shared machine the more strongly sealed-off mode of operation is the better choice as well.
 </Aside>
 
 ## What has to be unique per instance
 
 Several instances on one machine collide if they share names or addresses. Every instance
-therefore needs its own project and data area as well as its own network and port assignments.
-Which values these are in detail and how they are set is described in the operations manual. If
-they stay on their defaults, the second instance does not start.
+therefore needs its own identifiers and its own storage areas throughout. Which values these are
+in detail and how they are set is described in the operations manual that comes with the delivery
+package. Customers receive it together with their access.
 
 ## When a dedicated machine
 

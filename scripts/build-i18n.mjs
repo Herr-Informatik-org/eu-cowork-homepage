@@ -210,8 +210,16 @@ function rewriteHead(html, { lang, pagePath, meta }) {
 function prefixLinks(html, lang) {
   if (lang === 'de') return html;
   return html.replace(/href="(\/[^"]*)"/g, (full, href) => {
-    if (NO_PREFIX.some(p => href === p || href.startsWith(p))) return full;
     if (/\.(png|jpg|jpeg|svg|ico|webp|woff2?|xml|txt|json|css|js)$/i.test(href.split('#')[0].split('?')[0])) return full;
+    // Die Dokumentation ist ein eigenes Starlight-Projekt und legt die Sprache
+    // HINTER /docs ab, nicht davor: Deutsch auf der Wurzel, die uebrigen vier
+    // unter /docs/<sprache>.
+    if (href === '/docs' || href.startsWith('/docs/')) {
+      const rest = href.slice(5);
+      if (rest === `/${lang}` || rest.startsWith(`/${lang}/`)) return full;
+      return `href="/docs/${lang}${rest}"`;
+    }
+    if (NO_PREFIX.some(p => href === p || href.startsWith(p))) return full;
     if (href.startsWith(`/${lang}/`) || href === `/${lang}`) return full;
     const clean = href === '/' ? '' : href;
     return `href="/${lang}${clean}"`;

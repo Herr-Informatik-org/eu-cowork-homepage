@@ -15,9 +15,9 @@ Along with your instance you receive a guide that describes the path from creati
 
 ## What to settle beforehand
 
-- **The technical name.** The connector runs under this name in your instance. It cannot be renamed later, because the permission rules hang off it. So pick something meaningful and durable, for example `crm-lesen`.
+- **The technical name.** The connector runs under this name in your instance. It cannot easily be changed later. So pick something meaningful and durable.
 - **The address where the connector speaks MCP.** The service has to be reachable from your instance.
-- **The credentials for the target system.** They belong in the configuration exclusively as a reference to an environment variable, never in plain text. You store the value itself under **"Einstellungen → API-Schlüssel"** (settings → API keys). Saved keys are write only, they are never displayed again, and changing one means overwriting it.
+- **The credentials for the target system.** They never belong in the configuration in plain text, only ever as a reference to a stored key.
 - **The account behind the credentials.** It is the actual data boundary. In the target system, give it exactly the permissions and exactly the areas the use case needs, see [connector patterns](/docs/en/konnektoren/muster).
 - **A short guide in prose** about when this tool should be used and what it cannot do. It is only inserted when the connector is active, and it noticeably improves the hit rate.
 
@@ -38,18 +38,16 @@ The outcome of such a review can very well be "we build it ourselves", especiall
 
 ## Granting access is a step of its own
 
-A connector that has been created is not yet a connector that has been granted, and without a rule in place nothing is blocked automatically.
+A connector that has been created is not yet a connector that has been granted.
 
-<Aside type="danger" title="Set the server default to denied in the same work step">
-Set **"Server-Standard"** (server default) to denied and save, before you do anything else. Then deliberately grant access to the roles, groups, or people who need the connector. How the decision comes about is described under [permissions and grants](/docs/en/konnektoren/gateway-und-rechte).
+<Aside type="danger" title="Set the default rule to denied in the same work step">
+Set the connector's **default rule** to denied before you do anything else. Then deliberately grant access to the roles, groups, or people who need the connector. How the decision comes about is described under [permissions and grants](/docs/en/konnektoren/gateway-und-rechte).
 </Aside>
 
 Finally, check the grant with two test users who have different permissions. If both see the same thing, your permission boundary is not taking hold.
 
 ## When something does not work
 
-- **The connection test in the panel** builds a real MCP connection from the server and reports where it fails. What is tested is the current state of the form, including changes that have not been saved yet. The key does not leave the server in the process. The test checks the connection, **not the permissions**.
-- **A tool reports "access denied".** That is not an error, that is the permission rule. Check **"Verwaltung → MCP-Zugriff"** (administration → MCP access) and the **"Zugriffe"** (access) subpage of the person concerned.
-- **The connector stays invisible in the chat although the test is green.** The tool catalog is cached per person. After a restart of the instance it is current again.
-- **The service cannot be reached.** Connections to internal hosts and private addresses are blocked by default. The host has to be listed under **"Konfiguration → Funktionen → Erlaubte MCP-Hosts"** (configuration → features → allowed MCP hosts).
-- **The referenced variable is empty.** Then the connector gets an empty key and the target system rejects the call. Check the stored value.
+- **A tool reports "access denied".** That is not an error, that is the permission rule. Check the grants for the person concerned, see [permissions and grants](/docs/en/konnektoren/gateway-und-rechte).
+- **The connector does not answer.** First check whether the service is reachable from your instance, then check the stored credentials for the target system.
+- **The individual checks** are described in the guide that ships with your instance. It also covers the connection test, which checks a connection independently of the permissions.

@@ -1,0 +1,82 @@
+---
+title: Architecture
+description: La structure à grands traits — l’accès par un reverse proxy, l’application derrière, le stockage des données à côté et les fournisseurs de modèles à l’extérieur.
+sidebar:
+  order: 2
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import DiagrammArchitektur from '../../../../components/DiagrammArchitektur.astro';
+
+EU Cowork AI tourne dans des conteneurs sur une machine Linux. Cette page montre la
+structure à grands traits. Elle décrit le chemin que prend une requête et les décisions qui se
+trouvent derrière — non la mise en place dans le détail.
+
+## Le flux de données
+
+<DiagrammArchitektur />
+
+Deux choses y sont essentielles. Premièrement, tout chemin venu de l’extérieur passe par le reverse
+proxy ; les autres services n’acceptent aucune connexion depuis le réseau. Deuxièmement, les
+comptes, les conversations et les fichiers restent sur votre serveur, tandis que, pour les réponses
+des modèles elles-mêmes, le fournisseur est sollicité.
+
+## Les couches
+
+**Reverse proxy.** Le seul point d’entrée depuis l’extérieur. Il termine TLS, s’occupe du
+certificat et répartit les requêtes vers les services situés derrière.
+
+**Application.** C’est [LibreChat](https://www.librechat.ai). Le service livre l’interface,
+sollicite les fournisseurs de modèles, exécute les agents et traite les fichiers téléversés.
+
+**Stockage des données.** Les comptes, les conversations, les messages, les agents et les journaux
+se trouvent dans la base de données de l’instance, auxquels s’ajoutent un index de recherche sur
+vos propres chats et les fichiers téléversés sur le même serveur. La base de données est la source
+de vérité, l’index de recherche peut en être reconstruit à tout moment.
+
+**Les ajouts d’EU Cowork AI.** Autour de LibreChat se trouvent nos propres services pour
+l’administration, la gestion des droits et l’aperçu de la consommation, ainsi que le raccordement
+aux systèmes tiers. Ils ne sont joignables qu’à l’intérieur de l’instance et ne sont pas exposés au
+réseau.
+
+**En dehors de l’instance.** Pour les réponses des modèles, le fournisseur d’inférence est
+sollicité, pour la recherche web des moteurs de recherche externes. Si l’exécution de code est
+activée, elle tourne dans un environnement propre et séparé, à côté de l’application.
+
+<Aside type="note" title="Ce qui vient de LibreChat">
+Le chat, les agents, le traitement des fichiers et la connexion aux modèles viennent de LibreChat
+et y sont documentés publiquement. Les ajouts d’EU Cowork AI s’y appuient sans modifier le noyau ;
+c’est pourquoi les mises à jour de LibreChat restent possibles.
+</Aside>
+
+## Pourquoi une instance par client
+
+LibreChat ne connaît pas les mandants. La séparation se situe donc en dessous de l’application : un
+client est une instance distincte, avec sa propre base de données, son propre index de recherche,
+ses propres fichiers, sa propre configuration et sa propre clé d’inférence. Que deux instances
+partagent une machine n’est ensuite qu’une pure question de coûts et de risques.
+
+Ne peuvent être partagées, tout au plus, que des ressources d’exploitation sans lien avec un client.
+Doivent rester séparés dans tous les cas le stockage des données, la configuration avec toutes ses
+clés et l’environnement de l’exécution de code. Sinon, ni les données ni les coûts ne se laissent
+attribuer proprement à chaque client.
+
+<Aside type="note" title="La documentation de mise en place">
+Quels services une instance apporte dans le détail, comment ils se configurent et ce qu’il faut
+observer en exploitation, cela est décrit par les documents fournis avec la livraison.
+</Aside>
+
+## Pour aller plus loin
+
+<CardGrid>
+  <LinkCard
+    title="Configuration requise"
+    href="/docs/fr/erste-schritte/systemanforderungen"
+    description="Ce qu’une instance demande en CPU, en mémoire vive et en espace disque."
+  />
+  <LinkCard
+    title="Qu’est-ce qu’EU Cowork AI ?"
+    href="/docs/fr/erste-schritte/ueberblick"
+    description="La vue d’ensemble de la plateforme, de ses limites et de sa licence."
+  />
+</CardGrid>

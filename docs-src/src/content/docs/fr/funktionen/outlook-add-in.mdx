@@ -1,0 +1,225 @@
+---
+title: Add-in Outlook
+description: "Le collègue IA dans la boîte de réception : résumer les courriels, rédiger des réponses, extraire les tâches. Avec les pièces jointes, la connexion et la distribution."
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+L’add-in Outlook amène le collègue IA directement dans la boîte de réception, sous forme de volet
+latéral. Le message ouvert sert alors de contexte. Cette page décrit l’étendue des fonctions, le
+traitement des pièces jointes, la connexion et la voie de distribution dans l’entreprise.
+
+L’add-in est un développement maison.
+
+## Ce qu’il sait faire
+
+- Résumer le courriel ouvert, y compris les longs fils de discussion.
+- Rédiger un projet de réponse qui atterrit dans la fenêtre de réponse habituelle d’Outlook.
+- Extraire d’un message les tâches et les échéances.
+- Lire au passage les fichiers et les pièces jointes, voir plus bas.
+- Sur demande, reprendre votre style rédactionnel, si l’administrateur l’a mis en place.
+
+Il fonctionne dans Outlook pour Windows, pour Mac, sur le web et dans le nouvel Outlook.
+
+<Aside type="caution" title="Rien n’est jamais envoyé automatiquement">
+L’add-in fournit du texte. Le projet de réponse atterrit dans la fenêtre de réponse native, et
+c’est vous qui l’envoyez. Il n’existe aucun envoi automatique, et l’autorisation Microsoft
+correspondante pour l’envoi n’est délibérément pas demandée.
+</Aside>
+
+## Ce n’est pas une voie parallèle contournant la plateforme
+
+Derrière le volet tourne un véritable agent sur votre serveur, dans la même instance que le chat
+web. Cela a trois conséquences pour les administrateurs :
+
+| | |
+|---|---|
+| Droits | Les mêmes rôles et les mêmes règles pour les connecteurs s’appliquent que dans le chat web |
+| Consommation | Chaque tour est mesuré et apparaît dans la consommation et la facturation |
+| Journal | Les appels de connecteurs figurent dans le journal d’audit, comme partout ailleurs |
+
+Aucun trafic vers les modèles ne contourne la plateforme.
+
+## Fichiers et pièces jointes
+
+Le volet lit les fichiers **lui-même** et ne transmet que le texte. Le fichier ne quitte pas votre
+ordinateur.
+
+| Format | Ce qui est lu |
+|---|---|
+| PDF | Le texte page par page, **pas d’OCR** |
+| Word `.docx` | Les paragraphes, y compris les cellules de tableau et les sauts de ligne |
+| Excel `.xlsx` | Le nom de la feuille et les lignes, les colonnes vides sont conservées |
+| Texte `.txt .md .csv .tsv .json .log .yml .xml` | le texte brut |
+| Images JPEG et PNG | en pièce jointe image, réduite avant l’envoi |
+
+Des plafonds s’appliquent par message pour le nombre, la taille et la quantité de texte. Lorsqu’une
+limite est atteinte, le volet vous le dit au lieu d’écarter silencieusement quelque chose.
+
+**Ne sont pas lus** les anciens formats binaires `.doc`, `.xls` et `.ppt`, PowerPoint, les
+archives, les pièces jointes dans le cloud (seul un lien arrive alors) et les courriels joints.
+Dans ces cas aussi, le volet en indique la raison.
+
+Les fichiers arrivent dans la conversation par trois voies : le menu du champ de saisie, le
+glisser-déposer sur la zone de chat et, pour les images, le presse-papiers.
+
+<Aside type="caution" title="Les pièces jointes numérisées ont besoin d’une couche de texte">
+Un PDF numérisé sans couche de texte ne contient aucun texte exploitable. Le volet le signale
+expressément au lieu de produire un résumé vide.
+</Aside>
+
+### Les pièces jointes du courriel ouvert
+
+Les pièces jointes du message ouvert ne sont **jamais lues sans qu’on vous le demande**. Si le
+courriel comporte des pièces jointes, une carte interrompt l’opération après l’envoi et vous
+laisse choisir une à une celles qui peuvent être lues. Sur demande, le volet retient ce choix pour
+ce courriel précis.
+
+Pour cela, le client Outlook a besoin d’une version suffisamment récente de l’interface de boîte
+aux lettres. S’il est trop ancien, la carte le dit et l’opération se poursuit sans les pièces
+jointes.
+
+## Instructions personnelles
+
+Les réglages du volet comportent un champ pour les consignes personnelles, par exemple
+« immer Sie, nie Gedankenstriche, Grussformel Freundliche Grüsse » (toujours le vouvoiement,
+jamais de tirets, formule de politesse Freundliche Grüsse). Ces consignes se situent **tout en
+haut** de la hiérarchie : elles l’emportent sur les compétences, sur le profil de style
+rédactionnel et sur les instructions de l’agent.
+
+Elles sont reconstituées à partir des réglages à chaque envoi et ne sont pas enregistrées dans
+l’historique. Si vous les modifiez au milieu d’une conversation, la nouvelle version s’applique
+immédiatement.
+
+## Connexion sans mot de passe
+
+Le volet ne demande aucun mot de passe. La connexion passe à la place par un code d’appareil :
+
+<Steps>
+
+1. Dans le volet, cliquez sur **« Anmelden »** (se connecter). Un code court apparaît.
+
+2. **« Im Browser fortfahren »** (poursuivre dans le navigateur). Une page de confirmation s’y
+   ouvre, sur votre propre domaine de chat, avec le même code.
+
+3. Cliquez sur **« Verbinden »** (connecter). La page utilise votre connexion existante dans le
+   navigateur. Si vous n’y êtes pas connecté, la page vous propose de vous authentifier et le code
+   reste valable.
+
+4. Le volet termine la connexion de lui-même.
+
+</Steps>
+
+L’opération expire au bout d’un court délai. À la fin, le volet reçoit exactement une valeur :
+votre clé personnelle portant le nom **« Outlook-Add-in »**. Elle est limitée dans le temps et peut
+être révoquée à tout moment, dans les réglages du chat web sous **« API-Schlüssel für Agenten »**
+(clés API pour les agents).
+
+L’avantage de cette voie : l’authentification à deux facteurs et, plus tard, la connexion via
+Entra fonctionnent sans travail supplémentaire, parce que la connexion au navigateur les couvre de
+toute façon.
+
+## Une limite qu’il faut connaître
+
+<Aside type="caution" title="Les réponses du volet n’apparaissent pas dans le chat web">
+Ce que vous discutez dans le volet Outlook n’apparaît **pas** dans l’historique du chat web.
+L’historique vit dans le volet. C’est une limitation connue de l’interface par laquelle les
+clients externes sont raccordés.
+
+La mesure de la consommation et la journalisation s’appliquent néanmoins pleinement. Il n’y a donc
+aucune lacune en matière de coûts et de traçabilité, simplement pas de second historique de
+conversation.
+</Aside>
+
+## Pour les administrateurs : conditions préalables
+
+| Condition | Détail |
+|---|---|
+| TLS valide publiquement | Office ne charge que du HTTPS approuvé publiquement. Une **autorité de certification interne ne suffit pas**, le volet resterait vide |
+| Boîtes aux lettres sur Exchange Online | POP3, IMAP et Exchange local ne sont pas pris en charge par la plateforme d’add-ins. Il n’existe aucun contournement |
+| Droits d’administration dans Microsoft 365 | Rôle « Administrateur général » ou « Administrateur Exchange » |
+| Domaine de chat joignable | Le volet s’adresse au même domaine que le chat web |
+
+<Aside type="caution" title="Les réponses doivent être transmises en continu">
+Si le flux de réponse est mis en mémoire tampon au lieu d’être transmis en continu, la fenêtre
+d’affichage d’Outlook s’interrompt au bout d’un court délai avec « aucune connexion », alors que
+tout fonctionne correctement côté serveur. Sont concernées précisément les réponses longues et
+riches en appels d’outils, celles-là mêmes pour lesquelles on veut l’add-in. Le réglage par défaut
+est correct ; il ne devrait pas être modifié.
+</Aside>
+
+## Pour les administrateurs : mise en place
+
+<Steps>
+
+1. **Mettre l’add-in à disposition**, de sorte qu’il soit servi sous votre domaine de chat.
+
+2. **Créer l’agent.** Créer un agent dans le chat, par exemple sous le nom
+   `Outlook-Assistent`, avec le modèle standard du client et, dans un premier temps, sans
+   connecteurs.
+
+3. **Autoriser l’agent pour l’accès distant.** Sans cette autorisation, l’interface refuse
+   l’accès. De plus, le droit de rôle **« Remote-Agenten »** (agents distants) doit être attribué
+   aux rôles appelés à utiliser l’add-in.
+
+4. **Enregistrer l’agent par défaut**, afin que personne n’ait à le choisir dans le volet.
+
+5. **Vérifier le manifeste.** Il ne doit plus contenir le moindre espace réservé.
+
+</Steps>
+
+### Distribution dans le centre d’administration Microsoft 365
+
+<Steps>
+
+1. Ouvrir [admin.microsoft.com](https://admin.microsoft.com), puis **Paramètres → Applications
+   intégrées**.
+
+2. **Charger des applications personnalisées**, puis *Complément Office* et *Charger le fichier
+   manifeste*.
+
+3. Attribuer à **Moi uniquement** pour tester, à des **utilisateurs/groupes** précis pour un
+   pilote ou à l'**organisation entière** pour le déploiement. Confirmer les autorisations et
+   déployer.
+
+</Steps>
+
+<Aside type="note" title="Comptez 24 heures">
+Selon Microsoft, il faut **jusqu’à 24 heures** pour que l’add-in apparaisse dans le ruban chez
+tous les utilisateurs. L’Outlook classique dispose en plus d’un cache local.
+
+Pour un pilote, la voie passant par [aka.ms/olksideload](https://aka.ms/olksideload) est nettement
+plus rapide. Elle agit boîte aux lettres par boîte aux lettres et prend effet immédiatement sur
+tous les clients de cette boîte.
+</Aside>
+
+**Lors des mises à jour**, incrémentez le numéro de version dans le manifeste et actualisez-le
+sous Applications intégrées. Le **GUID reste toujours le même**. Un nouveau GUID compte comme un
+add-in étranger et apparaîtrait une seconde fois dans le ruban.
+
+### En option : reprendre le style rédactionnel
+
+Si le volet doit apprendre le style rédactionnel personnel à partir des courriels envoyés, il lui
+faut son propre enregistrement d’application dans Entra, avec une autorisation de lecture déléguée
+sur la boîte aux lettres. Sans cette étape, l’add-in fonctionne entièrement, seule la reprise du
+style manque. Le jeton d’accès reste alors dans le client et ne parvient pas à votre serveur.
+Aucune autorisation d’envoi n’est demandée, et ce délibérément.
+
+### Recherche d’erreurs
+
+| Symptôme | Cause et solution |
+|---|---|
+| L’add-in n’apparaît pas dans le ruban | La distribution prend jusqu’à 24 heures. Tester tout de suite via le chargement indépendant. Redémarrer l’Outlook classique |
+| Le volet reste blanc | Vérifier le certificat. Il en faut un valide publiquement, pas une autorité de certification interne |
+| Volet vide uniquement dans Outlook sur le web | Le volet ne doit pas être bloqué par des en-têtes d’encadrement |
+| L’accès à l’agent est refusé | L’autorisation de l’agent pour l’accès distant manque, ou le droit de rôle est désactivé |
+| Une connexion est exigée en pleine discussion | La clé personnelle a expiré. Se déconnecter dans le volet, puis se reconnecter |
+| Interruption sur les réponses longues | Le flux de réponse est mis en mémoire tampon au lieu d’être transmis en continu |
+| L’add-in manque chez certaines personnes | Leur boîte aux lettres n’est pas sur Exchange Online |
+
+Les erreurs issues du volet atterrissent en outre dans le panneau d’administration, sous
+**« Logs »** (journaux), onglet **« Client-Fehler »** (erreurs client). On y trouve la cause
+technique avec la personne, la plateforme et le nom du fichier, jamais le contenu d’un fichier.
+Les entrées sont supprimées automatiquement une fois le délai de conservation écoulé.

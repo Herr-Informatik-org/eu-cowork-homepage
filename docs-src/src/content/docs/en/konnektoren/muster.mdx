@@ -19,7 +19,7 @@ Three shapes cover practically everything that comes up in a small or medium bus
 
 The answer to that is not a filter in the prompt, it is the structure of the accounts: **one service account and one connector instance per permission profile**, rather than a single master key for everyone. An access key fully inherits the permissions of its account in the target system. That makes the account behind the key the actual data boundary, not the configuration and not the prompt. What the account is not allowed to see, the chat does not see either, no matter what the model tries.
 
-The grants in EU Cowork AI come **on top of that**. They decide who gets to see which instance at all. If a rule in the panel ever fails, the permission boundary of the service account still holds.
+The grants in EU Cowork AI come **on top of that**. They decide who gets to see which instance at all. If a grant in the panel is ever set too widely, the permission boundary of the service account still holds.
 
 | Instance with its own service account | Intended for |
 |---|---|
@@ -39,7 +39,7 @@ So grant **exactly one** instance per person. If someone needs a different profi
 
 Three points on top of that matter in day to day work:
 
-- **Set the server default to denied right away.** As long as the default is not set to denied, every person sees every instance, and with it everything the service accounts can see.
+- **Set the default rule to denied right away.** Set the default rule of every instance to denied before you grant access to anyone.
 - **Keep the release in the target system read only** wherever the use case allows. Enable writing, creating, and deleting only for the individual objects where you genuinely have the need.
 - **Use the log.** Every decision is written down immutably. In the log of the target system you can additionally tell which profile a query came from. Separate service accounts pay off a second time here.
 
@@ -56,7 +56,7 @@ That means: someone who is not allowed to see a folder in the target system does
 **This is the preferred route.** If a system offers this kind of sign-in, take it. The permissions of the target system are already the boundary, and they are finer than a rule in front of it could ever be: down to document and field level instead of only down to connector and tool level.
 
 <Aside type="note" title="Here the control sits in the target system">
-Because the person's permissions are already the boundary, an additional permission rule in front of it would be no security gain. For a connector like this there are therefore no rules per role, group, or person; the only thing you control is whether a role may use connectors at all. Anyone who should not have the connector is steered through the model and agent configuration.
+Because the person's permissions are already the boundary, the authoritative control for a connector like this sits in the target system. Maintain it there, and do not plan on rebuilding a finer gradation in front of it.
 </Aside>
 
 **What to watch out for.**
@@ -66,7 +66,7 @@ Because the person's permissions are already the boundary, an additional permiss
 - **The access has to survive and be renewable.** If the permission to renew the connection in the background is missing, it dies after a short while and every person has to connect again.
 
 <Aside type="caution" title="After a migration the keys of the instance have to come along">
-The personal access tokens sit encrypted in the database of your instance. If you move to a new server, the corresponding keys of the old instance have to be carried over. If that does not happen, all stored connections are unusable and **every person has to set up their access again**. No data is lost in the process, but it is one support case per member of staff. Put this point on your migration plan, see [backup and migration](/docs/en/betrieb/backup-und-umzug).
+The personal access paths are part of the protected data of your instance. If you move to a new server, the corresponding keys of the old instance have to be carried over. If that does not happen, all stored connections are unusable and **every person has to set up their access again**. No data is lost in the process, but it is one support case per member of staff. Put this point on your migration plan, see [backup and migration](/docs/en/betrieb/backup-und-umzug).
 </Aside>
 
 ## Pattern C: read-only bridge to a specialist system
@@ -84,15 +84,15 @@ The personal access tokens sit encrypted in the database of your instance. If yo
 So give the technical access in the target system only the areas it genuinely needs. What it does not see simply does not exist as far as the chat is concerned. That is the hardest boundary available, it sits entirely with you in the specialist system, and it can be bypassed neither by a prompt nor by a bug in our software. If you need several views, the way is the same as in pattern A: a second technical access path with a narrower area, a second instance of the bridge, and in the panel every person gets exactly one of them.
 
 <Aside type="tip" title="The rule behind it">
-**A tool that does not exist cannot be called by a model by accident.** So do not build tools for reboot, script execution, software deployment, maintenance windows, or write access to tickets in the first place. Then no rule is needed anywhere that would have to prevent someone from restarting a customer server from the chat. It simply is not possible.
+**A tool that does not exist cannot be called by a model by accident.** So do not build tools for intervening actions, such as reboots or script execution, in the first place. Then no rule is needed anywhere that would have to prevent someone from restarting a server from the chat. It simply is not possible.
 
-That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers reboots and script runs alongside reading and that cannot be switched off, a narrow bridge of your own is often the faster solution than the discussion about who is allowed to use it.
+That is exactly the measure you apply to a third party connector: which tools does it expose, and is there a read only mode? If a ready-made server offers intervening actions alongside reading and that cannot be switched off, a narrow bridge of your own is often the faster solution than the discussion about who is allowed to use it.
 </Aside>
 
 **What to watch out for.**
 
 - **A self-test is worth the effort.** A small check program that proves the sign-in, the permissions actually granted, and a read access turns an assurance into evidence. It can be run again after every change.
-- **Staged responses save on every question.** A detail query should first load only the master data and deliver expensive sections such as software inventory, services, or patch levels only on explicit request.
+- **Staged responses save on every question.** A detail query should first load only the master data and deliver extensive sections only on explicit request.
 - **For questions about many objects, use an evaluation tool.** Ten individual queries cost ten results in the context, one evaluation costs one.
 - **Everybody sees the same thing.** The specialist system does not know the individual chat user, it only sees the technical access. The separation between your staff is made solely by the grant in the panel and by the area you gave that access.
 
@@ -110,7 +110,7 @@ So enable tools one at a time and on request, not as a precaution.
   <LinkCard
     title="Permissions and grants"
     href="/docs/en/konnektoren/gateway-und-rechte"
-    description="The permission cascade and where you maintain the grants."
+    description="What the permission check decides on and where you maintain the grants."
   />
   <LinkCard
     title="Connecting your own connector"

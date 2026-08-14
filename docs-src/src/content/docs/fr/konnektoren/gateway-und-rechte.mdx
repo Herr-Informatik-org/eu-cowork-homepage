@@ -1,0 +1,57 @@
+---
+title: Droits et autorisations
+description: Comment EU Cowork AI décide qui a le droit d’utiliser quel connecteur, et où vous gérez les autorisations.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import DiagrammGateway from '../../../../components/DiagrammGateway.astro';
+
+Devant les connecteurs se trouve un contrôle des droits. Il décide si la personne à l’origine de la demande a le droit d’utiliser un connecteur, et il consigne la décision. Cette page explique pourquoi cette couche est nécessaire, sur quoi elle se prononce et où vous gérez les autorisations.
+
+## Pourquoi cette couche est nécessaire
+
+Si l’on raccorde des connecteurs sans couche de droits propre, on ne peut le plus souvent définir que si quelqu’un a le droit d’utiliser des connecteurs, pas lesquels. Qui a le droit d’utiliser MCP voit alors tous les systèmes raccordés, ou aucun.
+
+Pour un outil comme une consultation météo, cela n’a pas d’importance. Pour un ERP, si : « la comptabilité peut voir les factures, mais pas les salaires » ne se laisse pas exprimer à ce niveau. C’est exactement cette lacune que comble le contrôle des droits.
+
+## Ce que fait le contrôle des droits
+
+- **Une vérification avant l’appel.** Un appel d’outil n’atteint le connecteur que si la personne à l’origine de la demande y est autorisée. Sinon, elle reçoit dans le chat un message en clair qui la renvoie à l’administrateur. Le chat se poursuit normalement, il n’y a pas de plantage.
+- **Une liste d’outils propre à chaque personne.** Qui n’a pas d’autorisation pour un connecteur ne se voit même pas proposer ses outils.
+- **Un journal de chaque appel.** Chaque décision est consignée de façon inaltérable, refus compris. La durée de conservation de ces entrées, vous la fixez dans votre concept de suppression, voir [Protection des données et conservation](/docs/fr/administration/datenschutz-und-aufbewahrung).
+- **En cas de doute, refuser.** Si une décision reste incertaine, l’accès est refusé plutôt qu’autorisé.
+- **Le connecteur n’apprend pas qui demande.** L’identité sert à la décision et n’est pas transmise au connecteur.
+
+## Le parcours d’une requête
+
+<DiagrammGateway />
+
+## Les niveaux d’une autorisation
+
+Les autorisations peuvent être posées pour des personnes précises, pour des rôles et pour des groupes, et il s’y ajoute une règle par défaut par connecteur. Lorsque des indications se contredisent, la résolution est délibérément restrictive. C’est voulu : une limite de sécurité ne doit pas pouvoir être levée par le simple fait que quelqu’un appartient en plus à un groupe anodin.
+
+<Aside type="danger" title="Étape obligatoire : poser la règle par défaut avant l’autorisation">
+Le premier geste après la création d’un connecteur revient à la règle par défaut : **placez la règle par défaut du connecteur sur « refusé », puis autorisez de façon ciblée les rôles, les groupes et les personnes qui ont besoin du connecteur.**
+
+Ainsi, il est défini dès la première seconde qui voit derrière le connecteur, et l’autorisation est une décision consciente au lieu d’un effet secondaire. Inscrivez cette étape dans votre liste de réception.
+</Aside>
+
+À côté du niveau du connecteur, une autorisation peut aussi porter sur des outils précis.
+
+<Aside type="tip" title="Découpez vos connecteurs de sorte que le niveau du connecteur suffise">
+Au quotidien, le pilotage au niveau du connecteur couvre la plus grande part des cas — et c’est la limite la plus robuste. Planifiez donc vos connecteurs en conséquence : mieux vaut deux connecteurs étroits, chacun avec son propre compte de service, qu’un seul avec de nombreux outils dont la moitié devrait être bloquée. À quoi cela ressemble, vous le lirez sous [Modèles de connecteurs](/docs/fr/konnektoren/muster).
+</Aside>
+
+## Où vous gérez les autorisations
+
+Les règles par défaut, les autorisations pour les rôles et les groupes ainsi que les exceptions pour des personnes précises se gèrent dans le panneau d’administration. C’est également là que se trouve le journal des appels d’outils, qui peut être exporté pour vos archives. Inversement, on peut aussi partir d’une personne donnée et retracer quels connecteurs lui sont ouverts.
+
+Quelle vue se trouve où et comment elle s’utilise, cela est décrit dans le guide fourni avec votre livraison.
+
+## Ce que le contrôle des droits ne fait pas
+
+- **Il ne remplace pas les droits dans le système source.** Un compte de service aux droits trop larges reste un risque, même avec un contrôle devant lui. Tracez la limite des données dans le système source, pas dans le prompt.
+- **Il ne filtre ni les arguments ni les contenus.** Un outil qui accepte un langage de requête libre ne peut pas être raisonnablement restreint aux « seules factures ». Préférez les connecteurs avec des outils séparés ou avec un mode lecture seule.
+- **Il n’est pas la seule limite.** Pour les connecteurs qui travaillent avec les droits de chaque personne, c’est le système cible lui-même qui trace la limite de référence, voir [Modèles de connecteurs](/docs/fr/konnektoren/muster).

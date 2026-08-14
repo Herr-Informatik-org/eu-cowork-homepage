@@ -1,0 +1,192 @@
+---
+title: Chat e modelli
+description: Come funziona la chat, come sono composte le schede dei modelli, come lavorano i ricordi e la compattazione automatica delle conversazioni lunghe.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Questa pagina descrive che cosa il personale trova nella chat: la cronologia, la ricerca, le
+schede dei modelli, i ricordi e il comportamento delle conversazioni molto lunghe. Alla fine una
+sezione si rivolge agli amministratori e presenta i relativi interruttori.
+
+L’interfaccia di chat proviene da [LibreChat](https://www.librechat.ai/docs). Da parte nostra
+arrivano la selezione delle schede dei modelli, il prompt di sistema memorizzato e la gestione
+dei diritti che vi sta sopra.
+
+<Aside type="tip" title="Quattro nozioni per cominciare">
+
+| Nozione | In una frase |
+|---|---|
+| **Token** | L’unità di calcolo dei modelli linguistici: un frammento di testo di circa quattro caratteri, quindi all’incirca da mezza parola a una parola intera. Tutto ciò che Lei scrive e tutto ciò che il collega risponde viene conteggiato in token, ed è da lì che dipendono il consumo, i budget e i limiti di contesto. |
+| **Scheda del modello** | Un pacchetto già pronto composto da fornitore, modello e preimpostazioni, che Lei sceglie nel selettore sotto un nome comprensibile invece di indicare un modello grezzo. |
+| **Prompt di sistema** | L’istruzione di lavoro consegnata al modello prima della Sua domanda, che stabilisce lingua, tono e comportamento. È legata alla scheda e non è visibile nella chat. |
+| **Contesto** | Tutto ciò che il modello può leggere contemporaneamente per una richiesta: la Sua domanda, la conversazione fin lì, i file allegati e i risultati degli strumenti. Lo spazio disponibile è limitato e si misura in token. |
+
+</Aside>
+
+## La chat di tutti i giorni
+
+Lei scrive una domanda, la risposta compare progressivamente, parola dopo parola. Ogni
+conversazione si deposita nella cronologia della colonna di sinistra e riceve automaticamente un
+titolo che un modello ricava dai primi messaggi. Quel titolo Lei può riscriverlo in qualsiasi
+momento.
+
+| Funzione | Che cosa fa |
+|---|---|
+| Cronologia | Tutte le conversazioni restano salvate finché Lei non le elimina o finché non scatta il termine di conservazione |
+| Titoli automatici | Il titolo nasce al primo scambio, senza alcun Suo intervento |
+| Segnalibri | Contrassegnare le conversazioni importanti e ritrovarle più in fretta |
+| Risposte in parallelo | Far girare più chat affiancate e confrontare le risposte |
+| Chat privata | Una conversazione che non viene salvata |
+| Diramare | Aprire un nuovo ramo a partire da un messaggio qualsiasi, senza modificare l’originale |
+| Condividere | Rendere accessibile una conversazione sotto forma di link |
+
+La **«Privater Chat»** (chat privata) si chiama **«Temporäre Chats»** (chat temporanee)
+nell’editor dei ruoli del pannello di amministrazione, dove porta la nota «Unterhaltungen ohne
+Speicherung» (conversazioni senza salvataggio). Per quanto tempo una simile conversazione venga
+comunque conservata lo stabilisce l’amministratore.
+
+**Diramare** è la mossa giusta quando una conversazione deve proseguire in due direzioni. Lei
+conserva la cronologia esistente e prova un’altra variante nel ramo, senza perdere la
+conversazione originale.
+
+**Condividere** genera un link a un’istantanea della conversazione. Chi ha il link legge insieme
+a Lei. Il relativo diritto è un diritto di ruolo a sé e può essere revocato.
+
+## Cercare nelle vecchie chat
+
+Nella barra laterale c’è una ricerca sul testo integrale di tutte le proprie conversazioni. La
+ricerca trova quindi anche una formulazione nel bel mezzo di una risposta di tre settimane fa.
+
+<Aside type="note" title="Tre ricerche che non sono la stessa cosa">
+La ricerca a testo integrale nelle Sue chat è un’altra cosa rispetto alla **ricerca nei file** su
+un insieme di documenti, ed è un’altra cosa ancora rispetto alla **ricerca web**. Che cosa serve a
+che cosa è spiegato in
+[File e conoscenza](/docs/it/funktionen/dateien-und-wissen) e in
+[Ricerca web](/docs/it/funktionen/web-suche).
+</Aside>
+
+## Che cos’è una scheda del modello
+
+Una scheda del modello è un preset già confezionato. Riunisce tre cose:
+
+1. un determinato modello presso un determinato fornitore,
+2. il prompt di sistema memorizzato, cioè l’istruzione di lavoro data al modello,
+3. la preselezione degli strumenti che su questa scheda sono attivi.
+
+Il prompt di sistema viene inserito lato server e non arriva mai nel browser. Le schede fornite
+portano tutte lo stesso prompt; è lui a stabilire la lingua, il tono e il trattamento accurato
+dei fatti.
+
+Le nuove chat partono dalla scheda predefinita. Lei può cambiare scheda, il cambio non è
+bloccato.
+
+## Quali schede trova
+
+Quali schede compaiano nel selettore lo decide l’amministratore. Due distinzioni contano nel
+lavoro di tutti i giorni:
+
+- **Testo, oppure testo e immagini.** Non tutte le schede capiscono le immagini. Screenshot e
+  foto vanno su una scheda contrassegnata come compatibile con le immagini; su una scheda di solo
+  testo un’immagine resta senza effetto.
+- **UE o non UE.** Le schede le cui richieste lasciano l’UE portano nel nome la dicitura
+  ⚠ Nicht-EU (non UE).
+
+<Aside type="caution" title="La segnalazione è voluta">
+Il segno ⚠ e l’aggiunta «Nicht-EU» (non UE) fanno parte del nome della scheda, affinché nel
+momento della scelta sia visibile che questa richiesta lascia l’UE. La segnalazione non va rimossa
+finché la scheda punta a un fornitore fuori dall’UE. Chi vuole un’istanza puramente europea non
+offre nemmeno schede di questo tipo.
+</Aside>
+
+## I ricordi: la memoria a lungo termine
+
+Il collega IA si ricorda alcune cose su di Lei da una conversazione all’altra e le porta dentro
+ogni nuova risposta. Succede da sé, non c’è bisogno che Lei dica «ricordati questo».
+
+Viene salvato deliberatamente poco, e solo in quattro categorie:
+
+| Categoria | Contenuto |
+|---|---|
+| Preferenze | Come vuole le risposte: lingua, formato, livello di dettaglio, tono, correzioni ricorrenti |
+| Contesto di lavoro | Ruolo, team, ambiti di competenza, sistemi utilizzati |
+| Progetti | Progetti in corso, clienti e temi con un breve stato |
+| Note | Altri fatti stabili che rendono migliori le risposte future |
+
+Espressamente **non** vengono salvati password e chiavi, dati sanitari, religiosi e politici, dati
+salariali, fatti sensibili su terzi e dettagli occasionali senza valore di riutilizzo.
+
+La memoria è tenuta piccola di proposito. Se si riempie, il collega riassume le voci affini invece
+di continuare ad aggiungere a piacere.
+
+**Come disattivarla.** Nelle impostazioni, sotto **«Datenschutz & Sicherheit»** (protezione dei
+dati e sicurezza), sezione **«Erinnerungen»** (ricordi), si trova l’interruttore
+**«Gespeicherte Erinnerungen verwenden»** (usare i ricordi salvati). Spento significa: i Suoi
+ricordi non confluiscono più nelle risposte. Nella stessa area può consultare le Sue voci,
+modificarle una per una ed eliminarle.
+
+## Conversazioni molto lunghe
+
+Un modello può leggere solo una quantità limitata di testo per richiesta. Se una conversazione
+diventa molto lunga, un’esecuzione separata riassume automaticamente i messaggi più vecchi e da
+quel momento invia al modello questo riassunto invece della cronologia completa.
+
+- Il punto in cui questo scatta dipende dalla scheda scelta: le schede con una finestra di
+  contesto più piccola compattano prima.
+
+La Sua cronologia visibile resta comunque completa. Viene riassunto solo ciò che va al modello.
+
+<Aside type="note" title="Non esiste un comando manuale per questo">
+Un comando come `/compact`, con cui avviare Lei stesso la compattazione, non esiste. Il
+procedimento avviene esclusivamente in automatico. Se vuole ripartire consapevolmente da zero,
+apra una nuova chat oppure dirami nel punto opportuno.
+</Aside>
+
+## Per gli amministratori
+
+### Schede dei modelli per ruolo e per gruppo
+
+Quali schede veda una persona lo decide il pannello di amministrazione. La cascata è **gruppo
+prima del ruolo, ruolo prima della base**.
+
+- **«Verwaltung → Rollen»** (amministrazione, ruoli): un interruttore per scheda e per ruolo.
+  In più l’interruttore **«Weitere Modelle (Roh-Untermenü)»** (altri modelli, sottomenu grezzo)
+  con la nota «Aus = diese Rolle sieht NUR die oben aktivierten Karten» (spento = questo ruolo
+  vede SOLO le schede attivate sopra).
+- **«Verwaltung → Gruppen»** (amministrazione, gruppi): per ogni gruppo o **«Erben»**
+  (ereditare) oppure **«Eigene Auswahl (übersteuert die Rollen-Regel)»** (selezione propria,
+  prevale sulla regola di ruolo).
+
+È questa la via pulita per abilitare schede supplementari, per esempio alla direzione, e mostrare
+a tutti gli altri solo le schede UE.
+
+### Nascondere del tutto il selettore dei modelli
+
+Per un’installazione volutamente semplice, nel pannello sotto **«Konfiguration → Funktionen»**
+(configurazione, funzioni) imposti **«Modell-Auswahl anzeigen»** (mostrare la selezione del
+modello) su **spento**. Allora tutti lavorano sulla scheda predefinita e non vedono più alcuna
+scelta del modello.
+
+### Pannello dei parametri
+
+Alla consegna il pannello per la temperatura e per le regolazioni fini dello stesso genere è
+**spento**. È voluto: il personale senza dimestichezza con l’IA finirebbe altrimenti per
+modificare valori di cui non può valutare l’effetto. Riattivarlo si fa ruolo per ruolo attraverso
+la cascata di configurazione nel pannello; nella pratica è il ruolo ADMIN a ricevere questo
+override, mentre tutti gli altri ruoli ereditano il comportamento disattivato.
+
+### Un ordine sensato per l’installazione
+
+<Steps>
+
+1. Curare prezzi e dimensioni di contesto sotto **«Konfiguration → Preise»** (configurazione,
+   prezzi), affinché la misurazione del consumo sia corretta. Un campo prezzo vuoto non significa
+   gratuito: LibreChat calcola allora con un forfait integrato.
+
+2. Definire le schede per ruolo e per gruppo.
+
+3. Solo dopo invitare il personale.
+
+</Steps>

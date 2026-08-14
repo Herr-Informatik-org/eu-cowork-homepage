@@ -1,0 +1,92 @@
+---
+title: Qu’est-ce que MCP
+description: Le Model Context Protocol expliqué depuis la base, pour que vous compreniez comment EU Cowork AI est raccordé à vos propres systèmes.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Cette page explique comment un modèle de langage accède aux données de vos propres systèmes. Elle s’adresse aux responsables informatiques qui n’ont jamais entendu le terme MCP, et elle pose les bases de toutes les autres pages de ce chapitre.
+
+## Le problème que MCP résout
+
+Un modèle de langage ne connaît que ce qui figurait dans ses données d’entraînement et ce qui figure dans la conversation en cours. Il ne sait rien de vos clients, de vos factures ni de vos appareils. Pour qu’il puisse répondre à de telles questions, il lui faut un moyen d’interroger l’un de vos systèmes métier pendant la conversation.
+
+C’est exactement à cela que sert le **Model Context Protocol**, MCP en abrégé. C’est un langage commun qui décrit comment un système de chat pose une question à un système métier et en reçoit la réponse. MCP est une **norme ouverte avec une spécification publique**, publiée à l’origine par Anthropic et reprise depuis par de nombreux éditeurs. Ce n’est pas une invention d’EU Cowork AI, et vous ne vous liez pas à nous en l’adoptant.
+
+Pour vous, cela signifie deux choses. Premièrement, pour beaucoup de produits répandus, il existe déjà un serveur MCP prêt à l’emploi que vous pouvez raccorder. Deuxièmement, ce que vous construisez une fois pour EU Cowork AI fonctionne aussi avec d’autres logiciels qui parlent MCP.
+
+## Trois termes dont vous avez besoin
+
+**Outil.** Un outil est une capacité unique et clairement délimitée. Il a un nom technique, une description en prose et une liste de paramètres. Un raccordement à un système de supervision aurait par exemple un outil dont la tâche consiste à rechercher des appareils selon un petit nombre de critères. Un outil est toujours une action, jamais un système entier.
+
+**Connecteur, techniquement serveur MCP.** Un connecteur est un petit service qui propose un ensemble d’outils et qui, derrière eux, dialogue avec le système cible proprement dit. Dans cette documentation, nous l’appelons connecteur, parce que c’est plus parlant pour qui n’est pas développeur. Dans la configuration et dans le panneau d’administration, il s’appelle **« MCP-Server »** (serveur MCP).
+
+**Client.** Le client est la partie à laquelle les outils sont proposés et qui les appelle. Chez nous, c’est LibreChat, la couche de chat d’EU Cowork AI.
+
+Un connecteur est souvent un **pont** : le système cible lui-même ne parle pas MCP, il n’a qu’une interface de programmation ordinaire. Le connecteur traduit alors entre les deux mondes. C’est ainsi que fonctionnent la plupart des raccordements à un ERP, à un système de supervision ou à un système de tickets.
+
+## Un exemple : « Quelles factures ouvertes le client X a-t-il ? »
+
+Sans connecteur, le modèle ne peut pas répondre à cette question. Il ne sait pas qui est le client X, et il n’a aucun accès à votre comptabilité. Avec un connecteur ERP raccordé, voici ce qui se passe :
+
+1. La personne pose la question dans le chat.
+2. En même temps que la question, le modèle reçoit la liste des outils autorisés, chacun avec son nom et sa description. Parmi eux se trouvent les outils du connecteur ERP.
+3. Le modèle constate qu’il ne peut pas répondre à la question à partir de ses propres connaissances, et il appelle un outil, par exemple « rechercher des enregistrements » avec le nom du client comme filtre.
+4. Avant que l’appel n’atteigne le connecteur, une vérification établit si cette personne a bien le droit d’utiliser ce connecteur. La décision est journalisée.
+5. Si l’appel est autorisé, le connecteur interroge l’ERP et renvoie le résultat sous forme de texte.
+6. Le modèle lit le résultat, appelle au besoin un deuxième outil, par exemple « lire un enregistrement » avec le numéro de client trouvé, et formule sa réponse à partir de là.
+
+L’essentiel dans ce déroulement : le modèle **décide** quel outil il appelle, mais il **ne détermine pas** ce qu’il a le droit de faire. La limite est tracée par le contrôle des droits en amont et par le système cible en aval. Un modèle ne peut pas s’inventer des droits qu’il n’a pas.
+
+## Les deux modes de connexion
+
+Chaque connecteur doit s’authentifier auprès du système cible. Il existe pour cela deux voies fondamentalement différentes, et ce choix décide de l’endroit où se situe la limite des droits.
+
+| | Authentification par personne | Compte de service |
+|---|---|---|
+| Qui s’authentifie | chaque personne avec son propre compte | un seul compte technique pour tous |
+| Qui connaît les droits | le système cible lui-même | le système cible ne connaît que le compte de service |
+| Limite des droits | les droits de la personne dans le système cible | les autorisations dans EU Cowork AI plus les droits du compte de service |
+| Granularité | jusqu’au niveau du document et du champ | jusqu’au niveau du connecteur et de l’outil |
+| Typique pour | espace de stockage de fichiers, gestion documentaire, stockage cloud | ERP, gestion commerciale, comptabilité, supervision |
+
+**Authentification par personne** signifie ceci : à la première utilisation, la personne est envoyée vers la boîte de dialogue de connexion du système cible, y confirme l’accès, et le connecteur travaille dès lors avec son accès personnel. Qui n’a pas le droit de voir un dossier dans votre espace de stockage de fichiers ne le voit pas non plus dans le chat. Le système cible reste l’instance de référence, et vous n’avez pas à reconstruire les droits une deuxième fois.
+
+**Compte de service** signifie ceci : le connecteur détient une clé unique et s’authentifie de la même manière pour tout le monde. Le système cible ne voit que ce seul compte et ne peut donc pas distinguer vos collaborateurs les uns des autres. La séparation doit alors se faire en amont, par les autorisations dans EU Cowork AI.
+
+<Aside type="tip" title="Règle empirique">
+Prenez l'**authentification par personne** chaque fois que le système cible la propose. C’est la variante la plus sûre, parce que les droits y sont gérés là où ils sont gérés de toute façon. Un compte de service est la solution de repli pour les systèmes qui n’offrent aucun accès nominatif par une interface. Si vous avez besoin d’un compte de service, créez plutôt plusieurs comptes aux droits restreints qu’un seul compte aux droits étendus.
+</Aside>
+
+## Ce que coûte un connecteur
+
+Un connecteur n’est pas gratuit, même quand il ne coûte rien. Le catalogue d’outils, c’est-à-dire le nom, la description et les paramètres de chaque outil, est transmis au modèle **à chaque message**. Il occupe donc en permanence de la place dans le contexte, et il est payé à chaque appel.
+
+L’ordre de grandeur est considérable. Un connecteur volumineux peut facilement proposer plus de cent outils et occuper ainsi une part notable du contexte disponible avant même que la première question ne soit posée. Limité aux outils dont le cas d’usage a réellement besoin, le catalogue se réduit souvent à une petite fraction.
+
+À cela s’ajoute un second effet : plus le catalogue contient d’outils aux noms voisins, plus le modèle se trompe souvent d’outil. Des outils peu nombreux et clairement nommés donnent donc non seulement des réponses moins coûteuses, mais aussi des réponses meilleures.
+
+<CardGrid>
+  <LinkCard
+    title="Droits et autorisations"
+    href="/docs/fr/konnektoren/gateway-und-rechte"
+    description="Comment EU Cowork AI fait respecter qui a le droit d’utiliser quel connecteur, et pourquoi cette couche est nécessaire."
+  />
+  <LinkCard
+    title="Raccorder votre propre connecteur"
+    href="/docs/fr/konnektoren/eigenen-konnektor-anbinden"
+    description="Ce que vous clarifiez avant le raccordement, comment évaluer un connecteur tiers et ce qui est fourni avec la livraison."
+  />
+  <LinkCard
+    title="Modèles de connecteurs"
+    href="/docs/fr/konnektoren/muster"
+    description="Trois formes éprouvées : compte de service, authentification par personne et pont en lecture seule, avec le parcours des droits."
+  />
+  <LinkCard
+    title="Bonnes pratiques pour les connecteurs"
+    href="/docs/fr/konnektoren/best-practices"
+    description="Dix règles avec leur justification, plus une liste de contrôle avant l’autorisation."
+  />
+</CardGrid>

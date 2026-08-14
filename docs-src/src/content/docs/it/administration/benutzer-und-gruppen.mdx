@@ -1,0 +1,65 @@
+---
+title: Utenti, gruppi e ruoli
+description: Invitare e creare account, assegnare diritti tramite i ruoli, gestire i gruppi, bloccare e cancellare account.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Chi ha accesso e che cosa può fare si decide in tre punti: sull’account, sul ruolo e sul gruppo. Questa pagina descrive che cosa Lei ha a disposizione come amministratore per farlo.
+
+## Account
+
+L’elenco degli utenti mostra tutti gli account con ruolo, modalità di accesso, stato, ultima attività e quota di consumo. Da lì Lei raggiunge tutto il resto su una persona: consultare il consumo, consultare gli accessi, esportare i dati, cambiare ruolo, ricaricare il credito, bloccare e cancellare.
+
+<Aside type="tip" title="Nessun controllo al minuto">
+L’attività è indicata con precisione al giorno, non al minuto. È una scelta progettuale deliberata: per la domanda «lo strumento viene effettivamente usato» il giorno basta; per un controllo delle prestazioni il dato è volutamente inservibile.
+</Aside>
+
+## Inserire le persone
+
+Ci sono due strade:
+
+- **L’invito** è quella normale. La persona invitata imposta da sé la propria password, Lei non deve mai trasmetterne una. Gli inviti hanno una scadenza e valgono solo per l’indirizzo indicato. Facoltativamente la persona viene aggiunta automaticamente a uno o più gruppi al momento della registrazione.
+- **La creazione diretta** genera un account senza registrazione, ruolo e gruppi compresi. Una password iniziale si può generare e mettere negli appunti, in modo che non finisca negli screenshot o nel riempimento automatico del browser.
+
+Perché un invito vada a buon fine, il dominio di posta deve corrispondere ai domini ammessi per la registrazione. Se è configurato l’invio di posta, parte anche un’e-mail; altrimenti il link di invito lo spedisce Lei stesso.
+
+## Ruoli e diritti
+
+I ruoli raggruppano diritti. Accanto ai due ruoli di sistema per utenti e amministratori Lei può creare ruoli propri. I diritti sono raggruppati per tema:
+
+| Gruppo | Di che cosa si tratta |
+| --- | --- |
+| **«Werkzeuge»** (strumenti) | Ricerca web, interprete di codice, ricerca nei file e citazioni, accesso ai connettori |
+| **«Chat-Funktionen»** (funzioni di chat) | Risposte in parallelo, chat temporanee, segnalibri, memorie |
+| **«Erstellen und Teilen»** (creare e condividere) | Agenti, prompt, competenze e link condivisi |
+| **«Remote-Agenten»** (agenti remoti) | Agenti al di fuori della chat, ad esempio nell’add-in di Outlook |
+| **«Sichtbarkeit»** (visibilità) | se utenti e gruppi compaiono nella finestra di dialogo di condivisione |
+
+Inoltre Lei stabilisce per ciascun ruolo quali schede dei modelli sono visibili, si veda [Modelli e schede dei modelli](/docs/it/administration/modelle-und-karten).
+
+<Aside type="danger" title="Attenzione con il ruolo di amministratore">
+Le modifiche al ruolo di amministratore riguardano anche il Suo account e valgono immediatamente per tutti gli amministratori. Non c’è eccezione per la persona che aziona l’interruttore. Verifichi quindi due volte modifiche di questo tipo.
+</Aside>
+
+<Aside type="caution" title="Non distribuire mai le competenze in blocco">
+Le competenze sono processi standard depositati. Le abiliti in modo mirato, invece di aprirle indistintamente a tutti.
+</Aside>
+
+## Gruppi
+
+I gruppi sono la base per gli accessi e per la scelta dei modelli. O sono gestiti localmente nel pannello, oppure provengono dal Suo identity provider e sono allora in sola lettura, con i membri amministrati dall’identity provider.
+
+Per ciascun gruppo si può stabilire quali connettori sono ammessi e quali schede dei modelli sono visibili. Principio: vince la regola più stretta.
+
+## Bloccare e cancellare
+
+Un **blocco** è a tempo determinato o indeterminato e si può revocare in qualsiasi momento.
+
+La **cancellazione** di un account elimina account, conversazioni, messaggi, file, chiavi, agenti e credito, ed è irreversibile. La finestra di dialogo richiede perciò una conferma esplicita e propone immediatamente prima l’esportazione dei dati: dopo la cancellazione non è più possibile fornire alcuna informazione, quindi il riscontro previsto dal GDPR deve avvenire prima. Facoltativamente si cancellano anche le transazioni di consumo; in tal caso però il giustificativo di fatturazione va perduto. Maggiori dettagli in [Protezione dei dati e conservazione](/docs/it/administration/datenschutz-und-aufbewahrung).
+
+## «Che cosa può fare questa persona, e perché»
+
+Per ogni persona esiste una panoramica dei suoi accessi: ruolo, gruppi, connettori ammessi, schede dei modelli visibili e abilitazioni degli agenti. Per ogni voce è indicato quale livello ha preso la decisione, e il percorso che vi porta è collegato. È la via più rapida quando qualcuno segnala di non vedere un connettore o un modello.

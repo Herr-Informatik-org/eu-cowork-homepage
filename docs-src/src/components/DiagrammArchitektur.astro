@@ -7,8 +7,9 @@
  * einen kompletten Browser nach. Ein festes SVG ist kleiner, braucht kein
  * JavaScript im Browser und faerbt sich ueber die Theme-Variablen mit.
  *
- * Das Bild bleibt bewusst auf der allgemeinen Ebene: Zugang, Reverse-Proxy,
- * Anwendung, Datenhaltung, Modellanbieter.
+ * Das Bild bleibt bewusst auf der allgemeinen Ebene: Zugang, Einstieg,
+ * Anwendung, Datenhaltung, Modellanbieter. Konkrete Dienste, Container oder
+ * Ports werden nicht benannt.
  *
  * Die Beschriftungen haengen an der Sprache der Seite. Ohne das stuende auf der
  * englischen Fassung ein deutsches Diagramm.
@@ -17,41 +18,93 @@
  * damit auf jeder Seite. Lokal in der Komponente waeren sie nur dort geladen,
  * wo genau diese Komponente eingebunden ist.
  */
-const en = Astro.url.pathname.startsWith('/docs/en');
+const segment = Astro.url.pathname.replace(/^\/docs\/?/, '').split('/')[0];
+const sprache = ['en', 'fr', 'it', 'es'].includes(segment) ? segment : 'de';
 
-const t = en
-  ? {
+const T = {
+    en: {
       titel: 'The path of a request',
       beschreibung:
-        'From top to bottom: the browser reaches a reverse proxy that terminates TLS and is the only entry point. Behind it runs the application, LibreChat, with its data storage for accounts, conversations and the search index. For the model responses themselves the application talks to the model provider outside the server.',
+        'From top to bottom: the browser reaches a single entry point that terminates TLS. Behind it runs the application, LibreChat, with the data storage for accounts and conversations. For the model responses themselves the application talks to the model provider outside the server.',
       zugang: 'Access',
       ausserhalb: 'Outside',
       server: 'Your server',
-      proxy: 'Reverse proxy',
-      proxySub: 'entry point, TLS',
+      proxy: 'Entry point',
+      proxySub: 'TLS ends here',
       app: 'Application',
-      appSub: 'LibreChat: chat, agents, files',
+      appSub: 'chat, agents, files',
       daten: 'Data storage',
-      datenSub: 'accounts, conversations, search index',
+      datenSub: 'accounts and conversations',
       modelle: 'Model provider',
       modelleSub: 'the model responses are computed there',
-    }
-  : {
+    },
+    fr: {
+      titel: 'Le chemin d’une requête',
+      beschreibung:
+        'De haut en bas : le navigateur atteint un point d’entrée unique où se termine TLS. Derrière lui s’exécute l’application, LibreChat, avec le stockage des comptes et des conversations. Pour les réponses du modèle elles-mêmes, l’application s’adresse au fournisseur de modèles à l’extérieur du serveur.',
+      zugang: 'Accès',
+      ausserhalb: 'À l’extérieur',
+      server: 'Votre serveur',
+      proxy: 'Point d’entrée',
+      proxySub: 'TLS se termine ici',
+      app: 'Application',
+      appSub: 'chat, agents, fichiers',
+      daten: 'Stockage des données',
+      datenSub: 'comptes et conversations',
+      modelle: 'Fournisseur de modèles',
+      modelleSub: 'les réponses du modèle y sont calculées',
+    },
+    it: {
+      titel: 'Il percorso di una richiesta',
+      beschreibung:
+        'Dall’alto verso il basso: il browser raggiunge un unico punto di ingresso in cui termina il TLS. Dietro di esso funziona l’applicazione, LibreChat, con l’archivio dei dati per account e conversazioni. Per le risposte del modello l’applicazione si rivolge al fornitore di modelli all’esterno del server.',
+      zugang: 'Accesso',
+      ausserhalb: 'All’esterno',
+      server: 'Il suo server',
+      proxy: 'Punto di ingresso',
+      proxySub: 'qui termina il TLS',
+      app: 'Applicazione',
+      appSub: 'chat, agenti, file',
+      daten: 'Archivio dei dati',
+      datenSub: 'account e conversazioni',
+      modelle: 'Fornitore di modelli',
+      modelleSub: 'lì vengono calcolate le risposte del modello',
+    },
+    es: {
+      titel: 'El camino de una consulta',
+      beschreibung:
+        'De arriba abajo: el navegador llega a un único punto de entrada donde termina TLS. Detrás se ejecuta la aplicación, LibreChat, con el almacenamiento de datos de cuentas y conversaciones. Para las respuestas del modelo, la aplicación se dirige al proveedor de modelos fuera del servidor.',
+      zugang: 'Acceso',
+      ausserhalb: 'En el exterior',
+      server: 'Su servidor',
+      proxy: 'Punto de entrada',
+      proxySub: 'aquí termina TLS',
+      app: 'Aplicación',
+      appSub: 'chat, agentes, archivos',
+      daten: 'Almacenamiento de datos',
+      datenSub: 'cuentas y conversaciones',
+      modelle: 'Proveedor de modelos',
+      modelleSub: 'allí se calculan las respuestas del modelo',
+    },
+    de: {
       titel: 'Der Weg einer Anfrage',
       beschreibung:
-        'Von oben nach unten: Der Browser erreicht einen Reverse-Proxy, der TLS beendet und der einzige Einstieg ist. Dahinter läuft die Anwendung, LibreChat, mit ihrer Datenhaltung für Konten, Konversationen und den Suchindex. Für die Modellantworten selbst spricht die Anwendung den Modellanbieter ausserhalb des Servers an.',
+        'Von oben nach unten: Der Browser erreicht einen einzigen Einstieg, der TLS beendet. Dahinter läuft die Anwendung, LibreChat, mit der Datenhaltung für Konten und Konversationen. Für die Modellantworten selbst spricht die Anwendung den Modellanbieter ausserhalb des Servers an.',
       zugang: 'Zugang',
       ausserhalb: 'Ausserhalb',
       server: 'Ihr Server',
-      proxy: 'Reverse-Proxy',
-      proxySub: 'Einstieg, TLS',
+      proxy: 'Einstieg',
+      proxySub: 'hier endet TLS',
       app: 'Anwendung',
-      appSub: 'LibreChat: Chat, Agenten, Dateien',
+      appSub: 'Chat, Agenten, Dateien',
       daten: 'Datenhaltung',
-      datenSub: 'Konten, Konversationen, Suchindex',
+      datenSub: 'Konten und Konversationen',
       modelle: 'Modellanbieter',
       modelleSub: 'dort werden die Modellantworten berechnet',
-    };
+    },
+};
+
+const t = T[sprache];
 ---
 
 <figure class="euc-diagramm">

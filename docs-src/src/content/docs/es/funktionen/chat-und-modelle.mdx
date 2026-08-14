@@ -1,0 +1,192 @@
+---
+title: Chat y modelos
+description: Cómo funciona el chat, cómo se componen las fichas del modelo, y cómo trabajan los recuerdos y la compactación automática de las conversaciones largas.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Esta página describe lo que su personal encuentra en el chat: el historial, la búsqueda, las
+fichas del modelo, los recuerdos y el comportamiento de las conversaciones muy largas. Al final
+hay una sección para administradores con los ajustes correspondientes.
+
+La interfaz de chat proviene de [LibreChat](https://www.librechat.ai/docs). Lo que aportamos
+nosotros es la selección de las fichas del modelo, el prompt del sistema almacenado y la gestión
+de permisos por encima.
+
+<Aside type="tip" title="Cuatro conceptos para empezar">
+
+| Concepto | En una frase |
+|---|---|
+| **Token** | La unidad de cálculo de los modelos de lenguaje: un fragmento de texto de unos cuatro caracteres, es decir, más o menos entre media palabra y una palabra entera. Todo lo que usted escribe y todo lo que responde el colega se cuenta en tokens, y de ahí dependen el consumo, los presupuestos y los límites de contexto. |
+| **Ficha del modelo** | Un paquete listo para usar formado por un proveedor, un modelo y unos ajustes previos, que usted elige en el selector bajo un nombre comprensible en lugar de designar un modelo en bruto. |
+| **Prompt del sistema** | La instrucción de trabajo que se entrega al modelo antes de su pregunta y que fija el idioma, el tono y el comportamiento. Va unida a la ficha y no es visible en el chat. |
+| **Contexto** | Todo lo que el modelo puede leer a la vez en una consulta: su pregunta, el historial anterior, los archivos adjuntos y los resultados de las herramientas. El espacio disponible es limitado y se mide en tokens. |
+
+</Aside>
+
+## El chat en el día a día
+
+Usted escribe una pregunta y la respuesta va apareciendo sobre la marcha, palabra por palabra.
+Cada conversación se guarda en el historial de la columna izquierda y recibe automáticamente un
+título que un modelo deduce de los primeros mensajes. Puede sobrescribir ese título en cualquier
+momento.
+
+| Función | Qué hace |
+|---|---|
+| Historial | Todas las conversaciones quedan guardadas hasta que usted las borre o se aplique el plazo de conservación |
+| Títulos automáticos | El título nace en el primer intercambio, sin que usted intervenga |
+| Marcadores | Marcar las conversaciones importantes y volver a encontrarlas más rápido |
+| Respuestas en paralelo | Mantener varios chats abiertos a la vez y comparar las respuestas |
+| Chat privado | Una conversación que no se guarda |
+| Bifurcar | Abrir una rama nueva a partir de cualquier mensaje, sin modificar el original |
+| Compartir | Publicar una conversación como enlace |
+
+El **«Privater Chat»** (chat privado) se llama **«Temporäre Chats»** (chats temporales) en el
+editor de roles del panel de administración, donde lleva la indicación
+«Unterhaltungen ohne Speicherung» (conversaciones sin almacenamiento). Cuánto tiempo se conserva
+realmente una conversación de este tipo lo decide el administrador.
+
+**Bifurcar** es la maniobra adecuada cuando una conversación debe continuar en dos direcciones.
+Usted conserva el historial existente y prueba otra variante en la rama, sin perder la
+conversación original.
+
+**Compartir** genera un enlace a una instantánea de la conversación. Quien tenga el enlace puede
+leerla. Este permiso es un permiso de rol propio y se puede retirar.
+
+## Buscar en chats antiguos
+
+En la barra lateral hay una búsqueda sobre el texto completo de todas sus conversaciones. Por
+tanto, la búsqueda también encuentra una formulación en medio de una respuesta de hace tres
+semanas.
+
+<Aside type="note" title="Tres búsquedas que no son lo mismo">
+La búsqueda de texto completo en sus chats es algo distinto de la **búsqueda de archivos** en un
+fondo documental, y algo distinto también de la **búsqueda web**. Qué se ocupa de qué se explica
+en
+[Archivos y conocimiento](/docs/es/funktionen/dateien-und-wissen) y en
+[Búsqueda web](/docs/es/funktionen/web-suche).
+</Aside>
+
+## Qué es una ficha del modelo
+
+Una ficha del modelo es un ajuste previo completo. Reúne tres cosas:
+
+1. un modelo determinado de un proveedor determinado,
+2. el prompt del sistema almacenado, es decir, la instrucción de trabajo dirigida al modelo,
+3. la preselección de las herramientas activas en esta ficha.
+
+El prompt del sistema se inserta en el servidor y nunca llega al navegador. Las fichas que se
+entregan llevan el mismo prompt; este fija el idioma, el tono y el trato riguroso de los hechos.
+
+Los chats nuevos arrancan con la ficha predeterminada. Usted puede cambiar de ficha, el cambio no
+está bloqueado.
+
+## Qué fichas encontrará
+
+Qué fichas aparecen en el selector lo decide el administrador. Dos distinciones importan en el día
+a día:
+
+- **Texto, o texto e imágenes.** No todas las fichas entienden imágenes. Las capturas de pantalla
+  y las fotos tienen su sitio en una ficha marcada como compatible con imágenes; en una ficha de
+  solo texto, una imagen no surte efecto.
+- **UE o fuera de la UE.** Las fichas cuyas consultas salen de la UE llevan la marca ⚠ Nicht-EU
+  (fuera de la UE) en el nombre.
+
+<Aside type="caution" title="Esa marca es intencionada">
+El signo ⚠ y la mención «Nicht-EU» (fuera de la UE) figuran en el nombre de la ficha para que se
+vea, en el momento mismo de elegirla, que esa consulta sale de la UE. La marca no debe eliminarse
+mientras la ficha apunte a un proveedor situado fuera de la UE. Quien quiera una instancia
+puramente europea sencillamente no ofrece fichas de ese tipo.
+</Aside>
+
+## Los recuerdos: la memoria a largo plazo
+
+El colega de IA retiene algunas cosas sobre usted de una conversación a otra y las incorpora a
+cada respuesta nueva. Esto ocurre por sí solo, no hace falta que diga «recuerda esto».
+
+Se guarda deliberadamente poco, y solo en cuatro categorías:
+
+| Categoría | Contenido |
+|---|---|
+| Preferencias | Cómo quiere usted las respuestas: idioma, formato, nivel de detalle, tono, correcciones recurrentes |
+| Contexto de trabajo | Función, equipo, ámbitos de responsabilidad, sistemas utilizados |
+| Proyectos | Proyectos, clientes y temas en curso, con un breve estado |
+| Notas | Otros hechos estables que mejoran las respuestas futuras |
+
+Expresamente **no** se guardan contraseñas ni claves, datos de salud, religiosos y políticos,
+datos salariales, hechos sensibles sobre terceros ni detalles puntuales sin valor de reutilización.
+
+La memoria se mantiene pequeña a propósito. Cuando se llena, el colega agrupa las entradas
+relacionadas en lugar de seguir añadiendo indefinidamente.
+
+**Así se desactiva.** En los ajustes, bajo **«Datenschutz & Sicherheit»** (protección de datos y
+seguridad), sección **«Erinnerungen»** (recuerdos), está el conmutador
+**«Gespeicherte Erinnerungen verwenden»** (usar los recuerdos guardados). Desactivado significa
+que sus recuerdos ya no alimentan las respuestas. En ese mismo apartado puede consultar sus
+entradas, editarlas una a una y borrarlas.
+
+## Conversaciones muy largas
+
+Un modelo solo puede leer una cantidad limitada de texto por consulta. Cuando una conversación se
+vuelve muy larga, un proceso aparte resume automáticamente los mensajes más antiguos y a partir de
+ahí envía al modelo ese resumen en lugar del historial completo.
+
+- El punto a partir del cual esto se activa depende de la ficha elegida: las fichas con una
+  ventana de contexto más pequeña compactan antes.
+
+Su historial visible permanece íntegro. Solo se resume lo que va hacia el modelo.
+
+<Aside type="note" title="No existe ninguna orden manual para esto">
+Una orden como `/compact`, con la que usted mismo pudiera desencadenar la compactación, no existe.
+El proceso es exclusivamente automático. Si quiere empezar de cero de forma deliberada, abra un
+chat nuevo o bifurque en el punto que corresponda.
+</Aside>
+
+## Para administradores
+
+### Fichas del modelo por rol y por grupo
+
+Qué fichas ve una persona se decide en el panel de administración. La cascada es **grupo antes que
+rol, y rol antes que base**.
+
+- **«Verwaltung → Rollen»** (administración, roles): un conmutador por ficha y por rol. A eso se
+  añade el conmutador **«Weitere Modelle (Roh-Untermenü)»** (otros modelos, submenú en bruto) con
+  la indicación «Aus = diese Rolle sieht NUR die oben aktivierten Karten» (desactivado significa
+  que este rol ve ÚNICAMENTE las fichas activadas más arriba).
+- **«Verwaltung → Gruppen»** (administración, grupos): por grupo, o bien **«Erben»** (heredar),
+  o bien **«Eigene Auswahl (übersteuert die Rollen-Regel)»** (selección propia, prevalece sobre
+  la regla del rol).
+
+Esta es la manera limpia de habilitar fichas adicionales a la dirección, por ejemplo, y mostrar a
+todos los demás únicamente las fichas de la UE.
+
+### Ocultar por completo el selector de modelos
+
+Para una configuración deliberadamente sencilla, ponga **«Modell-Auswahl anzeigen»** (mostrar la
+selección de modelos) en desactivado, en el panel bajo **«Konfiguration → Funktionen»**
+(configuración, funciones). Entonces todo el mundo trabaja con la ficha predeterminada y ya no ve
+ninguna selección de modelos.
+
+### Panel de parámetros
+
+El panel para la temperatura y otros ajustes finos viene **desactivado** de fábrica. Es
+intencionado: sin conocimientos de IA, el personal acabaría modificando valores cuyo efecto no
+puede calibrar. Volver a activarlo se hace por rol, a través de la cascada de configuración del
+panel; en la práctica es el rol ADMIN el que recibe esa excepción, y todos los demás roles heredan
+el comportamiento desactivado.
+
+### Un orden sensato al implantarlo
+
+<Steps>
+
+1. Mantener los precios y los tamaños de contexto en **«Konfiguration → Preise»** (configuración,
+   precios), para que la medición del consumo sea correcta. Un campo de precio vacío no significa
+   gratis: LibreChat calcula entonces con una tarifa plana integrada.
+
+2. Definir las fichas por rol y por grupo.
+
+3. Invitar al personal solo después de eso.
+
+</Steps>

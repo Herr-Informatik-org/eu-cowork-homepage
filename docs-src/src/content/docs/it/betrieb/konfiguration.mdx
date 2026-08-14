@@ -1,0 +1,96 @@
+---
+title: Configurazione
+description: I tre livelli di configurazione di EU Cowork AI, quale livello prevale in caso di conflitto e come si imposta il Domain-Lock.
+sidebar:
+  order: 3
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+EU Cowork AI si configura in tre punti. Sapere quale punto è responsabile di che cosa, e quale
+livello prevale in caso di conflitto, Le risparmia lunghe ricerche.
+
+## I tre livelli
+
+| Livello | Punto | Contenuto | Quando ha effetto |
+|---|---|---|---|
+| Infrastruttura e segreti | File di ambiente dell’istanza | Indirizzi, chiavi, parametri di esercizio | dopo un riavvio dell’applicazione |
+| Comportamento del prodotto | `librechat.yaml` | Schede dei modelli, interfaccia, connettori, registrazione | dopo un riavvio del servizio di chat |
+| Sovrascritture di runtime | Pannello di amministrazione, pagina **«Konfiguration»** (configurazione) | le stesse impostazioni di prodotto, per istanza, ruolo o gruppo | subito, senza riavvio |
+
+Il file di ambiente nasce durante l’installazione da un modello commentato in ogni sua parte. Per
+ciascun valore vi è indicato a che cosa serve.
+
+## Quale livello prevale
+
+Un valore impostato nel pannello si colloca **al di sopra** dello YAML. Il pannello scrive i suoi
+valori nel database, l’applicazione li legge alla chiamata successiva ed essi sopravvivono a un
+riavvio. Lo YAML resta lo stato di partenza, che vale finché non esiste alcuna sovrascrittura.
+
+Nel pannello lo si riconosce da due dettagli: le sezioni con una sovrascrittura attiva riportano
+il badge **«aus DB-Override»** (da una sovrascrittura nel database), e accanto a ogni campo
+sovrascritto si trova un’icona per rimuoverla.
+
+<Aside type="caution" title="Svuotare un campo non rimuove la sovrascrittura">
+Chi svuota nel pannello un campo sovrascritto salva un valore vuoto e mantiene la sovrascrittura.
+Allo stato dello YAML si torna soltanto tramite l’icona di ripristino accanto al campo.
+</Aside>
+
+Per le schede dei modelli vale in aggiunta una cascata propria: **gruppo prima del ruolo prima
+della base**. I diritti sugli strumenti, invece, appartengono all’editor dei ruoli e non alla
+configurazione; nella scheda «Funktionen» (funzioni) verrebbero scartati lato server.
+
+## Il blocco `interface`
+
+Il blocco `interface` nello YAML determina che cosa è visibile nell’interfaccia: il selettore dei
+modelli, la ricerca web, la ricerca nei file, l’esecuzione di codice, le preimpostazioni, i
+segnalibri e il pannello dei parametri. Le funzioni i cui presupposti non sono soddisfatti sono
+deliberatamente disattivate allo stato di consegna — un pulsante visibile e senza effetto è
+peggio di nessun pulsante.
+
+Due regole sono qui importanti:
+
+- **Il blocco è globale.** All’avvio i valori vengono scritti in tutti i ruoli. Una differenza tra
+  i ruoli non è quindi rappresentabile nello YAML. Se uno strumento deve essere abilitato per un
+  solo ruolo, ometta il campo dallo YAML e lo imposti nell’editor dei ruoli del pannello di
+  amministrazione.
+- **Gli elenchi di capacità sostituiscono invece di fondersi.** Chi tocca l’elenco delle capacità
+  degli agenti sostituisce integralmente l’elenco predefinito. Nulla viene unito: tutto ciò che si
+  vuole mantenere va quindi elencato di nuovo.
+
+Per le aziende che desiderano un’interfaccia il più sobria possibile, i comandi di cui hanno
+bisogno soltanto gli utenti esperti si possono disattivare in blocco.
+
+## Domain-Lock
+
+Il Domain-Lock è il primo passo dopo l’installazione e va impostato **prima** che l’istanza sia
+raggiungibile sotto il proprio dominio. Ciò che conta è l’elenco dei domini di posta elettronica
+consentiti: è esso a decidere chi possa, in generale, creare un account.
+
+L’elenco è depositato nella configurazione dell’istanza; lo stesso elenco Lei lo gestisce nel
+pannello sotto **«Konfiguration»** (configurazione), nella scheda «Funktionen» (funzioni), nel
+campo **«Erlaubte E-Mail-Domains»** (domini di posta elettronica consentiti). Vale per
+l’autoregistrazione e per gli inviti: un invito a un indirizzo esterno all’elenco non ha effetto.
+
+Lo si può verificare con una registrazione sotto un dominio estraneo: deve essere respinta.
+
+<Aside type="note" title="Elenchi completi dei valori nel manuale operativo">
+Quali valori figurino nella configurazione e quali componenti facoltativi si possano attivare è
+descritto nel manuale operativo, che è allegato al pacchetto di fornitura. I clienti lo ricevono
+insieme al proprio accesso.
+</Aside>
+
+## Per continuare
+
+<CardGrid>
+  <LinkCard
+    title="Dominio e certificato"
+    href="/docs/it/betrieb/domain-und-tls"
+    description="Le tre varianti TLS e quando serve quale."
+  />
+  <LinkCard
+    title="Più istanze su un server"
+    href="/docs/it/betrieb/mehrere-instanzen"
+    description="Che cosa deve restare separato per ogni cliente e che cosa può essere condiviso."
+  />
+</CardGrid>

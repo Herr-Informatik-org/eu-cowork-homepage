@@ -1,0 +1,93 @@
+---
+title: Instalación
+description: Cómo se prepara una instancia de EU Cowork AI y qué pasos quedan pendientes tras el primer arranque.
+sidebar:
+  order: 2
+---
+
+import { Aside, Steps, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+La instalación se realiza de forma guiada a partir del paquete de entrega. En ella se generan la
+configuración y los secretos de la instancia; después arranca la aplicación. El requisito previo
+es un servidor preparado, véase [Preparar el servidor](/docs/es/betrieb/server-vorbereiten).
+
+## De qué se encarga la instalación
+
+- Comprueba los requisitos en la máquina y se interrumpe si falta algo fundamental.
+- Genera la configuración de la instancia y asigna a todos los secretos valores aleatorios recién
+  creados. Cada instancia recibe así sus propios valores, que solo son legibles para la
+  explotación de la instancia.
+- Prepara los almacenamientos de la instancia con los permisos necesarios y arranca la
+  aplicación.
+- Al final indica qué valores quedan por introducir a mano. Solo se indican los nombres de los
+  valores, nunca su contenido.
+
+<Aside type="danger" title="Poner a salvo los secretos generados">
+Una parte de los valores generados descifra lo que está almacenado cifrado en la base de datos.
+Si estos valores se pierden o se vuelven a generar en una migración en lugar de conservarse, los
+datos afectados quedan ilegibles de forma irrecuperable, y cada persona tendría que volver a
+establecer sus conexiones. La copia de seguridad periódica abarca la configuración y, con ella,
+estos valores, véase [Copia de seguridad y migración](/docs/es/betrieb/backup-und-umzug).
+</Aside>
+
+## El único valor obligatorio
+
+Para una instalación estándar, usted introduce exactamente un valor: la clave del proveedor de
+inferencia con procesamiento en la UE. La instalación lo señala expresamente al final. Todo lo
+demás es opcional — una segunda opción para los modelos, los conectores, el envío de correo
+electrónico y la ejecución de código.
+
+## Qué queda a mano
+
+- Establecer los registros DNS y elegir la variante de TLS, véase
+  [Dominio y certificado](/docs/es/betrieb/domain-und-tls).
+- Establecer el Domain-Lock para el registro, véase
+  [Configuración](/docs/es/betrieb/konfiguration#domain-lock).
+- Definir los permisos de los roles y las fichas de modelo en el panel de administración.
+- Habilitar de forma consciente el acceso para cada conector en el panel, en lugar de dejarlo
+  abierto.
+- Configurar la copia de seguridad, véase
+  [Copia de seguridad y migración](/docs/es/betrieb/backup-und-umzug).
+
+## Tras el primer arranque
+
+<Steps>
+
+1. **Abrir el chat.** En la dirección con la que se preparó la instancia.
+
+2. **Crear la primera cuenta.** Regístrese en el chat. La primera cuenta de una instancia recibe
+   los permisos de administración.
+
+3. **Comprobar el panel de administración.** El acceso requiere una cuenta con permisos de
+   administración.
+
+4. **Cerrar el acceso.** Establezca el Domain-Lock para que solo puedan registrarse personas de
+   su dominio de correo electrónico.
+
+5. **Crear una segunda cuenta de administración.** No solo la cuenta personal; de lo contrario,
+   llegado el caso usted mismo se quedará fuera.
+
+6. **Configurar la copia de seguridad.** Haga una copia a mano una vez y planifique después su
+   ejecución periódica.
+
+</Steps>
+
+<Aside type="note" title="Instrucciones detalladas en el manual de operación">
+El procedimiento exacto y la lista completa de los valores de configuración figuran en el manual
+de operación, que se adjunta al paquete de entrega. Los clientes lo reciben junto con su acceso.
+</Aside>
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Configuración"
+    href="/docs/es/betrieb/konfiguration"
+    description="Los tres niveles: entorno, librechat.yaml y las sobrescrituras en el panel de administración."
+  />
+  <LinkCard
+    title="Dominio y certificado"
+    href="/docs/es/betrieb/domain-und-tls"
+    description="Certificado público, CA interna en la LAN o explotación detrás de un WAF ya existente."
+  />
+</CardGrid>

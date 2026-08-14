@@ -1,0 +1,87 @@
+---
+title: Actualización
+description: Cómo se lleva una instancia en marcha de EU Cowork AI a un estado nuevo, por qué se hace antes una copia de seguridad y qué aspecto tiene el camino de vuelta.
+sidebar:
+  order: 5
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Una actualización consta de cuatro gestos: obtener el estado nuevo, comparar la configuración
+propia con la plantilla, hacer una copia de seguridad e instalar. Discurre por el mismo camino
+guiado que la instalación inicial, solo que en modo de actualización.
+
+## La comparación con la plantilla
+
+Antes de la actualización, la configuración de la instancia se contrasta con la plantilla
+suministrada. Solo se comparan los **nombres** de los valores, no los contenidos — así que los
+secretos no aparecen. De ahí usted deduce dos cosas:
+
+- Los valores que solo figuran en la plantilla son nuevos. La plantilla está comentada de
+  principio a fin; allí se indica para qué se necesita un valor. Los valores nuevos son casi
+  siempre opcionales.
+- Los valores que solo figuran en su configuración son específicos de la instancia o proceden de
+  una versión antigua y se pueden eliminar.
+
+## Por qué siempre una copia de seguridad antes
+
+Una actualización cambia estados del programa bajo una base de datos existente. Si algo sale mal,
+el camino de vuelta más rápido es un archivo anterior. Una copia de seguridad dura segundos, un
+conjunto de datos perdido cuesta días. Los detalles, en
+[Copia de seguridad y migración](/docs/es/betrieb/backup-und-umzug).
+
+## El modo de actualización
+
+En el modo de actualización, la configuración existente queda intacta y no se generan secretos
+nuevos. Eso es exactamente lo que usted quiere en una actualización: sus claves y direcciones se
+quedan como están. Al mismo tiempo, todos los componentes de la entrega se renuevan en conjunto.
+
+<Aside type="caution" title="Renovar componentes sueltos a mano no basta">
+Quien renueva solo una parte de la entrega deja los demás componentes en el estado antiguo. Por
+eso, utilice el camino de actualización previsto y no maniobras al margen.
+</Aside>
+
+## Por qué las versiones están fijadas
+
+Deliberadamente, las imágenes no están puestas en `latest`, sino en una versión fija e inmutable.
+El motivo: `latest` trae un estado distinto en cada servidor y en cada descarga. Una versión de
+EU Cowork AI es, en cambio, una **combinación probada** de la versión de LibreChat y los
+componentes complementarios. Solo con una versión fija ejecuta cada servidor exactamente la
+combinación que también se comprobó.
+
+## Comprobar después de la actualización
+
+Cuatro puntos: inicio de sesión en el chat, inicio de sesión en el panel de administración, una
+pregunta de prueba en el chat y un vistazo a si todos los servicios funcionan de forma estable.
+Los errores de configuración — por ejemplo, un archivo YAML que después de una actualización ya
+no encaja con el esquema — se hacen visibles en el proceso.
+
+## Vuelta atrás
+
+Una vuelta atrás devuelve **todo el estado de la entrega** a la versión anterior, no archivos
+sueltos. Solo en conjunto vuelven los componentes a formar la combinación que funcionaba antes. La
+configuración de la instancia queda intacta.
+
+Solo si también hay datos afectados se añade la restauración desde el archivo. Es destructiva,
+véase [Copia de seguridad y migración](/docs/es/betrieb/backup-und-umzug). Pruebe la vuelta atrás
+una vez en una instancia de prueba, antes de necesitarla por primera vez en un caso serio.
+
+<Aside type="note" title="Procedimiento en el manual de operación">
+El procedimiento de actualización, el cambio de versión y el camino de vuelta figuran en el manual
+de operación, que se adjunta al paquete de entrega. Los clientes lo reciben junto con su acceso.
+</Aside>
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Copia de seguridad y migración"
+    href="/docs/es/betrieb/backup-und-umzug"
+    description="Qué se guarda, cómo actúa una restauración y cómo se traslada una instancia a un servidor nuevo."
+  />
+  <LinkCard
+    title="Resolución de problemas"
+    href="/docs/es/betrieb/fehlerbehebung"
+    description="Dónde mirar primero cuando algo se atasca durante la explotación."
+  />
+</CardGrid>

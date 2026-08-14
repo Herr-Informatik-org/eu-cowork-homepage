@@ -1,0 +1,43 @@
+---
+title: Panoramica dei comandi
+description: Con che cosa si amministra un’istanza nella quotidianità e dove si trova la guida dettagliata.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Un’istanza viene amministrata con i consueti comandi di Docker Compose. Non esiste per questo
+una riga di comando propria che si debba prima imparare.
+
+| Scopo | Comando |
+|---|---|
+| Avviare | `docker compose up -d` |
+| Stato | `docker compose ps` |
+| Seguire il registro | `docker compose logs -f` |
+| Riavviare | `docker compose restart` |
+| Arrestare | `docker compose down` |
+
+Non ogni fornitura parte con la stessa dotazione. Quali indicazioni aggiuntive richieda una
+chiamata nella Sua fornitura è descritto nella documentazione operativa. Vanno poi aggiunte a
+**ogni** chiamata.
+
+## Script ausiliari forniti
+
+Per installazione, aggiornamento, backup e migrazione la fornitura porta con sé script già
+pronti, così che questi procedimenti non debbano essere composti a mano. Le loro chiamate, le
+opzioni e la sequenza corretta sono descritte nella documentazione operativa allegata alla
+fornitura. I clienti la ricevono insieme all’accesso.
+
+<Aside type="caution" title="Fare un backup prima di ogni aggiornamento">
+Vale senza eccezioni. Oltre al database, un backup comprende anche la configurazione e i file
+caricati; lo strumento di backup fornito porta con sé entrambi. Un archivio contiene credenziali
+e viene conservato protetto di conseguenza.
+</Aside>
+
+## Pagine correlate
+
+- [Installazione ed esercizio](/docs/it/betrieb/installation) descrive il percorso dal server
+  vuoto all’istanza in funzione.
+- [Risoluzione dei problemi](/docs/it/betrieb/fehlerbehebung) raccoglie i quadri d’errore più
+  frequenti.

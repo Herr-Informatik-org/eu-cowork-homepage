@@ -8,8 +8,8 @@ sidebar:
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 Most disturbances can be assigned to a group of causes within a few minutes. This page shows
-where to look for that. The detailed troubleshooting with the concrete commands is in the
-operations manual.
+where to look for that. The detailed troubleshooting is in the operations manual that comes with
+the delivery package.
 
 ## Where do I look first
 
@@ -18,8 +18,8 @@ operations manual.
    server logs. See [Logs and audit](/docs/en/administration/protokolle-und-audit).
 2. **The Access page of the person concerned.** For the question why someone does not see a
    connector, this is the fastest answer: it names the decisive rule level per connector.
-3. **Only then the command line.** What does not become visible in the panel are startup errors
-   of the services.
+3. **Only then the server level.** What does not become visible in the panel are disturbances
+   that already occur when the application starts.
 
 ## The most common groups of causes
 
@@ -27,16 +27,16 @@ operations manual.
 |---|---|
 | Answers do not arrive or run into timeouts | The instance does not reach the internet — typically a VPN client, a corporate proxy or a colliding network route. Less often an invalid key of the inference provider. |
 | A feature is visible but does nothing | The corresponding optional part is not running or is not configured. Affects mainly file search, code execution and web search. |
-| A service restarts repeatedly after the installation | Permissions on the mounted data directories. On the regular path through the installer this does not occur. |
+| A service restarts repeatedly after the installation | Access permissions on the storage areas of the instance. On the regular setup path this does not occur. |
 | Answers appear only at the end in one go | An upstream appliance buffers the response stream, see [Domain and certificate](/docs/en/betrieb/domain-und-tls). |
 | After a migration every person has to reconnect their connectors | The encryption keys were regenerated instead of carried over, see [Backup and migration](/docs/en/betrieb/backup-und-umzug). |
-| After an update something in the interface no longer fits | The YAML configuration no longer matches the current schema, or a new value is missing from the configuration. |
+| After an update something in the interface no longer fits | The configuration no longer matches the current state, or a new value is missing from it. |
 
 <Aside type="tip" title="If none of this fits">
 Note down what was changed last and compare your configuration with the supplied template. A
-large part of the remaining disturbances comes down to a missing value or a YAML file that no
-longer matches the schema after an update. If that does not get you further, the support path
-from your contract does.
+large part of the remaining disturbances comes down to a missing value or to a configuration that
+no longer matches the current state after an update. If that does not get you further, the
+support path from your contract does.
 </Aside>
 
 ## Next

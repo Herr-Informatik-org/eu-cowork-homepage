@@ -1,0 +1,57 @@
+---
+title: Diritti e abilitazioni
+description: Come EU Cowork AI decide chi possa usare quale connettore e dove Lei cura le abilitazioni.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import DiagrammGateway from '../../../../components/DiagrammGateway.astro';
+
+Davanti ai connettori sta una verifica dei diritti. Essa decide se la persona che pone la richiesta possa usare un connettore, e fissa la decisione. Questa pagina spiega perché serva questo livello, in base a che cosa decida e dove Lei curi le abilitazioni.
+
+## Perché serve questo livello
+
+Se si collegano connettori senza un livello di diritti proprio, di norma si può stabilire soltanto se qualcuno possa usare dei connettori, non quali. Chi può usare MCP vede allora tutti i sistemi collegati, oppure nessuno.
+
+Per uno strumento come una richiesta meteo questo è indifferente. Per un ERP non lo è: «le fatture le può vedere la contabilità, gli stipendi no» non è rappresentabile a questo livello. È esattamente questa lacuna che la verifica dei diritti colma.
+
+## Che cosa fa la verifica dei diritti
+
+- **Verifica prima della chiamata.** Una chiamata di strumento raggiunge il connettore solo se la persona che pone la richiesta è abilitata a farlo. Altrimenti riceve nella chat un messaggio in chiaro che la rimanda all’amministratore. La chat prosegue normalmente, non c’è alcun blocco.
+- **Elenco degli strumenti personalizzato.** Chi non ha un’abilitazione per un connettore non si vede nemmeno proporre i suoi strumenti.
+- **Registro di ogni chiamata.** Ogni decisione viene annotata in modo inalterabile, rifiuti compresi. Per quanto tempo queste voci vengano conservate lo stabilisce Lei nel Suo piano di cancellazione, vedere [Protezione dei dati e conservazione](/docs/it/administration/datenschutz-und-aufbewahrung).
+- **Nel dubbio, negare.** Se una decisione resta poco chiara, si nega invece di consentire.
+- **Il connettore non viene a sapere chi chiede.** L’identità serve per la decisione e non viene inoltrata al connettore.
+
+## Il percorso di una richiesta
+
+<DiagrammGateway />
+
+## I livelli di un’abilitazione
+
+Le abilitazioni si possono impostare per singole persone, per ruoli e per gruppi, e a ciò si aggiunge una regola predefinita per ogni connettore. Se le indicazioni si contraddicono, la risoluzione è deliberatamente restrittiva. Questo è voluto: un confine di sicurezza non deve poter essere annullato per il solo fatto che qualcuno appartiene per giunta a un gruppo innocuo.
+
+<Aside type="danger" title="Passo obbligatorio: impostare la regola predefinita prima dell’abilitazione">
+Il primo gesto dopo la creazione di un connettore spetta alla regola predefinita: **imposti la regola predefinita del connettore su «negato» e abiliti poi in modo mirato i ruoli, i gruppi e le persone che hanno bisogno del connettore.**
+
+Così è definito fin dal primo secondo chi veda dietro il connettore, e l’abilitazione è una decisione consapevole invece di un effetto collaterale. Inserisca questo passo nella Sua lista di collaudo.
+</Aside>
+
+Oltre al livello del connettore, un’abilitazione può riferirsi anche a singoli strumenti.
+
+<Aside type="tip" title="Ritagli i connettori in modo che basti il livello del connettore">
+Nella quotidianità il controllo a livello di connettore copre la maggior parte dei casi — ed è il confine più robusto. Pianifichi quindi i Suoi connettori di conseguenza: meglio due connettori ristretti, ciascuno con un proprio account di servizio, che uno solo con molti strumenti, metà dei quali dovrebbe essere bloccata. Come questo si presenti è descritto sotto [Schemi per i connettori](/docs/it/konnektoren/muster).
+</Aside>
+
+## Dove Lei cura le abilitazioni
+
+Le regole predefinite, le abilitazioni per ruoli e gruppi nonché le eccezioni per singole persone si curano nel pannello di amministrazione. Lì si trova anche il registro delle chiamate di strumento, che si può esportare per la Sua archiviazione. Viceversa si può anche partire da una singola persona e ricostruire quali connettori le siano aperti.
+
+Quale vista si trovi dove e come la si utilizzi è descritto nella guida allegata alla Sua fornitura.
+
+## Che cosa la verifica dei diritti non fa
+
+- **Non sostituisce i diritti nel sistema di origine.** Un account di servizio con diritti troppo ampi resta un rischio, anche se davanti c’è una verifica. Tracci il confine dei dati nel sistema di origine, non nel prompt.
+- **Non filtra né argomenti né contenuti.** Uno strumento che accetta un linguaggio di interrogazione libero non si lascia limitare in modo sensato a «solo fatture». Preferisca connettori con strumenti separati o con una modalità di sola lettura.
+- **Non è l’unico confine.** Nei connettori che lavorano con i diritti della singola persona, è il sistema di destinazione stesso a tracciare il confine di riferimento, vedere [Schemi per i connettori](/docs/it/konnektoren/muster).

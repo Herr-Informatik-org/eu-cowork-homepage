@@ -13,10 +13,9 @@ Zertifikatsvariante gilt, wird in der Konfiguration gewählt.
 
 ## DNS
 
-Die Instanz braucht einen DNS-Namen, der auf den Server zeigt; für das Admin-Panel kommt ein
-weiterer Name dazu. Welche Einträge genau zu setzen sind, nennt das Betriebshandbuch. Für die
-automatische Zertifikatsausstellung müssen die üblichen HTTP- und HTTPS-Ports von aussen
-erreichbar sein.
+Die Instanz braucht einen DNS-Namen, der auf den Server zeigt. Welche Einträge genau zu setzen
+sind, nennt das Betriebshandbuch. Für die automatische Zertifikatsausstellung muss der Server
+aus dem Internet über die üblichen Web-Ports erreichbar sein.
 
 ## Variante 1: Öffentliches Zertifikat
 
@@ -47,22 +46,21 @@ Wenn eine vorgelagerte Appliance wie Sophos, F5, HAProxy oder nginx bereits HTTP
 soll der mitgelieferte Proxy kein zweites Zertifikat holen. In dieser Variante übernimmt er
 allein die Verteilung, die Terminierung bleibt bei der Appliance.
 
-Damit die Zuordnung greift, muss die Appliance den Host-Header durchreichen. Die öffentliche
-Adresse bleibt in der Konfiguration der Anwendung auf `https://` stehen, auch wenn die
-Anwendung intern unverschlüsselt angesprochen wird — sonst entstehen Einladungslinks mit
-falschem Schema.
+Damit die Zuordnung greift, muss die Appliance den Host-Header durchreichen. In der
+Konfiguration der Anwendung wird die öffentliche Adresse so hinterlegt, wie Ihre Nutzenden sie
+aufrufen — sonst entstehen etwa Einladungslinks, die ins Leere führen.
 
 <Aside type="caution" title="WAF und Streaming">
 Viele Appliances puffern den Antwortstrom, um die Antwort zu prüfen. Der Chat schickt seine
 Antworten aber Stück für Stück. Ist die Pufferung aktiv, erscheint die Antwort erst am Ende
 auf einen Schlag oder bricht bei langen Antworten ab. Setzen Sie in der WAF eine Ausnahme für
-die Schnittstellen-Pfade, damit die Antwort nicht gescannt wird, und schalten Sie dort die
+die betroffenen Pfade, damit der Antwortstrom nicht gepuffert wird, und schalten Sie dort die
 Kompression ab.
 </Aside>
 
 <Aside type="note" title="Konfiguration im Betriebshandbuch">
-Welche Werte für die jeweilige Variante gesetzt werden und wie der Reverse-Proxy dabei
-eingebunden ist, steht im Betriebshandbuch, das dem Auslieferungspaket beiliegt.
+Welche Einstellungen die jeweilige Variante verlangt, steht im Betriebshandbuch, das dem
+Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 </Aside>
 
 ## Weiter

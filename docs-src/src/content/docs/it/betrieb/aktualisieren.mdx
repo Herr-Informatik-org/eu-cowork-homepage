@@ -1,0 +1,88 @@
+---
+title: Aggiornamento
+description: Come un’istanza di EU Cowork AI in esercizio viene portata a uno stato nuovo, perché prima si esegue un backup e come si presenta la via del ritorno.
+sidebar:
+  order: 5
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Un aggiornamento consiste in quattro mosse: prelevare il nuovo stato, confrontare la propria
+configurazione con il modello, eseguire il backup, installare. Si svolge lungo lo stesso percorso
+guidato della prima messa in servizio, soltanto in modalità di aggiornamento.
+
+## Il confronto con il modello
+
+Prima dell’aggiornamento la configurazione dell’istanza viene messa a confronto con il modello
+fornito. Vengono confrontati soltanto i **nomi** dei valori, non i contenuti — i segreti quindi
+non compaiono. Se ne ricavano due cose:
+
+- I valori che figurano soltanto nel modello sono nuovi. Il modello è commentato in ogni sua
+  parte e vi è indicato a che cosa serve un valore. I valori nuovi sono quasi sempre facoltativi.
+- I valori che figurano soltanto nella Sua configurazione sono specifici dell’istanza oppure
+  provengono da una versione vecchia e possono essere eliminati.
+
+## Perché prima si esegue sempre un backup
+
+Un aggiornamento sostituisce gli stati del programma sotto un database esistente. Se qualcosa va
+storto, la via di ritorno più rapida è un archivio precedente. Un backup dura pochi secondi, un
+patrimonio di dati perduto costa giorni. Dettagli in
+[Backup e migrazione](/docs/it/betrieb/backup-und-umzug).
+
+## La modalità di aggiornamento
+
+In modalità di aggiornamento la configurazione esistente resta intatta e non nascono nuovi
+segreti. È esattamente ciò che si vuole in un aggiornamento: le Sue chiavi e i Suoi indirizzi
+restano come sono. Allo stesso tempo tutti i componenti della fornitura vengono rinnovati insieme.
+
+<Aside type="caution" title="Rinnovare a mano singoli componenti non basta">
+Chi rinnova soltanto una parte della fornitura lascia i restanti componenti al vecchio stato.
+Utilizzi perciò il percorso di aggiornamento previsto e nessun intervento manuale accanto a esso.
+</Aside>
+
+## Perché le versioni sono fissate
+
+Le immagini, per scelta deliberata, non sono impostate su `latest`, bensì su una versione fissa e
+immutabile. Il motivo: `latest` scarica su ogni server e a ogni richiamo uno stato diverso. Una
+release di EU Cowork AI è però una **combinazione testata** di versione di LibreChat e componenti
+complementari. Solo con una versione fissa ogni server esegue esattamente la combinazione che è
+stata verificata.
+
+## Verifiche dopo l’aggiornamento
+
+Quattro punti: accesso alla chat, accesso al pannello di amministrazione, una domanda di prova
+nella chat e una verifica che tutti i servizi funzionino in modo stabile. Gli errori di
+configurazione — per esempio un file YAML che dopo un aggiornamento non corrisponde più allo
+schema — diventano così visibili.
+
+## Rollback
+
+Un rollback riporta l'**intero stato di fornitura** alla versione precedente, non singoli file.
+Solo insieme i componenti formano di nuovo la combinazione che era in esecuzione prima. La
+configurazione dell’istanza resta intatta.
+
+Soltanto se sono interessati anche i dati si aggiunge il restore dall’archivio. Esso è
+distruttivo, vedere [Backup e migrazione](/docs/it/betrieb/backup-und-umzug). Provi il rollback
+una volta su un’istanza di prova, prima di averne bisogno per la prima volta in una situazione
+critica.
+
+<Aside type="note" title="Procedura nel manuale operativo">
+La procedura di aggiornamento, il cambio di versione e la via del ritorno si trovano nel manuale
+operativo, che è allegato al pacchetto di fornitura. I clienti lo ricevono insieme al proprio
+accesso.
+</Aside>
+
+## Per continuare
+
+<CardGrid>
+  <LinkCard
+    title="Backup e migrazione"
+    href="/docs/it/betrieb/backup-und-umzug"
+    description="Che cosa viene salvato, come agisce un restore e come un’istanza si trasferisce su un nuovo server."
+  />
+  <LinkCard
+    title="Risoluzione dei problemi"
+    href="/docs/it/betrieb/fehlerbehebung"
+    description="Dove guardare per primo quando qualcosa si inceppa durante l’esercizio."
+  />
+</CardGrid>

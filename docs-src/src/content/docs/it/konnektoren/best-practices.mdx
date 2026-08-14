@@ -1,0 +1,129 @@
+---
+title: Buone pratiche per i connettori
+description: Dieci regole con motivazione, oltre a una lista di controllo prima dell’abilitazione di un nuovo connettore.
+sidebar:
+  order: 7
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Questa pagina riassume ciò che si è dimostrato valido nell’esercizio. Le regole sono ordinate per importanza, e la prima è quella che viene dimenticata più spesso e che costa di più.
+
+## 1. Regola predefinita subito su negato
+
+Un connettore è delimitato in modo pulito solo quando la sua regola predefinita è impostata. Finché ciò non è avvenuto, a decidere chi veda dietro il connettore non è la Sua intenzione, ma il caso dello stato di configurazione del momento. In un collegamento ERP si tratta di tutti i clienti, di tutti i documenti contabili e di tutti i dati del personale che l’account di servizio può vedere.
+
+Imposti quindi la **regola predefinita** su negato nello stesso passo di lavoro in cui crea il connettore, e abiliti in modo mirato solo dopo.
+
+## 2. Pochi strumenti invece di molti
+
+Il catalogo degli strumenti di un connettore viene trasmesso al modello **a ogni singolo messaggio**. Non è un investimento una tantum, bensì un affitto corrente su ogni chat.
+
+L’ordine di grandezza è considerevole: un connettore esteso può offrire oltre cento strumenti e occupare così una parte notevole del contesto disponibile, prima ancora che sia posta la prima domanda. Limitato al caso d’uso, spesso ne resta soltanto una piccola frazione.
+
+Il secondo effetto è almeno altrettanto importante: più sono gli strumenti dal nome simile presenti nel catalogo, più spesso il modello sceglie quello sbagliato. Un catalogo ristretto fornisce risposte non solo più economiche, ma anche più affidabili.
+
+Abiliti quindi gli strumenti singolarmente e su richiesta, non in via precauzionale.
+
+## 3. Uno strumento che non esiste non può essere richiamato
+
+La misura di sicurezza più affidabile è l’omissione. Un modello non può richiamare per errore uno strumento che non esiste affatto, e nessuna istruzione contenuta in un documento può farne comparire uno a parole.
+
+Un ponte di sola lettura verso un sistema gestionale lo dimostra, vedere [schema C](/docs/it/konnektoren/muster): lì non esiste deliberatamente alcuno strumento per azioni invasive. Per questo non si trova da nessuna parte una regola che debba impedire a qualcuno di riavviare un server dalla chat. Semplicemente non è possibile.
+
+È esattamente questo il metro con cui misura un connettore altrui: quali strumenti espone, ed esiste una modalità di sola lettura? Se un server pronto all’uso offre, oltre alla lettura, anche azioni invasive e questo non si lascia disattivare, un proprio connettore ristretto è spesso più rapido della discussione su chi possa usarlo.
+
+## 4. Account di servizio separati invece di una chiave universale
+
+Una chiave di accesso eredita i diritti del suo account nel sistema di origine. Una chiave per tutti significa quindi i diritti più ampi per tutti, e la separazione dipende soltanto dal nostro software.
+
+Crei invece più account di servizio ristretti, uno per profilo di diritti, e faccia funzionare per ogni account un’istanza propria del connettore. Esattamente così è costruito lo [schema A](/docs/it/konnektoren/muster): più istanze dello stesso ponte, ciascuna con un proprio account nel sistema di destinazione, ciascuna con un proprio profilo di diritti. Se un’abilitazione nel pannello è stata impostata una volta troppo larga, una persona vede comunque solo ciò che il suo account di servizio può vedere.
+
+Anche l’effetto collaterale è prezioso: nel registro del sistema di origine è riconoscibile da quale profilo provenisse una richiesta.
+
+## 5. Il confine dei dati appartiene al sistema di origine
+
+La tentazione di tracciare un confine nel prompt è grande: «non interrogare i dati salariali». Questo non è un confine, è una preghiera.
+
+Anche un filtraggio a livello di argomenti non porta lontano. Molti strumenti accettano espressioni di ricerca libere o condizioni di filtro. Che cosa sia possibile lì dentro non si lascia valutare dall’esterno in modo affidabile, e ogni regola di filtro è una corsa contro formulazioni a cui nessuno ha pensato.
+
+Affidabili sono solo due livelli: i diritti dell’account nel sistema di origine, ossia ciò che l'account dietro la chiave può davvero vedere in quel sistema, e il livello degli strumenti, perché uno strumento inesistente non può fornire nulla. Tracci il confine lì, e tratti il prompt come una comodità, non come un controllo.
+
+## 6. L’autenticazione per persona batte l’account di servizio
+
+Se un sistema offre un accesso personale tramite un’interfaccia, lo prenda. Allora il sistema di destinazione conosce la persona che pone la richiesta, e i diritti che essa ha là valgono immutati. Non deve ricostruire nulla, non deve curare nulla in più, e un cambiamento dei diritti nel sistema di origine ha effetto immediato anche nella chat.
+
+Un collegamento al Suo archivio dei file funziona tipicamente così, vedere [schema B](/docs/it/konnektoren/muster). Il prezzo è che ogni persona deve collegarsi una volta e che la graduazione viene poi curata nel sistema di destinazione. È lo scambio giusto: un confine più fine nel sistema di destinazione vale più di un confine più grossolano davanti.
+
+Un account di servizio è il ripiego per i sistemi privi di questa possibilità. Non è cattivo, ma esige con insistenza le regole 1, 4 e 8.
+
+## 7. Chiavi solo come riferimento
+
+Non inserisca mai le credenziali di accesso in chiaro nella configurazione, bensì esclusivamente come riferimento a una chiave depositata.
+
+Non è una formalità. Un valore in chiaro nella configurazione sarebbe leggibile da chiunque possa consultare la configurazione e finirebbe negli export e nei backup delle impostazioni.
+
+Tratti quindi una chiave una volta depositata come non più consultabile: modificarla significa sovrascriverla, e chi ha bisogno del valore lo prende dal sistema di origine, non dalla piattaforma.
+
+## 8. Per persona esattamente un’istanza dello stesso connettore
+
+Più istanze dello stesso connettore espongono nomi di strumenti identici. Se per una persona ne sono abilitate due, succedono due cose: il catalogo sta due volte nel contesto e costa il doppio a ogni messaggio, e il modello deve tirare a indovinare fra due strumenti dallo stesso nome. Entrambe le cose sono evitabili.
+
+Abiliti quindi per ogni persona esattamente un'istanza. Se qualcuno ha bisogno di un altro profilo di diritti, **cambi** l’abilitazione invece di aggiungerne una seconda. Verifichi poi nel pannello che cosa risulti effettivamente per questa persona.
+
+## 9. Gestire attivamente la dimensione del contesto
+
+Il catalogo degli strumenti è solo una metà. L’altra sono i **risultati** delle chiamate. Una richiesta avventata su tutto il parco apparecchi o un elenco di risultati non filtrato dall’ERP riempie il contesto, spinge fuori la cronologia della conversazione e rende la risposta peggiore, non migliore.
+
+Aiutano quattro leve:
+
+- **Stabilire limiti massimi per la lunghezza dei risultati degli strumenti e lasciarli in vigore.** Se una risposta sembra tagliata, è la protezione che sta lavorando.
+- **Preferire connettori con risposte a più livelli.** Una richiesta di dettaglio ben costruita carica dapprima solo i dati anagrafici e recupera le sezioni voluminose solo su richiesta esplicita. Questo fa risparmiare a ogni singola domanda.
+- **Per domande su molti oggetti, uno strumento di analisi invece di molte richieste singole.** Dieci richieste singole costano dieci risultati nel contesto, un’analisi ne costa uno.
+- **Con agenti ricchi di strumenti, non scrivere l’intero catalogo in ogni prompt.** Le definizioni degli strumenti si lasciano anche caricare solo all’occorrenza. Questo conviene solo con un numero molto elevato di strumenti.
+
+## 10. Contrassegnare i connettori fuori dall’UE
+
+Un connettore porta dati dalla Sua istanza a un fornitore. Se questo fornitore si trova fuori dall’UE, è un’affermazione sulla Sua gestione dei dati che non dovrebbe fare tacitamente.
+
+Questo vale anche quando il fornitore gestisce un’istanza europea: non appena i dati lasciano il Suo stack, si tratta di un trattamento presso un terzo, e la situazione giuridica si regola in base alla sede di quest’ultimo. Un connettore di questo tipo può essere una decisione del tutto giusta, ma deve essere una decisione **consapevole**.
+
+Perciò lo stato di fornitura di una nuova installazione non contiene **alcun connettore preconfigurato**. Che cosa venga collegato lo decide Lei.
+
+Tenga un breve elenco di quale connettore consegni dati a chi, indichi espressamente i collegamenti extra-UE ai Suoi utenti e nella Sua documentazione sulla protezione dei dati, e non affermi per tali connettori che tutto resta in Europa.
+
+## Lista di controllo prima dell’abilitazione di un nuovo connettore
+
+Esamini questi punti prima che la prima persona usi il connettore:
+
+- [ ] L’elenco degli strumenti esposti è stato letto per intero e compreso.
+- [ ] Tutto ciò che non serve è disattivato oppure non è nemmeno presente.
+- [ ] Esiste una modalità di sola lettura, oppure è motivato perché la scrittura sia necessaria.
+- [ ] L’account di servizio nel sistema di origine ha esattamente i diritti che gli servono, e non di più.
+- [ ] Il confine dei dati è tracciato nel sistema di origine, non nel prompt.
+- [ ] Le credenziali di accesso stanno nella configurazione esclusivamente come riferimento, mai in chiaro.
+- [ ] Per il connettore valgono abilitazioni per ruolo e per gruppo, oppure è motivato perché i diritti nel sistema di destinazione bastino.
+- [ ] La **regola predefinita** è su negato.
+- [ ] Le abilitazioni sono impostate e per ogni persona è abilitata una sola istanza.
+- [ ] Il collegamento al connettore è verificato.
+- [ ] Una persona di prova con diritti ristretti vede dimostrabilmente meno di una con diritti ampi.
+- [ ] Nel caso di un fornitore fuori dall’UE questo è documentato e comunicato.
+- [ ] Uno sguardo al registro mostra le chiamate e le decisioni attese.
+
+<CardGrid>
+  <LinkCard
+    title="Schemi per i connettori"
+    href="/docs/it/konnektoren/muster"
+    description="Tre forme costruttive collaudate: account di servizio, autenticazione per persona e ponte di sola lettura, con il percorso dei diritti."
+  />
+  <LinkCard
+    title="Diritti e abilitazioni"
+    href="/docs/it/konnektoren/gateway-und-rechte"
+    description="In base a che cosa decide la verifica dei diritti e dove Lei cura le abilitazioni."
+  />
+  <LinkCard
+    title="Collegare un proprio connettore"
+    href="/docs/it/konnektoren/eigenen-konnektor-anbinden"
+    description="Che cosa chiarire prima, in base a che cosa misurare un connettore altrui e che cosa conta al momento dell’abilitazione."
+  />
+</CardGrid>

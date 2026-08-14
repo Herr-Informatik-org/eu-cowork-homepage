@@ -7,73 +7,65 @@ sidebar:
 
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-A supplied script covers both: the regular backup and the migration to a new machine.
-Technically a migration is nothing other than a backup on the old server, a copy and a restore
-on the new one.
+Backup and migration belong together: technically a migration is nothing other than a backup on
+the old machine and its restore on the new one. The delivery package includes the necessary aids
+for both.
 
 ## What gets backed up
 
-A run produces exactly one archive. It contains the complete dump of the database — accounts,
-conversations, agents, credit and bookings, permission rules and logs — the configuration files
-of the instance including secrets, as well as the uploaded files and images.
+A backup has to cover the entire state of an instance — and only the state. That includes the
+database with the content of the instance, the uploaded files and the configuration together
+with its secrets. The secrets are indispensable: without them part of the database stays
+unreadable even after a complete restore.
 
-Not in the archive are the raw data of the database and the search index: both are derived and
-are rebuilt on their own after a restore. Runtime logs are not included either, they are not
-state.
+What can be derived again from this state does not have to be backed up. Such derived data
+rebuilds itself after a restore. Runtime logs are not state either.
 
 ## Backing up regularly
 
-The backup is set up once and then runs on a schedule. Old archives are deleted according to an
-adjustable retention rule. The instance has to be running for the dump.
+The backup is set up once and then runs on a schedule, with a retention rule that lets old states
+expire after a defined period. How often you back up follows from a single question: how much
+work may be lost in the worst case?
 
 ## Restore and its effect
 
-A restore is **destructive**: the database is replaced by the state from the archive, the
-previous content is gone afterwards, and the files from the archive overwrite anything with the
-same name. The script therefore asks beforehand and requires an explicit confirmation.
-
-There is one exception: the configuration of the current machine is not overwritten just like
-that, because it contains the addresses and operating parameters of exactly this server. The
-version from the archive is placed alongside it.
+A restore is **destructive**. It replaces the current state of the instance with the state from
+the backup; whatever has been created since is gone afterwards. The path there therefore requires
+an explicit confirmation. Treat a restore as a deliberate intervention, not as a routine move.
 
 ## Migration to a new server
 
-The sequence in short:
+A migration leads through a backup of the old instance, the setup of the new machine and the
+restore of that state. Three points decide whether it succeeds:
 
-1. Back up on the old server and transfer the archive.
-2. Prepare the new server and set up the application in migration mode — this generates **no**
-   new secrets but carries over the ones from the archive.
-3. Restore the archive and give the instance a trial run over its IP address before switching
-   over: sign in to chat and panel, check conversations and the user list.
-4. Freeze the old server, take a second backup and restore it, so that no data is lost that was
-   created between the two backups.
-5. Only then move DNS and check the certificate issuance. Leave the old stack stopped for a few
-   days until the migration is confirmed.
+- The secrets of the existing instance are carried over and not regenerated.
+- The new instance is checked before the switch-over, not afterwards.
+- Between the decisive backup and the switch-over no further work may happen, otherwise exactly
+  that work is missing on the new server.
 
-The transferred copy of the archive contains secrets and conversations. Delete it from the
-handover path after the migration and keep only the regular backup rotation.
+The copy of the backup transported for the migration contains secrets and customer content.
+Delete it after the migration; only the regular backup remains.
 
 <Aside type="danger" title="Carry over the encryption keys">
 This is the most expensive mistake in a migration. If the keys with which the application
 encrypts data in the database are regenerated on the new server instead of carried over from the
-old configuration, all encrypted credentials become unreadable: the OAuth tokens of every person
-for connectors with per-person sign-in, and the API keys stored in the panel. Every person would
-have to rebuild every connection. That is why the path leads through the configuration from the
-archive. The same applies in a milder form to the keys of the sign-in tokens — there only all
-sessions become invalid — and to the key of the full-text search, where the index is rebuilt.
+existing configuration, the affected data becomes unreadable — even if the database was restored
+completely. Every person would have to rebuild their connections. That is why the path always
+leads through the configuration from the backup.
 </Aside>
 
 ## Two recommendations that really count
 
-- **Test the restore once before you rely on it.** An archive that has never been restored is an
+- **Test the restore once before you rely on it.** A backup that has never been restored is an
   assumption, not a backup. The test belongs on a test machine, not on the production system.
-- **Mirror the archive off the server.** A copy on the same machine protects against accidental
-  deletion, not against the loss of the machine. Because the archive contains secrets, it
+- **Mirror the backup off the server.** A copy on the same machine protects against accidental
+  deletion, not against the loss of the machine. Because a backup contains secrets, it
   belongs in a cloud only encrypted, and never in a repository.
 
-<Aside type="note" title="Commands and sequence in the operations manual">
-The invocation of the script, the options and the migration step by step are described in the
-operations manual that comes with the delivery package.
+<Aside type="note" title="Sequence in the operations manual">
+The sequence in detail — backup, restore and migration step by step — is described in the
+operations manual that comes with the delivery package. Customers receive it together with their
+access.
 </Aside>
 
 ## Next

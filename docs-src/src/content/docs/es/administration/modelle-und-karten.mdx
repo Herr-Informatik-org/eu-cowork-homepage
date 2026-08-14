@@ -1,0 +1,54 @@
+---
+title: Modelos y fichas del modelo
+description: Qué son las fichas del modelo y cómo se controla su visibilidad por rol y por grupo.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+En el chat los usuarios no eligen un modelo en bruto, sino una **ficha del modelo**. Una ficha reúne un proveedor, un modelo y los ajustes predeterminados correspondientes bajo un nombre comprensible. Esta página muestra qué controla usted con ello como administrador.
+
+## Qué es una ficha del modelo
+
+Una ficha es un ajuste predefinido y curado. En lugar de un nombre técnico de modelo, la persona lee en el selector de modelos una denominación comprensible y obtiene así automáticamente el prompt de sistema adecuado y los parámetros adecuados. Eso tiene tres ventajas: la selección sigue siendo comprensible, el prompt de sistema se inserta en el servidor y no acaba en el navegador, y usted puede ajustar la selección por rol y por grupo.
+
+A una ficha pertenecen, entre otras cosas, una etiqueta visible, una breve descripción, la posición en el selector, el proveedor y el modelo que hay detrás, así como ajustes predeterminados como la temperatura, el texto de bienvenida y el prompt de sistema. Exactamente una ficha es la ficha predeterminada.
+
+Además se puede establecer si solo pueden elegirse fichas o si junto a ellas aparece también la lista de modelos en bruto.
+
+## Proveedores
+
+Los proveedores y los modelos que ponen a disposición se mantienen en la configuración. Una prueba de conexión comprueba el enlace sin revelar el secreto.
+
+<Aside type="danger" title="Las claves solo como referencia">
+Una clave de acceso nunca se deposita en texto claro en la configuración, sino exclusivamente como referencia a un valor guardado en el servidor. El texto claro se rechaza. Como alternativa, cada persona deposita su propia clave en el chat.
+</Aside>
+
+## Visibilidad por rol y por grupo
+
+Qué fichas ve alguien lo establece usted en el nivel del rol y del grupo. Donde no hay una regla propia, se aplica la selección entregada. Principio: gana la regla más restrictiva.
+
+En el editor de roles usted activa o desactiva las fichas una por una y oculta si hace falta la lista de modelos en bruto; un grupo recibe, si hace falta, una selección propia. En ambos niveles la selección puede devolverse en un solo paso al estado de entrega.
+
+<Aside type="note" title="Volver a guardar una vez tras cambiar fichas">
+Cuando usted cambie el nombre de una ficha o añada una, vuelva a guardar una vez las reglas de rol y de grupo afectadas y compruebe después que la visibilidad sigue tal como usted la entiende.
+</Aside>
+
+## Restringir proveedores
+
+Si un extremo de conexión pasa por un intermediario que a su vez recurre a varios proveedores, se puede restringir cuáles de ellos pueden atender sus solicitudes: solo proveedores sin almacenamiento y sin entrenamiento con los prompts y, si así se desea, solo proveedores con sede o centro de datos en la UE, el EEE y Suiza.
+
+<Aside type="caution" title="Dos limitaciones">
+Primera: los datos sobre la sede y el centro de datos proceden del intermediario, y **la sede de un proveedor no es garantía del lugar de tratamiento**. Trate **«Nur EU»** (solo UE) como una restricción razonable, no como una garantía.
+
+Segunda: **los modelos sin un proveedor correspondiente devolverán después un error.** Si usted define la lista de forma estrecha, compruebe cada ficha que pase por ese extremo de conexión.
+</Aside>
+
+## Enrutador de modelos
+
+Junto a las fichas fijas existe la posibilidad de repartir las solicitudes automáticamente hacia un modelo adecuado, en lugar de dejar que cada pregunta la responda el modelo más caro. Si la clasificación falla, la solicitud va al modelo más potente: en caso de duda el enrutador decide por la calidad, no por el ahorro.
+
+<Aside type="note" title="No activo en el estado de entrega">
+El enrutador **no** está desplegado en la plantilla de cliente. Después de la instalación su personal ve las fichas del modelo entregadas. El contexto se describe en [Chat y modelos](/docs/es/funktionen/chat-und-modelle).
+</Aside>

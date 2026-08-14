@@ -1,0 +1,79 @@
+---
+title: Dominio y certificado
+description: Las tres variantes de TLS de EU Cowork AI, es decir, certificado público, CA interna en la LAN y explotación detrás de un WAF ya existente.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+El acceso a una instancia pasa por un proxy inverso que forma parte de la entrega. Reparte las
+peticiones entre los componentes de la aplicación y se ocupa del certificado. Qué variante de
+certificado se aplica se elige en la configuración.
+
+## DNS
+
+La instancia necesita un nombre DNS que apunte al servidor. Qué registros hay que establecer
+exactamente lo indica el manual de operación. Para la emisión automática del certificado, el
+servidor debe ser accesible desde Internet a través de los puertos web habituales.
+
+## Variante 1: certificado público
+
+El caso normal para un servidor con dirección pública. El proxy inverso obtiene y renueva el
+certificado por su cuenta a través de Let’s Encrypt. El requisito previo es un DNS de resolución
+pública. En una red aislada esta variante no funciona.
+
+## Variante 2: CA interna en la LAN
+
+Para servidores sin accesibilidad pública. El proxy inverso emite los certificados desde una
+autoridad de certificación propia y local. Para ello los dispositivos necesitan un registro DNS
+interno, y la autoridad de certificación raíz debe estar registrada como de confianza en cada
+dispositivo — de lo contrario aparece un aviso de certificado.
+
+El cambio posterior a un certificado público es sencillo: el nombre de host, los enlaces y las
+URI de redirección siguen siendo los mismos.
+
+<Aside type="caution" title="Para el complemento de Outlook no basta una CA interna">
+La vista web de Office no muestra ningún aviso de certificado que se pueda descartar con un clic.
+Sin la CA raíz instalada en el dispositivo, la ventana del complemento se queda simplemente
+vacía, sin mensaje de error. Para una implantación amplia del complemento usted necesita un
+certificado de confianza pública, es decir, la variante 1 o la variante 3.
+</Aside>
+
+## Variante 3: detrás de un WAF ya existente
+
+Si un dispositivo situado por delante, como Sophos, F5, HAProxy o nginx, ya termina el HTTPS, el
+proxy suministrado no debe obtener un segundo certificado. En esta variante se encarga únicamente
+del reparto; la terminación se queda en el dispositivo.
+
+Para que la asignación funcione, el dispositivo debe transmitir la cabecera Host. En la
+configuración de la aplicación, la dirección pública se registra tal como la invocan sus usuarios
+— de lo contrario surgen, por ejemplo, enlaces de invitación que no llevan a ninguna parte.
+
+<Aside type="caution" title="WAF y streaming">
+Muchos dispositivos almacenan en búfer el flujo de respuesta para poder inspeccionarla. El chat,
+en cambio, envía sus respuestas poco a poco. Si el almacenamiento en búfer está activo, la
+respuesta aparece solo al final y de golpe, o se interrumpe en las respuestas largas. Establezca
+en el WAF una excepción para las rutas afectadas, de modo que el flujo de respuesta no se
+almacene en búfer, y desactive allí la compresión.
+</Aside>
+
+<Aside type="note" title="Configuración en el manual de operación">
+Qué ajustes exige cada variante figura en el manual de operación, que se adjunta al paquete de
+entrega. Los clientes lo reciben junto con su acceso.
+</Aside>
+
+## Para continuar
+
+<CardGrid>
+  <LinkCard
+    title="Actualización"
+    href="/docs/es/betrieb/aktualisieren"
+    description="Por qué una versión es una combinación probada y qué aspecto tiene el camino de vuelta."
+  />
+  <LinkCard
+    title="Resolución de problemas"
+    href="/docs/es/betrieb/fehlerbehebung"
+    description="Dónde mirar primero cuando algo se atasca durante la explotación."
+  />
+</CardGrid>
