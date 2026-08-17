@@ -17,7 +17,11 @@
        JavaScript in der Zielsprache lesbar.
      - Die .dc-Seiten rendern ihren Rumpf im Browser. Uebersetzt wird der
        Kopfbereich; den Rumpf baut die Laufzeit in der Sprache, die aus dem
-       Adresspraefix kommt.
+       Adresspraefix kommt. Damit auch ohne JavaScript etwas dasteht, erzeugt
+       der Vorrenderer weiter unten den <noscript>-Block aus derselben Vorlage
+       und denselben Uebersetzungsdaten -- siehe den ausfuehrlichen Abschnitt
+       dort, insbesondere die Begruendung, warum der Text in <noscript> gehoert
+       und nicht ins <x-dc>-Template.
 
    Aufruf: node scripts/build-i18n.mjs
    ============================================================================= */
@@ -306,6 +310,556 @@ function prefixLinks(html, lang) {
   });
 }
 
+/* ============================================================================
+   Vorrenderer fuer den noscript-Block der .dc-Seiten
+
+   Das Problem: eine .dc-Seite liefert im HTML nur die Vorlage aus. Erst der
+   Browser setzt die Uebersetzungsdaten ein und baut den Rumpf. Wer kein
+   JavaScript ausfuehrt -- und das tut keiner der KI-Crawler, weder GPTBot noch
+   ClaudeBot, PerplexityBot oder CCBot -- sieht davon nichts: gemessen am
+   ausgelieferten HTML standen auf der Startseite 507 Woerter im noscript und
+   daneben 391 unaufgeloeste {{ }}. Im Browser sind es 1'438 Woerter. Der
+   Inhalt war da, er kam nur nicht heraus.
+
+   Hier entsteht er deshalb beim Bauen ein zweites Mal, aus derselben Quelle:
+   das Logikskript der Seite laeuft in einer Sandbox, renderVals() liefert
+   dieselben Werte wie im Browser, und die Vorlage wird damit zu lesbarem Text
+   ausgewertet. Aus einer Quelle erzeugt heisst: die beiden Fassungen koennen
+   nicht auseinanderlaufen. Google fuehrt JavaScript aus und sieht beide; ein
+   von Hand gepflegter Zweittext waere frueher oder spaeter ein Widerspruch,
+   und ein Widerspruch liest sich wie Verschleierung.
+
+   WARUM DER TEXT IN <noscript> GEHOERT UND NICHT INS TEMPLATE
+   -----------------------------------------------------------
+   Die naheliegende Idee ist, das gerenderte HTML gleich in <x-dc> zu legen.
+   Das zerstoert die Seite. Die Laufzeit liest ihre Vorlage aus dem DOM
+   (`template: dc.innerHTML`, support.js:32) -- das <x-dc>-Element IST die
+   Vorlage, kein Container fuer ein Ergebnis. Wer dort Gerendertes hineinlegt,
+   nimmt der Komponente ihre Vorlage weg, und es bleibt eine tote Seite.
+
+   <noscript> ist die einzige Stelle, die beides kann. Ein Browser mit
+   JavaScript parst den Inhalt als Text und rendert ihn nie; er taucht in
+   keinem querySelector auf, wird von keinem IntersectionObserver gesehen, von
+   keiner Messroutine vermessen und loest keine Animation ein zweites Mal aus.
+   Ein Crawler ohne JavaScript liest genau ihn. Deshalb steht der erzeugte
+   Block dort und nirgends sonst.
+   ============================================================================ */
+
+/* ------------------------- Ausdruecke ------------------------- */
+
+/* Zeilengetreuer Nachbau von src/expr.ts aus support.js. Nachgebaut statt
+   nachempfunden, weil jede Abweichung genau das erzeugen wuerde, was dieser
+   Weg vermeiden soll: einen Unterschied zwischen dem, was der Crawler liest,
+   und dem, was der Besucher sieht. */
+const IDENT_RE = /^[A-Za-z_$][A-Za-z0-9_$]*/;
+const NUMBER_RE = /^-?\d+(\.\d+)?$/;
+
+function resolve(vals, src) {
+  const expr = String(src).trim();
+  if (!expr) return undefined;
+  if (expr[0] === '(' && expr[expr.length - 1] === ')' && parensWrapWhole(expr)) return resolve(vals, expr.slice(1, -1));
+  const eq = findTopLevelEquality(expr);
+  if (eq) {
+    const lv = resolve(vals, expr.slice(0, eq.index));
+    const rv = resolve(vals, expr.slice(eq.index + eq.op.length));
+    switch (eq.op) {
+      case '===': return lv === rv;
+      case '!==': return lv !== rv;
+      case '==': return lv == rv;
+      default: return lv != rv;
+    }
+  }
+  if (expr[0] === '!') return !resolve(vals, expr.slice(1));
+  if (expr === 'true') return true;
+  if (expr === 'false') return false;
+  if (expr === 'null') return null;
+  if (expr === 'undefined') return undefined;
+  if (NUMBER_RE.test(expr)) return Number(expr);
+  if (expr.length >= 2 && (expr[0] === '"' || expr[0] === "'") && expr[expr.length - 1] === expr[0]) return expr.slice(1, -1);
+  return resolvePath(vals, expr);
+}
+
+function parensWrapWhole(expr) {
+  let depth = 0;
+  for (let i = 0; i < expr.length - 1; i++) {
+    if (expr[i] === '(') depth++;
+    else if (expr[i] === ')') { depth--; if (depth === 0) return false; }
+  }
+  return true;
+}
+
+function findTopLevelEquality(expr) {
+  let depth = 0;
+  for (let i = 0; i < expr.length; i++) {
+    const c = expr[i];
+    if (c === '[' || c === '(') depth++;
+    else if (c === ']' || c === ')') depth--;
+    else if (depth === 0 && (c === '=' || c === '!') && expr[i + 1] === '=') {
+      if (i > 0 && (expr[i - 1] === '=' || expr[i - 1] === '!')) continue;
+      if (!expr.slice(0, i).trim()) continue;
+      return { index: i, op: expr[i + 2] === '=' ? c + '==' : c + '=' };
+    }
+  }
+  return null;
+}
+
+function resolvePath(vals, expr) {
+  const head = expr.match(IDENT_RE);
+  if (!head) return undefined;
+  let cur = vals == null ? undefined : vals[head[0]];
+  let i = head[0].length;
+  while (i < expr.length) {
+    if (expr[i] === '.') {
+      const m = expr.slice(i + 1).match(IDENT_RE) || expr.slice(i + 1).match(/^\d+/);
+      if (!m) return undefined;
+      cur = cur == null ? undefined : cur[m[0]];
+      i += 1 + m[0].length;
+    } else if (expr[i] === '[') {
+      let depth = 1, j = i + 1;
+      while (j < expr.length && depth > 0) {
+        if (expr[j] === '[') depth++;
+        else if (expr[j] === ']') { depth--; if (depth === 0) break; }
+        j++;
+      }
+      if (depth !== 0) return undefined;
+      cur = cur == null ? undefined : cur[resolve(vals, expr.slice(i + 1, j))];
+      i = j + 1;
+    } else return undefined;
+  }
+  return cur;
+}
+
+/* ------------------------- HTML lesen ------------------------- */
+
+/* Ein eigener, absichtlich kleiner Parser statt jsdom: der Build soll ohne
+   npm install laufen (siehe replaceTagged weiter oben, gleiche Ueberlegung).
+   Er muss auch nur eine einzige, erzeugte und wohlgeformte Quelle lesen. */
+const VOID_TAGS = new Set('area base br col embed hr img input link meta param source track wbr'.split(' '));
+const RAWTEXT_TAGS = new Set(['script', 'style', 'textarea', 'title']);
+
+function parseHtml(html) {
+  const root = { tag: '#root', attrs: {}, children: [] };
+  const stack = [root];
+  const top = () => stack[stack.length - 1];
+  const addText = (s) => { if (s) top().children.push({ tag: '#text', text: s }); };
+  let i = 0;
+  while (i < html.length) {
+    const lt = html.indexOf('<', i);
+    if (lt < 0) { addText(html.slice(i)); break; }
+    if (lt > i) addText(html.slice(i, lt));
+    if (html.startsWith('<!--', lt)) { const e = html.indexOf('-->', lt); i = e < 0 ? html.length : e + 3; continue; }
+    if (html.startsWith('<!', lt)) { const e = html.indexOf('>', lt); i = e < 0 ? html.length : e + 1; continue; }
+
+    if (html[lt + 1] === '/') {
+      const e = html.indexOf('>', lt);
+      const name = html.slice(lt + 2, e < 0 ? html.length : e).trim().toLowerCase();
+      for (let k = stack.length - 1; k > 0; k--) if (stack[k].tag === name) { stack.length = k; break; }
+      i = e < 0 ? html.length : e + 1;
+      continue;
+    }
+
+    const m = /^<([a-zA-Z][a-zA-Z0-9-]*)/.exec(html.slice(lt, lt + 48));
+    if (!m) { addText('<'); i = lt + 1; continue; }
+    const tag = m[1].toLowerCase();
+    // Grafik wird als Ganzes uebersprungen: sie traegt keinen Text, und ihre
+    // Kindelemente halten sich nicht an die Regeln fuer leere Elemente.
+    if (tag === 'svg') { i = skipSubtree(html, lt, 'svg'); continue; }
+
+    let j = lt + m[0].length, selfClose = false;
+    const attrs = {};
+    while (j < html.length) {
+      while (j < html.length && /\s/.test(html[j])) j++;
+      if (html[j] === '>') { j++; break; }
+      if (html[j] === '/' && html[j + 1] === '>') { selfClose = true; j += 2; break; }
+      const am = /^[^\s=/>]+/.exec(html.slice(j));
+      if (!am) { j++; continue; }
+      const name = am[0].toLowerCase();
+      j += am[0].length;
+      const afterName = j;
+      let val = '';
+      while (j < html.length && /\s/.test(html[j])) j++;
+      if (html[j] === '=') {
+        j++;
+        while (j < html.length && /\s/.test(html[j])) j++;
+        const q = html[j];
+        if (q === '"' || q === "'") {
+          const e = html.indexOf(q, j + 1);
+          val = html.slice(j + 1, e < 0 ? html.length : e);
+          j = e < 0 ? html.length : e + 1;
+        } else {
+          const e = /[\s>]/.exec(html.slice(j));
+          const end = e ? j + e.index : html.length;
+          val = html.slice(j, end);
+          j = end;
+        }
+      } else j = afterName;   // Attribut ohne Wert
+      attrs[name] = val;
+    }
+
+    const node = { tag, attrs, children: [] };
+    top().children.push(node);
+    i = j;
+    if (selfClose || VOID_TAGS.has(tag)) continue;
+    if (RAWTEXT_TAGS.has(tag)) {
+      const close = html.toLowerCase().indexOf('</' + tag, i);
+      node.children.push({ tag: '#text', text: html.slice(i, close < 0 ? html.length : close) });
+      const gt = close < 0 ? -1 : html.indexOf('>', close);
+      i = gt < 0 ? html.length : gt + 1;
+      continue;
+    }
+    stack.push(node);
+  }
+  return root;
+}
+
+function skipSubtree(html, from, tag) {
+  const openRe = new RegExp('<' + tag + '(?=[\\s/>])', 'gi');
+  const closeRe = new RegExp('</' + tag + '\\s*>', 'gi');
+  let depth = 0, i = from;
+  while (i < html.length) {
+    openRe.lastIndex = i; closeRe.lastIndex = i;
+    const o = openRe.exec(html), c = closeRe.exec(html);
+    if (!c) return html.length;
+    if (o && o.index < c.index) { depth++; i = o.index + o[0].length; continue; }
+    depth--;
+    i = c.index + c[0].length;
+    if (depth <= 0) return i;
+  }
+  return html.length;
+}
+
+/* ------------------------- Die Logik der Seite ausfuehren ------------------------- */
+
+/* Die Komponente wird gebaut, aber nie montiert: nur der Konstruktor und
+   renderVals() laufen. Alles, was erst componentDidMount anfasst -- Canvas,
+   WebGL, Beobachter, Zeitgeber -- kommt hier nie an die Reihe. Die Attrappen
+   unten muessen deshalb nur das aushalten, was ein Konstruktor beruehrt.
+
+   localStorage ist der Hebel fuer die Sprache: die Komponenten lesen dort
+   'eucowork_lang'. Wir antworten mit der Zielsprache und bekommen damit
+   denselben Weg wie im Browser, ohne einen zweiten einzubauen. */
+function makeSandbox(lang) {
+  const noop = () => {};
+  const fakeEl = () => ({
+    style: {}, dataset: {}, textContent: '', offsetWidth: 0, offsetHeight: 0,
+    classList: { add: noop, remove: noop, toggle: noop, contains: () => false },
+    setAttribute: noop, getAttribute: () => null, removeAttribute: noop,
+    appendChild: noop, removeChild: noop, addEventListener: noop, removeEventListener: noop,
+    getContext: () => null, querySelector: () => null, querySelectorAll: () => [],
+    getBoundingClientRect: () => ({ x: 0, y: 0, top: 0, left: 0, width: 0, height: 0 }),
+    contains: () => false
+  });
+  const doc = {
+    createElement: fakeEl, createElementNS: fakeEl,
+    documentElement: fakeEl(), head: fakeEl(), body: fakeEl(),
+    querySelector: () => null, querySelectorAll: () => [], getElementById: () => null,
+    addEventListener: noop, removeEventListener: noop, hidden: false
+  };
+  // 1280 Pixel breit: die Kopfleiste schaltet unter 940 auf das Klappmenue um.
+  // Auf der breiten Fassung steht die Navigation als Liste im Markup, und der
+  // Crawler findet die Verweise ohne einen Zustand, den er nie umschaltet.
+  const win = {
+    innerWidth: 1280, innerHeight: 900, devicePixelRatio: 1, scrollY: 0,
+    addEventListener: noop, removeEventListener: noop, dispatchEvent: noop,
+    matchMedia: () => ({ matches: false, addEventListener: noop, removeEventListener: noop, addListener: noop, removeListener: noop }),
+    performance: { now: () => 0 },
+    location: { pathname: '/', search: '', hash: '', href: ORIGIN + '/' },
+    navigator: { language: lang, languages: [lang], userAgent: 'build-i18n' },
+    requestAnimationFrame: () => 0, cancelAnimationFrame: noop,
+    setTimeout: () => 0, clearTimeout: noop, setInterval: () => 0, clearInterval: noop
+  };
+  win.document = doc;
+  const sandbox = {
+    window: win, document: doc, navigator: win.navigator, location: win.location,
+    localStorage: { getItem: (k) => (k === 'eucowork_lang' ? lang : null), setItem: noop, removeItem: noop },
+    sessionStorage: { getItem: () => null, setItem: noop, removeItem: noop },
+    console: { log: noop, warn: noop, error: noop, info: noop, debug: noop },
+    setTimeout: () => 0, clearTimeout: noop, setInterval: () => 0, clearInterval: noop,
+    requestAnimationFrame: () => 0, cancelAnimationFrame: noop,
+    fetch: () => Promise.resolve({ ok: false, json: () => Promise.resolve({}) }),
+    CustomEvent: class { constructor(t, o) { this.type = t; this.detail = o && o.detail; } },
+    Event: class { constructor(t) { this.type = t; } },
+    // React wird nur fuer createRef gebraucht; gerendert wird hier nichts.
+    React: { createRef: () => ({ current: null }), createElement: () => ({}), Fragment: 'Fragment', isValidElement: () => false },
+    ReactDOM: {},
+    DCLogic: class {
+      constructor(props) { this.props = props || {}; this.state = {}; }
+      setState(u) { Object.assign(this.state, typeof u === 'function' ? u(this.state, this.props) : u); }
+      forceUpdate() {}
+    }
+  };
+  sandbox.globalThis = sandbox;
+  sandbox.self = sandbox;
+  return sandbox;
+}
+
+/* Vorlage und Logikskript einer .dc-Datei trennen -- dieselbe Aufteilung, die
+   parseDcText in support.js vornimmt. */
+function splitDc(src) {
+  const open = /<x-dc(?:\s[^>]*)?>/.exec(src);
+  const close = src.lastIndexOf('</x-dc>');
+  const template = open && close > open.index ? src.slice(open.index + open[0].length, close) : '';
+  const script = /<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/.exec(src);
+  return { template, script: script ? script[1] : '' };
+}
+
+function runRenderVals(script, lang, props) {
+  const sandbox = makeSandbox(lang);
+  vm.createContext(sandbox);
+  const Comp = vm.runInContext(script + '\n;typeof Component !== "undefined" ? Component : null;', sandbox, { timeout: 15000 });
+  if (!Comp) throw new Error('keine Component-Klasse im Logikskript');
+  const inst = new Comp(props || {});
+  if (!inst.state) inst.state = {};
+  inst.state.lang = lang;   // Ohne localStorage-Attrappe waere hier 'de'.
+  return typeof inst.renderVals === 'function' ? (inst.renderVals() || {}) : {};
+}
+
+/* ------------------------- Vorlage zu lesbarem Text ------------------------- */
+
+/* Ziel ist Lesbarkeit, nicht originalgetreues Markup. Was bleibt: die
+   Ueberschriften in ihrer Hierarchie, die Absaetze, die Listen, die Tabellen
+   und vor allem die internen Verweise. Was faellt: Attrappen-Fenster,
+   Animationsgeruest, Inline-Grafik -- alles, was auf der Seite Bild ist und
+   im Text nichts erklaert. */
+const DROP_TAGS = new Set(['script', 'style', 'helmet', 'sc-helmet', 'noscript', 'template',
+  'iframe', 'video', 'audio', 'object', 'canvas', 'x-import', 'picture', 'source',
+  'img', 'input', 'link', 'meta', 'svg']);
+const HEADING_TAGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
+/* b und i sind hier durchweg Auszeichnung im Fliesstext, nicht Rolle. */
+const INLINE_TAGS = { strong: 'strong', b: 'strong', em: 'em', i: 'em', code: 'code' };
+const TRANSPARENT_INLINE = new Set(['span', 'sub', 'sup', 'small', 'abbr', 'mark', 'time', 'u', 's', 'kbd', 'var', 'cite', 'q']);
+
+function interpolate(text, vals) {
+  if (!text.includes('{{')) return escapeText(text);
+  const parts = text.split(/\{\{([\s\S]+?)\}\}/g);
+  let out = '';
+  for (let i = 0; i < parts.length; i++) {
+    if (!(i & 1)) { out += escapeText(parts[i]); continue; }
+    const v = resolve(vals, parts[i]);
+    // Funktionen, Objekte und React-Elemente haben keinen Text. Sie still
+    // wegzulassen ist richtig: die Laufzeit macht an dieser Stelle dasselbe.
+    if (v === undefined || v === null || typeof v !== 'string' && typeof v !== 'number') continue;
+    out += escapeText(String(v));
+  }
+  return out;
+}
+
+function attrValue(node, name, vals) {
+  const raw = node.attrs[name];
+  if (raw === undefined) return undefined;
+  const whole = raw.match(/^\s*\{\{([\s\S]+?)\}\}\s*$/);
+  if (whole) return resolve(vals, whole[1]);
+  if (raw.includes('{{')) return raw.split(/\{\{([\s\S]+?)\}\}/g).map((s, i) => (i & 1 ? (resolve(vals, s) ?? '') : s)).join('');
+  return raw;
+}
+
+/* Sammelt Text. `inlineOnly` schaltet das Bilden von Bloecken ab -- gebraucht
+   dort, wo aus einem ganzen Teilbaum eine einzige Zeile werden muss, etwa in
+   einer Verweis-Kachel, die ausser Text auch Ueberschrift und Absatz enthaelt. */
+class Sink {
+  constructor(inlineOnly) { this.blocks = []; this.inline = []; this.inlineOnly = !!inlineOnly; this.cells = null; }
+  text(s) { if (s) this.inline.push(s); }
+  take() { const s = this.inline.join('').replace(/\s+/g, ' ').trim(); this.inline.length = 0; return s; }
+  peek() { return this.inline.join('').replace(/\s+/g, ' ').trim(); }
+  flush(tag) {
+    if (this.inlineOnly) { this.inline.push(' '); return; }
+    const s = this.take();
+    if (s) this.blocks.push(`<${tag || 'p'}>${s}</${tag || 'p'}>`);
+  }
+}
+
+function kebabToCamel(s) { return s.replace(/-([a-z])/g, (_, c) => c.toUpperCase()); }
+
+function walkChildren(node, vals, sink, ctx) {
+  for (const child of node.children) walkNode(child, vals, sink, ctx);
+}
+
+function emitBlock(node, vals, sink, ctx, tag, prefix) {
+  if (sink.inlineOnly) { sink.text(' '); walkChildren(node, vals, sink, ctx); sink.text(' '); return; }
+  sink.flush();
+  const sub = new Sink(false);
+  if (prefix) sub.text(prefix);
+  walkChildren(node, vals, sub, ctx);
+  sub.flush(tag);
+  for (const b of sub.blocks) sink.blocks.push(b);
+}
+
+function emitGroup(node, vals, sink, ctx, wrapper, itemTag) {
+  if (sink.inlineOnly) { walkChildren(node, vals, sink, ctx); return; }
+  sink.flush();
+  const sub = new Sink(false);
+  walkChildren(node, vals, sub, ctx);
+  sub.flush(itemTag);
+  if (sub.blocks.length) sink.blocks.push(`<${wrapper}>${sub.blocks.join('')}</${wrapper}>`);
+}
+
+function walkNode(node, vals, sink, ctx) {
+  if (node.tag === '#text') { sink.text(interpolate(node.text, vals)); return; }
+  const tag = node.tag;
+  if (DROP_TAGS.has(tag)) return;
+
+  if (tag === 'sc-for') {
+    const list = attrValue(node, 'list', vals);
+    if (!Array.isArray(list)) return;
+    const as = node.attrs.as || 'item';
+    list.forEach((item, i) => walkChildren(node, { ...vals, [as]: item, $index: i }, sink, ctx));
+    return;
+  }
+
+  if (tag === 'sc-if') {
+    if (attrValue(node, 'value', vals)) walkChildren(node, vals, sink, ctx);
+    return;
+  }
+
+  /* Kopf- und Fussleiste kommen erst zur Laufzeit dazu und fehlen im
+     ausgelieferten HTML vollstaendig. Sie sind selbst .dc-Komponenten, also
+     werden sie hier auf demselben Weg gerendert -- damit stehen die
+     Navigationsverweise im Block und ein Crawler kommt von jeder Seite
+     weiter, statt in einer Sackgasse zu landen. */
+  if (tag === 'dc-import') {
+    const name = node.attrs.name || node.attrs.component || '';
+    const props = {};
+    for (const key of Object.keys(node.attrs)) {
+      if (key === 'name' || key === 'component' || key === 'hint-size' || key === 'style') continue;
+      props[kebabToCamel(key)] = attrValue(node, key, vals);
+    }
+    const blocks = ctx.renderImport(name, props);
+    if (blocks.length) { sink.flush(); for (const b of blocks) sink.blocks.push(b); }
+    return;
+  }
+
+  if (HEADING_TAGS.has(tag)) {
+    /* Die Ziffer vor einer Abschnittsueberschrift steht im Markup daneben,
+       nicht darin. Als eigener Absatz waere sie Muell; sie gehoert an die
+       Ueberschrift, so wie sie auf der Seite auch gelesen wird. */
+    let prefix = '';
+    const pending = sink.peek();
+    if (!sink.inlineOnly && pending && pending.length <= 24 && !pending.includes('<') && !/[.!?:]$/.test(pending)) {
+      sink.inline.length = 0;
+      prefix = pending + ' ';
+    }
+    emitBlock(node, vals, sink, ctx, tag, prefix);
+    return;
+  }
+
+  if (tag === 'a') {
+    const sub = new Sink(true);
+    walkChildren(node, vals, sub, ctx);
+    const label = sub.take();
+    if (!label) return;
+    const href = attrValue(node, 'href', vals);
+    if (typeof href === 'string' && href && !href.startsWith('javascript:')) sink.text(`<a href="${escapeAttr(href)}">${label}</a>`);
+    else sink.text(label);
+    return;
+  }
+
+  if (INLINE_TAGS[tag]) {
+    const sub = new Sink(true);
+    walkChildren(node, vals, sub, ctx);
+    const label = sub.take();
+    if (label) sink.text(`<${INLINE_TAGS[tag]}>${label}</${INLINE_TAGS[tag]}>`);
+    return;
+  }
+
+  if (tag === 'br') { sink.text(' '); return; }
+  if (tag === 'hr') { sink.flush(); return; }
+
+  if (TRANSPARENT_INLINE.has(tag)) { sink.text(' '); walkChildren(node, vals, sink, ctx); sink.text(' '); return; }
+
+  if (tag === 'p' || tag === 'blockquote' || tag === 'pre') { emitBlock(node, vals, sink, ctx, tag); return; }
+  if (tag === 'figcaption' || tag === 'summary' || tag === 'option') { emitBlock(node, vals, sink, ctx, 'p'); return; }
+  if (tag === 'ul' || tag === 'ol') { emitGroup(node, vals, sink, ctx, tag, 'li'); return; }
+  if (tag === 'dl') { emitGroup(node, vals, sink, ctx, 'dl', 'dd'); return; }
+  if (tag === 'li' || tag === 'dt' || tag === 'dd') { emitBlock(node, vals, sink, ctx, tag); return; }
+
+  if (tag === 'table') { emitGroup(node, vals, sink, ctx, 'table', 'tr'); return; }
+  if (tag === 'thead' || tag === 'tbody' || tag === 'tfoot') { walkChildren(node, vals, sink, ctx); return; }
+  if (tag === 'tr') {
+    if (sink.inlineOnly) { walkChildren(node, vals, sink, ctx); return; }
+    sink.flush();
+    const sub = new Sink(false);
+    sub.cells = [];
+    walkChildren(node, vals, sub, ctx);
+    if (sub.cells.length) sink.blocks.push(`<tr>${sub.cells.join('')}</tr>`);
+    return;
+  }
+  if (tag === 'th' || tag === 'td') {
+    const sub = new Sink(true);
+    walkChildren(node, vals, sub, ctx);
+    const cell = sub.take();
+    if (sink.cells) sink.cells.push(`<${tag}>${cell}</${tag}>`);
+    else sink.text(cell + ' ');
+    return;
+  }
+
+  /* Alles Uebrige (div, section, main, header, nav, button ...) ist Layout:
+     durchreichen, aber die Textlaeufe davor und danach abschliessen, damit
+     nicht zwei Beschriftungen zu einem Satz verschmelzen. */
+  if (sink.inlineOnly) { sink.text(' '); walkChildren(node, vals, sink, ctx); sink.text(' '); return; }
+  sink.flush();
+  walkChildren(node, vals, sink, ctx);
+  sink.flush();
+}
+
+/* ------------------------- Einstieg ------------------------- */
+
+/* Der Baumdurchlauf ist synchron, das Einlesen der Dateien nicht. Alle
+   .dc-Quellen werden deshalb einmal vorab geholt; danach ist der Vorrenderer
+   eine reine Rechnung ohne Dateizugriff.
+
+   Kopf und Fuss sind auf allen acht Seiten dieselben; ohne den Speicher liefe
+   ihr Logikskript achtzigmal statt zehnmal. */
+const dcSources = new Map();
+const prerenderCache = new Map();
+
+async function loadDcSources(files) {
+  for (const f of files) {
+    if (!dcSources.has(f)) dcSources.set(f, await readFile(join(ROOT, f), 'utf8'));
+  }
+}
+
+function prerender(file, lang, props) {
+  const key = `${file}\0${lang}\0${JSON.stringify(props || {})}`;
+  if (prerenderCache.has(key)) return prerenderCache.get(key);
+  const src = dcSources.get(file);
+  if (src === undefined) throw new Error(`${file}: nicht eingelesen`);
+  const { template, script } = splitDc(src);
+  if (!template) throw new Error(`${file}: kein <x-dc>-Rumpf gefunden`);
+  const vals = runRenderVals(script, lang, props);
+  const sink = new Sink(false);
+  const ctx = {
+    renderImport: (name, p) => (/^Site(Header|Footer)$/.test(name) ? prerender(name + '.dc.html', lang, p) : [])
+  };
+  walkChildren(parseHtml(template), vals, sink, ctx);
+  sink.flush();
+  prerenderCache.set(key, sink.blocks);
+  return sink.blocks;
+}
+
+const NOSCRIPT_START = '<!-- i18n:noscript:start -->';
+const NOSCRIPT_END = '<!-- i18n:noscript:end -->';
+
+/* Idempotent ersetzen, genau wie bei den hreflang-Blocken: beim ersten Lauf
+   tritt der erzeugte Block an die Stelle des von Hand gepflegten Inhalts, bei
+   jedem weiteren nur noch an die Stelle seiner selbst. */
+function injectNoscript(html, block) {
+  const marked = `${NOSCRIPT_START}\n${block}\n${NOSCRIPT_END}`;
+  const existing = new RegExp(`${NOSCRIPT_START}[\\s\\S]*?${NOSCRIPT_END}`);
+  if (existing.test(html)) return html.replace(existing, () => marked);
+  if (/<noscript>[\s\S]*?<\/noscript>/i.test(html)) {
+    return html.replace(/<noscript>[\s\S]*?<\/noscript>/i, () => `<noscript>\n${marked}\n</noscript>`);
+  }
+  return html.replace(/<body([^>]*)>/i, (full) => `${full}\n<noscript>\n${marked}\n</noscript>`);
+}
+
+function noscriptBlock(page, lang) {
+  const blocks = prerender(page.src, lang, {});
+  // Die Laufzeit setzt die Sprachpraefixe im DOM nach (assets/i18n.js). An den
+  // noscript-Inhalt kommt sie nicht heran -- der ist fuer den Browser Text --,
+  // also muessen die Verweise hier schon in der Zielsprache stehen.
+  return prefixLinks(blocks.join('\n'), lang);
+}
+
 /* --------------------------------- Erzeugung --------------------------------- */
 
 async function buildStatic(page, lang, meta, chrome) {
@@ -332,21 +886,27 @@ async function buildStatic(page, lang, meta, chrome) {
 }
 
 async function buildDc(page, lang, meta) {
-  const src = await readFile(join(ROOT, page.src), 'utf8');
+  const src = dcSources.get(page.src) ?? await readFile(join(ROOT, page.src), 'utf8');
   let out = rewriteHead(src, { lang, pagePath: page.path, meta });
 
   // Relative Verweise brechen eine Ebene tiefer.
   out = out.replace(/src="\.\/support\.js"/g, 'src="/support.js"');
 
   // Der Rumpf entsteht im Browser; der noscript-Block ist die Fassung fuer
-  // alles, was kein JavaScript ausfuehrt. Deutsch stehen zu lassen waere dort
-  // falsch, also tritt eine knappe Fassung aus den uebersetzten Metadaten an
-  // seine Stelle.
-  if (meta) {
-    out = out.replace(/<noscript>[\s\S]*?<\/noscript>/i,
-      `<noscript>\n  <h1>${escapeText(meta.title)}</h1>\n  <p>${escapeText(meta.description || '')}</p>\n</noscript>`);
+  // alles, was kein JavaScript ausfuehrt. Er wird aus derselben Vorlage und
+  // denselben Uebersetzungsdaten erzeugt, aus denen die Laufzeit rendert.
+  const errors = [];
+  try {
+    out = injectNoscript(out, noscriptBlock(page, lang));
+  } catch (err) {
+    // Ein Fehler im Vorrenderer darf den Build nicht anhalten. Dann steht dort
+    // wieder die knappe Fassung aus den Metadaten -- duerftig, aber nie leer.
+    errors.push(`Vorrenderer: ${err.message}`);
+    if (meta) {
+      out = injectNoscript(out, `<h1>${escapeText(meta.title)}</h1>\n<p>${escapeText(meta.description || '')}</p>`);
+    }
   }
-  return { html: out, missing: [] };
+  return { html: out, missing: [], errors };
 }
 
 async function main() {
@@ -363,6 +923,12 @@ async function main() {
   // Alte Ausgabe verwerfen, damit entfernte Seiten nicht liegen bleiben.
   for (const l of OTHER) await rm(join(ROOT, l), { recursive: true, force: true });
 
+  // Der Vorrenderer arbeitet ohne Dateizugriff; die Quellen kommen vorher.
+  await loadDcSources([
+    ...PAGES.filter(p => p.kind === 'dc').map(p => p.src),
+    'SiteHeader.dc.html', 'SiteFooter.dc.html'
+  ]);
+
   const problems = [];
   let written = 0;
 
@@ -370,10 +936,22 @@ async function main() {
     const pageMeta = metaAll[page.key];
     if (!pageMeta) problems.push(`${page.key}: keine Metadaten`);
 
-    // Deutsch bleibt an seinem Platz, bekommt aber die hreflang-Verknuepfung.
+    /* Deutsch bleibt an seinem Platz, bekommt aber die hreflang-Verknuepfung --
+       und seit dem Vorrenderer auch den erzeugten noscript-Block, denn die
+       deutsche Fassung wird direkt aus *.dc.html ausgeliefert. */
     const deSrc = await readFile(join(ROOT, page.src), 'utf8');
-    const deOut = injectHreflang(deSrc, page.path);
-    if (deOut !== deSrc) await writeFile(join(ROOT, page.src), deOut);
+    let deOut = injectHreflang(deSrc, page.path);
+    if (page.kind === 'dc') {
+      try {
+        deOut = injectNoscript(deOut, noscriptBlock(page, 'de'));
+      } catch (err) {
+        problems.push(`${page.key}/de: Vorrenderer: ${err.message}`);
+      }
+    }
+    if (deOut !== deSrc) {
+      await writeFile(join(ROOT, page.src), deOut);
+      dcSources.set(page.src, deOut);
+    }
 
     for (const lang of OTHER) {
       const meta = pageMeta ? pageMeta[lang] : null;
@@ -384,6 +962,7 @@ async function main() {
       if (built.missing.length) {
         problems.push(`${page.key}/${lang}: ${built.missing.length} Schluessel ohne Uebersetzung (${[...new Set(built.missing)].slice(0, 3).join(', ')})`);
       }
+      for (const e of built.errors || []) problems.push(`${page.key}/${lang}: ${e}`);
       const target = join(ROOT, lang, page.out);
       await mkdir(dirname(target), { recursive: true });
       await writeFile(target, built.html);

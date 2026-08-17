@@ -36,68 +36,250 @@
 </head>
 <body>
 <noscript>
-  <h1>EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.</h1>
-  <p>Open Source, auf Ihrer oder unserer Schweizer Infrastruktur. Alle Top-Modelle, EU-verarbeitet.</p>
-
-  <h2>Ein Werkzeug. Der ganze Arbeitstag.</h2>
-  <p>Sechs Bausteine, die zusammen einen KI-Kollegen ergeben.</p>
-  <ul>
-    <li><strong>Alle Modelle:</strong> 100+ Top-Modelle über einen Zugang, EU-verarbeitet.</li>
-    <li><strong>Websuche:</strong> Aktuelle Antworten mit Quellen, direkt im Chat.</li>
-    <li><strong>Dateien erzeugen:</strong> „Generier mir ein Excel“ sagen und die fertige Datei herunterladen.</li>
-    <li><strong>Rollen-Agenten &amp; Skills:</strong> KI-Kollegen für wiederkehrende Aufgaben.</li>
-    <li><strong>ERP-Anbindung mit Rechte-Kontrolle:</strong> Ihr ERP via MCP-Gateway. „Rechnungen lesen ja, Löhne nein.“ Jeder Tool-Aufruf auditiert.</li>
-    <li><strong>Proaktives Memory:</strong> Merkt sich selbstständig, was wichtig ist: auditierbar, löschbar, auf Ihrem Server.</li>
-  </ul>
-
-  <h2>Für den Einsatz im Unternehmen gebaut.</h2>
-  <p>EU Cowork AI verbindet Ihre Systeme, führt Aufgaben mit kontrollierten Zugriffen aus und bleibt für Ihre IT jederzeit nachvollziehbar.</p>
-  <ul>
-    <li><strong>Systeme anbinden:</strong> ERP, SharePoint, Firmenwissen und weitere Werkzeuge zentral verbunden. Native Konnektoren direkt verfügbar, eigene Systeme über MCP oder REST-API.</li>
-    <li><strong>Zugriffe zentral steuern:</strong> Nach Rolle, Gruppe oder Benutzer festlegen, wer auf welche Systeme und Funktionen zugreifen darf. Rechnungen erlaubt, Lohndaten gesperrt.</li>
-    <li><strong>Echte Arbeit ausführen:</strong> Dateien erstellen, ERP-Daten auswerten, wiederkehrende Aufgaben übernehmen. Excel, Word und PDF direkt im Chat.</li>
-    <li><strong>Alles nachvollziehen:</strong> Jeder Tool-Aufruf, jede Admin-Aktion, jeder Login fortlaufend protokolliert und exportierbar.</li>
-    <li><strong>In bestehende Arbeit integrieren:</strong> Im Chat, neben der geöffneten Outlook-E-Mail und künftig in weiteren Anwendungen.</li>
-    <li><strong>OIDC und Entra ID:</strong> Anmeldung über Ihr bestehendes Verzeichnis, Gruppen und Rollen kommen mit.</li>
-    <li><strong>Gepoolte Budgets:</strong> Ein Monatsbudget für die Organisation statt Limits pro Kopf, mit Soft-Block statt stiller Überschreitung.</li>
-  </ul>
-
-  <h2>Verifizierbar in Europa. Nicht nur behauptet.</h2>
-  <p>Fakten statt Adjektive. Jeder Punkt ist auf der Trust-Seite mit einem Nachweis hinterlegt.</p>
-  <ul>
-    <li><strong>Betrieb in der Schweiz:</strong> ISO-27001-zertifizierte Rechenzentren von Green (Lupfig AG, Schweiz).</li>
-    <li><strong>Verarbeitung in der EU:</strong> Modellanfragen laufen über EU-Rechenzentren, nach revDSG und DSGVO vertraglich zugesichert.</li>
-    <li><strong>Kein Datentraining:</strong> Ihre Daten trainieren keine Modelle. Weder heute noch später.</li>
-    <li><strong>Vollständig nachvollziehbar:</strong> Jeder Tool- und Datenzugriff ist protokolliert und exportierbar.</li>
-  </ul>
-
-  <h2>Häufige Fragen.</h2>
-  <h3>Wo werden meine Daten verarbeitet?</h3>
-  <p>Betrieb in der Schweiz (Green Lupfig), Inferenz EU-verarbeitet über EuRouter. Selbst gehostet bleiben Daten vollständig auf Ihrer Infrastruktur.</p>
-  <h3>Werden meine Daten fürs Training verwendet?</h3>
-  <p>Nein. No-Training, Telemetrie standardmässig aus.</p>
-  <h3>Ist das wirklich Open Source?</h3>
-  <p>Der Quellcode erscheint zum Start unter MIT-Lizenz: Veröffentlicht ist er heute noch nicht, bis dahin läuft die Sicherheitshärtung. Ab Start gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT. Der Stack ist ein Standard-Docker-Stack mit offenen Formaten und Ihrer eigenen Datenbank: Wer geht, nimmt alles mit.</p>
-  <h3>Welche Modelle sind verfügbar?</h3>
-  <p>Über 100 Modelle über EuRouter, inklusive der grossen Modelle von Anthropic und OpenAI.</p>
-  <h3>Kann ich mein ERP anbinden?</h3>
-  <p>Ja, über das MCP-Gateway mit granularem RBAC und per-Call-Audit.</p>
-  <h3>Gibt es eine App?</h3>
-  <p>Heute eine installierbare PWA; native iOS/Android-App in Planung.</p>
-  <h3>Gibt es EU Cowork AI direkt in Outlook?</h3>
-  <p>Ja, als Add-in in Beta: ein Bereich neben der geöffneten E-Mail, der zusammenfasst, Antworten entwirft, übersetzt und Aufgaben herauszieht. Heute im internen Einsatz bei uns, noch nicht allgemein verfügbar.</p>
-
-  <h2>Weiter</h2>
-  <ul>
-    <li><a href="/faq">FAQ: 41 Fragen und Antworten</a></li>
-    <li><a href="/vergleich">KI-Plattformen im Vergleich</a></li>
-    <li><a href="/governance">Governance: Rollen, Rechte, Kosten, Audit</a></li>
-    <li><a href="/integrationen">Integrationen und MCP</a></li>
-    <li><a href="/self-hosting">Self-Hosting mit Docker Compose</a></li>
-    <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
-    <li><a href="/vision">Unsere Vision</a></li>
-    <li><a href="/warteliste">Warteliste: frühen Zugang sichern</a></li>
-  </ul>
+<!-- i18n:noscript:start -->
+<p><a href="#top">EU Cowork AI</a></p>
+<p><a href="/preise">Preise</a> <a href="/docs">Docs</a> <a href="/blog">Blog</a></p>
+<p>DE</p>
+<p><a href="/self-hosting">Self-host for free</a> <a href="/warteliste">Auf die Warteliste</a></p>
+<h1>Die KI-Plattform für Ihr Unternehmen. Bleibt in Europa.</h1>
+<p>Open Source, 100 % europäisch betrieben: auf Ihrer oder unserer Schweizer Infrastruktur. Alle Top-Modelle, EU-verarbeitet.</p>
+<p><a href="/warteliste">Auf die Warteliste</a> <a href="/self-hosting">Self-host for free</a></p>
+<h2>Ein Werkzeug. Der ganze Arbeitstag.</h2>
+<p>Sechs Aufgaben aus einem normalen Arbeitstag. Alle an einem Ort.</p>
+<p>Modelle</p>
+<h3>Alle Modelle</h3>
+<p>100+ Top-Modelle über einen Zugang, EU-verarbeitet.</p>
+<p>Websuche</p>
+<h3>Websuche</h3>
+<p>Aktuelle Antworten mit Quellen, direkt im Chat.</p>
+<p><strong>websuche</strong></p>
+<p>Suche im Web</p>
+<p>Wie hoch war der Schweizer Export im Juni?</p>
+<p>Drei Quellen geprüft, die Zahlen stimmen überein. Durchsuche das Web …</p>
+<p>bfs.admin.ch <em>Quelle</em></p>
+<p>seco.admin.ch <em>Quelle</em></p>
+<p>kof.ethz.ch <em>Quelle</em></p>
+<p>snb.ch <em>Quelle</em></p>
+<p>Stand: 12. August <em>aktuell</em></p>
+<p>Dateien</p>
+<h3>Dateien erzeugen</h3>
+<p>„Generier mir ein Excel“ sagen und die fertige Datei herunterladen.</p>
+<p><strong>chat · monatsauswertung</strong></p>
+<p>Erstelle die Monatsauswertung Juli als Excel. Zahlen aus dem ERP gelesen, Marge je Bereich berechnet.</p>
+<p>Monatsauswertung_Juli.xlsx</p>
+<p>Quelle: erp · 3 Blätter <em>24 KB</em></p>
+<p>Blatt 1: Umsatz je Bereich <em>12 Zeilen</em></p>
+<p>Blatt 2: Marge je Bereich <em>12 Zeilen</em></p>
+<p>Blatt 3: Vergleich Vormonat <em>12 Zeilen</em></p>
+<p>Agenten</p>
+<h3>Rollen-Agenten &amp; Skills</h3>
+<p>KI-Kollegen für wiederkehrende Aufgaben, vom Admin freigegeben.</p>
+<p><strong>agenten · team</strong></p>
+<p>Offerten-Assistent <em>aktiv</em></p>
+<p>Protokoll-Schreiber <em>aktiv</em></p>
+<p>Onboarding-Lotse <em>aktiv</em></p>
+<p>Recherche-Kollege <em>Entwurf</em></p>
+<p>Skill: Angebot prüfen <em>freigegeben</em></p>
+<p>Skill: Protokoll formatieren <em>freigegeben</em></p>
+<p>Rechnungs-Prüfer <em>Entwurf</em></p>
+<p>Rechte</p>
+<h3>ERP-Anbindung mit Rechte-Kontrolle</h3>
+<p>ERP via MCP-Gateway: „Rechnungen lesen ja, Löhne nein.“ Alles auditiert.</p>
+<p>Memory</p>
+<h3>Proaktives Memory</h3>
+<p>Merkt sich Wichtiges von selbst: auditierbar, löschbar, auf Ihrem Server.</p>
+<p><strong>memory · gemerkt</strong></p>
+<p>Kunde bevorzugt Deutsch <em>gemerkt</em></p>
+<p>Rechnungen quartalsweise <em>gemerkt</em></p>
+<p>Ansprechpartner: A. Keller <em>gemerkt</em></p>
+<p>Notiz vom Juni <em>gelöscht</em></p>
+<p>Ablage: eigener Server <em>lokal</em></p>
+<p>Termine lieber vormittags <em>gemerkt</em></p>
+<p>Auswertungen als Excel <em>gemerkt</em></p>
+<h2>Für den Einsatz im Unternehmen gebaut.</h2>
+<p>EU Cowork AI verbindet Ihre Systeme, führt Aufgaben mit kontrollierten Zugriffen aus und bleibt für Ihre IT jederzeit nachvollziehbar.</p>
+<p>Systeme anbinden</p>
+<p>Verbinden Sie ERP, SharePoint, Firmenwissen und weitere Werkzeuge zentral mit EU Cowork AI. Native Konnektoren sind direkt verfügbar, eigene Systeme binden Sie über MCP oder eine REST-API an.</p>
+<p>Zugriffe zentral steuern</p>
+<p>Bestimmen Sie nach Rolle, Gruppe oder Benutzer, wer auf welche Systeme und Funktionen zugreifen darf. So ist beispielsweise der Zugriff auf Rechnungen erlaubt, während sensible Lohndaten gesperrt bleiben.</p>
+<p>Echte Arbeit ausführen</p>
+<p>EU Cowork AI beantwortet nicht nur Fragen, sondern erstellt Dateien, wertet ERP-Daten aus und übernimmt wiederkehrende Aufgaben. Fertige Excel-, Word- oder PDF-Dokumente stehen direkt im Chat bereit.</p>
+<p>Alles nachvollziehen</p>
+<p>Jeder Tool-Aufruf, jede Admin-Aktion und jeder Login wird fortlaufend protokolliert. Ihre IT sieht jederzeit, wer auf welche Daten zugegriffen hat, und kann die Einträge exportieren.</p>
+<p>In bestehende Arbeit integrieren</p>
+<p>Nutzen Sie Ihren KI-Kollegen dort, wo Ihr Team bereits arbeitet. Im Chat, direkt neben einer geöffneten Outlook-E-Mail und künftig auch in weiteren Anwendungen entsteht Unterstützung ohne ständiges Wechseln und Kopieren.</p>
+<p>OIDC und Entra ID Anmeldung über Ihr bestehendes Verzeichnis. Gruppen und Rollen kommen mit.</p>
+<p>Gepoolte Budgets Ein Monatsbudget für die Organisation statt Limits pro Kopf, mit Soft-Block statt stiller Überschreitung.</p>
+<p><a href="/governance">Governance und Audit-Log</a> <a href="/integrationen">Alle Integrationen</a></p>
+<p><strong>Integrationen</strong><em>·</em> Konnektoren Admin AK</p>
+<p>Konnektoren 4 von 4 aktiv</p>
+<p>ERP Kunden, Rechnungen, Projekte Nativ</p>
+<p>SharePoint Dokumente aus Microsoft 365 Nativ</p>
+<p>Firmenwissen Eigene Dokumente als Wissensbasis Nativ</p>
+<p>Websuche Antworten mit Quellenangabe Nativ</p>
+<p>Eigenes System MCP · REST</p>
+<p>https://mcp.ihre-firma.ch/sse Verbinden</p>
+<p>MCP oder REST-API. Jede Anbindung läuft über das Gateway.</p>
+<p>Rollen</p>
+<p>Admin 5</p>
+<p>Finanzen 12</p>
+<p>HR 8</p>
+<p>Projektleitung 6</p>
+<p>Lesender Zugriff 15</p>
+<p>Gruppen</p>
+<p>Buchhaltung 6</p>
+<p>Lohnbuchhaltung 4</p>
+<p>Controlling 3</p>
+<p>Projekte 7</p>
+<p>Vertrieb 9</p>
+<p>Berechtigungen für Lohnbuchhaltung Bearbeiten</p>
+<p>Rechnungen lesen Stammdaten und Belege erlaubt</p>
+<p>Löhne lesen Gehalts- und Abrechnungsdaten gesperrt</p>
+<p>SharePoint lesen Dokumente und Ordner erlaubt</p>
+<p>Datei-Generierung Excel, Word, PDF erlaubt</p>
+<p>Jede Änderung wird im Audit-Log erfasst.</p>
+<p>Erstell mir die Quartalsauswertung Q3 als Excel.</p>
+<p>ERP abgefragt · 1.284 Positionen Nach Kostenstelle gruppiert Vorjahresvergleich ergänzt Datei erzeugt</p>
+<p>Fertig. Umsatz, Kosten und Marge je Bereich, plus eine Übersicht.</p>
+<p>XLS Quartalsauswertung-Q3.xlsx 24 KB · 4 Blätter · in der Sandbox erzeugt Herunterladen</p>
+<p>Quelle: ERP · Buchungen 07–09/2026</p>
+<p>Nachricht an EU Cowork AI …</p>
+<p>Ausführung in der Sandbox, Ergebnis direkt im Chat.</p>
+<p>Nach Benutzer, Werkzeug oder Objekt suchen Letzte 24 h Exportieren</p>
+<p>Zeit Benutzer Aufruf Ergebnis</p>
+<p>09:14:02 a.keller erp.read_invoice · RE-2481 erlaubt</p>
+<p>09:13:47 a.keller erp.read_payroll gesperrt</p>
+<p>09:11:20 m.bauer sharepoint.search · Projekte/2026 erlaubt</p>
+<p>09:08:55 admin policy.update · Gruppe Finanzen gespeichert</p>
+<p>09:04:31 l.schulz files.create · Q3.xlsx erlaubt</p>
+<p>09:02:10 n.krause auth.login · OIDC Entra ID ok</p>
+<p>08:58:04 m.bauer knowledge.search · Handbuch erlaubt</p>
+<p>08:55:39 p.thomas erp.write_order gesperrt</p>
+<p>Fortlaufend geschrieben, exportierbar als CSV oder JSON.</p>
+<p>Chat Im Browser, auf jedem Gerät Aktiv</p>
+<p>Outlook Bereich neben der offenen E-Mail Beta</p>
+<p>Weitere Excel und weitere Anwendungen folgen Geplant</p>
+<p>Terminanfrage Baubegehung Los 3 EU Cowork AI</p>
+<p>ENTWURF · ANTWORT</p>
+<p>Eine Anmeldung. Überall dieselben Rechte und dasselbe Audit-Log.</p>
+<h2>Ihr KI-Kollege. Direkt in Outlook.</h2>
+<p>Das Add-in öffnet sich als Bereich neben der geöffneten E-Mail. Kontext, Entwurf und Aufgaben entstehen dort, wo Sie ohnehin arbeiten.</p>
+<p>E-Mail als Kontext</p>
+<p>Betreff, Verlauf und Anhänge stehen bereit, ohne Kopieren.</p>
+<p>Antworten im eigenen Stil</p>
+<p>Der Entwurf landet im Antwortfenster, Sie prüfen und senden.</p>
+<p>Aufgaben extrahieren</p>
+<p>To-dos, Zuständigkeiten und Termine aus langen Verläufen.</p>
+<p><a href="/integrationen#add-ins">Stand der Add-ins für Outlook und Excel</a></p>
+<p>Posteingang · Outlook</p>
+<p>Relevant Sonstige</p>
+<p>MB Meier Bau AG 08:12 an Anna Keller Terminanfrage Baubegehung Los 3 Guten Tag Frau Keller für Los 3 möchten wir die Baubegehung noch im August ansetzen.</p>
+<p>Antwort eingefügt · Entwurf im Antwortfenster</p>
+<p>PT Projektteam Gestern Status Update Kurzes Update zum Projektfortschritt und zu offenen Punkten.</p>
+<p>A Anna Keller Gestern Re: Angebot und nächste Schritte Vielen Dank! Passt so für uns.</p>
+<p>BL Bauleitung Mi Dokumente und Pläne Anbei die aktuellen Pläne und Spezifikationen.</p>
+<p>1-50 von 152 Ungelesen</p>
+<p>EU Cowork AI BETA</p>
+<p>Wie kann ich helfen?</p>
+<p>Die geöffnete E-Mail ist als Kontext bereit.</p>
+<p>Entwurf wird erstellt … Antwort bereit Entwurf erstellt auf Basis des E-Mail-Inhalts.</p>
+<p>Entwurf · Antwort</p>
+<p>Guten Tag Herr Meier</p>
+<p>Für die Baubegehung Los 3 passt uns Donnerstag, 14. August, 09:30 Uhr .</p>
+<p>Bitte kurz bestätigen, dann reserviere ich das Zeitfenster.</p>
+<p>Freundliche Grüsse</p>
+<p>Anna Keller</p>
+<p>Quellen: E-Mail-Verlauf · 3 Anhänge</p>
+<p>Antwort vorbereiten Als Antwort einfügen Eingefügt</p>
+<p>Antwort eingefügt · Entwurf im Antwortfenster</p>
+<p>Terminanfrage Baubegehung Los 3</p>
+<p>Nachricht an EU Cowork AI … EU Cowork AI Auto</p>
+<p>Nochmal abspielen</p>
+<h2>Bald verfügbar EU Cowork AI Mobile. Ihr KI-Kollege für unterwegs.</h2>
+<p>iOS und Android, gleiche Governance, gleiche EU-Residenz wie am Desktop.</p>
+<p>Push-Benachrichtigungen</p>
+<p>Der Agent meldet sich, sobald eine Aufgabe fertig ist.</p>
+<p>Face ID</p>
+<p>Entsperren ohne Passwort, die Sitzung bleibt auf dem Gerät.</p>
+<p>Share-Sheet</p>
+<p>Dokumente und Links aus jeder App direkt an EU Cowork AI übergeben.</p>
+<p>Laden im App Store</p>
+<p>Jetzt bei Google Play</p>
+<p>Die Abzeichen sind Platzhalter. Wir melden uns bei den Leuten auf der Warteliste, sobald es so weit ist.</p>
+<p><a href="/warteliste">Benachrichtigung zum Start erhalten</a></p>
+<p>9:41</p>
+<p>EU Cowork AI EU Cowork AI Auto</p>
+<p>Fasse mir das Protokoll vom Termin bei der Muster AG kurz zusammen.</p>
+<p>Drei Punkte: Firewall wird ersetzt, VLAN-Plan kommt bis Freitag, Backup-Test steht noch aus.</p>
+<p>Nachricht an EU Cowork AI ↑</p>
+<p>Nochmal abspielen</p>
+<h2>Verifizierbar in Europa. Nicht nur behauptet.</h2>
+<p>Fakten statt Adjektive. Jeder Punkt ist auf der Trust-Seite mit einem Nachweis hinterlegt, die auch Telemetrie, Auftragsverarbeitung und Subprozessoren im Detail aufführt.</p>
+<p>Betrieb in der Schweiz</p>
+<p>ISO-27001-zertifizierte Rechenzentren von Green (Lupfig AG, Schweiz).</p>
+<p>Verarbeitung in der EU</p>
+<p>Modellanfragen laufen über EU-Rechenzentren, nach revDSG und DSGVO vertraglich zugesichert.</p>
+<p>Kein Datentraining</p>
+<p>Ihre Daten trainieren keine Modelle. Weder heute noch später.</p>
+<p>Vollständig nachvollziehbar</p>
+<p>Jeder Tool- und Datenzugriff ist protokolliert und exportierbar.</p>
+<p><a href="/sicherheit">Alle Nachweise auf der Trust-Seite</a></p>
+<p>Betrieb: Green, Lupfig AG (CH) Verarbeitung: EU-Rechenzentren</p>
+<h2>Quellcode ab Start Auf dem eigenen Server installieren</h2>
+<h3>Repository klonen</h3>
+<p>Ein Klon, alle Dienste. Ein gewöhnlicher Docker-Compose-Stack, nichts Exotisches.</p>
+<p>$ <code>git clone https://github.com/Herr-Informatik-org/eu-cowork.git</code></p>
+<p>Kopieren</p>
+<h3>Installieren und starten</h3>
+<p>Der Installer erzeugt die Geheimnisse, holt die Images und startet den Stack mit Auto-TLS. Einen frischen Ubuntu-Server richtet setup-server.sh davor ein.</p>
+<p>$ <code>cd eu-cowork/distribution &amp;&amp; ./install.sh</code></p>
+<p>Kopieren</p>
+<p><a href="/self-hosting">Installation, Stack und Systemanforderungen</a></p>
+<p>Basis LibreChat Ein dünner Fork von LibreChat, über 40’000 Sterne auf GitHub und weltweit im Einsatz.</p>
+<p>Kein Seat-Limit Kein Preis pro Kopf, kein Branding-Zwang, keine Funktion hinter einer Enterprise-Schranke.</p>
+<p>Offene Formate, Ihre Datenbank Standard-Docker-Stack mit MongoDB und offenen Dateiformaten. Wer geht, nimmt alles mit.</p>
+<p>Ab einer einzelnen Person Ein Befehl, ein Server. Auch für eine Person, und dauerhaft gratis.</p>
+<h2>Häufige Fragen.</h2>
+<p>Wo werden meine Daten verarbeitet? +</p>
+<p>Betrieb in der Schweiz (Green Lupfig), Inferenz EU-verarbeitet über EuRouter. Selbst gehostet bleiben Daten vollständig auf Ihrer Infrastruktur.</p>
+<p>Werden meine Daten fürs Training verwendet? +</p>
+<p>Nein. No-Training, Telemetrie standardmässig aus.</p>
+<p>Ist das wirklich Open Source? +</p>
+<p>Der Quellcode erscheint zum Start unter MIT-Lizenz: Veröffentlicht ist er heute noch nicht, bis dahin läuft die Sicherheitshärtung. Ab Start gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT.</p>
+<p>Welche Modelle sind verfügbar? +</p>
+<p>Über 100 Modelle über EuRouter, inklusive der grossen Modelle von Anthropic und OpenAI.</p>
+<p>Kann ich mein ERP anbinden? +</p>
+<p>Ja, über das MCP-Gateway mit granularem RBAC und per-Call-Audit.</p>
+<p>Gibt es eine App? +</p>
+<p>Heute eine installierbare PWA; native iOS/Android-App in Planung.</p>
+<p>Gibt es EU Cowork AI direkt in Outlook? +</p>
+<p>Ja, als Add-in in Beta: ein Bereich neben der geöffneten E-Mail, der zusammenfasst, Antworten entwirft, übersetzt und Aufgaben herauszieht. Heute im internen Einsatz bei uns, noch nicht allgemein verfügbar.</p>
+<p><a href="/faq">Alle Fragen und Antworten</a></p>
+<h2>Bereit, wenn Sie es sind.</h2>
+<p>In der Schweiz gehostet oder selbst betrieben. In Minuten startklar.</p>
+<p><a href="/warteliste">Auf die Warteliste</a> <a href="/self-hosting">Self-host for free</a></p>
+<p>EU Cowork AI</p>
+<p>Ihr KI-Kollege. Bleibt in Europa.</p>
+<p>Überall betreibbar</p>
+<p>Managed, eigene Cloud oder On-Prem</p>
+<p>DSGVO-konform</p>
+<p>EU-Verarbeitung</p>
+<p><a href="/sicherheit">Mehr zur Sicherheit</a></p>
+<p>Schweizer Instanz · Lupfig --:--:--</p>
+<p>Produkt</p>
+<p><a href="#funktionen">Funktionen</a> <a href="#souveraenitaet">Souveränität</a> <a href="/integrationen">Integrationen</a> <a href="/vergleich">Vergleich</a> <a href="/self-hosting">Self-Host</a> <a href="/faq">FAQ</a> <a href="/docs">Dokumentation</a> <a href="/blog">Blog</a> <a href="/vision">Vision</a></p>
+<p>Trust</p>
+<p><a href="/sicherheit">Security &amp; Trust</a> <a href="/governance">Governance</a> <a href="/avv">AVV</a> <a href="/sicherheit#toms">TOM-Übersicht</a> <a href="/subprozessoren">Subprozessoren</a></p>
+<p>Rechtliches</p>
+<p><a href="/impressum">Impressum</a> <a href="/datenschutz">Datenschutz</a> <a href="/agb">AGB</a></p>
+<p>Sprache</p>
+<p>Deutsch</p>
+<p>English</p>
+<p>Français</p>
+<p>Italiano</p>
+<p>Español</p>
+<p>© 2026 EU Cowork AI</p>
+<!-- i18n:noscript:end -->
 </noscript>
 <x-dc>
 <helmet>
@@ -552,6 +734,109 @@
   .euc-mock-msg{ padding:14px 12px 0; }
   .euc-mock-msg .u{ display:block; margin-left:auto; max-width:82%; background:var(--c-deep); color:#F2F7FA; font-size:11.5px; line-height:1.5; padding:9px 12px; border-radius:12px 12px 3px 12px; }
   .euc-mock-msg .a{ display:block; margin-top:10px; font-size:11.5px; line-height:1.55; color:#2C3742; }
+
+  /* ---------- Verbrauchs-Attrappe: Diagramm aus divs statt aus einem Bild ----
+     Hier standen zwei echte Bildschirmfotos. Ein Foto bleibt in der Sprache, in
+     der es aufgenommen wurde; auf einer Seite in fünf Sprachen ist das der eine
+     Fleck, der immer deutsch bleibt. Nachgebaut wechselt die Kachel mit, weil
+     ihre Beschriftung Text ist wie jede andere.
+     Die Masse folgen den bestehenden Attrappen (Mono 8.5px für Achsen und
+     Spalten, Inter 11.5px für den Inhalt), damit die Kachel neben den vier
+     anderen nicht als Fremdkörper liest. */
+  .euc-use-chart{ padding:12px 12px 2px; }
+  .euc-use-title{ margin:0 0 8px; font-family:var(--f-body); font-size:11.5px; font-weight:600;
+    color:#1E2A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  /* Flacher als das Original, und zwar mit Absicht: sichtbar sind rund 246
+     Pixel Höhe, und was das Diagramm mehr bekäme, fehlte unten der Legende. Ein
+     Balkenfeld ohne Modellnamen erklärt nichts. */
+  .euc-use-plot{ position:relative; height:100px; }
+  /* Die Hilfslinien sind höhenlos und werden über space-between verteilt: fünf
+     Linien auf 0/25/50/75/100 Prozent, ohne eine einzige Rechnung im Markup.
+     Die unterste ist die Grundlinie, deshalb durchgezogen. */
+  .euc-use-grid{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; }
+  .euc-use-gl{ position:relative; height:0; margin-left:34px; border-top:1px dashed #E4E9ED; }
+  .euc-use-gl:last-child{ border-top-style:solid; border-top-color:#E7ECF0; }
+  .euc-use-gl span{ position:absolute; right:calc(100% + 6px); top:0; transform:translateY(-50%);
+    font-family:var(--f-mono); font-size:8.5px; line-height:1; color:#A8B2BC; white-space:nowrap; }
+  /* 1px Luft unten, sonst stünde der Balken auf der Grundlinie statt darauf. */
+  .euc-use-bars{ position:absolute; inset:0 0 1px 34px; display:flex; align-items:flex-end; }
+  /* Der Abstand steckt in der Innenkante, nicht in einem gap: so ist jede Zelle
+     exakt ein Sechzehntel breit und die X-Beschriftung kann darauf rechnen. */
+  .euc-use-bar{ flex:1 1 0; height:100%; padding:0 2px; display:flex; align-items:flex-end; }
+  .euc-use-stack{ display:flex; flex-direction:column; width:100%; }
+  .euc-use-stack i{ display:block; width:100%; min-height:1px; }
+  /* Die weisse Fuge zwischen zwei Modellen, wie in der Anwendung. */
+  .euc-use-stack i + i{ border-top:1px solid #FFFFFF; }
+  .euc-use-xrow{ position:relative; margin-left:34px; height:15px; display:flex; }
+  .euc-use-x{ position:relative; flex:1 1 0; }
+  /* Eine Zelle deckt zwei Balken ab; 25 Prozent ist die Mitte des ersten. */
+  .euc-use-x span{ position:absolute; left:25%; top:4px; transform:translateX(-50%);
+    font-family:var(--f-mono); font-size:8.5px; line-height:1; color:#A8B2BC; white-space:nowrap; }
+
+  /* Die vier Modellfarben, aus der alten Aufnahme gemessen. glm und gpt lagen
+     dort beide auf fast demselben Dunkelblau und waren im Stapel nicht zu
+     trennen; gpt ist deshalb aufgehellt, bleibt aber in derselben Familie. */
+  .euc-use-c1{ background:#1DAE7A; }
+  .euc-use-c2{ background:#2D7291; }
+  .euc-use-c3{ background:#2C79D4; }
+  .euc-use-c4{ background:#5B93A8; }
+
+  .euc-use-tbl{ margin-top:8px; border-top:1px solid var(--c-line-soft); }
+  .euc-use-trow{ display:flex; align-items:center; gap:8px; padding:7px 12px; border-bottom:1px solid #F6F8FA; }
+  /* Der Kopf hat kein Farbquadrat, holt sich dessen Platz aber als Einzug,
+     damit die Spalte nicht um neun Pixel verspringt. */
+  .euc-use-trow.is-head{ padding-left:29px; background:#FBFCFD;
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:#A8B2BC; }
+  .euc-use-sw{ flex:0 0 auto; width:9px; height:9px; border-radius:2px; }
+  .euc-use-trow .euc-use-tm{ flex:1 1 auto; min-width:0; font-family:var(--f-body); font-size:11.5px; color:#2C3742;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-use-trow .euc-use-tv{ flex:0 0 auto; font-family:var(--f-mono); font-size:9.5px; color:#3D4855; white-space:nowrap; }
+  .euc-use-trow.is-head .euc-use-tm,
+  .euc-use-trow.is-head .euc-use-tv{ font-family:inherit; font-size:inherit; letter-spacing:inherit; color:inherit; }
+
+  /* ---------- Rechte-Attrappe: drei angebundene Systeme ----------------------
+     Drei Karten nach dem Muster der Kapitel-Zeilen (weisse Fläche, 9px Radius,
+     Haarlinie), aber einzeilig: Name, Bezeichner, Abzeichen, Adresse. */
+  .euc-mcp-body{ padding:12px 12px 2px; }
+  .euc-mcp-lbl{ display:block; font-family:var(--f-body); font-size:10.5px; color:#8A96A2; }
+  .euc-mcp-chip{ display:inline-flex; align-items:center; gap:7px; margin-top:7px;
+    border-radius:var(--r-status); background:#F2F5F7; padding:5px 9px 5px 11px;
+    font-family:var(--f-body); font-size:10.5px; color:#3D4855; max-width:100%; }
+  .euc-mcp-chip > span{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .euc-mcp-chip svg{ flex:0 0 auto; color:#8A96A2; }
+  .euc-mcp-sep{ margin:11px 0 10px; border-top:1px solid var(--c-line-soft); }
+  .euc-mcp-saved{ display:block; font-family:var(--f-body); font-size:10.5px; color:#8A96A2; }
+  .euc-mcp-card{ display:flex; align-items:center; gap:8px; margin-top:8px; padding:10px 11px;
+    border:1px solid #EEF1F4; border-radius:9px; background:#FFFFFF; white-space:nowrap; overflow:hidden; }
+  .euc-mcp-n{ flex:0 0 auto; font-family:var(--f-body); font-size:11.5px; font-weight:600; color:#1E2A36; }
+  .euc-mcp-k{ flex:0 0 auto; font-family:var(--f-body); font-size:10px; color:#8A96A2; }
+  /* Gefüllt heisst „läuft über das Gateway", Umriss heisst „direkt". Der
+     Unterschied trägt eine Aussage, deshalb Fläche statt Farbe. */
+  .euc-mcp-badge{ flex:0 0 auto; border-radius:var(--r-status); padding:3px 9px;
+    font-family:var(--f-mono); font-size:8.5px; color:#1E2A36; background:#FFFFFF; border:1px solid #D7DDE3; }
+  .euc-mcp-badge.is-fill{ color:#F7FAFC; background:var(--c-deep); border-color:var(--c-deep); }
+  /* Die Adresse ist das einzige Element der Zeile, das nachgeben darf: sie
+     schrumpft und endet in Auslassungspunkten, statt aus der Karte zu laufen.
+     Eine vollständige interne Adresse gehört ohnehin auf keine Startseite. */
+  .euc-mcp-url{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis;
+    font-family:var(--f-mono); font-size:9px; color:#8A96A2; }
+  .euc-mcp-foot{ display:block; margin-top:12px; font-family:var(--f-body); font-size:10px; line-height:1.45; color:#8A96A2; }
+
+  /* Schmale Kachel. Auf 274px Rahmenbreite bleiben je Beschriftung 27 Pixel,
+     eine Datumsangabe braucht 30. Statt die Schrift unter die Lesegrenze zu
+     drücken fällt jede zweite weg; visibility statt display, sonst wandern die
+     Zellen. Dasselbe Motiv bei den Karten: der Bezeichner in Klammern ist die
+     entbehrlichste Angabe der Zeile, und ohne ihn bleibt Platz für den Anfang
+     der Adresse. */
+  @media (max-width:860px){
+    .euc-use-chart{ padding:11px 10px 2px; }
+    .euc-use-plot{ height:78px; }
+    .euc-use-x:nth-child(even) span{ visibility:hidden; }
+    .euc-use-trow{ padding:6px 10px; }
+    .euc-use-trow.is-head{ padding-left:27px; }
+    .euc-mcp-body{ padding:11px 10px 2px; }
+    .euc-mcp-k{ display:none; }
+  }
 
   /* ---------- Websuche-Kachel: Ruhezustand Globus, Ablauf auf Zuwendung ------
      Im Ruhezustand stand hier eine fertige Quellenliste — das Ergebnis ohne die
@@ -1739,30 +2024,30 @@
           </div>
           <div class="euc-shot" aria-hidden="true">
             <div class="euc-mock euc-ws" data-ws>
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>websuche</b></div>
+          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.ws.bar }}</b></div>
           <div class="euc-ws-stage">
             <!-- Ruhezustand: was die Kachel ist, nicht was sie geliefert hat. -->
             <div class="euc-ws-idle">
               <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-              <span>Suche im Web</span>
+              <span>{{ t.features.ws.idle }}</span>
             </div>
             <div class="euc-ws-play">
               <div class="euc-ws-user euc-mock-msg">
-                <span class="u">Wie hoch war der Schweizer Export im Juni?</span>
+                <span class="u">{{ t.features.ws.ask }}</span>
               </div>
               <!-- Antwort steht IM FLUSS (sie bestimmt die Höhe), der Suchlauf
                    liegt darüber: so wechselt der Text, ohne dass die Quellen
                    darunter springen. -->
               <div class="euc-ws-think euc-ws-swap">
-                <span class="euc-ws-line euc-ws-answer">Drei Quellen geprüft, die Zahlen stimmen überein.</span>
-                <span class="euc-ws-line euc-ws-searching euc-ws-shimmer">Durchsuche das Web …</span>
+                <span class="euc-ws-line euc-ws-answer">{{ t.features.ws.answer }}</span>
+                <span class="euc-ws-line euc-ws-searching euc-ws-shimmer">{{ t.features.ws.searching }}</span>
               </div>
               <div class="euc-ws-srcs" style="margin-top:12px;">
-                <div class="euc-mock-row euc-ws-src" style="--i:0;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">bfs.admin.ch</span><em>Quelle</em></div>
-                <div class="euc-mock-row euc-ws-src" style="--i:1;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">seco.admin.ch</span><em>Quelle</em></div>
-                <div class="euc-mock-row euc-ws-src" style="--i:2;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">kof.ethz.ch</span><em>Quelle</em></div>
-                <div class="euc-mock-row euc-ws-src" style="--i:3;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">snb.ch</span><em>Quelle</em></div>
-                <div class="euc-mock-row euc-ws-src" style="--i:4;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg></span><span class="l">Stand: 12. August</span><em class="neutral">aktuell</em></div>
+                <div class="euc-mock-row euc-ws-src" style="--i:0;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">bfs.admin.ch</span><em>{{ t.features.ws.src }}</em></div>
+                <div class="euc-mock-row euc-ws-src" style="--i:1;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">seco.admin.ch</span><em>{{ t.features.ws.src }}</em></div>
+                <div class="euc-mock-row euc-ws-src" style="--i:2;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">kof.ethz.ch</span><em>{{ t.features.ws.src }}</em></div>
+                <div class="euc-mock-row euc-ws-src" style="--i:3;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span><span class="l">snb.ch</span><em>{{ t.features.ws.src }}</em></div>
+                <div class="euc-mock-row euc-ws-src" style="--i:4;"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg></span><span class="l">{{ t.features.ws.asof }}</span><em class="neutral">{{ t.features.ws.fresh }}</em></div>
               </div>
             </div>
           </div>
@@ -1779,18 +2064,18 @@
           </div>
           <div class="euc-shot euc-shot-center" aria-hidden="true">
             <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>chat · monatsauswertung</b></div>
+          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.xls.bar }}</b></div>
           <div class="euc-mock-msg">
-            <span class="u">Erstelle die Monatsauswertung Juli als Excel.</span>
-            <span class="a">Zahlen aus dem ERP gelesen, Marge je Bereich berechnet.</span>
+            <span class="u">{{ t.features.xls.ask }}</span>
+            <span class="a">{{ t.features.xls.say }}</span>
           </div>
           <!-- Eigenes Tabellendokument-Zeichen: grünes Blatt mit Raster. Bewusst
                KEIN Microsoft-Logo — die Anmutung genügt, die Marke gehört uns nicht. -->
-          <div class="euc-mock-row" style="margin-top:12px;"><span class="euc-mock-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.8 2.6H6.6A1.6 1.6 0 0 0 5 4.2v15.6a1.6 1.6 0 0 0 1.6 1.6h10.8a1.6 1.6 0 0 0 1.6-1.6V7.4l-5.2-4.8Z" fill="#E9F5EE" stroke="#1F7A4D" stroke-width="1.35" stroke-linejoin="round"></path><path d="M13.8 2.6v4.8H19" stroke="#1F7A4D" stroke-width="1.35" stroke-linejoin="round"></path><rect x="7.5" y="11" width="9" height="7" rx=".7" stroke="#1F7A4D" stroke-width="1.15"></rect><path d="M7.5 13.4h9M12 11v7" stroke="#1F7A4D" stroke-width="1.15"></path></svg></span><span class="l">Monatsauswertung_Juli.xlsx</span><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg></span><span class="l">Quelle: erp · 3 Blätter</span><em class="neutral">24 KB</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">Blatt 1: Umsatz je Bereich</span><em class="neutral">12 Zeilen</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">Blatt 2: Marge je Bereich</span><em class="neutral">12 Zeilen</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">Blatt 3: Vergleich Vormonat</span><em class="neutral">12 Zeilen</em></div>
+          <div class="euc-mock-row" style="margin-top:12px;"><span class="euc-mock-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.8 2.6H6.6A1.6 1.6 0 0 0 5 4.2v15.6a1.6 1.6 0 0 0 1.6 1.6h10.8a1.6 1.6 0 0 0 1.6-1.6V7.4l-5.2-4.8Z" fill="#E9F5EE" stroke="#1F7A4D" stroke-width="1.35" stroke-linejoin="round"></path><path d="M13.8 2.6v4.8H19" stroke="#1F7A4D" stroke-width="1.35" stroke-linejoin="round"></path><rect x="7.5" y="11" width="9" height="7" rx=".7" stroke="#1F7A4D" stroke-width="1.15"></rect><path d="M7.5 13.4h9M12 11v7" stroke="#1F7A4D" stroke-width="1.15"></path></svg></span><span class="l">{{ t.features.xls.file }}</span><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg></span><span class="l">{{ t.features.xls.src }}</span><em class="neutral">{{ t.features.xls.size }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">{{ t.features.xls.s1 }}</span><em class="neutral">{{ t.features.xls.rows }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">{{ t.features.xls.s2 }}</span><em class="neutral">{{ t.features.xls.rows }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">{{ t.features.xls.s3 }}</span><em class="neutral">{{ t.features.xls.rows }}</em></div>
             </div>
           </div>
         </article>
@@ -1804,14 +2089,14 @@
           </div>
           <div class="euc-shot" aria-hidden="true">
             <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>agenten · team</b></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg></span><span class="l">Offerten-Assistent</span><em>aktiv</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path></svg></span><span class="l">Protokoll-Schreiber</span><em>aktiv</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path><circle cx="12" cy="12" r="10"></circle></svg></span><span class="l">Onboarding-Lotse</span><em>aktiv</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></span><span class="l">Recherche-Kollege</span><em class="neutral">Entwurf</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"></path></svg></span><span class="l">Skill: Angebot prüfen</span><em>freigegeben</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"></path></svg></span><span class="l">Skill: Protokoll formatieren</span><em>freigegeben</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 17.5v-11"></path></svg></span><span class="l">Rechnungs-Prüfer</span><em class="neutral">Entwurf</em></div>
+          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.ag.bar }}</b></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg></span><span class="l">{{ t.features.ag.a1 }}</span><em>{{ t.features.ag.on }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path></svg></span><span class="l">{{ t.features.ag.a2 }}</span><em>{{ t.features.ag.on }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path><circle cx="12" cy="12" r="10"></circle></svg></span><span class="l">{{ t.features.ag.a3 }}</span><em>{{ t.features.ag.on }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></span><span class="l">{{ t.features.ag.a4 }}</span><em class="neutral">{{ t.features.ag.draft }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"></path></svg></span><span class="l">{{ t.features.ag.a5 }}</span><em>{{ t.features.ag.ok }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"></path></svg></span><span class="l">{{ t.features.ag.a6 }}</span><em>{{ t.features.ag.ok }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 17.5v-11"></path></svg></span><span class="l">{{ t.features.ag.a7 }}</span><em class="neutral">{{ t.features.ag.draft }}</em></div>
             </div>
           </div>
         </article>
@@ -1839,14 +2124,14 @@
           </div>
           <div class="euc-shot" aria-hidden="true">
             <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>memory · gemerkt</b></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg></span><span class="l">Kunde bevorzugt Deutsch</span><em>gemerkt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></span><span class="l">Rechnungen quartalsweise</span><em>gemerkt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="l">Ansprechpartner: A. Keller</span><em>gemerkt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></span><span class="l">Notiz vom Juni</span><em class="no">gelöscht</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2"></rect><rect width="20" height="8" x="2" y="14" rx="2"></rect><path d="M6 6h.01"></path><path d="M6 18h.01"></path></svg></span><span class="l">Ablage: eigener Server</span><em class="neutral">lokal</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg></span><span class="l">Termine lieber vormittags</span><em>gemerkt</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">Auswertungen als Excel</span><em>gemerkt</em></div>
+          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.mem.bar }}</b></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg></span><span class="l">{{ t.features.mem.m1 }}</span><em>{{ t.features.mem.kept }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></span><span class="l">{{ t.features.mem.m2 }}</span><em>{{ t.features.mem.kept }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="l">{{ t.features.mem.m3 }}</span><em>{{ t.features.mem.kept }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></span><span class="l">{{ t.features.mem.m4 }}</span><em class="no">{{ t.features.mem.del }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2"></rect><rect width="20" height="8" x="2" y="14" rx="2"></rect><path d="M6 6h.01"></path><path d="M6 18h.01"></path></svg></span><span class="l">{{ t.features.mem.m5 }}</span><em class="neutral">{{ t.features.mem.local }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg></span><span class="l">{{ t.features.mem.m6 }}</span><em>{{ t.features.mem.kept }}</em></div>
+          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">{{ t.features.mem.m7 }}</span><em>{{ t.features.mem.kept }}</em></div>
             </div>
           </div>
         </article>
@@ -3365,7 +3650,38 @@ this.mobRef = React.createRef();
           t5:'ERP-Anbindung mit Rechte-Kontrolle', d5:'ERP via MCP-Gateway: „Rechnungen lesen ja, Löhne nein.“ Alles auditiert.',
           t6:'Proaktives Memory', d6:'Merkt sich Wichtiges von selbst: auditierbar, löschbar, auf Ihrem Server.',
           shot1:'Admin-Panel: Balkendiagramm des Verbrauchs pro Tag nach Modell, mit Kostentabelle je Modell.',
-          shot5:'Admin-Panel: MCP-Zugriff mit ERP, Wissensdatenbank und Dokumentenablage hinter dem MCP-Gateway, mit Benutzer-Ausnahme „erlaubt“.'
+          shot5:'Admin-Panel: MCP-Zugriff mit ERP, Wissensdatenbank und Dokumentenablage hinter dem MCP-Gateway, mit Benutzer-Ausnahme „erlaubt“.',
+          /* Die vier Attrappen der Kacheln 2, 3, 4 und 6 sind nachgebaute
+             Oberflächen aus reinem HTML, keine Bilder. Genau deshalb können sie
+             die Sprache mitwechseln: ihre Beschriftungen stehen hier wie jeder
+             andere Text. Die Kacheln 1 und 5 zeigen echte Bildschirmfotos und
+             bleiben deutsch, bis es sie je Sprache gibt.
+
+             Kurz halten: die Zeilen der Attrappe sind schmal, ein zu langes
+             Wort bricht um und die Attrappe sieht nicht mehr aus wie eine
+             Oberfläche, sondern wie ein Textblock. */
+          ws:{ bar:'websuche', idle:'Suche im Web',
+               ask:'Wie hoch war der Schweizer Export im Juni?',
+               answer:'Drei Quellen geprüft, die Zahlen stimmen überein.',
+               searching:'Durchsuche das Web …', src:'Quelle',
+               asof:'Stand: 12. August', fresh:'aktuell' },
+          xls:{ bar:'chat · monatsauswertung',
+                ask:'Erstelle die Monatsauswertung Juli als Excel.',
+                say:'Zahlen aus dem ERP gelesen, Marge je Bereich berechnet.',
+                file:'Monatsauswertung_Juli.xlsx', src:'Quelle: erp · 3 Blätter', size:'24 KB',
+                s1:'Blatt 1: Umsatz je Bereich', s2:'Blatt 2: Marge je Bereich',
+                s3:'Blatt 3: Vergleich Vormonat', rows:'12 Zeilen' },
+          ag:{ bar:'agenten · team',
+               a1:'Offerten-Assistent', a2:'Protokoll-Schreiber', a3:'Onboarding-Lotse',
+               a4:'Recherche-Kollege', a5:'Skill: Angebot prüfen',
+               a6:'Skill: Protokoll formatieren', a7:'Rechnungs-Prüfer',
+               on:'aktiv', draft:'Entwurf', ok:'freigegeben' },
+          mem:{ bar:'memory · gemerkt',
+                m1:'Kunde bevorzugt Deutsch', m2:'Rechnungen quartalsweise',
+                m3:'Ansprechpartner: A. Keller', m4:'Notiz vom Juni',
+                m5:'Ablage: eigener Server', m6:'Termine lieber vormittags',
+                m7:'Auswertungen als Excel',
+                kept:'gemerkt', del:'gelöscht', local:'lokal' }
         },
         en: {
           h2:'One tool. The whole working day.',
@@ -3379,7 +3695,29 @@ this.mobRef = React.createRef();
           t5:'ERP integration with access control', d5:'ERP via MCP gateway: “Read invoices yes, salaries no.” Every call audited.',
           t6:'Proactive memory', d6:'Remembers what matters on its own: auditable, deletable, on your server.',
           shot1:'Admin panel: bar chart of spend per day by model, with a cost table per model.',
-          shot5:'Admin panel: MCP access with ERP, knowledge base and document store behind the MCP gateway, with a per-user exception set to “allowed”.'
+          shot5:'Admin panel: MCP access with ERP, knowledge base and document store behind the MCP gateway, with a per-user exception set to “allowed”.',
+          ws:{ bar:'web search', idle:'Searching the web',
+               ask:'How high were Swiss exports in June?',
+               answer:'Three sources checked, the figures agree.',
+               searching:'Searching the web …', src:'Source',
+               asof:'As at 12 August', fresh:'current' },
+          xls:{ bar:'chat · monthly report',
+                ask:'Create the July monthly report as Excel.',
+                say:'Figures read from the ERP, margin per division calculated.',
+                file:'Monthly_report_July.xlsx', src:'Source: erp · 3 sheets', size:'24 KB',
+                s1:'Sheet 1: Revenue per division', s2:'Sheet 2: Margin per division',
+                s3:'Sheet 3: vs previous month', rows:'12 rows' },
+          ag:{ bar:'agents · team',
+               a1:'Quotation assistant', a2:'Minutes writer', a3:'Onboarding guide',
+               a4:'Research colleague', a5:'Skill: check quotation',
+               a6:'Skill: format minutes', a7:'Invoice checker',
+               on:'active', draft:'draft', ok:'approved' },
+          mem:{ bar:'memory · saved',
+                m1:'Client prefers German', m2:'Invoices quarterly',
+                m3:'Contact: A. Keller', m4:'Note from June',
+                m5:'Storage: own server', m6:'Meetings preferably mornings',
+                m7:'Reports as Excel',
+                kept:'saved', del:'deleted', local:'local' }
         },
         fr: {
           h2:'Un seul outil. Toute la journée de travail.',
@@ -3393,7 +3731,29 @@ this.mobRef = React.createRef();
           t5:'Intégration ERP avec contrôle des droits', d5:'ERP via la passerelle MCP : « lire les factures oui, les salaires non ». Chaque appel est audité.',
           t6:'Mémoire proactive', d6:'Retient d’elle-même ce qui compte : auditable, effaçable, sur votre serveur.',
           shot1:'Panneau d’administration : diagramme à barres de la consommation par jour et par modèle, avec un tableau des coûts par modèle.',
-          shot5:'Panneau d’administration : accès MCP avec l’ERP, la base de connaissances et la gestion documentaire derrière la passerelle MCP, avec une exception par utilisateur réglée sur « autorisé ».'
+          shot5:'Panneau d’administration : accès MCP avec l’ERP, la base de connaissances et la gestion documentaire derrière la passerelle MCP, avec une exception par utilisateur réglée sur « autorisé ».',
+          ws:{ bar:'recherche web', idle:'Recherche sur le web',
+               ask:'Quel a été le montant des exportations suisses en juin ?',
+               answer:'Trois sources vérifiées, les chiffres concordent.',
+               searching:'Recherche sur le web …', src:'Source',
+               asof:'État : 12 août', fresh:'à jour' },
+          xls:{ bar:'chat · bilan mensuel',
+                ask:'Créez le bilan mensuel de juillet sous Excel.',
+                say:'Chiffres lus dans l’ERP, marge calculée par secteur.',
+                file:'Bilan_mensuel_juillet.xlsx', src:'Source : erp · 3 feuilles', size:'24 Ko',
+                s1:'Feuille 1 : CA par secteur', s2:'Feuille 2 : marge par secteur',
+                s3:'Feuille 3 : mois précédent', rows:'12 lignes' },
+          ag:{ bar:'agents · équipe',
+               a1:'Assistant devis', a2:'Rédacteur de comptes rendus', a3:'Guide d’intégration',
+               a4:'Collègue de recherche', a5:'Skill : vérifier une offre',
+               a6:'Skill : mettre en forme un compte rendu', a7:'Vérificateur de factures',
+               on:'actif', draft:'brouillon', ok:'validé' },
+          mem:{ bar:'memory · mémorisé',
+                m1:'Client préfère l’allemand', m2:'Factures par trimestre',
+                m3:'Interlocuteur : A. Keller', m4:'Note de juin',
+                m5:'Stockage : serveur propre', m6:'Rendez-vous plutôt le matin',
+                m7:'Analyses au format Excel',
+                kept:'mémorisé', del:'supprimé', local:'local' }
         },
         it: {
           h2:'Un solo strumento. L’intera giornata di lavoro.',
@@ -3407,7 +3767,29 @@ this.mobRef = React.createRef();
           t5:'Integrazione ERP con controllo dei permessi', d5:'ERP tramite gateway MCP: «leggere le fatture sì, gli stipendi no». Ogni chiamata è tracciata.',
           t6:'Memoria proattiva', d6:'Ricorda da sé ciò che conta: verificabile, cancellabile, sul vostro server.',
           shot1:'Pannello di amministrazione: grafico a barre del consumo giornaliero per modello, con tabella dei costi per modello.',
-          shot5:'Pannello di amministrazione: accesso MCP con ERP, base di conoscenza e archivio documenti dietro il gateway MCP, con un’eccezione per utente impostata su «consentito».'
+          shot5:'Pannello di amministrazione: accesso MCP con ERP, base di conoscenza e archivio documenti dietro il gateway MCP, con un’eccezione per utente impostata su «consentito».',
+          ws:{ bar:'ricerca web', idle:'Ricerca sul web',
+               ask:'Quanto sono state le esportazioni svizzere a giugno?',
+               answer:'Tre fonti verificate, i dati coincidono.',
+               searching:'Ricerca sul web in corso …', src:'Fonte',
+               asof:'Aggiornato al 12 agosto', fresh:'attuale' },
+          xls:{ bar:'chat · analisi mensile',
+                ask:'Crea l’analisi mensile di luglio in Excel.',
+                say:'Dati letti dall’ERP, margine calcolato per settore.',
+                file:'Analisi_mensile_luglio.xlsx', src:'Fonte: erp · 3 fogli', size:'24 KB',
+                s1:'Foglio 1: fatturato per settore', s2:'Foglio 2: margine per settore',
+                s3:'Foglio 3: confronto mese prec.', rows:'12 righe' },
+          ag:{ bar:'agenti · team',
+               a1:'Assistente offerte', a2:'Redattore verbali', a3:'Guida onboarding',
+               a4:'Collega di ricerca', a5:'Skill: verifica offerta',
+               a6:'Skill: formatta verbale', a7:'Controllo fatture',
+               on:'attivo', draft:'bozza', ok:'approvato' },
+          mem:{ bar:'memory · memorizzati',
+                m1:'Cliente preferisce il tedesco', m2:'Fatture trimestrali',
+                m3:'Referente: A. Keller', m4:'Nota di giugno',
+                m5:'Archivio: server proprio', m6:'Appuntamenti di mattina',
+                m7:'Analisi in formato Excel',
+                kept:'memorizzato', del:'eliminato', local:'locale' }
         },
         es: {
           h2:'Una sola herramienta. Toda la jornada laboral.',
@@ -3421,7 +3803,29 @@ this.mobRef = React.createRef();
           t5:'Integración con el ERP y control de permisos', d5:'ERP mediante la pasarela MCP: «leer facturas sí, salarios no». Cada llamada queda auditada.',
           t6:'Memoria proactiva', d6:'Recuerda por sí misma lo importante: auditable, borrable, en su servidor.',
           shot1:'Panel de administración: gráfico de barras del consumo diario por modelo, con tabla de costes por modelo.',
-          shot5:'Panel de administración: acceso MCP con ERP, base de conocimiento y gestor documental detrás de la pasarela MCP, con una excepción por usuario ajustada a «permitido».'
+          shot5:'Panel de administración: acceso MCP con ERP, base de conocimiento y gestor documental detrás de la pasarela MCP, con una excepción por usuario ajustada a «permitido».',
+          ws:{ bar:'búsqueda web', idle:'Buscar en la web',
+               ask:'¿Cuánto exportó Suiza en junio?',
+               answer:'Tres fuentes verificadas, las cifras coinciden.',
+               searching:'Buscando en la web …', src:'Fuente',
+               asof:'Datos del 12 de agosto', fresh:'actual' },
+          xls:{ bar:'chat · informe mensual',
+                ask:'Cree el informe mensual de julio en Excel.',
+                say:'Cifras leídas del ERP, margen calculado por área.',
+                file:'Informe_mensual_julio.xlsx', src:'Fuente: erp · 3 hojas', size:'24 KB',
+                s1:'Hoja 1: ventas por área', s2:'Hoja 2: margen por área',
+                s3:'Hoja 3: mes anterior', rows:'12 filas' },
+          ag:{ bar:'agentes · equipo',
+               a1:'Asistente de ofertas', a2:'Redactor de actas', a3:'Guía de incorporación',
+               a4:'Colega de investigación', a5:'Skill: revisar oferta',
+               a6:'Skill: formatear acta', a7:'Revisor de facturas',
+               on:'activo', draft:'borrador', ok:'aprobado' },
+          mem:{ bar:'memory · guardado',
+                m1:'Cliente prefiere alemán', m2:'Facturas trimestrales',
+                m3:'Contacto: A. Keller', m4:'Nota de junio',
+                m5:'Archivo: servidor propio', m6:'Citas mejor por la mañana',
+                m7:'Informes en Excel',
+                kept:'guardado', del:'borrado', local:'local' }
         }
       }
       ,
@@ -4133,7 +4537,7 @@ sov: {
         },
         es: {
           h2:'Diseñado para su uso en toda la empresa.',
-          sub:'EU Cowork AI conecta sus sistemas, ejecuta tareas con accesos controlados y sigue siendo verificable por su departamento de TI en todo momento.',
+          sub:'EU Cowork AI conecta sus sistemas, ejecuta tareas con accesos controlados y sigue siendo verificable por su departamento de IT en todo momento.',
           i1:{ t:'Conectar sus sistemas',
                d:'Conecte de forma centralizada el ERP, SharePoint, el conocimiento corporativo y otras herramientas con EU Cowork AI. Los conectores nativos están disponibles de inmediato; sus propios sistemas se integran mediante MCP o una API REST.' },
           i2:{ t:'Controlar los accesos de forma centralizada',
@@ -4141,7 +4545,7 @@ sov: {
           i3:{ t:'Hacer trabajo real',
                d:'EU Cowork AI no solo responde preguntas: crea archivos, analiza datos del ERP y asume tareas recurrentes. Los documentos Excel, Word o PDF terminados están listos directamente en el chat.' },
           i4:{ t:'Dejar todo trazado',
-               d:'Cada llamada a una herramienta, cada acción de administración y cada inicio de sesión se registran de forma continua. Su TI ve en todo momento quién accedió a qué datos y puede exportar las entradas.' },
+               d:'Cada llamada a una herramienta, cada acción de administración y cada inicio de sesión se registran de forma continua. Su IT ve en todo momento quién accedió a qué datos y puede exportar las entradas.' },
           i5:{ t:'Integrarse en el trabajo existente',
                d:'Use a su compañero de IA donde su equipo ya trabaja. En el chat, junto a un correo de Outlook abierto y, en el futuro, también en otras aplicaciones: ayuda sin cambiar de ventana ni copiar y pegar constantemente.' },
           f1t:'OIDC y Entra ID',
