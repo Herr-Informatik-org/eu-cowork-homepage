@@ -65,7 +65,7 @@
       'chrome.footer.link.imprint': 'Imprint',
       'chrome.footer.link.privacy': 'Privacy',
       'chrome.footer.link.terms': 'Terms (GTC)',
-      'chrome.footer.rights': '© 2026 EU Cowork AI. Name is a working title.',
+      'chrome.footer.rights': '© 2026 EU Cowork AI',
       'chrome.footer.built': 'Built on LibreChat · MIT'
     },
     fr: {
@@ -106,7 +106,7 @@
       'chrome.footer.link.imprint': 'Mentions légales',
       'chrome.footer.link.privacy': 'Confidentialité',
       'chrome.footer.link.terms': 'CGV',
-      'chrome.footer.rights': '© 2026 EU Cowork AI. Le nom est provisoire.',
+      'chrome.footer.rights': '© 2026 EU Cowork AI',
       'chrome.footer.built': 'Built on LibreChat · MIT'
     },
     it: {
@@ -147,7 +147,7 @@
       'chrome.footer.link.imprint': 'Note legali',
       'chrome.footer.link.privacy': 'Privacy',
       'chrome.footer.link.terms': 'Condizioni generali',
-      'chrome.footer.rights': '© 2026 EU Cowork AI. Il nome è provvisorio.',
+      'chrome.footer.rights': '© 2026 EU Cowork AI',
       'chrome.footer.built': 'Built on LibreChat · MIT'
     },
     es: {
@@ -188,7 +188,7 @@
       'chrome.footer.link.imprint': 'Aviso legal',
       'chrome.footer.link.privacy': 'Privacidad',
       'chrome.footer.link.terms': 'Condiciones generales',
-      'chrome.footer.rights': '© 2026 EU Cowork AI. El nombre es provisional.',
+      'chrome.footer.rights': '© 2026 EU Cowork AI',
       'chrome.footer.built': 'Built on LibreChat · MIT'
     }
   };

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title data-i18n="meta.title">Self-host an open-source AI platform | EU Cowork AI</title>
-<meta name="description" content="Self-host EU Cowork AI: one Docker Compose stack on an Ubuntu VM, two scripts, around 0.7 GB RAM at idle, MIT license without seat limits and without Kubernetes.">
+<meta name="description" content="Self-host EU Cowork AI: one Docker Compose stack on an Ubuntu VM, two scripts, around 0.7 GB RAM at idle, MIT license at launch, without seat limits and without Kubernetes.">
 <link rel="canonical" href="https://eucowork.ai/en/self-hosting">
 <!-- i18n:hreflang:start -->
 <link rel="alternate" hreflang="de" href="https://eucowork.ai/self-hosting">
@@ -96,7 +96,16 @@
 
     <h1 data-i18n="hero.h1">Self-host EU Cowork AI</h1>
 
-    <p class="euc-lead" data-i18n="hero.lead">EU Cowork AI runs as a Docker Compose stack on a single Ubuntu machine. Two scripts bring the stack up, the software is MIT-licensed, and you need neither Kubernetes nor a GPU nor an account with us.</p>
+    <!-- Kennzeichnung „noch nicht verfügbar" in der Hausform: derselbe Gold-Chip
+         (.chip.chip-gold aus assets/content.css), den das Outlook-Add-in auf
+         /integrationen als Beta-Kennzeichnung traegt. Steht hier, weil jede
+         Schaltflaeche „Self-host for free" der Website auf dieser Seite landet:
+         wer klickt, sieht als Erstes, dass der Quellcode zum Start kommt. -->
+    <div class="chips">
+      <span class="chip chip-gold" data-i18n="hero.chip">Source code at launch</span>
+    </div>
+
+    <p class="euc-lead" data-i18n="hero.lead">EU Cowork AI runs as a Docker Compose stack on a single Ubuntu machine. Two scripts bring the stack up, the software will be released under the MIT licence at launch, and you need neither Kubernetes nor a GPU nor an account with us.</p>
   </section>
 
   <div class="euc-wrap">
@@ -109,7 +118,7 @@
         <li data-i18n="kurz.li2">The base stack uses around 0.7 GB of RAM when idle. Budget 1.5 to 2 GB per instance including a dedicated code sandbox.</li>
         <li data-i18n="kurz.li3">Two scripts are enough: <code>setup-server.sh</code> prepares the Ubuntu server, <code>install.sh</code> generates the secrets and starts the stack.</li>
         <li data-i18n="kurz.li4">For 1 to 15 users, three to five instances share one VM with 4 vCPU, 16 GB RAM and an 80 GB disk.</li>
-        <li data-i18n="kurz.li5">In concrete terms, the MIT licence means: no seat limit, no mandatory branding, no feature gating, open source code. Self-hosting is free.</li>
+        <li data-i18n="kurz.li5">In concrete terms, the MIT licence means: no seat limit, no mandatory branding, no feature gating, open source code. Self-hosting is free. The source code appears at launch.</li>
       </ul>
     </div>
 
@@ -297,7 +306,15 @@ docker compose up -d</code></pre>
     <!-- ==================== 7 · LIZENZ ==================== -->
     <section class="euc-section">
       <h2 id="lizenz" data-i18n="liz.h2">Licence: what MIT means in practice</h2>
-      <p data-i18n="liz.p1">EU Cowork AI is released under the MIT licence, as is the underlying chat application LibreChat. Self-hosting is free, from a single user and without registering with us. What that means in detail, and why it is the decisive difference in the <a class="euc-textlink" href="/en/vergleich">comparison with other platforms</a>:</p>
+
+      <!-- Zweite Kennzeichnung, gleiche Bauform. Sie gehoert hierher, weil die
+           Ueberschrift die Lizenz behauptet und die Liste darunter vier Zusagen
+           daran haengt; ohne den Chip liest sich der Abschnitt als Ist-Zustand. -->
+      <div class="chips">
+        <span class="chip chip-gold" data-i18n="liz.chip">Source code at launch</span>
+      </div>
+
+      <p data-i18n="liz.p1">EU Cowork AI will be released under the MIT licence at launch; the underlying chat application LibreChat is already under it today. Self-hosting is free, from a single user and without registering with us. What that means in detail, and why it is the decisive difference in the <a class="euc-textlink" href="/en/vergleich">comparison with other platforms</a>:</p>
 
       <ul>
         <li data-i18n="liz.li1"><strong>No seat limit.</strong> Whether 3 or 300 people work on the instance makes no difference to the licence.</li>
@@ -316,7 +333,7 @@ docker compose up -d</code></pre>
       <div class="faq">
         <div class="faq-item">
           <h3 data-i18n="faq.q1">What does it cost to self-host EU Cowork AI?</h3>
-          <p data-i18n="faq.a1">The software costs nothing. EU Cowork AI is released under the MIT licence, without a seat limit and without a licence key, and self-hosting is free from a single user. Costs arise outside the software: for the machine, for access to the model provider and for operation.</p>
+          <p data-i18n="faq.a1">The software costs nothing. EU Cowork AI will be released under the MIT licence at launch, without a seat limit and without a licence key, and self-hosting is free from a single user. Costs arise outside the software: for the machine, for access to the model provider and for operation.</p>
         </div>
         <div class="faq-item">
           <h3 data-i18n="faq.q2">Do I need a GPU for EU Cowork AI?</h3>
@@ -459,7 +476,7 @@ docker compose up -d</code></pre>
     <div class="euc-footer-rule"></div>
 
     <div class="euc-footer-bottom">
-      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI. Name is a working title.</span>
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI</span>
       <span class="euc-built" data-i18n="chrome.footer.built">Built on LibreChat · MIT</span>
     </div>
   </div>
@@ -480,7 +497,7 @@ docker compose up -d</code></pre>
   "about": {
     "@id": "https://eucowork.ai/#software"
   },
-  "description": "EU Cowork AI selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ohne Seat-Limit und ohne Kubernetes.",
+  "description": "EU Cowork AI selbst hosten: ein Docker-Compose-Stack auf einer Ubuntu-VM, zwei Skripte, rund 0,7 GB RAM Grundlast, MIT-Lizenz ab Start, ohne Seat-Limit und ohne Kubernetes.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -498,7 +515,7 @@ docker compose up -d</code></pre>
       }
     ]
   },
-  "abstract": "EU Cowork AI läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine, ohne Kubernetes und ohne GPU im App-Tier. Die Installation besteht aus zwei Skripten: setup-server.sh bereitet den Ubuntu-Server vor, install.sh erzeugt die Secrets und startet den Stack; danach wird der API-Schlüssel des Modell-Gateways eingetragen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM, pro Instanz sind 1,5 bis 2 GB RAM inklusive Code-Sandbox zu budgetieren. Zum Stack gehören die Chat-Anwendung auf LibreChat-Basis, MongoDB, Meilisearch, die optionale RAG-API mit pgvector, das MCP-Gateway, das Admin-Panel, die daneben laufende Code-Sandbox, die SearXNG-Websuche und Caddy mit automatischem TLS. Es gibt drei Betriebsmodelle bei einer einzigen Bauform: selbst betrieben, in der eigenen Cloud oder von uns betreut. Das Anwendungs-Image ist auf einen Digest gepinnt, Backup, Restore und Serverumzug laufen über ein Skript, und die MIT-Lizenz bedeutet kein Seat-Limit, kein Branding-Zwang und kein Feature-Gating.",
+  "abstract": "EU Cowork AI läuft als Docker-Compose-Stack auf einer einzelnen Ubuntu-Maschine, ohne Kubernetes und ohne GPU im App-Tier. Die Installation besteht aus zwei Skripten: setup-server.sh bereitet den Ubuntu-Server vor, install.sh erzeugt die Secrets und startet den Stack; danach wird der API-Schlüssel des Modell-Gateways eingetragen. Der Basis-Stack belegt im Leerlauf rund 0,7 GB RAM, pro Instanz sind 1,5 bis 2 GB RAM inklusive Code-Sandbox zu budgetieren. Zum Stack gehören die Chat-Anwendung auf LibreChat-Basis, MongoDB, Meilisearch, die optionale RAG-API mit pgvector, das MCP-Gateway, das Admin-Panel, die daneben laufende Code-Sandbox, die SearXNG-Websuche und Caddy mit automatischem TLS. Es gibt drei Betriebsmodelle bei einer einzigen Bauform: selbst betrieben, in der eigenen Cloud oder von uns betreut. Das Anwendungs-Image ist auf einen Digest gepinnt, Backup, Restore und Serverumzug laufen über ein Skript, und die MIT-Lizenz bedeutet kein Seat-Limit, kein Branding-Zwang und kein Feature-Gating. Der Quellcode ist heute noch nicht öffentlich: das Release-Repository wird mit dem Launch unter MIT-Lizenz veröffentlicht.",
   "publisher": {
     "@id": "https://eucowork.ai/#organization"
   },
@@ -518,7 +535,7 @@ docker compose up -d</code></pre>
       "name": "Was kostet es, EU Cowork AI selbst zu hosten?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Die Software kostet nichts. EU Cowork AI steht unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb."
+        "text": "Die Software kostet nichts. EU Cowork AI erscheint zum Start unter der MIT-Lizenz, ohne Seat-Limit und ohne Lizenzschlüssel, und Self-Hosting ist gratis ab einem Nutzer. Aufwand entsteht ausserhalb der Software: für die Maschine, für den Zugang zum Modell-Anbieter und für den Betrieb."
       }
     },
     {
@@ -577,13 +594,14 @@ window.EUC_I18N = {
     "crumb.current": "Self-hosting",
     "hero.eyebrow": "Self-hosting",
     "hero.h1": "Self-host EU Cowork AI",
-    "hero.lead": "EU Cowork AI runs as a Docker Compose stack on a single Ubuntu machine. Two scripts bring the stack up, the software is MIT-licensed, and you need neither Kubernetes nor a GPU nor an account with us.",
+    "hero.chip": "Source code at launch",
+    "hero.lead": "EU Cowork AI runs as a Docker Compose stack on a single Ubuntu machine. Two scripts bring the stack up, the software will be released under the MIT licence at launch, and you need neither Kubernetes nor a GPU nor an account with us.",
     "kurz.title": "In short",
     "kurz.li1": "EU Cowork AI is operated as a Docker Compose stack on an Ubuntu machine, without Kubernetes and without a GPU in the app tier.",
     "kurz.li2": "The base stack uses around 0.7 GB of RAM when idle. Budget 1.5 to 2 GB per instance including a dedicated code sandbox.",
     "kurz.li3": "Two scripts are enough: <code>setup-server.sh</code> prepares the Ubuntu server, <code>install.sh</code> generates the secrets and starts the stack.",
     "kurz.li4": "For 1 to 15 users, three to five instances share one VM with 4 vCPU, 16 GB RAM and an 80 GB disk.",
-    "kurz.li5": "In concrete terms, the MIT licence means: no seat limit, no mandatory branding, no feature gating, open source code. Self-hosting is free.",
+    "kurz.li5": "In concrete terms, the MIT licence means: no seat limit, no mandatory branding, no feature gating, open source code. Self-hosting is free. The source code appears at launch.",
     "toc.title": "On this page",
     "toc.i1": "What you need",
     "toc.i2": "Installation in three steps",
@@ -669,7 +687,8 @@ window.EUC_I18N = {
     "sich.p3": "The most expensive mistake during a migration is to have the encryption keys regenerated instead of carrying them over from the old <code>.env</code>. All credentials stored in the database then become unreadable. With carried-over values, the migration remains a maintenance window of 15 to 30 minutes.",
     "sich.p4": "Two rules from practice: mirror the backup target off the machine and test the restore once.",
     "liz.h2": "Licence: what MIT means in practice",
-    "liz.p1": "EU Cowork AI is released under the MIT licence, as is the underlying chat application LibreChat. Self-hosting is free, from a single user and without registering with us. What that means in detail, and why it is the decisive difference in the <a class=\"euc-textlink\" href=\"/vergleich\">comparison with other platforms</a>:",
+    "liz.chip": "Source code at launch",
+    "liz.p1": "EU Cowork AI will be released under the MIT licence at launch; the underlying chat application LibreChat is already under it today. Self-hosting is free, from a single user and without registering with us. What that means in detail, and why it is the decisive difference in the <a class=\"euc-textlink\" href=\"/vergleich\">comparison with other platforms</a>:",
     "liz.li1": "<strong>No seat limit.</strong> Whether 3 or 300 people work on the instance makes no difference to the licence.",
     "liz.li2": "<strong>No mandatory branding.</strong> Name, logo and colours are configuration, including for commercial use.",
     "liz.li3": "<strong>No feature gating.</strong> Permission management, audit log, budgets and system connections all come from the same open source.",
@@ -677,7 +696,7 @@ window.EUC_I18N = {
     "liz.p2": "Commercially, we sustain the model through operation and support, not through licences. That is why the path from managed operation back to self-hosting is open as well: the same architecture, the same archive.",
     "faq.h2": "Frequently asked questions about self-hosting",
     "faq.q1": "What does it cost to self-host EU Cowork AI?",
-    "faq.a1": "The software costs nothing. EU Cowork AI is released under the MIT licence, without a seat limit and without a licence key, and self-hosting is free from a single user. Costs arise outside the software: for the machine, for access to the model provider and for operation.",
+    "faq.a1": "The software costs nothing. EU Cowork AI will be released under the MIT licence at launch, without a seat limit and without a licence key, and self-hosting is free from a single user. Costs arise outside the software: for the machine, for access to the model provider and for operation.",
     "faq.q2": "Do I need a GPU for EU Cowork AI?",
     "faq.a2": "No. No GPU is needed for the app tier. The computing load of the language models sits with the inference provider, and CPU utilisation of the stack is close to zero in normal operation. GPU hardware is only needed by those who also want to run language models locally on their own machine.",
     "faq.q3": "How many users can one instance support?",
@@ -703,13 +722,14 @@ window.EUC_I18N = {
     "crumb.current": "Auto-hébergement",
     "hero.eyebrow": "Auto-hébergement",
     "hero.h1": "Héberger EU Cowork AI vous-même",
-    "hero.lead": "EU Cowork AI fonctionne comme un stack Docker Compose sur une seule machine Ubuntu. Deux scripts démarrent le stack, le logiciel est sous licence MIT, et vous n’avez besoin ni de Kubernetes, ni d’un GPU, ni d’un compte chez nous.",
+    "hero.chip": "Code source au lancement",
+    "hero.lead": "EU Cowork AI fonctionne comme un stack Docker Compose sur une seule machine Ubuntu. Deux scripts démarrent le stack, le logiciel paraîtra sous licence MIT au lancement, et vous n’avez besoin ni de Kubernetes, ni d’un GPU, ni d’un compte chez nous.",
     "kurz.title": "En bref",
     "kurz.li1": "EU Cowork AI s’exploite comme un stack Docker Compose sur une machine Ubuntu, sans Kubernetes et sans GPU dans la couche applicative.",
     "kurz.li2": "Le stack de base occupe environ 0,7 Go de RAM au repos. Prévoyez 1,5 à 2 Go par instance, bac à sable de code compris.",
     "kurz.li3": "Deux scripts suffisent : <code>setup-server.sh</code> prépare le serveur Ubuntu, <code>install.sh</code> génère les secrets et démarre le stack.",
     "kurz.li4": "Pour 1 à 15 utilisateurs, trois à cinq instances se partagent une VM dotée de 4 vCPU, 16 Go de RAM et 80 Go de disque.",
-    "kurz.li5": "Concrètement, la licence MIT signifie : aucune limite de sièges, aucune obligation de marque, aucun verrouillage de fonctionnalités, code source ouvert. L’auto-hébergement est gratuit.",
+    "kurz.li5": "Concrètement, la licence MIT signifie : aucune limite de sièges, aucune obligation de marque, aucun verrouillage de fonctionnalités, code source ouvert. L’auto-hébergement est gratuit. Le code source paraîtra au lancement.",
     "toc.title": "Sur cette page",
     "toc.i1": "Ce dont vous avez besoin",
     "toc.i2": "Installation en trois étapes",
@@ -795,7 +815,8 @@ window.EUC_I18N = {
     "sich.p3": "L’erreur la plus coûteuse lors d’une migration consiste à laisser régénérer les clés de chiffrement au lieu de les reprendre depuis l’ancien fichier <code>.env</code>. Tous les identifiants stockés dans la base de données deviennent alors illisibles. Avec des valeurs reprises, la migration reste une fenêtre de maintenance de 15 à 30 minutes.",
     "sich.p4": "Deux règles issues de l’exploitation : répliquer la cible de sauvegarde en dehors de la machine et tester la restauration au moins une fois.",
     "liz.h2": "Licence : ce que MIT signifie concrètement",
-    "liz.p1": "EU Cowork AI est sous licence MIT, tout comme l’application de chat sous-jacente LibreChat. L’auto-hébergement est gratuit, dès un utilisateur et sans inscription chez nous. Ce que cela signifie en détail, et pourquoi c’est la différence décisive dans la <a class=\"euc-textlink\" href=\"/vergleich\">comparaison avec d’autres plateformes</a> :",
+    "liz.chip": "Code source au lancement",
+    "liz.p1": "EU Cowork AI paraîtra sous licence MIT au lancement ; l’application de chat sous-jacente LibreChat l’est déjà aujourd’hui. L’auto-hébergement est gratuit, dès un utilisateur et sans inscription chez nous. Ce que cela signifie en détail, et pourquoi c’est la différence décisive dans la <a class=\"euc-textlink\" href=\"/vergleich\">comparaison avec d’autres plateformes</a> :",
     "liz.li1": "<strong>Aucune limite de sièges.</strong> Que 3 ou 300 personnes travaillent sur l’instance ne change rien à la licence.",
     "liz.li2": "<strong>Aucune obligation de marque.</strong> Nom, logo et couleurs relèvent de la configuration, y compris pour un usage commercial.",
     "liz.li3": "<strong>Aucun verrouillage de fonctionnalités.</strong> Gestion des droits, journal d’audit, budgets et connexions aux systèmes proviennent de la même source ouverte.",
@@ -803,7 +824,7 @@ window.EUC_I18N = {
     "liz.p2": "Sur le plan commercial, nous soutenons le modèle par l’exploitation et l’accompagnement, non par les licences. C’est pourquoi le chemin de retour de l’exploitation gérée vers l’auto-hébergement est également ouvert : même architecture, même archive.",
     "faq.h2": "Questions fréquentes sur l’auto-hébergement",
     "faq.q1": "Combien coûte l’auto-hébergement d’EU Cowork AI ?",
-    "faq.a1": "Le logiciel ne coûte rien. EU Cowork AI est sous licence MIT, sans limite de sièges et sans clé de licence, et l’auto-hébergement est gratuit dès un utilisateur. Les coûts naissent en dehors du logiciel : pour la machine, pour l’accès au fournisseur de modèles et pour l’exploitation.",
+    "faq.a1": "Le logiciel ne coûte rien. EU Cowork AI paraîtra sous licence MIT au lancement, sans limite de sièges et sans clé de licence, et l’auto-hébergement est gratuit dès un utilisateur. Les coûts naissent en dehors du logiciel : pour la machine, pour l’accès au fournisseur de modèles et pour l’exploitation.",
     "faq.q2": "Ai-je besoin d’un GPU pour EU Cowork AI ?",
     "faq.a2": "Non. Aucun GPU n’est nécessaire pour la couche applicative. La charge de calcul des modèles de langage repose sur le fournisseur d’inférence, et l’utilisation du processeur par le stack est proche de zéro en fonctionnement normal. Le matériel GPU n’est nécessaire que si vous souhaitez exécuter en plus des modèles de langage en local sur votre propre machine.",
     "faq.q3": "Combien d’utilisateurs une instance peut-elle supporter ?",
@@ -829,13 +850,14 @@ window.EUC_I18N = {
     "crumb.current": "Self-hosting",
     "hero.eyebrow": "Self-hosting",
     "hero.h1": "Ospitare EU Cowork AI in proprio",
-    "hero.lead": "EU Cowork AI funziona come stack Docker Compose su un’unica macchina Ubuntu. Due script avviano lo stack, il software è rilasciato con licenza MIT e non Le servono né Kubernetes, né una GPU, né un account presso di noi.",
+    "hero.chip": "Codice sorgente dal lancio",
+    "hero.lead": "EU Cowork AI funziona come stack Docker Compose su un’unica macchina Ubuntu. Due script avviano lo stack, il software uscirà con licenza MIT al lancio e non Le servono né Kubernetes, né una GPU, né un account presso di noi.",
     "kurz.title": "In breve",
     "kurz.li1": "EU Cowork AI viene eseguito come stack Docker Compose su una macchina Ubuntu, senza Kubernetes e senza GPU nel livello applicativo.",
     "kurz.li2": "Lo stack di base occupa a riposo circa 0,7 GB di RAM. Preveda da 1,5 a 2 GB per istanza, inclusa la sandbox di codice dedicata.",
     "kurz.li3": "Bastano due script: <code>setup-server.sh</code> prepara il server Ubuntu, <code>install.sh</code> genera i secret e avvia lo stack.",
     "kurz.li4": "Per 1-15 utenti, da tre a cinque istanze condividono una VM con 4 vCPU, 16 GB di RAM e 80 GB di disco.",
-    "kurz.li5": "In concreto la licenza MIT significa: nessun limite di postazioni, nessun obbligo di branding, nessun feature gating, codice sorgente aperto. Il self-hosting è gratuito.",
+    "kurz.li5": "In concreto la licenza MIT significa: nessun limite di postazioni, nessun obbligo di branding, nessun feature gating, codice sorgente aperto. Il self-hosting è gratuito. Il codice sorgente uscirà al lancio.",
     "toc.title": "In questa pagina",
     "toc.i1": "Che cosa Le serve",
     "toc.i2": "Installazione in tre passaggi",
@@ -921,7 +943,8 @@ window.EUC_I18N = {
     "sich.p3": "L’errore più costoso durante una migrazione consiste nel far rigenerare le chiavi di cifratura invece di riprenderle dal vecchio file <code>.env</code>. Tutte le credenziali salvate nella banca dati diventano allora illeggibili. Con i valori ripresi, la migrazione resta una finestra di manutenzione di 15-30 minuti.",
     "sich.p4": "Due regole tratte dall’esercizio: replicare la destinazione del backup al di fuori della macchina e testare almeno una volta il ripristino.",
     "liz.h2": "Licenza: che cosa significa MIT in concreto",
-    "liz.p1": "EU Cowork AI è rilasciato con licenza MIT, così come l’applicazione di chat sottostante LibreChat. Il self-hosting è gratuito, già a partire da un utente e senza registrazione presso di noi. Che cosa significhi nel dettaglio, e perché sia la differenza decisiva nel <a class=\"euc-textlink\" href=\"/vergleich\">confronto con altre piattaforme</a>:",
+    "liz.chip": "Codice sorgente dal lancio",
+    "liz.p1": "EU Cowork AI uscirà con licenza MIT al lancio; l’applicazione di chat sottostante LibreChat lo è già oggi. Il self-hosting è gratuito, già a partire da un utente e senza registrazione presso di noi. Che cosa significhi nel dettaglio, e perché sia la differenza decisiva nel <a class=\"euc-textlink\" href=\"/vergleich\">confronto con altre piattaforme</a>:",
     "liz.li1": "<strong>Nessun limite di postazioni.</strong> Che sull’istanza lavorino 3 o 300 persone non cambia nulla ai fini della licenza.",
     "liz.li2": "<strong>Nessun obbligo di branding.</strong> Nome, logo e colori sono configurazione, anche per l’impiego commerciale.",
     "liz.li3": "<strong>Nessun feature gating.</strong> Gestione dei diritti, log di audit, budget e collegamenti ai sistemi provengono dalla stessa sorgente aperta.",
@@ -929,7 +952,7 @@ window.EUC_I18N = {
     "liz.p2": "Sul piano commerciale sosteniamo il modello con l’esercizio e l’assistenza, non con le licenze. Per questo è aperta anche la via di ritorno dall’esercizio gestito a quello autonomo: stessa architettura, stesso archivio.",
     "faq.h2": "Domande frequenti sull’esercizio autonomo",
     "faq.q1": "Quanto costa ospitare EU Cowork AI in proprio?",
-    "faq.a1": "Il software non costa nulla. EU Cowork AI è rilasciato con licenza MIT, senza limite di postazioni e senza chiave di licenza, e il self-hosting è gratuito già a partire da un utente. I costi nascono al di fuori del software: per la macchina, per l’accesso al fornitore di modelli e per l’esercizio.",
+    "faq.a1": "Il software non costa nulla. EU Cowork AI uscirà con licenza MIT al lancio, senza limite di postazioni e senza chiave di licenza, e il self-hosting è gratuito già a partire da un utente. I costi nascono al di fuori del software: per la macchina, per l’accesso al fornitore di modelli e per l’esercizio.",
     "faq.q2": "Serve una GPU per EU Cowork AI?",
     "faq.a2": "No. Per il livello applicativo non è necessaria alcuna GPU. Il carico di calcolo dei modelli linguistici è a carico del fornitore di inferenza e l’utilizzo della CPU dello stack è prossimo allo zero nell’esercizio normale. L’hardware GPU serve solo a chi desidera eseguire in aggiunta modelli linguistici in locale sulla propria macchina.",
     "faq.q3": "Quanti utenti sostiene un’istanza?",
@@ -955,13 +978,14 @@ window.EUC_I18N = {
     "crumb.current": "Autoalojamiento",
     "hero.eyebrow": "Autoalojamiento",
     "hero.h1": "Aloje EU Cowork AI por su cuenta",
-    "hero.lead": "EU Cowork AI funciona como stack de Docker Compose en una única máquina Ubuntu. Dos scripts levantan el stack, el software está bajo licencia MIT y usted no necesita ni Kubernetes, ni una GPU, ni una cuenta con nosotros.",
+    "hero.chip": "Código fuente en el lanzamiento",
+    "hero.lead": "EU Cowork AI funciona como stack de Docker Compose en una única máquina Ubuntu. Dos scripts levantan el stack, el software se publicará bajo licencia MIT en el lanzamiento y usted no necesita ni Kubernetes, ni una GPU, ni una cuenta con nosotros.",
     "kurz.title": "En resumen",
     "kurz.li1": "EU Cowork AI se opera como stack de Docker Compose en una máquina Ubuntu, sin Kubernetes y sin GPU en la capa de aplicación.",
     "kurz.li2": "El stack base ocupa en reposo unos 0,7 GB de RAM. Presupueste de 1,5 a 2 GB por instancia, incluido un entorno aislado de código propio.",
     "kurz.li3": "Bastan dos scripts: <code>setup-server.sh</code> prepara el servidor Ubuntu, <code>install.sh</code> genera los secretos e inicia el stack.",
     "kurz.li4": "Para 1 a 15 usuarios, de tres a cinco instancias comparten una VM con 4 vCPU, 16 GB de RAM y 80 GB de disco.",
-    "kurz.li5": "En concreto, la licencia MIT significa: sin límite de puestos, sin marca obligatoria, sin restricción de funciones, código fuente abierto. El autoalojamiento es gratuito.",
+    "kurz.li5": "En concreto, la licencia MIT significa: sin límite de puestos, sin marca obligatoria, sin restricción de funciones, código fuente abierto. El autoalojamiento es gratuito. El código fuente se publicará en el lanzamiento.",
     "toc.title": "En esta página",
     "toc.i1": "Qué necesita",
     "toc.i2": "Instalación en tres pasos",
@@ -1047,7 +1071,8 @@ window.EUC_I18N = {
     "sich.p3": "El error más caro en un traslado es dejar que se regeneren las claves de cifrado en lugar de tomarlas del antiguo archivo <code>.env</code>. Después, todas las credenciales almacenadas en la base de datos resultan ilegibles. Con los valores heredados, el traslado sigue siendo una ventana de mantenimiento de 15 a 30 minutos.",
     "sich.p4": "Dos reglas de la práctica: replicar el destino de la copia de seguridad fuera de la máquina y probar la restauración al menos una vez.",
     "liz.h2": "Licencia: qué significa MIT en la práctica",
-    "liz.p1": "EU Cowork AI se publica bajo licencia MIT, al igual que la aplicación de chat subyacente LibreChat. El autoalojamiento es gratuito, desde un solo usuario y sin registrarse con nosotros. Qué significa esto en detalle y por qué es la diferencia decisiva en la <a class=\"euc-textlink\" href=\"/vergleich\">comparación con otras plataformas</a>:",
+    "liz.chip": "Código fuente en el lanzamiento",
+    "liz.p1": "EU Cowork AI se publicará bajo licencia MIT en el lanzamiento; la aplicación de chat subyacente LibreChat ya lo está hoy. El autoalojamiento es gratuito, desde un solo usuario y sin registrarse con nosotros. Qué significa esto en detalle y por qué es la diferencia decisiva en la <a class=\"euc-textlink\" href=\"/vergleich\">comparación con otras plataformas</a>:",
     "liz.li1": "<strong>Sin límite de puestos.</strong> Que trabajen 3 o 300 personas en la instancia no cambia nada en la licencia.",
     "liz.li2": "<strong>Sin marca obligatoria.</strong> Nombre, logotipo y colores son configuración, también para el uso comercial.",
     "liz.li3": "<strong>Sin restricción de funciones.</strong> Gestión de permisos, registro de auditoría, presupuestos y conexiones a sistemas proceden de la misma fuente abierta.",
@@ -1055,7 +1080,7 @@ window.EUC_I18N = {
     "liz.p2": "Comercialmente sostenemos el modelo con la operación y el acompañamiento, no con las licencias. Por eso también está abierto el camino de vuelta del funcionamiento gestionado al autoalojado: la misma arquitectura, el mismo archivo.",
     "faq.h2": "Preguntas frecuentes sobre el autoalojamiento",
     "faq.q1": "¿Cuánto cuesta alojar EU Cowork AI por cuenta propia?",
-    "faq.a1": "El software no cuesta nada. EU Cowork AI se publica bajo licencia MIT, sin límite de puestos y sin clave de licencia, y el autoalojamiento es gratuito desde un solo usuario. Los costes surgen fuera del software: por la máquina, por el acceso al proveedor de modelos y por la operación.",
+    "faq.a1": "El software no cuesta nada. EU Cowork AI se publicará bajo licencia MIT en el lanzamiento, sin límite de puestos y sin clave de licencia, y el autoalojamiento es gratuito desde un solo usuario. Los costes surgen fuera del software: por la máquina, por el acceso al proveedor de modelos y por la operación.",
     "faq.q2": "¿Necesito una GPU para EU Cowork AI?",
     "faq.a2": "No. Para la capa de aplicación no se necesita ninguna GPU. La carga de cálculo de los modelos de lenguaje recae en el proveedor de inferencia y el uso de CPU del stack es cercano a cero en funcionamiento normal. Solo necesita hardware GPU quien además quiera ejecutar modelos de lenguaje en local en su propia máquina.",
     "faq.q3": "¿Cuántos usuarios soporta una instancia?",

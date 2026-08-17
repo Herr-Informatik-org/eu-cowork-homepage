@@ -2787,7 +2787,22 @@
     <section id="self-host" data-hd-dark data-screen-label="Self-host (dark)" style="scroll-margin-top:90px; background:var(--c-deep); color:var(--c-on-deep); padding:var(--sec-y) var(--gutter);">
       <div style="max-width:var(--w-max); margin:0 auto;">
       <div style="max-width:760px;" data-reveal>
-        <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.020em; color:#F7FAFC; margin:0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
+        <!-- Kennzeichnung „noch nicht verfügbar" in der Hausform. Das Vorbild
+             ist die Beta-Kennzeichnung des Outlook-Add-ins weiter oben
+             (.euc-cap-pill.is-wait, Goldton #F4C542 mit Punkt); jene Pille
+             traegt aber nur auf hellem Grund und in Kacheln-Groesse. Hier liegt
+             Navy, deshalb .euc-status.is-deep: dieselbe Goldsprache, dieselbe
+             Punkt-plus-Wort-Bauform, und die Klasse ist laut ihrem Kommentar
+             genau fuer echte Zustaende („Bald verfügbar", „Beta") reserviert.
+             Kein neues CSS. Der Punkt pulsiert bewusst nicht, anders als in der
+             Mobile-Sektion: „noch nicht da" ist kein Live-Zustand.
+             Sie steht ueber der Ueberschrift und damit ueber den beiden
+             Befehlskarten, denn dort wird der Klon-Befehl kopiert. -->
+        <span class="euc-status is-deep">
+          <span aria-hidden="true" style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#F4C542;"></span>
+          <span>{{ t.selfhost.badge }}</span>
+        </span>
+        <h2 style="font-family:var(--f-display); font-weight:400; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-0.020em; color:#F7FAFC; margin:18px 0 0; text-wrap:balance;">{{ t.selfhost.h2 }}</h2>
       </div>
 
       <!-- Zwei Karten, ein Befehl je Karte. Der Ablauf ist genau das: klonen,
@@ -3351,12 +3366,16 @@ this.mobRef = React.createRef();
       }
       ,
       /* Der Quellcode ist noch nicht öffentlich. Der Hinweis dazu stand hier
-         als eigener Kasten und ist auf Wunsch entfernt; die Aussage trägt
-         jetzt allein die FAQ weiter unten („Ist das wirklich Open Source?“).
-         Wer den Klon-Befehl heute ausführt, läuft ins Leere. */
+         als eigener Kasten und ist auf Wunsch entfernt; seither trug die
+         Aussage allein die FAQ weiter unten („Ist das wirklich Open Source?“),
+         und wer den Klon-Befehl vorher las, lief ins Leere. Deshalb der
+         Schlüssel `badge`: er sitzt als Statusabzeichen über der Überschrift
+         der Sektion und sagt in zwei bis vier Wörtern, dass der Quellcode zum
+         Start kommt. Kein Datum, das steht bewusst noch nicht fest. */
       selfhost: {
         de: {
           h2:'Auf dem eigenen Server installieren',
+          badge:'Quellcode ab Start',
           c1t:'Repository klonen',
           c1d:'Ein Klon, alle Dienste. Ein gewöhnlicher Docker-Compose-Stack, nichts Exotisches.',
           c2t:'Installieren und starten',
@@ -3375,6 +3394,7 @@ this.mobRef = React.createRef();
         },
         en: {
           h2:'Install it on your own server',
+          badge:'Source code at launch',
           c1t:'Clone the repository',
           c1d:'One clone, every service. An ordinary Docker Compose stack, nothing exotic.',
           c2t:'Install and start',
@@ -3392,11 +3412,14 @@ this.mobRef = React.createRef();
           moreLink:'Installation, stack and system requirements'
         },
         fr: {
-          h2:'One command. 60 seconds.',
-          sub:'Une commande, un serveur, toute la stack. L’auto-hébergement reste gratuit pour toujours, dès une seule personne : aucune limite de sièges, aucun branding imposé.',
-          statusT:'Pas encore publié',
-          statusD:'Le code source paraîtra sous licence MIT. D’ici là, le durcissement de la sécurité est en cours : nous ouvrirons le dépôt seulement lorsque nous le transmettrions sans réserve. Les personnes inscrites sur la liste d’attente seront prévenues.',
-          copyLabel:'Copier', copied:'Copié', stars:'40 000+', starsLabel:'étoiles · LibreChat', mit:'Licence MIT à venir', cta:'Guide d’auto-hébergement', title:'zsh · eu-cowork',
+          h2:'Installer sur votre propre serveur',
+          badge:'Code source au lancement',
+          c1t:'Cloner le dépôt',
+          c1d:'Un clone, tous les services. Une stack Docker Compose ordinaire, rien d’exotique.',
+          c2t:'Installer et démarrer',
+          c2d:'L’installeur génère les secrets, récupère les images et démarre la stack avec TLS automatique. Sur un serveur Ubuntu neuf, setup-server.sh prépare la machine au préalable.',
+          copyLabel:'Copier', copied:'Copié',
+          copyA1:'Copier la commande de clonage', copyA2:'Copier la commande d’installation',
           o1t:'Basé sur LibreChat',
           o1d:'Un fork léger de LibreChat, plus de 40 000 étoiles sur GitHub et utilisé dans le monde entier.',
           o2t:'Aucune limite de sièges',
@@ -3408,11 +3431,14 @@ this.mobRef = React.createRef();
           moreLink:'Installation, stack et configuration requise'
         },
         it: {
-          h2:'One command. 60 seconds.',
-          sub:'Un comando, un server, l’intero stack. Il self-hosting resta gratuito per sempre, già a partire da una sola persona: nessun limite di postazioni, nessun branding imposto.',
-          statusT:'Non ancora pubblicato',
-          statusD:'Il codice sorgente uscirà con licenza MIT. Fino ad allora prosegue l’hardening di sicurezza: apriremo il repository solo quando lo consegneremmo senza riserve. Chi è in lista d’attesa riceverà una nostra comunicazione.',
-          copyLabel:'Copia', copied:'Copiato', stars:'40.000+', starsLabel:'stelle · LibreChat', mit:'Licenza MIT in arrivo', cta:'Guida al self-hosting', title:'zsh · eu-cowork',
+          h2:'Installare sul proprio server',
+          badge:'Codice sorgente dal lancio',
+          c1t:'Clonare il repository',
+          c1d:'Un clone, tutti i servizi. Un normale stack Docker Compose, niente di esotico.',
+          c2t:'Installare e avviare',
+          c2d:'L’installer genera i segreti, scarica le immagini e avvia lo stack con TLS automatico. Su un server Ubuntu nuovo, setup-server.sh prepara prima la macchina.',
+          copyLabel:'Copia', copied:'Copiato',
+          copyA1:'Copiare il comando di clonazione', copyA2:'Copiare il comando di installazione',
           o1t:'Basato su LibreChat',
           o1d:'Un fork leggero di LibreChat, oltre 40.000 stelle su GitHub e in uso in tutto il mondo.',
           o2t:'Nessun limite di postazioni',
@@ -3424,11 +3450,18 @@ this.mobRef = React.createRef();
           moreLink:'Installazione, stack e requisiti di sistema'
         },
         es: {
-          h2:'One command. 60 seconds.',
-          sub:'Un comando, un servidor, toda la pila. El autoalojamiento sigue siendo gratuito para siempre, desde una sola persona: sin límite de puestos, sin marca impuesta.',
-          statusT:'Aún no publicado',
-          statusD:'El código fuente se publicará bajo licencia MIT. Hasta entonces continúa el endurecimiento de la seguridad: abriremos el repositorio solo cuando lo entregaríamos sin reservas. Quien esté en la lista de espera tendrá noticias nuestras.',
-          copyLabel:'Copiar', copied:'Copiado', stars:'40.000+', starsLabel:'estrellas · LibreChat', mit:'Licencia MIT en camino', cta:'Guía de autoalojamiento', title:'zsh · eu-cowork',
+          h2:'Instalar en su propio servidor',
+          /* „al lanzamiento" statt „en el lanzamiento": das Abzeichen setzt
+             Versalien und bricht wegen der festen Bauhoehe nicht um. Bei 320px
+             Fensterbreite bleiben 280px Inhalt, und die kurze Fassung misst
+             rund 240px statt 264px. Der Fliesstext behaelt die lange Form. */
+          badge:'Código fuente al lanzamiento',
+          c1t:'Clonar el repositorio',
+          c1d:'Un clon, todos los servicios. Un stack de Docker Compose corriente, nada exótico.',
+          c2t:'Instalar y arrancar',
+          c2d:'El instalador genera los secretos, descarga las imágenes y arranca el stack con TLS automático. En un servidor Ubuntu nuevo, setup-server.sh prepara antes la máquina.',
+          copyLabel:'Copiar', copied:'Copiado',
+          copyA1:'Copiar el comando de clonación', copyA2:'Copiar el comando de instalación',
           o1t:'Basado en LibreChat',
           o1d:'Un fork ligero de LibreChat, con más de 40.000 estrellas en GitHub y en uso en todo el mundo.',
           o2t:'Sin límite de puestos',
@@ -3447,7 +3480,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'Wo werden meine Daten verarbeitet?', a:'Betrieb in der Schweiz (Green Lupfig), Inferenz EU-verarbeitet über EuRouter. Selbst gehostet bleiben Daten vollständig auf Ihrer Infrastruktur.' },
             { q:'Werden meine Daten fürs Training verwendet?', a:'Nein. No-Training, Telemetrie standardmässig aus.' },
-            { q:'Ist das wirklich Open Source?', a:'Der Quellcode erscheint unter MIT-Lizenz: Veröffentlicht ist er noch nicht, bis dahin läuft die Sicherheitshärtung. Danach gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT.' },
+            { q:'Ist das wirklich Open Source?', a:'Der Quellcode erscheint zum Start unter MIT-Lizenz: Veröffentlicht ist er heute noch nicht, bis dahin läuft die Sicherheitshärtung. Ab Start gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT.' },
             { q:'Welche Modelle sind verfügbar?', a:'Über 100 Modelle über EuRouter, inklusive der grossen Modelle von Anthropic und OpenAI.' },
             { q:'Kann ich mein ERP anbinden?', a:'Ja, über das MCP-Gateway mit granularem RBAC und per-Call-Audit.' },
             { q:'Gibt es eine App?', a:'Heute eine installierbare PWA; native iOS/Android-App in Planung.' },
@@ -3465,7 +3498,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'Where is my data processed?', a:'Operated in Switzerland (Green Lupfig), inference EU-processed via EuRouter. Self-hosted, data stays entirely on your infrastructure.' },
             { q:'Is my data used for training?', a:'No. No-training, telemetry off by default.' },
-            { q:'Is this really open source?', a:'The source will be released under the MIT license: it is not public yet, we are hardening it first. After that: self-hosting free from 1 user, no seat limit, no forced branding. The base it builds on, LibreChat, is MIT today.' },
+            { q:'Is this really open source?', a:'The source will be released under the MIT license at launch: it is not public yet, we are hardening it first. From launch: self-hosting free from 1 user, no seat limit, no forced branding. The base it builds on, LibreChat, is MIT today.' },
             { q:'Which models are available?', a:'Over 100 models via EuRouter, including the large models from Anthropic and OpenAI.' },
             { q:'Can I connect my ERP?', a:'Yes, via the MCP gateway with granular RBAC and per-call audit.' },
             { q:'Is there an app?', a:'Today an installable PWA; native iOS/Android app planned.' },
@@ -3478,7 +3511,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'Où mes données sont-elles traitées ?', a:'Exploitation en Suisse (Green Lupfig), inférence traitée dans l’UE via EuRouter. En auto-hébergement, les données restent entièrement sur votre infrastructure.' },
             { q:'Mes données servent-elles à l’entraînement ?', a:'Non. Aucun entraînement, télémétrie désactivée par défaut.' },
-            { q:'Est-ce vraiment de l’open source ?', a:'Le code source paraîtra sous licence MIT : il n’est pas encore public, le durcissement de la sécurité est en cours. Ensuite : auto-hébergement gratuit dès 1 utilisateur, aucune limite de sièges, aucun branding imposé. La base, LibreChat, est déjà sous licence MIT aujourd’hui.' },
+            { q:'Est-ce vraiment de l’open source ?', a:'Le code source paraîtra sous licence MIT au lancement : il n’est pas encore public, le durcissement de la sécurité est en cours. Dès le lancement : auto-hébergement gratuit dès 1 utilisateur, aucune limite de sièges, aucun branding imposé. La base, LibreChat, est déjà sous licence MIT aujourd’hui.' },
             { q:'Quels modèles sont disponibles ?', a:'Plus de 100 modèles via EuRouter, y compris les grands modèles d’Anthropic et d’OpenAI.' },
             { q:'Puis-je connecter mon ERP ?', a:'Oui, via la passerelle MCP avec un RBAC granulaire et un audit par appel.' },
             { q:'Existe-t-il une application ?', a:'Aujourd’hui une PWA installable ; une application native iOS/Android est prévue.' },
@@ -3491,7 +3524,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'Dove vengono elaborati i miei dati?', a:'Esercizio in Svizzera (Green Lupfig), inferenza elaborata nell’UE tramite EuRouter. In self-hosting i dati restano interamente sulla vostra infrastruttura.' },
             { q:'I miei dati vengono usati per l’addestramento?', a:'No. Nessun addestramento, telemetria disattivata per impostazione predefinita.' },
-            { q:'È davvero open source?', a:'Il codice sorgente uscirà con licenza MIT: non è ancora pubblico, prima completiamo l’hardening di sicurezza. Poi vale questo: self-hosting gratuito da 1 utente, nessun limite di postazioni, nessun branding imposto. La base, LibreChat, è già oggi sotto licenza MIT.' },
+            { q:'È davvero open source?', a:'Il codice sorgente uscirà con licenza MIT al lancio: non è ancora pubblico, prima completiamo l’hardening di sicurezza. Dal lancio vale questo: self-hosting gratuito da 1 utente, nessun limite di postazioni, nessun branding imposto. La base, LibreChat, è già oggi sotto licenza MIT.' },
             { q:'Quali modelli sono disponibili?', a:'Oltre 100 modelli tramite EuRouter, inclusi i grandi modelli di Anthropic e OpenAI.' },
             { q:'Posso collegare il mio ERP?', a:'Sì, tramite il gateway MCP con RBAC granulare e audit per singola chiamata.' },
             { q:'Esiste un’app?', a:'Oggi una PWA installabile; è in programma un’app nativa per iOS e Android.' },
@@ -3504,7 +3537,7 @@ this.mobRef = React.createRef();
           items:[
             { q:'¿Dónde se procesan mis datos?', a:'Operación en Suiza (Green Lupfig), inferencia procesada en la UE a través de EuRouter. En autoalojamiento, los datos permanecen íntegramente en su infraestructura.' },
             { q:'¿Se usan mis datos para el entrenamiento?', a:'No. Sin entrenamiento, telemetría desactivada por defecto.' },
-            { q:'¿Es realmente open source?', a:'El código fuente se publicará bajo licencia MIT: todavía no es público, antes completamos el endurecimiento de la seguridad. Después vale esto: autoalojamiento gratuito desde 1 usuario, sin límite de puestos, sin marca impuesta. La base, LibreChat, ya está hoy bajo licencia MIT.' },
+            { q:'¿Es realmente open source?', a:'El código fuente se publicará bajo licencia MIT en el lanzamiento: todavía no es público, antes completamos el endurecimiento de la seguridad. Desde el lanzamiento vale esto: autoalojamiento gratuito desde 1 usuario, sin límite de puestos, sin marca impuesta. La base, LibreChat, ya está hoy bajo licencia MIT.' },
             { q:'¿Qué modelos están disponibles?', a:'Más de 100 modelos a través de EuRouter, incluidos los grandes modelos de Anthropic y OpenAI.' },
             { q:'¿Puedo conectar mi ERP?', a:'Sí, mediante la pasarela MCP con RBAC granular y auditoría por llamada.' },
             { q:'¿Existe una aplicación?', a:'Hoy una PWA instalable; hay una app nativa para iOS y Android en planificación.' },
@@ -5782,7 +5815,7 @@ vm.BRAND = this.BRAND;
       "publisher": {
         "@id": "https://eucowork.ai/#organization"
       },
-      "description": "Quelloffene KI-Arbeitsplattform für Unternehmen: Zugang zu über 100 Sprachmodellen, EU-verarbeitet über EuRouter. Websuche mit Quellenangabe, Datei-Generierung (Excel, Word, PDF), Rollen-Agenten, proaktives Memory sowie ERP-Anbindung über ein MCP-Gateway mit granularer Rechte-Kontrolle bis auf Tool-Ebene und Audit-Log für jeden Aufruf. Self-hostbar ab einem Nutzer unter MIT-Lizenz ohne Seat-Limit und ohne Branding-Zwang, oder betrieben in ISO-27001-zertifizierten Rechenzentren in der Schweiz.",
+      "description": "Quelloffene KI-Arbeitsplattform für Unternehmen: Zugang zu über 100 Sprachmodellen, EU-verarbeitet über EuRouter. Websuche mit Quellenangabe, Datei-Generierung (Excel, Word, PDF), Rollen-Agenten, proaktives Memory sowie ERP-Anbindung über ein MCP-Gateway mit granularer Rechte-Kontrolle bis auf Tool-Ebene und Audit-Log für jeden Aufruf. Self-hostbar ab einem Nutzer unter MIT-Lizenz ohne Seat-Limit und ohne Branding-Zwang, oder betrieben in ISO-27001-zertifizierten Rechenzentren in der Schweiz. Der Quellcode ist heute noch nicht öffentlich; das Release-Repository wird zum Start unter MIT-Lizenz veröffentlicht.",
       "featureList": [
         "Zugang zu 100+ Sprachmodellen, EU-verarbeitet",
         "Websuche mit Quellenangabe direkt im Chat",
@@ -5833,7 +5866,7 @@ vm.BRAND = this.BRAND;
           "name": "Ist das wirklich Open Source?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Der Quellcode erscheint unter MIT-Lizenz: Veröffentlicht ist er noch nicht, bis dahin läuft die Sicherheitshärtung. Danach gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT."
+            "text": "Der Quellcode erscheint zum Start unter MIT-Lizenz: Veröffentlicht ist er heute noch nicht, bis dahin läuft die Sicherheitshärtung. Ab Start gilt: Self-Hosting gratis ab 1 User, kein Seat-Limit, kein Branding-Zwang. Die Basis, LibreChat, steht heute schon unter MIT."
           }
         },
         {

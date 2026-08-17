@@ -39,7 +39,7 @@
     <li><strong>Haftung:</strong> Nach den Bestimmungen des schweizerischen Obligationenrechts (OR).</li>
     <li><strong>Anwendbares Recht:</strong> Ausschliesslich schweizerisches Recht, Gerichtsstand Windisch (Kanton Aargau).</li>
   </ul>
-  <p>Hinweis: Diese AGB sind eine Vorschau und stellen keine Rechtsberatung dar. Massgebend ist die final freigegebene Fassung.</p>
+  <p>Hinweis: Diese AGB stellen keine Rechtsberatung dar.</p>
   <h2>Weiter</h2>
   <ul>
     <li><a href="/sicherheit">Trust Center: Sicherheit &amp; Datenschutz</a></li>
@@ -95,9 +95,13 @@
   <dc-import name="SiteHeader" active-nav="home" on-landing="{{ false }}" hint-size="100%,88px"></dc-import>
   <main style="max-width:820px; margin:0 auto; padding:clamp(124px,15vw,168px) clamp(20px,5vw,40px) clamp(64px,8vw,104px);">
     <a href="/" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.06em; color:#12326B; text-decoration:none; display:inline-flex; align-items:center; min-height:44px;">← {{ t.back }}</a>
-    <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:6px 12px; border:0; background:#FBF6E6; box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 0 0 1px rgba(199,168,58,.30); border-radius:99px;">
-      <span style="width:7px; height:7px; border-radius:50%; background:#C7A83A;"></span>
-      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7A6A2E;">{{ t.status }}</span>
+    <!-- Neutral gehalten, im Eisblau der Website. Die Bernstein-Variante mit dem
+         gelben Punkt, wie sie der AVV weiterhin traegt, ist die Warnfarbe fuer
+         einen Entwurf. Diese AGB sind seit Juli 2026 die verbindliche Fassung;
+         eine Hinweisflagge daneben wuerde etwas anderes behaupten. -->
+    <div style="display:inline-flex; align-items:center; gap:9px; margin-top:22px; padding:6px 12px; border:0; background:#EAF3F7; box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 0 0 1px rgba(18,50,107,.16); border-radius:99px;">
+      <span style="width:7px; height:7px; border-radius:50%; background:#12326B;"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#41505E;">{{ t.status }}</span>
     </div>
     <h1 style="font-family:var(--f-display); font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.08; letter-spacing:-.019em; color:#0B1E33; margin:16px 0 0;">{{ t.h1 }}</h1>
     <p style="font-family:'Inter',sans-serif; font-size:17.5px; line-height:1.58; letter-spacing:-0.005em; color:#41505E; margin:16px 0 0;">{{ t.intro }}</p>
@@ -125,7 +129,7 @@ class Component extends DCLogic {
     this._onLang = (e)=>this.setState({ lang:e.detail });
     this.C = {
       de: {
-        back:'Zurück zur Startseite', status:'Stand: Juli 2026 (Entwurf)',
+        back:'Zurück zur Startseite', status:'Stand: Juli 2026',
         h1:'Allgemeine Geschäftsbedingungen',
         intro:'Diese Allgemeinen Geschäftsbedingungen (die „AGB") regeln die vertraglichen Beziehungen zwischen der Herr Informatik GmbH („HERR INFORMATIK", Windisch) und dem Kunden über die Nutzung des Dienstes EU Cowork AI. Angelehnt an die AGB der Herr Informatik GmbH.',
         sections:[
@@ -143,10 +147,10 @@ class Component extends DCLogic {
           { n:'12', t:'Änderungen der AGB', b:'HERR INFORMATIK kann diese AGB anpassen. Änderungen werden dem Kunden vorgängig in geeigneter Form mitgeteilt und gelten als genehmigt, sofern der Kunde nicht innert der mitgeteilten Frist widerspricht.' },
           { n:'13', t:'Anwendbares Recht & Gerichtsstand', b:'Es gilt ausschliesslich schweizerisches Recht unter Ausschluss des Kollisionsrechts und des UN-Kaufrechts. Ausschliesslicher Gerichtsstand ist der Sitz von HERR INFORMATIK in Windisch (Kanton Aargau), soweit gesetzlich zulässig.' }
         ],
-        disclaimer:'Hinweis: Diese AGB sind eine an die Herr Informatik GmbH angelehnte Vorschau und stellen keine Rechtsberatung dar. Massgebend ist die von HERR INFORMATIK final freigegebene Fassung; im Widerspruchsfall geht diese vor.'
+        disclaimer:'Hinweis: Diese AGB sind an die Herr Informatik GmbH angelehnt und stellen keine Rechtsberatung dar.'
       },
       en: {
-        back:'Back to home', status:'As of: July 2026 (draft)',
+        back:'Back to home', status:'As of: July 2026',
         h1:'General Terms & Conditions',
         intro:'These General Terms and Conditions (the “GTC”) govern the contractual relationship between Herr Informatik GmbH (“HERR INFORMATIK”, Windisch) and the customer regarding use of the EU Cowork AI service. Based on the terms of Herr Informatik GmbH.',
         sections:[
@@ -164,10 +168,10 @@ class Component extends DCLogic {
           { n:'12', t:'Changes to the GTC', b:'HERR INFORMATIK may amend these GTC. Changes are communicated to the customer in advance in a suitable form and are deemed accepted unless the customer objects within the notified period.' },
           { n:'13', t:'Governing law & jurisdiction', b:'Swiss law applies exclusively, excluding conflict-of-law rules and the UN Convention on Contracts for the International Sale of Goods. The exclusive place of jurisdiction is the registered seat of HERR INFORMATIK in Windisch (Canton of Aargau), to the extent permitted by law.' }
         ],
-        disclaimer:'Note: these GTC are a preview based on Herr Informatik GmbH and do not constitute legal advice. The version finally approved by HERR INFORMATIK prevails; in case of conflict it takes precedence.'
+        disclaimer:'Note: these GTC are based on Herr Informatik GmbH and do not constitute legal advice.'
       },
       fr: {
-        back:'Retour à l’accueil', status:'Version : juillet 2026 (projet)',
+        back:'Retour à l’accueil', status:'Version : juillet 2026',
         h1:'Conditions générales de vente',
         intro:'Les présentes conditions générales de vente (les « CGV ») régissent les relations contractuelles entre Herr Informatik GmbH (« HERR INFORMATIK », Windisch) et le client concernant l’utilisation du service EU Cowork AI. Inspirées des conditions générales de Herr Informatik GmbH.',
         sections:[
@@ -185,10 +189,10 @@ class Component extends DCLogic {
           { n:'12', t:'Modification des CGV', b:'HERR INFORMATIK peut adapter les présentes CGV. Les modifications sont communiquées au client au préalable sous une forme appropriée et sont réputées approuvées si le client ne s’y oppose pas dans le délai communiqué.' },
           { n:'13', t:'Droit applicable et for', b:'Le droit suisse s’applique exclusivement, à l’exclusion des règles de conflit de lois et de la Convention des Nations Unies sur les contrats de vente internationale de marchandises. Le for exclusif est le siège de HERR INFORMATIK à Windisch (canton d’Argovie), dans la mesure où la loi le permet.' }
         ],
-        disclaimer:'Remarque : les présentes CGV sont un aperçu inspiré de Herr Informatik GmbH et ne constituent pas un conseil juridique. La version finalement approuvée par HERR INFORMATIK fait foi ; en cas de contradiction, elle prévaut.'
+        disclaimer:'Remarque : les présentes CGV sont inspirées de Herr Informatik GmbH et ne constituent pas un conseil juridique.'
       },
       it: {
-        back:'Torna alla pagina iniziale', status:'Stato: luglio 2026 (bozza)',
+        back:'Torna alla pagina iniziale', status:'Stato: luglio 2026',
         h1:'Condizioni generali di contratto',
         intro:'Le presenti condizioni generali di contratto (le «CG») disciplinano i rapporti contrattuali tra Herr Informatik GmbH («HERR INFORMATIK», Windisch) e il cliente in merito all’utilizzo del servizio EU Cowork AI. Ispirate alle condizioni generali di Herr Informatik GmbH.',
         sections:[
@@ -206,10 +210,10 @@ class Component extends DCLogic {
           { n:'12', t:'Modifiche delle CG', b:'HERR INFORMATIK può adeguare le presenti CG. Le modifiche vengono comunicate al cliente in anticipo in forma adeguata e si considerano approvate se il cliente non si oppone entro il termine comunicato.' },
           { n:'13', t:'Diritto applicabile e foro competente', b:'Si applica esclusivamente il diritto svizzero, con esclusione delle norme sui conflitti di leggi e della Convenzione delle Nazioni Unite sui contratti di compravendita internazionale di merci. Foro competente esclusivo è la sede di HERR INFORMATIK a Windisch (Cantone di Argovia), nella misura consentita dalla legge.' }
         ],
-        disclaimer:'Nota: le presenti CG sono un’anteprima ispirata a Herr Informatik GmbH e non costituiscono una consulenza legale. Fa stato la versione approvata in via definitiva da HERR INFORMATIK; in caso di contraddizione essa prevale.'
+        disclaimer:'Nota: le presenti CG sono ispirate a Herr Informatik GmbH e non costituiscono una consulenza legale.'
       },
       es: {
-        back:'Volver al inicio', status:'Estado: julio de 2026 (borrador)',
+        back:'Volver al inicio', status:'Estado: julio de 2026',
         h1:'Condiciones generales de contratación',
         intro:'Las presentes condiciones generales de contratación (las «CG») regulan las relaciones contractuales entre Herr Informatik GmbH («HERR INFORMATIK», Windisch) y el cliente en relación con el uso del servicio EU Cowork AI. Basadas en las condiciones generales de Herr Informatik GmbH.',
         sections:[
@@ -227,7 +231,7 @@ class Component extends DCLogic {
           { n:'12', t:'Modificaciones de las CG', b:'HERR INFORMATIK puede adaptar las presentes CG. Las modificaciones se comunican al cliente previamente de forma adecuada y se consideran aceptadas si el cliente no se opone dentro del plazo comunicado.' },
           { n:'13', t:'Derecho aplicable y jurisdicción', b:'Se aplica exclusivamente el derecho suizo, con exclusión de las normas de conflicto de leyes y de la Convención de las Naciones Unidas sobre los Contratos de Compraventa Internacional de Mercaderías. El fuero exclusivo es el domicilio social de HERR INFORMATIK en Windisch (cantón de Argovia), en la medida en que la ley lo permita.' }
         ],
-        disclaimer:'Nota: las presentes CG son una vista previa basada en Herr Informatik GmbH y no constituyen asesoramiento jurídico. Prevalece la versión aprobada definitivamente por HERR INFORMATIK; en caso de contradicción, esta tiene prioridad.'
+        disclaimer:'Nota: las presentes CG están basadas en Herr Informatik GmbH y no constituyen asesoramiento jurídico.'
       }
     };
   }
