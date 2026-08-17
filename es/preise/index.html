@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Precios: autoalojar o servicio gestionado | EU Cowork AI</title>
-<meta name="description" content="Un software, dos formas de operarlo: autoalojamiento gratuito, código fuente en el lanzamiento y servicio gestionado en Suiza por 14 € por persona y mes.">
+<meta name="description" content="Un software, dos formas de operarlo: autoalojamiento gratuito, código fuente en el lanzamiento y servicio gestionado en Suiza por 15 € por persona y mes.">
 <link rel="canonical" href="https://eucowork.ai/es/preise">
 <!-- i18n:hreflang:start -->
 <link rel="alternate" hreflang="de" href="https://eucowork.ai/preise">
@@ -45,9 +45,11 @@
 <p><a href="/es">EU Cowork AI</a></p>
 <p><a href="/es/preise">Precios</a> <a href="/docs/es">Docs</a> <a href="/es/blog">Blog</a></p>
 <p>ES</p>
-<p><a href="/es/self-hosting">Self-host for free</a> <a href="/es/warteliste">Únase a la lista de espera</a></p>
+<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Únase a la lista de espera</a></p>
 <h1>Un solo software. Dos formas de operarlo.</h1>
 <p>Usted dispone siempre del conjunto completo de funciones. Solo decide quién se encarga de la operación.</p>
+<p>EUR</p>
+<p>CHF</p>
 <h2>Operar usted mismo</h2>
 <p>El software se ejecuta en su infraestructura. La base de datos, las claves y la operación permanecen íntegramente en su poder.</p>
 <p>0 € /mes</p>
@@ -58,7 +60,7 @@
 <p>El servidor y el consumo de modelos los liquida usted directamente con los proveedores correspondientes.</p>
 <h2>Operación gestionada</h2>
 <p>El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.</p>
-<p>14 € /mes</p>
+<p>15 € /mes</p>
 <p>por persona</p>
 <p><a href="/es/warteliste">Solicitar operación gestionada</a></p>
 <dl><dt>Funciones</dt><dd>completas</dd><dt>Operación</dt><dd>a cargo de EU Cowork AI</dd><dt>Actualizaciones y copias de seguridad</dt><dd>incluidas</dd><dt>Consumo de modelos</dt><dd>saldo incluido</dd><dt>Base de datos y claves</dt><dd>instancia suiza propia</dd><dt>Cambio</dt><dd>posible hacia la operación propia</dd></dl>
@@ -74,7 +76,7 @@
 <h3>Soporte personal</h3>
 <p>Bajo petición</p>
 <p>Tiempos de respuesta comprometidos y una persona de contacto designada para su instalación.</p>
-<p><a href="/es/warteliste">Solicitar una conversación</a></p>
+<p><a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled">Reservar una cita</a></p>
 <h2>Preguntas frecuentes</h2>
 <p>¿Qué costes conlleva operarlo uno mismo?</p>
 <p>Por el software en sí, ninguno. Los costes surgen fuera de él: el servidor en el que se ejecuta la pila y el consumo de modelos, que usted liquida directamente con su proveedor. En reposo, la pila básica ocupa unos 0,7 GB de memoria y una VM compartida alberga varias instancias. Los valores medidos y el dimensionamiento figuran en <a href="/es/self-hosting">Self-hosting</a>.</p>
@@ -95,7 +97,7 @@
 <p><a href="/es/sicherheit">Más sobre la seguridad</a></p>
 <p>Instancia suiza · Lupfig --:--:--</p>
 <p>Producto</p>
-<p><a href="/es/#funktionen">Funciones</a> <a href="/es/#souveraenitaet">Soberanía</a> <a href="/es/integrationen">Integraciones</a> <a href="/es/vergleich">Comparativa</a> <a href="/es/self-hosting">Self-Host</a> <a href="/es/faq">FAQ</a> <a href="/docs/es">Documentación</a> <a href="/es/blog">Blog</a> <a href="/es/vision">Nuestra visión</a></p>
+<p><a href="/es/#funktionen">Funciones</a> <a href="/es/preise">Precios</a> <a href="/es/#souveraenitaet">Soberanía</a> <a href="/es/integrationen">Integraciones</a> <a href="/es/vergleich">Comparativa</a> <a href="/es/self-hosting">Self-Host</a> <a href="/es/faq">FAQ</a> <a href="/docs/es">Documentación</a> <a href="/es/blog">Blog</a> <a href="/es/vision">Nuestra visión</a> <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled">Reservar una cita</a></p>
 <p>Trust</p>
 <p><a href="/es/sicherheit">Security &amp; Trust</a> <a href="/es/governance">Governance</a> <a href="/es/avv">Acuerdo de encargo (DPA)</a> <a href="/es/sicherheit#toms">Resumen de MTO</a> <a href="/es/subprozessoren">Subencargados</a></p>
 <p>Legal</p>
@@ -191,6 +193,25 @@
     color: var(--c-ink); margin: 0;
   }
   .pr-lede { font-size: 14.5px; line-height: 1.55; color: var(--c-body-soft); margin: 10px 0 0; max-width: 42ch; }
+
+  /* ---------- Waehrungsumschalter ----------
+     Rechtsbuendig ueber dem Vergleich, in der Groesse der Zeilenbeschriftungen
+     darunter. Er soll auffindbar sein, wenn man ihn sucht, und sonst nicht
+     stoeren: die Erkennung liegt fast immer richtig. */
+  .pr-cur { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin: 0 0 12px; flex-wrap: wrap; }
+  .pr-cur-hint { font-size: 12.5px; color: var(--c-muted); }
+  .pr-cur-grp { display: inline-flex; border: var(--bd); border-radius: var(--r-status); overflow: hidden; background: #FFFFFF; }
+  .pr-cur-b {
+    appearance: none; border: 0; background: none; cursor: pointer;
+    padding: 5px 11px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em;
+    color: var(--c-muted); transition: background-color .15s ease, color .15s ease;
+  }
+  .pr-cur-b + .pr-cur-b { border-left: 1px solid var(--c-line-soft); }
+  .pr-cur-b.is-on { background: var(--c-ice-100); color: var(--c-ink); }
+  @media (hover:hover) and (pointer:fine){
+    .pr-cur-b:not(.is-on):hover { color: var(--c-ink); }
+  }
+  .pr-cur-b:focus-visible { outline: 2px solid var(--c-ink); outline-offset: -2px; }
 
   /* ---------- Preis: Zahl gross, Einheit klein daneben ---------- */
   .pr-price { display: flex; align-items: baseline; gap: 6px; margin: var(--s-6) 0 0; }
@@ -310,6 +331,18 @@
         <p>{{ t.heroLede }}</p>
       </section>
 
+      <!-- Waehrung. Steht ueber beiden Spalten, weil sie beide betrifft, und
+           bleibt klein: die Erkennung trifft die Wahl in aller Regel schon
+           richtig. Der Umschalter ist fuer die Faelle, in denen sie danebenliegt
+           — ein Schweizer im Ausland, ein Deutscher in Zuerich. -->
+      <div class="pr-cur">
+        <span class="pr-cur-hint">{{ curHint }}</span>
+        <div class="pr-cur-grp" role="group" aria-label="{{ curAria }}">
+          <button type="button" class="pr-cur-b{{ eurCls }}" aria-pressed="{{ eurPressed }}" onClick="{{ pickEur }}">EUR</button>
+          <button type="button" class="pr-cur-b{{ chfCls }}" aria-pressed="{{ chfPressed }}" onClick="{{ pickChf }}">CHF</button>
+        </div>
+      </div>
+
       <!-- ==================== VERGLEICH ==================== -->
       <div class="pr-frame">
         <div class="pr-cols">
@@ -399,7 +432,10 @@
             <h3>{{ t.sup2Title }}</h3>
             <p class="pr-sup-price">{{ t.sup2Price }}</p>
             <p>{{ t.sup2Text }}</p>
-            <div class="pr-sup-act"><a class="euc-btn-secondary" href="/warteliste">{{ t.sup2Cta }}</a></div>
+            <!-- Der Termin wird direkt gebucht statt angefragt: Microsoft
+                 Bookings liegt ausserhalb dieser Website, deshalb neues
+                 Fenster und rel="noopener". -->
+            <div class="pr-sup-act"><a class="euc-btn-secondary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener">{{ t.sup2Cta }}</a></div>
           </div>
         </div>
       </div>
@@ -446,13 +482,21 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
 class Component extends DCLogic {
-  /* Die Seite traegt keinen eigenen Zustand ausser der Sprache: alle Texte
-     liegen in this.C, das Template bindet nur. Sie ist eine dc-Seite, weil
-     nur so Kopf- und Fussleiste als ECHTE Bauteile eingebunden werden
-     koennen — dieselben wie auf der Startseite. */
+  /* Die Seite traegt Sprache und Waehrung als Zustand: alle Texte liegen in
+     this.C, alle Betraege in this.M, das Template bindet nur. Sie ist eine
+     dc-Seite, weil nur so Kopf- und Fussleiste als ECHTE Bauteile eingebunden
+     werden koennen — dieselben wie auf der Startseite. */
   constructor(props){
     super(props);
-    this.state = { lang: (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de' };
+    /* Waehrung startet auf Euro, nicht auf "unbekannt". Der ausgelieferte
+       Quelltext, die Kopfdaten und die strukturierten Daten nennen den
+       Euro-Preis; startete die Seite leer oder auf Franken, widerspraeche das
+       dem, was Suchmaschinen und Vorschauen zeigen. Wer in der Schweiz sitzt,
+       sieht kurz darauf Franken — ein Wert wechselt, kein Aufbau springt. */
+    this.state = {
+      lang: (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de',
+      cur: 'eur'
+    };
     this._onLang = (e)=>this.setState({ lang:e.detail });
     this.C = {
       de: {
@@ -460,8 +504,7 @@ class Component extends DCLogic {
         heroLede:'Sie erhalten immer den vollständigen Funktionsumfang. Sie entscheiden nur, wer den Betrieb übernimmt.',
 
         selfTitle:'Selbst betreiben',
-        selfLede:'Die Software läuft auf Ihrer Infrastruktur. Datenbank, Schlüssel und Betrieb bleiben vollständig bei Ihnen.',
-        selfAmount:'0 €', perMonth:'/Mt.',
+        selfLede:'Die Software läuft auf Ihrer Infrastruktur. Datenbank, Schlüssel und Betrieb bleiben vollständig bei Ihnen.', perMonth:'/Mt.',
         selfSub:'Softwarekosten, dauerhaft',
         selfStatus:'Quellcode ab Start',
         selfCta:'Veröffentlichung vormerken',
@@ -474,13 +517,11 @@ class Component extends DCLogic {
         selfNote:'Server und Modellverbrauch rechnen Sie direkt mit den jeweiligen Anbietern ab.',
 
         mgdTitle:'Betreiben lassen',
-        mgdLede:'Dieselbe Software auf einer eigenen Schweizer Instanz. Betrieb, Updates, Backups und Überwachung übernehmen wir.',
-        mgdAmount:'14 €', mgdSub:'pro Person',
+        mgdLede:'Dieselbe Software auf einer eigenen Schweizer Instanz. Betrieb, Updates, Backups und Überwachung übernehmen wir.', mgdSub:'pro Person',
         mgdCta:'Managed-Betrieb anfragen',
 
         mgdScope:'vollständig', mgdOps:'durch EU Cowork AI', mgdUpdates:'enthalten',
         mgdUsage:'Guthaben inklusive', mgdKeys:'eigene Schweizer Instanz', mgdSwitch:'zum Selbstbetrieb möglich',
-        mgdNote:'Inklusive 8 € Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.',
 
         bandTitle:'Keine abgespeckte Version.',
         bandText:'Beide Wege enthalten denselben vollständigen Funktionsumfang: Modelle und Websuche, Dateien und Agenten, Rollen und Gruppen, Audit-Protokoll, zentrale Budgets, Unternehmenslogin und Integrationen. Es gibt keine zweite Ausgabe, kein Seat-Limit und keine Funktion hinter einer Schranke, auch nicht im Selbstbetrieb.',
@@ -488,12 +529,12 @@ class Component extends DCLogic {
         linkSelfhosting:'Self-Hosting →', linkDocs:'Dokumentation →',
 
         supTitle:'Support für den Selbstbetrieb',
-        sup1Title:'Dokumentation und öffentliche Kanäle', sup1Price:'0 €',
+        sup1Title:'Dokumentation und öffentliche Kanäle',
         sup1Text:'Für Teams, die Installation und Betrieb selbst übernehmen.',
         sup1Link:'Zur Dokumentation →',
         sup2Title:'Persönlicher Support', sup2Price:'Auf Anfrage',
         sup2Text:'Feste Reaktionszeiten und eine benannte Ansprechperson für Ihre Installation.',
-        sup2Cta:'Gespräch anfragen',
+        sup2Cta:'Termin buchen',
 
         faqTitle:'Häufige Fragen',
         faq1q:'Welche Kosten entstehen beim Selbstbetrieb?',
@@ -516,8 +557,7 @@ class Component extends DCLogic {
         heroLede:'You always get the complete feature set. You only decide who runs it.',
 
         selfTitle:'Run it yourself',
-        selfLede:'The software runs on your infrastructure. Database, keys and operations stay entirely with you.',
-        selfAmount:'€0', perMonth:'/mo.',
+        selfLede:'The software runs on your infrastructure. Database, keys and operations stay entirely with you.', perMonth:'/mo.',
         selfSub:'software cost, permanent',
         selfStatus:'Source code at launch',
         selfCta:'Register for the release',
@@ -530,13 +570,11 @@ class Component extends DCLogic {
         selfNote:'You settle servers and model usage directly with the respective providers.',
 
         mgdTitle:'Let us run it',
-        mgdLede:'The same software on your own Swiss instance. We take care of operations, updates, backups and monitoring.',
-        mgdAmount:'€14', mgdSub:'per person',
+        mgdLede:'The same software on your own Swiss instance. We take care of operations, updates, backups and monitoring.', mgdSub:'per person',
         mgdCta:'Request managed operation',
 
         mgdScope:'complete', mgdOps:'by EU Cowork AI', mgdUpdates:'included',
         mgdUsage:'credit included', mgdKeys:'dedicated Swiss instance', mgdSwitch:'to self-hosting possible',
-        mgdNote:'Includes €8 of model credit per person, shared in your organisation’s pool.',
 
         bandTitle:'No stripped-down edition.',
         bandText:'Both paths include the same complete feature set: models and web search, files and agents, roles and groups, audit log, central budgets, enterprise login and integrations. There is no second edition, no seat limit and no feature behind a gate, not even when you run it yourself.',
@@ -544,12 +582,12 @@ class Component extends DCLogic {
         linkSelfhosting:'Self-hosting →', linkDocs:'Documentation →',
 
         supTitle:'Support for self-hosting',
-        sup1Title:'Documentation and public channels', sup1Price:'€0',
+        sup1Title:'Documentation and public channels',
         sup1Text:'For teams that handle installation and operations themselves.',
         sup1Link:'To the documentation →',
         sup2Title:'Personal support', sup2Price:'On request',
         sup2Text:'Committed response times and a named contact person for your installation.',
-        sup2Cta:'Request a call',
+        sup2Cta:'Book a call',
 
         faqTitle:'Frequently asked questions',
         faq1q:'What does self-hosting cost?',
@@ -572,8 +610,7 @@ class Component extends DCLogic {
         heroLede:'Vous disposez toujours de l’ensemble des fonctionnalités. Vous décidez uniquement qui en assure l’exploitation.',
 
         selfTitle:'Exploiter vous-même',
-        selfLede:'Le logiciel s’exécute sur votre infrastructure. La base de données, les clés et l’exploitation restent entièrement chez vous.',
-        selfAmount:'0 €', perMonth:'/mois',
+        selfLede:'Le logiciel s’exécute sur votre infrastructure. La base de données, les clés et l’exploitation restent entièrement chez vous.', perMonth:'/mois',
         selfSub:'coût du logiciel, définitif',
         selfStatus:'Code source au lancement',
         selfCta:'Être informé de la publication',
@@ -586,13 +623,11 @@ class Component extends DCLogic {
         selfNote:'Vous réglez le serveur et la consommation des modèles directement auprès des fournisseurs concernés.',
 
         mgdTitle:'Faire exploiter',
-        mgdLede:'Le même logiciel sur votre propre instance suisse. Nous assurons l’exploitation, les mises à jour, les sauvegardes et la surveillance.',
-        mgdAmount:'14 €', mgdSub:'par personne',
+        mgdLede:'Le même logiciel sur votre propre instance suisse. Nous assurons l’exploitation, les mises à jour, les sauvegardes et la surveillance.', mgdSub:'par personne',
         mgdCta:'Demander l’exploitation gérée',
 
         mgdScope:'complètes', mgdOps:'par EU Cowork AI', mgdUpdates:'incluses',
         mgdUsage:'crédit inclus', mgdKeys:'instance suisse dédiée', mgdSwitch:'possible vers l’auto-hébergement',
-        mgdNote:'Crédit de modèles de 8 € par personne inclus, mutualisé dans le pool de votre organisation.',
 
         bandTitle:'Aucune version allégée.',
         bandText:'Les deux modes comprennent les mêmes fonctionnalités complètes : modèles et recherche web, fichiers et agents, rôles et groupes, journal d’audit, budgets centralisés, authentification d’entreprise et intégrations. Il n’existe pas de seconde édition, pas de limite de sièges et aucune fonction derrière une barrière, pas même en auto-hébergement.',
@@ -600,12 +635,12 @@ class Component extends DCLogic {
         linkSelfhosting:'Auto-hébergement →', linkDocs:'Documentation →',
 
         supTitle:'Assistance pour l’auto-hébergement',
-        sup1Title:'Documentation et canaux publics', sup1Price:'0 €',
+        sup1Title:'Documentation et canaux publics',
         sup1Text:'Pour les équipes qui assurent elles-mêmes l’installation et l’exploitation.',
         sup1Link:'Vers la documentation →',
         sup2Title:'Assistance personnalisée', sup2Price:'Sur demande',
         sup2Text:'Des délais de réaction garantis et un interlocuteur désigné pour votre installation.',
-        sup2Cta:'Demander un entretien',
+        sup2Cta:'Réserver un rendez-vous',
 
         faqTitle:'Questions fréquentes',
         faq1q:'Quels coûts l’auto-hébergement entraîne-t-il ?',
@@ -628,8 +663,7 @@ class Component extends DCLogic {
         heroLede:'Riceve sempre l’intera gamma di funzioni. Decide soltanto chi si occupa dell’esercizio.',
 
         selfTitle:'Gestione autonoma',
-        selfLede:'Il software viene eseguito sulla Sua infrastruttura. Banca dati, chiavi ed esercizio restano interamente presso di Lei.',
-        selfAmount:'0 €', perMonth:'/mese',
+        selfLede:'Il software viene eseguito sulla Sua infrastruttura. Banca dati, chiavi ed esercizio restano interamente presso di Lei.', perMonth:'/mese',
         selfSub:'costo del software, definitivo',
         selfStatus:'Codice sorgente dal lancio',
         selfCta:'Essere informati della pubblicazione',
@@ -642,13 +676,11 @@ class Component extends DCLogic {
         selfNote:'Il server e il consumo dei modelli li regola direttamente con i rispettivi fornitori.',
 
         mgdTitle:'Esercizio gestito',
-        mgdLede:'Lo stesso software su un’istanza svizzera dedicata. Esercizio, aggiornamenti, backup e monitoraggio sono a nostro carico.',
-        mgdAmount:'14 €', mgdSub:'per persona',
+        mgdLede:'Lo stesso software su un’istanza svizzera dedicata. Esercizio, aggiornamenti, backup e monitoraggio sono a nostro carico.', mgdSub:'per persona',
         mgdCta:'Richiedere l’esercizio gestito',
 
         mgdScope:'completa', mgdOps:'a cura di EU Cowork AI', mgdUpdates:'inclusi',
         mgdUsage:'credito incluso', mgdKeys:'istanza svizzera dedicata', mgdSwitch:'possibile verso la gestione autonoma',
-        mgdNote:'Incluso un credito modelli di 8 € per persona, condiviso nel pool della Sua organizzazione.',
 
         bandTitle:'Nessuna versione ridotta.',
         bandText:'Entrambe le modalità comprendono la stessa gamma completa di funzioni: modelli e ricerca web, file e agenti, ruoli e gruppi, registro di audit, budget centralizzati, login aziendale e integrazioni. Non esiste una seconda edizione, non vi è alcun limite di postazioni e nessuna funzione dietro una barriera, nemmeno nella gestione autonoma.',
@@ -656,12 +688,12 @@ class Component extends DCLogic {
         linkSelfhosting:'Self-hosting →', linkDocs:'Documentazione →',
 
         supTitle:'Supporto per la gestione autonoma',
-        sup1Title:'Documentazione e canali pubblici', sup1Price:'0 €',
+        sup1Title:'Documentazione e canali pubblici',
         sup1Text:'Per i team che si occupano autonomamente di installazione ed esercizio.',
         sup1Link:'Alla documentazione →',
         sup2Title:'Supporto personale', sup2Price:'Su richiesta',
         sup2Text:'Tempi di reazione garantiti e una persona di riferimento designata per la Sua installazione.',
-        sup2Cta:'Richiedere un colloquio',
+        sup2Cta:'Prenotare un appuntamento',
 
         faqTitle:'Domande frequenti',
         faq1q:'Quali costi comporta la gestione autonoma?',
@@ -684,8 +716,7 @@ class Component extends DCLogic {
         heroLede:'Usted dispone siempre del conjunto completo de funciones. Solo decide quién se encarga de la operación.',
 
         selfTitle:'Operar usted mismo',
-        selfLede:'El software se ejecuta en su infraestructura. La base de datos, las claves y la operación permanecen íntegramente en su poder.',
-        selfAmount:'0 €', perMonth:'/mes',
+        selfLede:'El software se ejecuta en su infraestructura. La base de datos, las claves y la operación permanecen íntegramente en su poder.', perMonth:'/mes',
         selfSub:'coste del software, definitivo',
         selfStatus:'Código fuente en el lanzamiento',
         selfCta:'Avisarme de la publicación',
@@ -698,13 +729,11 @@ class Component extends DCLogic {
         selfNote:'El servidor y el consumo de modelos los liquida usted directamente con los proveedores correspondientes.',
 
         mgdTitle:'Operación gestionada',
-        mgdLede:'El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.',
-        mgdAmount:'14 €', mgdSub:'por persona',
+        mgdLede:'El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.', mgdSub:'por persona',
         mgdCta:'Solicitar operación gestionada',
 
         mgdScope:'completas', mgdOps:'a cargo de EU Cowork AI', mgdUpdates:'incluidas',
         mgdUsage:'saldo incluido', mgdKeys:'instancia suiza propia', mgdSwitch:'posible hacia la operación propia',
-        mgdNote:'Incluye un saldo de modelos de 8 € por persona, compartido en el fondo común de su organización.',
 
         bandTitle:'Ninguna versión recortada.',
         bandText:'Ambas formas incluyen el mismo conjunto completo de funciones: modelos y búsqueda web, archivos y agentes, roles y grupos, registro de auditoría, presupuestos centralizados, inicio de sesión corporativo e integraciones. No hay una segunda edición, ni límite de puestos, ni funciones tras una barrera, tampoco al operarlo usted mismo.',
@@ -712,12 +741,12 @@ class Component extends DCLogic {
         linkSelfhosting:'Self-hosting →', linkDocs:'Documentación →',
 
         supTitle:'Soporte para la operación propia',
-        sup1Title:'Documentación y canales públicos', sup1Price:'0 €',
+        sup1Title:'Documentación y canales públicos',
         sup1Text:'Para equipos que asumen ellos mismos la instalación y la operación.',
         sup1Link:'Ir a la documentación →',
         sup2Title:'Soporte personal', sup2Price:'Bajo petición',
         sup2Text:'Tiempos de respuesta comprometidos y una persona de contacto designada para su instalación.',
-        sup2Cta:'Solicitar una conversación',
+        sup2Cta:'Reservar una cita',
 
         faqTitle:'Preguntas frecuentes',
         faq1q:'¿Qué costes conlleva operarlo uno mismo?',
@@ -736,10 +765,113 @@ class Component extends DCLogic {
         ctaPrimary:'Solicitar operación gestionada', ctaSecondary:'Ver el self-hosting'
       }
     };
+
+    /* ---------------------------------------------------------------------
+       Betraege getrennt vom uebrigen Text.
+
+       Warum nicht einfach in this.C? Weil Sprache und Waehrung nicht dasselbe
+       sind. Ein Deutscher in Zuerich liest deutsch und zahlt in Franken, ein
+       Schweizer Betrieb kann die englische Fassung lesen. Zwei Achsen, zwei
+       Woerterbuecher; renderVals() legt sie uebereinander.
+
+       Nur vier Schluessel tragen Geld. Alles andere ist Text und steht oben.
+       --------------------------------------------------------------------- */
+    this.M = {
+      de: {
+        eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
+              mgdNote:'Inklusive 8 € Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.' },
+        chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
+              mgdNote:'Inklusive 7.50 CHF Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.' }
+      },
+      en: {
+        eur:{ selfAmount:'€0',   mgdAmount:'€15',    sup1Price:'€0',
+              mgdNote:'Includes €8 of model credit per person, shared in your organisation’s pool.' },
+        chf:{ selfAmount:'CHF 0', mgdAmount:'CHF 14', sup1Price:'CHF 0',
+              mgdNote:'Includes CHF 7.50 of model credit per person, shared in your organisation’s pool.' }
+      },
+      fr: {
+        eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
+              mgdNote:'Crédit de modèles de 8 € par personne inclus, mutualisé dans le pool de votre organisation.' },
+        chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
+              mgdNote:'Crédit de modèles de 7.50 CHF par personne inclus, mutualisé dans le pool de votre organisation.' }
+      },
+      it: {
+        eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
+              mgdNote:'Incluso un credito modelli di 8 € per persona, condiviso nel pool della Sua organizzazione.' },
+        chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
+              mgdNote:'Incluso un credito modelli di 7.50 CHF per persona, condiviso nel pool della Sua organizzazione.' }
+      },
+      es: {
+        eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
+              mgdNote:'Incluye un saldo de modelos de 8 € por persona, compartido en el fondo común de su organización.' },
+        chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
+              mgdNote:'Incluye un saldo de modelos de 7.50 CHF por persona, compartido en el fondo común de su organización.' }
+      }
+    };
+
+    /* Beschriftung des Umschalters. Kurz, weil er neben dem Preis sitzt und
+       nicht darum bittet, beachtet zu werden. */
+    this.CUR = {
+      de:{ aria:'Währung wählen', hint:'Preise in Franken für die Schweiz' },
+      en:{ aria:'Choose currency', hint:'Prices in francs for Switzerland' },
+      fr:{ aria:'Choisir la monnaie', hint:'Prix en francs pour la Suisse' },
+      it:{ aria:'Scegliere la valuta', hint:'Prezzi in franchi per la Svizzera' },
+      es:{ aria:'Elegir moneda', hint:'Precios en francos para Suiza' }
+    };
+
+    this._setCur = (c) => {
+      try { localStorage.setItem('eucowork_currency', c); } catch(e){}
+      this.setState({ cur: c });
+    };
   }
-  componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
+
+  componentDidMount(){
+    window.addEventListener('eucowork:langchange', this._onLang);
+    this._initCur();
+  }
+
+  /* Waehrung bestimmen, in dieser Reihenfolge:
+       1. was der Besucher zuletzt selbst gewaehlt hat
+       2. der Standort aus der Anfrage-IP, geliefert von /api/locale
+       3. Euro
+     Schritt 2 fragt nur, wenn Schritt 1 nichts hergab: wer einmal umgestellt
+     hat, soll nicht bei jedem Aufruf zurueckgeschoben werden. Faellt die
+     Abfrage aus, bleibt es beim Euro — ein Preis wird nie leer.
+
+     Liechtenstein steht neben der Schweiz, weil dort derselbe Franken gilt. */
+  _initCur(){
+    let gespeichert = null;
+    try { gespeichert = localStorage.getItem('eucowork_currency'); } catch(e){}
+    if (gespeichert === 'chf' || gespeichert === 'eur') { this.setState({ cur: gespeichert }); return; }
+    if (typeof fetch !== 'function') return;
+    fetch('/api/locale', { headers:{ 'Accept':'application/json' } })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && (d.country === 'CH' || d.country === 'LI')) this.setState({ cur: 'chf' }); })
+      .catch(() => {});
+  }
+
   componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
-  renderVals(){ const lang = this.state.lang || 'de'; return { t: this.C[lang] || this.C.de }; }
+
+  renderVals(){
+    const lang = this.state.lang || 'de';
+    const cur = this.state.cur === 'chf' ? 'chf' : 'eur';
+    const text = this.C[lang] || this.C.de;
+    const geld = (this.M[lang] || this.M.de)[cur];
+    const c = this.CUR[lang] || this.CUR.de;
+    return {
+      // Die Betraege ueberschreiben die Textfassung: das Template bindet
+      // weiterhin nur {{ t.mgdAmount }} und weiss von Waehrungen nichts.
+      t: Object.assign({}, text, geld),
+      curAria: c.aria,
+      curHint: cur === 'chf' ? c.hint : '',
+      eurCls: cur === 'eur' ? ' is-on' : '',
+      chfCls: cur === 'chf' ? ' is-on' : '',
+      eurPressed: cur === 'eur' ? 'true' : 'false',
+      chfPressed: cur === 'chf' ? 'true' : 'false',
+      pickEur: () => this._setCur('eur'),
+      pickChf: () => this._setCur('chf')
+    };
+  }
 }
 </script>
 <script type="application/ld+json">
@@ -756,7 +888,7 @@ class Component extends DCLogic {
   "about": {
     "@id": "https://eucowork.ai/#software"
   },
-  "description": "Eine Software, zwei Betriebswege: Selbstbetrieb kostenlos, Quellcode ab Start, betreuter Betrieb in der Schweiz für 14 € pro Person und Monat.",
+  "description": "Eine Software, zwei Betriebswege: Selbstbetrieb kostenlos, Quellcode ab Start, betreuter Betrieb in der Schweiz für 15 € pro Person und Monat.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -799,9 +931,27 @@ class Component extends DCLogic {
     {
       "@type": "Offer",
       "name": "Betreiben lassen",
-      "price": "14",
+      "price": "15",
       "priceCurrency": "EUR",
       "description": "Eigene Instanz in einem ISO-27001-zertifizierten Rechenzentrum in der Schweiz, inklusive Betrieb, Updates, Sicherungen und monatlichem Modellguthaben im Pool der Organisation. Preis pro Person und Monat.",
+      "url": "https://eucowork.ai/es/preise"
+    },
+    {
+      "@type": "Offer",
+      "name": "Betreiben lassen (Schweiz)",
+      "price": "14",
+      "priceCurrency": "CHF",
+      "eligibleRegion": [
+        {
+          "@type": "Country",
+          "name": "CH"
+        },
+        {
+          "@type": "Country",
+          "name": "LI"
+        }
+      ],
+      "description": "Dieselbe betreute Instanz, in Franken abgerechnet für Kunden in der Schweiz und in Liechtenstein. Preis pro Person und Monat.",
       "url": "https://eucowork.ai/es/preise"
     }
   ]

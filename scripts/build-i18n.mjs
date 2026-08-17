@@ -201,6 +201,16 @@ function rewriteHead(html, { lang, pagePath, meta }) {
     out = setMeta(out, /(<meta property="og:description" content=")([^"]*)(")/i, meta.ogDescription ?? meta.description);
     out = setMeta(out, /(<meta name="twitter:title" content=")([^"]*)(")/i, meta.twTitle ?? meta.ogTitle ?? meta.title);
     out = setMeta(out, /(<meta name="twitter:description" content=")([^"]*)(")/i, meta.twDescription ?? meta.ogDescription ?? meta.description);
+
+    /* Das Vorschaubild. Bis hierher trugen alle fuenf Sprachfassungen das
+       deutsche Bild, und der Alternativtext blieb sogar in /fr/ deutsch.
+       Wo eine Seite je Sprache ein eigenes Bild hat, steht es als ogImage
+       im Woerterbuch; ohne den Schluessel bleibt stehen, was in der Vorlage
+       steht. twitter:image zieht mit, sonst zeigt X ein anderes Bild als
+       LinkedIn. */
+    out = setMeta(out, /(<meta property="og:image" content=")([^"]*)(")/i, meta.ogImage);
+    out = setMeta(out, /(<meta name="twitter:image" content=")([^"]*)(")/i, meta.twImage ?? meta.ogImage);
+    out = setMeta(out, /(<meta property="og:image:alt" content=")([^"]*)(")/i, meta.ogImageAlt);
   }
 
   out = setMeta(out, /(<meta property="og:locale" content=")([^"]*)(")/i, OG_LOCALE[lang]);

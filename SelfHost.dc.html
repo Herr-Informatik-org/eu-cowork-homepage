@@ -104,6 +104,11 @@
               <div style="color:#F4C542;">→ https://localhost</div>
             </div>
           </div>
+          <!-- Der Klon-Befehl darueber laeuft heute ins Leere: das Repository
+               ist noch nicht offen. Der Hinweis steht direkt unter dem Block,
+               in der Schriftgroesse der uebrigen Randnotizen dieser Seite. -->
+          <p style="font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.55; color:#5A6472; margin:12px 0 0;">{{ t.noteA }}
+            <a href="/docs/betrieb/installation">{{ t.noteL }}</a>{{ t.noteB }}</p>
         </div>
       </div>
     </section>
@@ -174,6 +179,10 @@ class Component extends DCLogic {
         tagline:'Raw power. No surprises.',
         sub:'Ein Compose-Stack, Auto-TLS, private Websuche. MIT-Lizenz, kein Seat-Limit, kein Branding-Zwang — ab 1 User.',
         ctaGithub:'View on GitHub →', ctaDocs:'Zum Stack →',
+        /* Drei Teile, damit der Verweis ein echter Link sein kann, ohne HTML
+           durch die Uebersetzung zu schleusen. */
+        noteA:'Der Klon funktioniert, sobald das Release-Repository unter MIT-Lizenz veröffentlicht ist. Bis dahin steht die vollständige Installationsanleitung mit Systemanforderungen und gemessenen Werten',
+        noteL:'in der Dokumentation', noteB:'.',
         stepsTitle:'So läuft es',
         steps:[
           { n:'01', t:'Klonen', d:'Repository holen — ein Befehl.' },
@@ -196,6 +205,8 @@ class Component extends DCLogic {
         tagline:'Raw power. No surprises.',
         sub:'One compose stack, auto-TLS, private web search. MIT license, no seat limit, no forced branding — from 1 user.',
         ctaGithub:'View on GitHub →', ctaDocs:'To the stack →',
+        noteA:'The clone works as soon as the release repository is published under the MIT license. Until then, the full installation guide with system requirements and measured figures is available',
+        noteL:'in the documentation', noteB:'.',
         stepsTitle:'How it runs',
         steps:[
           { n:'01', t:'Clone', d:'Pull the repository — one command.' },
@@ -218,6 +229,8 @@ class Component extends DCLogic {
         tagline:'Raw power. No surprises.',
         sub:'Un stack Compose, TLS automatique, recherche web privée. Licence MIT, aucune limite de sièges, aucun marquage imposé — dès 1 utilisateur.',
         ctaGithub:'View on GitHub →', ctaDocs:'Vers le stack →',
+        noteA:'Le clonage fonctionnera dès que le dépôt de publication sera publié sous licence MIT. D’ici là, le guide d’installation complet, avec la configuration requise et les valeurs mesurées, se trouve',
+        noteL:'dans la documentation', noteB:'.',
         stepsTitle:'Comment ça se passe',
         steps:[
           { n:'01', t:'Cloner', d:'Récupérer le dépôt — une seule commande.' },
@@ -240,6 +253,8 @@ class Component extends DCLogic {
         tagline:'Raw power. No surprises.',
         sub:'Uno stack Compose, TLS automatico, ricerca web privata. Licenza MIT, nessun limite di postazioni, nessun branding imposto — da 1 utente.',
         ctaGithub:'View on GitHub →', ctaDocs:'Allo stack →',
+        noteA:'Il clone funzionerà non appena il repository di rilascio sarà pubblicato con licenza MIT. Fino ad allora la guida di installazione completa, con requisiti di sistema e valori misurati, si trova',
+        noteL:'nella documentazione', noteB:'.',
         stepsTitle:'Come funziona',
         steps:[
           { n:'01', t:'Clonare', d:'Scaricare il repository — un solo comando.' },
@@ -262,6 +277,8 @@ class Component extends DCLogic {
         tagline:'Raw power. No surprises.',
         sub:'Un stack de Compose, TLS automático, búsqueda web privada. Licencia MIT, sin límite de puestos, sin marca impuesta — desde 1 usuario.',
         ctaGithub:'View on GitHub →', ctaDocs:'Al stack →',
+        noteA:'El clon funcionará en cuanto el repositorio de publicación se publique bajo licencia MIT. Hasta entonces, la guía de instalación completa, con los requisitos del sistema y los valores medidos, está',
+        noteL:'en la documentación', noteB:'.',
         stepsTitle:'Así funciona',
         steps:[
           { n:'01', t:'Clonar', d:'Obtener el repositorio — un solo comando.' },

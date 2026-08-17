@@ -34,7 +34,7 @@
 <p><a href="/it">EU Cowork AI</a></p>
 <p><a href="/it/preise">Prezzi</a> <a href="/docs/it">Docs</a> <a href="/it/blog">Blog</a></p>
 <p>IT</p>
-<p><a href="/it/self-hosting">Self-host for free</a> <a href="/it/warteliste">Iscriviti alla lista d’attesa</a></p>
+<p><a href="/it/self-hosting">Ospitare in proprio</a> <a href="/it/warteliste">Iscriviti alla lista d’attesa</a></p>
 <h1>Protezione dei dati</h1>
 <p>Come trattiamo i dati personali secondo la revDSG (Svizzera) e il GDPR. Breve, perché raccogliamo pochi dati.</p>
 <p>Telemetria disattivata per impostazione predefinita</p>
@@ -50,7 +50,9 @@
 <p>Esercizio in Svizzera (Green, Lupfig); inferenza dei modelli elaborata nell'UE tramite EuRouter. In caso di self-hosting i dati restano interamente presso di Lei.</p>
 <h2>6 Durata di conservazione</h2>
 <p>I dati vengono conservati solo per il tempo necessario al servizio o richiesto dalla legge. Cancellazione su richiesta.</p>
-<h2>7 I Suoi diritti</h2>
+<h2>7 Prenotazione di appuntamenti</h2>
+<p>Per la prenotazione di appuntamenti utilizziamo Microsoft Bookings, un servizio di Microsoft Corporation. Quando prenota un appuntamento, Microsoft tratta i dati da Lei indicati (nome, indirizzo e-mail, orario scelto, indicazioni facoltative) secondo le condizioni di Microsoft. La prenotazione è facoltativa; tutti i contenuti di questo sito sono accessibili anche senza.</p>
+<h2>8 I Suoi diritti</h2>
 <p>Accesso, rettifica, cancellazione, limitazione e portabilità dei dati. Richieste a privacy@eu-cowork.example.</p>
 <p>Nota: la presente informativa sulla protezione dei dati è una versione preliminare. La versione vincolante, con i dati societari completi, sarà pubblicata prima del lancio e sostituirà i segnaposto.</p>
 <p>EU Cowork AI</p>
@@ -62,7 +64,7 @@
 <p><a href="/it/sicherheit">Maggiori informazioni sulla sicurezza</a></p>
 <p>Istanza svizzera · Lupfig --:--:--</p>
 <p>Prodotto</p>
-<p><a href="/it/#funktionen">Funzionalità</a> <a href="/it/#souveraenitaet">Sovranità</a> <a href="/it/integrationen">Integrazioni</a> <a href="/it/vergleich">Confronto</a> <a href="/it/self-hosting">Self-Host</a> <a href="/it/faq">FAQ</a> <a href="/docs/it">Documentazione</a> <a href="/it/blog">Blog</a> <a href="/it/vision">La nostra visione</a></p>
+<p><a href="/it/#funktionen">Funzionalità</a> <a href="/it/preise">Prezzi</a> <a href="/it/#souveraenitaet">Sovranità</a> <a href="/it/integrationen">Integrazioni</a> <a href="/it/vergleich">Confronto</a> <a href="/it/self-hosting">Self-Host</a> <a href="/it/faq">FAQ</a> <a href="/docs/it">Documentazione</a> <a href="/it/blog">Blog</a> <a href="/it/vision">La nostra visione</a> <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled">Prenotare un appuntamento</a></p>
 <p>Trust</p>
 <p><a href="/it/sicherheit">Security &amp; Trust</a> <a href="/it/governance">Governance</a> <a href="/it/avv">Accordo sul trattamento (DPA)</a> <a href="/it/sicherheit#toms">Panoramica MTO</a> <a href="/it/subprozessoren">Sub-responsabili</a></p>
 <p>Legale</p>
@@ -163,7 +165,8 @@ class Component extends DCLogic {
           { n:'4', t:'Telemetrie', b:'Standardmässig deaktiviert. Optionale, aggregierte Nutzungsmetriken nur nach ausdrücklicher Aktivierung.' },
           { n:'5', t:'Ort der Verarbeitung', b:'Betrieb in der Schweiz (Green, Lupfig); Modell-Inferenz EU-verarbeitet über EuRouter. Beim Self-Hosting bleiben Daten vollständig bei euch.' },
           { n:'6', t:'Speicherdauer', b:'Daten werden nur so lange gespeichert, wie es für den Dienst nötig ist oder gesetzliche Pflichten es verlangen. Löschung auf Anfrage.' },
-          { n:'7', t:'Eure Rechte', b:'Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit. Anfragen an privacy@eu-cowork.example.' }
+          { n:'7', t:'Terminbuchung', b:'Für die Terminbuchung nutzen wir Microsoft Bookings, einen Dienst der Microsoft Corporation. Wenn ihr einen Termin bucht, verarbeitet Microsoft die von euch angegebenen Daten (Name, E-Mail-Adresse, gewählter Termin, optionale Angaben) nach den Bedingungen von Microsoft. Die Buchung ist freiwillig; alle Inhalte dieser Website sind ohne sie zugänglich.' },
+          { n:'8', t:'Eure Rechte', b:'Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit. Anfragen an privacy@eu-cowork.example.' }
         ],
         disclaimer:'Hinweis: Diese Datenschutzerklärung ist eine Vorschau. Die verbindliche Fassung mit vollständigen Firmenangaben wird vor Launch veröffentlicht und ersetzt Platzhalter.'
       },
@@ -178,7 +181,8 @@ class Component extends DCLogic {
           { n:'4', t:'Telemetry', b:'Disabled by default. Optional, aggregated usage metrics only after explicit opt-in.' },
           { n:'5', t:'Place of processing', b:'Operated in Switzerland (Green, Lupfig); model inference EU-processed via EuRouter. When self-hosting, data stays entirely with you.' },
           { n:'6', t:'Retention', b:'Data is stored only as long as needed for the service or required by law. Deletion on request.' },
-          { n:'7', t:'Your rights', b:'Access, rectification, erasure, restriction and data portability. Requests to privacy@eu-cowork.example.' }
+          { n:'7', t:'Appointment booking', b:'For appointment booking we use Microsoft Bookings, a service of Microsoft Corporation. When you book an appointment, Microsoft processes the data you provide (name, email address, chosen slot, optional details) under the terms of Microsoft. Booking is voluntary; all content on this website is accessible without it.' },
+          { n:'8', t:'Your rights', b:'Access, rectification, erasure, restriction and data portability. Requests to privacy@eu-cowork.example.' }
         ],
         disclaimer:'Note: this privacy statement is a preview. The binding version with full company details will be published before launch and replaces placeholders.'
       },
@@ -193,7 +197,8 @@ class Component extends DCLogic {
           { n:'4', t:'Télémétrie', b:'Désactivée par défaut. Métriques d\'utilisation agrégées et facultatives uniquement après activation explicite.' },
           { n:'5', t:'Lieu du traitement', b:'Exploitation en Suisse (Green, Lupfig) ; inférence des modèles traitée dans l\'UE via EuRouter. En auto-hébergement, les données restent entièrement chez vous.' },
           { n:'6', t:'Durée de conservation', b:'Les données ne sont conservées que le temps nécessaire au service ou exigé par la loi. Suppression sur demande.' },
-          { n:'7', t:'Vos droits', b:'Accès, rectification, effacement, limitation et portabilité des données. Demandes à privacy@eu-cowork.example.' }
+          { n:'7', t:'Prise de rendez-vous', b:'Pour la prise de rendez-vous, nous utilisons Microsoft Bookings, un service de Microsoft Corporation. Lorsque vous réservez un rendez-vous, Microsoft traite les données que vous indiquez (nom, adresse e-mail, créneau choisi, informations facultatives) selon les conditions de Microsoft. La réservation est facultative ; tous les contenus de ce site sont accessibles sans elle.' },
+          { n:'8', t:'Vos droits', b:'Accès, rectification, effacement, limitation et portabilité des données. Demandes à privacy@eu-cowork.example.' }
         ],
         disclaimer:'Remarque : cette déclaration de protection des données est une version préliminaire. La version contraignante, avec les mentions complètes de la société, sera publiée avant le lancement et remplacera les éléments provisoires.'
       },
@@ -208,7 +213,8 @@ class Component extends DCLogic {
           { n:'4', t:'Telemetria', b:'Disattivata per impostazione predefinita. Metriche d\'uso aggregate e facoltative solo dopo attivazione esplicita.' },
           { n:'5', t:'Luogo del trattamento', b:'Esercizio in Svizzera (Green, Lupfig); inferenza dei modelli elaborata nell\'UE tramite EuRouter. In caso di self-hosting i dati restano interamente presso di Lei.' },
           { n:'6', t:'Durata di conservazione', b:'I dati vengono conservati solo per il tempo necessario al servizio o richiesto dalla legge. Cancellazione su richiesta.' },
-          { n:'7', t:'I Suoi diritti', b:'Accesso, rettifica, cancellazione, limitazione e portabilità dei dati. Richieste a privacy@eu-cowork.example.' }
+          { n:'7', t:'Prenotazione di appuntamenti', b:'Per la prenotazione di appuntamenti utilizziamo Microsoft Bookings, un servizio di Microsoft Corporation. Quando prenota un appuntamento, Microsoft tratta i dati da Lei indicati (nome, indirizzo e-mail, orario scelto, indicazioni facoltative) secondo le condizioni di Microsoft. La prenotazione è facoltativa; tutti i contenuti di questo sito sono accessibili anche senza.' },
+          { n:'8', t:'I Suoi diritti', b:'Accesso, rettifica, cancellazione, limitazione e portabilità dei dati. Richieste a privacy@eu-cowork.example.' }
         ],
         disclaimer:'Nota: la presente informativa sulla protezione dei dati è una versione preliminare. La versione vincolante, con i dati societari completi, sarà pubblicata prima del lancio e sostituirà i segnaposto.'
       },
@@ -223,7 +229,8 @@ class Component extends DCLogic {
           { n:'4', t:'Telemetría', b:'Desactivada por defecto. Métricas de uso agregadas y opcionales solo tras una activación expresa.' },
           { n:'5', t:'Lugar del tratamiento', b:'Operación en Suiza (Green, Lupfig); inferencia de modelos procesada en la UE a través de EuRouter. En el self-hosting, los datos permanecen íntegramente con usted.' },
           { n:'6', t:'Plazo de conservación', b:'Los datos se conservan únicamente el tiempo necesario para el servicio o exigido por la ley. Supresión previa solicitud.' },
-          { n:'7', t:'Sus derechos', b:'Acceso, rectificación, supresión, limitación y portabilidad de los datos. Solicitudes a privacy@eu-cowork.example.' }
+          { n:'7', t:'Reserva de citas', b:'Para la reserva de citas utilizamos Microsoft Bookings, un servicio de Microsoft Corporation. Cuando usted reserva una cita, Microsoft trata los datos que facilita (nombre, dirección de correo electrónico, horario elegido, indicaciones opcionales) conforme a las condiciones de Microsoft. La reserva es voluntaria; todos los contenidos de este sitio web son accesibles sin ella.' },
+          { n:'8', t:'Sus derechos', b:'Acceso, rectificación, supresión, limitación y portabilidad de los datos. Solicitudes a privacy@eu-cowork.example.' }
         ],
         disclaimer:'Aviso: esta declaración de protección de datos es una versión preliminar. La versión vinculante, con los datos completos de la empresa, se publicará antes del lanzamiento y sustituirá a los marcadores de posición.'
       }

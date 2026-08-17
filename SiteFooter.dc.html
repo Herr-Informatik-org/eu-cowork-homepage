@@ -184,7 +184,7 @@
             <div class="euc-ft-coltitle">{{ col.title }}</div>
             <nav>
               <sc-for list="{{ col.links }}" as="link" hint-placeholder-count="4">
-                <a href="{{ link.href }}" target="{{ link.target }}">{{ link.label }}</a>
+                <a href="{{ link.href }}" target="{{ link.target }}" rel="{{ link.rel }}">{{ link.label }}</a>
               </sc-for>
             </nav>
           </div>
@@ -219,6 +219,10 @@ class Component extends DCLogic {
     this.BRAND = 'EU Cowork AI';
     this.BRAND_MAIN = 'EU Cowork';
     this.BRAND_AI = 'AI';
+    /* Terminbuchung laeuft ueber Microsoft Bookings, also ausserhalb dieser
+       Website. Die Adresse steht einmal hier und wird gebunden, damit sie in
+       allen fuenf Sprachfassungen zeichengleich bleibt. */
+    this.BOOKING = 'https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled';
     this.clockRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     this.state = { lang: initLang };
@@ -254,6 +258,7 @@ class Component extends DCLogic {
         status:'Schweizer Instanz',
         rights:'© 2026 EU Cowork AI',
         product:'Produkt', trust:'Trust', legal:'Rechtliches',
+        pricing:'Preise', booking:'Termin buchen',
         funktionen:'Funktionen', souver:'Souveränität', selfhost:'Self-Host',
         integrationen:'Integrationen', vergleich:'Vergleich', faq:'FAQ', docs:'Dokumentation', blog:'Blog', vision:'Vision',
         governance:'Governance',
@@ -268,6 +273,7 @@ class Component extends DCLogic {
         status:'Swiss instance',
         rights:'© 2026 EU Cowork AI',
         product:'Product', trust:'Trust', legal:'Legal',
+        pricing:'Pricing', booking:'Book a call',
         funktionen:'Features', souver:'Sovereignty', selfhost:'Self-Host',
         integrationen:'Integrations', vergleich:'Comparison', faq:'FAQ', docs:'Documentation', blog:'Blog', vision:'Our vision',
         governance:'Governance',
@@ -282,6 +288,7 @@ class Component extends DCLogic {
         status:'Instance suisse',
         rights:'© 2026 EU Cowork AI',
         product:'Produit', trust:'Trust', legal:'Juridique',
+        pricing:'Tarifs', booking:'Réserver un rendez-vous',
         funktionen:'Fonctionnalités', souver:'Souveraineté', selfhost:'Self-Host',
         integrationen:'Intégrations', vergleich:'Comparatif', faq:'FAQ', docs:'Documentation', blog:'Blog', vision:'Notre vision',
         governance:'Governance',
@@ -296,6 +303,7 @@ class Component extends DCLogic {
         status:'Istanza svizzera',
         rights:'© 2026 EU Cowork AI',
         product:'Prodotto', trust:'Trust', legal:'Legale',
+        pricing:'Prezzi', booking:'Prenotare un appuntamento',
         funktionen:'Funzionalità', souver:'Sovranità', selfhost:'Self-Host',
         integrationen:'Integrazioni', vergleich:'Confronto', faq:'FAQ', docs:'Documentazione', blog:'Blog', vision:'La nostra visione',
         governance:'Governance',
@@ -310,6 +318,7 @@ class Component extends DCLogic {
         status:'Instancia suiza',
         rights:'© 2026 EU Cowork AI',
         product:'Producto', trust:'Trust', legal:'Legal',
+        pricing:'Precios', booking:'Reservar una cita',
         funktionen:'Funciones', souver:'Soberanía', selfhost:'Self-Host',
         integrationen:'Integraciones', vergleich:'Comparativa', faq:'FAQ', docs:'Documentación', blog:'Blog', vision:'Nuestra visión',
         governance:'Governance',
@@ -324,6 +333,7 @@ class Component extends DCLogic {
     const columns = [
       { title:S.product, links:[
         { label:S.funktionen, href: base + '#funktionen' },
+        { label:S.pricing, href:'/preise' },
         { label:S.souver, href: base + '#souveraenitaet' },
         { label:S.integrationen, href:'/integrationen' },
         { label:S.vergleich, href:'/vergleich' },
@@ -331,7 +341,8 @@ class Component extends DCLogic {
         { label:S.faq, href:'/faq' },
         { label:S.docs, href:'/docs' },
         { label:S.blog, href:'/blog' },
-        { label:S.vision, href:'/vision' }
+        { label:S.vision, href:'/vision' },
+        { label:S.booking, href:this.BOOKING }
       ]},
       { title:S.trust, links:[
         { label:S.security, href:'/sicherheit' },
@@ -345,7 +356,10 @@ class Component extends DCLogic {
         { label:S.datenschutz, href:'/datenschutz' },
         { label:S.agb, href:'/agb' }
       ]}
-    ].map(c => ({ ...c, links: c.links.map(l => ({ ...l, target: l.href.startsWith('http') ? '_blank' : '_self' })) }));
+    ].map(c => ({ ...c, links: c.links.map(l => {
+      const ext = l.href.startsWith('http');
+      return { ...l, target: ext ? '_blank' : '_self', rel: ext ? 'noopener' : '' };
+    }) }));
     return {
       brand: this.BRAND,
       brandMain: this.BRAND_MAIN,
