@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-CH">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,9 +41,9 @@
 </head>
 <body>
 
-<a data-i18n="chrome.skip" class="euc-skip" href="#inhalt">Zum Inhalt springen</a>
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Zum Inhalt springen</a>
 
-<!-- ==================== HEADER (unverändert übernehmen) ==================== -->
+<!-- ==================== HEADER ==================== -->
 <header class="euc-header">
   <a class="euc-brand" href="/">
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
@@ -54,25 +54,25 @@
   </a>
 
   <nav class="euc-nav" aria-label="Hauptnavigation">
-    <a data-i18n="chrome.nav.pricing" href="/preise">Preise</a>
-    <a data-i18n="chrome.nav.docs" href="/docs">Docs</a>
-    <a data-i18n="chrome.nav.blog" href="/blog">Blog</a>
+    <a href="/preise" data-i18n="chrome.nav.pricing">Preise</a>
+    <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/blog" data-i18n="chrome.nav.blog">Blog</a>
   </nav>
 
   <div class="euc-header-cta">
     <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
-    <a data-i18n="chrome.cta.selfhost" class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
-    <a data-i18n="chrome.cta.waitlist" class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
+    <a class="euc-btn-secondary" href="/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
+    <a class="euc-btn-primary" href="/warteliste" data-i18n="chrome.cta.waitlist">Auf die Warteliste</a>
   </div>
 
   <details class="euc-mob">
     <summary aria-label="Menü"><span></span><span></span><span></span></summary>
     <div class="euc-mob-panel">
-      <a data-i18n="chrome.nav.pricing" href="/preise">Preise</a>
-      <a data-i18n="chrome.nav.docs" href="/docs">Docs</a>
-      <a data-i18n="chrome.nav.blog" href="/blog">Blog</a>
-      <a data-i18n="chrome.cta.waitlist" class="euc-btn-primary" href="/warteliste">Auf die Warteliste</a>
-      <a data-i18n="chrome.cta.selfhost" class="euc-btn-secondary" href="/self-hosting">Self-host for free</a>
+      <a href="/preise" data-i18n="chrome.nav.pricing">Preise</a>
+      <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/warteliste" data-i18n="chrome.cta.waitlist">Auf die Warteliste</a>
+      <a class="euc-btn-secondary" href="/self-hosting" data-i18n="chrome.cta.selfhost">Self-host for free</a>
       <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
     </div>
   </details>
@@ -85,7 +85,7 @@
     <nav class="euc-breadcrumb" aria-label="Brotkrumen">
       <ol>
         <li><a data-i18n="chrome.crumb.home" href="/">Start</a></li>
-        <li><span data-i18n="crumb.current" aria-current="page">Vision</span></li>
+        <li><span aria-current="page" data-i18n="crumb.current">Vision</span></li>
       </ol>
     </nav>
   </div>
@@ -346,7 +346,7 @@
   </div>
 </main>
 
-<!-- ==================== FOOTER (unverändert übernehmen) ==================== -->
+<!-- ==================== FOOTER ==================== -->
 <footer class="euc-footer">
   <div class="euc-footer-inner">
     <div class="euc-footer-top">
@@ -359,7 +359,7 @@
           </svg>
           <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
         </div>
-        <p data-i18n="chrome.footer.tagline" class="euc-footer-tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
 
         <div class="euc-badges">
           <div class="euc-badge">
@@ -372,23 +372,23 @@
               </svg>
             </span>
             <div>
-              <div data-i18n="chrome.footer.badge1t" class="euc-badge-t">Überall betreibbar</div>
-              <div data-i18n="chrome.footer.badge1s" class="euc-badge-s">Managed, eigene Cloud oder On-Prem</div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Überall betreibbar</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managed, eigene Cloud oder On-Prem</div>
             </div>
           </div>
           <div class="euc-badge">
             <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
             <div>
-              <div data-i18n="chrome.footer.badge2t" class="euc-badge-t">DSGVO-konform</div>
-              <div data-i18n="chrome.footer.badge2s" class="euc-badge-s">EU-Verarbeitung</div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">DSGVO-konform</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">EU-Verarbeitung</div>
             </div>
           </div>
-          <a data-i18n="chrome.footer.more" class="euc-footer-more" href="/sicherheit">Mehr zur Sicherheit</a>
+          <a class="euc-footer-more" href="/sicherheit" data-i18n="chrome.footer.more">Mehr zur Sicherheit</a>
         </div>
 
         <div class="euc-status">
-          <span class="euc-status-dot"><i></i><b></b></span>
-          <span data-i18n="chrome.footer.status">Betriebsbereit</span>
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Schweizer Instanz</span>
           <span class="euc-status-sep">·</span>
           <span class="euc-status-loc">Lupfig</span>
         </div>
@@ -396,41 +396,41 @@
 
       <div class="euc-footer-cols">
         <div class="euc-footer-col">
-          <p data-i18n="chrome.footer.col.product" class="euc-footer-coltitle">Produkt</p>
-          <nav>
-            <a data-i18n="chrome.footer.link.features" href="/#funktionen">Funktionen</a>
-            <a data-i18n="chrome.footer.link.sovereignty" href="/#souveraenitaet">Souveränität</a>
-            <a data-i18n="chrome.footer.link.pricing" href="/preise">Preise</a>
-            <a data-i18n="chrome.footer.link.selfhost" href="/self-hosting">Self-Host</a>
-            <a data-i18n="chrome.footer.link.integrations" href="/integrationen">Integrationen</a>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Produkt</p>
+          <nav aria-label="Produkt">
+            <a href="/#funktionen" data-i18n="chrome.footer.link.features">Funktionen</a>
+            <a href="/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Souveränität</a>
+            <a href="/preise" data-i18n="chrome.footer.link.pricing">Preise</a>
+            <a href="/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/integrationen" data-i18n="chrome.footer.link.integrations">Integrationen</a>
           </nav>
         </div>
         <div class="euc-footer-col">
-          <p data-i18n="chrome.footer.col.know" class="euc-footer-coltitle">Wissen</p>
-          <nav>
-            <a data-i18n="chrome.footer.link.faq" href="/faq">FAQ</a>
-            <a data-i18n="chrome.footer.link.docs" href="/docs">Docs</a>
-            <a data-i18n="chrome.footer.link.blog" href="/blog">Blog</a>
-            <a data-i18n="chrome.footer.link.comparison" href="/vergleich">Vergleich</a>
-            <a data-i18n="chrome.footer.link.governance" href="/governance">Governance</a>
-            <a data-i18n="chrome.footer.link.vision" href="/vision">Vision</a>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.know">Wissen</p>
+          <nav aria-label="Wissen">
+            <a href="/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs" data-i18n="chrome.footer.link.docs">Docs</a>
+            <a href="/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/vergleich" data-i18n="chrome.footer.link.comparison">Vergleich</a>
+            <a href="/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/vision" data-i18n="chrome.footer.link.vision">Vision</a>
           </nav>
         </div>
         <div class="euc-footer-col">
-          <p data-i18n="chrome.footer.col.trust" class="euc-footer-coltitle">Trust</p>
-          <nav>
-            <a data-i18n="chrome.footer.link.security" href="/sicherheit">Security &amp; Trust</a>
-            <a data-i18n="chrome.footer.link.avv" href="/avv">AVV</a>
-            <a data-i18n="chrome.footer.link.toms" href="/sicherheit#toms">TOMs</a>
-            <a data-i18n="chrome.footer.link.subs" href="/subprozessoren">Subprozessoren</a>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/sicherheit" data-i18n="chrome.footer.link.security">Security &amp; Trust</a>
+            <a href="/avv" data-i18n="chrome.footer.link.avv">AVV</a>
+            <a href="/sicherheit#toms" data-i18n="chrome.footer.link.toms">TOM-Übersicht</a>
+            <a href="/subprozessoren" data-i18n="chrome.footer.link.subs">Subprozessoren</a>
           </nav>
         </div>
         <div class="euc-footer-col">
-          <p data-i18n="chrome.footer.col.legal" class="euc-footer-coltitle">Rechtliches</p>
-          <nav>
-            <a data-i18n="chrome.footer.link.imprint" href="/impressum">Impressum</a>
-            <a data-i18n="chrome.footer.link.privacy" href="/datenschutz">Datenschutz</a>
-            <a data-i18n="chrome.footer.link.terms" href="/agb">AGB</a>
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Rechtliches</p>
+          <nav aria-label="Rechtliches">
+            <a href="/impressum" data-i18n="chrome.footer.link.imprint">Impressum</a>
+            <a href="/datenschutz" data-i18n="chrome.footer.link.privacy">Datenschutz</a>
+            <a href="/agb" data-i18n="chrome.footer.link.terms">AGB</a>
           </nav>
         </div>
       </div>
@@ -439,8 +439,8 @@
     <div class="euc-footer-rule"></div>
 
     <div class="euc-footer-bottom">
-      <span data-i18n="chrome.footer.rights" class="euc-rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
-      <span data-i18n="chrome.footer.built" class="euc-built">Built on LibreChat · MIT</span>
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI. Name ist Arbeitstitel.</span>
+      <span class="euc-built" data-i18n="chrome.footer.built">Built on LibreChat · MIT</span>
     </div>
   </div>
 </footer>

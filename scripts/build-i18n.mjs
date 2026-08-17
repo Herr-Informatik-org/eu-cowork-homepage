@@ -24,6 +24,7 @@
 
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
@@ -41,7 +42,11 @@ const BCP47 = { de: 'de-CH', en: 'en', fr: 'fr', it: 'it', es: 'es' };
 
 /* Die Adressen stammen aus vercel.json. Security.dc.html und SelfHost.dc.html
    stehen bewusst nicht in der Liste: sie sind nicht mehr geroutet, die
-   statischen Seiten /sicherheit und /self-hosting haben sie abgeloest. */
+   statischen Seiten /sicherheit und /self-hosting haben sie abgeloest.
+
+   lastmod ist hier nur noch der Rueckfall fuer Umgebungen ohne Git. Das echte
+   Datum holt gitDatum() weiter unten aus dem Stand der Datei; von Hand
+   gepflegte Daten waren zuletzt eine Woche zu alt. */
 const PAGES = [
   { key: 'landing',        path: '/',                src: 'Landing.dc.html',        out: 'index.html',                 kind: 'dc' , lastmod: '2026-08-05', changefreq: 'weekly', priority: '1.0' },
   { key: 'preise',         path: '/preise',          src: 'Preise.dc.html',         out: 'preise/index.html',          kind: 'dc' , lastmod: '2026-08-13', changefreq: 'monthly', priority: '0.9' },
@@ -198,8 +203,83 @@ function rewriteHead(html, { lang, pagePath, meta }) {
   out = setMeta(out, /(<meta property="og:url" content=")([^"]*)(")/i, ORIGIN + urlFor(lang, pagePath));
   out = out.replace(/(<link rel="canonical" href=")([^"]*)(")/i, `$1${ORIGIN}${urlFor(lang, pagePath)}$3`);
   out = out.replace(/"inLanguage":\s*"[^"]*"/g, `"inLanguage": "${BCP47[lang]}"`);
+  out = localizeJsonLd(out, lang);
 
   return injectHreflang(out, pagePath);
+}
+
+/* ------------------------------ JSON-LD-Adressen ------------------------------ */
+
+/* Diese drei Bezeichner benennen kein Dokument, sondern eine Sache: das
+   Unternehmen, die Website als Ganzes und die Software. Sie sind ueber alle
+   fuenf Sprachen dieselbe Sache und muessen deshalb in jeder Sprachfassung
+   woertlich gleich bleiben. Wer sie mituebersetzt, macht aus einer Organisation
+   fuenf und zerlegt den Wissensgraphen, den die Verknuepfungen aufbauen. */
+const GLOBAL_IDS = new Set([
+  `${ORIGIN}/#organization`,
+  `${ORIGIN}/#website`,
+  `${ORIGIN}/#software`
+]);
+
+/* Alles andere im JSON-LD, was auf eucowork.ai zeigt, ist eine Adresse: die
+   Adresse der Seite selbst (url, @id der WebPage), ihre Einordnung
+   (mainEntityOfPage) und vor allem die Brotkrumen (item). Blieben die deutsch,
+   widerspraeche das strukturierte Datum dem canonical derselben Seite --
+   /es/self-hosting behauptete von sich, unter /self-hosting zu liegen. */
+const LD_URL_KEYS = new Set(['@id', 'url', 'item', 'mainEntityOfPage', 'sameAs', 'relatedLink', 'significantLink']);
+
+function localizeUrl(url, lang) {
+  if (lang === 'de' || typeof url !== 'string') return url;
+  if (url !== ORIGIN && !url.startsWith(ORIGIN + '/')) return url;
+
+  const rest = url.slice(ORIGIN.length);
+  const hashAt = rest.indexOf('#');
+  const hash = hashAt >= 0 ? rest.slice(hashAt) : '';
+  const path = (hashAt >= 0 ? rest.slice(0, hashAt) : rest) || '/';
+
+  // Die Dokumentation legt die Sprache HINTER /docs ab, siehe prefixLinks.
+  if (path === '/docs' || path.startsWith('/docs/')) {
+    const tail = path.slice(5);
+    if (tail === `/${lang}` || tail.startsWith(`/${lang}/`)) return url;
+    return `${ORIGIN}/docs/${lang}${tail}${hash}`;
+  }
+  if (NO_PREFIX.some(p => path === p || path.startsWith(p))) return url;
+  if (path === `/${lang}` || path.startsWith(`/${lang}/`)) return url;
+
+  return `${ORIGIN}/${lang}${path === '/' ? '' : path}${hash}`;
+}
+
+/* Ein Knoten, der sich als eine der globalen Sachen ausweist, bleibt komplett
+   unangetastet: sein @id ist der Bezeichner, und sein url zeigt auf die
+   deutsche Wurzel, weil die Organisation genau eine Startseite hat. */
+function localizeNode(node, lang) {
+  if (Array.isArray(node)) return node.map(v => localizeNode(v, lang));
+  if (node === null || typeof node !== 'object') return node;
+
+  if (typeof node['@id'] === 'string' && GLOBAL_IDS.has(node['@id'])) return node;
+
+  const out = {};
+  for (const [key, value] of Object.entries(node)) {
+    if (LD_URL_KEYS.has(key)) {
+      if (typeof value === 'string') { out[key] = localizeUrl(value, lang); continue; }
+      if (Array.isArray(value) && value.every(v => typeof v === 'string')) {
+        out[key] = value.map(v => localizeUrl(v, lang));
+        continue;
+      }
+    }
+    out[key] = localizeNode(value, lang);
+  }
+  return out;
+}
+
+function localizeJsonLd(html, lang) {
+  if (lang === 'de') return html;
+  return html.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/gi, (full, open, body, close) => {
+    let data;
+    try { data = JSON.parse(body); } catch { return full; }   // Kaputtes JSON lieber unveraendert lassen.
+    const json = JSON.stringify(localizeNode(data, lang), null, 2).replace(/<\//g, '<\\/');
+    return `${open}\n${json}\n${close}`;
+  });
 }
 
 /* --------------------------------- Verweise --------------------------------- */
@@ -323,6 +403,39 @@ async function main() {
   }
 }
 
+/* ------------------------------- lastmod -------------------------------
+
+   Ein von Hand gepflegtes Datum veraltet zuverlaessig: die Tabelle oben stand
+   auf dem 5. August, waehrend die Seiten laengst neuer waren. Ein falsches
+   lastmod ist schlimmer als gar keines, denn Suchmaschinen holen die Seite
+   dann nicht neu. Deshalb fragen wir das Datum dort, wo es ohnehin steht:
+
+     - Die Datei ist gegenueber dem Stand im Git veraendert? Dann ist heute
+       der Tag der Aenderung, egal was der letzte Commit sagt.
+     - Sonst zaehlt das Datum des letzten Commits, der die Datei angefasst hat.
+     - Ohne Git (fremde Umgebung, Zip-Kopie) bleibt der Wert aus der Tabelle.
+
+   Die mtime der Datei kommt bewusst nicht vor: ein frischer Clone setzt sie
+   auf den Zeitpunkt des Clones und wuerde die ganze Website als heute geaendert
+   ausgeben. ------------------------------------------------------------- */
+
+function heute() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function gitDatum(relPfad, rueckfall) {
+  try {
+    const dirty = execFileSync('git', ['status', '--porcelain', '--', relPfad],
+      { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (dirty) return heute();
+
+    const commit = execFileSync('git', ['log', '-1', '--format=%cs', '--', relPfad],
+      { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(commit)) return commit;
+  } catch { /* kein Git zur Hand, Rueckfall greift */ }
+  return rueckfall;
+}
+
 /* Die Sitemap nennt jede Adresse einmal und fuehrt an jedem Eintrag die
    uebrigen vier Sprachen mit. Ohne diese Wechselseitigkeit ignoriert Google
    die Verknuepfung. */
@@ -332,7 +445,7 @@ async function writeSitemap() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'
   ];
   for (const page of PAGES) {
-    const m = page;
+    const m = { ...page, lastmod: gitDatum(page.src, page.lastmod) };
     for (const lang of LANGS) {
       lines.push('  <url>');
       lines.push(`    <loc>${ORIGIN}${urlFor(lang, page.path)}</loc>`);
@@ -350,7 +463,7 @@ async function writeSitemap() {
   // Die Doku bringt ihre eigene Sitemap mit, hier steht nur der Einstieg.
   lines.push('  <url>');
   lines.push(`    <loc>${ORIGIN}/docs</loc>`);
-  lines.push('    <lastmod>2026-08-13</lastmod>');
+  lines.push(`    <lastmod>${gitDatum('docs/index.html', '2026-08-13')}</lastmod>`);
   lines.push('    <changefreq>weekly</changefreq>');
   lines.push('    <priority>0.9</priority>');
   lines.push('  </url>');

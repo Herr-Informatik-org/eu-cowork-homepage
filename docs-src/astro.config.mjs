@@ -24,7 +24,8 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     // Eigene Sitemap unter /docs/sitemap-index.xml. Die Haupt-sitemap.xml der
-    // Website bleibt handgepflegt; beide sind in robots.txt eingetragen.
+    // Website entsteht getrennt davon in scripts/build-i18n.mjs; beide sind in
+    // robots.txt eingetragen.
     sitemap({
       i18n: {
         defaultLocale: 'de',

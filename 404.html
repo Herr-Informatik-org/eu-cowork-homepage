@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seite nicht gefunden | EU Cowork AI</title>
+
+<!-- Diese Seite liefert Vercel mit HTTP 404 aus. Sie ist eine Fehlermeldung,
+     kein Inhalt, und gehoert deshalb ausdruecklich nicht in den Index. Der
+     Statuscode allein genuegt zwar meist, aber die Anweisung kostet nichts. -->
+<meta name="robots" content="noindex, follow">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Bewusst ohne externe Stylesheets und ohne i18n.js: eine Fehlerseite muss
+     auch dann lesbar bleiben, wenn genau das kaputt ist, was den Fehler
+     ausgeloest hat. Alles Noetige steht hier. -->
+<style>
+  :root{
+    --c-bg:#FAFAF7; --c-surface:#FFFFFF; --c-ink:#0B1E33; --c-body:#41505E;
+    --c-muted:#8A96A2; --c-eu-700:#12326B; --c-gold:#F4C542; --c-line:#E7ECF0;
+    --f-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--c-bg); color:var(--c-body); font-family:var(--f-body);
+    font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  .euc-404-head{padding:20px clamp(20px,5vw,80px); border-bottom:1px solid var(--c-line)}
+  .euc-brand{display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    color:var(--c-ink); font-weight:600; font-size:17px; letter-spacing:-.01em}
+  .euc-brand-ai{color:var(--c-eu-700)}
+  main{flex:1; display:flex; align-items:center; justify-content:center;
+    padding:clamp(56px,10vw,120px) clamp(20px,5vw,80px)}
+  .euc-404-box{max-width:600px}
+  .euc-404-code{font-size:13px; font-weight:600; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--c-muted); margin:0 0 12px}
+  h1{font-size:clamp(28px,4vw,40px); line-height:1.15; letter-spacing:-.02em;
+    color:var(--c-ink); margin:0 0 16px; font-weight:600}
+  h1::after{content:'.'; color:var(--c-gold)}
+  p{margin:0 0 28px; max-width:52ch}
+  .euc-404-links{display:flex; flex-wrap:wrap; gap:10px}
+  .euc-404-links a{display:inline-block; padding:10px 18px; border-radius:4px;
+    text-decoration:none; font-size:15px; font-weight:500; border:1px solid var(--c-line);
+    background:var(--c-surface); color:var(--c-ink)}
+  .euc-404-links a:first-child{background:var(--c-ink); color:#F7FAFC; border-color:var(--c-ink)}
+  .euc-404-links a:hover{border-color:#C6D0DA}
+  .euc-404-links a:first-child:hover{background:#123456}
+  a:focus-visible{outline:2px solid var(--c-eu-700); outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="euc-404-head">
+  <a class="euc-brand" href="/" data-home>
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+</div>
+
+<main>
+  <div class="euc-404-box">
+    <p class="euc-404-code">Fehler 404</p>
+    <h1 data-t="h1">Diese Seite gibt es nicht</h1>
+    <p data-t="lead">Die Adresse führt ins Leere. Möglicherweise hat sich ein Tippfehler eingeschlichen, oder die Seite ist umgezogen.</p>
+    <div class="euc-404-links">
+      <a href="/"      data-home data-t="home">Zur Startseite</a>
+      <a href="/docs"  data-docs data-t="docs">Dokumentation</a>
+      <a href="/preise" data-home data-t="pricing">Preise</a>
+    </div>
+  </div>
+</main>
+
+<script>
+/* Vercel liefert diese eine Datei fuer jede unbekannte Adresse aus, also auch
+   fuer /en/... und /fr/.... Welche Sprache gemeint war, steht deshalb nur in
+   der Adresse selbst; die Seite liest sie dort ab und richtet Text und
+   Verweise danach aus. Ohne JavaScript bleibt die deutsche Fassung stehen. */
+(function () {
+  var T = {
+    en: { lang:'en', h1:'This page does not exist', lead:'The address leads nowhere. Perhaps there is a typo, or the page has moved.', home:'To the homepage', docs:'Documentation', pricing:'Pricing' },
+    fr: { lang:'fr', h1:"Cette page n'existe pas", lead:"L'adresse ne mène nulle part. Il s'agit peut-être d'une faute de frappe, ou la page a été déplacée.", home:"Aller à l'accueil", docs:'Documentation', pricing:'Tarifs' },
+    it: { lang:'it', h1:'Questa pagina non esiste', lead:"L'indirizzo non porta da nessuna parte. Forse c'è un errore di battitura, oppure la pagina è stata spostata.", home:'Vai alla home', docs:'Documentazione', pricing:'Prezzi' },
+    es: { lang:'es', h1:'Esta página no existe', lead:'La dirección no lleva a ninguna parte. Puede que haya una errata o que la página se haya trasladado.', home:'Ir a la portada', docs:'Documentación', pricing:'Precios' }
+  };
+  var seg = location.pathname.split('/').filter(Boolean);
+  /* Die Doku legt die Sprache hinter /docs ab, die Website davor. */
+  var code = seg[0] === 'docs' ? seg[1] : seg[0];
+  var t = T[code];
+  if (!t) return;
+
+  document.documentElement.lang = t.lang;
+  document.title = t.h1 + ' | EU Cowork AI';
+  document.querySelectorAll('[data-t]').forEach(function (el) {
+    var v = t[el.getAttribute('data-t')];
+    if (v) el.textContent = v;
+  });
+  document.querySelectorAll('[data-home]').forEach(function (el) {
+    var href = el.getAttribute('href');
+    el.setAttribute('href', href === '/' ? '/' + t.lang : '/' + t.lang + href);
+  });
+  document.querySelectorAll('[data-docs]').forEach(function (el) {
+    el.setAttribute('href', '/docs/' + t.lang);
+  });
+})();
+</script>
+
+</body>
+</html>
