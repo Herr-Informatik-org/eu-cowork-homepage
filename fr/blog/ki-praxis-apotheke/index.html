@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="fr" data-euc-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">IA et logiciels de cabinet et pharmacie | EU Cowork AI</title>
+<meta name="description" content="Projets de rapports, manuel qualité interrogeable, fiches multilingues. Et où en est le raccordement de l’IA à vitomed, Elexis, OneDoc et Documedis.">
+<link rel="canonical" href="https://eucowork.ai/fr/blog/ki-praxis-apotheke">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/blog/ki-praxis-apotheke">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/blog/ki-praxis-apotheke">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/blog/ki-praxis-apotheke">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/blog/ki-praxis-apotheke">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/blog/ki-praxis-apotheke">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/blog/ki-praxis-apotheke">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://eucowork.ai/fr/blog/ki-praxis-apotheke">
+<meta property="og:title" content="IA et logiciels de cabinet et pharmacie | EU Cowork AI">
+<meta property="og:description" content="Projets de rapports pour assureurs et autorités, manuels du cabinet et de la qualité interrogeables, fiches multilingues. Sans diagnostic ni contrôle de la médication.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-share-fr.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI : Votre collègue IA. Il reste en Europe.">
+<meta property="article:published_time" content="2026-08-17">
+<meta property="article:modified_time" content="2026-08-18">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IA et logiciels de cabinet et pharmacie | EU Cowork AI">
+<meta name="twitter:description" content="Trois processus d’IA pour cabinet, pharmacie et Spitex : projets de rapports, base de connaissances, fiches multilingues. Limite claire au dispositif médical.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-share-fr.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Aller au contenu</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/fr">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/fr/preise" data-i18n="chrome.nav.pricing">Tarifs</a>
+    <a href="/docs/fr" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/fr/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/fr/self-hosting" data-i18n="chrome.cta.selfhost">Héberger vous-même</a>
+    <a class="euc-btn-primary" href="/fr/warteliste" data-i18n="chrome.cta.waitlist">Rejoindre la liste d’attente</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/fr/preise" data-i18n="chrome.nav.pricing">Tarifs</a>
+      <a href="/docs/fr" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/fr/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/fr/warteliste" data-i18n="chrome.cta.waitlist">Rejoindre la liste d’attente</a>
+      <a class="euc-btn-secondary" href="/fr/self-hosting" data-i18n="chrome.cta.selfhost">Héberger vous-même</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main blog-article" id="inhalt">
+
+  <!-- ==================== HERO ==================== -->
+  <div class="blog-hero">
+    <div class="euc-wrap-wide">
+      <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/fr" data-i18n="chrome.crumb.home">Accueil</a></li>
+        <li><a href="/fr/blog" data-i18n="crumb.blog">Blog</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">IA en cabinet et pharmacie</span></li>
+      </ol>
+    </nav>
+      <div class="blog-hero-grid">
+        <div class="blog-hero-text">
+          <p class="euc-eyebrow" data-i18n="hero.eyebrow">L’IA au quotidien professionnel</p>
+          <h1 data-i18n="hero.h1">L’IA en cabinet et en pharmacie : trois processus qui rendent du temps d’écriture</h1>
+          <p class="euc-lead" data-i18n="hero.lead">Garantie de prise en charge, demande de l’assurance-invalidité (AI), rapport de sortie : le travail d’écriture pour les assureurs et les autorités dévore les soirées, pas les heures de consultation. Cet article montre à travers trois processus comment un collègue IA travaille avec les documents que votre établissement met à disposition, où passe la limite avec le dispositif médical et ce qui s’applique aux données de santé.</p>
+          <p class="blog-hero-meta">
+            <span class="chip" data-i18n="hero.chip">Cabinet et pharmacie</span>
+            <time datetime="2026-08-17" data-i18n="hero.datum">17 août 2026</time>
+            <span data-i18n="hero.lesezeit">Temps de lecture : 12 minutes</span>
+          </p>
+        </div>
+        <div class="blog-hero-art" aria-hidden="true">
+          <svg viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path class="fig-soft" d="M40 352 H604"></path>
+
+            <rect class="fig-panel" x="40" y="286" width="392" height="16" rx="6"></rect>
+            <path class="fig-soft" d="M64 302 v50 M408 302 v50"></path>
+
+            <rect class="fig-fill-tint fig-line" x="64" y="78" width="150" height="208" rx="8"></rect>
+            <rect class="fig-panel" x="52" y="90" width="150" height="196" rx="8"></rect>
+            <rect class="fig-fill-ice fig-line" x="68" y="106" width="118" height="26" rx="6"></rect>
+            <path class="fig-eu-mid" d="M68 156 h80"></path>
+            <path class="fig-line" d="M68 178 h118 M68 196 h118 M68 214 h94"></path>
+            <path class="fig-eu-mid" d="M70 252 c12 -18 20 10 32 -4 c10 -13 18 10 30 -5"></path>
+            <path class="fig-line" d="M68 264 h94"></path>
+
+            <path class="fig-line" d="M352 40 v40 M392 40 v40"></path>
+          <circle class="fig-eu-mid" cx="372" cy="120" r="44"></circle>
+            <path class="fig-eu-mid" d="M360 92 h24 v16 h28 v24 h-28 v16 h-24 v-16 h-28 v-24 h28 Z"></path>
+
+            <path class="fig-fill-tint fig-eu-mid" d="M234 240 C236 272 252 282 274 282 C296 282 312 272 314 240 Z"></path>
+            <path class="fig-eu-mid" d="M224 240 h100 M262 282 v4 M286 282 v4 M254 286 h40"></path>
+            <path class="fig-eu-mid" d="M334 180 L296 232 M342 186 L304 238 M334 180 L342 186"></path>
+            <circle class="fig-fill-ice fig-eu-mid" cx="292" cy="240" r="13"></circle>
+
+            <rect class="fig-panel" x="336" y="216" width="62" height="70" rx="6"></rect>
+            <path class="fig-line" d="M336 232 h62"></path>
+            <path class="fig-eu-mid" d="M348 252 h38"></path>
+            <path class="fig-line" d="M348 268 h38"></path>
+            <rect class="fig-fill-tint fig-line" x="402" y="222" width="26" height="64" rx="8"></rect>
+            <rect class="fig-fill-ice fig-soft" x="408" y="228" width="14" height="10" rx="5"></rect>
+            <rect class="fig-fill-ice fig-soft" x="408" y="242" width="14" height="10" rx="5"></rect>
+            <rect class="fig-fill-ice fig-soft" x="408" y="256" width="14" height="10" rx="5"></rect>
+            <rect class="fig-fill-ice fig-soft" x="408" y="270" width="14" height="10" rx="5"></rect>
+
+            <path class="fig-soft" d="M418 122 C468 118 462 190 510 242"></path>
+            <path class="fig-flow fig-eu" d="M418 122 C468 118 462 190 510 242"></path>
+
+            <rect class="fig-panel" x="452" y="242" width="150" height="110" rx="8"></rect>
+            <path class="fig-eu-mid" d="M472 264 h56"></path>
+            <path class="fig-line" d="M472 286 h110 M472 304 h110 M472 322 h66"></path>
+            <path class="fig-eu" d="M554 322 l8 8 16 -18"></path>
+            <circle class="fig-dot-gold" cx="586" cy="264" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="blog-rail" aria-label="Lesefortschritt">
+    <ol>
+      <li><a href="#lage" data-i18n="toc.i1">Situation de départ</a></li>
+      <li><a href="#berichte" data-i18n="toc.i2">Rapports et demandes des assureurs</a></li>
+      <li><a href="#wissen" data-i18n="toc.i3">Base de connaissances pour l’équipe</a></li>
+      <li><a href="#information" data-i18n="toc.i4">Information multilingue</a></li>
+      <li><a href="#konnektoren" data-i18n="toc.i5">Connecteurs vers les logiciels métier</a></li>
+      <li><a href="#datenschutz" data-i18n="toc.i6">Protection des données et secret professionnel</a></li>
+      <li><a href="#fragen" data-i18n="toc.i7">Questions fréquentes</a></li>
+    </ol>
+  </nav>
+
+  <div class="euc-wrap">
+
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.titel">En bref</p>
+      <ul>
+        <li data-i18n="kurz.p1">Les médecins actifs en cabinet ambulatoire consacrent en moyenne 54 minutes par jour de travail aux seules exigences des autorités et des assureurs ; 87 % des praticiens ambulatoires citent les assureurs comme la charge la plus lourde.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup></li>
+        <li data-i18n="kurz.p2">EU Cowork AI travaille sur l’administration qui entoure les soins : projets de rapports pour les assureurs et les autorités, une base de connaissances interrogeable pour l’équipe, des fiches d’information en plusieurs langues.</li>
+        <li data-i18n="kurz.p3">Pas de diagnostic, pas de triage, pas de posologie, pas de contrôle de la médication : de telles fonctions feraient de l’outil un dispositif médical et ne font délibérément pas partie du système.</li>
+        <li data-i18n="kurz.p4">Les données de santé sont des données personnelles sensibles. L’instance, c’est-à-dire votre propre exemplaire du système, tourne en Suisse ou sur votre propre serveur. Les droits descendent jusqu’à chaque outil. Les programmes dotés d’une interface documentée, c’est-à-dire d’une voie officielle pour l’échange de données, peuvent être raccordés via le Model Context Protocol (MCP). Chaque accès figure dans le journal d’audit, le registre de tous les accès. Les données des clients n’entraînent aucun modèle.</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.titel">Sur cette page</p>
+      <ol>
+        <li><a href="#lage" data-i18n="toc.i1">Situation de départ</a></li>
+        <li><a href="#berichte" data-i18n="toc.i2">Rapports et demandes des assureurs</a></li>
+        <li><a href="#wissen" data-i18n="toc.i3">Base de connaissances pour l’équipe</a></li>
+        <li><a href="#information" data-i18n="toc.i4">Information multilingue</a></li>
+        <li><a href="#konnektoren" data-i18n="toc.i5">Connecteurs vers les logiciels métier</a></li>
+        <li><a href="#datenschutz" data-i18n="toc.i6">Protection des données et secret professionnel</a></li>
+        <li><a href="#fragen" data-i18n="toc.i7">Questions fréquentes</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== AUSGANGSLAGE ==================== -->
+    <section class="euc-section">
+      <h2 id="lage" data-i18n="lage.h2">Situation de départ : le travail d’écriture croît plus vite que la consultation</h2>
+      <p data-i18n="lage.p1">Les médecins actifs en cabinet ambulatoire consacrent en moyenne 54 minutes par jour de travail aux seules exigences des autorités et des assureurs, et 87 % des praticiens ambulatoires citent les assureurs comme la charge la plus lourde.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> C’est près d’une heure qui naît chaque jour dans un endroit où personne n’est soigné : au bureau, le plus souvent après la dernière consultation.</p>
+      <p data-i18n="lage.p2">Dans le même temps, le temps se raréfie. Les médecins de famille disposent aujourd’hui de 6 heures par semaine de moins pour le traitement qu’il y a 20 ans, et d’ici 2035, 40 % d’entre eux devront être remplacés.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup> Celles et ceux qui restent prennent en charge davantage de patientes et de patients, pas moins de formulaires.</p>
+      <p data-i18n="lage.p3">La Confédération mesure désormais cette charge elle-même : depuis mai 2026, l’Office fédéral de la santé publique OFSP (BAG) collecte des données auprès des médecins de famille, les premiers résultats intermédiaires sont annoncés pour août 2026 et le rapport final pour janvier 2027.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> Le débat sur l’allègement est donc lancé. Le courrier d’aujourd’hui attend quand même.</p>
+      <p data-i18n="lage.p4">En pharmacie, le calcul diffère, le résultat se ressemble : depuis le 1er janvier 2020, l’article 30 de la loi sur les produits thérapeutiques (LPTh) exige un système d’assurance qualité.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup> Quelque 1 800 pharmacies comptant en moyenne 12,7 personnes pour 9 équivalents plein temps gèrent ainsi chacune son propre système de gestion de la qualité (SGQ). En font partie les instructions de travail, les attestations de formation et le bilan annuel.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> Dans l’aide et les soins à domicile (Spitex), quelque 400 organisations à but non lucratif employant plus de 40 000 personnes prennent en charge environ trois quarts des clientes et des clients.<sup><a href="#fn-6" aria-label="Note 6">6</a></sup> Chacune d’elles rédige des rapports d’évolution destinés aux assureurs et aux autorités.</p>
+      <p data-i18n="lage.p5">Le cadre de cet article est ainsi posé, et il est étroit. Un collègue IA ne pose aucun diagnostic, ne fait pas de triage, ne recommande ni thérapie ni posologie, ne contrôle aucune interaction et ne remplace aucun contrôle de la médication. De telles fonctions feraient de l’outil un dispositif médical, avec tout ce que cela implique en matière d’évaluation de la conformité. Il est question ici d’administration, de documentation, de base de connaissances et de traduction. Le contrôle de la médication reste dans le logiciel métier de la pharmacie ; le collègue IA écrit le texte qui l’entoure.</p>
+
+        <figure class="euc-fig">
+        <svg viewBox="0 100 640 145" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path class="fig-soft" d="M64 178 H576"></path>
+          <path class="fig-flow fig-eu" d="M64 178 H576"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="40" y="132" width="108" height="92" rx="8"></rect>
+            <rect class="fig-fill-ice fig-line" x="58" y="150" width="72" height="48" rx="5"></rect>
+            <path class="fig-eu-mid" d="M58 154 l36 26 36 -26"></path>
+            <circle class="fig-numbg" cx="148" cy="132" r="11"></circle>
+            <text class="fig-num" x="148" y="136.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="186" y="132" width="108" height="92" rx="8"></rect>
+            <rect class="fig-fill-tint fig-line" x="200" y="146" width="76" height="60" rx="5"></rect>
+            <path class="fig-eu-mid" d="M212 162 h52 M212 176 h52"></path>
+            <path class="fig-line" d="M212 190 h34"></path>
+            <circle class="fig-numbg" cx="294" cy="132" r="11"></circle>
+            <text class="fig-num" x="294" y="136.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="332" y="132" width="108" height="92" rx="8"></rect>
+            <rect class="fig-fill-ice fig-line" x="346" y="146" width="76" height="60" rx="5"></rect>
+            <path class="fig-line" d="M358 162 h52 M358 174 h52"></path>
+            <path class="fig-eu" d="M358 186 l8 8 14 -16"></path>
+            <circle class="fig-dot-gold" cx="412" cy="158" r="4"></circle>
+            <circle class="fig-numbg" cx="440" cy="132" r="11"></circle>
+            <text class="fig-num" x="440" y="136.5" text-anchor="middle">3</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="478" y="132" width="108" height="92" rx="8"></rect>
+            <path class="fig-line" d="M496 156 h72 M496 170 h48"></path>
+            <path class="fig-eu" d="M496 192 c10 -16 18 6 27 -9 c8 -11 13 8 22 -3"></path>
+            <path class="fig-line" d="M496 208 h72"></path>
+            <circle class="fig-numbg" cx="586" cy="132" r="11"></circle>
+            <text class="fig-num" x="586" y="136.5" text-anchor="middle">4</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="lage.leg1">Demande d’un assureur ou d’une autorité, avec un délai</li>
+          <li data-i18n="lage.leg2">Extraits mis à disposition depuis votre propre documentation</li>
+          <li data-i18n="lage.leg3">Projet de rapport au format de votre entreprise, avec indication de la source</li>
+          <li data-i18n="lage.leg4">Contrôle et signature du professionnel</li>
+        </ol>
+        <figcaption data-i18n="lage.fig">Voici le trajet d’une demande d’assurance à travers le cabinet : du courrier entrant au rapport signé. La signature reste au professionnel.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ==================== USECASE 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="berichte" data-i18n="uc1.h2">Cas d’usage 1 : les rapports et les demandes des assureurs sous forme de projet</h2>
+      <p data-i18n="uc1.p1">Le matin, une demande se trouve dans la boîte de réception : garantie de prise en charge pour une thérapie, avec un délai. Le cabinet met à la disposition du collègue IA la demande ainsi que les extraits de la documentation qui s’y rapportent. En retour arrive un projet de rapport structuré au format de votre entreprise, avec les indications aux endroits où l’assureur les attend, et avec la source de chaque indication reprise. La médecin lit, biffe, complète l’appréciation et signe.</p>
+      <p data-i18n="uc1.p2">Le même schéma porte les autres rapports : rapport d’adressage, rapport de sortie, demande AI, et dans l’aide et les soins à domicile le rapport d’évolution destiné à l’assureur ainsi que le rapport à l’autorité de protection de l’enfant et de l’adulte (APEA). Le texte d’accompagnement de la prescription médicale ou de l’annonce des besoins selon l’article 7 de l’ordonnance sur les prestations de l’assurance des soins (OPAS) naît lui aussi sous forme de projet. L’évaluation des besoins et le classement restent dans le logiciel métier et chez le professionnel. Le projet met en ordre ce qui est déjà documenté. Il n’invente rien. Là où une indication manque, une lacune signalée subsiste au lieu d’une formulation qui sonne plausible.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="48" y="60" width="152" height="102" rx="8"></rect>
+            <path class="fig-eu" d="M66 82 h64"></path>
+            <path class="fig-line" d="M66 100 h116 M66 116 h116 M66 132 h86 M66 148 h60"></path>
+            <circle class="fig-numbg" cx="200" cy="60" r="11"></circle>
+            <text class="fig-num" x="200" y="64.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-fill-tint fig-line" x="48" y="192" width="150" height="26" rx="6"></rect>
+            <rect class="fig-fill-tint fig-line" x="60" y="224" width="150" height="26" rx="6"></rect>
+            <rect class="fig-fill-ice fig-line" x="72" y="256" width="150" height="26" rx="6"></rect>
+            <circle class="fig-numbg" cx="222" cy="256" r="11"></circle>
+            <text class="fig-num" x="222" y="260.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M200 112 H420 M148 192 C262 158 322 148 416 120"></path>
+          <path class="fig-flow fig-eu" d="M200 112 H420"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="420" y="56" width="170" height="150" rx="8"></rect>
+            <path class="fig-eu" d="M440 82 h92"></path>
+            <path class="fig-line" d="M440 100 h130 M440 116 h130 M440 132 h130 M440 148 h96"></path>
+            <path class="fig-eu-mid" d="M440 176 c8 -13 15 5 22 -7 c7 -9 11 6 18 -3"></path>
+            <path class="fig-line" d="M440 190 h96"></path>
+            <circle class="fig-dot-gold" cx="566" cy="82" r="4"></circle>
+            <circle class="fig-numbg" cx="590" cy="56" r="11"></circle>
+            <text class="fig-num" x="590" y="60.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc1.leg1">La demande, telle qu’elle arrive</li>
+          <li data-i18n="uc1.leg2">Extraits mis à disposition et standard de rapport de l’entreprise</li>
+          <li data-i18n="uc1.leg3">Projet de rapport avec indication de la source, prêt à signer</li>
+        </ol>
+        <figcaption data-i18n="uc1.fig">Le projet met en ordre les indications existantes et expose chaque source. L’appréciation professionnelle, c’est le professionnel qui l’écrit lui-même.</figcaption>
+      </figure>
+
+      <p data-i18n="uc1.p3">C’est précisément là que se logent les 54 minutes de la situation de départ.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> Ce que le projet ne contient délibérément pas, c’est l’appréciation professionnelle : capacité de travail, pronostic et indication sont formulés par le professionnel. Rien ne part automatiquement, chaque rapport attend la signature.</p>
+    </section>
+
+    <!-- ==================== USECASE 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="wissen" data-i18n="uc2.h2">Cas d’usage 2 : le savoir de l’équipe devient interrogeable</h2>
+      <p data-i18n="uc2.p1">L’assistante médicale a une question de tarif, cherche la règle interne pour une annulation de dernière minute ou le bon chapitre du manuel du cabinet. Aujourd’hui, elle interrompt la consultation pour cela. Avec une base de connaissances constituée du manuel du cabinet, des procédures internes et des documents de facturation de l’entreprise, elle obtient la réponse avec l’indication de la source, vérifiable en quelques secondes.</p>
+      <p data-i18n="uc2.p2">En pharmacie, c’est le manuel de gestion de la qualité qui devient interrogeable : « Où est écrite notre règle sur la chaîne du froid ? » Et le travail d’écriture lié au système de gestion de la qualité naît des documents existants sous forme de projet, de l’instruction de travail à l’attestation de formation jusqu’au bilan annuel. Le contrôle de la médication, lui, reste dans le logiciel métier, là où il a sa place.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-line" x="48" y="52" width="184" height="54" rx="10"></rect>
+            <path class="fig-eu-mid" d="M66 72 h114 M66 88 h78"></path>
+            <path class="fig-line" d="M84 106 l-10 17 27 -13"></path>
+            <circle class="fig-numbg" cx="232" cy="52" r="11"></circle>
+            <text class="fig-num" x="232" y="56.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M138 130 V156 M322 190 H458 M508 190 V134"></path>
+          <path class="fig-flow fig-eu" d="M322 190 H458"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="76" y="156" width="246" height="36" rx="8"></rect>
+            <rect class="fig-panel" x="76" y="200" width="246" height="36" rx="8"></rect>
+            <rect class="fig-panel" x="76" y="244" width="246" height="36" rx="8"></rect>
+            <path class="fig-line" d="M94 174 h152 M94 218 h122 M94 262 h152"></path>
+            <rect class="fig-eu-mid" x="272" y="210" width="30" height="16" rx="4"></rect>
+            <path class="fig-eu-mid" d="M282 210 v-5 a5 5 0 0 1 10 0 v5 M287 216 v4"></path>
+            <circle class="fig-numbg" cx="322" cy="244" r="11"></circle>
+            <text class="fig-num" x="322" y="248.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="458" y="134" width="132" height="112" rx="8"></rect>
+            <path class="fig-line" d="M476 158 h96 M476 174 h96 M476 206 h96 M476 222 h64"></path>
+            <path class="fig-eu" d="M476 190 h96"></path>
+            <circle class="fig-dot-gold" cx="572" cy="158" r="4"></circle>
+            <circle class="fig-numbg" cx="590" cy="134" r="11"></circle>
+            <text class="fig-num" x="590" y="138.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc2.leg1">Une question en langage courant, à la réception ou au laboratoire</li>
+          <li data-i18n="uc2.leg2">Manuel du cabinet, manuel de gestion de la qualité et concepts, ouverts selon les droits</li>
+          <li data-i18n="uc2.leg3">Une réponse avec l’indication de la source, vérifiable en quelques secondes</li>
+        </ol>
+        <figcaption data-i18n="uc2.fig">La base de connaissances répond à partir de vos propres documents et montre d’où vient la réponse. Ce processus n’a besoin d’aucune donnée de patient.</figcaption>
+      </figure>
+
+      <p data-i18n="uc2.p3">Dans l’aide et les soins à domicile, ce sont les concepts d’hygiène et d’urgence ainsi que l’intégration des nouvelles collaboratrices et des nouveaux collaborateurs, qui posent leurs questions dans leur langue et obtiennent la réponse à partir des mêmes documents. Les droits descendent jusqu’à chaque outil : qui n’a pas le droit de voir un dossier ne le voit pas non plus par l’intermédiaire du collègue IA, et chaque accès figure dans le journal d’audit.</p>
+    </section>
+
+    <!-- ==================== USECASE 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="information" data-i18n="uc3.h2">Cas d’usage 3 : l’information aux patients et à la clientèle en plusieurs langues</h2>
+      <p data-i18n="uc3.p1">Une fiche d’information sur la préparation à un examen existe en allemand, validée par un professionnel. Elle donne naissance à la version française, à la version italienne et à la version anglaise, auxquelles s’ajoutent les langues réellement parlées dans le bassin de population et une version en langage simplifié pour toutes les personnes à qui le ton administratif barre l’accès.</p>
+      <p data-i18n="uc3.p2">Il en va de même pour les consignes de prise au comptoir et pour les instructions de suivi après une intervention. Avant la remise, chaque version passe par la validation professionnelle, tout comme l’original allemand. Ce qui devient perceptible ensuite : moins de rappels au téléphone et moins de malentendus au comptoir.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="52" y="104" width="96" height="124" rx="8"></rect>
+            <rect class="fig-fill-ice fig-line" x="68" y="120" width="64" height="76" rx="4"></rect>
+            <path class="fig-eu" d="M80 140 h40"></path>
+            <path class="fig-eu-mid" d="M80 156 h40 M80 170 h28"></path>
+            <path class="fig-line" d="M70 212 h60"></path>
+            <circle class="fig-numbg" cx="148" cy="104" r="11"></circle>
+            <text class="fig-num" x="148" y="108.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M148 166 H300 M300 166 C348 166 356 74 404 74 M300 166 H404 M300 166 C348 166 356 258 404 258"></path>
+          <path class="fig-flow fig-eu" d="M148 166 H300"></path>
+          <circle class="fig-numbg" cx="300" cy="166" r="11"></circle>
+          <text class="fig-num" x="300" y="170.5" text-anchor="middle">2</text>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="40" width="180" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M422 62 h64"></path>
+            <path class="fig-line" d="M422 78 h144 M422 92 h104"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="132" width="180" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M422 154 h64"></path>
+            <path class="fig-line" d="M422 170 h144 M422 184 h96"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="224" width="180" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M422 246 h64"></path>
+            <path class="fig-line" d="M422 262 h144 M422 276 h110"></path>
+            <circle class="fig-dot-gold" cx="566" cy="246" r="4"></circle>
+            <circle class="fig-numbg" cx="584" cy="224" r="11"></circle>
+            <text class="fig-num" x="584" y="228.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc3.leg1">Une fiche d’information validée, issue de votre propre fonds</li>
+          <li data-i18n="uc3.leg2">Transposition et simplification linguistique</li>
+          <li data-i18n="uc3.leg3">Plusieurs versions, chacune soumise à la validation professionnelle</li>
+        </ol>
+        <figcaption data-i18n="uc3.fig">Un original, plusieurs versions linguistiques. Aucune n’est remise avant que le professionnel ne l’ait validée.</figcaption>
+      </figure>
+
+      <p data-i18n="uc3.p3">Ici aussi, la limite est claire. Le collègue IA transpose et simplifie un texte validé ; il n’ajoute aucune indication qui ne figure pas dans l’original et n’omet aucune mise en garde. Les quantités, les moments de prise et les posologies sont vérifiés contre l’original avant la validation. Il ne remplace pas l’entretien de conseil.</p>
+    </section>
+
+    <!-- ==================== KONNEKTOREN ==================== -->
+    <section class="euc-section">
+      <h2 id="konnektoren" data-i18n="konn.h2">Connecteurs : ce qui peut être raccordé à votre logiciel métier</h2>
+      <p data-i18n="konn.p1">Un collègue IA est aussi utile que ce qu’il a le droit d’atteindre. Un connecteur n’est rien d’autre que le lien vers un autre programme. MCP est un standard ouvert pour de tels liens. Il permet de s’adresser à des programmes dotés d’une interface documentée. Chaque outil a son propre droit, et chaque appel est journalisé. Dans la santé, la situation de départ est particulière : beaucoup de choses sont fermées. Voici à quoi ressemble le raccordement de l’IA aux logiciels répandus en cabinet, en pharmacie et dans l’aide et les soins à domicile, vérifié en août 2026 :</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="konn.th1">Logiciel</th>
+              <th data-i18n="konn.th2">Interface</th>
+              <th data-i18n="konn.th3">Raccordement à EU Cowork AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="konn.r1c1">Microsoft 365 (Outlook, Teams, SharePoint)</td>
+              <td data-i18n="konn.r1c2">API Graph, documentée publiquement</td>
+              <td data-i18n="konn.r1c3">Serveur MCP de Microsoft disponible ; courriel, agenda et fichiers directement accessibles</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r2c1">FHIR (standard de données dans la santé)</td>
+              <td data-i18n="konn.r2c2">Ancré dans l’ordonnance du DFI sur le dossier électronique du patient (DEP, EPDV-EDI) ; serveurs MCP génériques en open source</td>
+              <td data-i18n="konn.r2c3">Raccordement possible via MCP là où le logiciel métier parle FHIR</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r3c1">Vitodata vitomed</td>
+              <td data-i18n="konn.r3c2">Interfaces par l’éditeur</td>
+              <td data-i18n="konn.r3c3">Raccordement possible via MCP, le chemin passe par l’éditeur</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r4c1">Elexis (logiciel de cabinet open source)</td>
+              <td data-i18n="konn.r4c2">Code source ouvert</td>
+              <td data-i18n="konn.r4c3">Raccordement possible via MCP</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r5c1">OneDoc, Medicosearch (prise de rendez-vous)</td>
+              <td data-i18n="konn.r5c2">Interfaces pour les partenaires</td>
+              <td data-i18n="konn.r5c3">Raccordement possible, le chemin passe par l’éditeur</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r6c1">HCI Solutions Documedis (données de médication)</td>
+              <td data-i18n="konn.r6c2">Interfaces selon l’éditeur, réglées par contrat</td>
+              <td data-i18n="konn.r6c3">Possible pour les données de base et les textes, le chemin passe par l’éditeur ; le contrôle de la médication s’exécute dans le logiciel métier et n’est pas effectué par le collègue IA.</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r7c1">Forum Datenaustausch (standards XML pour la facturation des prestations)</td>
+              <td data-i18n="konn.r7c2">Standard ouvert, facture 5.0 obligatoire depuis le 1er janvier 2026<sup><a href="#fn-7" aria-label="Note 7">7</a></sup></td>
+              <td data-i18n="konn.r7c3">Utilisable comme format de document</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r8c1">Lobos, Perigon, careCoach (EMS et aide et soins à domicile)</td>
+              <td data-i18n="konn.r8c2">Interfaces au cas par cas selon les projets</td>
+              <td data-i18n="konn.r8c3">Raccordement possible, le chemin passe par l’éditeur</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r9c1">Achilles et Axenita (Axon Lab), curaMED, systèmes de l’Ärztekasse</td>
+              <td data-i18n="konn.r9c2">Aucune API publiquement documentée</td>
+              <td data-i18n="konn.r9c3">Le chemin passe par les exports et les documents</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-i18n="konn.p2">Le résumé honnête : le domaine est largement fermé. C’est précisément pour cela que le raccordement des systèmes n’est pas au centre de cet article. Le projet de rapport, la base de connaissances et les fiches d’information travaillent avec des documents et fonctionnent sans raccordement au logiciel de cabinet. Là où le logiciel métier parle le standard de données FHIR, un chemin passe par des serveurs MCP génériques. Générique signifie : ils ne sont liés à aucun éditeur, et ils existent en open source.<sup><a href="#fn-8" aria-label="Note 8">8</a></sup> Pour la facturation des prestations, le standard facture 5.0 du Forum Datenaustausch est obligatoire depuis le 1er janvier 2026. C’est un format de fichier ouvert construit sur XML, qui se lit et s’écrit comme un document.<sup><a href="#fn-7" aria-label="Note 7">7</a></sup> Le fonctionnement de principe d’un raccordement est décrit sur la page <a class="euc-textlink" href="/fr/integrationen">Intégrations</a>.</p>
+    </section>
+
+    <!-- ==================== DATENSCHUTZ ==================== -->
+    <section class="euc-section">
+      <h2 id="datenschutz" data-i18n="ds.h2">Protection des données et secret professionnel : la section la plus stricte</h2>
+      <p data-i18n="ds.p1">L’article 321 du code pénal suisse (CP) nomme expressément les médecins et les pharmaciens. Il couvre également leurs auxiliaires. Selon la loi révisée sur la protection des données, les données de santé sont des données personnelles sensibles. Les deux ensemble signifient qu’un outil qui traite de telles données ne s’introduit pas en passant. Cet article ne remplace pas un conseil juridique.</p>
+      <p data-i18n="ds.p2">Le premier pas est donc le plus simple : deux des trois cas d’usage de cet article n’ont besoin d’aucune donnée de patient. La base de connaissances vit du manuel du cabinet, du manuel de gestion de la qualité et des procédures internes ; les fiches d’information sont vos propres textes. On peut commencer là sans qu’un seul dossier ne quitte l’entreprise.</p>
+      <p data-i18n="ds.p3">Là où les données de patients ont leur place, à savoir dans le projet de rapport, les mesures habituelles s’appliquent dans une exécution stricte. L’instance tourne dans des centres de données certifiés ISO 27001 en Suisse ou sur votre propre serveur. Il existe un <a class="euc-textlink" href="/fr/avv">contrat de sous-traitance</a> et une <a class="euc-textlink" href="/fr/subprozessoren">liste des sous-traitants ultérieurs</a> publique. Les données des clients n’entraînent aucun modèle. Les droits descendent jusqu’à chaque outil, et le journal d’audit est exportable.</p>
+      <p data-i18n="ds.p4">Ce que nous n’affirmons pas : que les données de patients seraient anonymisées au passage. Un rapport d’évolution reste une donnée personnelle même sans nom, et qui promet autre chose promet trop. La réponse tient au lieu du traitement et au contrôle des accès, pas à un masque de texte.</p>
+      <p data-i18n="ds.p5">Dans les organisations d’aide et de soins à domicile et dans les institutions s’ajoute le fait que des données de personnes incapables de discernement sont traitées. Le contact avec l’APEA fait lui aussi partie du travail. Le concept de suppression et la journalisation des accès doivent y être fixés plus strictement que dans un cabinet individuel. Les évaluations selon BESA ou RAI n’en sont pas touchées : elles naissent dans le logiciel métier et y sont assumées. Les justificatifs sur l’exploitation figurent dans le <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Questions fréquentes des cabinets, des pharmacies et de l’aide et des soins à domicile</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">Des données de patients ont-elles seulement le droit d’entrer dans un système d’IA ?</h3>
+          <p data-i18n="faq.a1">C’est vous qui en décidez, pas le fournisseur. Les médecins et les pharmaciens sont soumis à l’art. 321 CP. Les données de santé sont sensibles selon la loi révisée sur la protection des données, et le traitement par un fournisseur exige un contrat de sous-traitance. C’est pourquoi EU Cowork AI tourne en Suisse ou sur votre propre serveur, les données des clients n’entraînent aucun modèle, et chaque accès figure dans le journal d’audit. Une grande partie des cas d’usage se passe en outre entièrement de données de patients. Cette réponse ne remplace pas un conseil juridique.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">L’IA pose-t-elle des diagnostics ou contrôle-t-elle les médicaments ?</h3>
+          <p data-i18n="faq.a2">Non, et délibérément pas. Le diagnostic, le triage, la recommandation thérapeutique et posologique, le contrôle des interactions et le contrôle de la médication ne font pas partie du système ; de telles fonctions feraient de l’outil un dispositif médical. EU Cowork AI travaille sur l’administration, la documentation, la base de connaissances et la traduction. Le contrôle de la médication reste dans le logiciel métier de la pharmacie.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">Que voit l’assistante médicale, que voit la médecin ?</h3>
+          <p data-i18n="faq.a3">Ce que vous définissez. Les droits descendent jusqu’à chaque outil. Ils s’appliquent dans l’ordre utilisateur, rôle, groupe et valeur par défaut du serveur, et se gèrent dans le panneau d’administration. Qui n’a pas le droit de voir un dossier ne le voit pas non plus par l’intermédiaire du collègue IA, et chaque accès atterrit dans le journal d’audit exportable.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">EU Cowork AI fonctionne-t-il avec notre logiciel de cabinet, par exemple vitomed ou Elexis ?</h3>
+          <p data-i18n="faq.a4">Réponse honnête : en règle générale pas directement, car le domaine est largement fermé. C’est précisément pour cela que les cas d’usage de cet article misent sur les documents plutôt que sur l’accès aux systèmes. Le projet de rapport, la base de connaissances et les fiches d’information fonctionnent sans raccordement. Là où votre logiciel métier parle le standard de données FHIR ou là où l’éditeur propose une voie partenaire, un raccordement via MCP est possible.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">Combien cela coûte-t-il pour un cabinet de huit personnes ?</h3>
+          <p data-i18n="faq.a5">L’exploitation managée coûte 15 € par personne et par mois, 14 CHF en Suisse, dont 8 €, respectivement 7.50 CHF, sous forme de crédit de modèles dans le pool commun de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Toutes les indications figurent sur la page <a class="euc-textlink" href="/fr/preise">Tarifs</a>.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">Qui répond si un projet de rapport est faux ?</h3>
+          <p data-i18n="faq.a6">Le professionnel qui signe. C’est pourquoi chaque résultat est un projet avec indication de la source et non un rapport achevé : un modèle de langue peut produire des erreurs, et le contrôle avant la signature fait partie du processus, pas des options supplémentaires. Cette réponse ne remplace pas un conseil juridique.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q7">Qu’en est-il des clientes et des clients incapables de discernement ?</h3>
+          <p data-i18n="faq.a7">Pour eux, les mêmes règles s’appliquent dans une exécution plus stricte. Le concept de suppression et la journalisation des accès doivent tenir dans un contexte où l’APEA lit par-dessus l’épaule, et les rapports aux autorités restent des projets jusqu’à la validation par la direction. Les évaluations selon BESA ou RAI naissent toujours dans le logiciel métier. Cette réponse ne remplace pas un conseil juridique.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q8">Comment commençons-nous ?</h3>
+          <p data-i18n="faq.a8">Avec les documents qui vous appartiennent de toute façon : fiches d’information, manuel du cabinet, manuel de gestion de la qualité, concepts d’hygiène et d’urgence. Cette base de connaissances n’a besoin d’aucune donnée de patient, elle montre en quelques jours si l’équipe travaille avec elle, et ce n’est qu’ensuite que la question du projet de rapport vaut la peine d’être posée.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Parcourez avec nous un cas qui vous est propre</h2>
+      <p data-i18n="cta.p">Apportez une demande d’assureur, une fiche d’information ou un chapitre du manuel de gestion de la qualité, et nous parcourons le processus ensemble, sans données de patients. Ou inscrivez-vous et démarrez parmi les premiers.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Réserver un rendez-vous</a>
+        <a class="euc-btn-secondary" href="/fr/warteliste" data-i18n="cta.btn2">Rejoindre la liste d’attente</a>
+      </div>
+    </section>
+
+    <!-- ==================== QUELLEN ==================== -->
+    <section class="euc-section">
+      <h2 id="quellen" data-i18n="src.h2">Sources</h2>
+      <p data-i18n="src.p">Tous les chiffres de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.</p>
+      <ol class="euc-small">
+        <li data-i18n="src.fn1" id="fn-1">gfs.bern sur mandat de la FMH, enquête sur l’environnement de travail des médecins 2025 (N = 1 532, dont 330 praticiens ambulatoires) : <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a></li>
+        <li data-i18n="src.fn2" id="fn-2">mfe Médecins de famille et de l’enfance Suisse avec le Centre universitaire de médecine de famille des deux Bâle (uniham-bb), étude Workforce 2025 (publiée le 2 octobre 2025) : <a class="euc-textlink" href="https://www.hausaerzteschweiz.ch/information/news/detail/workforce-studie-2025-hausaerztemangel-verschaerft-sich-grundversorgung-in-der-schweiz-akut-gefaehrdet" target="_blank" rel="noopener">hausaerzteschweiz.ch</a></li>
+        <li data-i18n="src.fn3" id="fn-3">OFSP, charge administrative dans le système de santé, enquête auprès des médecins de famille depuis mai 2026 : <a class="euc-textlink" href="https://www.bag.admin.ch/de/administrativer-aufwand-im-gesundheitswesen" target="_blank" rel="noopener">bag.admin.ch</a></li>
+        <li data-i18n="src.fn4" id="fn-4">pharmaSuisse, qualité en pharmacie, système d’assurance qualité selon l’article 30 de la loi sur les produits thérapeutiques depuis le 1er janvier 2020 : <a class="euc-textlink" href="https://www.pharmasuisse.org/de/dienstleistungen/fuer-apotheken/qualitaet-apotheken" target="_blank" rel="noopener">pharmasuisse.org</a></li>
+        <li data-i18n="src.fn5" id="fn-5">pharmaSuisse, dossier pénurie de personnel qualifié, quelque 1 800 pharmacies comptant en moyenne 12,7 personnes pour 9 équivalents plein temps : <a class="euc-textlink" href="https://www.pharmasuisse.org/de/politik-und-medien/dossiers/fachkraeftemangel" target="_blank" rel="noopener">pharmasuisse.org</a></li>
+        <li data-i18n="src.fn6" id="fn-6">Spitex Verband Schweiz, quelque 400 organisations à but non lucratif employant plus de 40 000 personnes : <a class="euc-textlink" href="https://www.spitex.ch/de/verband" target="_blank" rel="noopener">spitex.ch</a></li>
+        <li data-i18n="src.fn7" id="fn-7">Forum Datenaustausch, standards XML pour la facturation des prestations, facture 5.0 obligatoire depuis le 1er janvier 2026 : <a class="euc-textlink" href="https://www.forum-datenaustausch.ch/xml-standards" target="_blank" rel="noopener">forum-datenaustausch.ch</a></li>
+        <li data-i18n="src.fn8" id="fn-8">WSO2, FHIR MCP Server, raccordement générique open source aux systèmes FHIR : <a class="euc-textlink" href="https://github.com/wso2/fhir-mcp-server" target="_blank" rel="noopener">github.com</a></li>
+      </ol>
+    </section>
+
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.titel">Suite</p>
+      <ul>
+        <li><a href="/fr/blog/ki-handwerk-kmu" data-i18n="weiter.l1">L’IA dans l’artisanat et les PME : trois processus qui rendent du temps de bureau</a></li>
+        <li><a href="/fr/sicherheit" data-i18n="weiter.l2">Security et Trust : où se trouvent les données et qui les voit</a></li>
+        <li><a href="/docs/fr" data-i18n="weiter.l3">Documentation : exploitation, installation et gouvernance en détail</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="geprueft">Dernière vérification : <time datetime="2026-08">août 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Votre collègue IA. Il reste en Europe.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Déployable partout</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managé, votre cloud ou on-premise</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">Conforme au RGPD</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">Traitement dans l’UE</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/fr/sicherheit"><span data-i18n="chrome.footer.more">En savoir plus sur la sécurité</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Instance suisse</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc" data-euc-clock>Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Produit</p>
+          <nav aria-label="Produkt">
+            <a href="/fr/#funktionen" data-i18n="chrome.footer.link.features">Fonctionnalités</a>
+            <a href="/fr/preise" data-i18n="chrome.footer.link.pricing">Tarifs</a>
+            <a href="/fr/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Souveraineté</a>
+            <a href="/fr/integrationen" data-i18n="chrome.footer.link.integrations">Intégrations</a>
+            <a href="/fr/vergleich" data-i18n="chrome.footer.link.comparison">Comparatif</a>
+            <a href="/fr/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/fr/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs/fr" data-i18n="chrome.footer.link.docs">Documentation</a>
+            <a href="/fr/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/fr/vision" data-i18n="chrome.footer.link.vision">Notre vision</a>
+            <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="chrome.footer.link.booking">Réserver un rendez-vous</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/fr/sicherheit" data-i18n="chrome.footer.link.security">Security & Trust</a>
+            <a href="/fr/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/fr/avv" data-i18n="chrome.footer.link.avv">DPA (sous-traitance)</a>
+            <a href="/fr/sicherheit#toms" data-i18n="chrome.footer.link.toms">Aperçu des MTO</a>
+            <a href="/fr/subprozessoren" data-i18n="chrome.footer.link.subs">Sous-traitants ultérieurs</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Juridique</p>
+          <nav aria-label="Rechtliches">
+            <a href="/fr/impressum" data-i18n="chrome.footer.link.imprint">Mentions légales</a>
+            <a href="/fr/datenschutz" data-i18n="chrome.footer.link.privacy">Confidentialité</a>
+            <a href="/fr/agb" data-i18n="chrome.footer.link.terms">CGV</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.lang">Langue</p>
+          <nav aria-label="Sprache">
+            <button type="button" data-euc-lang-to="de">Deutsch</button>
+            <button type="button" data-euc-lang-to="en">English</button>
+            <button type="button" data-euc-lang-to="fr">Français</button>
+            <button type="button" data-euc-lang-to="it">Italiano</button>
+            <button type="button" data-euc-lang-to="es">Español</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI by Herr-Informatik GmbH</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebPage",
+        "FAQPage"
+      ],
+      "@id": "https://eucowork.ai/fr/blog/ki-praxis-apotheke#webpage",
+      "url": "https://eucowork.ai/fr/blog/ki-praxis-apotheke",
+      "name": "L’IA en cabinet et en pharmacie : trois processus qui rendent du temps d’écriture",
+      "inLanguage": "fr",
+      "isPartOf": {
+        "@id": "https://eucowork.ai/#website"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "description": "Projets de rapports, manuel qualité interrogeable, fiches multilingues. Et où en est le raccordement de l’IA à vitomed, Elexis, OneDoc et Documedis.",
+      "primaryImageOfPage": {
+        "@id": "https://eucowork.ai/fr/blog/ki-praxis-apotheke#primaryimage"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://eucowork.ai/fr"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://eucowork.ai/fr/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "IA en cabinet et pharmacie",
+            "item": "https://eucowork.ai/fr/blog/ki-praxis-apotheke"
+          }
+        ]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Des données de patients ont-elles seulement le droit d’entrer dans un système d’IA ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "C’est vous qui en décidez, pas le fournisseur. Les médecins et les pharmaciens sont soumis à l’art. 321 CP. Les données de santé sont sensibles selon la loi révisée sur la protection des données, et le traitement par un fournisseur exige un contrat de sous-traitance. C’est pourquoi EU Cowork AI tourne en Suisse ou sur votre propre serveur, les données des clients n’entraînent aucun modèle, et chaque accès figure dans le journal d’audit. Une grande partie des cas d’usage se passe en outre entièrement de données de patients. Cette réponse ne remplace pas un conseil juridique."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "L’IA pose-t-elle des diagnostics ou contrôle-t-elle les médicaments ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non, et délibérément pas. Le diagnostic, le triage, la recommandation thérapeutique et posologique, le contrôle des interactions et le contrôle de la médication ne font pas partie du système ; de telles fonctions feraient de l’outil un dispositif médical. EU Cowork AI travaille sur l’administration, la documentation, la base de connaissances et la traduction. Le contrôle de la médication reste dans le logiciel métier de la pharmacie."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Que voit l’assistante médicale, que voit la médecin ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ce que vous définissez. Les droits descendent jusqu’à chaque outil. Ils s’appliquent dans l’ordre utilisateur, rôle, groupe et valeur par défaut du serveur, et se gèrent dans le panneau d’administration. Qui n’a pas le droit de voir un dossier ne le voit pas non plus par l’intermédiaire du collègue IA, et chaque accès atterrit dans le journal d’audit exportable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "EU Cowork AI fonctionne-t-il avec notre logiciel de cabinet, par exemple vitomed ou Elexis ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Réponse honnête : en règle générale pas directement, car le domaine est largement fermé. C’est précisément pour cela que les cas d’usage de cet article misent sur les documents plutôt que sur l’accès aux systèmes. Le projet de rapport, la base de connaissances et les fiches d’information fonctionnent sans raccordement. Là où votre logiciel métier parle le standard de données FHIR ou là où l’éditeur propose une voie partenaire, un raccordement via MCP est possible."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Combien cela coûte-t-il pour un cabinet de huit personnes ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L’exploitation managée coûte 15 € par personne et par mois, 14 CHF en Suisse, dont 8 €, respectivement 7.50 CHF, sous forme de crédit de modèles dans le pool commun de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Toutes les indications figurent sur la page Tarifs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui répond si un projet de rapport est faux ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le professionnel qui signe. C’est pourquoi chaque résultat est un projet avec indication de la source et non un rapport achevé : un modèle de langue peut produire des erreurs, et le contrôle avant la signature fait partie du processus, pas des options supplémentaires. Cette réponse ne remplace pas un conseil juridique."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu’en est-il des clientes et des clients incapables de discernement ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pour eux, les mêmes règles s’appliquent dans une exécution plus stricte. Le concept de suppression et la journalisation des accès doivent tenir dans un contexte où l’APEA lit par-dessus l’épaule, et les rapports aux autorités restent des projets jusqu’à la validation par la direction. Les évaluations selon BESA ou RAI naissent toujours dans le logiciel métier. Cette réponse ne remplace pas un conseil juridique."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment commençons-nous ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Avec les documents qui vous appartiennent de toute façon : fiches d’information, manuel du cabinet, manuel de gestion de la qualité, concepts d’hygiène et d’urgence. Cette base de connaissances n’a besoin d’aucune donnée de patient, elle montre en quelques jours si l’équipe travaille avec elle, et ce n’est qu’ensuite que la question du projet de rapport vaut la peine d’être posée."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://eucowork.ai/fr/blog/ki-praxis-apotheke#article",
+      "mainEntityOfPage": {
+        "@id": "https://eucowork.ai/fr/blog/ki-praxis-apotheke#webpage"
+      },
+      "headline": "L’IA en cabinet et en pharmacie : trois processus qui rendent du temps d’écriture",
+      "description": "Projets de rapports, manuel qualité interrogeable, fiches multilingues. Et où en est le raccordement de l’IA à vitomed, Elexis, OneDoc et Documedis.",
+      "articleSection": "Cabinet et pharmacie",
+      "datePublished": "2026-08-17",
+      "dateModified": "2026-08-18",
+      "inLanguage": "fr",
+      "author": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "publisher": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "image": {
+        "@id": "https://eucowork.ai/fr/blog/ki-praxis-apotheke#primaryimage"
+      },
+      "isPartOf": {
+        "@id": "https://eucowork.ai/fr/blog#blog"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "mentions": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Microsoft 365"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Vitodata vitomed"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Elexis"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "OneDoc"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Medicosearch"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "HCI Solutions Documedis"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Lobos"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Perigon"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "careCoach"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Achilles"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Axenita"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "curaMED"
+        }
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://eucowork.ai/fr/blog/ki-praxis-apotheke#primaryimage",
+      "url": "https://eucowork.ai/og/eucowork-share-fr.png",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var rail = document.querySelector('.blog-rail');
+  if (!rail) return;
+  var links = [].slice.call(rail.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+  var targets = links.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  }).filter(Boolean);
+  var hero = document.querySelector('.blog-hero');
+  var footer = document.querySelector('.euc-footer');
+  function setActive(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+    });
+  }
+  function onScroll() {
+    var top = window.scrollY || document.documentElement.scrollTop;
+    var show = hero ? top > hero.offsetTop + hero.offsetHeight - 80 : true;
+    /* Vor der Fussleiste ausblenden: die Leiste ist vertikal zentriert,
+       ihre Unterkante darf den Footer nicht erreichen. */
+    if (show && footer) {
+      var reach = window.innerHeight / 2 + rail.offsetHeight / 2 + 32;
+      show = footer.getBoundingClientRect().top > reach;
+    }
+    rail.classList.toggle('is-visible', show);
+    var line = top + window.innerHeight * 0.35;
+    var current = targets[0];
+    targets.forEach(function (t) {
+      if (t.getBoundingClientRect().top + top <= line) { current = t; }
+    });
+    if (current) setActive(current.id);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    'meta.title': 'AI for practice and pharmacy software | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'AI in medical practice and pharmacy',
+    'hero.eyebrow': 'AI in everyday work',
+    'hero.h1': 'AI in practice and pharmacy: three workflows that give writing time back',
+    'hero.lead': 'Cost approval requests, disability insurance enquiries, discharge letters: the writing for insurers and authorities eats the evening, not the consultation hour. This article walks through three workflows to show how an AI colleague works with your own released documents, where the line to a medical device runs, and what applies to health data.',
+    'hero.chip': 'Practice and pharmacy',
+    'hero.datum': '17 August 2026',
+    'hero.lesezeit': 'Reading time: 12 minutes',
+    'lage.leg1': 'An enquiry from an insurer or authority, with a deadline',
+    'lage.leg2': 'Released extracts from your own documentation',
+    'lage.leg3': 'A report draft in your own report format, with source references',
+    'lage.leg4': 'Review and signature by the professional',
+    'lage.fig': 'How an insurance enquiry moves through the practice: from the incoming post to the signed report. The signature stays with the professional.',
+    'kurz.titel': 'In brief',
+    'kurz.p1': 'Doctors in ambulatory practice spend an average of 54 minutes per working day on requirements from authorities and insurers alone; 87% of those in ambulatory care name insurers as the heaviest burden.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI works on the administration around the care: report drafts for insurers and authorities, a knowledge base the team can query, fact sheets in several languages.',
+    'kurz.p3': 'No diagnosis, no triage, no dosing, no medication check: such functions would make it a medical device, and they are deliberately not part of the system.',
+    'kurz.p4': 'Health data is sensitive personal data. The instance, meaning your own copy of the system, runs in Switzerland or on your own server. Permissions apply down to individual tools. Programs with a documented interface, meaning an official route for exchanging data, can be connected via the Model Context Protocol (MCP). Every access appears in the audit log, the record of all accesses. Customer data does not train any models.',
+    'toc.titel': 'On this page',
+    'toc.i1': 'Starting point',
+    'toc.i2': 'Reports and insurance enquiries',
+    'toc.i3': 'A knowledge base for the team',
+    'toc.i4': 'Multilingual information',
+    'toc.i5': 'Connectors to industry software',
+    'toc.i6': 'Data protection and professional secrecy',
+    'toc.i7': 'Frequently asked questions',
+    'lage.h2': 'Starting point: the paperwork grows faster than the consultation hour',
+    'lage.p1': 'Doctors in ambulatory practice spend an average of 54 minutes per working day on requirements from authorities and insurers alone, and 87% of those in ambulatory care name insurers as the heaviest burden.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> That is close to an hour arising every day in a place where nobody is treated: at the desk, usually after the last consultation.',
+    'lage.p2': 'At the same time, the hours are getting shorter. General practitioners today have 6 hours per week less available for treatment than 20 years ago, and by 2035, 40% of them have to be replaced.<sup><a href="#fn-2" aria-label="Footnote 2">2</a></sup> Those who stay take on more patients, not fewer forms.',
+    'lage.p3': 'The federal government is now measuring the effort itself: since May 2026 the Federal Office of Public Health has been collecting data from general practitioners, with first interim results announced for August 2026 and the final report for January 2027.<sup><a href="#fn-3" aria-label="Footnote 3">3</a></sup> So the debate about relief is under way. Today’s post is waiting all the same.',
+    'lage.p4': 'In the pharmacy the arithmetic differs, the result is similar: since 1 January 2020, Article 30 of the Therapeutic Products Act has required a quality assurance system.<sup><a href="#fn-4" aria-label="Footnote 4">4</a></sup> Around 1,800 pharmacies with an average of 12.7 people and 9 full-time equivalents therefore each run their own quality management system (QMS). That includes work instructions, training records and an annual review.<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup> In home care, around 400 non-profit Spitex organisations with more than 40,000 employees serve about three quarters of all clients.<sup><a href="#fn-6" aria-label="Footnote 6">6</a></sup> Every one of them writes progress reports to insurers and authorities.',
+    'lage.p5': 'That sets the frame for this article, and it is a narrow one. An AI colleague makes no diagnosis, performs no triage, recommends no therapy and no dose, checks no interactions and replaces no medication check. Such functions would make it a medical device, with everything that conformity assessment brings with it. This is about administration, documentation, the knowledge base and translation. The medication check stays in the pharmacy’s specialist system; the AI colleague writes the text around it.',
+    'uc1.h2': 'Use case 1: reports and insurance enquiries as a draft',
+    'uc1.p1': 'An enquiry is in the inbox in the morning: cost approval for a therapy, with a deadline. The practice releases the enquiry and the matching extracts from the documentation to the AI colleague. Back comes a structured report draft in your own report format, with the details in the places where the insurer expects them, and with a source reference for every detail taken over. The doctor reads, deletes, adds the assessment and signs.',
+    'uc1.p2': 'The same pattern carries the other reports: referral, discharge, disability insurance enquiry, and in home care the progress report to the insurer and the report to the child and adult protection authority. The accompanying text for the medical order or the needs notification under Article 7 of the health insurance benefits ordinance (KLV) is drafted as well. The needs assessment and the care level classification stay in the specialist system and with the professional. The draft organises what is already documented. It invents nothing on top. Where a detail is missing, a marked gap remains instead of a phrase that merely sounds plausible.',
+    'uc1.leg1': 'The enquiry, exactly as it arrives',
+    'uc1.leg2': 'Released extracts and the report format of the business',
+    'uc1.leg3': 'A report draft with source references, ready to sign',
+    'uc1.fig': 'The draft organises existing details and shows the source of each one. The professional writes the clinical assessment.',
+    'uc1.p3': 'This is exactly where the 54 minutes from the starting point sit.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> What the draft deliberately does not contain is the clinical assessment: fitness for work, prognosis and indication are written by the professional. Nothing goes out automatically, every report waits for a signature.',
+    'uc2.h2': 'Use case 2: the team’s knowledge becomes queryable',
+    'uc2.p1': 'The practice assistant has a tariff question, is looking for the internal rule on a late cancellation or the right chapter in the practice manual. Today she interrupts the consultation for that. With a knowledge base built from the practice manual, the internal procedures and the billing documents of the business, she gets the answer with its source, checkable in seconds.',
+    'uc2.p2': 'In the pharmacy the quality manual becomes queryable: “Where is our cold chain rule written down?” And the writing work for the quality management system is drafted from the existing documents, from the work instruction through the training record to the annual review. The medication check stays in the specialist system, where it belongs.',
+    'uc2.leg1': 'A question in everyday language, at reception or in the lab',
+    'uc2.leg2': 'Practice manual, quality manual and concepts, opened by permission',
+    'uc2.leg3': 'An answer with its source, checkable in seconds',
+    'uc2.fig': 'The knowledge base answers from your own documents and shows where each answer comes from. This workflow needs no patient data at all.',
+    'uc2.p3': 'In home care it is the hygiene and emergency concepts and the onboarding of new employees, who ask in their own language and get answers from the same documents. Permissions apply down to individual tools: whoever may not see a folder does not see it through the AI colleague either, and every access appears in the audit log.',
+    'uc3.h2': 'Use case 3: patient and customer information in several languages',
+    'uc3.p1': 'A fact sheet on preparing for an examination exists in German, cleared by a professional. From it come the French, Italian and English versions, plus the languages actually spoken in the catchment area, and a plain-language version for everyone who is shut out by officialese.',
+    'uc3.p2': 'The same applies to intake instructions at the counter and to aftercare instructions following a procedure. Before being handed over, every version goes through professional clearance, just as the German original did. What becomes noticeable afterwards: fewer calls back and fewer misunderstandings at the counter.',
+    'uc3.leg1': 'A cleared fact sheet from your own collection',
+    'uc3.leg2': 'Translation and plain-language simplification',
+    'uc3.leg3': 'Several versions, each for professional clearance',
+    'uc3.fig': 'One original, several language versions. None of them is handed over before a professional has cleared it.',
+    'uc3.p3': 'The line is clear here too. The AI colleague transfers and simplifies a cleared text; it adds no advice that is not in the original, and it leaves out no warnings. Quantities, timings and dosage figures are checked against the original before clearance. It does not replace the consultation.',
+    'konn.h2': 'Connectors: what can be linked to your industry software',
+    'konn.p1': 'An AI colleague is only as useful as what it is allowed to reach. A connector is nothing more than the link to another program. MCP is an open standard for such links. Through it, programs with a documented interface can be addressed. Each individual tool has its own permission, and every call is logged. In healthcare the starting position is particular: much of the field is closed. This is what an AI connection looks like for common software in practices, pharmacies and home care, checked in August 2026:',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Connection to EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r1c2': 'Graph API, openly documented',
+    'konn.r1c3': 'MCP server available from Microsoft; email, calendar and files directly addressable',
+    'konn.r2c1': 'FHIR (health data standard)',
+    'konn.r2c2': 'Anchored in the FDHA ordinance on the electronic patient record (EPDV-EDI); generic MCP servers available as open source',
+    'konn.r2c3': 'Connection via MCP possible wherever the specialist system speaks FHIR',
+    'konn.r3c1': 'Vitodata vitomed',
+    'konn.r3c2': 'Interfaces through the vendor',
+    'konn.r3c3': 'Connection via MCP possible; the route runs through the vendor',
+    'konn.r4c1': 'Elexis (open-source practice software)',
+    'konn.r4c2': 'Open source',
+    'konn.r4c3': 'Connection via MCP possible',
+    'konn.r5c1': 'OneDoc, Medicosearch (appointment booking)',
+    'konn.r5c2': 'Interfaces for partners',
+    'konn.r5c3': 'Connection possible; the route runs through the vendor',
+    'konn.r6c1': 'HCI Solutions Documedis (medication data)',
+    'konn.r6c2': 'Interfaces per the vendor, governed by contract',
+    'konn.r6c3': 'Possible for master and text data, the route runs through the vendor; the medication check runs in the specialist system and is not executed through the AI colleague.',
+    'konn.r7c1': 'Forum Datenaustausch (XML standards for service billing)',
+    'konn.r7c2': 'Open standard, invoice 5.0 mandatory since 1 January 2026<sup><a href="#fn-7" aria-label="Footnote 7">7</a></sup>',
+    'konn.r7c3': 'Usable as a document format',
+    'konn.r8c1': 'Lobos, Perigon, careCoach (care homes and home care)',
+    'konn.r8c2': 'Interfaces on a project basis',
+    'konn.r8c3': 'Connection possible; the route runs through the vendor',
+    'konn.r9c1': 'Achilles and Axenita (Axon Lab), curaMED, Ärztekasse systems',
+    'konn.r9c2': 'No publicly documented API',
+    'konn.r9c3': 'The route runs via exports and documents',
+    'konn.p2': 'The honest summary: this field is largely closed. That is precisely why system connections are not at the centre of this article. Report drafts, the knowledge base and fact sheets work with documents and run without any link to the practice software. Where the specialist system speaks the FHIR data standard, one route runs through generic MCP servers. Generic means: they are tied to no single vendor, and they exist as open source.<sup><a href="#fn-8" aria-label="Footnote 8">8</a></sup> For service billing, the Forum Datenaustausch standard invoice 5.0 has been mandatory since 1 January 2026. It is an open file format built on XML that can be read and written as a document.<sup><a href="#fn-7" aria-label="Footnote 7">7</a></sup> How a connection works in principle is described on the <a class="euc-textlink" href="/fr/integrationen">integrations</a> page.',
+    'ds.h2': 'Data protection and professional secrecy: the strictest section',
+    'ds.p1': 'Article 321 of the Swiss Criminal Code names doctors and pharmacists explicitly. It covers their auxiliary staff as well. Under the revised Swiss Data Protection Act, health data counts as sensitive personal data. Together this means: a tool that processes such data is not introduced on the side. This article is not legal advice.',
+    'ds.p2': 'The first step is therefore the easiest: two of the three use cases in this article need no patient data at all. The knowledge base lives on the practice manual, the quality manual and internal procedures; the fact sheets are your own texts. You can start there without a single file leaving the business.',
+    'ds.p3': 'Where patient data does belong, namely in the report draft, the usual measures apply in strict form. The instance runs in ISO 27001 certified data centres in Switzerland or on your own server. There is a <a class="euc-textlink" href="/fr/avv">data processing agreement</a> and a public <a class="euc-textlink" href="/fr/subprozessoren">subprocessor list</a>. Customer data does not train any models. Permissions reach down to individual tools, and the audit log can be exported.',
+    'ds.p4': 'What we do not claim: that patient data is anonymised in the process. A progress report remains personal data even without a name, and anyone promising otherwise is promising too much. The answer lies in where the processing happens and in access control, not in a text filter.',
+    'ds.p5': 'For Spitex organisations and institutions there is more: data of people lacking capacity is processed. Contact with the child and adult protection authority is part of the work as well. Deletion policies and access logging have to be set more strictly there than in a single practice. Care level assessments under BESA or RAI are untouched by all this: they arise in the specialist system and are answered for there. The evidence on operations is available in the <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Frequently asked questions from practices, pharmacies and home care',
+    'faq.q1': 'Is it even permissible to put patient data into an AI system?',
+    'faq.a1': 'You decide that, not the provider. Doctors and pharmacists are bound by Article 321 of the Swiss Criminal Code. Health data is sensitive under the revised Data Protection Act, and processing by a provider requires a data processing agreement. For that reason EU Cowork AI runs in Switzerland or on your own server, customer data does not train any models, and every access appears in the audit log. A large share of the use cases also works entirely without patient data. This answer is not legal advice.',
+    'faq.q2': 'Does the AI make diagnoses or check medication?',
+    'faq.a2': 'No, and deliberately so. Diagnosis, triage, therapy and dosing recommendations, interaction checking and medication checking are not part of the system; such functions would make it a medical device. EU Cowork AI works on administration, documentation, the knowledge base and translation. The medication check stays in the pharmacy’s specialist system.',
+    'faq.q3': 'What does the practice assistant see, and what does the doctor see?',
+    'faq.a3': 'Whatever you define. Permissions apply down to individual tools. They take effect in the order user, role, group and server default, and they are managed in the admin panel. Whoever may not see a folder does not see it through the AI colleague either, and every access lands in the exportable audit log.',
+    'faq.q4': 'Does EU Cowork AI work with our practice software, such as vitomed or Elexis?',
+    'faq.a4': 'Honest answer: usually not directly, because this field is largely closed. That is precisely why the use cases in this article build on documents rather than on system access. Report drafts, the knowledge base and fact sheets run without any connection. Where your specialist system speaks the FHIR data standard or the vendor offers a partner route, a connection via MCP is possible.',
+    'faq.q5': 'What does it cost for a practice with eight staff?',
+    'faq.a5': 'Managed operation costs €15 per person per month, in Switzerland CHF 14, of which €8 or CHF 7.50 is model credit in your organisation’s shared pool. If you self-host, the software costs nothing: it is MIT licensed. All details are on the <a class="euc-textlink" href="/fr/preise">pricing</a> page.',
+    'faq.q6': 'Who is liable if a report draft is wrong?',
+    'faq.a6': 'The professional who signs it. That is why every result is a draft with source references and not a finished report: a language model can produce errors, and the review before the signature is part of the workflow, not an optional extra. This answer is not legal advice.',
+    'faq.q7': 'What applies to clients who lack capacity?',
+    'faq.a7': 'The same rules apply to them, in a stricter form. Deletion policies and access logging have to hold up in a context where the child and adult protection authority reads along, and reports to authorities remain drafts until management clears them. Care level assessments under BESA or RAI still arise in the specialist system. This answer is not legal advice.',
+    'faq.q8': 'How do we start?',
+    'faq.a8': 'With the documents that are yours anyway: fact sheets, the practice manual, the quality manual, hygiene and emergency concepts. This knowledge base needs no patient data, it shows within a few days whether the team actually works with it, and only after that is the question of report drafts worth asking.',
+    'cta.h2': 'Walk through a case of your own with us',
+    'cta.p': 'Bring an insurance enquiry, a fact sheet or a chapter from your quality manual, and we will walk through the workflow together, without patient data. Or sign up and be among the first to start.',
+    'cta.btn1': 'Book a call',
+    'cta.btn2': 'Join the waitlist',
+    'src.h2': 'Sources',
+    'src.p': 'All figures in this article come from the following sources, last checked in August 2026.',
+    'src.fn1': 'gfs.bern on behalf of the FMH, survey on the medical working environment 2025 (N = 1,532, of which 330 in ambulatory care): <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
+    'src.fn2': 'mfe Swiss Family Docs together with the University Centre for Primary Health Care of the University of Basel, workforce study 2025 (published 2 October 2025): <a class="euc-textlink" href="https://www.hausaerzteschweiz.ch/information/news/detail/workforce-studie-2025-hausaerztemangel-verschaerft-sich-grundversorgung-in-der-schweiz-akut-gefaehrdet" target="_blank" rel="noopener">hausaerzteschweiz.ch</a>',
+    'src.fn3': 'Federal Office of Public Health, administrative effort in healthcare, survey among general practitioners running since May 2026: <a class="euc-textlink" href="https://www.bag.admin.ch/de/administrativer-aufwand-im-gesundheitswesen" target="_blank" rel="noopener">bag.admin.ch</a>',
+    'src.fn4': 'pharmaSuisse, quality in the pharmacy, quality assurance system under Article 30 of the Therapeutic Products Act since 1 January 2020: <a class="euc-textlink" href="https://www.pharmasuisse.org/de/dienstleistungen/fuer-apotheken/qualitaet-apotheken" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn5': 'pharmaSuisse, dossier on the shortage of skilled staff, around 1,800 pharmacies with an average of 12.7 people and 9 full-time equivalents: <a class="euc-textlink" href="https://www.pharmasuisse.org/de/politik-und-medien/dossiers/fachkraeftemangel" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn6': 'Spitex Verband Schweiz, around 400 non-profit organisations with more than 40,000 employees: <a class="euc-textlink" href="https://www.spitex.ch/de/verband" target="_blank" rel="noopener">spitex.ch</a>',
+    'src.fn7': 'Forum Datenaustausch, XML standards for service billing, invoice 5.0 mandatory since 1 January 2026: <a class="euc-textlink" href="https://www.forum-datenaustausch.ch/xml-standards" target="_blank" rel="noopener">forum-datenaustausch.ch</a>',
+    'src.fn8': 'WSO2, FHIR MCP Server, a generic open-source connection to FHIR systems: <a class="euc-textlink" href="https://github.com/wso2/fhir-mcp-server" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Continue',
+    'weiter.l1': 'AI in trades and SMEs: three workflows that give office time back',
+    'weiter.l2': 'Security and trust: where the data sits and who can see it',
+    'weiter.l3': 'Documentation: operation, installation and governance in detail',
+    'geprueft': 'Last reviewed: <time datetime="2026-08">August 2026</time>'
+  },
+  fr: {
+    'meta.title': 'IA et logiciels de cabinet et pharmacie | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'IA en cabinet et pharmacie',
+    'hero.eyebrow': 'L’IA au quotidien professionnel',
+    'hero.h1': 'L’IA en cabinet et en pharmacie : trois processus qui rendent du temps d’écriture',
+    'hero.lead': 'Garantie de prise en charge, demande de l’assurance-invalidité (AI), rapport de sortie : le travail d’écriture pour les assureurs et les autorités dévore les soirées, pas les heures de consultation. Cet article montre à travers trois processus comment un collègue IA travaille avec les documents que votre établissement met à disposition, où passe la limite avec le dispositif médical et ce qui s’applique aux données de santé.',
+    'hero.chip': 'Cabinet et pharmacie',
+    'hero.datum': '17 août 2026',
+    'hero.lesezeit': 'Temps de lecture : 12 minutes',
+    'lage.leg1': 'Demande d’un assureur ou d’une autorité, avec un délai',
+    'lage.leg2': 'Extraits mis à disposition depuis votre propre documentation',
+    'lage.leg3': 'Projet de rapport au format de votre entreprise, avec indication de la source',
+    'lage.leg4': 'Contrôle et signature du professionnel',
+    'lage.fig': 'Voici le trajet d’une demande d’assurance à travers le cabinet : du courrier entrant au rapport signé. La signature reste au professionnel.',
+    'kurz.titel': 'En bref',
+    'kurz.p1': 'Les médecins actifs en cabinet ambulatoire consacrent en moyenne 54 minutes par jour de travail aux seules exigences des autorités et des assureurs ; 87 % des praticiens ambulatoires citent les assureurs comme la charge la plus lourde.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI travaille sur l’administration qui entoure les soins : projets de rapports pour les assureurs et les autorités, une base de connaissances interrogeable pour l’équipe, des fiches d’information en plusieurs langues.',
+    'kurz.p3': 'Pas de diagnostic, pas de triage, pas de posologie, pas de contrôle de la médication : de telles fonctions feraient de l’outil un dispositif médical et ne font délibérément pas partie du système.',
+    'kurz.p4': 'Les données de santé sont des données personnelles sensibles. L’instance, c’est-à-dire votre propre exemplaire du système, tourne en Suisse ou sur votre propre serveur. Les droits descendent jusqu’à chaque outil. Les programmes dotés d’une interface documentée, c’est-à-dire d’une voie officielle pour l’échange de données, peuvent être raccordés via le Model Context Protocol (MCP). Chaque accès figure dans le journal d’audit, le registre de tous les accès. Les données des clients n’entraînent aucun modèle.',
+    'toc.titel': 'Sur cette page',
+    'toc.i1': 'Situation de départ',
+    'toc.i2': 'Rapports et demandes des assureurs',
+    'toc.i3': 'Base de connaissances pour l’équipe',
+    'toc.i4': 'Information multilingue',
+    'toc.i5': 'Connecteurs vers les logiciels métier',
+    'toc.i6': 'Protection des données et secret professionnel',
+    'toc.i7': 'Questions fréquentes',
+    'lage.h2': 'Situation de départ : le travail d’écriture croît plus vite que la consultation',
+    'lage.p1': 'Les médecins actifs en cabinet ambulatoire consacrent en moyenne 54 minutes par jour de travail aux seules exigences des autorités et des assureurs, et 87 % des praticiens ambulatoires citent les assureurs comme la charge la plus lourde.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> C’est près d’une heure qui naît chaque jour dans un endroit où personne n’est soigné : au bureau, le plus souvent après la dernière consultation.',
+    'lage.p2': 'Dans le même temps, le temps se raréfie. Les médecins de famille disposent aujourd’hui de 6 heures par semaine de moins pour le traitement qu’il y a 20 ans, et d’ici 2035, 40 % d’entre eux devront être remplacés.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup> Celles et ceux qui restent prennent en charge davantage de patientes et de patients, pas moins de formulaires.',
+    'lage.p3': 'La Confédération mesure désormais cette charge elle-même : depuis mai 2026, l’Office fédéral de la santé publique OFSP (BAG) collecte des données auprès des médecins de famille, les premiers résultats intermédiaires sont annoncés pour août 2026 et le rapport final pour janvier 2027.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> Le débat sur l’allègement est donc lancé. Le courrier d’aujourd’hui attend quand même.',
+    'lage.p4': 'En pharmacie, le calcul diffère, le résultat se ressemble : depuis le 1er janvier 2020, l’article 30 de la loi sur les produits thérapeutiques (LPTh) exige un système d’assurance qualité.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup> Quelque 1 800 pharmacies comptant en moyenne 12,7 personnes pour 9 équivalents plein temps gèrent ainsi chacune son propre système de gestion de la qualité (SGQ). En font partie les instructions de travail, les attestations de formation et le bilan annuel.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> Dans l’aide et les soins à domicile (Spitex), quelque 400 organisations à but non lucratif employant plus de 40 000 personnes prennent en charge environ trois quarts des clientes et des clients.<sup><a href="#fn-6" aria-label="Note 6">6</a></sup> Chacune d’elles rédige des rapports d’évolution destinés aux assureurs et aux autorités.',
+    'lage.p5': 'Le cadre de cet article est ainsi posé, et il est étroit. Un collègue IA ne pose aucun diagnostic, ne fait pas de triage, ne recommande ni thérapie ni posologie, ne contrôle aucune interaction et ne remplace aucun contrôle de la médication. De telles fonctions feraient de l’outil un dispositif médical, avec tout ce que cela implique en matière d’évaluation de la conformité. Il est question ici d’administration, de documentation, de base de connaissances et de traduction. Le contrôle de la médication reste dans le logiciel métier de la pharmacie ; le collègue IA écrit le texte qui l’entoure.',
+    'uc1.h2': 'Cas d’usage 1 : les rapports et les demandes des assureurs sous forme de projet',
+    'uc1.p1': 'Le matin, une demande se trouve dans la boîte de réception : garantie de prise en charge pour une thérapie, avec un délai. Le cabinet met à la disposition du collègue IA la demande ainsi que les extraits de la documentation qui s’y rapportent. En retour arrive un projet de rapport structuré au format de votre entreprise, avec les indications aux endroits où l’assureur les attend, et avec la source de chaque indication reprise. La médecin lit, biffe, complète l’appréciation et signe.',
+    'uc1.p2': 'Le même schéma porte les autres rapports : rapport d’adressage, rapport de sortie, demande AI, et dans l’aide et les soins à domicile le rapport d’évolution destiné à l’assureur ainsi que le rapport à l’autorité de protection de l’enfant et de l’adulte (APEA). Le texte d’accompagnement de la prescription médicale ou de l’annonce des besoins selon l’article 7 de l’ordonnance sur les prestations de l’assurance des soins (OPAS) naît lui aussi sous forme de projet. L’évaluation des besoins et le classement restent dans le logiciel métier et chez le professionnel. Le projet met en ordre ce qui est déjà documenté. Il n’invente rien. Là où une indication manque, une lacune signalée subsiste au lieu d’une formulation qui sonne plausible.',
+    'uc1.leg1': 'La demande, telle qu’elle arrive',
+    'uc1.leg2': 'Extraits mis à disposition et standard de rapport de l’entreprise',
+    'uc1.leg3': 'Projet de rapport avec indication de la source, prêt à signer',
+    'uc1.fig': 'Le projet met en ordre les indications existantes et expose chaque source. L’appréciation professionnelle, c’est le professionnel qui l’écrit lui-même.',
+    'uc1.p3': 'C’est précisément là que se logent les 54 minutes de la situation de départ.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> Ce que le projet ne contient délibérément pas, c’est l’appréciation professionnelle : capacité de travail, pronostic et indication sont formulés par le professionnel. Rien ne part automatiquement, chaque rapport attend la signature.',
+    'uc2.h2': 'Cas d’usage 2 : le savoir de l’équipe devient interrogeable',
+    'uc2.p1': 'L’assistante médicale a une question de tarif, cherche la règle interne pour une annulation de dernière minute ou le bon chapitre du manuel du cabinet. Aujourd’hui, elle interrompt la consultation pour cela. Avec une base de connaissances constituée du manuel du cabinet, des procédures internes et des documents de facturation de l’entreprise, elle obtient la réponse avec l’indication de la source, vérifiable en quelques secondes.',
+    'uc2.p2': 'En pharmacie, c’est le manuel de gestion de la qualité qui devient interrogeable : « Où est écrite notre règle sur la chaîne du froid ? » Et le travail d’écriture lié au système de gestion de la qualité naît des documents existants sous forme de projet, de l’instruction de travail à l’attestation de formation jusqu’au bilan annuel. Le contrôle de la médication, lui, reste dans le logiciel métier, là où il a sa place.',
+    'uc2.leg1': 'Une question en langage courant, à la réception ou au laboratoire',
+    'uc2.leg2': 'Manuel du cabinet, manuel de gestion de la qualité et concepts, ouverts selon les droits',
+    'uc2.leg3': 'Une réponse avec l’indication de la source, vérifiable en quelques secondes',
+    'uc2.fig': 'La base de connaissances répond à partir de vos propres documents et montre d’où vient la réponse. Ce processus n’a besoin d’aucune donnée de patient.',
+    'uc2.p3': 'Dans l’aide et les soins à domicile, ce sont les concepts d’hygiène et d’urgence ainsi que l’intégration des nouvelles collaboratrices et des nouveaux collaborateurs, qui posent leurs questions dans leur langue et obtiennent la réponse à partir des mêmes documents. Les droits descendent jusqu’à chaque outil : qui n’a pas le droit de voir un dossier ne le voit pas non plus par l’intermédiaire du collègue IA, et chaque accès figure dans le journal d’audit.',
+    'uc3.h2': 'Cas d’usage 3 : l’information aux patients et à la clientèle en plusieurs langues',
+    'uc3.p1': 'Une fiche d’information sur la préparation à un examen existe en allemand, validée par un professionnel. Elle donne naissance à la version française, à la version italienne et à la version anglaise, auxquelles s’ajoutent les langues réellement parlées dans le bassin de population et une version en langage simplifié pour toutes les personnes à qui le ton administratif barre l’accès.',
+    'uc3.p2': 'Il en va de même pour les consignes de prise au comptoir et pour les instructions de suivi après une intervention. Avant la remise, chaque version passe par la validation professionnelle, tout comme l’original allemand. Ce qui devient perceptible ensuite : moins de rappels au téléphone et moins de malentendus au comptoir.',
+    'uc3.leg1': 'Une fiche d’information validée, issue de votre propre fonds',
+    'uc3.leg2': 'Transposition et simplification linguistique',
+    'uc3.leg3': 'Plusieurs versions, chacune soumise à la validation professionnelle',
+    'uc3.fig': 'Un original, plusieurs versions linguistiques. Aucune n’est remise avant que le professionnel ne l’ait validée.',
+    'uc3.p3': 'Ici aussi, la limite est claire. Le collègue IA transpose et simplifie un texte validé ; il n’ajoute aucune indication qui ne figure pas dans l’original et n’omet aucune mise en garde. Les quantités, les moments de prise et les posologies sont vérifiés contre l’original avant la validation. Il ne remplace pas l’entretien de conseil.',
+    'konn.h2': 'Connecteurs : ce qui peut être raccordé à votre logiciel métier',
+    'konn.p1': 'Un collègue IA est aussi utile que ce qu’il a le droit d’atteindre. Un connecteur n’est rien d’autre que le lien vers un autre programme. MCP est un standard ouvert pour de tels liens. Il permet de s’adresser à des programmes dotés d’une interface documentée. Chaque outil a son propre droit, et chaque appel est journalisé. Dans la santé, la situation de départ est particulière : beaucoup de choses sont fermées. Voici à quoi ressemble le raccordement de l’IA aux logiciels répandus en cabinet, en pharmacie et dans l’aide et les soins à domicile, vérifié en août 2026 :',
+    'konn.th1': 'Logiciel',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Raccordement à EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r1c2': 'API Graph, documentée publiquement',
+    'konn.r1c3': 'Serveur MCP de Microsoft disponible ; courriel, agenda et fichiers directement accessibles',
+    'konn.r2c1': 'FHIR (standard de données dans la santé)',
+    'konn.r2c2': 'Ancré dans l’ordonnance du DFI sur le dossier électronique du patient (DEP, EPDV-EDI) ; serveurs MCP génériques en open source',
+    'konn.r2c3': 'Raccordement possible via MCP là où le logiciel métier parle FHIR',
+    'konn.r3c1': 'Vitodata vitomed',
+    'konn.r3c2': 'Interfaces par l’éditeur',
+    'konn.r3c3': 'Raccordement possible via MCP, le chemin passe par l’éditeur',
+    'konn.r4c1': 'Elexis (logiciel de cabinet open source)',
+    'konn.r4c2': 'Code source ouvert',
+    'konn.r4c3': 'Raccordement possible via MCP',
+    'konn.r5c1': 'OneDoc, Medicosearch (prise de rendez-vous)',
+    'konn.r5c2': 'Interfaces pour les partenaires',
+    'konn.r5c3': 'Raccordement possible, le chemin passe par l’éditeur',
+    'konn.r6c1': 'HCI Solutions Documedis (données de médication)',
+    'konn.r6c2': 'Interfaces selon l’éditeur, réglées par contrat',
+    'konn.r6c3': 'Possible pour les données de base et les textes, le chemin passe par l’éditeur ; le contrôle de la médication s’exécute dans le logiciel métier et n’est pas effectué par le collègue IA.',
+    'konn.r7c1': 'Forum Datenaustausch (standards XML pour la facturation des prestations)',
+    'konn.r7c2': 'Standard ouvert, facture 5.0 obligatoire depuis le 1er janvier 2026<sup><a href="#fn-7" aria-label="Note 7">7</a></sup>',
+    'konn.r7c3': 'Utilisable comme format de document',
+    'konn.r8c1': 'Lobos, Perigon, careCoach (EMS et aide et soins à domicile)',
+    'konn.r8c2': 'Interfaces au cas par cas selon les projets',
+    'konn.r8c3': 'Raccordement possible, le chemin passe par l’éditeur',
+    'konn.r9c1': 'Achilles et Axenita (Axon Lab), curaMED, systèmes de l’Ärztekasse',
+    'konn.r9c2': 'Aucune API publiquement documentée',
+    'konn.r9c3': 'Le chemin passe par les exports et les documents',
+    'konn.p2': 'Le résumé honnête : le domaine est largement fermé. C’est précisément pour cela que le raccordement des systèmes n’est pas au centre de cet article. Le projet de rapport, la base de connaissances et les fiches d’information travaillent avec des documents et fonctionnent sans raccordement au logiciel de cabinet. Là où le logiciel métier parle le standard de données FHIR, un chemin passe par des serveurs MCP génériques. Générique signifie : ils ne sont liés à aucun éditeur, et ils existent en open source.<sup><a href="#fn-8" aria-label="Note 8">8</a></sup> Pour la facturation des prestations, le standard facture 5.0 du Forum Datenaustausch est obligatoire depuis le 1er janvier 2026. C’est un format de fichier ouvert construit sur XML, qui se lit et s’écrit comme un document.<sup><a href="#fn-7" aria-label="Note 7">7</a></sup> Le fonctionnement de principe d’un raccordement est décrit sur la page <a class="euc-textlink" href="/fr/integrationen">Intégrations</a>.',
+    'ds.h2': 'Protection des données et secret professionnel : la section la plus stricte',
+    'ds.p1': 'L’article 321 du code pénal suisse (CP) nomme expressément les médecins et les pharmaciens. Il couvre également leurs auxiliaires. Selon la loi révisée sur la protection des données, les données de santé sont des données personnelles sensibles. Les deux ensemble signifient qu’un outil qui traite de telles données ne s’introduit pas en passant. Cet article ne remplace pas un conseil juridique.',
+    'ds.p2': 'Le premier pas est donc le plus simple : deux des trois cas d’usage de cet article n’ont besoin d’aucune donnée de patient. La base de connaissances vit du manuel du cabinet, du manuel de gestion de la qualité et des procédures internes ; les fiches d’information sont vos propres textes. On peut commencer là sans qu’un seul dossier ne quitte l’entreprise.',
+    'ds.p3': 'Là où les données de patients ont leur place, à savoir dans le projet de rapport, les mesures habituelles s’appliquent dans une exécution stricte. L’instance tourne dans des centres de données certifiés ISO 27001 en Suisse ou sur votre propre serveur. Il existe un <a class="euc-textlink" href="/fr/avv">contrat de sous-traitance</a> et une <a class="euc-textlink" href="/fr/subprozessoren">liste des sous-traitants ultérieurs</a> publique. Les données des clients n’entraînent aucun modèle. Les droits descendent jusqu’à chaque outil, et le journal d’audit est exportable.',
+    'ds.p4': 'Ce que nous n’affirmons pas : que les données de patients seraient anonymisées au passage. Un rapport d’évolution reste une donnée personnelle même sans nom, et qui promet autre chose promet trop. La réponse tient au lieu du traitement et au contrôle des accès, pas à un masque de texte.',
+    'ds.p5': 'Dans les organisations d’aide et de soins à domicile et dans les institutions s’ajoute le fait que des données de personnes incapables de discernement sont traitées. Le contact avec l’APEA fait lui aussi partie du travail. Le concept de suppression et la journalisation des accès doivent y être fixés plus strictement que dans un cabinet individuel. Les évaluations selon BESA ou RAI n’en sont pas touchées : elles naissent dans le logiciel métier et y sont assumées. Les justificatifs sur l’exploitation figurent dans le <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Questions fréquentes des cabinets, des pharmacies et de l’aide et des soins à domicile',
+    'faq.q1': 'Des données de patients ont-elles seulement le droit d’entrer dans un système d’IA ?',
+    'faq.a1': 'C’est vous qui en décidez, pas le fournisseur. Les médecins et les pharmaciens sont soumis à l’art. 321 CP. Les données de santé sont sensibles selon la loi révisée sur la protection des données, et le traitement par un fournisseur exige un contrat de sous-traitance. C’est pourquoi EU Cowork AI tourne en Suisse ou sur votre propre serveur, les données des clients n’entraînent aucun modèle, et chaque accès figure dans le journal d’audit. Une grande partie des cas d’usage se passe en outre entièrement de données de patients. Cette réponse ne remplace pas un conseil juridique.',
+    'faq.q2': 'L’IA pose-t-elle des diagnostics ou contrôle-t-elle les médicaments ?',
+    'faq.a2': 'Non, et délibérément pas. Le diagnostic, le triage, la recommandation thérapeutique et posologique, le contrôle des interactions et le contrôle de la médication ne font pas partie du système ; de telles fonctions feraient de l’outil un dispositif médical. EU Cowork AI travaille sur l’administration, la documentation, la base de connaissances et la traduction. Le contrôle de la médication reste dans le logiciel métier de la pharmacie.',
+    'faq.q3': 'Que voit l’assistante médicale, que voit la médecin ?',
+    'faq.a3': 'Ce que vous définissez. Les droits descendent jusqu’à chaque outil. Ils s’appliquent dans l’ordre utilisateur, rôle, groupe et valeur par défaut du serveur, et se gèrent dans le panneau d’administration. Qui n’a pas le droit de voir un dossier ne le voit pas non plus par l’intermédiaire du collègue IA, et chaque accès atterrit dans le journal d’audit exportable.',
+    'faq.q4': 'EU Cowork AI fonctionne-t-il avec notre logiciel de cabinet, par exemple vitomed ou Elexis ?',
+    'faq.a4': 'Réponse honnête : en règle générale pas directement, car le domaine est largement fermé. C’est précisément pour cela que les cas d’usage de cet article misent sur les documents plutôt que sur l’accès aux systèmes. Le projet de rapport, la base de connaissances et les fiches d’information fonctionnent sans raccordement. Là où votre logiciel métier parle le standard de données FHIR ou là où l’éditeur propose une voie partenaire, un raccordement via MCP est possible.',
+    'faq.q5': 'Combien cela coûte-t-il pour un cabinet de huit personnes ?',
+    'faq.a5': 'L’exploitation managée coûte 15 € par personne et par mois, 14 CHF en Suisse, dont 8 €, respectivement 7.50 CHF, sous forme de crédit de modèles dans le pool commun de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Toutes les indications figurent sur la page <a class="euc-textlink" href="/fr/preise">Tarifs</a>.',
+    'faq.q6': 'Qui répond si un projet de rapport est faux ?',
+    'faq.a6': 'Le professionnel qui signe. C’est pourquoi chaque résultat est un projet avec indication de la source et non un rapport achevé : un modèle de langue peut produire des erreurs, et le contrôle avant la signature fait partie du processus, pas des options supplémentaires. Cette réponse ne remplace pas un conseil juridique.',
+    'faq.q7': 'Qu’en est-il des clientes et des clients incapables de discernement ?',
+    'faq.a7': 'Pour eux, les mêmes règles s’appliquent dans une exécution plus stricte. Le concept de suppression et la journalisation des accès doivent tenir dans un contexte où l’APEA lit par-dessus l’épaule, et les rapports aux autorités restent des projets jusqu’à la validation par la direction. Les évaluations selon BESA ou RAI naissent toujours dans le logiciel métier. Cette réponse ne remplace pas un conseil juridique.',
+    'faq.q8': 'Comment commençons-nous ?',
+    'faq.a8': 'Avec les documents qui vous appartiennent de toute façon : fiches d’information, manuel du cabinet, manuel de gestion de la qualité, concepts d’hygiène et d’urgence. Cette base de connaissances n’a besoin d’aucune donnée de patient, elle montre en quelques jours si l’équipe travaille avec elle, et ce n’est qu’ensuite que la question du projet de rapport vaut la peine d’être posée.',
+    'cta.h2': 'Parcourez avec nous un cas qui vous est propre',
+    'cta.p': 'Apportez une demande d’assureur, une fiche d’information ou un chapitre du manuel de gestion de la qualité, et nous parcourons le processus ensemble, sans données de patients. Ou inscrivez-vous et démarrez parmi les premiers.',
+    'cta.btn1': 'Réserver un rendez-vous',
+    'cta.btn2': 'Rejoindre la liste d’attente',
+    'src.h2': 'Sources',
+    'src.p': 'Tous les chiffres de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.',
+    'src.fn1': 'gfs.bern sur mandat de la FMH, enquête sur l’environnement de travail des médecins 2025 (N = 1 532, dont 330 praticiens ambulatoires) : <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
+    'src.fn2': 'mfe Médecins de famille et de l’enfance Suisse avec le Centre universitaire de médecine de famille des deux Bâle (uniham-bb), étude Workforce 2025 (publiée le 2 octobre 2025) : <a class="euc-textlink" href="https://www.hausaerzteschweiz.ch/information/news/detail/workforce-studie-2025-hausaerztemangel-verschaerft-sich-grundversorgung-in-der-schweiz-akut-gefaehrdet" target="_blank" rel="noopener">hausaerzteschweiz.ch</a>',
+    'src.fn3': 'OFSP, charge administrative dans le système de santé, enquête auprès des médecins de famille depuis mai 2026 : <a class="euc-textlink" href="https://www.bag.admin.ch/de/administrativer-aufwand-im-gesundheitswesen" target="_blank" rel="noopener">bag.admin.ch</a>',
+    'src.fn4': 'pharmaSuisse, qualité en pharmacie, système d’assurance qualité selon l’article 30 de la loi sur les produits thérapeutiques depuis le 1er janvier 2020 : <a class="euc-textlink" href="https://www.pharmasuisse.org/de/dienstleistungen/fuer-apotheken/qualitaet-apotheken" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn5': 'pharmaSuisse, dossier pénurie de personnel qualifié, quelque 1 800 pharmacies comptant en moyenne 12,7 personnes pour 9 équivalents plein temps : <a class="euc-textlink" href="https://www.pharmasuisse.org/de/politik-und-medien/dossiers/fachkraeftemangel" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn6': 'Spitex Verband Schweiz, quelque 400 organisations à but non lucratif employant plus de 40 000 personnes : <a class="euc-textlink" href="https://www.spitex.ch/de/verband" target="_blank" rel="noopener">spitex.ch</a>',
+    'src.fn7': 'Forum Datenaustausch, standards XML pour la facturation des prestations, facture 5.0 obligatoire depuis le 1er janvier 2026 : <a class="euc-textlink" href="https://www.forum-datenaustausch.ch/xml-standards" target="_blank" rel="noopener">forum-datenaustausch.ch</a>',
+    'src.fn8': 'WSO2, FHIR MCP Server, raccordement générique open source aux systèmes FHIR : <a class="euc-textlink" href="https://github.com/wso2/fhir-mcp-server" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Suite',
+    'weiter.l1': 'L’IA dans l’artisanat et les PME : trois processus qui rendent du temps de bureau',
+    'weiter.l2': 'Security et Trust : où se trouvent les données et qui les voit',
+    'weiter.l3': 'Documentation : exploitation, installation et gouvernance en détail',
+    'geprueft': 'Dernière vérification : <time datetime="2026-08">août 2026</time>'
+  },
+  it: {
+    'meta.title': 'IA e software per studio e farmacia | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'IA in studio medico e farmacia',
+    'hero.eyebrow': 'L’IA nel lavoro quotidiano',
+    'hero.h1': 'L’IA in studio medico e in farmacia: tre processi che restituiscono tempo di scrittura',
+    'hero.lead': 'Garanzia di assunzione dei costi, richiesta dell’assicurazione invalidità (AI), rapporto di dimissione: il lavoro di scrittura per assicuratori e autorità divora la fine della giornata, non la visita. Questo articolo mostra su tre processi come un collega IA lavora con i documenti che la sua struttura mette a disposizione, dove passa il confine con il dispositivo medico e che cosa vale per i dati sanitari.',
+    'hero.chip': 'Studio medico e farmacia',
+    'hero.datum': '17 agosto 2026',
+    'hero.lesezeit': 'Tempo di lettura: 12 minuti',
+    'lage.leg1': 'Richiesta di un assicuratore o di un’autorità, con termine',
+    'lage.leg2': 'Estratti messi a disposizione dalla documentazione interna',
+    'lage.leg3': 'Bozza di rapporto nel formato interno, con indicazione della fonte',
+    'lage.leg4': 'Controllo e firma del professionista',
+    'lage.fig': 'Ecco come una richiesta assicurativa attraversa lo studio: dalla posta in entrata al rapporto firmato. La firma resta al professionista.',
+    'kurz.titel': 'In breve',
+    'kurz.p1': 'I medici attivi in ambulatorio dedicano in media 54 minuti per giornata lavorativa alle sole prescrizioni di autorità e assicuratori; l’87% di chi lavora in ambito ambulatoriale indica gli assicuratori come il peso maggiore.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI lavora sull’amministrazione che sta attorno alla cura: bozze di rapporto per assicuratori e autorità, una base di conoscenza interrogabile per il team, schede informative in più lingue.',
+    'kurz.p3': 'Nessuna diagnosi, nessun triage, nessun dosaggio, nessun controllo dei medicamenti: funzioni di questo tipo farebbero del sistema un dispositivo medico e sono consapevolmente escluse.',
+    'kurz.p4': 'I dati sanitari sono dati personali degni di particolare protezione. L’istanza, cioè la sua copia del sistema, è gestita in Svizzera o sul suo server. I permessi arrivano fino al singolo strumento. I programmi con un’interfaccia documentata, cioè con una via ufficiale per lo scambio di dati, si possono collegare tramite il Model Context Protocol (MCP). Ogni accesso finisce nel registro di audit, l’elenco di tutti gli accessi. I dati dei clienti non addestrano alcun modello.',
+    'toc.titel': 'In questa pagina',
+    'toc.i1': 'Situazione di partenza',
+    'toc.i2': 'Rapporti e richieste degli assicuratori',
+    'toc.i3': 'Base di conoscenza per il team',
+    'toc.i4': 'Informazione plurilingue',
+    'toc.i5': 'Connettori verso i software di settore',
+    'toc.i6': 'Protezione dei dati e segreto professionale',
+    'toc.i7': 'Domande frequenti',
+    'lage.h2': 'Situazione di partenza: il lavoro di scrittura cresce più in fretta della visita',
+    'lage.p1': 'I medici attivi in ambulatorio dedicano in media 54 minuti per giornata lavorativa alle sole prescrizioni di autorità e assicuratori, e l’87% di chi lavora in ambito ambulatoriale indica gli assicuratori come il peso maggiore.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> È quasi un’ora che nasce ogni giorno in un luogo dove non si cura nessuno: alla scrivania, di solito dopo l’ultima consultazione.',
+    'lage.p2': 'Nel frattempo il tempo si fa più scarso. I medici di famiglia hanno oggi 6 ore alla settimana in meno per il trattamento rispetto a 20 anni fa, ed entro il 2035 il 40% di loro dovrà essere sostituito.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> Chi resta prende in carico più pazienti, non meno moduli.',
+    'lage.p3': 'La Confederazione misura ormai l’onere da sé: dal maggio 2026 l’Ufficio federale della sanità pubblica UFSP (BAG) raccoglie dati presso i medici di famiglia, i primi risultati intermedi sono annunciati per l’agosto 2026 e il rapporto finale per il gennaio 2027.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> La discussione sullo sgravio è dunque avviata. La posta di oggi aspetta comunque.',
+    'lage.p4': 'In farmacia il conto è diverso, il risultato simile: dal 1° gennaio 2020 l’articolo 30 della legge sugli agenti terapeutici (LATer) richiede un sistema di garanzia della qualità.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> Circa 1.800 farmacie con in media 12,7 persone per 9 equivalenti a tempo pieno gestiscono così ciascuna il proprio sistema di gestione della qualità (SGQ). Ne fanno parte istruzioni di lavoro, attestati di formazione e un bilancio annuale.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Nella Spitex circa 400 organizzazioni senza scopo di lucro con oltre 40.000 collaboratori assistono circa tre quarti delle clienti e dei clienti.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup> Ognuna di esse scrive rapporti di decorso ad assicuratori e autorità.',
+    'lage.p5': 'Il quadro di questo articolo è così fissato, ed è stretto. Un collega IA non pone alcuna diagnosi, non fa triage, non raccomanda né terapia né dosaggio, non verifica interazioni e non sostituisce alcun controllo dei medicamenti. Funzioni di questo tipo farebbero del sistema un dispositivo medico, con tutto ciò che ne consegue in termini di valutazione della conformità. Qui si tratta di amministrazione, documentazione, base di conoscenza e traduzione. Il controllo dei medicamenti resta nel software di settore della farmacia; il collega IA scrive il testo che gli sta attorno.',
+    'uc1.h2': 'Caso d’uso 1: rapporti e richieste degli assicuratori come bozza',
+    'uc1.p1': 'Al mattino nella posta in entrata c’è una richiesta: garanzia di assunzione dei costi per una terapia, con termine. Lo studio mette a disposizione del collega IA la richiesta e gli estratti della documentazione che le appartengono. In risposta arriva una bozza di rapporto strutturata nel formato interno, con le indicazioni nei punti in cui l’assicuratore se le aspetta e con la fonte di ogni indicazione ripresa. La medica legge, cancella, completa la valutazione e firma.',
+    'uc1.p2': 'Lo stesso schema regge gli altri rapporti: rapporto di invio, rapporto di dimissione, richiesta AI e, nella Spitex, il rapporto di decorso all’assicuratore e il rapporto all’autorità di protezione dei minori e degli adulti (APMA). Anche il testo di accompagnamento alla prescrizione medica o alla segnalazione del fabbisogno secondo l’articolo 7 dell’ordinanza sulle prestazioni (OPre) nasce come bozza. La valutazione del fabbisogno e la classificazione restano nel software di settore e presso il professionista. La bozza mette in ordine ciò che è già documentato. Non inventa nulla. Dove manca un’indicazione resta una lacuna segnalata invece di una formulazione che suona plausibile.',
+    'uc1.leg1': 'La richiesta, così come arriva',
+    'uc1.leg2': 'Estratti messi a disposizione e standard di rapporto della struttura',
+    'uc1.leg3': 'Bozza di rapporto con indicazione della fonte, pronta per la firma',
+    'uc1.fig': 'La bozza mette in ordine le indicazioni esistenti e dichiara ogni fonte. La valutazione specialistica la scrive il professionista stesso.',
+    'uc1.p3': 'È esattamente qui che stanno i 54 minuti della situazione di partenza.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> Ciò che la bozza consapevolmente non contiene è la valutazione specialistica: capacità lavorativa, prognosi e indicazione le formula il professionista. Nulla esce automaticamente, ogni rapporto attende la firma.',
+    'uc2.h2': 'Caso d’uso 2: il sapere del team diventa interrogabile',
+    'uc2.p1': 'L’assistente di studio medico ha una domanda tariffale, cerca la regola interna per una disdetta dell’ultimo momento o il capitolo giusto nel manuale dello studio. Oggi per questo interrompe la visita. Con una base di conoscenza formata dal manuale dello studio, dalle procedure interne e dai documenti di fatturazione della struttura ottiene la risposta con l’indicazione della fonte, verificabile in pochi secondi.',
+    'uc2.p2': 'In farmacia diventa interrogabile il manuale di gestione della qualità: «Dove è scritta la nostra regola sulla catena del freddo?» E il lavoro di scrittura legato al sistema di gestione della qualità nasce come bozza dai documenti esistenti, dall’istruzione di lavoro all’attestato di formazione fino al bilancio annuale. Il controllo dei medicamenti resta intanto nel software di settore, dove gli compete.',
+    'uc2.leg1': 'Domanda in linguaggio comune, alla reception o in laboratorio',
+    'uc2.leg2': 'Manuale dello studio, manuale di gestione della qualità e concetti, aperti secondo i permessi',
+    'uc2.leg3': 'Risposta con indicazione della fonte, verificabile in pochi secondi',
+    'uc2.fig': 'La base di conoscenza risponde a partire dai suoi documenti e mostra da dove viene la risposta. Per questo processo non servono dati dei pazienti.',
+    'uc2.p3': 'Nella Spitex sono i concetti di igiene e di emergenza e l’inserimento dei nuovi collaboratori, che chiedono nella loro lingua e ottengono la risposta dagli stessi documenti. I permessi arrivano fino al singolo strumento: chi non può vedere un archivio non lo vede nemmeno tramite il collega IA, e ogni accesso finisce nel registro di audit.',
+    'uc3.h2': 'Caso d’uso 3: informazione a pazienti e clienti in più lingue',
+    'uc3.p1': 'Una scheda informativa sulla preparazione a un esame esiste in tedesco, approvata sul piano specialistico. Da essa nascono la versione francese, quella italiana e quella inglese, oltre alle lingue effettivamente parlate nel bacino d’utenza e a una versione linguisticamente semplificata per tutti coloro ai quali il tono burocratico sbarra l’accesso.',
+    'uc3.p2': 'Lo stesso vale per le indicazioni di assunzione al banco e per le istruzioni di follow-up dopo un intervento. Prima della consegna ogni versione passa dall’approvazione specialistica, come l’originale tedesco. Ciò che si nota dopo: meno telefonate di chiarimento e meno malintesi al banco.',
+    'uc3.leg1': 'Scheda informativa approvata, dal proprio archivio',
+    'uc3.leg2': 'Trasposizione e semplificazione linguistica',
+    'uc3.leg3': 'Più versioni, ciascuna da sottoporre all’approvazione specialistica',
+    'uc3.fig': 'Un originale, più versioni linguistiche. Nessuna viene consegnata prima che il professionista l’abbia approvata.',
+    'uc3.p3': 'Anche qui il confine è chiaro. Il collega IA traspone e semplifica un testo approvato; non aggiunge indicazioni che nell’originale non ci sono e non omette alcuna avvertenza. Quantità, tempi e dosaggi vengono verificati sull’originale prima dell’approvazione. Il colloquio di consulenza non lo sostituisce.',
+    'konn.h2': 'Connettori: che cosa si può collegare al suo software di settore',
+    'konn.p1': 'Un collega IA è utile quanto ciò che gli è permesso raggiungere. Un connettore non è altro che il collegamento a un altro programma. MCP è uno standard aperto per collegamenti di questo tipo. Tramite esso si possono interpellare programmi dotati di interfaccia documentata. Ogni singolo strumento ha un permesso proprio e ogni chiamata viene registrata. Nella sanità la situazione di partenza è particolare: molto è chiuso. Ecco come si presenta il collegamento dell’IA ai software diffusi per studio medico, farmacia e Spitex, verificato nell’agosto 2026:',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interfaccia',
+    'konn.th3': 'Collegamento a EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r1c2': 'API Graph, documentata pubblicamente',
+    'konn.r1c3': 'Server MCP di Microsoft disponibile; e-mail, calendario e file interpellabili direttamente',
+    'konn.r2c1': 'FHIR (standard di dati nella sanità)',
+    'konn.r2c2': 'Ancorato nell’ordinanza del DFI sulla cartella informatizzata del paziente (CIP, EPDV-EDI); server MCP generici come open source',
+    'konn.r2c3': 'Collegamento possibile tramite MCP dove il software di settore parla FHIR',
+    'konn.r3c1': 'Vitodata vitomed',
+    'konn.r3c2': 'Interfacce tramite il produttore',
+    'konn.r3c3': 'Collegamento possibile tramite MCP, la via passa dal produttore',
+    'konn.r4c1': 'Elexis (software per studi medici open source)',
+    'konn.r4c2': 'Codice sorgente aperto',
+    'konn.r4c3': 'Collegamento possibile tramite MCP',
+    'konn.r5c1': 'OneDoc, Medicosearch (prenotazione di appuntamenti)',
+    'konn.r5c2': 'Interfacce per partner',
+    'konn.r5c3': 'Collegamento possibile, la via passa dal produttore',
+    'konn.r6c1': 'HCI Solutions Documedis (dati sui medicamenti)',
+    'konn.r6c2': 'Interfacce secondo il produttore, regolate contrattualmente',
+    'konn.r6c3': 'Possibile per dati anagrafici e testuali, la via passa dal produttore; il controllo dei medicamenti gira nel software di settore e non viene eseguito tramite il collega IA.',
+    'konn.r7c1': 'Forum Datenaustausch (standard XML per la fatturazione delle prestazioni)',
+    'konn.r7c2': 'Standard aperto, fattura 5.0 obbligatoria dal 1° gennaio 2026<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup>',
+    'konn.r7c3': 'Utilizzabile come formato di documento',
+    'konn.r8c1': 'Lobos, Perigon, careCoach (case di cura e Spitex)',
+    'konn.r8c2': 'Interfacce legate ai singoli progetti',
+    'konn.r8c3': 'Collegamento possibile, la via passa dal produttore',
+    'konn.r9c1': 'Achilles e Axenita (Axon Lab), curaMED, sistemi dell’Ärztekasse',
+    'konn.r9c2': 'Nessuna API documentata pubblicamente',
+    'konn.r9c3': 'La via passa da esportazioni e documenti',
+    'konn.p2': 'Il riassunto onesto: il campo è in larga parte chiuso. Proprio per questo il collegamento dei sistemi non è al centro di questo articolo. Bozza di rapporto, base di conoscenza e schede informative lavorano con documenti e funzionano senza collegamento al software dello studio. Dove il software di settore parla lo standard di dati FHIR, una via passa da server MCP generici. Generico significa: non sono legati ad alcun produttore ed esistono come open source.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup> Per la fatturazione delle prestazioni vale dal 1° gennaio 2026 lo standard fattura 5.0 del Forum Datenaustausch. È un formato di file aperto costruito su XML, che si lascia leggere e scrivere come documento.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> Come funziona un collegamento in generale è descritto nella pagina <a class="euc-textlink" href="/fr/integrationen">Integrazioni</a>.',
+    'ds.h2': 'Protezione dei dati e segreto professionale: la sezione più severa',
+    'ds.p1': 'L’articolo 321 del Codice penale svizzero (CP) nomina espressamente i medici e i farmacisti. Comprende anche i loro ausiliari. Secondo la legge riveduta sulla protezione dei dati, i dati sanitari sono dati personali degni di particolare protezione. Le due cose insieme significano che uno strumento che tratta simili dati non si introduce di sfuggita. Questo articolo non sostituisce una consulenza legale.',
+    'ds.p2': 'Il primo passo è quindi il più semplice: due dei tre casi d’uso di questo articolo non hanno affatto bisogno di dati dei pazienti. La base di conoscenza vive del manuale dello studio, del manuale di gestione della qualità e delle procedure interne; le schede informative sono i suoi testi. Da lì si può cominciare senza che un solo incarto lasci la struttura.',
+    'ds.p3': 'Dove i dati dei pazienti hanno invece la loro sede, ossia nella bozza di rapporto, vale il consueto in esecuzione severa. L’istanza è gestita in centri di calcolo certificati ISO 27001 in Svizzera o sul suo server. Esistono un <a class="euc-textlink" href="/fr/avv">accordo sul trattamento dei dati</a> e un <a class="euc-textlink" href="/fr/subprozessoren">elenco dei sub-responsabili</a> pubblico. I dati dei clienti non addestrano alcun modello. I permessi arrivano fino al singolo strumento e il registro di audit è esportabile.',
+    'ds.p4': 'Ciò che non affermiamo: che i dati dei pazienti vengano nel frattempo anonimizzati. Un rapporto di decorso resta un dato personale anche senza nome, e chi promette altro promette troppo. La risposta sta nel luogo del trattamento e nel controllo degli accessi, non in una maschera di testo.',
+    'ds.p5': 'Nelle organizzazioni Spitex e nelle istituzioni si aggiunge che vengono trattati dati di persone incapaci di discernimento. Anche il contatto con l’APMA fa parte del lavoro. Il piano di cancellazione e la registrazione degli accessi vanno impostati lì più severamente che in uno studio individuale. Le classificazioni secondo BESA o RAI restano intatte: nascono nel software di settore e lì se ne risponde. Le prove sull’esercizio si trovano nel <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Domande frequenti da studi medici, farmacie e Spitex',
+    'faq.q1': 'I dati dei pazienti possono davvero entrare in un sistema di IA?',
+    'faq.a1': 'Lo decide lei, non il fornitore. Medici e farmacisti sottostanno all’art. 321 CP. I dati sanitari sono degni di particolare protezione secondo la legge riveduta sulla protezione dei dati e per il trattamento da parte di un fornitore serve un accordo sul trattamento dei dati. Per questo EU Cowork AI è gestito in Svizzera o sul suo server, i dati dei clienti non addestrano alcun modello e ogni accesso finisce nel registro di audit. Gran parte dei casi d’uso fa inoltre completamente a meno dei dati dei pazienti. Questa risposta non sostituisce una consulenza legale.',
+    'faq.q2': 'L’IA pone diagnosi o verifica i medicamenti?',
+    'faq.a2': 'No, e consapevolmente no. Diagnosi, triage, raccomandazione terapeutica e di dosaggio, verifica delle interazioni e controllo dei medicamenti non fanno parte del sistema; funzioni di questo tipo ne farebbero un dispositivo medico. EU Cowork AI lavora su amministrazione, documentazione, base di conoscenza e traduzione. Il controllo dei medicamenti resta nel software di settore della farmacia.',
+    'faq.q3': 'Che cosa vede l’assistente di studio medico, che cosa vede la medica?',
+    'faq.a3': 'Quello che stabilisce lei. I permessi arrivano fino al singolo strumento. Valgono nell’ordine utente, ruolo, gruppo e impostazione predefinita del server e si gestiscono nel pannello di amministrazione. Chi non può vedere un archivio non lo vede nemmeno tramite il collega IA, e ogni accesso finisce nel registro di audit esportabile.',
+    'faq.q4': 'EU Cowork AI funziona con il nostro software per lo studio, per esempio vitomed o Elexis?',
+    'faq.a4': 'Risposta onesta: di regola non direttamente, perché il campo è in larga parte chiuso. Proprio per questo i casi d’uso di questo articolo puntano sui documenti invece che sull’accesso ai sistemi. Bozza di rapporto, base di conoscenza e schede informative funzionano senza collegamento. Dove il suo software di settore parla lo standard di dati FHIR o il produttore offre una via per i partner, un collegamento tramite MCP è possibile.',
+    'faq.q5': 'Quanto costa per uno studio con otto collaboratori?',
+    'faq.a5': 'L’esercizio gestito costa 15 € per persona al mese, in Svizzera 14 CHF, di cui 8 €, rispettivamente 7.50 CHF, come credito modelli nel pool condiviso della sua organizzazione. Chi ospita in proprio non paga nulla per il software: è rilasciato con licenza MIT. Tutte le indicazioni si trovano nella pagina <a class="euc-textlink" href="/fr/preise">Prezzi</a>.',
+    'faq.q6': 'Chi risponde se una bozza di rapporto è sbagliata?',
+    'faq.a6': 'Il professionista che firma. Per questo ogni risultato è una bozza con indicazione della fonte e non un rapporto finito: un modello linguistico può produrre errori, e il controllo prima della firma fa parte del processo, non delle opzioni aggiuntive. Questa risposta non sostituisce una consulenza legale.',
+    'faq.q7': 'Che cosa vale per clienti incapaci di discernimento?',
+    'faq.a7': 'Per loro valgono le stesse regole in esecuzione più severa. Il piano di cancellazione e la registrazione degli accessi devono reggere in un contesto in cui l’APMA legge con noi, e i rapporti alle autorità restano bozze fino all’approvazione da parte della direzione. Le classificazioni secondo BESA o RAI nascono sempre nel software di settore. Questa risposta non sostituisce una consulenza legale.',
+    'faq.q8': 'Come cominciamo?',
+    'faq.a8': 'Con i documenti che le appartengono comunque: schede informative, manuale dello studio, manuale di gestione della qualità, concetti di igiene e di emergenza. Questa base di conoscenza non ha bisogno di dati dei pazienti, mostra nel giro di pochi giorni se il team ci lavora, e solo dopo vale la pena porre la domanda sulla bozza di rapporto.',
+    'cta.h2': 'Percorra con noi un caso suo',
+    'cta.p': 'Porti una richiesta di un assicuratore, una scheda informativa o un capitolo del manuale di gestione della qualità e percorriamo insieme il processo, senza dati dei pazienti. Oppure si iscriva e parta tra i primi.',
+    'cta.btn1': 'Prenotare un appuntamento',
+    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'src.h2': 'Fonti',
+    'src.p': 'Tutti i dati di questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.',
+    'src.fn1': 'gfs.bern su incarico della FMH, indagine sull’ambiente di lavoro dei medici 2025 (N = 1.532, di cui 330 attivi in ambulatorio): <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
+    'src.fn2': 'mfe Medici di famiglia e dell’infanzia Svizzera con il Centro universitario di medicina di famiglia dei due Basilea (uniham-bb), studio Workforce 2025 (pubblicato il 2 ottobre 2025): <a class="euc-textlink" href="https://www.hausaerzteschweiz.ch/information/news/detail/workforce-studie-2025-hausaerztemangel-verschaerft-sich-grundversorgung-in-der-schweiz-akut-gefaehrdet" target="_blank" rel="noopener">hausaerzteschweiz.ch</a>',
+    'src.fn3': 'UFSP, onere amministrativo nella sanità, rilevamento presso i medici di famiglia dal maggio 2026: <a class="euc-textlink" href="https://www.bag.admin.ch/de/administrativer-aufwand-im-gesundheitswesen" target="_blank" rel="noopener">bag.admin.ch</a>',
+    'src.fn4': 'pharmaSuisse, qualità in farmacia, sistema di garanzia della qualità secondo l’articolo 30 della legge sugli agenti terapeutici dal 1° gennaio 2020: <a class="euc-textlink" href="https://www.pharmasuisse.org/de/dienstleistungen/fuer-apotheken/qualitaet-apotheken" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn5': 'pharmaSuisse, dossier carenza di personale qualificato, circa 1.800 farmacie con in media 12,7 persone per 9 equivalenti a tempo pieno: <a class="euc-textlink" href="https://www.pharmasuisse.org/de/politik-und-medien/dossiers/fachkraeftemangel" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn6': 'Spitex Verband Schweiz, circa 400 organizzazioni senza scopo di lucro con oltre 40.000 collaboratori: <a class="euc-textlink" href="https://www.spitex.ch/de/verband" target="_blank" rel="noopener">spitex.ch</a>',
+    'src.fn7': 'Forum Datenaustausch, standard XML per la fatturazione delle prestazioni, fattura 5.0 obbligatoria dal 1° gennaio 2026: <a class="euc-textlink" href="https://www.forum-datenaustausch.ch/xml-standards" target="_blank" rel="noopener">forum-datenaustausch.ch</a>',
+    'src.fn8': 'WSO2, FHIR MCP Server, collegamento generico open source ai sistemi FHIR: <a class="euc-textlink" href="https://github.com/wso2/fhir-mcp-server" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Avanti',
+    'weiter.l1': 'L’IA nell’artigianato e nelle PMI: tre processi che restituiscono tempo d’ufficio',
+    'weiter.l2': 'Security e Trust: dove si trovano i dati e chi li vede',
+    'weiter.l3': 'Documentazione: esercizio, installazione e governance in dettaglio',
+    'geprueft': 'Ultima verifica: <time datetime="2026-08">agosto 2026</time>'
+  },
+  es: {
+    'meta.title': 'IA y software de consulta y farmacia | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'IA en consulta y farmacia',
+    'hero.eyebrow': 'La IA en el trabajo diario',
+    'hero.h1': 'La IA en la consulta y la farmacia: tres procesos que devuelven tiempo de escritura',
+    'hero.lead': 'Garantía de asunción de costes, solicitud del seguro de invalidez (IV), informe de alta: el trabajo de escritura para aseguradoras y autoridades se come el final de la jornada, no la consulta. Este artículo muestra con tres procesos cómo un colega de IA trabaja con los documentos que su empresa pone a disposición, por dónde pasa el límite con el producto sanitario y qué se aplica a los datos de salud.',
+    'hero.chip': 'Consulta y farmacia',
+    'hero.datum': '17 de agosto de 2026',
+    'hero.lesezeit': 'Tiempo de lectura: 12 minutos',
+    'lage.leg1': 'Solicitud de una aseguradora o de una autoridad, con plazo',
+    'lage.leg2': 'Extractos puestos a disposición de la documentación propia',
+    'lage.leg3': 'Borrador de informe en el formato interno, con indicación de la fuente',
+    'lage.leg4': 'Control y firma del profesional',
+    'lage.fig': 'Así recorre la consulta una solicitud de una aseguradora: del correo entrante al informe firmado. La firma sigue estando en manos del profesional.',
+    'kurz.titel': 'En resumen',
+    'kurz.p1': 'Los médicos que trabajan en consulta ambulatoria dedican de media 54 minutos por jornada laboral solo a los requisitos de autoridades y aseguradoras; el 87 % de quienes trabajan en el ámbito ambulatorio señala a las aseguradoras como la mayor carga.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI trabaja en la administración que rodea a la atención: borradores de informe para aseguradoras y autoridades, una base de conocimiento consultable para el equipo, hojas informativas en varios idiomas.',
+    'kurz.p3': 'Ningún diagnóstico, ningún triaje, ninguna dosificación, ningún control de la medicación: tales funciones convertirían al sistema en un producto sanitario y quedan conscientemente fuera.',
+    'kurz.p4': 'Los datos de salud son datos personales especialmente dignos de protección. La instancia, es decir, su propia copia del sistema, se ejecuta en Suiza o en su propio servidor. Los permisos llegan hasta cada herramienta. Los programas con una interfaz documentada, es decir, con una vía oficial para el intercambio de datos, se pueden conectar mediante el Model Context Protocol (MCP). Cada acceso queda en el registro de auditoría, el listado de todos los accesos. Los datos de los clientes no entrenan ningún modelo.',
+    'toc.titel': 'En esta página',
+    'toc.i1': 'Punto de partida',
+    'toc.i2': 'Informes y solicitudes de las aseguradoras',
+    'toc.i3': 'Base de conocimiento para el equipo',
+    'toc.i4': 'Información multilingüe',
+    'toc.i5': 'Conectores al software del sector',
+    'toc.i6': 'Protección de datos y secreto profesional',
+    'toc.i7': 'Preguntas frecuentes',
+    'lage.h2': 'Punto de partida: el trabajo de escritura crece más deprisa que la consulta',
+    'lage.p1': 'Los médicos que trabajan en consulta ambulatoria dedican de media 54 minutos por jornada laboral solo a los requisitos de autoridades y aseguradoras, y el 87 % de quienes trabajan en el ámbito ambulatorio señala a las aseguradoras como la mayor carga.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> Es casi una hora que surge cada día en un lugar donde no se trata a nadie: en el escritorio, casi siempre después de la última consulta.',
+    'lage.p2': 'Al mismo tiempo, el tiempo escasea. Los médicos de familia disponen hoy de 6 horas semanales menos para el tratamiento que hace 20 años, y para 2035 habrá que sustituir al 40 % de ellos.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> Quien se queda asume más pacientes, no menos formularios.',
+    'lage.p3': 'La Confederación mide ya ella misma esa carga: desde mayo de 2026, la Oficina Federal de Salud Pública OFSP (BAG) recoge datos entre los médicos de familia; los primeros resultados intermedios están anunciados para agosto de 2026 y el informe final para enero de 2027.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> El debate sobre el alivio está, pues, en marcha. El correo de hoy espera igualmente.',
+    'lage.p4': 'En la farmacia la cuenta es distinta y el resultado parecido: desde el 1 de enero de 2020, el artículo 30 de la Ley suiza de productos terapéuticos (LPTh) exige un sistema de garantía de calidad.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> Alrededor de 1.800 farmacias con una media de 12,7 personas para 9 equivalentes a tiempo completo llevan así cada una su propio sistema de gestión de la calidad (SGC). Forman parte de él las instrucciones de trabajo, los justificantes de formación y el balance anual.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> En la atención y los cuidados a domicilio (Spitex), unas 400 organizaciones sin ánimo de lucro con más de 40.000 empleados atienden a alrededor de tres cuartas partes de las clientas y los clientes.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup> Cada una de ellas escribe informes de evolución para aseguradoras y autoridades.',
+    'lage.p5': 'Con ello queda fijado el marco de este artículo, y es estrecho. Un colega de IA no establece ningún diagnóstico, no hace triaje, no recomienda terapia ni dosificación, no verifica interacciones y no sustituye ningún control de la medicación. Tales funciones convertirían al sistema en un producto sanitario, con todo lo que conlleva una evaluación de la conformidad. Aquí se trata de administración, documentación, base de conocimiento y traducción. El control de la medicación permanece en el software del sector de la farmacia; el colega de IA escribe el texto que lo rodea.',
+    'uc1.h2': 'Caso de uso 1: informes y solicitudes de las aseguradoras como borrador',
+    'uc1.p1': 'Por la mañana hay una solicitud en la bandeja de entrada: garantía de asunción de costes para una terapia, con plazo. La consulta pone a disposición del colega de IA la solicitud y los extractos de la documentación que le corresponden. De vuelta llega un borrador de informe estructurado en el formato interno, con los datos en los lugares donde la aseguradora los espera y con la fuente de cada dato recogido. La médica lee, tacha, completa la valoración y firma.',
+    'uc1.p2': 'El mismo patrón sostiene los demás informes: informe de derivación, informe de alta, solicitud del IV y, en la atención a domicilio, el informe de evolución para la aseguradora y el informe a la autoridad de protección del niño y del adulto (KESB). También el texto de acompañamiento de la prescripción médica o de la notificación de necesidad según el artículo 7 de la ordenanza suiza sobre prestaciones del seguro de enfermedad (KLV) surge como borrador. La evaluación de la necesidad y la clasificación permanecen en el software del sector y en manos del profesional. El borrador ordena lo que ya está documentado. No inventa nada. Donde falta un dato queda una laguna marcada en lugar de una formulación que suena plausible.',
+    'uc1.leg1': 'La solicitud, tal como llega',
+    'uc1.leg2': 'Extractos puestos a disposición y el estándar de informe de la empresa',
+    'uc1.leg3': 'Borrador de informe con indicación de la fuente, listo para firmar',
+    'uc1.fig': 'El borrador ordena los datos existentes y muestra cada fuente. La valoración profesional la escribe el propio profesional.',
+    'uc1.p3': 'Justo ahí están los 54 minutos del punto de partida.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> Lo que el borrador conscientemente no contiene es la valoración profesional: capacidad laboral, pronóstico e indicación los formula el profesional. Nada sale automáticamente, cada informe espera la firma.',
+    'uc2.h2': 'Caso de uso 2: el conocimiento del equipo se vuelve consultable',
+    'uc2.p1': 'La asistente de consulta médica tiene una duda de tarifas, busca la norma interna para una anulación de última hora o el capítulo adecuado del manual de la consulta. Hoy interrumpe la consulta para eso. Con una base de conocimiento formada por el manual de la consulta, los procedimientos internos y los documentos de facturación de la empresa obtiene la respuesta con la indicación de la fuente, verificable en segundos.',
+    'uc2.p2': 'En la farmacia se vuelve consultable el manual de gestión de la calidad: «¿Dónde está escrita nuestra norma sobre la cadena de frío?» Y el trabajo de escritura del sistema de gestión de la calidad nace como borrador de los documentos existentes, desde la instrucción de trabajo y el justificante de formación hasta el balance anual. El control de la medicación permanece entretanto en el software del sector, donde le corresponde.',
+    'uc2.leg1': 'Pregunta en lenguaje corriente, en recepción o en el laboratorio',
+    'uc2.leg2': 'Manual de la consulta, manual de gestión de la calidad y conceptos, abiertos según los permisos',
+    'uc2.leg3': 'Respuesta con indicación de la fuente, verificable en segundos',
+    'uc2.fig': 'La base de conocimiento responde a partir de sus propios documentos y muestra de dónde procede la respuesta. Este proceso no necesita datos de pacientes.',
+    'uc2.p3': 'En la atención a domicilio son los conceptos de higiene y de emergencia y la incorporación de nuevos empleados, que preguntan en su idioma y obtienen la respuesta de los mismos documentos. Los permisos llegan hasta cada herramienta: quien no puede ver un archivo tampoco lo ve a través del colega de IA, y cada acceso queda en el registro de auditoría.',
+    'uc3.h2': 'Caso de uso 3: información a pacientes y clientes en varios idiomas',
+    'uc3.p1': 'Una hoja informativa sobre la preparación para una exploración existe en alemán, validada por un profesional. De ella surgen la versión francesa, la italiana y la inglesa, además de los idiomas que realmente se hablan en la zona de influencia y una versión en lenguaje simplificado para todas las personas a las que el tono administrativo les cierra el acceso.',
+    'uc3.p2': 'Lo mismo vale para las indicaciones de toma en el mostrador y para las instrucciones de seguimiento tras una intervención. Antes de la entrega, cada versión pasa por la validación profesional, igual que el original alemán. Lo que se nota después: menos llamadas de consulta y menos malentendidos en el mostrador.',
+    'uc3.leg1': 'Hoja informativa validada, del fondo propio',
+    'uc3.leg2': 'Traslación y simplificación lingüística',
+    'uc3.leg3': 'Varias versiones, cada una para la validación profesional',
+    'uc3.fig': 'Un original, varias versiones lingüísticas. Ninguna se entrega antes de que el profesional la haya validado.',
+    'uc3.p3': 'También aquí el límite es claro. El colega de IA traslada y simplifica un texto validado; no añade indicaciones que no figuren en el original y no omite ninguna advertencia. Las cantidades, los momentos de toma y las dosis se comprueban contra el original antes de la validación. No sustituye la conversación de asesoramiento.',
+    'konn.h2': 'Conectores: qué se puede conectar a su software del sector',
+    'konn.p1': 'Un colega de IA es tan útil como aquello a lo que se le permite llegar. Un conector no es otra cosa que el enlace con otro programa. MCP es un estándar abierto para enlaces de este tipo. A través de él se pueden dirigir programas con interfaz documentada. Cada herramienta tiene su propio permiso y cada llamada queda registrada. En la sanidad el punto de partida es particular: mucho está cerrado. Así se presenta la conexión de la IA con el software habitual en consultas, farmacias y atención a domicilio, comprobado en agosto de 2026:',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interfaz',
+    'konn.th3': 'Conexión con EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r1c2': 'API Graph, documentada públicamente',
+    'konn.r1c3': 'Servidor MCP de Microsoft disponible; correo, calendario y archivos accesibles directamente',
+    'konn.r2c1': 'FHIR (estándar de datos en la sanidad)',
+    'konn.r2c2': 'Anclado en la ordenanza del Departamento Federal del Interior suizo sobre la historia clínica electrónica del paciente (EPDV-EDI); servidores MCP genéricos como código abierto',
+    'konn.r2c3': 'Conexión posible mediante MCP allí donde el software del sector habla FHIR',
+    'konn.r3c1': 'Vitodata vitomed',
+    'konn.r3c2': 'Interfaces a través del fabricante',
+    'konn.r3c3': 'Conexión posible mediante MCP, el camino pasa por el fabricante',
+    'konn.r4c1': 'Elexis (software de consulta de código abierto)',
+    'konn.r4c2': 'Código fuente abierto',
+    'konn.r4c3': 'Conexión posible mediante MCP',
+    'konn.r5c1': 'OneDoc, Medicosearch (reserva de citas)',
+    'konn.r5c2': 'Interfaces para socios',
+    'konn.r5c3': 'Conexión posible, el camino pasa por el fabricante',
+    'konn.r6c1': 'HCI Solutions Documedis (datos de medicación)',
+    'konn.r6c2': 'Interfaces según el fabricante, reguladas por contrato',
+    'konn.r6c3': 'Posible para datos maestros y de texto, el camino pasa por el fabricante; el control de la medicación se ejecuta en el software del sector y no se realiza a través del colega de IA.',
+    'konn.r7c1': 'Forum Datenaustausch (estándares XML para la facturación de prestaciones)',
+    'konn.r7c2': 'Estándar abierto, factura 5.0 obligatoria desde el 1 de enero de 2026<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup>',
+    'konn.r7c3': 'Utilizable como formato de documento',
+    'konn.r8c1': 'Lobos, Perigon, careCoach (residencias y atención a domicilio)',
+    'konn.r8c2': 'Interfaces según el proyecto',
+    'konn.r8c3': 'Conexión posible, el camino pasa por el fabricante',
+    'konn.r9c1': 'Achilles y Axenita (Axon Lab), curaMED, sistemas de la Ärztekasse',
+    'konn.r9c2': 'Ninguna API documentada públicamente',
+    'konn.r9c3': 'El camino pasa por exportaciones y documentos',
+    'konn.p2': 'El resumen honesto: el campo está en gran parte cerrado. Precisamente por eso la conexión de sistemas no está en el centro de este artículo. El borrador de informe, la base de conocimiento y las hojas informativas trabajan con documentos y funcionan sin conexión con el software de la consulta. Allí donde el software del sector habla el estándar de datos FHIR, un camino pasa por servidores MCP genéricos. Genérico significa: no están ligados a ningún fabricante y existen como código abierto.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup> Para la facturación de prestaciones rige desde el 1 de enero de 2026 el estándar factura 5.0 del Forum Datenaustausch. Es un formato de archivo abierto construido sobre XML que se puede leer y escribir como documento.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> Cómo funciona una conexión en general se explica en la página <a class="euc-textlink" href="/fr/integrationen">Integraciones</a>.',
+    'ds.h2': 'Protección de datos y secreto profesional: la sección más estricta',
+    'ds.p1': 'El artículo 321 del Código Penal suizo (CP) nombra expresamente a los médicos y a los farmacéuticos. Alcanza también a sus auxiliares. Según la ley revisada de protección de datos, los datos de salud son datos personales especialmente dignos de protección. Ambas cosas juntas significan que una herramienta que trata tales datos no se introduce de pasada. Este artículo no sustituye al asesoramiento jurídico.',
+    'ds.p2': 'El primer paso es, por tanto, el más sencillo: dos de los tres casos de uso de este artículo no necesitan dato alguno de pacientes. La base de conocimiento vive del manual de la consulta, del manual de gestión de la calidad y de los procedimientos internos; las hojas informativas son sus propios textos. Con eso se puede empezar sin que un solo expediente salga de la empresa.',
+    'ds.p3': 'Donde los datos de pacientes sí tienen su lugar, es decir, en el borrador de informe, rige lo habitual en una ejecución estricta. La instancia se ejecuta en centros de datos certificados según ISO 27001 en Suiza o en su propio servidor. Existen un <a class="euc-textlink" href="/fr/avv">acuerdo de encargo de tratamiento</a> y una <a class="euc-textlink" href="/fr/subprozessoren">lista de subencargados</a> pública. Los datos de los clientes no entrenan ningún modelo. Los permisos llegan hasta cada herramienta y el registro de auditoría se puede exportar.',
+    'ds.p4': 'Lo que no afirmamos: que los datos de pacientes queden anonimizados por el camino. Un informe de evolución sigue siendo un dato personal aunque no lleve nombre, y quien promete otra cosa promete demasiado. La respuesta está en el lugar del tratamiento y en el control de accesos, no en una máscara de texto.',
+    'ds.p5': 'En las organizaciones de atención a domicilio y en las instituciones se añade que se tratan datos de personas incapaces de discernimiento. También el contacto con la KESB forma parte del trabajo. El concepto de eliminación y el registro de accesos deben fijarse allí de forma más estricta que en una consulta individual. Las clasificaciones según BESA o RAI quedan al margen: surgen en el software del sector y allí se responde de ellas. Los justificantes sobre la operación están en el <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Preguntas frecuentes de consultas, farmacias y atención a domicilio',
+    'faq.q1': '¿Pueden entrar realmente datos de pacientes en un sistema de IA?',
+    'faq.a1': 'Eso lo decide usted, no el proveedor. Los médicos y los farmacéuticos están sujetos al art. 321 CP. Los datos de salud son especialmente dignos de protección según la ley revisada de protección de datos, y el tratamiento por un proveedor exige un acuerdo de encargo de tratamiento. Por eso EU Cowork AI se ejecuta en Suiza o en su propio servidor, los datos de los clientes no entrenan ningún modelo y cada acceso queda en el registro de auditoría. Además, una gran parte de los casos de uso funciona por completo sin datos de pacientes. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'faq.q2': '¿La IA establece diagnósticos o verifica medicamentos?',
+    'faq.a2': 'No, y conscientemente no. El diagnóstico, el triaje, la recomendación terapéutica y de dosificación, la verificación de interacciones y el control de la medicación no forman parte del sistema; tales funciones lo convertirían en un producto sanitario. EU Cowork AI trabaja en administración, documentación, base de conocimiento y traducción. El control de la medicación permanece en el software del sector de la farmacia.',
+    'faq.q3': '¿Qué ve la asistente de consulta médica y qué ve la médica?',
+    'faq.a3': 'Lo que usted determine. Los permisos llegan hasta cada herramienta. Se aplican en el orden usuario, rol, grupo y valor predeterminado del servidor, y se gestionan en el panel de administración. Quien no puede ver un archivo tampoco lo ve a través del colega de IA, y cada acceso acaba en el registro de auditoría exportable.',
+    'faq.q4': '¿Funciona EU Cowork AI con nuestro software de consulta, por ejemplo vitomed o Elexis?',
+    'faq.a4': 'Respuesta honesta: por regla general no directamente, porque el campo está en gran parte cerrado. Precisamente por eso los casos de uso de este artículo apuestan por los documentos en lugar de por el acceso a los sistemas. El borrador de informe, la base de conocimiento y las hojas informativas funcionan sin conexión. Allí donde su software del sector habla el estándar de datos FHIR o el fabricante ofrece una vía para socios, es posible una conexión mediante MCP.',
+    'faq.q5': '¿Cuánto cuesta para una consulta con ocho empleados?',
+    'faq.a5': 'La operación gestionada cuesta 15 € por persona y mes, en Suiza 14 CHF, de los cuales 8 €, respectivamente 7.50 CHF, son saldo de modelos en el fondo común de su organización. Quien se aloja por su cuenta no paga nada por el software: está bajo licencia MIT. Toda la información está en la página <a class="euc-textlink" href="/fr/preise">Precios</a>.',
+    'faq.q6': '¿Quién responde si un borrador de informe es erróneo?',
+    'faq.a6': 'El profesional que firma. Por eso cada resultado es un borrador con indicación de la fuente y no un informe terminado: un modelo de lenguaje puede producir errores, y el control antes de la firma forma parte del proceso, no de las opciones adicionales. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'faq.q7': '¿Qué se aplica a clientas y clientes incapaces de discernimiento?',
+    'faq.a7': 'Para ellos rigen las mismas reglas en una ejecución más estricta. El concepto de eliminación y el registro de accesos deben resistir en un contexto en el que la KESB lee también, y los informes a las autoridades siguen siendo borradores hasta la validación por la dirección. Las clasificaciones según BESA o RAI siguen surgiendo en el software del sector. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'faq.q8': '¿Cómo empezamos?',
+    'faq.a8': 'Con los documentos que de todos modos le pertenecen: hojas informativas, manual de la consulta, manual de gestión de la calidad, conceptos de higiene y de emergencia. Esta base de conocimiento no necesita datos de pacientes, muestra en pocos días si el equipo trabaja con ella, y solo después vale la pena plantear la pregunta del borrador de informe.',
+    'cta.h2': 'Recorra con nosotros un caso propio',
+    'cta.p': 'Traiga una solicitud de una aseguradora, una hoja informativa o un capítulo del manual de gestión de la calidad y recorremos juntos el proceso, sin datos de pacientes. O inscríbase y empiece entre los primeros.',
+    'cta.btn1': 'Reservar una cita',
+    'cta.btn2': 'Únase a la lista de espera',
+    'src.h2': 'Fuentes',
+    'src.p': 'Todas las cifras de este artículo proceden de las fuentes siguientes, comprobadas por última vez en agosto de 2026.',
+    'src.fn1': 'gfs.bern por encargo de la FMH, encuesta sobre el entorno laboral de los médicos 2025 (N = 1.532, de los cuales 330 en el ámbito ambulatorio): <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
+    'src.fn2': 'mfe Médicos de familia y de la infancia Suiza junto con el Centro Universitario de Medicina de Familia de Basilea (uniham-bb), estudio Workforce 2025 (publicado el 2 de octubre de 2025): <a class="euc-textlink" href="https://www.hausaerzteschweiz.ch/information/news/detail/workforce-studie-2025-hausaerztemangel-verschaerft-sich-grundversorgung-in-der-schweiz-akut-gefaehrdet" target="_blank" rel="noopener">hausaerzteschweiz.ch</a>',
+    'src.fn3': 'OFSP, carga administrativa en el sistema sanitario, encuesta entre los médicos de familia desde mayo de 2026: <a class="euc-textlink" href="https://www.bag.admin.ch/de/administrativer-aufwand-im-gesundheitswesen" target="_blank" rel="noopener">bag.admin.ch</a>',
+    'src.fn4': 'pharmaSuisse, calidad en la farmacia, sistema de garantía de calidad según el artículo 30 de la Ley de productos terapéuticos desde el 1 de enero de 2020: <a class="euc-textlink" href="https://www.pharmasuisse.org/de/dienstleistungen/fuer-apotheken/qualitaet-apotheken" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn5': 'pharmaSuisse, dosier sobre la escasez de personal cualificado, alrededor de 1.800 farmacias con una media de 12,7 personas para 9 equivalentes a tiempo completo: <a class="euc-textlink" href="https://www.pharmasuisse.org/de/politik-und-medien/dossiers/fachkraeftemangel" target="_blank" rel="noopener">pharmasuisse.org</a>',
+    'src.fn6': 'Spitex Verband Schweiz, alrededor de 400 organizaciones sin ánimo de lucro con más de 40.000 empleados: <a class="euc-textlink" href="https://www.spitex.ch/de/verband" target="_blank" rel="noopener">spitex.ch</a>',
+    'src.fn7': 'Forum Datenaustausch, estándares XML para la facturación de prestaciones, factura 5.0 obligatoria desde el 1 de enero de 2026: <a class="euc-textlink" href="https://www.forum-datenaustausch.ch/xml-standards" target="_blank" rel="noopener">forum-datenaustausch.ch</a>',
+    'src.fn8': 'WSO2, FHIR MCP Server, conexión genérica de código abierto a sistemas FHIR: <a class="euc-textlink" href="https://github.com/wso2/fhir-mcp-server" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Continuar',
+    'weiter.l1': 'La IA en los oficios y las pymes: tres procesos que devuelven tiempo de oficina',
+    'weiter.l2': 'Security y Trust: dónde están los datos y quién los ve',
+    'weiter.l3': 'Documentación: operación, instalación y gobernanza en detalle',
+    'geprueft': 'Última revisión: <time datetime="2026-08">agosto de 2026</time>'
+  }
+};
+</script>
+
+</body>
+</html>

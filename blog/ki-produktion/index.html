@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">KI in der Produktion: ERP, Abacus, SAP | EU Cowork AI</title>
+<meta name="description" content="Wissen aus Serviceberichten sichern, Pflichtenhefte prüfen, Audits vorbereiten. KI-Anbindung an Abacus, SAP Business One und Odoo für Schweizer Betriebe.">
+<link rel="canonical" href="https://eucowork.ai/blog/ki-produktion">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/blog/ki-produktion">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/blog/ki-produktion">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/blog/ki-produktion">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/blog/ki-produktion">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/blog/ki-produktion">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/blog/ki-produktion">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://eucowork.ai/blog/ki-produktion">
+<meta property="og:title" content="KI in der Produktion: ERP, Abacus, SAP | EU Cowork AI">
+<meta property="og:description" content="Wissen erhalten, Pflichtenhefte prüfen, Audits vorbereiten: so arbeitet ein KI-Kollege im Produktionsbetrieb.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-share-de.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa.">
+<meta property="article:published_time" content="2026-03-17">
+<meta property="article:modified_time" content="2026-08-18">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KI in der Produktion: ERP, Abacus, SAP | EU Cowork AI">
+<meta name="twitter:description" content="Serviceberichte, Pflichtenhefte und QS-Unterlagen: drei KI-Anwendungsfälle für Fertigung und Lebensmittelproduktion.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-share-de.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Zum Inhalt springen</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/preise" data-i18n="chrome.nav.pricing">Preise</a>
+    <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/self-hosting" data-i18n="chrome.cta.selfhost">Selbst betreiben</a>
+    <a class="euc-btn-primary" href="/warteliste" data-i18n="chrome.cta.waitlist">Auf die Warteliste</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/preise" data-i18n="chrome.nav.pricing">Preise</a>
+      <a href="/docs" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/warteliste" data-i18n="chrome.cta.waitlist">Auf die Warteliste</a>
+      <a class="euc-btn-secondary" href="/self-hosting" data-i18n="chrome.cta.selfhost">Selbst betreiben</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main blog-article" id="inhalt">
+
+  <!-- ==================== HERO ==================== -->
+  <div class="blog-hero">
+    <div class="euc-wrap-wide">
+      <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/" data-i18n="chrome.crumb.home">Start</a></li>
+        <li><a href="/blog" data-i18n="crumb.blog">Blog</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">KI in der Produktion</span></li>
+      </ol>
+    </nav>
+      <div class="blog-hero-grid">
+        <div class="blog-hero-text">
+          <p class="euc-eyebrow" data-i18n="hero.eyebrow">KI im Arbeitsalltag</p>
+          <h1 data-i18n="hero.h1">KI in der Produktion: drei Abläufe, die Wissen im Unternehmen halten</h1>
+          <p class="euc-lead" data-i18n="hero.lead">Der erfahrenste Mitarbeiter geht in zwei Jahren in Pension, das Pflichtenheft für die nächste Offerte hat 140 Seiten, und das Audit steht im Frühjahr an. Dieser Artikel zeigt an drei Abläufen, wie ein KI-Kollege mit dem Wissen Ihres Betriebs arbeitet, was sich an Ihr ERP anbinden lässt und wo die Grenzen liegen.</p>
+          <p class="blog-hero-meta">
+            <span class="chip" data-i18n="hero.chip">Produktion</span>
+            <time datetime="2026-03-17" data-i18n="hero.datum">17. März 2026</time>
+            <span data-i18n="hero.lesezeit">Lesezeit: 12 Minuten</span>
+          </p>
+        </div>
+        <div class="blog-hero-art" aria-hidden="true">
+          <svg viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path class="fig-soft" d="M40 352 H604"></path>
+
+            <path class="fig-fill-tint fig-eu-mid" d="M122 117 L135 116 L135 132 L122 131 L121 134 L120 137 L129 146 L118 157 L109 148 L106 149 L103 150 L104 163 L88 163 L89 150 L86 149 L83 148 L74 157 L63 146 L72 137 L71 134 L70 131 L57 132 L57 116 L70 117 L71 114 L72 111 L63 102 L74 91 L83 100 L86 99 L89 98 L88 85 L104 85 L103 98 L106 99 L109 100 L118 91 L129 102 L120 111 L121 114 Z"></path>
+            <circle class="fig-fill-ice fig-line" cx="96" cy="124" r="13"></circle>
+
+            <rect class="fig-panel" x="168" y="66" width="96" height="126" rx="8"></rect>
+            <rect class="fig-fill-ice fig-eu-mid" x="192" y="58" width="48" height="16" rx="5"></rect>
+            <path class="fig-eu-mid" d="M184 100 h50"></path>
+            <path class="fig-line" d="M184 122 h64 M184 140 h64 M184 158 h64 M184 176 h44"></path>
+
+            <rect class="fig-fill-tint fig-line" x="44" y="296" width="256" height="22" rx="11"></rect>
+            <circle class="fig-soft" cx="70" cy="307" r="8"></circle>
+            <circle class="fig-soft" cx="124" cy="307" r="8"></circle>
+            <circle class="fig-soft" cx="178" cy="307" r="8"></circle>
+            <circle class="fig-soft" cx="232" cy="307" r="8"></circle>
+            <circle class="fig-soft" cx="278" cy="307" r="8"></circle>
+            <path class="fig-soft" d="M92 318 v34 M256 318 v34"></path>
+
+            <rect class="fig-panel" x="58" y="248" width="58" height="48" rx="6"></rect>
+            <path class="fig-line" d="M58 266 h58 M87 248 v18"></path>
+            <rect class="fig-panel" x="136" y="248" width="58" height="48" rx="6"></rect>
+            <path class="fig-line" d="M136 266 h58 M165 248 v18"></path>
+            <rect class="fig-fill-tint fig-line" x="214" y="248" width="58" height="48" rx="6"></rect>
+            <path class="fig-line" d="M214 266 h58 M243 248 v18"></path>
+
+            <rect class="fig-panel" x="336" y="318" width="76" height="34" rx="8"></rect>
+            <rect class="fig-fill-ice fig-eu" x="366" y="256" width="16" height="64" rx="8"></rect>
+            <path class="fig-eu" d="M374 256 L330 206 M330 206 L258 220"></path>
+            <circle class="fig-fill-ice fig-eu" cx="374" cy="256" r="8"></circle>
+            <circle class="fig-fill-ice fig-eu" cx="330" cy="206" r="7"></circle>
+            <path class="fig-eu" d="M240 222 h36"></path>
+            <rect class="fig-fill-ice fig-eu" x="246" y="222" width="9" height="18" rx="3"></rect>
+            <rect class="fig-fill-ice fig-eu" x="261" y="222" width="9" height="18" rx="3"></rect>
+
+            <path class="fig-soft" d="M264 100 C400 80 430 150 510 242"></path>
+            <path class="fig-flow fig-eu" d="M264 100 C400 80 430 150 510 242"></path>
+
+            <rect class="fig-panel" x="452" y="242" width="150" height="110" rx="8"></rect>
+            <path class="fig-eu-mid" d="M472 264 h56"></path>
+            <path class="fig-line" d="M472 286 h110 M472 304 h110 M472 322 h66"></path>
+            <path class="fig-eu" d="M554 322 l8 8 16 -18"></path>
+            <circle class="fig-dot-gold" cx="586" cy="264" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="blog-rail" aria-label="Lesefortschritt">
+    <ol>
+      <li><a href="#lage" data-i18n="toc.i1">Ausgangslage</a></li>
+      <li><a href="#wissen" data-i18n="toc.i2">Erfahrungswissen erhalten</a></li>
+      <li><a href="#lastenheft" data-i18n="toc.i3">Pflichtenhefte und Ausschreibungen</a></li>
+      <li><a href="#qs" data-i18n="toc.i4">Qualitätssicherung und Audit</a></li>
+      <li><a href="#konnektoren" data-i18n="toc.i5">Konnektoren zu ERP und Office</a></li>
+      <li><a href="#datenschutz" data-i18n="toc.i6">Geheimnisschutz und Datenschutz</a></li>
+      <li><a href="#fragen" data-i18n="toc.i7">Häufige Fragen</a></li>
+    </ol>
+  </nav>
+
+  <div class="euc-wrap">
+
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.titel">Kurz gesagt</p>
+      <ul>
+        <li data-i18n="kurz.p1">Nur 17 % der KMU haben eine definierte Digitalstrategie, gegenüber fast 50 % der Grossunternehmen.<sup><a href="#fn-1" aria-label="Fussnote 1">1</a></sup></li>
+        <li data-i18n="kurz.p2">Produktionsnahe KI steckt in der Schweizer Tech-Industrie meist noch im Versuch: Die Hälfte der Unternehmen hat sie nicht erwogen, 10 % führen Pilotversuche durch.<sup><a href="#fn-2" aria-label="Fussnote 2">2</a></sup></li>
+        <li data-i18n="kurz.p3">EU Cowork AI arbeitet mit dem Wissen Ihres Betriebs. Serviceberichte, Prüfprotokolle, Notizen zu Stücklisten und Änderungsanträge werden zur Wissensbasis: einer Sammlung Ihrer eigenen Unterlagen, der Sie in ganzen Sätzen Fragen stellen können.</li>
+        <li data-i18n="kurz.p4">Ihre Konstruktionsdaten bleiben in der Schweiz oder auf Ihrem eigenen Server und trainieren keine Modelle. Ihr ERP lässt sich anbinden, wenn es eine dokumentierte Schnittstelle hat. Eine Schnittstelle ist die Stelle, über die zwei Programme Daten austauschen; das Model Context Protocol (MCP) ist der offene Standard, über den ein KI-Programm sie nutzt.</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.titel">Auf dieser Seite</p>
+      <ol>
+        <li><a href="#lage" data-i18n="toc.i1">Ausgangslage</a></li>
+        <li><a href="#wissen" data-i18n="toc.i2">Erfahrungswissen erhalten</a></li>
+        <li><a href="#lastenheft" data-i18n="toc.i3">Pflichtenhefte und Ausschreibungen</a></li>
+        <li><a href="#qs" data-i18n="toc.i4">Qualitätssicherung und Audit</a></li>
+        <li><a href="#konnektoren" data-i18n="toc.i5">Konnektoren zu ERP und Office</a></li>
+        <li><a href="#datenschutz" data-i18n="toc.i6">Geheimnisschutz und Datenschutz</a></li>
+        <li><a href="#fragen" data-i18n="toc.i7">Häufige Fragen</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== AUSGANGSLAGE ==================== -->
+    <section class="euc-section">
+      <h2 id="lage" data-i18n="lage.h2">Ausgangslage: die Strategie fehlt, das Wissen geht in Pension</h2>
+      <p data-i18n="lage.p1">Nur 17 % der KMU haben eine definierte Digitalstrategie, gegenüber fast 50 % der Grossunternehmen. Das zeigt eine Erhebung von Swissmem zu Industrie 4.0, an der sich 267 Unternehmen aus der Deutschschweiz und 54 aus der Westschweiz beteiligt haben.<sup><a href="#fn-1" aria-label="Fussnote 1">1</a></sup> Bei der künstlichen Intelligenz ist der Abstand zwischen Ankündigung und Werkstatt noch grösser. Die ETH Zürich hat dazu mit Swissmem und Next Industries über 200 Schweizer Tech-Unternehmen befragt. Die Hälfte hat produktionsnahe KI noch nicht erwogen, 10 % führen Pilotversuche durch.<sup><a href="#fn-2" aria-label="Fussnote 2">2</a></sup></p>
+      <p data-i18n="lage.p2">Die Zurückhaltung hat gute Gründe. Swissmem nennt als Hürden Sicherheitsrisiken und Datenschutzfragen, regulatorische Anforderungen sowie Datenstruktur und Datenqualität.<sup><a href="#fn-4" aria-label="Fussnote 4">4</a></sup> Wer Konstruktionsdaten in eine fremde Cloud gibt, handelt sich ein Problem ein, das kein Effizienzgewinn aufwiegt. Und wer eine Ablage hat, die über dreissig Jahre gewachsen ist, weiss, dass Datenqualität nicht auf Knopfdruck entsteht. Die brauchbare Antwort darauf heisst nicht abwarten, sondern klein und kontrolliert anfangen.</p>
+      <p data-i18n="lage.p3">Denn eine Uhr läuft, und sie hängt im Personalbüro. Swissmem benennt den Wissensverlust durch Pensionierungen als Kernproblem. Der Verband betreibt dazu das Forschungsprojekt Digitaler Wissenserhalt im Unternehmen, in dem Sprachmodelle eine über Jahrzehnte gewachsene, uneinheitliche Dokumentation wieder auffindbar machen.<sup><a href="#fn-3" aria-label="Fussnote 3">3</a></sup> Ein Sprachmodell ist ein Programm, das Text liest und selbst Text formuliert. Der Branchenverband arbeitet also genau an dem Fall, den Ihre Werkstatt jede Woche erlebt: Die Antwort steht in einem Dokument, das niemand mehr findet, und der Kollege, der sie auswendig weiss, hat noch zwei Jahre bis zur Pension.</p>
+      <p data-i18n="lage.p4">In der Lebensmittelproduktion kommt eine gesetzliche Schiene dazu. Die Selbstkontrolle nach den HACCP-Grundsätzen ist Pflicht des Betriebs.<sup><a href="#fn-5" aria-label="Fussnote 5">5</a></sup> Branchenleitlinien für die gute Verfahrenspraxis prüft das Bundesamt für Lebensmittelsicherheit und Veterinärwesen. Grundlage dafür ist Artikel 80 der Lebensmittel- und Gebrauchsgegenständeverordnung.<sup><a href="#fn-6" aria-label="Fussnote 6">6</a></sup> Die Pflicht bleibt beim Betrieb. Die Schreibarbeit drumherum nicht.</p>
+
+        <figure class="euc-fig">
+        <svg viewBox="0 100 640 145" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path class="fig-soft" d="M64 178 H576"></path>
+          <path class="fig-flow fig-eu" d="M64 178 H576"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="40" y="132" width="108" height="92" rx="8"></rect>
+            <rect class="fig-fill-tint fig-line" x="56" y="146" width="60" height="20" rx="4"></rect>
+            <rect class="fig-fill-tint fig-line" x="64" y="172" width="60" height="20" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="72" y="198" width="60" height="20" rx="4"></rect>
+            <circle class="fig-numbg" cx="148" cy="132" r="11"></circle>
+            <text class="fig-num" x="148" y="136.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="186" y="132" width="108" height="92" rx="8"></rect>
+            <path class="fig-line" d="M204 152 h48 M204 168 h48 M204 184 h48 M204 200 h32"></path>
+            <rect class="fig-eu-mid" x="256" y="188" width="24" height="14" rx="3"></rect>
+            <path class="fig-eu-mid" d="M262 188 v-4 a6 6 0 0 1 12 0 v4"></path>
+            <circle class="fig-numbg" cx="294" cy="132" r="11"></circle>
+            <text class="fig-num" x="294" y="136.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="332" y="132" width="108" height="92" rx="8"></rect>
+            <rect class="fig-fill-ice fig-line" x="348" y="150" width="76" height="42" rx="8"></rect>
+            <path class="fig-eu-mid" d="M362 164 h48 M362 178 h30"></path>
+            <path class="fig-line" d="M364 192 l-6 16 20 -16"></path>
+            <circle class="fig-numbg" cx="440" cy="132" r="11"></circle>
+            <text class="fig-num" x="440" y="136.5" text-anchor="middle">3</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="478" y="132" width="108" height="92" rx="8"></rect>
+            <path class="fig-line" d="M496 152 h72 M496 166 h72 M496 194 h50"></path>
+            <path class="fig-eu" d="M496 180 h72"></path>
+            <path class="fig-eu-mid" d="M496 206 l8 8 14 -16"></path>
+            <circle class="fig-dot-gold" cx="568" cy="194" r="4"></circle>
+            <circle class="fig-numbg" cx="586" cy="132" r="11"></circle>
+            <text class="fig-num" x="586" y="136.5" text-anchor="middle">4</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="lage.leg1">Serviceberichte, Prüfprotokolle und Änderungsanträge aus Jahrzehnten</li>
+          <li data-i18n="lage.leg2">Wissensbasis im eigenen Betrieb, mit Rechten pro Werkzeug</li>
+          <li data-i18n="lage.leg3">Frage in Umgangssprache, aus der Werkstatt oder vom Büro</li>
+          <li data-i18n="lage.leg4">Antwort mit Dokumentverweis, geprüft von der Fachperson</li>
+        </ol>
+        <figcaption data-i18n="lage.fig">So kommt das Wissen des Betriebs an den Arbeitsplatz zurück: von der gewachsenen Ablage bis zur Antwort mit Fundstelle. Die Beurteilung bleibt beim Menschen.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ==================== USECASE 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="wissen" data-i18n="uc1.h2">Anwendungsfall 1: das Erfahrungswissen bleibt im Unternehmen</h2>
+      <p data-i18n="uc1.p1">Eine Anlage aus dem Jahr 2011 steht beim Kunden still. Der Servicetechniker sucht die Ursache und ist sicher, dass derselbe Fehler schon einmal aufgetreten ist, nur steht das in einem Servicebericht, den niemand mehr findet. Zwei Türen weiter fragt der Konstrukteur, warum eine Variante damals mit dieser Lagerung gebaut wurde. Beantworten kann beides derselbe Mitarbeiter, und der geht in zwei Jahren in Pension.</p>
+      <p data-i18n="uc1.p2">Serviceberichte, Prüfprotokolle, Notizen zu Stücklisten und Änderungsanträge gehen in die Wissensbasis, so wie sie vorliegen: als PDF, als Scan, als gewachsene Ordnerstruktur. Gefragt wird in Umgangssprache, also so, wie Sie einen Kollegen fragen würden, und nicht mit Suchbefehlen: welcher Fehler bei welcher Baureihe schon aufgetreten ist, warum diese Lagerung gewählt wurde, was im Abnahmeprotokoll stand. Die Antwort kommt mit dem Verweis auf das Dokument, aus dem sie stammt. So schlagen Sie in Sekunden nach, statt glauben zu müssen.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-line" x="44" y="44" width="196" height="54" rx="10"></rect>
+            <path class="fig-eu-mid" d="M62 64 h124 M62 80 h84"></path>
+            <path class="fig-line" d="M78 98 l-10 18 28 -14"></path>
+            <circle class="fig-numbg" cx="240" cy="44" r="11"></circle>
+            <text class="fig-num" x="240" y="48.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M142 116 V150 M332 196 H452"></path>
+          <path class="fig-flow fig-eu" d="M332 196 H452"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="70" y="150" width="262" height="30" rx="8"></rect>
+            <rect class="fig-panel" x="70" y="188" width="262" height="30" rx="8"></rect>
+            <rect class="fig-panel" x="70" y="226" width="262" height="30" rx="8"></rect>
+            <rect class="fig-panel" x="70" y="264" width="262" height="30" rx="8"></rect>
+            <path class="fig-line" d="M88 165 h160 M88 203 h160 M88 241 h160 M88 279 h124"></path>
+            <rect class="fig-eu-mid" x="282" y="236" width="30" height="14" rx="4"></rect>
+            <path class="fig-eu-mid" d="M292 236 v-3 a5 5 0 0 1 10 0 v3 M297 241 v4"></path>
+            <circle class="fig-numbg" cx="332" cy="264" r="11"></circle>
+            <text class="fig-num" x="332" y="268.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="452" y="138" width="140" height="116" rx="8"></rect>
+            <path class="fig-line" d="M470 162 h104 M470 178 h104 M470 212 h104 M470 228 h72"></path>
+            <path class="fig-eu" d="M470 195 h104"></path>
+            <circle class="fig-dot-gold" cx="574" cy="162" r="4"></circle>
+            <circle class="fig-numbg" cx="592" cy="138" r="11"></circle>
+            <text class="fig-num" x="592" y="142.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc1.leg1">Frage in Umgangssprache, aus dem Service oder der Konstruktion</li>
+          <li data-i18n="uc1.leg2">Berichte, Protokolle und Änderungsanträge, mit Rechten pro Werkzeug</li>
+          <li data-i18n="uc1.leg3">Antwort mit Verweis auf das Dokument, in Sekunden prüfbar</li>
+        </ol>
+        <figcaption data-i18n="uc1.fig">Die Wissensbasis antwortet aus den Unterlagen des Betriebs und zeigt, woher die Antwort stammt. Was im Archiv liegt, wird wieder Arbeitsmittel.</figcaption>
+      </figure>
+
+      <p data-i18n="uc1.p3">Die Rechte gelten bis auf einzelne Werkzeuge: Wer die Kalkulation nicht sehen darf, sieht sie auch über die KI nicht. Jeder Zugriff steht im Audit-Log, einem Protokoll, das festhält, wer wann welche Unterlage geöffnet hat. Fangen Sie mit einem Maschinentyp oder einer Baureihe an und prüfen Sie die ersten Antworten an Fällen, die Sie auswendig kennen. Die Qualität der Antworten wächst mit der Qualität der Ablage, und der Betrieb sieht am eigenen Beispiel, was ordentliche Ablage künftig wert ist.</p>
+    </section>
+
+    <!-- ==================== USECASE 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="lastenheft" data-i18n="uc2.h2">Anwendungsfall 2: das Pflichtenheft vor der Offerte durchleuchten</h2>
+      <p data-i18n="uc2.p1">Das Lastenheft des Kunden, in Schweizer Ausschreibungen meist Pflichtenheft genannt, kommt mit 140 Seiten herein. Die Eingabefrist steht in zehn Tagen, und lesen kann es nur der Senior, der ohnehin ausgelastet ist. Das Dokument geht in den KI-Kollegen, und heraus kommt eine strukturierte Anforderungsliste: was gefordert ist, in welchem Kapitel es steht, welche Norm zitiert wird und welche Toleranz genannt ist.</p>
+      <p data-i18n="uc2.p2">Im zweiten Schritt läuft diese Liste gegen Ihre eigenen Spezifikationen, Normenlisten und früheren Angebote aus der Wissensbasis. Was Ihr Portfolio abdeckt, steht als abgedeckt da, mit Verweis auf die eigene Spezifikation. Was es nicht abdeckt, ist markiert. Was unklar formuliert ist, landet auf der Liste der Rückfragen an den Kunden, mit der Fundstelle im Pflichtenheft. Der Senior liest damit gezielt die markierten Stellen statt alle 140 Seiten, und der Entscheid, ob Sie anbieten, fällt auf einer Grundlage statt auf einem Gefühl.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel fig-line" x="58" y="44" width="152" height="110" rx="8"></rect>
+            <rect class="fig-panel fig-line" x="52" y="50" width="152" height="110" rx="8"></rect>
+            <rect class="fig-panel" x="46" y="56" width="152" height="110" rx="8"></rect>
+            <path class="fig-line" d="M64 80 h100 M64 96 h116 M64 112 h116 M64 128 h88 M64 144 h116"></path>
+            <circle class="fig-numbg" cx="210" cy="44" r="11"></circle>
+            <text class="fig-num" x="210" y="48.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-fill-tint fig-line" x="46" y="196" width="150" height="26" rx="6"></rect>
+            <rect class="fig-fill-tint fig-line" x="58" y="228" width="150" height="26" rx="6"></rect>
+            <rect class="fig-fill-ice fig-line" x="70" y="260" width="150" height="26" rx="6"></rect>
+            <circle class="fig-numbg" cx="220" cy="260" r="11"></circle>
+            <text class="fig-num" x="220" y="264.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M210 112 H408 M196 208 C300 182 340 166 404 148"></path>
+          <path class="fig-flow fig-eu" d="M210 112 H408"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="408" y="56" width="184" height="164" rx="8"></rect>
+            <path class="fig-eu-mid" d="M426 82 l7 7 13 -15 M426 110 l7 7 13 -15 M426 194 l7 7 13 -15"></path>
+            <path class="fig-eu" d="M426 138 h18 M426 166 h18"></path>
+            <path class="fig-line" d="M458 84 h116 M458 112 h116 M458 140 h100 M458 168 h94 M458 196 h116"></path>
+            <circle class="fig-dot-gold" cx="574" cy="140" r="4"></circle>
+            <circle class="fig-numbg" cx="592" cy="56" r="11"></circle>
+            <text class="fig-num" x="592" y="60.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc2.leg1">Pflichtenheft des Kunden, so wie es hereinkommt</li>
+          <li data-i18n="uc2.leg2">Eigene Spezifikationen, Normenlisten und frühere Angebote</li>
+          <li data-i18n="uc2.leg3">Anforderungsliste mit markierten Lücken und Rückfragen</li>
+        </ol>
+        <figcaption data-i18n="uc2.fig">Der Abgleich entsteht aus Ihrem Portfolio, nicht aus dem Modellgedächtnis. Ob angeboten wird, entscheidet der Betrieb.</figcaption>
+      </figure>
+
+      <p data-i18n="uc2.p3">Was dabei bewusst nicht passiert: Der KI-Kollege gibt keine Zusage ab und ersetzt keine technische Klärung. Er liefert einen Entwurf mit Fundstelle, und ein Sprachmodell kann eine Anforderung überlesen oder falsch einordnen. Deshalb gehört die Liste in die Hand des Fachbereichs, der beurteilt, was machbar ist. Der Gewinn liegt darin, dass die Durchsicht am ersten Tag beginnt statt am siebten.</p>
+    </section>
+
+    <!-- ==================== USECASE 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="qs" data-i18n="uc3.h2">Anwendungsfall 3: Qualitätssicherung und Audit in der Lebensmittelproduktion</h2>
+      <p data-i18n="uc3.p1">Das Audit nach IFS Food oder BRCGS steht im März an. Der Fragenkatalog wird gegen das eigene HACCP- und QM-Handbuch gespiegelt, und heraus kommt eine Lückenliste: welche Frage im Handbuch beantwortet ist, wo nur ein Verweis steht, wo nichts steht. Die Qualitätssicherung arbeitet diese Liste ab, statt das Handbuch dreimal von vorn zu lesen.</p>
+      <p data-i18n="uc3.p2">Der zweite Stapel sind die Lieferantendokumente: Spezifikationen, Zertifikate, Analysenzertifikate. Der KI-Kollege fasst sie zusammen, markiert Ablaufdaten und benennt, was fehlt. Der dritte Fall sind mehrsprachige Etiketten- und Deklarationsentwürfe sowie Betriebsanleitungen. Sie entstehen mit Ihrem Firmenglossar, also mit Ihrer eigenen Begriffsliste, und verwenden über alle Sprachen dieselben Begriffe. Die Reihenfolge der Zutaten und die Hervorhebung der Allergene stehen dabei als Prüfpunkte auf der Liste der Qualitätssicherung, nicht als Ergebnis der Maschine.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="48" y="98" width="96" height="112" rx="10"></rect>
+            <rect class="fig-fill-ice fig-line" x="62" y="112" width="68" height="26" rx="4"></rect>
+            <rect class="fig-fill-tint fig-line" x="62" y="146" width="68" height="26" rx="4"></rect>
+            <path class="fig-eu-mid" d="M62 188 h68"></path>
+            <circle class="fig-numbg" cx="144" cy="98" r="11"></circle>
+            <text class="fig-num" x="144" y="102.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M144 154 H296 M296 154 C344 154 352 68 400 68 M296 154 H400 M296 154 C344 154 352 240 400 240"></path>
+          <path class="fig-flow fig-eu" d="M144 154 H296"></path>
+          <circle class="fig-numbg" cx="296" cy="154" r="11"></circle>
+          <text class="fig-num" x="296" y="158.5" text-anchor="middle">2</text>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="400" y="34" width="184" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M418 56 h64"></path>
+            <path class="fig-line" d="M418 72 h146 M418 86 h110"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="400" y="120" width="184" height="68" rx="8"></rect>
+            <path class="fig-line" d="M418 140 h20 M448 140 h116 M418 156 h20 M448 156 h116 M418 172 h20 M448 172 h84"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="400" y="206" width="184" height="68" rx="8"></rect>
+            <path class="fig-eu-mid" d="M418 230 l8 8 14 -16 M448 232 h116 M418 254 l8 8 14 -16 M448 256 h86"></path>
+            <circle class="fig-dot-gold" cx="566" cy="226" r="4"></circle>
+            <circle class="fig-numbg" cx="584" cy="206" r="11"></circle>
+            <text class="fig-num" x="584" y="210.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc3.leg1">Auditfragen, Lieferantendokumente und Rezepturunterlagen</li>
+          <li data-i18n="uc3.leg2">Abgleich mit dem eigenen HACCP- und QM-Handbuch</li>
+          <li data-i18n="uc3.leg3">Lückenliste, Dokumentenübersicht und Etikettenentwurf zur Freigabe</li>
+        </ol>
+        <figcaption data-i18n="uc3.fig">Aus einem Eingang werden drei Entwürfe. Die Freigabe durch die Qualitätssicherung ersetzt keiner davon.</figcaption>
+      </figure>
+
+      <p data-i18n="uc3.p3">Die Grenze ist hier scharf gezogen, und das ist gut so. Die Selbstkontrolle ist eine gesetzliche Pflicht des Betriebs.<sup><a href="#fn-5" aria-label="Fussnote 5">5</a></sup> Der KI-Kollege schreibt Entwürfe und findet Lücken, freigeben muss die Qualitätssicherung. Bei Etiketten und Betriebsanleitungen kommt die Produktehaftung dazu: Die fachliche Freigabe gehört ausdrücklich zum Menschen, und rechtssicher ist kein Text, den eine Maschine geschrieben hat. Dieser Artikel ersetzt keine Rechtsberatung.</p>
+    </section>
+
+    <!-- ==================== KONNEKTOREN ==================== -->
+    <section class="euc-section">
+      <h2 id="konnektoren" data-i18n="konn.h2">Konnektoren: was sich an Ihre Systeme anbinden lässt</h2>
+      <p data-i18n="konn.p1">Ein KI-Kollege ist so nützlich wie das, was er erreichen darf. MCP ist ein offener Standard dafür, dass ein KI-Programm ein anderes Programm ansprechen darf. Nötig ist dafür eine dokumentierte Schnittstelle, also eine offengelegte Anschlussstelle, über die zwei Programme Daten austauschen. Jedes einzelne Werkzeug wird eigens freigegeben, und jeder Aufruf wird protokolliert. Das meistgenutzte ERP der Schweiz ist laut einer Auswertung von Profondia Abacus mit 17 %, vor SAP mit 16 % und Microsoft Dynamics mit 8 %.<sup><a href="#fn-7" aria-label="Fussnote 7">7</a></sup> Die Tabelle zeigt, wie weit die KI-Anbindung an verbreitete Software in Fertigung und Lebensmittelproduktion heute reicht, geprüft im August 2026. In der mittleren Spalte stehen die technischen Namen dieser Schnittstellen; für Sie zählt die rechte Spalte.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="konn.th1">Software</th>
+              <th data-i18n="konn.th2">Schnittstelle</th>
+              <th data-i18n="konn.th3">Anbindung an EU Cowork AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="konn.r1c1">Abacus</td>
+              <td data-i18n="konn.r1c2">REST-API mit OAuth2, Zugang über das Partnerprogramm</td>
+              <td data-i18n="konn.r1c3">Anbindung über MCP möglich, der Zugang läuft über den Abacus-Partnerweg</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r2c1">SAP Business One</td>
+              <td data-i18n="konn.r2c2">Service Layer (OData), dokumentiert</td>
+              <td data-i18n="konn.r2c3">Anbindung über MCP möglich: Artikel, Lager, Geschäftspartner, Aufträge, Rechnungen</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r3c1">Microsoft Dynamics 365 Business Central</td>
+              <td data-i18n="konn.r3c2">API dokumentiert</td>
+              <td data-i18n="konn.r3c3">MCP-Server von Microsoft vorhanden; in Business Central online ab Werk lesend, Schreibzugriffe einzeln freischaltbar</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r4c1">Odoo</td>
+              <td data-i18n="konn.r4c2">Offene Schnittstelle, dokumentiert</td>
+              <td data-i18n="konn.r4c3">Fertige MCP-Anbindungen aus der Community vorhanden: Fertigungsaufträge, Stücklisten, Lager</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r5c1">Microsoft 365 (Outlook, Teams, SharePoint)</td>
+              <td data-i18n="konn.r5c2">Graph-API, offen dokumentiert</td>
+              <td data-i18n="konn.r5c3">MCP-Server von Microsoft vorhanden; E-Mail, Kalender und Dateien direkt ansprechbar</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r6c1">proALPHA, Opacc</td>
+              <td data-i18n="konn.r6c2">Schnittstellen vorhanden, Dokumentation nur für Kunden und Partner</td>
+              <td data-i18n="konn.r6c3">Anbindung über MCP möglich, der Weg führt über den Hersteller</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r7c1">CSB-System</td>
+              <td data-i18n="konn.r7c2">Keine öffentlich dokumentierte API</td>
+              <td data-i18n="konn.r7c3">Der Weg führt über Exporte und Dokumente</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-i18n="konn.p2">Fehlt Ihre Software in der Liste? Die drei Abläufe oben arbeiten mit Dokumenten und brauchen gar keine Systemanbindung. Für den Anfang genügt ein Export aus dem MES, also aus der Fertigungssteuerung, oder aus dem Prüfmittelsystem. Wie eine Anbindung über MCP grundsätzlich funktioniert und welche Systeme vorbereitet sind, steht auf der Seite <a class="euc-textlink" href="/integrationen">Integrationen</a>.</p>
+    </section>
+
+    <!-- ==================== DATENSCHUTZ ==================== -->
+    <section class="euc-section">
+      <h2 id="datenschutz" data-i18n="ds.h2">Geheimnisschutz: Ihre Konstruktionsdaten bleiben in Ihrer Hand</h2>
+      <p data-i18n="ds.p1">Der Hebel in dieser Branche heisst nicht in erster Linie Datenschutzgesetz, sondern Fabrikations- und Geschäftsgeheimnis. Artikel 162 des Strafgesetzbuchs stellt den Verrat solcher Geheimnisse unter Strafe. Genau solche Geheimnisse stehen in Ihren Konstruktionsdaten, Kalkulationen und Kundenspezifikationen, oft zusätzlich geschützt durch eine Geheimhaltungsvereinbarung. Wer für Medtech, Pharma oder Luftfahrt zuliefert, trägt darüber hinaus die vertraglichen Auflagen seiner Kunden gegen jeden Abfluss von Daten in fremde Clouds. Dieser Artikel ersetzt keine Rechtsberatung.</p>
+      <p data-i18n="ds.p2">Deshalb der Kernsatz: Ihre Konstruktionsdaten bleiben in Ihrer eigenen Instanz. Eine Instanz ist die Installation, die allein für Ihren Betrieb läuft, mit Rechten pro Werkzeug und einem Protokoll für jeden Zugriff. Betrieben wird sie in ISO-27001-zertifizierten Rechenzentren von Green in Lupfig (Schweiz) oder auf Ihrem eigenen Server. Modellanfragen werden EU-seitig verarbeitet, und Kundendaten trainieren keine Modelle. Die Telemetrie, also das Zurückmelden von Nutzungsdaten, ist standardmässig ausgeschaltet. Wer wegen Kundenauflagen gar nichts nach aussen geben darf, betreibt die Instanz im eigenen Rechenzentrum; die Software steht unter MIT-Lizenz.</p>
+      <p data-i18n="ds.p3">Für Personaldaten gilt zusätzlich das revidierte Datenschutzgesetz. Der Betrieb bleibt verantwortlich, auch wenn ein KI-Werkzeug die Daten bearbeitet. Arbeitet ein Anbieter mit, braucht es dafür einen Auftragsverarbeitungsvertrag, also einen Vertrag, der festlegt, was dieser Anbieter mit den Daten tun darf. Der <a class="euc-textlink" href="/avv">Auftragsverarbeitungsvertrag</a> und die <a class="euc-textlink" href="/subprozessoren">Subprozessorenliste</a> stehen offen auf der Website, die technischen Massnahmen im <a class="euc-textlink" href="/sicherheit">Trust Center</a>.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Häufige Fragen aus Fertigung und Lebensmittelproduktion</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">Unsere Dokumentation ist über Jahrzehnte gewachsen und alles andere als einheitlich. Bringt das trotzdem etwas?</h3>
+          <p data-i18n="faq.a1">Ja, mit einer ehrlichen Einschränkung. Die Wissensbasis nimmt PDF, gescannte Berichte und ganze Ordnerstrukturen, aber die Qualität der Antworten wächst mit der Qualität der Ablage. Fangen Sie mit einem Maschinentyp oder einer Baureihe an, prüfen Sie die Antworten an Fällen, die Sie kennen, und erweitern Sie danach. Ein Aufräumprojekt vorweg ist nicht nötig und wäre auch nie fertig.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">Versteht die KI unsere technischen Zeichnungen?</h3>
+          <p data-i18n="faq.a2">Text und Tabellen ja, Geometrie nur begrenzt. Stücklisten, Schriftfelder, Stempel, Revisionsvermerke und handschriftliche Notizen auf dem Plan werden gelesen; eine Zeichnung im Sinne einer Konstruktionsprüfung beurteilt ein Sprachmodell nicht. Für das Wiederfinden von Dokumenten und Vermerken reicht das, für die Freigabe einer Konstruktion nicht.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">Bleibt unser Konstruktionswissen geschützt?</h3>
+          <p data-i18n="faq.a3">Die Rechte gelten bis auf einzelne Werkzeuge, in der Reihenfolge Nutzer, Rolle, Gruppe und Voreinstellung des Servers, und jeder Zugriff steht im exportierbaren Audit-Log. Der betreute Betrieb läuft in der Schweiz, der Selbstbetrieb auf Ihrem eigenen Server; Kundendaten trainieren in beiden Fällen keine Modelle. Wer vertragliche Auflagen seiner Kunden erfüllen muss, betreibt die Instanz im eigenen Unternehmen.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">Was kostet das?</h3>
+          <p data-i18n="faq.a4">Der betreute Betrieb kostet 15 € pro Person und Monat, in der Schweiz 14 CHF. Davon sind 8 € beziehungsweise 7.50 CHF Modellguthaben: ein gemeinsamer Topf Ihrer Organisation, aus dem die Anfragen an das Sprachmodell bezahlt werden. Wer selbst hostet, zahlt für die Software nichts: Sie steht unter MIT-Lizenz, einer freien Lizenz ohne Lizenzkosten. Alle Angaben stehen auf der Seite <a class="euc-textlink" href="/preise">Preise</a>.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">Können wir mit einer Abteilung starten?</h3>
+          <p data-i18n="faq.a5">Ja, und das ist der übliche Weg: Service oder Qualitätssicherung mit einer klar umrissenen Wissensbasis. Nutzer, Rechte und das gemeinsame Monatsbudget verwalten Sie im Admin-Panel, das Budget hat eine weiche Sperre, damit die Kosten planbar bleiben. Weitere Abteilungen kommen dazu, wenn die erste sichtbar arbeitet.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">Ersetzt das unser ERP oder PLM, und funktioniert es mit Abacus, SAP Business One oder Odoo?</h3>
+          <p data-i18n="faq.a6">Nein, ersetzt wird nichts. Ihr ERP bleibt das führende System für Stammdaten, Aufträge und Stücklisten, Ihr PLM für Stände und Freigaben. Der KI-Kollege arbeitet darüber: Er liest, fasst zusammen und formuliert. Die KI-Anbindung an Abacus, SAP Business One, Dynamics 365 Business Central oder Odoo führt über MCP und deren dokumentierte Schnittstellen; die Tabelle oben zeigt, was je System möglich ist. Es gelten Rechte pro Werkzeug und ein Protokoll für jeden Aufruf.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q7">Wir schreiben mehrsprachige Betriebsanleitungen und Etiketten. Wie weit dürfen wir uns darauf verlassen?</h3>
+          <p data-i18n="faq.a7">Der Entwurf entsteht mit Ihrem Firmenglossar und verwendet über alle Sprachen dieselben Begriffe. Die fachliche Freigabe bleibt Pflicht: An Anleitungen und Etiketten hängt die Produktehaftung, und ein Sprachmodell kann Falsches ausgeben. Bei Maschinen gehört die Betriebsanleitung zur Konformität, und die Sprachfassung für das Bestimmungsland ist eine rechtliche Anforderung; die Freigabe bleibt beim Hersteller. Kein Entwurf ist eine rechtssichere Deklaration. Diese Antwort ersetzt keine Rechtsberatung.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Sehen Sie es an einem eigenen Fall an</h2>
+      <p data-i18n="cta.p">Bringen Sie ein Pflichtenheft, einen Stapel Serviceberichte oder Ihren Auditfragenkatalog mit, und wir gehen den Ablauf gemeinsam durch. Oder Sie tragen sich ein und starten unter den Ersten.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Termin buchen</a>
+        <a class="euc-btn-secondary" href="/warteliste" data-i18n="cta.btn2">Auf die Warteliste</a>
+      </div>
+    </section>
+
+    <!-- ==================== QUELLEN ==================== -->
+    <section class="euc-section">
+      <h2 id="quellen" data-i18n="src.h2">Quellen</h2>
+      <p data-i18n="src.p">Alle Zahlen und rechtlichen Angaben in diesem Artikel stammen aus den folgenden Quellen, zuletzt geprüft im August 2026.</p>
+      <ol class="euc-small">
+        <li data-i18n="src.fn1" id="fn-1">Swissmem, Erhebung zu Industrie 4.0 in der MEM-Branche (267 Unternehmen Deutschschweiz, 54 Westschweiz), Digitalstrategie in KMU und Grossunternehmen: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a></li>
+        <li data-i18n="src.fn2" id="fn-2">Studie der ETH Zürich mit Swissmem und Next Industries unter über 200 Schweizer Tech-Unternehmen zum Stand der KI, referiert von MaschinenMarkt Schweiz: <a class="euc-textlink" href="https://www.maschinenmarkt.ch/ki-in-der-schweizer-tech-branche-realitaet-hinkt-hype-hinterher-a-4122f3c55699f1a949e6a0d170cb02c3/" target="_blank" rel="noopener">maschinenmarkt.ch</a></li>
+        <li data-i18n="src.fn3" id="fn-3">Swissmem, Forschungsprojekt Digitaler Wissenserhalt im Unternehmen, Erschliessung gewachsener Dokumentation mit Sprachmodellen: <a class="euc-textlink" href="https://www.swissmem.ch/de/engagement/digitalisierung/forschungsprojekt-digitaler-wissenserhalt-im-unternehmen.html" target="_blank" rel="noopener">swissmem.ch</a></li>
+        <li data-i18n="src.fn4" id="fn-4">Swissmem, Künstliche Intelligenz: aktuelle Anwendungen und Herausforderungen in der Schweizer Industrie: <a class="euc-textlink" href="https://www.swissmem.ch/de/wissen/technologien/kuenstliche-intelligenz/kuenstliche-intelligenz-aktuelle-anwendungen-und-herausforderungen-in-der-schweizer-industrie.html" target="_blank" rel="noopener">swissmem.ch</a></li>
+        <li data-i18n="src.fn5" id="fn-5">Bundesamt für Lebensmittelsicherheit und Veterinärwesen, Leitlinien für gute Verfahrenspraxis in Lebensmittelbetrieben und Selbstkontrolle nach HACCP: <a class="euc-textlink" href="https://www.blv.admin.ch/de/leitlinien-fuer-gute-verfahrenspraxis-lebensmittelbetriebe" target="_blank" rel="noopener">blv.admin.ch</a></li>
+        <li data-i18n="src.fn6" id="fn-6">Artikel 80 der Lebensmittel- und Gebrauchsgegenständeverordnung (LGV), Branchenleitlinien und deren Prüfung: <a class="euc-textlink" href="https://www.fedlex.admin.ch/eli/cc/2017/63/de#art_80" target="_blank" rel="noopener">fedlex.admin.ch</a></li>
+        <li data-i18n="src.fn7" id="fn-7">Profondia-Auswertung zur ERP-Nutzung in der Schweiz, referiert von Swiss IT Magazine: <a class="euc-textlink" href="https://www.itmagazine.ch/artikel/80096/Abacus_ist_das_am_meisten_genutzte_ERP-System_in_der_Schweiz.html" target="_blank" rel="noopener">itmagazine.ch</a></li>
+      </ol>
+    </section>
+
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.titel">Weiter</p>
+      <ul>
+        <li><a href="/blog/ki-treuhand-kanzlei" data-i18n="weiter.l1">KI in Treuhand und Kanzlei: Mandate erschliessen und Fristen entlasten</a></li>
+        <li><a href="/integrationen" data-i18n="weiter.l2">Integrationen: welche Systeme vorbereitet sind</a></li>
+        <li><a href="/sicherheit" data-i18n="weiter.l3">Security und Trust: wo die Daten liegen und wer sie sieht</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="geprueft">Zuletzt geprüft: <time datetime="2026-08">August 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Ihr KI-Kollege. Bleibt in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Überall betreibbar</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managed, eigene Cloud oder On-Prem</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">DSGVO-konform</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">EU-Verarbeitung</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/sicherheit"><span data-i18n="chrome.footer.more">Mehr zur Sicherheit</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Schweizer Instanz</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc" data-euc-clock>Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Produkt</p>
+          <nav aria-label="Produkt">
+            <a href="/#funktionen" data-i18n="chrome.footer.link.features">Funktionen</a>
+            <a href="/preise" data-i18n="chrome.footer.link.pricing">Preise</a>
+            <a href="/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Souveränität</a>
+            <a href="/integrationen" data-i18n="chrome.footer.link.integrations">Integrationen</a>
+            <a href="/vergleich" data-i18n="chrome.footer.link.comparison">Vergleich</a>
+            <a href="/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs" data-i18n="chrome.footer.link.docs">Dokumentation</a>
+            <a href="/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/vision" data-i18n="chrome.footer.link.vision">Vision</a>
+            <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="chrome.footer.link.booking">Termin buchen</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/sicherheit" data-i18n="chrome.footer.link.security">Security &amp; Trust</a>
+            <a href="/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/avv" data-i18n="chrome.footer.link.avv">AVV</a>
+            <a href="/sicherheit#toms" data-i18n="chrome.footer.link.toms">TOM-Übersicht</a>
+            <a href="/subprozessoren" data-i18n="chrome.footer.link.subs">Subprozessoren</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Rechtliches</p>
+          <nav aria-label="Rechtliches">
+            <a href="/impressum" data-i18n="chrome.footer.link.imprint">Impressum</a>
+            <a href="/datenschutz" data-i18n="chrome.footer.link.privacy">Datenschutz</a>
+            <a href="/agb" data-i18n="chrome.footer.link.terms">AGB</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.lang">Sprache</p>
+          <nav aria-label="Sprache">
+            <button type="button" data-euc-lang-to="de">Deutsch</button>
+            <button type="button" data-euc-lang-to="en">English</button>
+            <button type="button" data-euc-lang-to="fr">Français</button>
+            <button type="button" data-euc-lang-to="it">Italiano</button>
+            <button type="button" data-euc-lang-to="es">Español</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI by Herr-Informatik GmbH</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["WebPage", "FAQPage"],
+      "@id": "https://eucowork.ai/blog/ki-produktion#webpage",
+      "url": "https://eucowork.ai/blog/ki-produktion",
+      "name": "KI in der Produktion: drei Abläufe, die Wissen im Unternehmen halten",
+      "inLanguage": "de-CH",
+      "isPartOf": {
+        "@id": "https://eucowork.ai/#website"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "description": "Wissen aus Serviceberichten sichern, Pflichtenhefte prüfen, Audits vorbereiten. KI-Anbindung an Abacus, SAP Business One und Odoo für Schweizer Betriebe.",
+      "primaryImageOfPage": {
+        "@id": "https://eucowork.ai/blog/ki-produktion#primaryimage"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Start",
+            "item": "https://eucowork.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://eucowork.ai/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "KI in der Produktion",
+            "item": "https://eucowork.ai/blog/ki-produktion"
+          }
+        ]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Unsere Dokumentation ist über Jahrzehnte gewachsen und alles andere als einheitlich. Bringt das trotzdem etwas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, mit einer ehrlichen Einschränkung. Die Wissensbasis nimmt PDF, gescannte Berichte und ganze Ordnerstrukturen, aber die Qualität der Antworten wächst mit der Qualität der Ablage. Fangen Sie mit einem Maschinentyp oder einer Baureihe an, prüfen Sie die Antworten an Fällen, die Sie kennen, und erweitern Sie danach. Ein Aufräumprojekt vorweg ist nicht nötig und wäre auch nie fertig."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Versteht die KI unsere technischen Zeichnungen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Text und Tabellen ja, Geometrie nur begrenzt. Stücklisten, Schriftfelder, Stempel, Revisionsvermerke und handschriftliche Notizen auf dem Plan werden gelesen; eine Zeichnung im Sinne einer Konstruktionsprüfung beurteilt ein Sprachmodell nicht. Für das Wiederfinden von Dokumenten und Vermerken reicht das, für die Freigabe einer Konstruktion nicht."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bleibt unser Konstruktionswissen geschützt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die Rechte gelten bis auf einzelne Werkzeuge, in der Reihenfolge Nutzer, Rolle, Gruppe und Voreinstellung des Servers, und jeder Zugriff steht im exportierbaren Audit-Log. Der betreute Betrieb läuft in der Schweiz, der Selbstbetrieb auf Ihrem eigenen Server; Kundendaten trainieren in beiden Fällen keine Modelle. Wer vertragliche Auflagen seiner Kunden erfüllen muss, betreibt die Instanz im eigenen Unternehmen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was kostet das?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Der betreute Betrieb kostet 15 € pro Person und Monat, in der Schweiz 14 CHF. Davon sind 8 € beziehungsweise 7.50 CHF Modellguthaben: ein gemeinsamer Topf Ihrer Organisation, aus dem die Anfragen an das Sprachmodell bezahlt werden. Wer selbst hostet, zahlt für die Software nichts: Sie steht unter MIT-Lizenz, einer freien Lizenz ohne Lizenzkosten. Alle Angaben stehen auf der Seite Preise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Können wir mit einer Abteilung starten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, und das ist der übliche Weg: Service oder Qualitätssicherung mit einer klar umrissenen Wissensbasis. Nutzer, Rechte und das gemeinsame Monatsbudget verwalten Sie im Admin-Panel, das Budget hat eine weiche Sperre, damit die Kosten planbar bleiben. Weitere Abteilungen kommen dazu, wenn die erste sichtbar arbeitet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ersetzt das unser ERP oder PLM, und funktioniert es mit Abacus, SAP Business One oder Odoo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein, ersetzt wird nichts. Ihr ERP bleibt das führende System für Stammdaten, Aufträge und Stücklisten, Ihr PLM für Stände und Freigaben. Der KI-Kollege arbeitet darüber: Er liest, fasst zusammen und formuliert. Die KI-Anbindung an Abacus, SAP Business One, Dynamics 365 Business Central oder Odoo führt über MCP und deren dokumentierte Schnittstellen; die Tabelle oben zeigt, was je System möglich ist. Es gelten Rechte pro Werkzeug und ein Protokoll für jeden Aufruf."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wir schreiben mehrsprachige Betriebsanleitungen und Etiketten. Wie weit dürfen wir uns darauf verlassen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Der Entwurf entsteht mit Ihrem Firmenglossar und verwendet über alle Sprachen dieselben Begriffe. Die fachliche Freigabe bleibt Pflicht: An Anleitungen und Etiketten hängt die Produktehaftung, und ein Sprachmodell kann Falsches ausgeben. Bei Maschinen gehört die Betriebsanleitung zur Konformität, und die Sprachfassung für das Bestimmungsland ist eine rechtliche Anforderung; die Freigabe bleibt beim Hersteller. Kein Entwurf ist eine rechtssichere Deklaration. Diese Antwort ersetzt keine Rechtsberatung."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://eucowork.ai/blog/ki-produktion#article",
+      "mainEntityOfPage": {
+        "@id": "https://eucowork.ai/blog/ki-produktion#webpage"
+      },
+      "headline": "KI in der Produktion: drei Abläufe, die Wissen im Unternehmen halten",
+      "description": "Wissen aus Serviceberichten sichern, Pflichtenhefte prüfen, Audits vorbereiten. KI-Anbindung an Abacus, SAP Business One und Odoo für Schweizer Betriebe.",
+      "articleSection": "Produktion",
+      "datePublished": "2026-03-17",
+      "dateModified": "2026-08-18",
+      "inLanguage": "de-CH",
+      "author": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "publisher": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "image": {
+        "@id": "https://eucowork.ai/blog/ki-produktion#primaryimage"
+      },
+      "isPartOf": {
+        "@id": "https://eucowork.ai/blog#blog"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "mentions": [
+        { "@type": "SoftwareApplication", "name": "Abacus" },
+        { "@type": "SoftwareApplication", "name": "SAP Business One" },
+        { "@type": "SoftwareApplication", "name": "Microsoft Dynamics 365 Business Central" },
+        { "@type": "SoftwareApplication", "name": "Odoo" },
+        { "@type": "SoftwareApplication", "name": "Microsoft 365" },
+        { "@type": "SoftwareApplication", "name": "proALPHA" },
+        { "@type": "SoftwareApplication", "name": "Opacc" },
+        { "@type": "SoftwareApplication", "name": "CSB-System" }
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://eucowork.ai/blog/ki-produktion#primaryimage",
+      "url": "https://eucowork.ai/og/eucowork-share-de.png",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var rail = document.querySelector('.blog-rail');
+  if (!rail) return;
+  var links = [].slice.call(rail.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+  var targets = links.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  }).filter(Boolean);
+  var hero = document.querySelector('.blog-hero');
+  var footer = document.querySelector('.euc-footer');
+  function setActive(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+    });
+  }
+  function onScroll() {
+    var top = window.scrollY || document.documentElement.scrollTop;
+    var show = hero ? top > hero.offsetTop + hero.offsetHeight - 80 : true;
+    /* Vor der Fussleiste ausblenden: die Leiste ist vertikal zentriert,
+       ihre Unterkante darf den Footer nicht erreichen. */
+    if (show && footer) {
+      var reach = window.innerHeight / 2 + rail.offsetHeight / 2 + 32;
+      show = footer.getBoundingClientRect().top > reach;
+    }
+    rail.classList.toggle('is-visible', show);
+    var line = top + window.innerHeight * 0.35;
+    var current = targets[0];
+    targets.forEach(function (t) {
+      if (t.getBoundingClientRect().top + top <= line) { current = t; }
+    });
+    if (current) setActive(current.id);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    'meta.title': 'AI in manufacturing: ERP, Abacus, SAP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'AI in manufacturing',
+    'hero.eyebrow': 'AI in everyday work',
+    'hero.h1': 'AI in manufacturing: three workflows that keep knowledge in the company',
+    'hero.lead': 'Your most experienced employee retires in two years, the specification for the next quote runs to 140 pages, and the audit is due in spring. This article walks through three workflows to show how an AI colleague works with your company’s knowledge, what can be connected to your ERP, and where the limits are.',
+    'hero.chip': 'Manufacturing',
+    'hero.datum': '17 March 2026',
+    'hero.lesezeit': 'Reading time: 12 minutes',
+    'lage.leg1': 'Service reports, test protocols and change requests from decades of work',
+    'lage.leg2': 'A knowledge base inside your own company, with permissions per tool',
+    'lage.leg3': 'A question in everyday language, from the shop floor or the office',
+    'lage.leg4': 'An answer with its source document, checked by the specialist',
+    'lage.fig': 'How company knowledge comes back to the workplace: from the archive that grew over decades to an answer with its source. The judgement stays with a person.',
+    'kurz.titel': 'In brief',
+    'kurz.p1': 'Only 17% of SMEs have a defined digital strategy, compared with almost 50% of large companies.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup>',
+    'kurz.p2': 'In the Swiss tech industry, AI close to production is mostly still at the trial stage: half of the companies have not considered it, 10% are running pilots.<sup><a href="#fn-2" aria-label="Footnote 2">2</a></sup>',
+    'kurz.p3': 'EU Cowork AI works with your company’s knowledge. Service reports, test protocols, notes on bills of materials and change requests become a knowledge base: a collection of your own documents that you can question in plain sentences.',
+    'kurz.p4': 'Your design data stays in Switzerland or on your own server and does not train any models. Your ERP can be connected if it has a documented interface. An interface is the point where two programs exchange data; the Model Context Protocol (MCP) is the open standard an AI program uses to reach it.',
+    'toc.titel': 'On this page',
+    'toc.i1': 'Starting point',
+    'toc.i2': 'Preserving practical knowledge',
+    'toc.i3': 'Specifications and tenders',
+    'toc.i4': 'Quality assurance and audits',
+    'toc.i5': 'Connectors to ERP and office software',
+    'toc.i6': 'Trade secrets and data protection',
+    'toc.i7': 'Frequently asked questions',
+    'lage.h2': 'Starting point: the strategy is missing, the knowledge is retiring',
+    'lage.p1': 'Only 17% of SMEs have a defined digital strategy, compared with almost 50% of large companies. That comes from a Swissmem survey on Industry 4.0 with 267 companies from German-speaking Switzerland and 54 from the French-speaking part.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> With artificial intelligence the gap between announcement and shop floor is wider still. ETH Zurich, together with Swissmem and Next Industries, surveyed more than 200 Swiss tech companies. Half have not even considered AI close to production, and 10% are running pilots.<sup><a href="#fn-2" aria-label="Footnote 2">2</a></sup>',
+    'lage.p2': 'There are good reasons for the hesitation. Swissmem names security risks and data protection questions, regulatory requirements, and data structure and data quality as the hurdles.<sup><a href="#fn-4" aria-label="Footnote 4">4</a></sup> Putting design data into somebody else’s cloud buys you a problem that no efficiency gain makes up for. And anyone with an archive that grew over thirty years knows that data quality does not appear at the push of a button. The workable answer is not to wait, but to start small and under control.',
+    'lage.p3': 'Because a clock is running, and it hangs in the HR office. Swissmem names the loss of knowledge through retirements as a core problem. The association runs the research project Digitaler Wissenserhalt im Unternehmen, in which language models make decades of inconsistent documentation findable again.<sup><a href="#fn-3" aria-label="Footnote 3">3</a></sup> A language model is a program that reads text and writes text of its own. So the industry association is working on exactly the case your workshop lives through every week: the answer is in a document nobody can find any more, and the colleague who knows it by heart has two years left before retirement.',
+    'lage.p4': 'In food production there is a legal track on top. Self-monitoring according to the HACCP principles is an obligation of the business.<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup> Industry guides to good practice are reviewed by the Federal Food Safety and Veterinary Office. The basis for this is Article 80 of the Swiss Foodstuffs and Utility Articles Ordinance.<sup><a href="#fn-6" aria-label="Footnote 6">6</a></sup> The obligation stays with the business. The paperwork around it does not have to.',
+    'uc1.h2': 'Use case 1: practical knowledge stays in the company',
+    'uc1.p1': 'A machine built in 2011 has stopped at the customer’s site. The service technician is looking for the cause and is certain the same fault has occurred before, except that it is written up in a service report nobody can find. Two doors down, the design engineer asks why a variant was built with that particular bearing arrangement back then. The same employee can answer both questions, and he retires in two years.',
+    'uc1.p2': 'Service reports, test protocols, notes on bills of materials and change requests go into the knowledge base exactly as they are: as PDFs, as scans, as a folder structure that grew over time. Questions are asked in everyday language, the way you would ask a colleague, and not with search commands: which fault has already occurred on which series, why that bearing arrangement was chosen, what the acceptance protocol said. The answer comes with a reference to the document it is based on. So you look it up in seconds instead of having to take it on trust.',
+    'uc1.leg1': 'A question in everyday language, from service or engineering',
+    'uc1.leg2': 'Reports, protocols and change requests, with permissions per tool',
+    'uc1.leg3': 'An answer with its source document, checkable in seconds',
+    'uc1.fig': 'The knowledge base answers from the company’s own documents and shows where each answer comes from. What sits in the archive becomes a working tool again.',
+    'uc1.p3': 'Permissions apply down to individual tools: whoever may not see the costing does not see it through the AI either. Every access is recorded in the audit log, a record of who opened which document and when. Start with one machine type or one series and check the first answers against cases you know by heart. The quality of the answers grows with the quality of the archive, and the business sees on its own example what orderly filing is worth from now on.',
+    'uc2.h2': 'Use case 2: examining the specification before the quote',
+    'uc2.p1': 'The customer’s requirements specification arrives with 140 pages. The submission deadline is in ten days, and the only person who can read it is the senior engineer who is fully booked anyway. The document goes into the AI colleague, and out comes a structured requirements list: what is required, which chapter it appears in, which standard is cited and which tolerance is named.',
+    'uc2.p2': 'In a second step that list is matched against your own specifications, standards lists and earlier bids from the knowledge base. What your portfolio covers is shown as covered, with a reference to your own specification. What it does not cover is flagged. What is worded ambiguously goes onto the list of questions for the customer, with the exact spot in the specification. The senior engineer then reads the flagged passages instead of all 140 pages, and the decision whether to bid rests on a basis rather than on a feeling.',
+    'uc2.leg1': 'Customer specification, exactly as it arrives',
+    'uc2.leg2': 'Your own specifications, standards lists and earlier bids',
+    'uc2.leg3': 'Requirements list with flagged gaps and open questions',
+    'uc2.fig': 'The comparison is built from your portfolio, not from the model’s memory. Whether to bid is decided by the business.',
+    'uc2.p3': 'What deliberately does not happen: the AI colleague makes no commitment and replaces no technical clarification. It delivers a draft with sources, and a language model can miss a requirement or classify it wrongly. That is why the list belongs in the hands of the specialists who judge what is feasible. The gain is that the review starts on day one instead of day seven.',
+    'uc3.h2': 'Use case 3: quality assurance and audits in food production',
+    'uc3.p1': 'The IFS Food or BRCGS audit is due in March. The question catalogue is mirrored against your own HACCP and quality management manual, and out comes a gap list: which question the manual answers, where there is only a cross-reference, where there is nothing. Quality assurance works through that list instead of reading the manual from the start three times over.',
+    'uc3.p2': 'The second pile is supplier documentation: specifications, certificates, certificates of analysis. The AI colleague summarises them, flags expiry dates and names what is missing. The third case is multilingual label and declaration drafts as well as operating instructions. They are produced with your company glossary, that is with your own list of agreed terms, and use the same terms across every language. The order of ingredients and the highlighting of allergens are check points on the quality assurance list, not results produced by the machine.',
+    'uc3.leg1': 'Audit questions, supplier documents and recipe files',
+    'uc3.leg2': 'Comparison against your own HACCP and quality manual',
+    'uc3.leg3': 'Gap list, document overview and label draft for approval',
+    'uc3.fig': 'One input becomes three drafts. None of them replaces sign-off by quality assurance.',
+    'uc3.p3': 'The boundary here is drawn sharply, and rightly so. Self-monitoring is a statutory obligation of the business.<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup> The AI colleague writes drafts and finds gaps; sign-off has to come from quality assurance. With labels and operating instructions, product liability is added on top: professional approval belongs explicitly to a person, and no text written by a machine is legally sound in itself. This article is not legal advice.',
+    'konn.h2': 'Connectors: what can be linked to your systems',
+    'konn.p1': 'An AI colleague is only as useful as what it is allowed to reach. MCP is an open standard that lets an AI program address another program. What it needs is a documented interface, that is a published connection point where two programs exchange data. Every single tool is released separately, and every call is logged. According to an analysis by Profondia, the most widely used ERP in Switzerland is Abacus with 17%, ahead of SAP with 16% and Microsoft Dynamics with 8%.<sup><a href="#fn-7" aria-label="Footnote 7">7</a></sup> The table shows how far the AI connection to common software in manufacturing and food production reaches today, checked in August 2026. The middle column gives the technical names of those interfaces; the column that matters for you is the right one.',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Connection to EU Cowork AI',
+    'konn.r1c1': 'Abacus',
+    'konn.r1c2': 'REST API with OAuth2, access through the partner programme',
+    'konn.r1c3': 'Connection via MCP possible; access runs through the Abacus partner channel',
+    'konn.r2c1': 'SAP Business One',
+    'konn.r2c2': 'Service Layer (OData), documented',
+    'konn.r2c3': 'Connection via MCP possible: items, stock, business partners, orders, invoices',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central',
+    'konn.r3c2': 'API documented',
+    'konn.r3c3': 'MCP server available from Microsoft; read-only out of the box in Business Central online, write access can be enabled individually',
+    'konn.r4c1': 'Odoo',
+    'konn.r4c2': 'Open interface, documented',
+    'konn.r4c3': 'Ready-made MCP connections available from the community: manufacturing orders, bills of materials, stock',
+    'konn.r5c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r5c2': 'Graph API, openly documented',
+    'konn.r5c3': 'MCP server available from Microsoft; email, calendar and files directly addressable',
+    'konn.r6c1': 'proALPHA, Opacc',
+    'konn.r6c2': 'Interfaces exist, documentation only for customers and partners',
+    'konn.r6c3': 'Connection via MCP possible; the route runs through the vendor',
+    'konn.r7c1': 'CSB-System',
+    'konn.r7c2': 'No publicly documented API',
+    'konn.r7c3': 'The route runs via exports and documents',
+    'konn.p2': 'Is your software missing from the list? The three workflows above work with documents and need no system connection at all. To begin with, an export from your MES, that is from your production control system, or from your test equipment system is enough. How a connection via MCP works in principle, and which systems are prepared, is described on the <a class="euc-textlink" href="/integrationen">integrations</a> page.',
+    'ds.h2': 'Trade secrets: your design data stays in your hands',
+    'ds.p1': 'The decisive point in this industry is not primarily data protection law but manufacturing and business secrecy. Article 162 of the Swiss Criminal Code makes the betrayal of such secrets a criminal offence. Exactly those secrets sit in your design data, your costings and your customer specifications, often protected by a non-disclosure agreement on top. Anyone supplying medtech, pharmaceuticals or aviation also carries their customers’ contractual requirements against any flow of data into third-party clouds. This article is not legal advice.',
+    'ds.p2': 'Hence the core statement: your design data stays in your own instance. An instance is the installation that runs for your business alone, with permissions per tool and a log for every access. It runs in ISO 27001 certified data centres operated by Green in Lupfig (Switzerland) or on your own server. Model requests are processed in the EU, and customer data does not train any models. Telemetry, that is the reporting back of usage data, is switched off by default. If customer requirements mean that nothing at all may go outside, you run the instance in your own data centre; the software is MIT licensed.',
+    'ds.p3': 'For personnel data the revised Swiss Data Protection Act applies on top. The business remains responsible even when an AI tool processes the data. If a provider is involved, that requires a data processing agreement, a contract setting out what this provider may do with the data. The <a class="euc-textlink" href="/avv">data processing agreement</a> and the <a class="euc-textlink" href="/subprozessoren">subprocessor list</a> are published openly on the website, the technical measures in the <a class="euc-textlink" href="/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Frequently asked questions from manufacturing and food production',
+    'faq.q1': 'Our documentation grew over decades and is anything but consistent. Is this still useful for us?',
+    'faq.a1': 'Yes, with one honest caveat. The knowledge base takes PDFs, scanned reports and entire folder structures, but the quality of the answers grows with the quality of the archive. Start with one machine type or one series, check the answers against cases you know, and expand afterwards. A clean-up project up front is not necessary, and it would never be finished anyway.',
+    'faq.q2': 'Does the AI understand our technical drawings?',
+    'faq.a2': 'Text and tables yes, geometry only to a limited extent. Bills of materials, title blocks, stamps, revision notes and handwritten remarks on the drawing are read; a language model does not assess a drawing in the sense of a design review. That is enough for finding documents and notes again, and not enough for approving a design.',
+    'faq.q3': 'Does our design knowledge stay protected?',
+    'faq.a3': 'Permissions apply down to individual tools, in the order user, role, group and server default, and every access is recorded in the exportable audit log. Managed operation runs in Switzerland, self-hosting runs on your own server; in neither case does customer data train any models. If you have to meet contractual requirements from your customers, you run the instance inside your own company.',
+    'faq.q4': 'What does it cost?',
+    'faq.a4': 'Managed operation costs €15 per person per month, in Switzerland CHF 14. Of that, €8 or CHF 7.50 is model credit: a shared pot for your organisation that pays for the requests to the language model. If you self-host, the software costs nothing: it is MIT licensed, a free licence with no licence fee. All details are on the <a class="euc-textlink" href="/preise">pricing</a> page.',
+    'faq.q5': 'Can we start with a single department?',
+    'faq.a5': 'Yes, and that is the usual route: service or quality assurance with a clearly defined knowledge base. You manage users, permissions and the shared monthly budget in the admin panel, and the budget has a soft limit so that costs stay predictable. Further departments follow once the first one is visibly working.',
+    'faq.q6': 'Does this replace our ERP or PLM, and does it work with Abacus, SAP Business One or Odoo?',
+    'faq.a6': 'No, nothing is replaced. Your ERP remains the leading system for master data, orders and bills of materials, your PLM for revisions and releases. The AI colleague works on top of them: it reads, summarises and drafts. The AI connection to Abacus, SAP Business One, Dynamics 365 Business Central or Odoo runs via MCP and their documented interfaces; the table above shows what is possible for each system. Permissions per tool and a log for every call apply throughout.',
+    'faq.q7': 'We write multilingual operating instructions and labels. How far can we rely on this?',
+    'faq.a7': 'The draft is produced with your company glossary and uses the same terms across every language. Professional approval remains mandatory: product liability hangs on instructions and labels, and a language model can produce errors. For machinery the operating instructions are part of conformity, and the language version for the destination country is a legal requirement; approval remains with the manufacturer. No draft is a legally sound declaration. This answer is not legal advice.',
+    'cta.h2': 'See it on a case of your own',
+    'cta.p': 'Bring a customer specification, a stack of service reports or your audit question catalogue, and we will walk through the workflow together. Or sign up and be among the first to start.',
+    'cta.btn1': 'Book a call',
+    'cta.btn2': 'Join the waitlist',
+    'src.h2': 'Sources',
+    'src.p': 'All figures and legal references in this article come from the following sources, last checked in August 2026.',
+    'src.fn1': 'Swissmem, survey on Industry 4.0 in the Swiss mechanical and electrical engineering industry (267 companies in German-speaking Switzerland, 54 in the French-speaking part), digital strategy in SMEs and large companies: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn2': 'Study by ETH Zurich with Swissmem and Next Industries covering more than 200 Swiss tech companies on the state of AI, reported by MaschinenMarkt Schweiz: <a class="euc-textlink" href="https://www.maschinenmarkt.ch/ki-in-der-schweizer-tech-branche-realitaet-hinkt-hype-hinterher-a-4122f3c55699f1a949e6a0d170cb02c3/" target="_blank" rel="noopener">maschinenmarkt.ch</a>',
+    'src.fn3': 'Swissmem, research project Digitaler Wissenserhalt im Unternehmen, opening up grown documentation with language models: <a class="euc-textlink" href="https://www.swissmem.ch/de/engagement/digitalisierung/forschungsprojekt-digitaler-wissenserhalt-im-unternehmen.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn4': 'Swissmem, artificial intelligence: current applications and challenges in Swiss industry: <a class="euc-textlink" href="https://www.swissmem.ch/de/wissen/technologien/kuenstliche-intelligenz/kuenstliche-intelligenz-aktuelle-anwendungen-und-herausforderungen-in-der-schweizer-industrie.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn5': 'Federal Food Safety and Veterinary Office, guides to good practice for food businesses and self-monitoring under HACCP: <a class="euc-textlink" href="https://www.blv.admin.ch/de/leitlinien-fuer-gute-verfahrenspraxis-lebensmittelbetriebe" target="_blank" rel="noopener">blv.admin.ch</a>',
+    'src.fn6': 'Article 80 of the Swiss Foodstuffs and Utility Articles Ordinance (LGV), industry guides and their review: <a class="euc-textlink" href="https://www.fedlex.admin.ch/eli/cc/2017/63/de#art_80" target="_blank" rel="noopener">fedlex.admin.ch</a>',
+    'src.fn7': 'Profondia analysis of ERP use in Switzerland, reported by Swiss IT Magazine: <a class="euc-textlink" href="https://www.itmagazine.ch/artikel/80096/Abacus_ist_das_am_meisten_genutzte_ERP-System_in_der_Schweiz.html" target="_blank" rel="noopener">itmagazine.ch</a>',
+    'weiter.titel': 'Continue',
+    'weiter.l1': 'AI in fiduciary and law firms: opening up mandates and easing deadlines',
+    'weiter.l2': 'Integrations: which systems are prepared',
+    'weiter.l3': 'Security and trust: where the data is held and who sees it',
+    'geprueft': 'Last reviewed: <time datetime="2026-08">August 2026</time>'
+  },
+  fr: {
+    'meta.title': 'IA en production : ERP, Abacus, SAP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'L’IA dans la production',
+    'hero.eyebrow': 'L’IA au quotidien professionnel',
+    'hero.h1': 'L’IA dans la production : trois processus qui gardent le savoir dans l’entreprise',
+    'hero.lead': 'Votre collaborateur le plus expérimenté part à la retraite dans deux ans, le cahier des charges de la prochaine offre compte 140 pages, et l’audit est prévu au printemps. Cet article montre à travers trois processus comment un collègue IA travaille avec le savoir de votre entreprise, ce qui peut être relié à votre ERP et où se situent les limites.',
+    'hero.chip': 'Production',
+    'hero.datum': '17 mars 2026',
+    'hero.lesezeit': 'Temps de lecture : 12 minutes',
+    'lage.leg1': 'Rapports de service, procès-verbaux d’essai et demandes de modification accumulés sur des décennies',
+    'lage.leg2': 'Base de connaissances hébergée chez vous, avec des droits par outil',
+    'lage.leg3': 'Question en langage courant, depuis l’atelier ou depuis le bureau',
+    'lage.leg4': 'Réponse avec renvoi au document, vérifiée par la personne compétente',
+    'lage.fig': 'Voilà comment le savoir de l’entreprise revient au poste de travail : de l’archive accumulée au fil du temps jusqu’à la réponse avec sa source. L’appréciation reste humaine.',
+    'kurz.titel': 'En bref',
+    'kurz.p1': 'Seuls 17 % des PME disposent d’une stratégie numérique définie, contre près de 50 % des grandes entreprises.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup>',
+    'kurz.p2': 'Dans l’industrie technologique suisse, l’IA proche de la production en reste le plus souvent au stade de l’essai : la moitié des entreprises ne l’ont pas envisagée, 10 % mènent des projets pilotes.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup>',
+    'kurz.p3': 'EU Cowork AI travaille avec le savoir de votre entreprise. Les rapports de service, les procès-verbaux d’essai, les notes sur les nomenclatures et les demandes de modification deviennent une base de connaissances : un ensemble de vos propres documents, auquel vous posez des questions en phrases ordinaires.',
+    'kurz.p4': 'Vos données de conception restent en Suisse ou sur votre propre serveur et n’entraînent aucun modèle. Votre ERP peut être raccordé s’il dispose d’une interface documentée. Une interface est l’endroit par lequel deux programmes échangent des données ; le Model Context Protocol (MCP) est le standard ouvert par lequel un programme d’IA l’utilise.',
+    'toc.titel': 'Sur cette page',
+    'toc.i1': 'Situation de départ',
+    'toc.i2': 'Préserver le savoir d’expérience',
+    'toc.i3': 'Cahiers des charges et appels d’offres',
+    'toc.i4': 'Assurance qualité et audit',
+    'toc.i5': 'Connecteurs vers l’ERP et la bureautique',
+    'toc.i6': 'Secret d’affaires et protection des données',
+    'toc.i7': 'Questions fréquentes',
+    'lage.h2': 'Situation de départ : la stratégie manque, le savoir part à la retraite',
+    'lage.p1': 'Seuls 17 % des PME disposent d’une stratégie numérique définie, contre près de 50 % des grandes entreprises. C’est ce que montre une enquête de Swissmem sur l’industrie 4.0, à laquelle ont participé 267 entreprises de Suisse alémanique et 54 de Suisse romande.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> Pour l’intelligence artificielle, l’écart entre l’annonce et l’atelier est plus grand encore. L’EPF de Zurich a interrogé à ce sujet, avec Swissmem et Next Industries, plus de 200 entreprises technologiques suisses. La moitié n’a pas encore envisagé l’IA proche de la production, et 10 % mènent des projets pilotes.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup>',
+    'lage.p2': 'Cette réserve a de bonnes raisons. Swissmem cite comme obstacles les risques de sécurité et les questions de protection des données, les exigences réglementaires ainsi que la structure et la qualité des données.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup> Confier ses données de conception à un cloud étranger, c’est se créer un problème qu’aucun gain d’efficacité ne compense. Et quiconque dispose d’une archive constituée sur trente ans sait que la qualité des données ne surgit pas sur simple pression d’un bouton. La réponse utile n’est pas d’attendre, mais de commencer petit et sous contrôle.',
+    'lage.p3': 'Car une horloge tourne, et elle est accrochée au bureau du personnel. Swissmem désigne la perte de savoir due aux départs à la retraite comme un problème central. L’association mène à ce sujet le projet de recherche Digitaler Wissenserhalt im Unternehmen, dans lequel des modèles de langage rendent de nouveau trouvable une documentation hétérogène accumulée sur des décennies.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> Un modèle de langage est un programme qui lit du texte et en rédige lui-même. L’association de branche travaille donc exactement sur le cas que votre atelier vit chaque semaine : la réponse figure dans un document que plus personne ne retrouve, et le collègue qui la connaît par cœur a encore deux ans avant la retraite.',
+    'lage.p4': 'Dans la production alimentaire s’ajoute une voie légale. L’autocontrôle selon les principes HACCP est une obligation de l’entreprise.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> Les lignes directrices sectorielles pour les bonnes pratiques procédurales sont examinées par l’OSAV (BLV), l’Office fédéral de la sécurité alimentaire et des affaires vétérinaires. La base en est l’article 80 de l’ordonnance sur les denrées alimentaires et les objets usuels.<sup><a href="#fn-6" aria-label="Note 6">6</a></sup> L’obligation reste à l’entreprise. Le travail de rédaction qui l’entoure, non.',
+    'uc1.h2': 'Cas d’usage 1 : le savoir d’expérience reste dans l’entreprise',
+    'uc1.p1': 'Une installation de 2011 est à l’arrêt chez le client. Le technicien de service cherche la cause et il est certain que la même panne s’est déjà produite, sauf que cela figure dans un rapport de service que plus personne ne retrouve. Deux portes plus loin, le constructeur demande pourquoi une variante avait été réalisée à l’époque avec ce montage de paliers. Le même collaborateur peut répondre aux deux questions, et il part à la retraite dans deux ans.',
+    'uc1.p2': 'Les rapports de service, les procès-verbaux d’essai, les notes sur les nomenclatures et les demandes de modification entrent dans la base de connaissances tels quels : en PDF, en scan, dans une arborescence de dossiers accumulée au fil du temps. Les questions se posent en langage courant, comme vous les poseriez à un collègue, et non avec des commandes de recherche : quelle panne est déjà apparue sur quelle série, pourquoi ce montage de paliers a été choisi, ce que disait le procès-verbal de réception. La réponse arrive avec le renvoi au document dont elle provient. Vous vérifiez ainsi en quelques secondes au lieu de devoir croire sur parole.',
+    'uc1.leg1': 'Question en langage courant, depuis le service ou depuis le bureau d’études',
+    'uc1.leg2': 'Rapports, procès-verbaux et demandes de modification, avec des droits par outil',
+    'uc1.leg3': 'Réponse avec renvoi au document, vérifiable en quelques secondes',
+    'uc1.fig': 'La base de connaissances répond à partir des documents de l’entreprise et montre d’où vient la réponse. Ce qui dort dans les archives redevient un outil de travail.',
+    'uc1.p3': 'Les droits descendent jusqu’à chaque outil : qui n’a pas le droit de voir le calcul de prix de revient ne le voit pas non plus via l’IA. Chaque accès figure dans le journal d’audit, un registre qui retient qui a ouvert quel document et quand. Commencez par un type de machine ou par une série et vérifiez les premières réponses sur des cas que vous connaissez par cœur. La qualité des réponses croît avec la qualité de l’archivage, et l’entreprise constate sur son propre exemple ce que vaudra désormais un classement soigné.',
+    'uc2.h2': 'Cas d’usage 2 : passer le cahier des charges au crible avant l’offre',
+    'uc2.p1': 'Un cahier des charges client arrive avec 140 pages. Le délai de remise est dans dix jours, et le seul à pouvoir le lire est le senior, déjà surchargé de toute façon. Le document entre dans le collègue IA, et il en ressort une liste structurée d’exigences : ce qui est demandé, dans quel chapitre cela figure, quelle norme est citée et quelle tolérance est indiquée.',
+    'uc2.p2': 'Dans un deuxième temps, cette liste est confrontée à vos propres spécifications, à vos listes de normes et à vos offres antérieures issues de la base de connaissances. Ce que votre portefeuille couvre apparaît comme couvert, avec un renvoi à votre propre spécification. Ce qu’il ne couvre pas est signalé. Ce qui est formulé de manière floue atterrit sur la liste des questions à poser au client, avec la référence exacte dans le cahier des charges. Le senior lit ainsi de manière ciblée les passages signalés au lieu des 140 pages, et la décision de soumettre une offre repose sur une base plutôt que sur une impression.',
+    'uc2.leg1': 'Cahier des charges du client, tel qu’il arrive',
+    'uc2.leg2': 'Vos propres spécifications, listes de normes et offres antérieures',
+    'uc2.leg3': 'Liste d’exigences avec lacunes signalées et questions ouvertes',
+    'uc2.fig': 'La comparaison naît de votre portefeuille, non de la mémoire du modèle. C’est l’entreprise qui décide de soumettre une offre ou non.',
+    'uc2.p3': 'Ce qui, délibérément, ne se produit pas : le collègue IA ne donne aucun engagement et ne remplace aucune clarification technique. Il livre un projet avec la source, et un modèle de langage peut passer à côté d’une exigence ou la classer à tort. C’est pourquoi la liste appartient au service spécialisé, qui juge de ce qui est réalisable. Le gain tient à ce que l’examen commence le premier jour et non le septième.',
+    'uc3.h2': 'Cas d’usage 3 : assurance qualité et audit dans la production alimentaire',
+    'uc3.p1': 'L’audit selon IFS Food ou BRCGS est prévu en mars. Le catalogue de questions est mis en regard de votre propre manuel HACCP et qualité, et il en ressort une liste de lacunes : quelle question trouve réponse dans le manuel, où il n’y a qu’un renvoi, où il n’y a rien. L’assurance qualité traite cette liste au lieu de relire trois fois le manuel depuis le début.',
+    'uc3.p2': 'La deuxième pile, ce sont les documents des fournisseurs : spécifications, certificats, certificats d’analyse. Le collègue IA les résume, signale les dates de péremption et nomme ce qui manque. Le troisième cas, ce sont les projets d’étiquetage et de déclaration multilingues ainsi que les notices d’utilisation. Ils naissent avec votre glossaire d’entreprise, c’est-à-dire avec votre propre liste de termes, et emploient les mêmes termes dans toutes les langues. L’ordre des ingrédients et la mise en évidence des allergènes figurent alors comme points de contrôle sur la liste de l’assurance qualité, et non comme résultat de la machine.',
+    'uc3.leg1': 'Questions d’audit, documents des fournisseurs et dossiers de recettes',
+    'uc3.leg2': 'Comparaison avec votre propre manuel HACCP et qualité',
+    'uc3.leg3': 'Liste de lacunes, aperçu des documents et projet d’étiquette à valider',
+    'uc3.fig': 'Une seule entrée donne trois projets. Aucun d’eux ne remplace la validation par l’assurance qualité.',
+    'uc3.p3': 'La limite est ici tracée nettement, et c’est heureux. L’autocontrôle est une obligation légale de l’entreprise.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> Le collègue IA rédige des projets et trouve les lacunes ; la validation doit venir de l’assurance qualité. Pour les étiquettes et les notices d’utilisation s’ajoute la responsabilité du fait des produits : la validation technique appartient expressément à une personne, et aucun texte écrit par une machine n’est juridiquement sûr en soi. Cet article ne remplace pas un conseil juridique.',
+    'konn.h2': 'Connecteurs : ce qui peut être relié à vos systèmes',
+    'konn.p1': 'Un collègue IA est aussi utile que ce qu’il a le droit d’atteindre. MCP est un standard ouvert qui permet à un programme d’IA de solliciter un autre programme. Il faut pour cela une interface documentée, c’est-à-dire un point de raccordement publié par lequel deux programmes échangent des données. Chaque outil est libéré séparément, et chaque appel est consigné. Selon une analyse de Profondia, l’ERP le plus utilisé en Suisse est Abacus avec 17 %, devant SAP avec 16 % et Microsoft Dynamics avec 8 %.<sup><a href="#fn-7" aria-label="Note 7">7</a></sup> Le tableau montre jusqu’où va aujourd’hui le raccordement de l’IA aux logiciels répandus dans la fabrication et la production alimentaire, vérifié en août 2026. La colonne du milieu donne les noms techniques de ces interfaces ; celle qui compte pour vous est la colonne de droite.',
+    'konn.th1': 'Logiciel',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Raccordement à EU Cowork AI',
+    'konn.r1c1': 'Abacus',
+    'konn.r1c2': 'API REST avec OAuth2, accès via le programme partenaires',
+    'konn.r1c3': 'Raccordement via MCP possible, l’accès passe par la filière partenaires d’Abacus',
+    'konn.r2c1': 'SAP Business One',
+    'konn.r2c2': 'Service Layer (OData), documenté',
+    'konn.r2c3': 'Raccordement via MCP possible : articles, stocks, partenaires commerciaux, commandes, factures',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central',
+    'konn.r3c2': 'API documentée',
+    'konn.r3c3': 'Serveur MCP disponible chez Microsoft ; dans Business Central online en lecture seule par défaut, les accès en écriture peuvent être activés individuellement',
+    'konn.r4c1': 'Odoo',
+    'konn.r4c2': 'Interface ouverte, documentée',
+    'konn.r4c3': 'Raccordements MCP prêts à l’emploi issus de la communauté : ordres de fabrication, nomenclatures, stocks',
+    'konn.r5c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r5c2': 'API Graph, documentée ouvertement',
+    'konn.r5c3': 'Serveur MCP disponible chez Microsoft ; e-mail, calendrier et fichiers directement accessibles',
+    'konn.r6c1': 'proALPHA, Opacc',
+    'konn.r6c2': 'Interfaces existantes, documentation réservée aux clients et aux partenaires',
+    'konn.r6c3': 'Raccordement via MCP possible, la voie passe par l’éditeur',
+    'konn.r7c1': 'CSB-System',
+    'konn.r7c2': 'Pas d’API publiquement documentée',
+    'konn.r7c3': 'La voie passe par des exports et des documents',
+    'konn.p2': 'Votre logiciel manque à la liste ? Les trois processus ci-dessus travaillent avec des documents et n’ont besoin d’aucun raccordement de système. Pour commencer, un export depuis le MES, c’est-à-dire depuis la conduite de production, ou depuis le système de gestion des moyens de contrôle suffit. Le fonctionnement de principe d’un raccordement via MCP et la liste des systèmes préparés figurent sur la page <a class="euc-textlink" href="/integrationen">Intégrations</a>.',
+    'ds.h2': 'Secret d’affaires : vos données de conception restent entre vos mains',
+    'ds.p1': 'Dans cette branche, le levier ne s’appelle pas d’abord loi sur la protection des données, mais secret de fabrication et secret d’affaires. L’article 162 du Code pénal punit la violation de tels secrets. Ce sont exactement ces secrets que contiennent vos données de conception, vos calculs de prix de revient et vos spécifications clients, souvent protégés en plus par un accord de confidentialité. Qui fournit la medtech, la pharma ou l’aéronautique porte de surcroît les exigences contractuelles de ses clients contre toute fuite de données vers des clouds étrangers. Cet article ne remplace pas un conseil juridique.',
+    'ds.p2': 'D’où la phrase clé : vos données de conception restent dans votre propre instance. Une instance est l’installation qui tourne pour votre seule entreprise, avec des droits par outil et un journal pour chaque accès. Elle est exploitée dans des centres de données certifiés ISO 27001 de Green à Lupfig (Suisse) ou sur votre propre serveur. Les requêtes aux modèles sont traitées du côté de l’UE et les données des clients n’entraînent aucun modèle. La télémétrie, c’est-à-dire la remontée de données d’utilisation, est désactivée par défaut. Qui, en raison d’exigences de ses clients, ne peut rien transmettre à l’extérieur exploite l’instance dans son propre centre de données ; le logiciel est sous licence MIT.',
+    'ds.p3': 'Pour les données du personnel s’applique en outre la loi révisée sur la protection des données. L’entreprise reste responsable, même lorsqu’un outil d’IA traite les données. Si un prestataire intervient, cela requiert un contrat de sous-traitance, un contrat qui fixe ce que ce prestataire a le droit de faire des données. Le <a class="euc-textlink" href="/avv">contrat de sous-traitance</a> et la <a class="euc-textlink" href="/subprozessoren">liste des sous-traitants ultérieurs</a> sont publiés ouvertement sur le site, les mesures techniques dans le <a class="euc-textlink" href="/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Questions fréquentes de la fabrication et de la production alimentaire',
+    'faq.q1': 'Notre documentation s’est constituée sur des décennies et n’a rien d’homogène. Cela apporte-t-il quand même quelque chose ?',
+    'faq.a1': 'Oui, avec une restriction honnête. La base de connaissances accepte les PDF, les rapports scannés et des arborescences de dossiers entières, mais la qualité des réponses croît avec la qualité de l’archivage. Commencez par un type de machine ou par une série, vérifiez les réponses sur des cas que vous connaissez, puis élargissez. Un projet de rangement préalable n’est pas nécessaire et ne serait de toute façon jamais terminé.',
+    'faq.q2': 'L’IA comprend-elle nos dessins techniques ?',
+    'faq.a2': 'Le texte et les tableaux oui, la géométrie seulement de façon limitée. Les nomenclatures, les cartouches, les tampons, les mentions de révision et les notes manuscrites sur le plan sont lus ; un modèle de langage n’apprécie pas un dessin au sens d’un contrôle de conception. Cela suffit pour retrouver des documents et des mentions, pas pour valider une conception.',
+    'faq.q3': 'Notre savoir de conception reste-t-il protégé ?',
+    'faq.a3': 'Les droits descendent jusqu’à chaque outil, dans l’ordre utilisateur, rôle, groupe et valeur par défaut du serveur, et chaque accès figure dans le journal d’audit exportable. L’exploitation managée a lieu en Suisse, l’auto-hébergement sur votre propre serveur ; dans les deux cas, les données des clients n’entraînent aucun modèle. Qui doit satisfaire aux exigences contractuelles de ses clients exploite l’instance dans sa propre entreprise.',
+    'faq.q4': 'Combien cela coûte-t-il ?',
+    'faq.a4': 'L’exploitation managée coûte 15 € par personne et par mois, 14 CHF en Suisse. Sur ce montant, 8 €, respectivement 7.50 CHF, sont un crédit de modèles : un pot commun de votre organisation qui paie les requêtes adressées au modèle de langage. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT, une licence libre sans frais de licence. Toutes les indications figurent sur la page <a class="euc-textlink" href="/preise">Tarifs</a>.',
+    'faq.q5': 'Pouvons-nous commencer avec un seul service ?',
+    'faq.a5': 'Oui, et c’est la voie habituelle : le service après-vente ou l’assurance qualité avec une base de connaissances clairement délimitée. Vous gérez les utilisateurs, les droits et le budget mensuel commun dans le panneau d’administration ; le budget dispose d’un blocage souple, afin que les coûts restent prévisibles. D’autres services suivent lorsque le premier travaille de manière visible.',
+    'faq.q6': 'Cela remplace-t-il notre ERP ou notre PLM, et cela fonctionne-t-il avec Abacus, SAP Business One ou Odoo ?',
+    'faq.a6': 'Non, rien n’est remplacé. Votre ERP reste le système directeur pour les données de base, les commandes et les nomenclatures, votre PLM pour les états et les validations. Le collègue IA travaille au-dessus : il lit, résume et rédige. Le raccordement de l’IA à Abacus, SAP Business One, Dynamics 365 Business Central ou Odoo passe par MCP et par leurs interfaces documentées ; le tableau ci-dessus montre ce qui est possible pour chaque système. Des droits par outil et une trace pour chaque appel s’appliquent partout.',
+    'faq.q7': 'Nous rédigeons des notices d’utilisation et des étiquettes multilingues. Jusqu’où pouvons-nous nous y fier ?',
+    'faq.a7': 'Le projet naît avec votre glossaire d’entreprise et emploie les mêmes termes dans toutes les langues. La validation technique reste obligatoire : la responsabilité du fait des produits est attachée aux notices et aux étiquettes, et un modèle de langage peut produire des erreurs. Pour les machines, la notice d’utilisation fait partie de la conformité, et la version linguistique du pays de destination est une exigence légale ; la validation reste du ressort du fabricant. Aucun projet n’est une déclaration juridiquement sûre. Cette réponse ne remplace pas un conseil juridique.',
+    'cta.h2': 'Voyez-le sur un cas qui vous est propre',
+    'cta.p': 'Apportez un cahier des charges, une pile de rapports de service ou votre catalogue de questions d’audit, et nous parcourrons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.',
+    'cta.btn1': 'Réserver un rendez-vous',
+    'cta.btn2': 'Rejoindre la liste d’attente',
+    'src.h2': 'Sources',
+    'src.p': 'Tous les chiffres et toutes les indications juridiques de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.',
+    'src.fn1': 'Swissmem, enquête sur l’industrie 4.0 dans la branche MEM (267 entreprises de Suisse alémanique, 54 de Suisse romande), stratégie numérique dans les PME et les grandes entreprises : <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn2': 'Étude de l’EPF de Zurich avec Swissmem et Next Industries auprès de plus de 200 entreprises technologiques suisses sur l’état de l’IA, rapportée par MaschinenMarkt Schweiz : <a class="euc-textlink" href="https://www.maschinenmarkt.ch/ki-in-der-schweizer-tech-branche-realitaet-hinkt-hype-hinterher-a-4122f3c55699f1a949e6a0d170cb02c3/" target="_blank" rel="noopener">maschinenmarkt.ch</a>',
+    'src.fn3': 'Swissmem, projet de recherche Digitaler Wissenserhalt im Unternehmen, exploitation de la documentation accumulée au moyen de modèles de langage : <a class="euc-textlink" href="https://www.swissmem.ch/de/engagement/digitalisierung/forschungsprojekt-digitaler-wissenserhalt-im-unternehmen.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn4': 'Swissmem, intelligence artificielle : applications actuelles et défis dans l’industrie suisse : <a class="euc-textlink" href="https://www.swissmem.ch/de/wissen/technologien/kuenstliche-intelligenz/kuenstliche-intelligenz-aktuelle-anwendungen-und-herausforderungen-in-der-schweizer-industrie.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn5': 'OSAV (BLV), Office fédéral de la sécurité alimentaire et des affaires vétérinaires, lignes directrices pour les bonnes pratiques procédurales dans les entreprises du secteur alimentaire et autocontrôle selon HACCP : <a class="euc-textlink" href="https://www.blv.admin.ch/de/leitlinien-fuer-gute-verfahrenspraxis-lebensmittelbetriebe" target="_blank" rel="noopener">blv.admin.ch</a>',
+    'src.fn6': 'Article 80 de l’ordonnance sur les denrées alimentaires et les objets usuels (LGV), lignes directrices sectorielles et leur examen : <a class="euc-textlink" href="https://www.fedlex.admin.ch/eli/cc/2017/63/de#art_80" target="_blank" rel="noopener">fedlex.admin.ch</a>',
+    'src.fn7': 'Analyse de Profondia sur l’utilisation des ERP en Suisse, rapportée par Swiss IT Magazine : <a class="euc-textlink" href="https://www.itmagazine.ch/artikel/80096/Abacus_ist_das_am_meisten_genutzte_ERP-System_in_der_Schweiz.html" target="_blank" rel="noopener">itmagazine.ch</a>',
+    'weiter.titel': 'Pour aller plus loin',
+    'weiter.l1': 'L’IA en fiduciaire et en cabinet : exploiter les mandats et alléger les délais',
+    'weiter.l2': 'Intégrations : quels systèmes sont préparés',
+    'weiter.l3': 'Security et Trust : où se trouvent les données et qui les voit',
+    'geprueft': 'Dernière vérification : <time datetime="2026-08">août 2026</time>'
+  },
+  it: {
+    'meta.title': 'IA nella produzione: ERP, Abacus, SAP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'L’IA nella produzione',
+    'hero.eyebrow': 'L’IA nel lavoro quotidiano',
+    'hero.h1': 'L’IA nella produzione: tre processi che trattengono il sapere in azienda',
+    'hero.lead': 'Il collaboratore più esperto va in pensione tra due anni, il capitolato per la prossima offerta conta 140 pagine e l’audit è previsto in primavera. Questo articolo mostra su tre processi come un collega IA lavora con il sapere della sua azienda, che cosa si può collegare al suo ERP e dove stanno i limiti.',
+    'hero.chip': 'Produzione',
+    'hero.datum': '17 marzo 2026',
+    'hero.lesezeit': 'Tempo di lettura: 12 minuti',
+    'lage.leg1': 'Rapporti di servizio, verbali di collaudo e richieste di modifica accumulati in decenni',
+    'lage.leg2': 'Base di conoscenza nella propria azienda, con permessi per singolo strumento',
+    'lage.leg3': 'Domanda in linguaggio comune, dall’officina o dall’ufficio',
+    'lage.leg4': 'Risposta con rimando al documento, verificata dalla persona competente',
+    'lage.fig': 'Così il sapere dell’azienda torna al posto di lavoro: dall’archivio cresciuto negli anni fino alla risposta con la fonte. La valutazione resta all’essere umano.',
+    'kurz.titel': 'In breve',
+    'kurz.p1': 'Solo il 17% delle PMI dispone di una strategia digitale definita, contro quasi il 50% delle grandi imprese.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'Nell’industria tecnologica svizzera l’IA vicina alla produzione è per lo più ancora allo stadio sperimentale: metà delle imprese non l’ha presa in considerazione, il 10% conduce progetti pilota.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup>',
+    'kurz.p3': 'EU Cowork AI lavora con il sapere della sua azienda. Rapporti di servizio, verbali di collaudo, note sulle distinte base e richieste di modifica diventano una base di conoscenza: una raccolta dei suoi documenti, alla quale può porre domande in frasi normali.',
+    'kurz.p4': 'I suoi dati di progettazione restano in Svizzera oppure sul suo server e non addestrano alcun modello. Il suo ERP si può collegare se dispone di un’interfaccia documentata. Un’interfaccia è il punto attraverso il quale due programmi si scambiano dati; il Model Context Protocol (MCP) è lo standard aperto con cui un programma di IA la utilizza.',
+    'toc.titel': 'In questa pagina',
+    'toc.i1': 'Situazione di partenza',
+    'toc.i2': 'Preservare il sapere esperienziale',
+    'toc.i3': 'Capitolati e gare d’appalto',
+    'toc.i4': 'Assicurazione qualità e audit',
+    'toc.i5': 'Connettori verso ERP e Office',
+    'toc.i6': 'Tutela del segreto e protezione dei dati',
+    'toc.i7': 'Domande frequenti',
+    'lage.h2': 'Situazione di partenza: manca la strategia, il sapere va in pensione',
+    'lage.p1': 'Solo il 17% delle PMI dispone di una strategia digitale definita, contro quasi il 50% delle grandi imprese. Lo mostra un’indagine di Swissmem sull’industria 4.0, alla quale hanno partecipato 267 imprese della Svizzera tedesca e 54 della Svizzera romanda.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> Per l’intelligenza artificiale la distanza tra annuncio e officina è ancora maggiore. L’ETH di Zurigo ha interpellato in proposito, insieme a Swissmem e Next Industries, oltre 200 imprese tecnologiche svizzere. Metà non ha ancora preso in considerazione l’IA vicina alla produzione e il 10% conduce progetti pilota.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup>',
+    'lage.p2': 'La prudenza ha buone ragioni. Swissmem indica come ostacoli i rischi per la sicurezza e le questioni di protezione dei dati, i requisiti normativi nonché la struttura e la qualità dei dati.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> Chi affida i dati di progettazione a un cloud estraneo si procura un problema che nessun guadagno di efficienza compensa. E chi ha un archivio cresciuto in trent’anni sa che la qualità dei dati non nasce premendo un pulsante. La risposta utile non è attendere, bensì cominciare in piccolo e in modo controllato.',
+    'lage.p3': 'Perché un orologio corre, ed è appeso nell’ufficio del personale. Swissmem indica la perdita di sapere dovuta ai pensionamenti come problema centrale. L’associazione porta avanti a tale scopo il progetto di ricerca Digitaler Wissenserhalt im Unternehmen, nel quale modelli linguistici rendono di nuovo reperibile una documentazione disomogenea cresciuta in decenni.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> Un modello linguistico è un programma che legge testi e ne formula a sua volta. L’associazione di categoria lavora dunque esattamente sul caso che la sua officina vive ogni settimana: la risposta si trova in un documento che nessuno riesce più a trovare, e il collega che la conosce a memoria ha ancora due anni prima della pensione.',
+    'lage.p4': 'Nella produzione alimentare si aggiunge un binario legale. L’autocontrollo secondo i principi HACCP è un obbligo dell’azienda.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Le linee guida settoriali per la buona prassi procedurale sono esaminate dall’USAV (BLV), l’Ufficio federale della sicurezza alimentare e di veterinaria. La base è l’articolo 80 dell’ordinanza sulle derrate alimentari e gli oggetti d’uso.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup> L’obbligo resta dell’azienda. Il lavoro di scrittura che vi ruota attorno no.',
+    'uc1.h2': 'Caso d’uso 1: il sapere esperienziale resta in azienda',
+    'uc1.p1': 'Un impianto del 2011 è fermo presso il cliente. Il tecnico di servizio cerca la causa ed è certo che lo stesso guasto si sia già verificato, solo che è annotato in un rapporto di servizio che nessuno riesce più a trovare. Due porte più in là il progettista chiede perché all’epoca una variante sia stata costruita con quel montaggio dei cuscinetti. A entrambe le domande può rispondere lo stesso collaboratore, che tra due anni va in pensione.',
+    'uc1.p2': 'Rapporti di servizio, verbali di collaudo, note sulle distinte base e richieste di modifica entrano nella base di conoscenza così come sono: come PDF, come scansione, come struttura di cartelle cresciuta nel tempo. Si domanda in linguaggio comune, come lo chiederebbe a un collega, e non con comandi di ricerca: quale guasto si sia già presentato su quale serie, perché sia stato scelto quel montaggio dei cuscinetti, che cosa dicesse il verbale di collaudo. La risposta arriva con il rimando al documento da cui proviene. Così può consultarla in pochi secondi anziché doverle credere sulla parola.',
+    'uc1.leg1': 'Domanda in linguaggio comune, dal servizio o dalla progettazione',
+    'uc1.leg2': 'Rapporti, verbali e richieste di modifica, con permessi per singolo strumento',
+    'uc1.leg3': 'Risposta con rimando al documento, verificabile in pochi secondi',
+    'uc1.fig': 'La base di conoscenza risponde a partire dai documenti dell’azienda e mostra da dove proviene la risposta. Ciò che giace in archivio torna a essere strumento di lavoro.',
+    'uc1.p3': 'I permessi arrivano fino al singolo strumento: chi non può vedere il calcolo dei costi non lo vede nemmeno tramite l’IA. Ogni accesso finisce nel registro di audit, un verbale che annota chi ha aperto quale documento e quando. Cominci con un tipo di macchina o con una serie e verifichi le prime risposte su casi che conosce a memoria. La qualità delle risposte cresce con la qualità dell’archivio, e l’azienda vede sul proprio esempio quanto varrà d’ora in poi un archivio ordinato.',
+    'uc2.h2': 'Caso d’uso 2: passare al setaccio il capitolato prima dell’offerta',
+    'uc2.p1': 'Un capitolato del cliente arriva con 140 pagine. Il termine di consegna scade tra dieci giorni e l’unico a poterlo leggere è il senior, che è comunque già carico di lavoro. Il documento entra nel collega IA e ne esce un elenco strutturato di requisiti: che cosa è richiesto, in quale capitolo è indicato, quale norma è citata e quale tolleranza è nominata.',
+    'uc2.p2': 'In un secondo passo questo elenco viene confrontato con le sue specifiche, i suoi elenchi di norme e le sue offerte precedenti presenti nella base di conoscenza. Ciò che il suo portafoglio copre risulta coperto, con rimando alla specifica propria. Ciò che non copre viene contrassegnato. Ciò che è formulato in modo poco chiaro finisce nell’elenco delle domande al cliente, con il punto esatto nel capitolato. Il senior legge così in modo mirato i passaggi contrassegnati anziché tutte le 140 pagine, e la decisione se presentare offerta poggia su una base anziché su una sensazione.',
+    'uc2.leg1': 'Capitolato del cliente, così come arriva',
+    'uc2.leg2': 'Specifiche proprie, elenchi di norme e offerte precedenti',
+    'uc2.leg3': 'Elenco dei requisiti con lacune contrassegnate e domande aperte',
+    'uc2.fig': 'Il confronto nasce dal suo portafoglio, non dalla memoria del modello. Se presentare offerta lo decide l’azienda.',
+    'uc2.p3': 'Ciò che consapevolmente non avviene: il collega IA non rilascia alcun impegno e non sostituisce alcun chiarimento tecnico. Fornisce una bozza con la fonte, e un modello linguistico può ignorare un requisito o classificarlo in modo errato. Per questo l’elenco appartiene al reparto specialistico, che valuta ciò che è fattibile. Il vantaggio sta nel fatto che l’esame comincia il primo giorno anziché il settimo.',
+    'uc3.h2': 'Caso d’uso 3: assicurazione qualità e audit nella produzione alimentare',
+    'uc3.p1': 'L’audit secondo IFS Food o BRCGS è previsto in marzo. Il catalogo delle domande viene messo a confronto con il proprio manuale HACCP e di gestione della qualità, e ne esce un elenco delle lacune: quale domanda trova risposta nel manuale, dove c’è solo un rimando, dove non c’è nulla. L’assicurazione qualità lavora su questo elenco anziché rileggere tre volte il manuale dall’inizio.',
+    'uc3.p2': 'La seconda pila è costituita dai documenti dei fornitori: specifiche, certificati, certificati di analisi. Il collega IA li riassume, contrassegna le date di scadenza e indica che cosa manca. Il terzo caso sono le bozze multilingue di etichettatura e dichiarazione nonché le istruzioni per l’uso. Nascono con il suo glossario aziendale, cioè con il suo elenco di termini, e utilizzano gli stessi termini in tutte le lingue. L’ordine degli ingredienti e l’evidenziazione degli allergeni figurano come punti di controllo nell’elenco dell’assicurazione qualità, non come risultato della macchina.',
+    'uc3.leg1': 'Domande di audit, documenti dei fornitori e documentazione delle ricette',
+    'uc3.leg2': 'Confronto con il proprio manuale HACCP e di gestione della qualità',
+    'uc3.leg3': 'Elenco delle lacune, panoramica dei documenti e bozza di etichetta da approvare',
+    'uc3.fig': 'Da un solo ingresso nascono tre bozze. Nessuna di esse sostituisce l’approvazione da parte dell’assicurazione qualità.',
+    'uc3.p3': 'Qui il confine è tracciato in modo netto, ed è giusto così. L’autocontrollo è un obbligo di legge dell’azienda.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Il collega IA scrive bozze e trova lacune; ad approvare deve essere l’assicurazione qualità. Per etichette e istruzioni per l’uso si aggiunge la responsabilità da prodotto: l’approvazione tecnica spetta espressamente all’essere umano, e nessun testo scritto da una macchina è di per sé giuridicamente sicuro. Questo articolo non sostituisce una consulenza legale.',
+    'konn.h2': 'Connettori: che cosa si può collegare ai suoi sistemi',
+    'konn.p1': 'Un collega IA è utile quanto ciò che gli è consentito raggiungere. MCP è uno standard aperto grazie al quale un programma di IA può interpellare un altro programma. Serve a questo scopo un’interfaccia documentata, cioè un punto di collegamento reso pubblico attraverso il quale due programmi si scambiano dati. Ogni singolo strumento viene abilitato a parte e ogni chiamata viene registrata. Secondo un’analisi di Profondia l’ERP più utilizzato in Svizzera è Abacus con il 17%, davanti a SAP con il 16% e a Microsoft Dynamics con l’8%.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> La tabella mostra fino a dove arriva oggi il collegamento dell’IA al software diffuso nella fabbricazione e nella produzione alimentare, verificata nell’agosto 2026. Nella colonna centrale figurano i nomi tecnici di queste interfacce; per lei conta la colonna di destra.',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interfaccia',
+    'konn.th3': 'Collegamento a EU Cowork AI',
+    'konn.r1c1': 'Abacus',
+    'konn.r1c2': 'API REST con OAuth2, accesso tramite il programma partner',
+    'konn.r1c3': 'Collegamento tramite MCP possibile, l’accesso passa dal canale partner di Abacus',
+    'konn.r2c1': 'SAP Business One',
+    'konn.r2c2': 'Service Layer (OData), documentato',
+    'konn.r2c3': 'Collegamento tramite MCP possibile: articoli, magazzino, partner commerciali, ordini, fatture',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central',
+    'konn.r3c2': 'API documentata',
+    'konn.r3c3': 'Server MCP disponibile da Microsoft; in Business Central online di fabbrica in sola lettura, gli accessi in scrittura sono abilitabili singolarmente',
+    'konn.r4c1': 'Odoo',
+    'konn.r4c2': 'Interfaccia aperta, documentata',
+    'konn.r4c3': 'Collegamenti MCP già pronti dalla community: ordini di produzione, distinte base, magazzino',
+    'konn.r5c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r5c2': 'API Graph, documentata apertamente',
+    'konn.r5c3': 'Server MCP disponibile da Microsoft; e-mail, calendario e file direttamente accessibili',
+    'konn.r6c1': 'proALPHA, Opacc',
+    'konn.r6c2': 'Interfacce presenti, documentazione solo per clienti e partner',
+    'konn.r6c3': 'Collegamento tramite MCP possibile, la via passa dal produttore',
+    'konn.r7c1': 'CSB-System',
+    'konn.r7c2': 'Nessuna API documentata pubblicamente',
+    'konn.r7c3': 'La via passa da esportazioni e documenti',
+    'konn.p2': 'Il suo software manca nell’elenco? I tre processi qui sopra lavorano con documenti e non necessitano di alcun collegamento di sistema. Per iniziare basta un’esportazione dal MES, cioè dal sistema di conduzione della produzione, oppure dal sistema di gestione dei mezzi di controllo. Come funziona in linea di principio un collegamento tramite MCP e quali sistemi sono predisposti è descritto nella pagina <a class="euc-textlink" href="/integrationen">Integrazioni</a>.',
+    'ds.h2': 'Tutela del segreto: i suoi dati di progettazione restano nelle sue mani',
+    'ds.p1': 'In questo settore la leva non si chiama in primo luogo legge sulla protezione dei dati, bensì segreto di fabbrica e segreto d’affari. L’articolo 162 del Codice penale punisce la rivelazione di tali segreti. Sono esattamente questi i segreti contenuti nei suoi dati di progettazione, nei calcoli dei costi e nelle specifiche dei clienti, spesso protetti in aggiunta da un accordo di riservatezza. Chi fornisce medtech, farmaceutica o aeronautica porta inoltre gli obblighi contrattuali dei propri clienti contro ogni fuoriuscita di dati verso cloud estranei. Questo articolo non sostituisce una consulenza legale.',
+    'ds.p2': 'Da qui la frase centrale: i suoi dati di progettazione restano nella sua istanza. Un’istanza è l’installazione che gira per la sua sola azienda, con permessi per singolo strumento e un registro per ogni accesso. È gestita in centri di calcolo certificati ISO 27001 di Green a Lupfig (Svizzera) oppure sul suo server. Le richieste ai modelli sono elaborate sul lato UE e i dati dei clienti non addestrano alcun modello. La telemetria, cioè il rinvio di dati di utilizzo, è disattivata per impostazione predefinita. Chi per obblighi verso i clienti non può cedere nulla all’esterno gestisce l’istanza nel proprio centro di calcolo; il software è rilasciato con licenza MIT.',
+    'ds.p3': 'Per i dati del personale vale inoltre la legge riveduta sulla protezione dei dati. L’azienda resta responsabile anche quando è uno strumento di IA a trattare i dati. Se collabora un fornitore, serve un accordo sul trattamento dei dati, cioè un contratto che stabilisce che cosa quel fornitore può fare con i dati. L’<a class="euc-textlink" href="/avv">accordo sul trattamento dei dati</a> e l’<a class="euc-textlink" href="/subprozessoren">elenco dei sub-responsabili</a> sono pubblicati apertamente sul sito, le misure tecniche nel <a class="euc-textlink" href="/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Domande frequenti dalla fabbricazione e dalla produzione alimentare',
+    'faq.q1': 'La nostra documentazione è cresciuta in decenni ed è tutt’altro che uniforme. Serve comunque a qualcosa?',
+    'faq.a1': 'Sì, con una limitazione onesta. La base di conoscenza accetta PDF, rapporti scansionati e intere strutture di cartelle, ma la qualità delle risposte cresce con la qualità dell’archivio. Cominci con un tipo di macchina o con una serie, verifichi le risposte su casi che conosce e allarghi in seguito. Un progetto di riordino preliminare non è necessario e non sarebbe mai concluso.',
+    'faq.q2': 'L’IA capisce i nostri disegni tecnici?',
+    'faq.a2': 'Testo e tabelle sì, la geometria solo in misura limitata. Distinte base, cartigli, timbri, annotazioni di revisione e note manoscritte sul piano vengono letti; un modello linguistico non valuta un disegno nel senso di una verifica progettuale. Per ritrovare documenti e annotazioni è sufficiente, per approvare una progettazione no.',
+    'faq.q3': 'Il nostro sapere progettuale resta protetto?',
+    'faq.a3': 'I permessi arrivano fino al singolo strumento, nell’ordine utente, ruolo, gruppo e impostazione predefinita del server, e ogni accesso finisce nel registro di audit esportabile. L’esercizio gestito avviene in Svizzera, l’esercizio autonomo sul suo server; in entrambi i casi i dati dei clienti non addestrano alcun modello. Chi deve soddisfare obblighi contrattuali dei propri clienti gestisce l’istanza nella propria azienda.',
+    'faq.q4': 'Quanto costa?',
+    'faq.a4': 'L’esercizio gestito costa 15 € per persona al mese, in Svizzera 14 CHF. Di questi, 8 € rispettivamente 7.50 CHF sono credito modelli: un fondo comune della sua organizzazione dal quale vengono pagate le richieste al modello linguistico. Chi ospita in proprio non paga nulla per il software: è rilasciato con licenza MIT, una licenza libera senza costi di licenza. Tutte le indicazioni si trovano nella pagina <a class="euc-textlink" href="/preise">Prezzi</a>.',
+    'faq.q5': 'Possiamo iniziare con un solo reparto?',
+    'faq.a5': 'Sì, ed è la via consueta: servizio o assicurazione qualità con una base di conoscenza chiaramente delimitata. Utenti, permessi e budget mensile comune li gestisce nel pannello di amministrazione; il budget ha un blocco morbido, così che i costi restino prevedibili. Altri reparti si aggiungono quando il primo lavora in modo visibile.',
+    'faq.q6': 'Questo sostituisce il nostro ERP o il nostro PLM, e funziona con Abacus, SAP Business One o Odoo?',
+    'faq.a6': 'No, non viene sostituito nulla. Il suo ERP resta il sistema guida per anagrafiche, ordini e distinte base, il suo PLM per stati e approvazioni. Il collega IA lavora al di sopra: legge, riassume e formula. Il collegamento dell’IA ad Abacus, SAP Business One, Dynamics 365 Business Central oppure Odoo passa da MCP e dalle loro interfacce documentate; la tabella qui sopra mostra che cosa è possibile per ogni sistema. Valgono ovunque permessi per singolo strumento e una registrazione per ogni chiamata.',
+    'faq.q7': 'Scriviamo istruzioni per l’uso ed etichette multilingue. Fino a che punto possiamo farvi affidamento?',
+    'faq.a7': 'La bozza nasce con il suo glossario aziendale e utilizza gli stessi termini in tutte le lingue. L’approvazione tecnica resta obbligatoria: a istruzioni ed etichette è legata la responsabilità da prodotto, e un modello linguistico può produrre affermazioni errate. Per le macchine le istruzioni per l’uso fanno parte della conformità, e la versione linguistica per il Paese di destinazione è un requisito giuridico; l’approvazione resta al fabbricante. Nessuna bozza è una dichiarazione giuridicamente sicura. Questa risposta non sostituisce una consulenza legale.',
+    'cta.h2': 'Lo veda su un suo caso concreto',
+    'cta.p': 'Porti un capitolato, una pila di rapporti di servizio oppure il suo catalogo di domande di audit, e percorreremo insieme il processo. Oppure si iscriva e parta tra i primi.',
+    'cta.btn1': 'Prenotare un appuntamento',
+    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'src.h2': 'Fonti',
+    'src.p': 'Tutte le cifre e le indicazioni giuridiche di questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.',
+    'src.fn1': 'Swissmem, indagine sull’industria 4.0 nel settore MEM (267 imprese della Svizzera tedesca, 54 della Svizzera romanda), strategia digitale nelle PMI e nelle grandi imprese: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn2': 'Studio dell’ETH di Zurigo con Swissmem e Next Industries su oltre 200 imprese tecnologiche svizzere sullo stato dell’IA, riferito da MaschinenMarkt Schweiz: <a class="euc-textlink" href="https://www.maschinenmarkt.ch/ki-in-der-schweizer-tech-branche-realitaet-hinkt-hype-hinterher-a-4122f3c55699f1a949e6a0d170cb02c3/" target="_blank" rel="noopener">maschinenmarkt.ch</a>',
+    'src.fn3': 'Swissmem, progetto di ricerca Digitaler Wissenserhalt im Unternehmen, accesso alla documentazione cresciuta nel tempo tramite modelli linguistici: <a class="euc-textlink" href="https://www.swissmem.ch/de/engagement/digitalisierung/forschungsprojekt-digitaler-wissenserhalt-im-unternehmen.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn4': 'Swissmem, intelligenza artificiale: applicazioni attuali e sfide nell’industria svizzera: <a class="euc-textlink" href="https://www.swissmem.ch/de/wissen/technologien/kuenstliche-intelligenz/kuenstliche-intelligenz-aktuelle-anwendungen-und-herausforderungen-in-der-schweizer-industrie.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn5': 'USAV (BLV), Ufficio federale della sicurezza alimentare e di veterinaria, linee guida per la buona prassi procedurale nelle aziende alimentari e autocontrollo secondo HACCP: <a class="euc-textlink" href="https://www.blv.admin.ch/de/leitlinien-fuer-gute-verfahrenspraxis-lebensmittelbetriebe" target="_blank" rel="noopener">blv.admin.ch</a>',
+    'src.fn6': 'Articolo 80 dell’ordinanza sulle derrate alimentari e gli oggetti d’uso (LGV), linee guida settoriali e loro esame: <a class="euc-textlink" href="https://www.fedlex.admin.ch/eli/cc/2017/63/de#art_80" target="_blank" rel="noopener">fedlex.admin.ch</a>',
+    'src.fn7': 'Analisi Profondia sull’utilizzo degli ERP in Svizzera, riferita da Swiss IT Magazine: <a class="euc-textlink" href="https://www.itmagazine.ch/artikel/80096/Abacus_ist_das_am_meisten_genutzte_ERP-System_in_der_Schweiz.html" target="_blank" rel="noopener">itmagazine.ch</a>',
+    'weiter.titel': 'Continua',
+    'weiter.l1': 'L’IA in fiduciaria e studio legale: valorizzare i mandati e alleggerire le scadenze',
+    'weiter.l2': 'Integrazioni: quali sistemi sono predisposti',
+    'weiter.l3': 'Security e Trust: dove risiedono i dati e chi li vede',
+    'geprueft': 'Ultima verifica: <time datetime="2026-08">agosto 2026</time>'
+  },
+  es: {
+    'meta.title': 'IA en la producción: ERP, Abacus, SAP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'La IA en la producción',
+    'hero.eyebrow': 'La IA en el trabajo diario',
+    'hero.h1': 'La IA en la producción: tres procesos que mantienen el saber en la empresa',
+    'hero.lead': 'Su empleado con más experiencia se jubila en dos años, el pliego de condiciones para la próxima oferta tiene 140 páginas y la auditoría llega en primavera. Este artículo muestra con tres procesos cómo un colega de IA trabaja con el saber de su empresa, qué puede conectarse a su ERP y dónde están los límites.',
+    'hero.chip': 'Producción',
+    'hero.datum': '17 de marzo de 2026',
+    'hero.lesezeit': 'Tiempo de lectura: 12 minutos',
+    'lage.leg1': 'Informes de servicio, actas de ensayo y solicitudes de modificación acumulados durante décadas',
+    'lage.leg2': 'Base de conocimiento en la propia empresa, con permisos por herramienta',
+    'lage.leg3': 'Pregunta en lenguaje corriente, desde el taller o desde la oficina',
+    'lage.leg4': 'Respuesta con referencia al documento, comprobada por la persona especialista',
+    'lage.fig': 'Así vuelve el saber de la empresa al puesto de trabajo: desde el archivo acumulado con los años hasta la respuesta con su fuente. La valoración sigue siendo humana.',
+    'kurz.titel': 'En resumen',
+    'kurz.p1': 'Solo el 17 % de las pymes tiene una estrategia digital definida, frente a casi el 50 % de las grandes empresas.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'En la industria tecnológica suiza, la IA cercana a la producción sigue casi siempre en fase de prueba: la mitad de las empresas no la ha considerado y el 10 % realiza proyectos piloto.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup>',
+    'kurz.p3': 'EU Cowork AI trabaja con el saber de su empresa. Los informes de servicio, las actas de ensayo, las notas sobre listas de materiales y las solicitudes de modificación se convierten en una base de conocimiento: una colección de sus propios documentos a la que usted pregunta en frases normales.',
+    'kurz.p4': 'Sus datos de diseño permanecen en Suiza o en su propio servidor y no entrenan ningún modelo. Su ERP puede conectarse si dispone de una interfaz documentada. Una interfaz es el punto por el que dos programas intercambian datos; el Model Context Protocol (MCP) es el estándar abierto con el que un programa de IA la utiliza.',
+    'toc.titel': 'En esta página',
+    'toc.i1': 'Punto de partida',
+    'toc.i2': 'Preservar el saber de la experiencia',
+    'toc.i3': 'Pliegos de condiciones y licitaciones',
+    'toc.i4': 'Aseguramiento de la calidad y auditoría',
+    'toc.i5': 'Conectores con el ERP y la ofimática',
+    'toc.i6': 'Secreto empresarial y protección de datos',
+    'toc.i7': 'Preguntas frecuentes',
+    'lage.h2': 'Punto de partida: falta la estrategia, el saber se jubila',
+    'lage.p1': 'Solo el 17 % de las pymes tiene una estrategia digital definida, frente a casi el 50 % de las grandes empresas. Así lo muestra una encuesta de Swissmem sobre la industria 4.0 en la que participaron 267 empresas de la Suiza alemana y 54 de la Suiza francesa.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> En la inteligencia artificial, la distancia entre el anuncio y el taller es aún mayor. La ETH de Zúrich preguntó al respecto, junto con Swissmem y Next Industries, a más de 200 empresas tecnológicas suizas. La mitad no ha considerado todavía la IA cercana a la producción y el 10 % realiza proyectos piloto.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup>',
+    'lage.p2': 'La reserva tiene buenos motivos. Swissmem menciona como obstáculos los riesgos de seguridad y las cuestiones de protección de datos, los requisitos regulatorios y la estructura y la calidad de los datos.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> Quien entrega datos de diseño a una nube ajena se procura un problema que ninguna ganancia de eficiencia compensa. Y quien tiene un archivo formado a lo largo de treinta años sabe que la calidad de los datos no surge pulsando un botón. La respuesta útil no es esperar, sino empezar en pequeño y de forma controlada.',
+    'lage.p3': 'Porque hay un reloj en marcha, y cuelga en la oficina de personal. Swissmem señala la pérdida de saber por las jubilaciones como problema central. La asociación mantiene para ello el proyecto de investigación Digitaler Wissenserhalt im Unternehmen, en el que modelos de lenguaje vuelven a hacer localizable una documentación heterogénea acumulada durante décadas.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> Un modelo de lenguaje es un programa que lee texto y redacta texto por su cuenta. La asociación sectorial trabaja, pues, justamente en el caso que su taller vive cada semana: la respuesta está en un documento que ya nadie encuentra, y el compañero que la sabe de memoria tiene dos años por delante hasta la jubilación.',
+    'lage.p4': 'En la producción de alimentos se añade una vía legal. El autocontrol conforme a los principios HACCP es una obligación de la empresa.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Las líneas directrices sectoriales para la buena praxis de procedimiento las examina la Oficina Federal de Seguridad Alimentaria y Veterinaria (BLV). La base para ello es el artículo 80 de la Ordenanza sobre productos alimenticios y objetos de uso.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup> La obligación sigue siendo de la empresa. El trabajo de escritura que la rodea, no.',
+    'uc1.h2': 'Caso de uso 1: el saber de la experiencia se queda en la empresa',
+    'uc1.p1': 'Una instalación del año 2011 está parada en el cliente. El técnico de servicio busca la causa y está seguro de que el mismo fallo ya se produjo una vez, solo que consta en un informe de servicio que ya nadie encuentra. Dos puertas más allá, el diseñador pregunta por qué en su día una variante se construyó con ese montaje de rodamientos. A ambas preguntas puede responder el mismo empleado, y se jubila en dos años.',
+    'uc1.p2': 'Los informes de servicio, las actas de ensayo, las notas sobre listas de materiales y las solicitudes de modificación entran en la base de conocimiento tal como están: en PDF, como escaneo, como estructura de carpetas formada con los años. Se pregunta en lenguaje corriente, tal como se lo preguntaría a un compañero, y no con comandos de búsqueda: qué fallo se ha presentado ya en qué serie, por qué se eligió ese montaje de rodamientos, qué decía el acta de recepción. La respuesta llega con la referencia al documento del que procede. Así la consulta en segundos en lugar de tener que creerla.',
+    'uc1.leg1': 'Pregunta en lenguaje corriente, desde el servicio técnico o desde la oficina técnica',
+    'uc1.leg2': 'Informes, actas y solicitudes de modificación, con permisos por herramienta',
+    'uc1.leg3': 'Respuesta con referencia al documento, comprobable en segundos',
+    'uc1.fig': 'La base de conocimiento responde a partir de los documentos de la empresa y muestra de dónde procede la respuesta. Lo que reposa en el archivo vuelve a ser herramienta de trabajo.',
+    'uc1.p3': 'Los permisos llegan hasta cada herramienta: quien no puede ver el cálculo de costes tampoco lo ve a través de la IA. Cada acceso queda en el registro de auditoría, un registro que anota quién abrió qué documento y cuándo. Empiece con un tipo de máquina o con una serie y compruebe las primeras respuestas con casos que conoce de memoria. La calidad de las respuestas crece con la calidad del archivo, y la empresa ve en su propio ejemplo lo que vale en adelante un archivo ordenado.',
+    'uc2.h2': 'Caso de uso 2: examinar a fondo el pliego de condiciones antes de la oferta',
+    'uc2.p1': 'Un pliego de condiciones del cliente llega con 140 páginas. El plazo de presentación vence en diez días y el único que puede leerlo es el sénior, que de todos modos está saturado. El documento entra en el colega de IA y de ahí sale una lista estructurada de requisitos: qué se exige, en qué capítulo consta, qué norma se cita y qué tolerancia se indica.',
+    'uc2.p2': 'En un segundo paso, esa lista se contrasta con sus propias especificaciones, sus listas de normas y sus ofertas anteriores de la base de conocimiento. Lo que su cartera cubre aparece como cubierto, con referencia a la especificación propia. Lo que no cubre queda marcado. Lo que está formulado de forma poco clara acaba en la lista de consultas al cliente, con el punto exacto del pliego. Así el sénior lee de forma selectiva los pasajes marcados en lugar de las 140 páginas, y la decisión de presentar oferta se apoya en una base y no en una impresión.',
+    'uc2.leg1': 'Pliego de condiciones del cliente, tal como llega',
+    'uc2.leg2': 'Especificaciones propias, listas de normas y ofertas anteriores',
+    'uc2.leg3': 'Lista de requisitos con lagunas marcadas y consultas abiertas',
+    'uc2.fig': 'La comparación surge de su cartera, no de la memoria del modelo. Si se presenta oferta lo decide la empresa.',
+    'uc2.p3': 'Lo que deliberadamente no ocurre: el colega de IA no asume ningún compromiso ni sustituye ninguna aclaración técnica. Entrega un borrador con la fuente, y un modelo de lenguaje puede pasar por alto un requisito o clasificarlo mal. Por eso la lista corresponde al departamento especializado, que juzga qué es viable. La ganancia está en que la revisión empieza el primer día y no el séptimo.',
+    'uc3.h2': 'Caso de uso 3: aseguramiento de la calidad y auditoría en la producción de alimentos',
+    'uc3.p1': 'La auditoría según IFS Food o BRCGS llega en marzo. El catálogo de preguntas se contrasta con el propio manual HACCP y de calidad, y de ahí sale una lista de lagunas: qué pregunta está respondida en el manual, dónde solo hay una referencia, dónde no hay nada. El aseguramiento de la calidad va resolviendo esa lista en lugar de leer el manual tres veces desde el principio.',
+    'uc3.p2': 'El segundo montón son los documentos de proveedores: especificaciones, certificados, certificados de análisis. El colega de IA los resume, marca las fechas de caducidad y señala lo que falta. El tercer caso son los borradores multilingües de etiquetado y declaración, así como las instrucciones de uso. Se elaboran con su glosario de empresa, es decir, con su propia lista de términos, y emplean los mismos términos en todos los idiomas. El orden de los ingredientes y el resaltado de los alérgenos figuran como puntos de control en la lista del aseguramiento de la calidad, no como resultado de la máquina.',
+    'uc3.leg1': 'Preguntas de auditoría, documentos de proveedores y documentación de recetas',
+    'uc3.leg2': 'Contraste con el propio manual HACCP y de calidad',
+    'uc3.leg3': 'Lista de lagunas, resumen de documentos y borrador de etiqueta para su aprobación',
+    'uc3.fig': 'De una sola entrada salen tres borradores. Ninguno de ellos sustituye la aprobación por el aseguramiento de la calidad.',
+    'uc3.p3': 'Aquí el límite está trazado con nitidez, y está bien que así sea. El autocontrol es una obligación legal de la empresa.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> El colega de IA escribe borradores y encuentra lagunas; aprobar tiene que hacerlo el aseguramiento de la calidad. En etiquetas e instrucciones de uso se añade la responsabilidad por producto: la aprobación técnica corresponde expresamente a una persona, y ningún texto escrito por una máquina es jurídicamente seguro por sí mismo. Este artículo no sustituye al asesoramiento jurídico.',
+    'konn.h2': 'Conectores: qué puede enlazarse con sus sistemas',
+    'konn.p1': 'Un colega de IA es tan útil como aquello que puede alcanzar. MCP es un estándar abierto que permite a un programa de IA dirigirse a otro programa. Para ello hace falta una interfaz documentada, es decir, un punto de conexión publicado por el que dos programas intercambian datos. Cada herramienta se habilita por separado y cada llamada queda registrada. Según un análisis de Profondia, el ERP más utilizado en Suiza es Abacus con el 17 %, por delante de SAP con el 16 % y de Microsoft Dynamics con el 8 %.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> La tabla muestra hasta dónde llega hoy la conexión de la IA con el software extendido en la fabricación y la producción de alimentos, verificada en agosto de 2026. En la columna central figuran los nombres técnicos de esas interfaces; la que cuenta para usted es la columna derecha.',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interfaz',
+    'konn.th3': 'Conexión con EU Cowork AI',
+    'konn.r1c1': 'Abacus',
+    'konn.r1c2': 'API REST con OAuth2, acceso a través del programa de partners',
+    'konn.r1c3': 'Conexión mediante MCP posible; el acceso pasa por la vía de partners de Abacus',
+    'konn.r2c1': 'SAP Business One',
+    'konn.r2c2': 'Service Layer (OData), documentado',
+    'konn.r2c3': 'Conexión mediante MCP posible: artículos, almacén, socios comerciales, pedidos, facturas',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central',
+    'konn.r3c2': 'API documentada',
+    'konn.r3c3': 'Servidor MCP disponible de Microsoft; en Business Central online, de fábrica solo de lectura, los accesos de escritura se habilitan por separado',
+    'konn.r4c1': 'Odoo',
+    'konn.r4c2': 'Interfaz abierta, documentada',
+    'konn.r4c3': 'Conexiones MCP ya listas de la comunidad: órdenes de fabricación, listas de materiales, almacén',
+    'konn.r5c1': 'Microsoft 365 (Outlook, Teams, SharePoint)',
+    'konn.r5c2': 'API Graph, documentada abiertamente',
+    'konn.r5c3': 'Servidor MCP disponible de Microsoft; correo, calendario y archivos directamente accesibles',
+    'konn.r6c1': 'proALPHA, Opacc',
+    'konn.r6c2': 'Interfaces existentes, documentación solo para clientes y partners',
+    'konn.r6c3': 'Conexión mediante MCP posible; el camino pasa por el fabricante',
+    'konn.r7c1': 'CSB-System',
+    'konn.r7c2': 'Sin API documentada públicamente',
+    'konn.r7c3': 'El camino pasa por exportaciones y documentos',
+    'konn.p2': '¿Falta su software en la lista? Los tres procesos anteriores trabajan con documentos y no necesitan ninguna conexión de sistemas. Para empezar basta una exportación del MES, es decir, del sistema de conducción de la producción, o del sistema de equipos de control. Cómo funciona en principio una conexión mediante MCP y qué sistemas están preparados se explica en la página <a class="euc-textlink" href="/integrationen">Integraciones</a>.',
+    'ds.h2': 'Secreto empresarial: sus datos de diseño siguen en sus manos',
+    'ds.p1': 'En este sector la palanca no se llama en primer lugar ley de protección de datos, sino secreto de fabricación y secreto comercial. El artículo 162 del Código Penal castiga la revelación de tales secretos. Justamente esos secretos son los que contienen sus datos de diseño, sus cálculos de costes y las especificaciones de sus clientes, a menudo protegidos además por un acuerdo de confidencialidad. Quien suministra a medtech, farmacia o aeronáutica asume además las exigencias contractuales de sus clientes contra cualquier salida de datos hacia nubes ajenas. Este artículo no sustituye al asesoramiento jurídico.',
+    'ds.p2': 'De ahí la frase central: sus datos de diseño permanecen en su propia instancia. Una instancia es la instalación que funciona solo para su empresa, con permisos por herramienta y un registro de cada acceso. Se opera en centros de datos certificados según ISO 27001 de Green en Lupfig (Suiza) o en su propio servidor. Las consultas a los modelos se procesan en la UE y los datos de los clientes no entrenan ningún modelo. La telemetría, es decir, el envío de datos de uso, está desactivada de forma predeterminada. Quien por exigencias de sus clientes no puede entregar nada al exterior opera la instancia en su propio centro de datos; el software está bajo licencia MIT.',
+    'ds.p3': 'Para los datos de personal rige además la ley revisada de protección de datos. La empresa sigue siendo responsable aunque una herramienta de IA trate los datos. Si interviene un proveedor, hace falta un acuerdo de encargo de tratamiento, es decir, un contrato que fija qué puede hacer ese proveedor con los datos. El <a class="euc-textlink" href="/avv">acuerdo de encargo de tratamiento</a> y la <a class="euc-textlink" href="/subprozessoren">lista de subencargados</a> están publicados abiertamente en el sitio web, y las medidas técnicas en el <a class="euc-textlink" href="/sicherheit">Trust Center</a>.',
+    'faq.h2': 'Preguntas frecuentes de la fabricación y la producción de alimentos',
+    'faq.q1': 'Nuestra documentación se ha formado a lo largo de décadas y es cualquier cosa menos homogénea. ¿Aporta algo aun así?',
+    'faq.a1': 'Sí, con una limitación honesta. La base de conocimiento admite PDF, informes escaneados y estructuras de carpetas enteras, pero la calidad de las respuestas crece con la calidad del archivo. Empiece con un tipo de máquina o con una serie, compruebe las respuestas con casos que conoce y amplíe después. Un proyecto de ordenación previo no es necesario y, además, nunca estaría terminado.',
+    'faq.q2': '¿Entiende la IA nuestros planos técnicos?',
+    'faq.a2': 'El texto y las tablas sí, la geometría solo de forma limitada. Se leen las listas de materiales, los cajetines, los sellos, las notas de revisión y las anotaciones manuscritas en el plano; un modelo de lenguaje no evalúa un plano en el sentido de una revisión de diseño. Para volver a encontrar documentos y anotaciones basta; para aprobar un diseño, no.',
+    'faq.q3': '¿Queda protegido nuestro saber de diseño?',
+    'faq.a3': 'Los permisos llegan hasta cada herramienta, en el orden usuario, rol, grupo y valor predeterminado del servidor, y cada acceso queda en el registro de auditoría exportable. La operación gestionada se realiza en Suiza, el autoalojamiento en su propio servidor; en ambos casos los datos de los clientes no entrenan ningún modelo. Quien deba cumplir exigencias contractuales de sus clientes opera la instancia en su propia empresa.',
+    'faq.q4': '¿Cuánto cuesta?',
+    'faq.a4': 'La operación gestionada cuesta 15 € por persona y mes, en Suiza 14 CHF. De ese importe, 8 € o bien 7.50 CHF son saldo de modelos: un fondo común de su organización con el que se pagan las consultas al modelo de lenguaje. Quien se aloja por su cuenta no paga nada por el software: está bajo licencia MIT, una licencia libre sin coste de licencia. Toda la información está en la página <a class="euc-textlink" href="/preise">Precios</a>.',
+    'faq.q5': '¿Podemos empezar con un solo departamento?',
+    'faq.a5': 'Sí, y es la vía habitual: servicio técnico o aseguramiento de la calidad con una base de conocimiento claramente delimitada. Los usuarios, los permisos y el presupuesto mensual común se gestionan en el panel de administración; el presupuesto tiene un bloqueo blando para que los costes sigan siendo previsibles. Otros departamentos se suman cuando el primero trabaja de forma visible.',
+    'faq.q6': '¿Sustituye esto a nuestro ERP o PLM, y funciona con Abacus, SAP Business One u Odoo?',
+    'faq.a6': 'No, no se sustituye nada. Su ERP sigue siendo el sistema rector para datos maestros, pedidos y listas de materiales; su PLM, para estados y aprobaciones. El colega de IA trabaja por encima: lee, resume y redacta. La conexión de la IA con Abacus, SAP Business One, Dynamics 365 Business Central u Odoo pasa por MCP y por sus interfaces documentadas; la tabla anterior muestra qué es posible en cada sistema. Rigen en todo momento permisos por herramienta y un registro para cada llamada.',
+    'faq.q7': 'Redactamos instrucciones de uso y etiquetas multilingües. ¿Hasta qué punto podemos fiarnos?',
+    'faq.a7': 'El borrador se elabora con su glosario de empresa y emplea los mismos términos en todos los idiomas. La aprobación técnica sigue siendo obligatoria: de las instrucciones y las etiquetas depende la responsabilidad por producto, y un modelo de lenguaje puede producir errores. En las máquinas, el manual de instrucciones forma parte de la conformidad, y la versión lingüística para el país de destino es un requisito legal; la aprobación sigue correspondiendo al fabricante. Ningún borrador es una declaración jurídicamente segura. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'cta.h2': 'Véalo con un caso propio',
+    'cta.p': 'Traiga un pliego de condiciones, un montón de informes de servicio o su catálogo de preguntas de auditoría y recorreremos el proceso juntos. O apúntese y empiece entre los primeros.',
+    'cta.btn1': 'Reservar una cita',
+    'cta.btn2': 'Únase a la lista de espera',
+    'src.h2': 'Fuentes',
+    'src.p': 'Todas las cifras y las indicaciones jurídicas de este artículo proceden de las siguientes fuentes, revisadas por última vez en agosto de 2026.',
+    'src.fn1': 'Swissmem, encuesta sobre la industria 4.0 en el sector MEM (267 empresas de la Suiza alemana, 54 de la Suiza francesa), estrategia digital en pymes y grandes empresas: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn2': 'Estudio de la ETH de Zúrich con Swissmem y Next Industries entre más de 200 empresas tecnológicas suizas sobre el estado de la IA, referido por MaschinenMarkt Schweiz: <a class="euc-textlink" href="https://www.maschinenmarkt.ch/ki-in-der-schweizer-tech-branche-realitaet-hinkt-hype-hinterher-a-4122f3c55699f1a949e6a0d170cb02c3/" target="_blank" rel="noopener">maschinenmarkt.ch</a>',
+    'src.fn3': 'Swissmem, proyecto de investigación Digitaler Wissenserhalt im Unternehmen, apertura de la documentación acumulada con modelos de lenguaje: <a class="euc-textlink" href="https://www.swissmem.ch/de/engagement/digitalisierung/forschungsprojekt-digitaler-wissenserhalt-im-unternehmen.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn4': 'Swissmem, inteligencia artificial: aplicaciones actuales y retos en la industria suiza: <a class="euc-textlink" href="https://www.swissmem.ch/de/wissen/technologien/kuenstliche-intelligenz/kuenstliche-intelligenz-aktuelle-anwendungen-und-herausforderungen-in-der-schweizer-industrie.html" target="_blank" rel="noopener">swissmem.ch</a>',
+    'src.fn5': 'Oficina Federal de Seguridad Alimentaria y Veterinaria (BLV), líneas directrices para la buena praxis de procedimiento en empresas alimentarias y autocontrol según HACCP: <a class="euc-textlink" href="https://www.blv.admin.ch/de/leitlinien-fuer-gute-verfahrenspraxis-lebensmittelbetriebe" target="_blank" rel="noopener">blv.admin.ch</a>',
+    'src.fn6': 'Artículo 80 de la Ordenanza sobre productos alimenticios y objetos de uso (LGV), líneas directrices sectoriales y su examen: <a class="euc-textlink" href="https://www.fedlex.admin.ch/eli/cc/2017/63/de#art_80" target="_blank" rel="noopener">fedlex.admin.ch</a>',
+    'src.fn7': 'Análisis de Profondia sobre el uso de ERP en Suiza, referido por Swiss IT Magazine: <a class="euc-textlink" href="https://www.itmagazine.ch/artikel/80096/Abacus_ist_das_am_meisten_genutzte_ERP-System_in_der_Schweiz.html" target="_blank" rel="noopener">itmagazine.ch</a>',
+    'weiter.titel': 'Continuar',
+    'weiter.l1': 'La IA en la fiduciaria y el despacho: abrir mandatos y aliviar los plazos',
+    'weiter.l2': 'Integraciones: qué sistemas están preparados',
+    'weiter.l3': 'Security y Trust: dónde están los datos y quién los ve',
+    'geprueft': 'Última revisión: <time datetime="2026-08">agosto de 2026</time>'
+  }
+};
+</script>
+
+</body>
+</html>

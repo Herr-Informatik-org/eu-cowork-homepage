@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="fr" data-euc-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">IA pour cabinet et fiduciaire avec DATEV | EU Cowork AI</title>
+<meta name="description" content="Indexer un mandat, partager le savoir du cabinet, guider les mandants : trois processus IA en cabinet, avec raccordement IA à DATEV et Pennylane.">
+<link rel="canonical" href="https://eucowork.ai/fr/blog/ki-kanzlei-europa">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/blog/ki-kanzlei-europa">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/blog/ki-kanzlei-europa">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/blog/ki-kanzlei-europa">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/blog/ki-kanzlei-europa">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/blog/ki-kanzlei-europa">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/blog/ki-kanzlei-europa">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://eucowork.ai/fr/blog/ki-kanzlei-europa">
+<meta property="og:title" content="IA pour cabinet et fiduciaire avec DATEV | EU Cowork AI">
+<meta property="og:description" content="Indexer un mandat, partager le savoir du cabinet, informer les mandants : voilà comment travaille un collègue IA en cabinet, en conseil fiscal et en fiduciaire.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-share-fr.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI : Votre collègue IA. Il reste en Europe.">
+<meta property="article:published_time" content="2026-08-18">
+<meta property="article:modified_time" content="2026-08-18">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IA pour cabinet et fiduciaire avec DATEV | EU Cowork AI">
+<meta name="twitter:description" content="Trois cas d’usage de l’IA en cabinet, conseil fiscal et fiduciaire dans huit marchés européens, avec les connecteurs et des limites claires.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-share-fr.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Aller au contenu</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/fr">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/fr/preise" data-i18n="chrome.nav.pricing">Tarifs</a>
+    <a href="/docs/fr" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/fr/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/fr/self-hosting" data-i18n="chrome.cta.selfhost">Héberger vous-même</a>
+    <a class="euc-btn-primary" href="/fr/warteliste" data-i18n="chrome.cta.waitlist">Rejoindre la liste d’attente</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/fr/preise" data-i18n="chrome.nav.pricing">Tarifs</a>
+      <a href="/docs/fr" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/fr/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/fr/warteliste" data-i18n="chrome.cta.waitlist">Rejoindre la liste d’attente</a>
+      <a class="euc-btn-secondary" href="/fr/self-hosting" data-i18n="chrome.cta.selfhost">Héberger vous-même</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main blog-article" id="inhalt">
+
+  <!-- ==================== HERO ==================== -->
+  <div class="blog-hero">
+    <div class="euc-wrap-wide">
+      <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/fr" data-i18n="chrome.crumb.home">Accueil</a></li>
+        <li><a href="/fr/blog" data-i18n="crumb.blog">Blog</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">L’IA en cabinet et en fiduciaire</span></li>
+      </ol>
+    </nav>
+      <div class="blog-hero-grid">
+        <div class="blog-hero-text">
+          <p class="euc-eyebrow" data-i18n="hero.eyebrow">L’IA au quotidien professionnel</p>
+          <h1 data-i18n="hero.h1">Moins de professionnels, plus de règles : trois processus d’IA au cabinet</h1>
+          <p class="euc-lead" data-i18n="hero.lead">Indexer un mandat, transmettre le savoir du cabinet, guider les mandants à travers les échéances : la profession se rétrécit pendant que les corpus de règles se multiplient. Cet article montre, à travers trois processus, comment un collègue IA travaille avec les documents de votre cabinet et où passent les limites.</p>
+          <p class="blog-hero-meta">
+            <span class="chip" data-i18n="hero.chip">Fiduciaire et cabinet</span>
+            <time datetime="2026-08-18" data-i18n="hero.datum">18 août 2026</time>
+            <span data-i18n="hero.lesezeit">Temps de lecture : 10 minutes</span>
+          </p>
+        </div>
+        <div class="blog-hero-art" aria-hidden="true">
+          <svg viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path class="fig-soft" d="M40 352 H604"></path>
+
+            <rect class="fig-panel" x="44" y="290" width="356" height="16" rx="6"></rect>
+            <path class="fig-soft" d="M68 306 v46 M376 306 v46"></path>
+
+            <rect class="fig-panel" x="52" y="76" width="176" height="126" rx="8"></rect>
+            <path class="fig-eu-mid" d="M70 102 h50"></path>
+            <path class="fig-line" d="M70 124 h140 M70 142 h140 M70 160 h100"></path>
+            <circle class="fig-eu" cx="190" cy="176" r="16"></circle>
+            <path class="fig-eu" d="M183 176 l6 6 11 -13"></path>
+            <rect class="fig-fill-tint fig-soft" x="130" y="202" width="20" height="74"></rect>
+            <rect class="fig-panel" x="100" y="276" width="80" height="14" rx="5"></rect>
+
+            <rect class="fig-fill-ice fig-line" x="170" y="230" width="116" height="20" rx="4"></rect>
+            <rect class="fig-fill-ice fig-eu-mid" x="180" y="234" width="30" height="12" rx="3"></rect>
+            <circle class="fig-soft" cx="268" cy="240" r="4"></circle>
+            <rect class="fig-fill-tint fig-line" x="164" y="250" width="128" height="20" rx="4"></rect>
+            <rect class="fig-fill-ice fig-eu-mid" x="174" y="254" width="30" height="12" rx="3"></rect>
+            <circle class="fig-soft" cx="274" cy="260" r="4"></circle>
+            <rect class="fig-panel" x="158" y="270" width="140" height="20" rx="4"></rect>
+            <rect class="fig-fill-ice fig-eu-mid" x="168" y="274" width="30" height="12" rx="3"></rect>
+            <circle class="fig-soft" cx="280" cy="280" r="4"></circle>
+
+            <rect class="fig-fill-ice fig-eu-mid" x="322" y="216" width="48" height="22" rx="11"></rect>
+            <rect class="fig-fill-tint fig-eu-mid" x="338" y="238" width="16" height="22" rx="4"></rect>
+            <path class="fig-fill-tint fig-eu-mid" d="M324 260 h44 l8 20 h-60 Z"></path>
+            <rect class="fig-fill-ice fig-eu" x="314" y="280" width="64" height="10" rx="3"></rect>
+
+            <path class="fig-soft" d="M320 52 v14 M384 52 v14"></path>
+            <rect class="fig-panel" x="296" y="64" width="112" height="108" rx="6"></rect>
+            <rect class="fig-fill-tint fig-eu-mid" x="296" y="64" width="112" height="24" rx="6"></rect>
+            <path class="fig-line" d="M324 88 v84 M352 88 v84 M380 88 v84 M296 116 h112 M296 144 h112"></path>
+            <rect class="fig-fill-ice fig-eu-mid" x="328" y="120" width="20" height="20" rx="4"></rect>
+
+            <path class="fig-soft" d="M408 108 C460 110 466 182 510 242"></path>
+            <path class="fig-flow fig-eu" d="M408 108 C460 110 466 182 510 242"></path>
+
+            <rect class="fig-panel" x="452" y="242" width="150" height="110" rx="8"></rect>
+            <path class="fig-eu-mid" d="M472 264 h56"></path>
+            <path class="fig-line" d="M472 286 h110 M472 304 h110 M472 322 h66"></path>
+            <path class="fig-eu" d="M554 322 l8 8 16 -18"></path>
+            <circle class="fig-dot-gold" cx="586" cy="264" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="blog-rail" aria-label="Lesefortschritt">
+    <ol>
+      <li><a href="#lage" data-i18n="toc.i1">Situation de départ</a></li>
+      <li><a href="#dossier" data-i18n="toc.i2">Indexer un mandat</a></li>
+      <li><a href="#wissen" data-i18n="toc.i3">Le savoir du cabinet, interrogeable</a></li>
+      <li><a href="#mandanten" data-i18n="toc.i4">Guider les mandants dans les échéances</a></li>
+      <li><a href="#grenzen" data-i18n="toc.i5">Les limites</a></li>
+      <li><a href="#konnektoren" data-i18n="toc.i6">Connecteurs vers le logiciel de cabinet</a></li>
+      <li><a href="#datenschutz" data-i18n="toc.i7">Protection des données</a></li>
+      <li><a href="#fragen" data-i18n="toc.i8">Questions fréquentes</a></li>
+    </ol>
+  </nav>
+
+  <div class="euc-wrap">
+
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.titel">En bref</p>
+      <ul>
+        <li data-i18n="kurz.p1">La profession se rétrécit pendant que les corpus de règles se multiplient : en Allemagne, les chambres recensent 53 932 cabinets de conseil fiscal, dont un peu plus des deux tiers sont des cabinets individuels, pour un âge moyen de 53,7 ans.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup></li>
+        <li data-i18n="kurz.p2">EU Cowork AI travaille avec les documents de votre cabinet. Dossiers de mandat, notices, lettres types et directives deviennent une base de connaissances : un ensemble que vous interrogez en langage courant. Chaque réponse indique sa source.</li>
+        <li data-i18n="kurz.p3">La plateforme ne conseille pas, elle prépare. La réserve d’activité en matière de conseil fiscal prévue à l’article 5 de la loi allemande sur le conseil fiscal (StBerG), le secret professionnel et la validation par un professionnel habilité restent intacts.<sup><a href="#fn-9" aria-label="Note 9">9</a></sup></li>
+        <li data-i18n="kurz.p4">Vos données restent sur votre propre serveur ou dans un centre de données européen et n’entraînent aucun modèle.</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.titel">Sur cette page</p>
+      <ol>
+        <li><a href="#lage" data-i18n="toc.i1">Situation de départ</a></li>
+        <li><a href="#dossier" data-i18n="toc.i2">Indexer un mandat</a></li>
+        <li><a href="#wissen" data-i18n="toc.i3">Le savoir du cabinet, interrogeable</a></li>
+        <li><a href="#mandanten" data-i18n="toc.i4">Guider les mandants dans les échéances</a></li>
+        <li><a href="#grenzen" data-i18n="toc.i5">Les limites</a></li>
+        <li><a href="#konnektoren" data-i18n="toc.i6">Connecteurs vers le logiciel de cabinet</a></li>
+        <li><a href="#datenschutz" data-i18n="toc.i7">Protection des données</a></li>
+        <li><a href="#fragen" data-i18n="toc.i8">Questions fréquentes</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== AUSGANGSLAGE ==================== -->
+    <section class="euc-section">
+      <h2 id="lage" data-i18n="lage.h2">Situation de départ : la profession se rétrécit, les corpus de règles s’étoffent</h2>
+      <p data-i18n="lage.p1">En Allemagne, les chambres des conseils fiscaux recensent 53 932 cabinets, dont un bon 67 % de cabinets individuels, pour un âge moyen de 53,7 ans. Les contrats de formation d’assistant fiscal ont reculé à 17 081, soit moins 1,3 %, tandis que le nombre de personnes en reconversion est monté à 2 113.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> En Italie, la profession se contracte directement : fin 2025, 119 050 dottori commercialisti et esperti contabili étaient inscrits, soit 0,8 % de moins que l’année précédente, pour un revenu médian de 48 420 euros contre 87 376 euros en moyenne.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup></p>
+      <p data-i18n="lage.p2">Au Liechtenstein, l’autorité de surveillance le dit elle-même : dans ses priorités de surveillance 2026, la FMA écrit que le nombre de prestataires du secteur fiduciaire diminue légèrement face au durcissement de la réglementation et à la lourdeur de la charge réglementaire.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> En Suède, le goulet d’étranglement se situe de l’autre côté : Srf konsulterna range le redovisningskonsult parmi les métiers en pénurie, pour environ 70 000 créations d’entreprises par an.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup></p>
+      <p data-i18n="lage.p3">En même temps, les corpus de règles arrivent presque tous d’un coup. En France, à partir du 1er septembre 2026, toutes les entreprises assujetties à la TVA doivent pouvoir recevoir des factures électroniques, et à partir du 1er septembre 2027 les petites structures doivent aussi en émettre, via une plateforme agréée, autorisée par l’État.<sup><a href="#fn-6" aria-label="Note 6">6</a></sup> En Espagne, les entités soumises à l’impôt sur les sociétés doivent adapter leurs systèmes de facturation avant le 1er janvier 2027, toutes les autres avant le 1er juillet 2027. L’obligation B2B issue du Real Decreto 238/2026 ne commence à courir qu’avec un arrêté ministériel encore attendu, puis après douze ou vingt-quatre mois selon les cas.<sup><a href="#fn-7" aria-label="Note 7">7</a></sup> En Norvège, les modifications de la loi comptable prennent effet par étapes : facture électronique entre entreprises soumises à l’obligation de tenue de comptes à partir du 1er janvier 2027, comptabilité électronique à partir du 1er janvier 2030.<sup><a href="#fn-8" aria-label="Note 8">8</a></sup> En Italie, elle fait depuis longtemps partie du quotidien via le Sistema di Interscambio.</p>
+      <p data-i18n="lage.p4">Chacune de ces échéances est deux choses à la fois : un mandat de conseil et une charge administrative dans son propre cabinet. Que la technique ne soit pas le goulet d’étranglement, la statistique européenne le montre : en 2025, dans l’UE, 55,0 % des entreprises de 250 salariés et plus employaient au moins une technologie d’IA, contre seulement 17,0 % des structures de 10 à 49 salariés.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> L’écart est plus grand que n’importe quel écart entre pays.</p>
+    </section>
+
+    <!-- ==================== USECASE 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="dossier" data-i18n="uc1.h2">Cas d’usage 1 : indexer un mandat au lieu de le feuilleter</h2>
+      <p data-i18n="uc1.p1">Un nouveau mandat arrive avec quatre classeurs et deux ans de correspondance. Le collègue IA lit ce que vous lui donnez et établit une chronologie : qui a décidé quoi et quand, quels contrats et avenants existent, quelles échéances y sont nommées et quels points restent ouverts. Chaque indication est accompagnée de sa source.</p>
+      <p data-i18n="uc1.p2">Le même principe vaut dans un mandat en cours : un état des lieux avant l’entretien, la liste des pièces demandées avant un contrôle, sous forme de projet, un résumé après un long avis de l’administration. Ce que l’assistant ne fait pas, c’est apprécier. Il montre où une chose figure, pas ce qui en découle.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-fill-tint fig-line" x="44" y="56" width="156" height="34" rx="6"></rect>
+            <rect class="fig-fill-tint fig-line" x="44" y="100" width="156" height="34" rx="6"></rect>
+            <rect class="fig-fill-ice fig-line" x="44" y="144" width="156" height="34" rx="6"></rect>
+            <path class="fig-line" d="M62 73 h84 M62 117 h108 M62 161 h96"></path>
+            <circle class="fig-numbg" cx="200" cy="56" r="11"></circle>
+            <text class="fig-num" x="200" y="60.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M200 117 H300 M300 117 C332 117 328 95 360 95 M300 117 C332 117 328 214 360 214"></path>
+          <path class="fig-flow fig-eu" d="M200 117 H300"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="360" y="40" width="236" height="112" rx="8"></rect>
+            <path class="fig-eu-mid" d="M384 70 V122"></path>
+            <circle class="fig-fill-ice fig-eu" cx="384" cy="70" r="4"></circle>
+            <circle class="fig-fill-ice fig-eu" cx="384" cy="96" r="4"></circle>
+            <circle class="fig-fill-ice fig-eu" cx="384" cy="122" r="4"></circle>
+            <path class="fig-line" d="M400 70 h158 M400 96 h134 M400 122 h158"></path>
+            <circle class="fig-dot-gold" cx="572" cy="96" r="4"></circle>
+            <circle class="fig-numbg" cx="596" cy="40" r="11"></circle>
+            <text class="fig-num" x="596" y="44.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="360" y="182" width="236" height="86" rx="8"></rect>
+            <path class="fig-eu" d="M382 208 l8 8 14 -16 M382 240 l8 8 14 -16"></path>
+            <path class="fig-line" d="M416 212 h158 M416 244 h124"></path>
+            <circle class="fig-numbg" cx="596" cy="182" r="11"></circle>
+            <text class="fig-num" x="596" y="186.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc1.leg1">Dossiers, contrats et correspondance du mandat</li>
+          <li data-i18n="uc1.leg2">Chronologie avec les parties en présence et les sources</li>
+          <li data-i18n="uc1.leg3">Points ouverts, nommés au lieu d’être oubliés</li>
+        </ol>
+        <figcaption data-i18n="uc1.fig">L’assistant met en ordre ce qui existe et nomme la source de chaque indication. L’appréciation se fait au cabinet.</figcaption>
+      </figure>
+
+      <p data-i18n="uc1.p3">Le contrôle des délais reste dans votre logiciel de cabinet et entre des mains humaines. Une date tirée d’un document est une indication à vérifier, pas un délai confirmé.</p>
+    </section>
+
+    <!-- ==================== USECASE 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="wissen" data-i18n="uc2.h2">Cas d’usage 2 : le savoir du cabinet devient interrogeable</h2>
+      <p data-i18n="uc2.p1">Celui qui débute pose d’abord la même question : comment fait-on ici ? Pendant que les contrats de formation reculent en Allemagne, le nombre de personnes en reconversion augmente.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> Les personnes venues d’un autre métier apportent de l’expérience professionnelle, mais pas le savoir de ce cabinet. Une base de connaissances faite de notices, de lettres types et de la correspondance passée répond à ces questions avec sa source, au lieu d’interrompre pour la douzième fois un collègue expérimenté.</p>
+      <p data-i18n="uc2.p2">Les droits descendent jusqu’à chaque classement. Qui ne traite pas un mandat ne le voit pas non plus par l’assistant, et chaque accès figure dans le journal. C’est la condition pour qu’une base de connaissances soit compatible avec le secret du mandat.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-line" x="44" y="52" width="178" height="54" rx="10"></rect>
+            <path class="fig-eu-mid" d="M62 72 h108 M62 88 h74"></path>
+            <path class="fig-line" d="M78 106 l-10 18 26 -14"></path>
+            <circle class="fig-numbg" cx="222" cy="52" r="11"></circle>
+            <text class="fig-num" x="222" y="56.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M132 106 V156 M326 200 H430"></path>
+          <path class="fig-flow fig-eu" d="M326 200 H430"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="72" y="156" width="254" height="36" rx="8"></rect>
+            <rect class="fig-panel" x="72" y="200" width="254" height="36" rx="8"></rect>
+            <rect class="fig-panel" x="72" y="244" width="254" height="36" rx="8"></rect>
+            <path class="fig-line" d="M90 174 h150 M90 218 h150 M90 262 h150"></path>
+            <rect class="fig-fill-ice fig-eu-mid" x="270" y="166" width="32" height="18" rx="4"></rect>
+            <path class="fig-eu-mid" d="M280 166 v-6 a6 6 0 0 1 12 0 v6 M286 172 v6"></path>
+            <circle class="fig-numbg" cx="326" cy="244" r="11"></circle>
+            <text class="fig-num" x="326" y="248.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="430" y="96" width="166" height="128" rx="8"></rect>
+            <path class="fig-line" d="M450 122 h126 M450 140 h126 M450 158 h94"></path>
+            <path class="fig-eu" d="M450 182 h126"></path>
+            <path class="fig-eu-mid" d="M450 202 l9 9 15 -18"></path>
+            <circle class="fig-dot-gold" cx="576" cy="122" r="4"></circle>
+            <circle class="fig-numbg" cx="596" cy="96" r="11"></circle>
+            <text class="fig-num" x="596" y="100.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc2.leg1">Question en langage courant, y compris de nouveaux collaborateurs</li>
+          <li data-i18n="uc2.leg2">Notices, lettres types et directives, avec des droits par classement</li>
+          <li data-i18n="uc2.leg3">Réponse avec sa source, vérifiable en quelques secondes</li>
+        </ol>
+        <figcaption data-i18n="uc2.fig">La base de connaissances répond à partir des documents du cabinet. Ce que quelqu’un n’a pas le droit de voir, il ne le voit pas non plus par l’assistant.</figcaption>
+      </figure>
+
+      <p data-i18n="uc2.p3">Le gain est double : les personnes expérimentées sont moins souvent interrompues, et le savoir reste au sein du cabinet quand quelqu’un part à la retraite. La base de connaissances ne vaut cependant que ce que valent les documents qu’elle contient.</p>
+    </section>
+
+    <!-- ==================== USECASE 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="mandanten" data-i18n="uc3.h2">Cas d’usage 3 : guider les mandants à travers les échéances</h2>
+      <p data-i18n="uc3.p1">Chacune de ces échéances produit le même travail : expliquer, rappeler, relancer. Une circulaire sur la facturation électronique, une relance pour des pièces manquantes, trente fois dans une version légèrement différente. L’assistant tire le projet de vos propres notes techniques, regroupe les mandats selon qu’ils sont concernés ou non et dépose les courriers pour relecture.</p>
+      <p data-i18n="uc3.p2">Dans les mandats transfrontaliers s’ajoute la langue : à partir de la notice allemande naît la version française, italienne ou espagnole sous forme de projet, avec les mêmes sources. Pour les courriers juridiquement pertinents, la traduction reste un projet, jamais la version qui fait foi.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="40" y="104" width="146" height="106" rx="8"></rect>
+            <path class="fig-eu" d="M58 130 h74"></path>
+            <path class="fig-line" d="M58 150 h110 M58 166 h110 M58 182 h80"></path>
+            <circle class="fig-numbg" cx="186" cy="104" r="11"></circle>
+            <text class="fig-num" x="186" y="108.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M186 157 H266 M266 157 C306 157 302 66 342 66 M266 157 H342 M266 157 C306 157 302 248 342 248 M528 66 C546 66 540 157 556 157 M528 157 H556 M528 248 C546 248 540 157 556 157"></path>
+          <path class="fig-flow fig-eu" d="M186 157 H266"></path>
+          <circle class="fig-numbg" cx="266" cy="157" r="11"></circle>
+          <text class="fig-num" x="266" y="161.5" text-anchor="middle">2</text>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="342" y="32" width="186" height="68" rx="8"></rect>
+            <path class="fig-eu-mid" d="M360 54 h64"></path>
+            <path class="fig-line" d="M360 72 h150 M360 86 h116"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="342" y="123" width="186" height="68" rx="8"></rect>
+            <path class="fig-eu-mid" d="M360 145 h64"></path>
+            <path class="fig-line" d="M360 163 h150 M360 177 h130"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="342" y="214" width="186" height="68" rx="8"></rect>
+            <path class="fig-eu-mid" d="M360 236 h64"></path>
+            <path class="fig-line" d="M360 254 h150 M360 268 h100"></path>
+            <circle class="fig-numbg" cx="528" cy="214" r="11"></circle>
+            <text class="fig-num" x="528" y="218.5" text-anchor="middle">3</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-eu" x="556" y="123" width="40" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M566 160 l8 8 14 -16"></path>
+            <circle class="fig-dot-gold" cx="576" cy="140" r="4"></circle>
+            <circle class="fig-numbg" cx="596" cy="123" r="11"></circle>
+            <text class="fig-num" x="596" y="127.5" text-anchor="middle">4</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc3.leg1">Note technique ou notice du cabinet sur la nouvelle obligation</li>
+          <li data-i18n="uc3.leg2">Une entrée, plusieurs versions selon le mandat et la langue</li>
+          <li data-i18n="uc3.leg3">Projets dans le ton du cabinet, avec les mêmes sources</li>
+          <li data-i18n="uc3.leg4">Validation par le professionnel habilité, envoi seulement ensuite</li>
+        </ol>
+        <figcaption data-i18n="uc3.fig">D’une note technique naissent de nombreux courriers. Aucun ne quitte le cabinet sans validation.</figcaption>
+      </figure>
+
+      <p data-i18n="uc3.p3">Ce qui n’arrive volontairement pas : rien n’est transmis automatiquement à un système public, ni au Sistema di Interscambio, ni à VERI*FACTU, ni à une plateforme agréée. L’assistant prépare, un être humain transmet.</p>
+    </section>
+
+    <!-- ==================== GRENZEN ==================== -->
+    <section class="euc-section">
+      <h2 id="grenzen" data-i18n="grenzen.h2">Les limites, clairement nommées</h2>
+      <p data-i18n="grenzen.p1">En Allemagne, l’assistance en matière fiscale exercée à titre professionnel est réservée aux personnes désignées aux articles 3, 3a, 3d et 4 de la loi sur le conseil fiscal (StBerG). L’article 5 StBerG l’interdit à tous les autres.<sup><a href="#fn-9" aria-label="Note 9">9</a></sup> EU Cowork AI ne donne donc ni conseil fiscal ni conseil juridique. La plateforme prépare la réponse et ne remplace ni le professionnel habilité, ni un expert-comptable, ni un commercialista, ni une gestoría.</p>
+      <p data-i18n="grenzen.p2">Le secret professionnel est le deuxième point fixe : secret professionnel en France, segreto professionale en Italie, secreto profesional en Espagne, obligation de discrétion selon le droit professionnel en Allemagne, en Autriche et au Liechtenstein. Il est pénalement sanctionné, et un contrat de sous-traitance ne le lève pas. La responsabilité reste au sein du cabinet. Il en découle trois phrases : un modèle de langage peut produire des erreurs, c’est pourquoi chaque texte est un projet. Chaque source, vous la vérifiez sur l’original. Et la conformité n’est jamais remplie automatiquement, elle naît des personnes et des processus.</p>
+    </section>
+
+    <!-- ==================== KONNEKTOREN ==================== -->
+    <section class="euc-section">
+      <h2 id="konnektoren" data-i18n="konn.h2">Connecteurs : ce qui peut être raccordé à votre logiciel de cabinet</h2>
+      <p data-i18n="konn.p1">Un collègue IA n’est utile que dans la mesure de ce qu’il a le droit d’atteindre. Le lien vers un autre programme s’appelle un connecteur. Il passe par MCP, un standard ouvert pour le raccordement de systèmes externes. La condition est une interface documentée, une API dans le jargon : le fabricant décrit publiquement comment d’autres programmes peuvent récupérer des données. Certains fabricants livrent déjà une pièce de liaison toute faite, un serveur MCP. Des droits s’appliquent par outil, et chaque appel est journalisé. Voici l’état des lieux pour les logiciels de cabinet et de comptabilité répandus, vérifié en août 2026 : Pour les suites espagnoles de gestion de cabinet, aucun constat vérifié n’est disponible ; elles n’ont donc aucune ligne dans ce tableau.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="konn.th1">Logiciel (pays)</th>
+              <th data-i18n="konn.th2">Interface</th>
+              <th data-i18n="konn.th3">Raccordement à EU Cowork AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="konn.r1c1">DATEV (DE)</td>
+              <td data-i18n="konn.r1c2">API partenaires ; le portail développeurs exige une connexion et n’est pas consultable sans compte DATEV</td>
+              <td data-i18n="konn.r1c3">Uniquement par la filière partenaires de DATEV</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r2c1">Lexware Office (DE)</td>
+              <td data-i18n="konn.r2c2">API REST ouverte et documentée</td>
+              <td data-i18n="konn.r2c3">Raccordement possible via MCP : contacts, factures, rappels</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r3c1">BMD NTCS et RZL (AT)</td>
+              <td data-i18n="konn.r3c2">Pas de portail développeurs public ; RZL gère un programme de partenaires d’interface</td>
+              <td data-i18n="konn.r3c3">Par la filière partenaires</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r4c1">Vertec (LI, CH)</td>
+              <td data-i18n="konn.r4c2">Interface ouverte, documentée</td>
+              <td data-i18n="konn.r4c3">Serveur MCP du fabricant disponible : saisie des prestations, mandats, facturation</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r5c1">Pennylane (FR)</td>
+              <td data-i18n="konn.r5c2">API REST ouverte et documentée, OAuth 2.0, accès dédié aux cabinets</td>
+              <td data-i18n="konn.r5c3">Raccordement possible via MCP : pièces justificatives, écritures, données de base</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r6c1">Fatture in Cloud (IT)</td>
+              <td data-i18n="konn.r6c2">API REST ouverte et documentée, OAuth 2.0, webhooks</td>
+              <td data-i18n="konn.r6c3">Raccordement possible via MCP ; l’exception documentée au sein de son groupe</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r7c1">Holded (ES)</td>
+              <td data-i18n="konn.r7c2">API REST ouverte et documentée, authentification par jeton bearer, webhooks</td>
+              <td data-i18n="konn.r7c3">Raccordement possible via MCP : comptabilité, factures, contacts</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r9c1">Fortnox (SE)</td>
+              <td data-i18n="konn.r9c2">API REST ouverte et documentée, OAuth2, limites de débit documentées</td>
+              <td data-i18n="konn.r9c3">Raccordement possible via MCP : factures, pièces comptables, clients, salaires</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r10c1">Tripletex, Fiken et PowerOffice Go (NO)</td>
+              <td data-i18n="konn.r10c2">Documentation ouverte avec environnement de test ; chez Fiken, le client crée lui-même la clé d’accès</td>
+              <td data-i18n="konn.r10c3">Raccordement possible via MCP : comptabilité et facturation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-i18n="konn.p2">Le schéma est le même dans les huit marchés : ce qui est ouvert, c’est en général la comptabilité, ce qui est fermé, c’est la grande suite de cabinet. Votre logiciel manque ? La plus grande partie du quotidien fonctionne sans aucun raccordement de système. Le fonctionnement du raccordement de l’IA à un logiciel de cabinet ou de comptabilité via MCP est décrit sur la page <a class="euc-textlink" href="/fr/integrationen">Intégrations</a>.</p>
+    </section>
+
+    <!-- ==================== DATENSCHUTZ ==================== -->
+    <section class="euc-section">
+      <h2 id="datenschutz" data-i18n="ds.h2">Protection des données : les données des mandants restent là où vous les voulez</h2>
+      <p data-i18n="ds.p1">EU Cowork AI fonctionne sur votre propre serveur ou en exploitation managée dans des centres de données certifiés ISO 27001. Les données des clients n’entraînent aucun modèle, le traitement par les modèles a lieu dans l’UE, et le <a class="euc-textlink" href="/fr/avv">contrat de sous-traitance</a> ainsi que la <a class="euc-textlink" href="/fr/subprozessoren">liste des sous-traitants ultérieurs</a> sont publiés ouvertement sur ce site.</p>
+      <p data-i18n="ds.p2">Sur le fond, un point compte avant tout. Si des données à caractère personnel sont transférées vers un pays tiers, c’est-à-dire un pays hors de l’Espace économique européen, le chapitre V du règlement général sur la protection des données s’applique. Cela suppose une base juridique propre et, selon l’instrument retenu, une évaluation de la situation juridique dans le pays de destination. Si le stockage et le traitement par les modèles restent dans l’Espace économique européen, cette étape de contrôle disparaît. Il reste la sous-traitance au sens de l’article 28, que tout cabinet maîtrise. Rien ne devient licite d’office pour autant, mais cela devient plus facile à justifier.</p>
+      <p data-i18n="ds.p3">Le deuxième point, c’est l’ajustement. En 2025, 71,0 % des entreprises utilisatrices d’IA en Norvège et 62,1 % en Suède employaient des logiciels commerciaux achetés tout faits.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> De tels outils sont utiles, mais ils ne connaissent pas votre cabinet : ni vos dossiers de mandat, ni vos lettres types. C’est exactement là que se situe la différence avec le collègue IA.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Questions fréquentes en cabinet, en conseil fiscal et en fiduciaire</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">La plateforme a-t-elle le droit de conseiller mes mandants sur le plan fiscal ou juridique ?</h3>
+          <p data-i18n="faq.a1">Non. En Allemagne, l’assistance en matière fiscale exercée à titre professionnel est, en vertu de l’article 5 StBerG, réservée aux personnes habilitées. Dans les autres marchés cibles, des réserves professionnelles équivalentes s’appliquent. L’assistant trouve les passages, résume et rédige des projets. L’appréciation et la validation restent au professionnel habilité. Cet article ne remplace pas un conseil juridique.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">Comment cela se concilie-t-il avec le secret professionnel ?</h3>
+          <p data-i18n="faq.a2">Le secret professionnel est pénalement sanctionné en France, en Italie et en Espagne, et il est protégé par le droit professionnel et le droit pénal dans les marchés germanophones. Un contrat de sous-traitance ne le lève pas. Il est la base sur laquelle un prestataire peut être associé.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">Nous travaillons avec DATEV. EU Cowork AI fonctionne-t-il avec ce logiciel ?</h3>
+          <p data-i18n="faq.a3">Oui. Le raccordement à DATEV passe par le programme développeurs et suppose un partenariat. Mais la plus grande partie de l’utilité n’en dépend pas : indexation du dossier, base de connaissances, courriers aux mandants et traductions travaillent avec des documents.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">S’agit-il d’un système à haut risque au sens du règlement européen sur l’IA ?</h3>
+          <p data-i18n="faq.a4">En règle générale, non. Chercher dans des documents, résumer et rédiger des projets ne relève pas des catégories à haut risque. Il en va autrement dès qu’un système trie des candidatures ou évalue des collaborateurs. Indépendamment de cela, le règlement exige de tout déployeur une maîtrise de l’IA, donc de la formation et des règles d’utilisation documentées.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">Combien cela coûte-t-il pour un cabinet de douze personnes ?</h3>
+          <p data-i18n="faq.a5">L’exploitation managée coûte 15 € par personne et par mois, dont 8 € sous forme de crédit de modèles dans le pool de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Tout le reste figure sur la page <a class="euc-textlink" href="/fr/preise">Tarifs</a>.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">Où se trouvent nos données, et nous faut-il un service informatique ?</h3>
+          <p data-i18n="faq.a6">Dans la variante managée, dans des centres de données européens certifiés ISO 27001 ; en auto-hébergement, sur votre propre serveur. Un service informatique n’est pas nécessaire. Pour l’auto-hébergement, il suffit de quelqu’un qui sache entretenir un serveur Linux avec Docker ; Docker est la technique courante qui fait tourner un logiciel serveur dans des paquets autonomes. Les preuves figurent dans le <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Voyez-le sur un mandat à vous</h2>
+      <p data-i18n="cta.p">Apportez un dossier ou une notice, et nous parcourons le processus ensemble.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Réserver un rendez-vous</a>
+        <a class="euc-btn-secondary" href="/fr/warteliste" data-i18n="cta.btn2">Rejoindre la liste d’attente</a>
+      </div>
+    </section>
+
+    <!-- ==================== QUELLEN ==================== -->
+    <section class="euc-section">
+      <h2 id="quellen" data-i18n="src.h2">Sources</h2>
+      <p data-i18n="src.p">Tous les chiffres proviennent de ces sources, vérifiées pour la dernière fois en août 2026.</p>
+      <ol class="euc-small">
+        <li data-i18n="src.fn1" id="fn-1">Bundessteuerberaterkammer, statistique professionnelle 2025 (DE) : <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a></li>
+        <li data-i18n="src.fn2" id="fn-2">Fondazione Nazionale dei Commercialisti, Rapporto 2026 sull’Albo (IT) : <a class="euc-textlink" href="https://www.fondazionenazionalecommercialisti.it/node/1911" target="_blank" rel="noopener">fondazionenazionalecommercialisti.it</a></li>
+        <li data-i18n="src.fn3" id="fn-3">Autorité des marchés financiers du Liechtenstein (FMA), priorités de surveillance 2026 (LI) : <a class="euc-textlink" href="https://www.fma-li.li/_default_upload_bucket/fma-aufsichtsschwerpunkte-2026.pdf" target="_blank" rel="noopener">fma-li.li</a></li>
+        <li data-i18n="src.fn4" id="fn-4">Srf konsulterna sur la pénurie de redovisningskonsulter, 2025 (SE) : <a class="euc-textlink" href="https://via.tt.se/pressmeddelande/3788193/brist-pa-redovisningskonsulter-srf-konsulterna-kraver-fler-utbildningsplatser?publisherId=3235883&amp;lang=sv" target="_blank" rel="noopener">via.tt.se</a></li>
+        <li data-i18n="src.fn5" id="fn-5">Eurostat, isoc_eb_ai, usage de l’IA par classe de taille et mode d’acquisition, 2025 : <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu</a></li>
+        <li data-i18n="src.fn6" id="fn-6">Direction générale des finances publiques, facturation électronique (FR) : <a class="euc-textlink" href="https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique" target="_blank" rel="noopener">impots.gouv.fr</a></li>
+        <li data-i18n="src.fn7" id="fn-7">Agencia Tributaria sur les échéances de facturation et le Real Decreto 238/2026 (ES) : <a class="euc-textlink" href="https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html" target="_blank" rel="noopener">agenciatributaria.gob.es</a> et <a class="euc-textlink" href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7295" target="_blank" rel="noopener">boe.es</a></li>
+        <li data-i18n="src.fn8" id="fn-8">Stortinget, Lovvedtak 52 (de 2025 à 2026) modifiant la bokføringsloven (NO) : <a class="euc-textlink" href="https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=200136" target="_blank" rel="noopener">stortinget.no</a></li>
+        <li data-i18n="src.fn9" id="fn-9">Steuerberatungsgesetz, article 5, assistance non autorisée en matière fiscale (DE) : <a class="euc-textlink" href="https://www.gesetze-im-internet.de/stberg/__5.html" target="_blank" rel="noopener">gesetze-im-internet.de</a></li>
+      </ol>
+    </section>
+
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.titel">Pour aller plus loin</p>
+      <ul>
+        <li><a href="/fr/blog/ki-treuhand-kanzlei" data-i18n="weiter.l1">La version suisse : l’IA en étude d’avocats et en fiduciaire</a></li>
+        <li><a href="/fr/integrationen" data-i18n="weiter.l2">Intégrations : quels systèmes sont préparés</a></li>
+        <li><a href="/fr/sicherheit" data-i18n="weiter.l3">Sécurité et confiance : les preuves relatives à l’exploitation</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="geprueft">Dernière vérification : <time datetime="2026-08">août 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Votre collègue IA. Il reste en Europe.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Déployable partout</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Managé, votre cloud ou on-premise</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">Conforme au RGPD</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">Traitement dans l’UE</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/fr/sicherheit"><span data-i18n="chrome.footer.more">En savoir plus sur la sécurité</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Instance suisse</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc" data-euc-clock>Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Produit</p>
+          <nav aria-label="Produkt">
+            <a href="/fr/#funktionen" data-i18n="chrome.footer.link.features">Fonctionnalités</a>
+            <a href="/fr/preise" data-i18n="chrome.footer.link.pricing">Tarifs</a>
+            <a href="/fr/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Souveraineté</a>
+            <a href="/fr/integrationen" data-i18n="chrome.footer.link.integrations">Intégrations</a>
+            <a href="/fr/vergleich" data-i18n="chrome.footer.link.comparison">Comparatif</a>
+            <a href="/fr/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/fr/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs/fr" data-i18n="chrome.footer.link.docs">Documentation</a>
+            <a href="/fr/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/fr/vision" data-i18n="chrome.footer.link.vision">Notre vision</a>
+            <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="chrome.footer.link.booking">Réserver un rendez-vous</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/fr/sicherheit" data-i18n="chrome.footer.link.security">Security & Trust</a>
+            <a href="/fr/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/fr/avv" data-i18n="chrome.footer.link.avv">DPA (sous-traitance)</a>
+            <a href="/fr/sicherheit#toms" data-i18n="chrome.footer.link.toms">Aperçu des MTO</a>
+            <a href="/fr/subprozessoren" data-i18n="chrome.footer.link.subs">Sous-traitants ultérieurs</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Juridique</p>
+          <nav aria-label="Rechtliches">
+            <a href="/fr/impressum" data-i18n="chrome.footer.link.imprint">Mentions légales</a>
+            <a href="/fr/datenschutz" data-i18n="chrome.footer.link.privacy">Confidentialité</a>
+            <a href="/fr/agb" data-i18n="chrome.footer.link.terms">CGV</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.lang">Langue</p>
+          <nav aria-label="Sprache">
+            <button type="button" data-euc-lang-to="de">Deutsch</button>
+            <button type="button" data-euc-lang-to="en">English</button>
+            <button type="button" data-euc-lang-to="fr">Français</button>
+            <button type="button" data-euc-lang-to="it">Italiano</button>
+            <button type="button" data-euc-lang-to="es">Español</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI by Herr-Informatik GmbH</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebPage",
+        "FAQPage"
+      ],
+      "@id": "https://eucowork.ai/fr/blog/ki-kanzlei-europa#webpage",
+      "url": "https://eucowork.ai/fr/blog/ki-kanzlei-europa",
+      "name": "Moins de professionnels, plus de règles : trois processus d’IA au cabinet",
+      "inLanguage": "fr",
+      "isPartOf": {
+        "@id": "https://eucowork.ai/#website"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "description": "Indexer un mandat, partager le savoir du cabinet, guider les mandants : trois processus IA en cabinet, avec raccordement IA à DATEV et Pennylane.",
+      "primaryImageOfPage": {
+        "@id": "https://eucowork.ai/fr/blog/ki-kanzlei-europa#primaryimage"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://eucowork.ai/fr"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://eucowork.ai/fr/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "L’IA en cabinet et en fiduciaire",
+            "item": "https://eucowork.ai/fr/blog/ki-kanzlei-europa"
+          }
+        ]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "La plateforme a-t-elle le droit de conseiller mes mandants sur le plan fiscal ou juridique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. En Allemagne, l’assistance en matière fiscale exercée à titre professionnel est, en vertu de l’article 5 StBerG, réservée aux personnes habilitées. Dans les autres marchés cibles, des réserves professionnelles équivalentes s’appliquent. L’assistant trouve les passages, résume et rédige des projets. L’appréciation et la validation restent au professionnel habilité. Cet article ne remplace pas un conseil juridique."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment cela se concilie-t-il avec le secret professionnel ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le secret professionnel est pénalement sanctionné en France, en Italie et en Espagne, et il est protégé par le droit professionnel et le droit pénal dans les marchés germanophones. Un contrat de sous-traitance ne le lève pas. Il est la base sur laquelle un prestataire peut être associé."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nous travaillons avec DATEV. EU Cowork AI fonctionne-t-il avec ce logiciel ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Le raccordement à DATEV passe par le programme développeurs et suppose un partenariat. Mais la plus grande partie de l’utilité n’en dépend pas : indexation du dossier, base de connaissances, courriers aux mandants et traductions travaillent avec des documents."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "S’agit-il d’un système à haut risque au sens du règlement européen sur l’IA ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En règle générale, non. Chercher dans des documents, résumer et rédiger des projets ne relève pas des catégories à haut risque. Il en va autrement dès qu’un système trie des candidatures ou évalue des collaborateurs. Indépendamment de cela, le règlement exige de tout déployeur une maîtrise de l’IA, donc de la formation et des règles d’utilisation documentées."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Combien cela coûte-t-il pour un cabinet de douze personnes ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L’exploitation managée coûte 15 € par personne et par mois, dont 8 € sous forme de crédit de modèles dans le pool de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Tout le reste figure sur la page Tarifs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Où se trouvent nos données, et nous faut-il un service informatique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dans la variante managée, dans des centres de données européens certifiés ISO 27001 ; en auto-hébergement, sur votre propre serveur. Un service informatique n’est pas nécessaire. Pour l’auto-hébergement, il suffit de quelqu’un qui sache entretenir un serveur Linux avec Docker ; Docker est la technique courante qui fait tourner un logiciel serveur dans des paquets autonomes. Les preuves figurent dans le Trust Center."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://eucowork.ai/fr/blog/ki-kanzlei-europa#article",
+      "mainEntityOfPage": {
+        "@id": "https://eucowork.ai/fr/blog/ki-kanzlei-europa#webpage"
+      },
+      "headline": "Moins de professionnels, plus de règles : trois processus d’IA au cabinet",
+      "description": "Indexer un mandat, partager le savoir du cabinet, guider les mandants : trois processus IA en cabinet, avec raccordement IA à DATEV et Pennylane.",
+      "articleSection": "Fiduciaire et cabinet",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-18",
+      "inLanguage": "fr",
+      "author": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "publisher": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "image": {
+        "@id": "https://eucowork.ai/fr/blog/ki-kanzlei-europa#primaryimage"
+      },
+      "isPartOf": {
+        "@id": "https://eucowork.ai/fr/blog#blog"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "mentions": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "DATEV"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Lexware Office"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "BMD NTCS"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "RZL"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Vertec"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Pennylane"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Fatture in Cloud"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Holded"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Fortnox"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Tripletex"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Fiken"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "PowerOffice Go"
+        }
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://eucowork.ai/fr/blog/ki-kanzlei-europa#primaryimage",
+      "url": "https://eucowork.ai/og/eucowork-share-fr.png",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var rail = document.querySelector('.blog-rail');
+  if (!rail) return;
+  var links = [].slice.call(rail.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+  var targets = links.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  }).filter(Boolean);
+  var hero = document.querySelector('.blog-hero');
+  var footer = document.querySelector('.euc-footer');
+  function setActive(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+    });
+  }
+  function onScroll() {
+    var top = window.scrollY || document.documentElement.scrollTop;
+    var show = hero ? top > hero.offsetTop + hero.offsetHeight - 80 : true;
+    /* Vor der Fussleiste ausblenden: die Leiste ist vertikal zentriert,
+       ihre Unterkante darf den Footer nicht erreichen. */
+    if (show && footer) {
+      var reach = window.innerHeight / 2 + rail.offsetHeight / 2 + 32;
+      show = footer.getBoundingClientRect().top > reach;
+    }
+    rail.classList.toggle('is-visible', show);
+    var line = top + window.innerHeight * 0.35;
+    var current = targets[0];
+    targets.forEach(function (t) {
+      if (t.getBoundingClientRect().top + top <= line) { current = t; }
+    });
+    if (current) setActive(current.id);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    'meta.title': 'AI for tax and law firms in Europe: DATEV | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'AI for tax and law firms',
+    'hero.eyebrow': 'AI in everyday work',
+    'hero.h1': 'Fewer professionals, more rules: three AI workflows in the firm',
+    'hero.lead': 'Opening a new file, passing on the firm’s knowledge, guiding clients through the deadlines: the profession is shrinking while the rulebooks keep growing. This article walks through three workflows to show how an AI colleague works with your own documents and where the limits run.',
+    'hero.chip': 'Fiduciary and legal',
+    'hero.datum': '18 August 2026',
+    'hero.lesezeit': 'Reading time: 10 minutes',
+    'kurz.titel': 'In brief',
+    'kurz.p1': 'The profession is shrinking while the rulebooks grow: in Germany the chambers count 53,932 tax advisory practices, a good two thirds of them sole practices, with an average age of 53.7 years.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI works with your firm’s own documents. Client files, briefing notes, model letters and guidelines become a knowledge base: a collection you can question in plain language. Every answer names its source.',
+    'kurz.p3': 'The platform does not advise, it prepares. The German statutory reservation on tax advice under Section 5 StBerG, professional secrecy and sign-off by a qualified professional all remain untouched.<sup><a href="#fn-9" aria-label="Footnote 9">9</a></sup>',
+    'kurz.p4': 'Your data stays on your own server or in a European data centre, and it does not train any models.',
+    'toc.titel': 'On this page',
+    'toc.i1': 'Starting point',
+    'toc.i2': 'Opening a client file',
+    'toc.i3': 'Firm knowledge, queryable',
+    'toc.i4': 'Guiding clients through deadlines',
+    'toc.i5': 'The limits',
+    'toc.i6': 'Connectors to firm software',
+    'toc.i7': 'Data protection',
+    'toc.i8': 'Frequently asked questions',
+    'lage.h2': 'Starting point: the profession is shrinking, the rulebooks are growing',
+    'lage.p1': 'In Germany the tax advisers’ chambers count 53,932 practices, a good 67% of them sole practices, with an average age of 53.7 years. Training contracts for tax clerks fell to 17,081, down 1.3%, while the number of career changers in retraining rose to 2,113.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> In Italy the profession is shrinking outright: at the end of 2025, 119,050 dottori commercialisti and esperti contabili were registered, 0.8% fewer than the year before, with a median income of 48,420 euros against an average of 87,376 euros.<sup><a href="#fn-2" aria-label="Footnote 2">2</a></sup>',
+    'lage.p2': 'In Liechtenstein the supervisor names the connection itself: in its supervisory priorities for 2026, the FMA writes that the number of providers in the fiduciary sector is declining slightly in the face of tightened regulation and a high regulatory workload.<sup><a href="#fn-3" aria-label="Footnote 3">3</a></sup> In Sweden the bottleneck sits on the other side: Srf konsulterna counts the redovisningskonsult among the shortage occupations, with around 70,000 company formations a year.<sup><a href="#fn-4" aria-label="Footnote 4">4</a></sup>',
+    'lage.p3': 'At the same time, the rulebooks are arriving almost all at once. In France, from 1 September 2026 every VAT-registered business must be able to receive electronic invoices and from 1 September 2027 small businesses must also send them, through a plateforme agréée, a state-approved invoicing platform.<sup><a href="#fn-6" aria-label="Footnote 6">6</a></sup> In Spain, entities subject to corporate income tax must adapt their invoicing systems before 1 January 2027 and all others before 1 July 2027. The B2B obligation from Real Decreto 238/2026 only starts running with a ministerial order that is still outstanding, and then twelve or twenty-four months respectively.<sup><a href="#fn-7" aria-label="Footnote 7">7</a></sup> In Norway the amendments to the bookkeeping act take effect in stages: electronic invoicing between businesses subject to bookkeeping obligations from 1 January 2027, electronic bookkeeping from 1 January 2030.<sup><a href="#fn-8" aria-label="Footnote 8">8</a></sup> In Italy it has long been routine through the Sistema di Interscambio.',
+    'lage.p4': 'Each of these deadlines is two things at once: an advisory mandate and an administrative load in your own office. That technology is not the bottleneck is clear from the European statistics: in 2025, 55.0% of EU enterprises with 250 or more employees used at least one AI technology, but only 17.0% of those with 10 to 49 employees.<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup> That gap is wider than any gap between countries.',
+    'uc1.h2': 'Use case 1: opening a client file instead of leafing through it',
+    'uc1.p1': 'A new engagement arrives with four binders and two years of correspondence. The AI colleague reads what you give it and builds a chronology: who decided what and when, which contracts and amendments exist, which deadlines they name and which points remain open. Every entry comes with its source.',
+    'uc1.p2': 'The same helps in an ongoing engagement: an overview of the state of play before a meeting, the requested documents drafted before an audit, a summary of a long assessment notice. What the assistant does not do is judge. It shows where something is written, not what follows from it.',
+    'uc1.leg1': 'Files, contracts and correspondence of the engagement',
+    'uc1.leg2': 'A chronology with the people involved and the sources',
+    'uc1.leg3': 'Open points, named instead of overlooked',
+    'uc1.fig': 'The assistant orders what is there and names the source for every entry. The assessment happens in the firm.',
+    'uc1.p3': 'Deadline control stays in your practice management software and with a person. A date found in a document is a prompt to check, not a confirmed deadline.',
+    'uc2.h2': 'Use case 2: the firm’s knowledge becomes queryable',
+    'uc2.p1': 'Anyone starting out asks the same first question: how do we do this here? While training contracts in Germany are declining, the number of career changers in retraining is rising.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> Career changers bring professional experience, but not the knowledge of this particular firm. A knowledge base built from briefing notes, model letters and past correspondence answers such questions with a source reference, instead of interrupting an experienced colleague for the twelfth time.',
+    'uc2.p2': 'Permissions apply right down to individual folders. Whoever does not work on an engagement does not see it through the assistant either, and every access is recorded in the log. That is the condition under which a knowledge base can be reconciled with client confidentiality.',
+    'uc2.leg1': 'A question in everyday language, including from new staff',
+    'uc2.leg2': 'Briefing notes, model letters and guidelines, with permissions per folder',
+    'uc2.leg3': 'An answer with its source, checkable in seconds',
+    'uc2.fig': 'The knowledge base answers from the firm’s own documents. What someone may not see, they do not see through the assistant either.',
+    'uc2.p3': 'The gain is twofold: experienced staff are interrupted less often, and the knowledge stays in the firm when someone retires. The knowledge base is only as good as the documents in it.',
+    'uc3.h2': 'Use case 3: guiding clients through the deadlines',
+    'uc3.p1': 'Every one of these deadlines creates the same work: explaining, reminding, following up. A circular on electronic invoicing, a query about missing documents, thirty times in a slightly different version. The assistant draws the draft from your own technical notes, groups engagements by who is affected, and files the letters for review.',
+    'uc3.p2': 'In cross-border engagements language is added: from the German briefing note, the French, Italian or Spanish version is drafted, with the same source references. For legally relevant letters the translation remains a draft, never the binding text.',
+    'uc3.leg1': 'The firm’s technical note or briefing note on the new obligation',
+    'uc3.leg2': 'One input, several versions by engagement and language',
+    'uc3.leg3': 'Drafts in the firm’s tone, with the same source references',
+    'uc3.leg4': 'Sign-off by the qualified professional, and only then dispatch',
+    'uc3.fig': 'One technical note becomes many letters. None of them leaves the firm without sign-off.',
+    'uc3.p3': 'What deliberately does not happen: nothing is transmitted automatically to a government system, not to the Sistema di Interscambio, not to VERI*FACTU and not to a plateforme agréée. The assistant prepares, a person transmits.',
+    'grenzen.h2': 'The limits, plainly stated',
+    'grenzen.p1': 'In Germany, providing assistance in tax matters on a commercial basis is reserved to the persons named in Sections 3, 3a, 3d and 4 StBerG. Section 5 StBerG prohibits it for everyone else.<sup><a href="#fn-9" aria-label="Footnote 9">9</a></sup> EU Cowork AI therefore gives neither tax nor legal advice. The platform prepares the answer and replaces neither the professional nor an expert-comptable, a commercialista or a gestoría.',
+    'grenzen.p2': 'Professional secrecy is the second fixed point: secret professionnel in France, segreto professionale in Italy, secreto profesional in Spain, and the duty of confidentiality under professional law in Germany, Austria and Liechtenstein. It carries criminal sanctions, and a data processing agreement does not set it aside. The responsibility stays in the firm. Three sentences follow: a language model can produce errors, which is why every text is a draft. Every source reference is checked against the original. And compliance is never automatically fulfilled; it arises through people and processes.',
+    'konn.h2': 'Connectors: what can be linked to your firm software',
+    'konn.p1': 'An AI colleague is only as useful as what it is allowed to reach. The link to another program is called a connector. It runs over MCP, an open standard for connecting external systems. The prerequisite is a documented interface, an API in technical language: the vendor publicly describes how other programs may retrieve data. Some vendors already ship a ready-made connecting piece for this, an MCP server. Permissions apply per tool, and every call is logged. The state of play for common practice management and accounting software, checked in August 2026: For the Spanish practice-management suites no verified findings are available, which is why they have no row in this table.',
+    'konn.th1': 'Software (country)',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Connection to EU Cowork AI',
+    'konn.r1c1': 'DATEV (DE)',
+    'konn.r1c2': 'Partner API; the developer portal requires a login and is not visible without a DATEV account',
+    'konn.r1c3': 'Only through the DATEV partner channel',
+    'konn.r2c1': 'Lexware Office (DE)',
+    'konn.r2c2': 'REST API, openly documented',
+    'konn.r2c3': 'Possible via MCP: contacts, invoices, reminders',
+    'konn.r3c1': 'BMD NTCS and RZL (AT)',
+    'konn.r3c2': 'No public developer portal; RZL runs an interface partner programme',
+    'konn.r3c3': 'Through the partner channel',
+    'konn.r4c1': 'Vertec (LI, CH)',
+    'konn.r4c2': 'Open interface, documented',
+    'konn.r4c3': 'MCP server available from the vendor: time recording, engagements, invoicing',
+    'konn.r5c1': 'Pennylane (FR)',
+    'konn.r5c2': 'REST API openly documented, OAuth 2.0, dedicated access for firms',
+    'konn.r5c3': 'Possible via MCP: receipts, postings, master data',
+    'konn.r6c1': 'Fatture in Cloud (IT)',
+    'konn.r6c2': 'REST API openly documented, OAuth 2.0, webhooks',
+    'konn.r6c3': 'Possible via MCP; the documented exception within its group',
+    'konn.r7c1': 'Holded (ES)',
+    'konn.r7c2': 'REST API openly documented, bearer authentication, webhooks',
+    'konn.r7c3': 'Possible via MCP: accounting, invoices, contacts',
+    'konn.r9c1': 'Fortnox (SE)',
+    'konn.r9c2': 'REST API openly documented, OAuth2, documented rate limits',
+    'konn.r9c3': 'Possible via MCP: invoices, vouchers, customers, payroll',
+    'konn.r10c1': 'Tripletex, Fiken and PowerOffice Go (NO)',
+    'konn.r10c2': 'Open docs with a test environment; with Fiken the customer creates the access key',
+    'konn.r10c3': 'Possible via MCP: accounting and invoicing',
+    'konn.p2': 'The pattern is the same in all eight markets: what is open is usually the accounting system, what is closed is the large practice suite. Is your software missing? Most of the daily work runs without any system connection. How the AI connection to a practice management or accounting software works via MCP is described on the <a class="euc-textlink" href="/fr/integrationen">integrations</a> page.',
+    'ds.h2': 'Data protection: client data stays where you want it',
+    'ds.p1': 'EU Cowork AI runs on your own server or managed in data centres with ISO 27001 certification. Customer data does not train any models, model processing takes place in the EU, and the <a class="euc-textlink" href="/fr/avv">data processing agreement</a> and <a class="euc-textlink" href="/fr/subprozessoren">subprocessor list</a> are published openly on this website.',
+    'ds.p2': 'Factually, one point matters most. If personal data is transferred to a third country, that is a country outside the European Economic Area, Chapter V of the General Data Protection Regulation applies. That means its own legal basis and, depending on the instrument, an assessment of the legal situation there. If storage and model processing stay within the European Economic Area, that step falls away. What remains is processing on behalf of a controller under Article 28, which every firm already handles. Nothing becomes automatically lawful that way, but it becomes easier to justify.',
+    'ds.p3': 'The second point is fit. In 2025, 71.0% of AI-using enterprises in Norway and 62.1% in Sweden used commercial software bought off the shelf.<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup> Such tools are useful, but they do not know your own firm: not your client files, not your model letters. That is precisely where the difference lies.',
+    'faq.h2': 'Frequently asked questions from tax, law and fiduciary firms',
+    'faq.q1': 'May the platform give my clients tax or legal advice?',
+    'faq.a1': 'No. In Germany, assistance in tax matters on a commercial basis is reserved under Section 5 StBerG to those authorised to provide it. Comparable professional reservations apply in the other target markets. The assistant finds passages, summarises and drafts. The assessment and the sign-off stay with the qualified professional. This article is not legal advice.',
+    'faq.q2': 'How does this work with professional secrecy?',
+    'faq.a2': 'Professional secrecy carries criminal sanctions in France, Italy and Spain and is protected under professional and criminal law in the German-speaking markets. A data processing agreement does not set it aside. It is the basis on which a service provider may be brought in at all.',
+    'faq.q3': 'We work with DATEV. Does EU Cowork AI work with it?',
+    'faq.a3': 'Yes. Connecting to DATEV runs through the developer programme and requires a partnership. But most of the benefit does not depend on it: opening client files, the knowledge base, client letters and translations all work with documents.',
+    'faq.q4': 'Is this a high-risk system under the AI Act?',
+    'faq.a4': 'As a rule, no. Searching documents, summarising and drafting does not fall into the high-risk categories. It is different as soon as a system sorts job applications or evaluates employees. Regardless of risk, the regulation requires AI literacy from every deployer, meaning training and documented rules of use.',
+    'faq.q5': 'What does it cost for a firm of twelve people?',
+    'faq.a5': 'Managed operation costs €15 per person per month, of which €8 is model credit in your organisation’s pool. If you self-host, the software costs nothing: it is MIT licensed. Everything else is on the <a class="euc-textlink" href="/fr/preise">pricing</a> page.',
+    'faq.q6': 'Where is our data held, and do we need an IT department?',
+    'faq.a6': 'In the managed variant in European data centres with ISO 27001 certification, with self-hosting on your own server. You do not need an IT department. For self-hosting you need someone who can maintain a Linux server with Docker; Docker is the common technology for running server software in self-contained packages. The evidence is available in the <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'cta.h2': 'See it on an engagement of your own',
+    'cta.p': 'Bring a client file or a briefing note, and we will walk through the workflow together.',
+    'cta.btn1': 'Book a call',
+    'cta.btn2': 'Join the waitlist',
+    'src.h2': 'Sources',
+    'src.p': 'All figures come from these sources, last checked in August 2026.',
+    'src.fn1': 'Bundessteuerberaterkammer, professional statistics 2025 (DE): <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
+    'src.fn2': 'Fondazione Nazionale dei Commercialisti, Rapporto 2026 sull’Albo (IT): <a class="euc-textlink" href="https://www.fondazionenazionalecommercialisti.it/node/1911" target="_blank" rel="noopener">fondazionenazionalecommercialisti.it</a>',
+    'src.fn3': 'Financial Market Authority Liechtenstein, supervisory priorities 2026 (LI): <a class="euc-textlink" href="https://www.fma-li.li/_default_upload_bucket/fma-aufsichtsschwerpunkte-2026.pdf" target="_blank" rel="noopener">fma-li.li</a>',
+    'src.fn4': 'Srf konsulterna on the shortage of redovisningskonsulter, 2025 (SE): <a class="euc-textlink" href="https://via.tt.se/pressmeddelande/3788193/brist-pa-redovisningskonsulter-srf-konsulterna-kraver-fler-utbildningsplatser?publisherId=3235883&amp;lang=sv" target="_blank" rel="noopener">via.tt.se</a>',
+    'src.fn5': 'Eurostat, isoc_eb_ai, AI use by size class and sourcing route, 2025: <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu</a>',
+    'src.fn6': 'Direction générale des finances publiques, facturation électronique (FR): <a class="euc-textlink" href="https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique" target="_blank" rel="noopener">impots.gouv.fr</a>',
+    'src.fn7': 'Agencia Tributaria on invoicing deadlines and Real Decreto 238/2026 (ES): <a class="euc-textlink" href="https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html" target="_blank" rel="noopener">agenciatributaria.gob.es</a> and <a class="euc-textlink" href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7295" target="_blank" rel="noopener">boe.es</a>',
+    'src.fn8': 'Stortinget, Lovvedtak 52 (2025 to 2026) amending the bokføringsloven (NO): <a class="euc-textlink" href="https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=200136" target="_blank" rel="noopener">stortinget.no</a>',
+    'src.fn9': 'Steuerberatungsgesetz, Section 5, unauthorised assistance in tax matters (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/stberg/__5.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'weiter.titel': 'Continue',
+    'weiter.l1': 'The Swiss edition: AI in law firms and fiduciary offices',
+    'weiter.l2': 'Integrations: which systems are prepared',
+    'weiter.l3': 'Security and Trust: evidence on operation',
+    'geprueft': 'Last reviewed: <time datetime="2026-08">August 2026</time>'
+  },
+  fr: {
+    'meta.title': 'IA pour cabinet et fiduciaire avec DATEV | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'L’IA en cabinet et en fiduciaire',
+    'hero.eyebrow': 'L’IA au quotidien professionnel',
+    'hero.h1': 'Moins de professionnels, plus de règles : trois processus d’IA au cabinet',
+    'hero.lead': 'Indexer un mandat, transmettre le savoir du cabinet, guider les mandants à travers les échéances : la profession se rétrécit pendant que les corpus de règles se multiplient. Cet article montre, à travers trois processus, comment un collègue IA travaille avec les documents de votre cabinet et où passent les limites.',
+    'hero.chip': 'Fiduciaire et cabinet',
+    'hero.datum': '18 août 2026',
+    'hero.lesezeit': 'Temps de lecture : 10 minutes',
+    'kurz.titel': 'En bref',
+    'kurz.p1': 'La profession se rétrécit pendant que les corpus de règles se multiplient : en Allemagne, les chambres recensent 53 932 cabinets de conseil fiscal, dont un peu plus des deux tiers sont des cabinets individuels, pour un âge moyen de 53,7 ans.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI travaille avec les documents de votre cabinet. Dossiers de mandat, notices, lettres types et directives deviennent une base de connaissances : un ensemble que vous interrogez en langage courant. Chaque réponse indique sa source.',
+    'kurz.p3': 'La plateforme ne conseille pas, elle prépare. La réserve d’activité en matière de conseil fiscal prévue à l’article 5 de la loi allemande sur le conseil fiscal (StBerG), le secret professionnel et la validation par un professionnel habilité restent intacts.<sup><a href="#fn-9" aria-label="Note 9">9</a></sup>',
+    'kurz.p4': 'Vos données restent sur votre propre serveur ou dans un centre de données européen et n’entraînent aucun modèle.',
+    'toc.titel': 'Sur cette page',
+    'toc.i1': 'Situation de départ',
+    'toc.i2': 'Indexer un mandat',
+    'toc.i3': 'Le savoir du cabinet, interrogeable',
+    'toc.i4': 'Guider les mandants dans les échéances',
+    'toc.i5': 'Les limites',
+    'toc.i6': 'Connecteurs vers le logiciel de cabinet',
+    'toc.i7': 'Protection des données',
+    'toc.i8': 'Questions fréquentes',
+    'lage.h2': 'Situation de départ : la profession se rétrécit, les corpus de règles s’étoffent',
+    'lage.p1': 'En Allemagne, les chambres des conseils fiscaux recensent 53 932 cabinets, dont un bon 67 % de cabinets individuels, pour un âge moyen de 53,7 ans. Les contrats de formation d’assistant fiscal ont reculé à 17 081, soit moins 1,3 %, tandis que le nombre de personnes en reconversion est monté à 2 113.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> En Italie, la profession se contracte directement : fin 2025, 119 050 dottori commercialisti et esperti contabili étaient inscrits, soit 0,8 % de moins que l’année précédente, pour un revenu médian de 48 420 euros contre 87 376 euros en moyenne.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup>',
+    'lage.p2': 'Au Liechtenstein, l’autorité de surveillance le dit elle-même : dans ses priorités de surveillance 2026, la FMA écrit que le nombre de prestataires du secteur fiduciaire diminue légèrement face au durcissement de la réglementation et à la lourdeur de la charge réglementaire.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> En Suède, le goulet d’étranglement se situe de l’autre côté : Srf konsulterna range le redovisningskonsult parmi les métiers en pénurie, pour environ 70 000 créations d’entreprises par an.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup>',
+    'lage.p3': 'En même temps, les corpus de règles arrivent presque tous d’un coup. En France, à partir du 1er septembre 2026, toutes les entreprises assujetties à la TVA doivent pouvoir recevoir des factures électroniques, et à partir du 1er septembre 2027 les petites structures doivent aussi en émettre, via une plateforme agréée, autorisée par l’État.<sup><a href="#fn-6" aria-label="Note 6">6</a></sup> En Espagne, les entités soumises à l’impôt sur les sociétés doivent adapter leurs systèmes de facturation avant le 1er janvier 2027, toutes les autres avant le 1er juillet 2027. L’obligation B2B issue du Real Decreto 238/2026 ne commence à courir qu’avec un arrêté ministériel encore attendu, puis après douze ou vingt-quatre mois selon les cas.<sup><a href="#fn-7" aria-label="Note 7">7</a></sup> En Norvège, les modifications de la loi comptable prennent effet par étapes : facture électronique entre entreprises soumises à l’obligation de tenue de comptes à partir du 1er janvier 2027, comptabilité électronique à partir du 1er janvier 2030.<sup><a href="#fn-8" aria-label="Note 8">8</a></sup> En Italie, elle fait depuis longtemps partie du quotidien via le Sistema di Interscambio.',
+    'lage.p4': 'Chacune de ces échéances est deux choses à la fois : un mandat de conseil et une charge administrative dans son propre cabinet. Que la technique ne soit pas le goulet d’étranglement, la statistique européenne le montre : en 2025, dans l’UE, 55,0 % des entreprises de 250 salariés et plus employaient au moins une technologie d’IA, contre seulement 17,0 % des structures de 10 à 49 salariés.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> L’écart est plus grand que n’importe quel écart entre pays.',
+    'uc1.h2': 'Cas d’usage 1 : indexer un mandat au lieu de le feuilleter',
+    'uc1.p1': 'Un nouveau mandat arrive avec quatre classeurs et deux ans de correspondance. Le collègue IA lit ce que vous lui donnez et établit une chronologie : qui a décidé quoi et quand, quels contrats et avenants existent, quelles échéances y sont nommées et quels points restent ouverts. Chaque indication est accompagnée de sa source.',
+    'uc1.p2': 'Le même principe vaut dans un mandat en cours : un état des lieux avant l’entretien, la liste des pièces demandées avant un contrôle, sous forme de projet, un résumé après un long avis de l’administration. Ce que l’assistant ne fait pas, c’est apprécier. Il montre où une chose figure, pas ce qui en découle.',
+    'uc1.leg1': 'Dossiers, contrats et correspondance du mandat',
+    'uc1.leg2': 'Chronologie avec les parties en présence et les sources',
+    'uc1.leg3': 'Points ouverts, nommés au lieu d’être oubliés',
+    'uc1.fig': 'L’assistant met en ordre ce qui existe et nomme la source de chaque indication. L’appréciation se fait au cabinet.',
+    'uc1.p3': 'Le contrôle des délais reste dans votre logiciel de cabinet et entre des mains humaines. Une date tirée d’un document est une indication à vérifier, pas un délai confirmé.',
+    'uc2.h2': 'Cas d’usage 2 : le savoir du cabinet devient interrogeable',
+    'uc2.p1': 'Celui qui débute pose d’abord la même question : comment fait-on ici ? Pendant que les contrats de formation reculent en Allemagne, le nombre de personnes en reconversion augmente.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> Les personnes venues d’un autre métier apportent de l’expérience professionnelle, mais pas le savoir de ce cabinet. Une base de connaissances faite de notices, de lettres types et de la correspondance passée répond à ces questions avec sa source, au lieu d’interrompre pour la douzième fois un collègue expérimenté.',
+    'uc2.p2': 'Les droits descendent jusqu’à chaque classement. Qui ne traite pas un mandat ne le voit pas non plus par l’assistant, et chaque accès figure dans le journal. C’est la condition pour qu’une base de connaissances soit compatible avec le secret du mandat.',
+    'uc2.leg1': 'Question en langage courant, y compris de nouveaux collaborateurs',
+    'uc2.leg2': 'Notices, lettres types et directives, avec des droits par classement',
+    'uc2.leg3': 'Réponse avec sa source, vérifiable en quelques secondes',
+    'uc2.fig': 'La base de connaissances répond à partir des documents du cabinet. Ce que quelqu’un n’a pas le droit de voir, il ne le voit pas non plus par l’assistant.',
+    'uc2.p3': 'Le gain est double : les personnes expérimentées sont moins souvent interrompues, et le savoir reste au sein du cabinet quand quelqu’un part à la retraite. La base de connaissances ne vaut cependant que ce que valent les documents qu’elle contient.',
+    'uc3.h2': 'Cas d’usage 3 : guider les mandants à travers les échéances',
+    'uc3.p1': 'Chacune de ces échéances produit le même travail : expliquer, rappeler, relancer. Une circulaire sur la facturation électronique, une relance pour des pièces manquantes, trente fois dans une version légèrement différente. L’assistant tire le projet de vos propres notes techniques, regroupe les mandats selon qu’ils sont concernés ou non et dépose les courriers pour relecture.',
+    'uc3.p2': 'Dans les mandats transfrontaliers s’ajoute la langue : à partir de la notice allemande naît la version française, italienne ou espagnole sous forme de projet, avec les mêmes sources. Pour les courriers juridiquement pertinents, la traduction reste un projet, jamais la version qui fait foi.',
+    'uc3.leg1': 'Note technique ou notice du cabinet sur la nouvelle obligation',
+    'uc3.leg2': 'Une entrée, plusieurs versions selon le mandat et la langue',
+    'uc3.leg3': 'Projets dans le ton du cabinet, avec les mêmes sources',
+    'uc3.leg4': 'Validation par le professionnel habilité, envoi seulement ensuite',
+    'uc3.fig': 'D’une note technique naissent de nombreux courriers. Aucun ne quitte le cabinet sans validation.',
+    'uc3.p3': 'Ce qui n’arrive volontairement pas : rien n’est transmis automatiquement à un système public, ni au Sistema di Interscambio, ni à VERI*FACTU, ni à une plateforme agréée. L’assistant prépare, un être humain transmet.',
+    'grenzen.h2': 'Les limites, clairement nommées',
+    'grenzen.p1': 'En Allemagne, l’assistance en matière fiscale exercée à titre professionnel est réservée aux personnes désignées aux articles 3, 3a, 3d et 4 de la loi sur le conseil fiscal (StBerG). L’article 5 StBerG l’interdit à tous les autres.<sup><a href="#fn-9" aria-label="Note 9">9</a></sup> EU Cowork AI ne donne donc ni conseil fiscal ni conseil juridique. La plateforme prépare la réponse et ne remplace ni le professionnel habilité, ni un expert-comptable, ni un commercialista, ni une gestoría.',
+    'grenzen.p2': 'Le secret professionnel est le deuxième point fixe : secret professionnel en France, segreto professionale en Italie, secreto profesional en Espagne, obligation de discrétion selon le droit professionnel en Allemagne, en Autriche et au Liechtenstein. Il est pénalement sanctionné, et un contrat de sous-traitance ne le lève pas. La responsabilité reste au sein du cabinet. Il en découle trois phrases : un modèle de langage peut produire des erreurs, c’est pourquoi chaque texte est un projet. Chaque source, vous la vérifiez sur l’original. Et la conformité n’est jamais remplie automatiquement, elle naît des personnes et des processus.',
+    'konn.h2': 'Connecteurs : ce qui peut être raccordé à votre logiciel de cabinet',
+    'konn.p1': 'Un collègue IA n’est utile que dans la mesure de ce qu’il a le droit d’atteindre. Le lien vers un autre programme s’appelle un connecteur. Il passe par MCP, un standard ouvert pour le raccordement de systèmes externes. La condition est une interface documentée, une API dans le jargon : le fabricant décrit publiquement comment d’autres programmes peuvent récupérer des données. Certains fabricants livrent déjà une pièce de liaison toute faite, un serveur MCP. Des droits s’appliquent par outil, et chaque appel est journalisé. Voici l’état des lieux pour les logiciels de cabinet et de comptabilité répandus, vérifié en août 2026 : Pour les suites espagnoles de gestion de cabinet, aucun constat vérifié n’est disponible ; elles n’ont donc aucune ligne dans ce tableau.',
+    'konn.th1': 'Logiciel (pays)',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Raccordement à EU Cowork AI',
+    'konn.r1c1': 'DATEV (DE)',
+    'konn.r1c2': 'API partenaires ; le portail développeurs exige une connexion et n’est pas consultable sans compte DATEV',
+    'konn.r1c3': 'Uniquement par la filière partenaires de DATEV',
+    'konn.r2c1': 'Lexware Office (DE)',
+    'konn.r2c2': 'API REST ouverte et documentée',
+    'konn.r2c3': 'Raccordement possible via MCP : contacts, factures, rappels',
+    'konn.r3c1': 'BMD NTCS et RZL (AT)',
+    'konn.r3c2': 'Pas de portail développeurs public ; RZL gère un programme de partenaires d’interface',
+    'konn.r3c3': 'Par la filière partenaires',
+    'konn.r4c1': 'Vertec (LI, CH)',
+    'konn.r4c2': 'Interface ouverte, documentée',
+    'konn.r4c3': 'Serveur MCP du fabricant disponible : saisie des prestations, mandats, facturation',
+    'konn.r5c1': 'Pennylane (FR)',
+    'konn.r5c2': 'API REST ouverte et documentée, OAuth 2.0, accès dédié aux cabinets',
+    'konn.r5c3': 'Raccordement possible via MCP : pièces justificatives, écritures, données de base',
+    'konn.r6c1': 'Fatture in Cloud (IT)',
+    'konn.r6c2': 'API REST ouverte et documentée, OAuth 2.0, webhooks',
+    'konn.r6c3': 'Raccordement possible via MCP ; l’exception documentée au sein de son groupe',
+    'konn.r7c1': 'Holded (ES)',
+    'konn.r7c2': 'API REST ouverte et documentée, authentification par jeton bearer, webhooks',
+    'konn.r7c3': 'Raccordement possible via MCP : comptabilité, factures, contacts',
+    'konn.r9c1': 'Fortnox (SE)',
+    'konn.r9c2': 'API REST ouverte et documentée, OAuth2, limites de débit documentées',
+    'konn.r9c3': 'Raccordement possible via MCP : factures, pièces comptables, clients, salaires',
+    'konn.r10c1': 'Tripletex, Fiken et PowerOffice Go (NO)',
+    'konn.r10c2': 'Documentation ouverte avec environnement de test ; chez Fiken, le client crée lui-même la clé d’accès',
+    'konn.r10c3': 'Raccordement possible via MCP : comptabilité et facturation',
+    'konn.p2': 'Le schéma est le même dans les huit marchés : ce qui est ouvert, c’est en général la comptabilité, ce qui est fermé, c’est la grande suite de cabinet. Votre logiciel manque ? La plus grande partie du quotidien fonctionne sans aucun raccordement de système. Le fonctionnement du raccordement de l’IA à un logiciel de cabinet ou de comptabilité via MCP est décrit sur la page <a class="euc-textlink" href="/fr/integrationen">Intégrations</a>.',
+    'ds.h2': 'Protection des données : les données des mandants restent là où vous les voulez',
+    'ds.p1': 'EU Cowork AI fonctionne sur votre propre serveur ou en exploitation managée dans des centres de données certifiés ISO 27001. Les données des clients n’entraînent aucun modèle, le traitement par les modèles a lieu dans l’UE, et le <a class="euc-textlink" href="/fr/avv">contrat de sous-traitance</a> ainsi que la <a class="euc-textlink" href="/fr/subprozessoren">liste des sous-traitants ultérieurs</a> sont publiés ouvertement sur ce site.',
+    'ds.p2': 'Sur le fond, un point compte avant tout. Si des données à caractère personnel sont transférées vers un pays tiers, c’est-à-dire un pays hors de l’Espace économique européen, le chapitre V du règlement général sur la protection des données s’applique. Cela suppose une base juridique propre et, selon l’instrument retenu, une évaluation de la situation juridique dans le pays de destination. Si le stockage et le traitement par les modèles restent dans l’Espace économique européen, cette étape de contrôle disparaît. Il reste la sous-traitance au sens de l’article 28, que tout cabinet maîtrise. Rien ne devient licite d’office pour autant, mais cela devient plus facile à justifier.',
+    'ds.p3': 'Le deuxième point, c’est l’ajustement. En 2025, 71,0 % des entreprises utilisatrices d’IA en Norvège et 62,1 % en Suède employaient des logiciels commerciaux achetés tout faits.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup> De tels outils sont utiles, mais ils ne connaissent pas votre cabinet : ni vos dossiers de mandat, ni vos lettres types. C’est exactement là que se situe la différence avec le collègue IA.',
+    'faq.h2': 'Questions fréquentes en cabinet, en conseil fiscal et en fiduciaire',
+    'faq.q1': 'La plateforme a-t-elle le droit de conseiller mes mandants sur le plan fiscal ou juridique ?',
+    'faq.a1': 'Non. En Allemagne, l’assistance en matière fiscale exercée à titre professionnel est, en vertu de l’article 5 StBerG, réservée aux personnes habilitées. Dans les autres marchés cibles, des réserves professionnelles équivalentes s’appliquent. L’assistant trouve les passages, résume et rédige des projets. L’appréciation et la validation restent au professionnel habilité. Cet article ne remplace pas un conseil juridique.',
+    'faq.q2': 'Comment cela se concilie-t-il avec le secret professionnel ?',
+    'faq.a2': 'Le secret professionnel est pénalement sanctionné en France, en Italie et en Espagne, et il est protégé par le droit professionnel et le droit pénal dans les marchés germanophones. Un contrat de sous-traitance ne le lève pas. Il est la base sur laquelle un prestataire peut être associé.',
+    'faq.q3': 'Nous travaillons avec DATEV. EU Cowork AI fonctionne-t-il avec ce logiciel ?',
+    'faq.a3': 'Oui. Le raccordement à DATEV passe par le programme développeurs et suppose un partenariat. Mais la plus grande partie de l’utilité n’en dépend pas : indexation du dossier, base de connaissances, courriers aux mandants et traductions travaillent avec des documents.',
+    'faq.q4': 'S’agit-il d’un système à haut risque au sens du règlement européen sur l’IA ?',
+    'faq.a4': 'En règle générale, non. Chercher dans des documents, résumer et rédiger des projets ne relève pas des catégories à haut risque. Il en va autrement dès qu’un système trie des candidatures ou évalue des collaborateurs. Indépendamment de cela, le règlement exige de tout déployeur une maîtrise de l’IA, donc de la formation et des règles d’utilisation documentées.',
+    'faq.q5': 'Combien cela coûte-t-il pour un cabinet de douze personnes ?',
+    'faq.a5': 'L’exploitation managée coûte 15 € par personne et par mois, dont 8 € sous forme de crédit de modèles dans le pool de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Tout le reste figure sur la page <a class="euc-textlink" href="/fr/preise">Tarifs</a>.',
+    'faq.q6': 'Où se trouvent nos données, et nous faut-il un service informatique ?',
+    'faq.a6': 'Dans la variante managée, dans des centres de données européens certifiés ISO 27001 ; en auto-hébergement, sur votre propre serveur. Un service informatique n’est pas nécessaire. Pour l’auto-hébergement, il suffit de quelqu’un qui sache entretenir un serveur Linux avec Docker ; Docker est la technique courante qui fait tourner un logiciel serveur dans des paquets autonomes. Les preuves figurent dans le <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'cta.h2': 'Voyez-le sur un mandat à vous',
+    'cta.p': 'Apportez un dossier ou une notice, et nous parcourons le processus ensemble.',
+    'cta.btn1': 'Réserver un rendez-vous',
+    'cta.btn2': 'Rejoindre la liste d’attente',
+    'src.h2': 'Sources',
+    'src.p': 'Tous les chiffres proviennent de ces sources, vérifiées pour la dernière fois en août 2026.',
+    'src.fn1': 'Bundessteuerberaterkammer, statistique professionnelle 2025 (DE) : <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
+    'src.fn2': 'Fondazione Nazionale dei Commercialisti, Rapporto 2026 sull’Albo (IT) : <a class="euc-textlink" href="https://www.fondazionenazionalecommercialisti.it/node/1911" target="_blank" rel="noopener">fondazionenazionalecommercialisti.it</a>',
+    'src.fn3': 'Autorité des marchés financiers du Liechtenstein (FMA), priorités de surveillance 2026 (LI) : <a class="euc-textlink" href="https://www.fma-li.li/_default_upload_bucket/fma-aufsichtsschwerpunkte-2026.pdf" target="_blank" rel="noopener">fma-li.li</a>',
+    'src.fn4': 'Srf konsulterna sur la pénurie de redovisningskonsulter, 2025 (SE) : <a class="euc-textlink" href="https://via.tt.se/pressmeddelande/3788193/brist-pa-redovisningskonsulter-srf-konsulterna-kraver-fler-utbildningsplatser?publisherId=3235883&amp;lang=sv" target="_blank" rel="noopener">via.tt.se</a>',
+    'src.fn5': 'Eurostat, isoc_eb_ai, usage de l’IA par classe de taille et mode d’acquisition, 2025 : <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu</a>',
+    'src.fn6': 'Direction générale des finances publiques, facturation électronique (FR) : <a class="euc-textlink" href="https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique" target="_blank" rel="noopener">impots.gouv.fr</a>',
+    'src.fn7': 'Agencia Tributaria sur les échéances de facturation et le Real Decreto 238/2026 (ES) : <a class="euc-textlink" href="https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html" target="_blank" rel="noopener">agenciatributaria.gob.es</a> et <a class="euc-textlink" href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7295" target="_blank" rel="noopener">boe.es</a>',
+    'src.fn8': 'Stortinget, Lovvedtak 52 (de 2025 à 2026) modifiant la bokføringsloven (NO) : <a class="euc-textlink" href="https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=200136" target="_blank" rel="noopener">stortinget.no</a>',
+    'src.fn9': 'Steuerberatungsgesetz, article 5, assistance non autorisée en matière fiscale (DE) : <a class="euc-textlink" href="https://www.gesetze-im-internet.de/stberg/__5.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'weiter.titel': 'Pour aller plus loin',
+    'weiter.l1': 'La version suisse : l’IA en étude d’avocats et en fiduciaire',
+    'weiter.l2': 'Intégrations : quels systèmes sont préparés',
+    'weiter.l3': 'Sécurité et confiance : les preuves relatives à l’exploitation',
+    'geprueft': 'Dernière vérification : <time datetime="2026-08">août 2026</time>'
+  },
+  it: {
+    'meta.title': 'IA per studio e fiduciaria con DATEV | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'L’IA nello studio e nella fiduciaria',
+    'hero.eyebrow': 'L’IA nel lavoro quotidiano',
+    'hero.h1': 'Meno professionisti, più regole: tre processi di IA nello studio',
+    'hero.lead': 'Indicizzare un mandato, trasmettere il sapere dello studio, guidare i mandanti attraverso le scadenze: la categoria professionale si assottiglia mentre i corpi di regole aumentano. Questo articolo mostra, attraverso tre processi, come un collega IA lavora con i documenti del suo studio e dove passano i limiti.',
+    'hero.chip': 'Fiduciaria e studio',
+    'hero.datum': '18 agosto 2026',
+    'hero.lesezeit': 'Tempo di lettura: 10 minuti',
+    'kurz.titel': 'In breve',
+    'kurz.p1': 'La categoria professionale si assottiglia mentre i corpi di regole aumentano: in Germania gli ordini contano 53.932 studi di consulenza fiscale, di cui ben due terzi studi individuali, con un’età media di 53,7 anni.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI lavora con i documenti del suo studio. Incarti dei mandati, promemoria, lettere tipo e direttive diventano una base di conoscenza: una raccolta che lei interroga in linguaggio corrente. Ogni risposta indica la fonte.',
+    'kurz.p3': 'La piattaforma non consiglia, prepara. La riserva di attività per la consulenza fiscale prevista dall’articolo 5 della legge tedesca sulla consulenza fiscale (StBerG), il segreto professionale e l’approvazione da parte di un professionista abilitato restano intatti.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup>',
+    'kurz.p4': 'I suoi dati restano sul suo server oppure in un centro di calcolo europeo e non addestrano alcun modello.',
+    'toc.titel': 'In questa pagina',
+    'toc.i1': 'Situazione di partenza',
+    'toc.i2': 'Indicizzare un mandato',
+    'toc.i3': 'Il sapere dello studio, interrogabile',
+    'toc.i4': 'Guidare i mandanti nelle scadenze',
+    'toc.i5': 'I limiti',
+    'toc.i6': 'Connettori al software di studio',
+    'toc.i7': 'Protezione dei dati',
+    'toc.i8': 'Domande frequenti',
+    'lage.h2': 'Situazione di partenza: la categoria si assottiglia, i corpi di regole crescono',
+    'lage.p1': 'In Germania gli ordini dei consulenti fiscali contano 53.932 studi, di cui ben il 67% studi individuali, con un’età media di 53,7 anni. I contratti di formazione per assistente fiscale sono scesi a 17.081, meno 1,3%, mentre il numero delle persone in riqualificazione è salito a 2.113.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> In Italia la categoria si contrae direttamente: alla fine del 2025 risultavano iscritti 119.050 dottori commercialisti ed esperti contabili, lo 0,8% in meno rispetto all’anno precedente, con un reddito mediano di 48.420 euro contro una media di 87.376 euro.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup>',
+    'lage.p2': 'Nel Liechtenstein è la stessa autorità di vigilanza a dirlo: nelle sue priorità di vigilanza 2026 la FMA scrive che il numero di operatori del settore fiduciario diminuisce leggermente a fronte di una regolamentazione più severa e di un elevato onere regolatorio.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> In Svezia il collo di bottiglia sta dall’altra parte: Srf konsulterna annovera il redovisningskonsult fra le professioni carenti, a fronte di circa 70.000 costituzioni di imprese all’anno.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup>',
+    'lage.p3': 'Nello stesso tempo i corpi di regole arrivano quasi tutti insieme. In Francia, dal 1° settembre 2026 tutte le imprese soggette a IVA devono poter ricevere fatture elettroniche e dal 1° settembre 2027 anche le piccole realtà devono inviarle, tramite una plateforme agréée, una piattaforma di fatturazione autorizzata dallo Stato.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup> In Spagna le entità soggette all’imposta sulle società devono adeguare i propri sistemi di fatturazione entro il 1° gennaio 2027, tutte le altre entro il 1° luglio 2027. L’obbligo B2B derivante dal Real Decreto 238/2026 decorre solo da un decreto ministeriale ancora atteso, e poi dopo dodici o ventiquattro mesi.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> In Norvegia le modifiche della legge sulla contabilità si applicano in modo scaglionato: fattura elettronica fra imprese soggette all’obbligo di contabilità dal 1° gennaio 2027, contabilità elettronica dal 1° gennaio 2030.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup> In Italia essa fa parte del quotidiano da tempo, tramite il Sistema di Interscambio.',
+    'lage.p4': 'Ognuna di queste scadenze è due cose insieme: un incarico di consulenza e un onere amministrativo nello studio stesso. Che la tecnica non sia il collo di bottiglia lo mostra la statistica europea: nel 2025 nell’UE il 55,0% delle imprese con almeno 250 addetti impiegava almeno una tecnologia di IA, ma solo il 17,0% delle realtà da 10 a 49 addetti.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Il divario è più grande di qualsiasi divario fra i paesi.',
+    'uc1.h2': 'Caso d’uso 1: indicizzare un mandato invece di sfogliarlo',
+    'uc1.p1': 'Un nuovo mandato arriva con quattro classificatori e due anni di corrispondenza. Il collega IA legge ciò che lei gli consegna e costruisce una cronologia: chi ha deciso che cosa e quando, quali contratti e quali appendici esistono, quali termini vi sono indicati e quali punti restano aperti. Per ogni indicazione è riportata la fonte.',
+    'uc1.p2': 'Lo stesso vale nel mandato in corso: un quadro della situazione prima del colloquio, i documenti richiesti prima di una verifica sotto forma di bozza, un riassunto dopo un lungo avviso dell’amministrazione. Ciò che l’assistente non fa è valutare. Mostra dove una cosa è scritta, non che cosa ne consegua.',
+    'uc1.leg1': 'Atti, contratti e corrispondenza del mandato',
+    'uc1.leg2': 'Cronologia con le parti coinvolte e le fonti',
+    'uc1.leg3': 'Punti aperti, nominati anziché trascurati',
+    'uc1.fig': 'L’assistente mette in ordine ciò che c’è e indica per ogni dato la fonte. La valutazione avviene nello studio.',
+    'uc1.p3': 'Il controllo dei termini resta nel software del suo studio e in mano a una persona. Una data tratta da un documento è un’indicazione da verificare, non un termine confermato.',
+    'uc2.h2': 'Caso d’uso 2: il sapere dello studio diventa interrogabile',
+    'uc2.p1': 'Chi comincia da poco chiede per prima cosa: come si fa qui da noi? Mentre in Germania i contratti di formazione diminuiscono, il numero delle persone in riqualificazione aumenta.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> Chi arriva da un altro mestiere porta esperienza professionale, ma non il sapere di questo studio. Una base di conoscenza fatta di promemoria, lettere tipo e scritti precedenti risponde a domande simili indicando la fonte, invece di interrompere per la dodicesima volta un collega esperto.',
+    'uc2.p2': 'I permessi valgono fino al singolo archivio. Chi non tratta un mandato non lo vede nemmeno tramite l’assistente, e ogni accesso figura nel registro. È questo il presupposto perché una base di conoscenza sia compatibile con il segreto del mandato.',
+    'uc2.leg1': 'Domanda in linguaggio corrente, anche da nuovi collaboratori',
+    'uc2.leg2': 'Promemoria, lettere tipo e direttive, con permessi per archivio',
+    'uc2.leg3': 'Risposta con la fonte, verificabile in pochi secondi',
+    'uc2.fig': 'La base di conoscenza risponde a partire dai documenti dello studio. Ciò che qualcuno non può vedere non lo vede nemmeno tramite l’assistente.',
+    'uc2.p3': 'Il guadagno è doppio: le persone esperte vengono interrotte più di rado e il sapere resta nello studio quando qualcuno va in pensione. La base di conoscenza vale però soltanto quanto i documenti che contiene.',
+    'uc3.h2': 'Caso d’uso 3: guidare i mandanti attraverso le scadenze',
+    'uc3.p1': 'Ognuna di queste scadenze genera lo stesso lavoro: spiegare, ricordare, sollecitare. Una circolare sulla fattura elettronica, una richiesta di documenti mancanti, trenta volte in una versione lievemente diversa. L’assistente ricava la bozza dalle sue stesse note tecniche, raggruppa i mandati secondo chi è interessato e deposita le lettere per la revisione.',
+    'uc3.p2': 'Nei mandati transfrontalieri si aggiunge la lingua: dal promemoria tedesco nasce come bozza la versione francese, italiana o spagnola, con le stesse fonti. Per gli scritti giuridicamente rilevanti la traduzione resta una bozza, mai la versione vincolante.',
+    'uc3.leg1': 'Nota tecnica o promemoria dello studio sul nuovo obbligo',
+    'uc3.leg2': 'Un ingresso, più versioni secondo il mandato e la lingua',
+    'uc3.leg3': 'Bozze nel tono dello studio, con le stesse fonti',
+    'uc3.leg4': 'Approvazione del professionista abilitato, e solo allora l’invio',
+    'uc3.fig': 'Da una nota tecnica nascono molte lettere. Nessuna lascia lo studio senza approvazione.',
+    'uc3.p3': 'Che cosa non accade di proposito: nulla viene trasmesso automaticamente a un sistema pubblico, né al Sistema di Interscambio né a VERI*FACTU né a una plateforme agréée. L’assistente prepara, a trasmettere è una persona.',
+    'grenzen.h2': 'I limiti, indicati chiaramente',
+    'grenzen.p1': 'In Germania l’assistenza in materia fiscale prestata a titolo professionale è riservata alle persone indicate agli articoli 3, 3a, 3d e 4 della legge sulla consulenza fiscale (StBerG). L’articolo 5 StBerG la vieta a tutti gli altri.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup> EU Cowork AI non fornisce quindi né consulenza fiscale né consulenza legale. La piattaforma prepara la risposta e non sostituisce né il professionista abilitato né un expert-comptable, un commercialista o una gestoría.',
+    'grenzen.p2': 'Il segreto professionale è il secondo punto fermo: secret professionnel in Francia, segreto professionale in Italia, secreto profesional in Spagna, obbligo di riservatezza secondo il diritto professionale in Germania, Austria e Liechtenstein. È penalmente sanzionato e un accordo sul trattamento dei dati non lo elimina. La responsabilità resta nello studio. Ne discendono tre frasi: un modello linguistico può produrre errori, per questo ogni testo è una bozza. Ogni fonte la verifica sull’originale. E la conformità non è mai adempiuta automaticamente, nasce dalle persone e dai processi.',
+    'konn.h2': 'Connettori: che cosa si può collegare al software del suo studio',
+    'konn.p1': 'Un collega IA è utile quanto ciò che gli è consentito raggiungere. Il collegamento a un altro programma si chiama connettore. Passa da MCP, uno standard aperto per il collegamento di sistemi esterni. Il presupposto è un’interfaccia documentata, in gergo un’API: il produttore descrive pubblicamente come altri programmi possono richiamare i dati. Alcuni produttori forniscono già un pezzo di raccordo pronto, un server MCP. I permessi valgono per singolo strumento e ogni chiamata viene registrata. Ecco la situazione per i software di studio e di contabilità più diffusi, verificata nell’agosto 2026: Per le suite spagnole di gestione dello studio non esiste un riscontro verificato, perciò in questa tabella non compaiono.',
+    'konn.th1': 'Software (paese)',
+    'konn.th2': 'Interfaccia',
+    'konn.th3': 'Collegamento a EU Cowork AI',
+    'konn.r1c1': 'DATEV (DE)',
+    'konn.r1c2': 'API per partner; il portale per sviluppatori richiede un accesso e non è consultabile senza un account DATEV',
+    'konn.r1c3': 'Solo tramite il canale partner di DATEV',
+    'konn.r2c1': 'Lexware Office (DE)',
+    'konn.r2c2': 'API REST aperta e documentata',
+    'konn.r2c3': 'Collegamento possibile tramite MCP: contatti, fatture, solleciti',
+    'konn.r3c1': 'BMD NTCS e RZL (AT)',
+    'konn.r3c2': 'Nessun portale pubblico per sviluppatori; RZL gestisce un programma di partner di interfaccia',
+    'konn.r3c3': 'Tramite il canale partner',
+    'konn.r4c1': 'Vertec (LI, CH)',
+    'konn.r4c2': 'Interfaccia aperta, documentata',
+    'konn.r4c3': 'Server MCP del produttore disponibile: rilevamento delle prestazioni, mandati, fatturazione',
+    'konn.r5c1': 'Pennylane (FR)',
+    'konn.r5c2': 'API REST aperta e documentata, OAuth 2.0, accesso dedicato agli studi',
+    'konn.r5c3': 'Collegamento possibile tramite MCP: giustificativi, registrazioni, dati di base',
+    'konn.r6c1': 'Fatture in Cloud (IT)',
+    'konn.r6c2': 'API REST aperta e documentata, OAuth 2.0, webhook',
+    'konn.r6c3': 'Collegamento possibile tramite MCP; nel gruppo societario è l’eccezione documentata',
+    'konn.r7c1': 'Holded (ES)',
+    'konn.r7c2': 'API REST aperta e documentata, autenticazione bearer, webhook',
+    'konn.r7c3': 'Collegamento possibile tramite MCP: contabilità, fatture, contatti',
+    'konn.r9c1': 'Fortnox (SE)',
+    'konn.r9c2': 'API REST aperta e documentata, OAuth2, limiti di frequenza documentati',
+    'konn.r9c3': 'Collegamento possibile tramite MCP: fatture, giustificativi contabili, clienti, salari',
+    'konn.r10c1': 'Tripletex, Fiken e PowerOffice Go (NO)',
+    'konn.r10c2': 'Documentazione aperta con ambiente di test; presso Fiken è il cliente stesso a generare la chiave di accesso',
+    'konn.r10c3': 'Collegamento possibile tramite MCP: contabilità e fatturazione',
+    'konn.p2': 'Lo schema è lo stesso in tutti e otto i mercati: aperta è per lo più la contabilità, chiusa la grande suite di studio. Manca il suo software? La maggior parte del lavoro quotidiano funziona senza alcun collegamento di sistema. Come funzioni il collegamento dell’IA a un software di studio o di contabilità tramite MCP è descritto nella pagina <a class="euc-textlink" href="/fr/integrationen">Integrazioni</a>.',
+    'ds.h2': 'Protezione dei dati: i dati dei mandanti restano dove lei li vuole',
+    'ds.p1': 'EU Cowork AI gira sul suo server oppure in esercizio gestito in centri di calcolo certificati ISO 27001. I dati dei clienti non addestrano alcun modello, l’elaborazione dei modelli avviene nell’UE e l’<a class="euc-textlink" href="/fr/avv">accordo sul trattamento dei dati</a> insieme all’<a class="euc-textlink" href="/fr/subprozessoren">elenco dei sub-responsabili</a> sono pubblicati apertamente su questo sito.',
+    'ds.p2': 'Nella sostanza conta soprattutto un punto. Se dati personali sono trasferiti in un paese terzo, cioè in un paese fuori dallo Spazio economico europeo, si applica il capo V del regolamento generale sulla protezione dei dati. Servono una propria base giuridica e, a seconda dello strumento, una valutazione della situazione normativa nel paese di destinazione. Se conservazione ed elaborazione dei modelli restano nello Spazio economico europeo, questo passaggio di verifica viene meno. Resta il trattamento su incarico ai sensi dell’articolo 28, che ogni studio padroneggia. Nulla diventa così automaticamente lecito, ma diventa più facile da motivare.',
+    'ds.p3': 'Il secondo punto è l’aderenza alla realtà dello studio. Nel 2025 il 71,0% delle imprese che usano l’IA in Norvegia e il 62,1% in Svezia impiegava software commerciale acquistato già pronto.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Strumenti simili sono utili, ma non conoscono il suo studio in particolare: non i suoi incarti di mandato, non le sue lettere tipo. È esattamente lì che sta la differenza rispetto al collega IA.',
+    'faq.h2': 'Domande frequenti da studi, consulenti fiscali e fiduciarie',
+    'faq.q1': 'La piattaforma può fornire ai miei mandanti consulenza fiscale o legale?',
+    'faq.a1': 'No. In Germania l’assistenza in materia fiscale prestata a titolo professionale è riservata, secondo l’articolo 5 StBerG, a chi vi è abilitato. Negli altri mercati di riferimento valgono riserve professionali corrispondenti. L’assistente trova i passaggi, riassume e redige bozze. Valutazione e approvazione restano al professionista abilitato. Questo articolo non sostituisce una consulenza legale.',
+    'faq.q2': 'Come si concilia tutto ciò con il segreto professionale?',
+    'faq.a2': 'Il segreto professionale è penalmente sanzionato in Francia, Italia e Spagna ed è tutelato dal diritto professionale e penale nei mercati di lingua tedesca. Un accordo sul trattamento dei dati non lo elimina. È la base su cui un fornitore di servizi può essere coinvolto.',
+    'faq.q3': 'Lavoriamo con DATEV. EU Cowork AI funziona con questo software?',
+    'faq.a3': 'Sì. Il collegamento a DATEV passa dal programma per sviluppatori e presuppone una partnership. La maggior parte dell’utilità però non dipende da questo: indicizzazione dell’incarto, base di conoscenza, lettere ai mandanti e traduzioni lavorano con documenti.',
+    'faq.q4': 'Secondo il regolamento europeo sull’IA si tratta di un sistema ad alto rischio?',
+    'faq.a4': 'Di regola no. Cercare nei documenti, riassumere e redigere bozze non rientra nelle categorie ad alto rischio. È diverso non appena un sistema seleziona candidature o valuta i collaboratori. Indipendentemente da ciò, il regolamento richiede a ogni deployer un’adeguata alfabetizzazione in materia di IA, quindi formazione e regole d’uso documentate.',
+    'faq.q5': 'Quanto costa per uno studio di dodici persone?',
+    'faq.a5': 'L’esercizio gestito costa 15 € per persona al mese, di cui 8 € come credito modelli nel pool della sua organizzazione. Chi ospita il software in proprio non paga nulla per il software: è rilasciato con licenza MIT. Tutto il resto nella pagina <a class="euc-textlink" href="/fr/preise">Prezzi</a>.',
+    'faq.q6': 'Dove si trovano i nostri dati e ci serve un reparto IT?',
+    'faq.a6': 'Nella variante gestita in centri di calcolo europei certificati ISO 27001, nell’esercizio autonomo sul suo server. Un reparto IT non serve. Per l’esercizio autonomo basta qualcuno in grado di curare un server Linux con Docker; Docker è la tecnica diffusa che fa girare il software server in pacchetti autonomi. Le prove si trovano nel <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'cta.h2': 'Lo veda su un mandato suo',
+    'cta.p': 'Porti un incarto o un promemoria e percorreremo insieme il processo.',
+    'cta.btn1': 'Prenotare un appuntamento',
+    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'src.h2': 'Fonti',
+    'src.p': 'Tutte le cifre provengono da queste fonti, verificate da ultimo nell’agosto 2026.',
+    'src.fn1': 'Bundessteuerberaterkammer, statistica professionale 2025 (DE): <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
+    'src.fn2': 'Fondazione Nazionale dei Commercialisti, Rapporto 2026 sull’Albo (IT): <a class="euc-textlink" href="https://www.fondazionenazionalecommercialisti.it/node/1911" target="_blank" rel="noopener">fondazionenazionalecommercialisti.it</a>',
+    'src.fn3': 'Autorità dei mercati finanziari del Liechtenstein (FMA), priorità di vigilanza 2026 (LI): <a class="euc-textlink" href="https://www.fma-li.li/_default_upload_bucket/fma-aufsichtsschwerpunkte-2026.pdf" target="_blank" rel="noopener">fma-li.li</a>',
+    'src.fn4': 'Srf konsulterna sulla carenza di redovisningskonsulter, 2025 (SE): <a class="euc-textlink" href="https://via.tt.se/pressmeddelande/3788193/brist-pa-redovisningskonsulter-srf-konsulterna-kraver-fler-utbildningsplatser?publisherId=3235883&amp;lang=sv" target="_blank" rel="noopener">via.tt.se</a>',
+    'src.fn5': 'Eurostat, isoc_eb_ai, impiego dell’IA per classe dimensionale e modalità di acquisizione, 2025: <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu</a>',
+    'src.fn6': 'Direction générale des finances publiques, facturation électronique (FR): <a class="euc-textlink" href="https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique" target="_blank" rel="noopener">impots.gouv.fr</a>',
+    'src.fn7': 'Agencia Tributaria sui termini di fatturazione e Real Decreto 238/2026 (ES): <a class="euc-textlink" href="https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html" target="_blank" rel="noopener">agenciatributaria.gob.es</a> e <a class="euc-textlink" href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7295" target="_blank" rel="noopener">boe.es</a>',
+    'src.fn8': 'Stortinget, Lovvedtak 52 (dal 2025 al 2026) sulla bokføringsloven (NO): <a class="euc-textlink" href="https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=200136" target="_blank" rel="noopener">stortinget.no</a>',
+    'src.fn9': 'Steuerberatungsgesetz, articolo 5, assistenza non autorizzata in materia fiscale (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/stberg/__5.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'weiter.titel': 'Continua',
+    'weiter.l1': 'La versione svizzera: l’IA nello studio legale e nella fiduciaria',
+    'weiter.l2': 'Integrazioni: quali sistemi sono predisposti',
+    'weiter.l3': 'Sicurezza e fiducia: le prove sull’esercizio',
+    'geprueft': 'Ultima verifica: <time datetime="2026-08">agosto 2026</time>'
+  },
+  es: {
+    'meta.title': 'IA para despachos y gestorías con DATEV | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'La IA en despachos y gestorías',
+    'hero.eyebrow': 'La IA en el trabajo diario',
+    'hero.h1': 'Menos profesionales, más normas: tres procesos de IA en el despacho',
+    'hero.lead': 'Indexar un mandato, transmitir el saber del despacho, guiar a los mandantes por los plazos: la profesión se reduce mientras los cuerpos normativos aumentan. Este artículo muestra, con tres procesos, cómo trabaja un colega de IA con la documentación de su despacho y dónde están los límites.',
+    'hero.chip': 'Fiduciaria y despacho',
+    'hero.datum': '18 de agosto de 2026',
+    'hero.lesezeit': 'Tiempo de lectura: 10 minutos',
+    'kurz.titel': 'En resumen',
+    'kurz.p1': 'La profesión se reduce mientras los cuerpos normativos aumentan: en Alemania los colegios contabilizan 53.932 despachos de asesoría fiscal, de los cuales algo más de dos tercios son despachos individuales, con una edad media de 53,7 años.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI trabaja con la documentación de su despacho. Expedientes de mandato, fichas informativas, cartas modelo y directrices se convierten en una base de conocimiento: un conjunto que usted consulta en lenguaje corriente. Cada respuesta indica la fuente.',
+    'kurz.p3': 'La plataforma no asesora, prepara. La reserva de actividad para el asesoramiento fiscal del artículo 5 de la ley alemana de asesoramiento fiscal (StBerG), el secreto profesional y la aprobación por un profesional habilitado quedan intactos.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup>',
+    'kurz.p4': 'Sus datos permanecen en su propio servidor o en un centro de datos europeo y no entrenan ningún modelo.',
+    'toc.titel': 'En esta página',
+    'toc.i1': 'Punto de partida',
+    'toc.i2': 'Indexar un mandato',
+    'toc.i3': 'El saber del despacho, consultable',
+    'toc.i4': 'Guiar a los mandantes por los plazos',
+    'toc.i5': 'Los límites',
+    'toc.i6': 'Conectores al software de despacho',
+    'toc.i7': 'Protección de datos',
+    'toc.i8': 'Preguntas frecuentes',
+    'lage.h2': 'Punto de partida: la profesión se encoge, los cuerpos normativos crecen',
+    'lage.p1': 'En Alemania los colegios de asesores fiscales contabilizan 53.932 despachos, de los cuales algo más del 67 % son despachos individuales, con una edad media de 53,7 años. Los contratos de formación de auxiliar fiscal bajaron a 17.081, un 1,3 % menos, mientras que el número de personas en reconversión subió a 2.113.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> En Italia la profesión se contrae directamente: a finales de 2025 había 119.050 dottori commercialisti y esperti contabili inscritos, un 0,8 % menos que el año anterior, con una renta mediana de 48.420 euros frente a 87.376 euros de media.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup>',
+    'lage.p2': 'En Liechtenstein lo dice la propia supervisión: en sus prioridades de supervisión para 2026, la FMA escribe que el número de proveedores del sector fiduciario disminuye ligeramente ante una regulación más estricta y una elevada carga regulatoria.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> En Suecia el cuello de botella está en el otro lado: Srf konsulterna cuenta al redovisningskonsult entre las profesiones con escasez, con unas 70.000 constituciones de empresas al año.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup>',
+    'lage.p3': 'Al mismo tiempo, los cuerpos normativos llegan casi todos a la vez. En Francia, a partir del 1 de septiembre de 2026 todas las empresas sujetas al IVA deben poder recibir facturas electrónicas y a partir del 1 de septiembre de 2027 también las pequeñas empresas deben emitirlas, a través de una plateforme agréée, una plataforma de facturación autorizada por el Estado.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup> En España, las entidades sujetas al impuesto sobre sociedades deben adaptar sus sistemas de facturación antes del 1 de enero de 2027 y todas las demás antes del 1 de julio de 2027. La obligación B2B del Real Decreto 238/2026 solo empieza a correr con una orden ministerial todavía pendiente y, a partir de ahí, doce o veinticuatro meses.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> En Noruega las modificaciones de la ley de contabilidad se aplican de forma escalonada: factura electrónica entre empresas obligadas a llevar contabilidad desde el 1 de enero de 2027 y contabilidad electrónica desde el 1 de enero de 2030.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup> En Italia lleva mucho tiempo formando parte del día a día a través del Sistema di Interscambio.',
+    'lage.p4': 'Cada uno de esos plazos es dos cosas a la vez: un encargo de asesoramiento y una carga administrativa en el propio despacho. Que la técnica no sea el cuello de botella lo muestra la estadística europea: en 2025, en la UE, el 55,0 % de las empresas de 250 empleados o más utilizaba al menos una tecnología de IA, pero solo el 17,0 % de las de 10 a 49 empleados.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> La distancia es mayor que cualquier distancia entre países.',
+    'uc1.h2': 'Caso de uso 1: indexar un mandato en lugar de hojearlo',
+    'uc1.p1': 'Un mandato nuevo llega con cuatro archivadores y dos años de correspondencia. El colega de IA lee lo que usted le entrega y elabora una cronología: quién decidió qué y cuándo, qué contratos y adendas existen, qué plazos se mencionan en ellos y qué puntos quedan abiertos. Cada dato lleva su fuente.',
+    'uc1.p2': 'Lo mismo sirve en el mandato en curso: un panorama del estado antes de la reunión, la documentación solicitada antes de una comprobación en forma de borrador, un resumen tras una resolución larga de la administración. Lo que el asistente no hace es valorar. Muestra dónde consta algo, no qué se deriva de ello.',
+    'uc1.leg1': 'Expedientes, contratos y correspondencia del mandato',
+    'uc1.leg2': 'Cronología con las partes implicadas y las fuentes',
+    'uc1.leg3': 'Puntos abiertos, nombrados en lugar de pasados por alto',
+    'uc1.fig': 'El asistente ordena lo que hay e indica la fuente de cada dato. La valoración se hace en el despacho.',
+    'uc1.p3': 'El control de plazos sigue en su software de despacho y en manos de una persona. Una fecha extraída de un documento es un aviso para comprobar, no un plazo confirmado.',
+    'uc2.h2': 'Caso de uso 2: el saber del despacho se vuelve consultable',
+    'uc2.p1': 'Quien empieza pregunta primero lo mismo: ¿cómo lo hacemos aquí? Mientras en Alemania retroceden los contratos de formación, aumenta el número de personas en reconversión.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> Quien llega de otra profesión trae experiencia laboral, pero no el saber de este despacho. Una base de conocimiento formada por fichas informativas, cartas modelo y escritos anteriores responde a esas preguntas con su fuente, en lugar de interrumpir por duodécima vez a un colega con experiencia.',
+    'uc2.p2': 'Los permisos llegan hasta cada archivo. Quien no lleva un mandato tampoco lo ve a través del asistente, y cada acceso consta en el registro. Ese es el requisito para que una base de conocimiento sea compatible con el secreto del mandato.',
+    'uc2.leg1': 'Pregunta en lenguaje corriente, también de personal nuevo',
+    'uc2.leg2': 'Fichas informativas, cartas modelo y directrices, con permisos por archivo',
+    'uc2.leg3': 'Respuesta con su fuente, comprobable en segundos',
+    'uc2.fig': 'La base de conocimiento responde a partir de la documentación del despacho. Lo que alguien no puede ver tampoco lo ve a través del asistente.',
+    'uc2.p3': 'La ganancia es doble: se interrumpe con menos frecuencia a quienes tienen experiencia y el saber permanece en el despacho cuando alguien se jubila. La base de conocimiento vale, eso sí, lo que valga la documentación que contiene.',
+    'uc3.h2': 'Caso de uso 3: guiar a los mandantes por los plazos',
+    'uc3.p1': 'Cada uno de esos plazos genera el mismo trabajo: explicar, recordar, insistir. Una circular sobre la factura electrónica, una petición de documentos que faltan, treinta veces en una versión ligeramente distinta. El asistente saca el borrador de sus propias notas técnicas, agrupa los mandatos según a quién afectan y deja los escritos listos para su revisión.',
+    'uc3.p2': 'En los mandatos transfronterizos se añade el idioma: a partir de la ficha informativa alemana nace como borrador la versión francesa, italiana o española, con las mismas fuentes. En los escritos con relevancia jurídica, la traducción sigue siendo un borrador, nunca la versión vinculante.',
+    'uc3.leg1': 'Nota técnica o ficha informativa del despacho sobre la nueva obligación',
+    'uc3.leg2': 'Una entrada, varias versiones según el mandato y el idioma',
+    'uc3.leg3': 'Borradores en el tono del despacho, con las mismas fuentes',
+    'uc3.leg4': 'Aprobación por el profesional habilitado y solo entonces el envío',
+    'uc3.fig': 'De una nota técnica nacen muchos escritos. Ninguno sale del despacho sin aprobación.',
+    'uc3.p3': 'Lo que a propósito no ocurre: nada se transmite automáticamente a un sistema público, ni al Sistema di Interscambio, ni a VERI*FACTU, ni a una plateforme agréée. El asistente prepara y quien transmite es una persona.',
+    'grenzen.h2': 'Los límites, dichos con claridad',
+    'grenzen.p1': 'En Alemania, la asistencia en materia tributaria prestada a título profesional está reservada a las personas mencionadas en los artículos 3, 3a, 3d y 4 de la ley de asesoramiento fiscal (StBerG). El artículo 5 StBerG la prohíbe a todos los demás.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup> Por eso EU Cowork AI no presta asesoramiento fiscal ni jurídico. La plataforma prepara la respuesta y no sustituye ni al profesional habilitado ni a un expert-comptable, un commercialista o una gestoría.',
+    'grenzen.p2': 'El secreto profesional es el segundo punto fijo: secret professionnel en Francia, segreto professionale en Italia, secreto profesional en España y el deber de reserva conforme al derecho profesional en Alemania, Austria y Liechtenstein. Está sancionado penalmente y un acuerdo de encargo de tratamiento no lo levanta. La responsabilidad se queda en el despacho. De ahí se siguen tres frases: un modelo de lenguaje puede devolver algo falso, por eso cada texto es un borrador. Cada fuente la comprueba usted en el original. Y el cumplimiento nunca se satisface de forma automática, surge de las personas y de los procesos.',
+    'konn.h2': 'Conectores: qué se puede conectar a su software de despacho',
+    'konn.p1': 'Un colega de IA es tan útil como aquello que se le permite alcanzar. La unión con otro programa se llama conector. Funciona mediante MCP, un estándar abierto para conectar sistemas externos. El requisito es una interfaz documentada, en jerga una API: el fabricante describe públicamente cómo otros programas pueden recuperar datos. Algunos fabricantes ya entregan una pieza de enlace lista, un servidor MCP. Los permisos rigen por herramienta y cada llamada queda registrada. Así está la situación en el software de despacho y de contabilidad más extendido, comprobada en agosto de 2026: Sobre las suites de despacho españolas no hay ningún dato verificado, por eso no aparecen en ninguna fila de esta tabla.',
+    'konn.th1': 'Software (país)',
+    'konn.th2': 'Interfaz',
+    'konn.th3': 'Conexión con EU Cowork AI',
+    'konn.r1c1': 'DATEV (DE)',
+    'konn.r1c2': 'API para partners; el portal de desarrolladores exige inicio de sesión y no es consultable sin una cuenta de DATEV',
+    'konn.r1c3': 'Solo por la vía de partners de DATEV',
+    'konn.r2c1': 'Lexware Office (DE)',
+    'konn.r2c2': 'API REST abierta y documentada',
+    'konn.r2c3': 'Conexión posible mediante MCP: contactos, facturas, reclamaciones de pago',
+    'konn.r3c1': 'BMD NTCS y RZL (AT)',
+    'konn.r3c2': 'Sin portal público de desarrolladores; RZL mantiene un programa de partners de interfaz',
+    'konn.r3c3': 'Por la vía de partners',
+    'konn.r4c1': 'Vertec (LI, CH)',
+    'konn.r4c2': 'Interfaz abierta y documentada',
+    'konn.r4c3': 'Servidor MCP del fabricante disponible: registro de prestaciones, mandatos, facturación',
+    'konn.r5c1': 'Pennylane (FR)',
+    'konn.r5c2': 'API REST abierta y documentada, OAuth 2.0, acceso propio para despachos',
+    'konn.r5c3': 'Conexión posible mediante MCP: justificantes, asientos, datos maestros',
+    'konn.r6c1': 'Fatture in Cloud (IT)',
+    'konn.r6c2': 'API REST abierta y documentada, OAuth 2.0, webhooks',
+    'konn.r6c3': 'Conexión posible mediante MCP; dentro de su grupo, la excepción documentada',
+    'konn.r7c1': 'Holded (ES)',
+    'konn.r7c2': 'API REST abierta y documentada, autenticación bearer, webhooks',
+    'konn.r7c3': 'Conexión posible mediante MCP: contabilidad, facturas, contactos',
+    'konn.r9c1': 'Fortnox (SE)',
+    'konn.r9c2': 'API REST abierta y documentada, OAuth2, límites de frecuencia documentados',
+    'konn.r9c3': 'Conexión posible mediante MCP: facturas, justificantes contables, clientes, nóminas',
+    'konn.r10c1': 'Tripletex, Fiken y PowerOffice Go (NO)',
+    'konn.r10c2': 'Documentación abierta con entorno de pruebas; en Fiken el cliente genera él mismo la clave de acceso',
+    'konn.r10c3': 'Conexión posible mediante MCP: contabilidad y facturación',
+    'konn.p2': 'El patrón es el mismo en los ocho mercados: lo abierto suele ser la contabilidad, lo cerrado la gran suite de despacho. ¿Falta su software? La mayor parte del día a día funciona sin ninguna conexión de sistema. Cómo funciona la conexión de la IA con un software de despacho o de contabilidad mediante MCP se explica en la página <a class="euc-textlink" href="/fr/integrationen">Integraciones</a>.',
+    'ds.h2': 'Protección de datos: los datos de los mandantes se quedan donde usted quiera',
+    'ds.p1': 'EU Cowork AI funciona en su propio servidor o en operación gestionada en centros de datos certificados según ISO 27001. Los datos de clientes no entrenan ningún modelo, el procesamiento por los modelos se realiza en la UE, y el <a class="euc-textlink" href="/fr/avv">acuerdo de encargo de tratamiento</a> junto con la <a class="euc-textlink" href="/fr/subprozessoren">lista de subencargados</a> están publicados abiertamente en esta web.',
+    'ds.p2': 'En lo material cuenta sobre todo un punto. Si se transfieren datos personales a un tercer país, es decir a un país fuera del Espacio Económico Europeo, se aplica el capítulo V del Reglamento General de Protección de Datos. Hacen falta una base jurídica propia y, según el instrumento, una evaluación de la situación jurídica en el país de destino. Si el almacenamiento y el procesamiento por los modelos permanecen en el Espacio Económico Europeo, ese paso de comprobación desaparece. Queda el tratamiento por encargo conforme al artículo 28, que cualquier despacho domina. Con ello nada resulta lícito de forma automática, pero sí más fácil de justificar.',
+    'ds.p3': 'El segundo punto es el ajuste. En 2025, el 71,0 % de las empresas usuarias de IA en Noruega y el 62,1 % en Suecia empleaba software comercial comprado ya hecho.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup> Esas herramientas son útiles, pero no conocen su despacho: ni sus expedientes de mandato ni sus cartas modelo. Justo ahí está la diferencia con el colega de IA.',
+    'faq.h2': 'Preguntas frecuentes de despachos, asesorías fiscales y fiduciarias',
+    'faq.q1': '¿Puede la plataforma asesorar a mis mandantes en materia fiscal o jurídica?',
+    'faq.a1': 'No. En Alemania, la asistencia en materia tributaria prestada a título profesional está reservada, conforme al artículo 5 StBerG, a quienes están facultados para ello. En los demás mercados de destino rigen reservas profesionales equivalentes. El asistente encuentra pasajes, resume y redacta borradores. La valoración y la aprobación siguen siendo del profesional habilitado. Este artículo no sustituye al asesoramiento jurídico.',
+    'faq.q2': '¿Cómo encaja esto con el secreto profesional?',
+    'faq.a2': 'El secreto profesional está sancionado penalmente en Francia, Italia y España y protegido por el derecho profesional y penal en los mercados de habla alemana. Un acuerdo de encargo de tratamiento no lo levanta. Es la base sobre la que puede intervenir un prestador de servicios.',
+    'faq.q3': 'Trabajamos con DATEV. ¿Funciona EU Cowork AI con ese software?',
+    'faq.a3': 'Sí. La conexión con DATEV pasa por el programa de desarrolladores y exige una asociación. Pero la mayor parte de la utilidad no depende de eso: la indexación del expediente, la base de conocimiento, las cartas a mandantes y las traducciones trabajan con documentos.',
+    'faq.q4': '¿Es esto un sistema de alto riesgo conforme al reglamento europeo de IA?',
+    'faq.a4': 'Por regla general, no. Buscar en documentos, resumir y redactar borradores no entra en las categorías de alto riesgo. Es distinto en cuanto un sistema clasifica candidaturas o evalúa a la plantilla. Al margen de eso, el reglamento exige a todo responsable del despliegue una alfabetización en materia de IA, es decir, formación y reglas de uso documentadas.',
+    'faq.q5': '¿Cuánto cuesta para un despacho de doce personas?',
+    'faq.a5': 'La operación gestionada cuesta 15 € por persona y mes, de los cuales 8 € son saldo de modelos en el fondo común de su organización. Quien se autoaloja no paga nada por el software: está bajo licencia MIT. Todo lo demás, en la página <a class="euc-textlink" href="/fr/preise">Precios</a>.',
+    'faq.q6': '¿Dónde están nuestros datos y necesitamos un departamento de IT?',
+    'faq.a6': 'En la variante gestionada, en centros de datos europeos certificados según ISO 27001; en el autoalojamiento, en su propio servidor. No hace falta un departamento de IT. Para el autoalojamiento basta con alguien que sepa mantener un servidor Linux con Docker; Docker es la técnica habitual para ejecutar software de servidor en paquetes autónomos. Las pruebas están en el <a class="euc-textlink" href="/fr/sicherheit">Trust Center</a>.',
+    'cta.h2': 'Véalo con un mandato propio',
+    'cta.p': 'Traiga un expediente o una ficha informativa y recorremos juntos el proceso.',
+    'cta.btn1': 'Reservar una cita',
+    'cta.btn2': 'Únase a la lista de espera',
+    'src.h2': 'Fuentes',
+    'src.p': 'Todas las cifras proceden de estas fuentes, comprobadas por última vez en agosto de 2026.',
+    'src.fn1': 'Bundessteuerberaterkammer, estadística profesional 2025 (DE): <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
+    'src.fn2': 'Fondazione Nazionale dei Commercialisti, Rapporto 2026 sull’Albo (IT): <a class="euc-textlink" href="https://www.fondazionenazionalecommercialisti.it/node/1911" target="_blank" rel="noopener">fondazionenazionalecommercialisti.it</a>',
+    'src.fn3': 'Autoridad del Mercado Financiero de Liechtenstein (FMA), prioridades de supervisión 2026 (LI): <a class="euc-textlink" href="https://www.fma-li.li/_default_upload_bucket/fma-aufsichtsschwerpunkte-2026.pdf" target="_blank" rel="noopener">fma-li.li</a>',
+    'src.fn4': 'Srf konsulterna sobre la escasez de redovisningskonsulter, 2025 (SE): <a class="euc-textlink" href="https://via.tt.se/pressmeddelande/3788193/brist-pa-redovisningskonsulter-srf-konsulterna-kraver-fler-utbildningsplatser?publisherId=3235883&amp;lang=sv" target="_blank" rel="noopener">via.tt.se</a>',
+    'src.fn5': 'Eurostat, isoc_eb_ai, uso de IA por clase de tamaño y vía de adquisición, 2025: <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu</a>',
+    'src.fn6': 'Direction générale des finances publiques, facturation électronique (FR): <a class="euc-textlink" href="https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique" target="_blank" rel="noopener">impots.gouv.fr</a>',
+    'src.fn7': 'Agencia Tributaria sobre los plazos de facturación y el Real Decreto 238/2026 (ES): <a class="euc-textlink" href="https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html" target="_blank" rel="noopener">agenciatributaria.gob.es</a> y <a class="euc-textlink" href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7295" target="_blank" rel="noopener">boe.es</a>',
+    'src.fn8': 'Stortinget, Lovvedtak 52 (de 2025 a 2026) sobre la bokføringsloven (NO): <a class="euc-textlink" href="https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=200136" target="_blank" rel="noopener">stortinget.no</a>',
+    'src.fn9': 'Steuerberatungsgesetz, artículo 5, asistencia no autorizada en materia tributaria (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/stberg/__5.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'weiter.titel': 'Continuar',
+    'weiter.l1': 'La versión suiza: la IA en despachos de abogados y asesorías fiduciarias',
+    'weiter.l2': 'Integraciones: qué sistemas están preparados',
+    'weiter.l3': 'Seguridad y confianza: pruebas sobre la operación',
+    'geprueft': 'Última revisión: <time datetime="2026-08">agosto de 2026</time>'
+  }
+};
+</script>
+
+</body>
+</html>

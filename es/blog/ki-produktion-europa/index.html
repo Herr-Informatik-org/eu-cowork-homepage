@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="es" data-euc-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">IA en la producción: conectar su ERP | EU Cowork AI</title>
+<meta name="description" content="Hacer consultable el saber de la planta, preparar auditorías de clientes, instrucciones multilingües. IA conectada con Monitor ERP, weclapp, Xentral y Odoo.">
+<link rel="canonical" href="https://eucowork.ai/es/blog/ki-produktion-europa">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/blog/ki-produktion-europa">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/blog/ki-produktion-europa">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/blog/ki-produktion-europa">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/blog/ki-produktion-europa">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/blog/ki-produktion-europa">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/blog/ki-produktion-europa">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="https://eucowork.ai/es/blog/ki-produktion-europa">
+<meta property="og:title" content="IA en la producción: conectar su ERP | EU Cowork AI">
+<meta property="og:description" content="Mantener el saber cuando la gente se va: base de conocimiento, preparación de auditorías e instrucciones multilingües para la fabricación y la alimentación en Europa.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-share-es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Su colega de IA. Se queda en Europa.">
+<meta property="article:published_time" content="2026-08-18">
+<meta property="article:modified_time" content="2026-08-18">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IA en la producción: conectar su ERP | EU Cowork AI">
+<meta name="twitter:description" content="Conservar el saber de los informes de servicio, preparar auditorías de clientes y generar instrucciones multilingües: tres casos de uso de IA en la producción.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-share-es.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Saltar al contenido</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/es">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/es/preise" data-i18n="chrome.nav.pricing">Precios</a>
+    <a href="/docs/es" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/es/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/es/self-hosting" data-i18n="chrome.cta.selfhost">Alojar usted mismo</a>
+    <a class="euc-btn-primary" href="/es/warteliste" data-i18n="chrome.cta.waitlist">Únase a la lista de espera</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/es/preise" data-i18n="chrome.nav.pricing">Precios</a>
+      <a href="/docs/es" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/es/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/es/warteliste" data-i18n="chrome.cta.waitlist">Únase a la lista de espera</a>
+      <a class="euc-btn-secondary" href="/es/self-hosting" data-i18n="chrome.cta.selfhost">Alojar usted mismo</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main blog-article" id="inhalt">
+
+  <!-- ==================== HERO ==================== -->
+  <div class="blog-hero">
+    <div class="euc-wrap-wide">
+      <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/es" data-i18n="chrome.crumb.home">Inicio</a></li>
+        <li><a href="/es/blog" data-i18n="crumb.blog">Blog</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">La IA en la producción en Europa</span></li>
+      </ol>
+    </nav>
+      <div class="blog-hero-grid">
+        <div class="blog-hero-text">
+          <p class="euc-eyebrow" data-i18n="hero.eyebrow">La IA en el trabajo diario</p>
+          <h1 data-i18n="hero.h1">La IA en la producción: mantener el saber cuando la gente se va</h1>
+          <p class="euc-lead" data-i18n="hero.lead">Las personas con experiencia se jubilan y detrás llegan las exigencias de los grandes clientes: cuestionarios, catálogos de auditoría, justificantes. Este artículo muestra con tres procesos cómo un colega de IA trabaja con el saber de su planta y dónde está el límite con la máquina.</p>
+          <p class="blog-hero-meta">
+            <span class="chip" data-i18n="hero.chip">Producción</span>
+            <time datetime="2026-08-18" data-i18n="hero.datum">18 de agosto de 2026</time>
+            <span data-i18n="hero.lesezeit">Tiempo de lectura: 11 minutos</span>
+          </p>
+        </div>
+        <div class="blog-hero-art" aria-hidden="true">
+          <svg viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path class="fig-soft" d="M40 352 H604"></path>
+
+            <rect class="fig-panel" x="52" y="100" width="22" height="186" rx="4"></rect>
+            <rect class="fig-panel" x="186" y="100" width="22" height="186" rx="4"></rect>
+            <path class="fig-line" d="M63 112 v168 M197 112 v168"></path>
+            <rect class="fig-fill-tint fig-soft" x="44" y="72" width="172" height="28" rx="6"></rect>
+            <path class="fig-eu-mid" d="M78 108 h104"></path>
+            <rect class="fig-fill-ice fig-eu" x="108" y="112" width="44" height="52" rx="6"></rect>
+            <rect class="fig-fill-tint fig-eu" x="122" y="164" width="16" height="32" rx="4"></rect>
+            <path class="fig-eu" d="M120 196 h20 l-5 20 h-10 Z"></path>
+            <rect class="fig-fill-tint fig-eu-mid" x="98" y="254" width="64" height="32" rx="3"></rect>
+            <rect class="fig-panel" x="40" y="286" width="180" height="20" rx="5"></rect>
+            <path class="fig-soft" d="M64 306 v46 M196 306 v46"></path>
+
+            <rect class="fig-panel" x="228" y="142" width="94" height="76" rx="7"></rect>
+            <path class="fig-eu-mid" d="M244 164 h38"></path>
+            <path class="fig-line" d="M244 184 h62 M244 200 h44"></path>
+            <rect class="fig-fill-ice fig-soft" x="232" y="224" width="86" height="20" rx="6"></rect>
+            <circle class="fig-eu-mid" cx="252" cy="234" r="4"></circle>
+            <circle class="fig-eu-mid" cx="275" cy="234" r="4"></circle>
+            <circle class="fig-eu-mid" cx="298" cy="234" r="4"></circle>
+            <rect class="fig-fill-tint fig-soft" x="267" y="244" width="16" height="94" rx="4"></rect>
+            <rect class="fig-panel" x="249" y="338" width="52" height="14" rx="5"></rect>
+
+            <rect class="fig-fill-ice fig-line" x="344" y="220" width="62" height="36" rx="2"></rect>
+            <rect class="fig-fill-tint fig-line" x="352" y="256" width="78" height="38" rx="2"></rect>
+            <rect class="fig-panel" x="340" y="294" width="92" height="38" rx="2"></rect>
+            <path class="fig-soft" d="M368 220 v36 M382 256 v38 M372 294 v38 M344 232 h62 M352 268 h78 M340 306 h92"></path>
+            <rect class="fig-fill-tint fig-soft" x="330" y="332" width="112" height="12" rx="3"></rect>
+            <rect class="fig-soft" x="336" y="344" width="16" height="8" rx="2"></rect>
+            <rect class="fig-soft" x="378" y="344" width="16" height="8" rx="2"></rect>
+            <rect class="fig-soft" x="420" y="344" width="16" height="8" rx="2"></rect>
+
+            <path class="fig-soft" d="M216 92 C330 96 424 148 510 242"></path>
+            <path class="fig-flow fig-eu" d="M216 92 C330 96 424 148 510 242"></path>
+
+            <rect class="fig-panel" x="452" y="242" width="150" height="110" rx="8"></rect>
+            <path class="fig-eu-mid" d="M472 264 h56"></path>
+            <path class="fig-line" d="M472 286 h110 M472 304 h110 M472 322 h66"></path>
+            <path class="fig-eu" d="M554 322 l8 8 16 -18"></path>
+            <circle class="fig-dot-gold" cx="586" cy="264" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="blog-rail" aria-label="Lesefortschritt">
+    <ol>
+      <li><a href="#lage" data-i18n="toc.i1">Punto de partida</a></li>
+      <li><a href="#wissen" data-i18n="toc.i2">El saber de la plantilla</a></li>
+      <li><a href="#audits" data-i18n="toc.i3">Auditorías y cuestionarios</a></li>
+      <li><a href="#anweisungen" data-i18n="toc.i4">Instrucciones en cada idioma</a></li>
+      <li><a href="#konnektoren" data-i18n="toc.i5">Conectores con el ERP</a></li>
+      <li><a href="#datenschutz" data-i18n="toc.i6">Protección de datos y secretos</a></li>
+      <li><a href="#fragen" data-i18n="toc.i7">Preguntas frecuentes</a></li>
+    </ol>
+  </nav>
+
+  <div class="euc-wrap">
+
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.titel">En resumen</p>
+      <ul>
+        <li data-i18n="kurz.p1">En la industria manufacturera alemana trabajaban a mediados de 2026 todavía 5,29 millones de personas, 144.100 menos que un año antes.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> En Noruega, el 62 % de las empresas de la federación Norsk Industri declara necesidades de competencias sin cubrir.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup></li>
+        <li data-i18n="kurz.p2">EU Cowork AI trabaja con el saber de su planta. Los informes de servicio, las actas de avería y de ensayo, los planes de preparación de máquina y las respuestas de auditoría anteriores se convierten en una base de conocimiento: una colección de sus propios documentos a la que usted pregunta en frases normales. Cada respuesta indica el documento del que procede.</li>
+        <li data-i18n="kurz.p3">En las auditorías de clientes y en los cuestionarios de proveedores surgen una lista de lagunas y borradores de respuesta a partir de su propia documentación. La aprobación se hace en la empresa; el cumplimiento normativo no lo realiza ningún software.</li>
+        <li data-i18n="kurz.p4">Un ERP como Monitor ERP, RamBase o weclapp puede conectarse si dispone de una interfaz documentada. Una interfaz es el punto por el que dos programas intercambian datos; el Model Context Protocol (MCP) es el estándar abierto con el que un programa de IA la utiliza. Rigen permisos por herramienta y un registro de cada acceso. El nivel de las máquinas y del MES, es decir, los controles y la conducción de la producción, queda fuera.</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.titel">En esta página</p>
+      <ol>
+        <li><a href="#lage" data-i18n="toc.i1">Punto de partida</a></li>
+        <li><a href="#wissen" data-i18n="toc.i2">El saber de la plantilla</a></li>
+        <li><a href="#audits" data-i18n="toc.i3">Auditorías y cuestionarios</a></li>
+        <li><a href="#anweisungen" data-i18n="toc.i4">Instrucciones en cada idioma</a></li>
+        <li><a href="#konnektoren" data-i18n="toc.i5">Conectores con el ERP</a></li>
+        <li><a href="#datenschutz" data-i18n="toc.i6">Protección de datos y secretos</a></li>
+        <li><a href="#fragen" data-i18n="toc.i7">Preguntas frecuentes</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== AUSGANGSLAGE ==================== -->
+    <section class="euc-section">
+      <h2 id="lage" data-i18n="lage.h2">Punto de partida: el saber se va, las obligaciones de prueba llegan</h2>
+      <p data-i18n="lage.p1">Al cierre del primer semestre de 2026, la industria manufacturera alemana ocupaba a 5,29 millones de personas, 144.100 o un 2,7 % menos que un año antes.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> La documentación no se ha reducido por ello, solo se reparte entre menos hombros.</p>
+      <p data-i18n="lage.p2">Así ocurre en toda Europa. En Suecia, el 87 % de las empresas tecnológicas e industriales consultadas informa de dificultades para reclutar competencias en electricidad, energía y automatización.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> En Noruega, el 62 % de las empresas de Norsk Industri declara necesidades de competencias sin cubrir y menciona como consecuencia la pérdida de cuota de mercado.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> En España, la estadística oficial contó en el cuarto trimestre de 2025 13.868 vacantes solo en la industria.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup></p>
+      <p data-i18n="lage.p3">Del otro lado llegan las exigencias. La ley alemana sobre los deberes de diligencia en las cadenas de suministro se aplica a las empresas con, por regla general, al menos 1.000 trabajadores en el país. Hasta principios de 2024 el umbral estaba en 3.000.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> El proveedor de 60 personas no está sujeto, pero recibe igualmente sobre su mesa los cuestionarios de sus grandes clientes. En ciberseguridad, el mismo patrón: en Italia las medidas básicas de NIS2 deben estar implantadas antes de octubre de 2026, y quien suministra a clientes afectados recibe las exigencias por vía contractual.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup></p>
+      <p data-i18n="lage.p4">En la propia IA, la mayor distancia no está entre países, sino entre grandes y pequeños. En Suecia, el 30,7 % de las empresas de 10 a 49 empleados utiliza al menos una tecnología de IA; a partir de 250 empleados, el 71,9 %.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> En Francia, solo el 15 % de las pequeñas y medianas empresas de la industria alimentaria, el principal sector industrial del país, utiliza soluciones de IA.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup></p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 56 640 200" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="48" y="86" width="150" height="130" rx="8"></rect>
+            <circle class="fig-fill-ice fig-eu-mid" cx="86" cy="122" r="10"></circle>
+            <path class="fig-eu-mid" d="M70 178 v-10 a16 16 0 0 1 32 0 v10"></path>
+            <circle class="fig-fill-ice fig-eu-mid" cx="126" cy="122" r="10"></circle>
+            <path class="fig-eu-mid" d="M110 178 v-10 a16 16 0 0 1 32 0 v10"></path>
+            <circle class="fig-line" cx="166" cy="122" r="10"></circle>
+            <path class="fig-line" d="M150 178 v-10 a16 16 0 0 1 32 0 v10"></path>
+            <circle class="fig-numbg" cx="198" cy="86" r="11"></circle>
+            <text class="fig-num" x="198" y="90.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M166 196 C168 218 150 232 40 232 M52 226 l-12 6 12 6 M198 176 H236"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="236" y="150" width="168" height="66" rx="8"></rect>
+            <path class="fig-eu" d="M236 150 l24 -26 v26 M260 150 l24 -26 v26 M284 150 l24 -26 v26"></path>
+            <rect class="fig-fill-ice fig-eu-mid" x="360" y="108" width="16" height="42" rx="3"></rect>
+            <path class="fig-line" d="M252 176 h20 M284 176 h20 M316 176 h20 M252 198 h84"></path>
+            <circle class="fig-numbg" cx="404" cy="150" r="11"></circle>
+            <text class="fig-num" x="404" y="154.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M454 181 H404"></path>
+          <path class="fig-flow fig-eu" d="M454 181 H404"></path>
+          <g class="fig-reveal">
+            <rect class="fig-fill-tint fig-line" x="470" y="80" width="130" height="34" rx="6"></rect>
+            <rect class="fig-fill-tint fig-line" x="462" y="122" width="130" height="34" rx="6"></rect>
+            <rect class="fig-fill-ice fig-line" x="454" y="164" width="130" height="34" rx="6"></rect>
+            <path class="fig-line" d="M486 97 h60 M478 139 h60"></path>
+            <path class="fig-eu-mid" d="M470 181 h50"></path>
+            <circle class="fig-dot-gold" cx="592" cy="97" r="4"></circle>
+            <circle class="fig-numbg" cx="600" cy="80" r="11"></circle>
+            <text class="fig-num" x="600" y="84.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="lage.leg1">La experiencia abandona la empresa, turno tras turno</li>
+          <li data-i18n="lage.leg2">La misma planta, la misma documentación, menos personas</li>
+          <li data-i18n="lage.leg3">Cuestionarios, catálogos de auditoría y justificantes del cliente</li>
+        </ol>
+        <figcaption data-i18n="lage.fig">Dos movimientos se encuentran en la misma oficina: el saber se va, las exigencias llegan. Ambos acaban en las mismas personas.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ==================== USECASE 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="wissen" data-i18n="uc1.h2">Caso de uso 1: el saber de la generación que se marcha se vuelve consultable</h2>
+      <p data-i18n="uc1.p1">El técnico de mantenimiento que desde hace veinte años sabe cómo se comporta esta prensa tras un cambio de utillaje se jubila en dos años. Buena parte de su saber ya está en la empresa, solo que disperso: en informes de servicio, actas de avería y de ensayo, planes de preparación de máquina y los parámetros anotados a mano en la carpeta junto a la instalación. Una base de conocimiento formada justamente con esos documentos responde a la pregunta del turno de noche. Indica la referencia, es decir, el documento y la página de los que procede la respuesta: qué ajuste funcionó la última vez en ese lote, cómo se resolvió ese fallo.</p>
+      <p data-i18n="uc1.p2">La diferencia con un chat en el navegador está en el anclaje. La respuesta procede de sus documentos y muestra de qué informe procede. No procede de la memoria del modelo, es decir, de lo que el programa ha aprendido en general. Lo que no está escrito no lo encuentra, y una documentación desactualizada produce respuestas desactualizadas.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 20 640 250" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-line" x="48" y="40" width="180" height="52" rx="10"></rect>
+            <path class="fig-eu-mid" d="M66 60 h112 M66 76 h74"></path>
+            <path class="fig-line" d="M84 92 l-10 16 26 -12"></path>
+            <circle class="fig-numbg" cx="228" cy="40" r="11"></circle>
+            <text class="fig-num" x="228" y="44.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M138 108 V140"></path>
+          <g class="fig-reveal">
+            <path class="fig-soft" d="M48 232 H262"></path>
+            <rect class="fig-fill-tint fig-line" x="60" y="156" width="26" height="76" rx="3"></rect>
+            <rect class="fig-fill-ice fig-line" x="92" y="146" width="26" height="86" rx="3"></rect>
+            <rect class="fig-fill-tint fig-line" x="124" y="160" width="26" height="72" rx="3"></rect>
+            <rect class="fig-fill-ice fig-line" x="156" y="150" width="26" height="82" rx="3"></rect>
+            <rect class="fig-fill-tint fig-line" x="188" y="164" width="26" height="68" rx="3"></rect>
+            <path class="fig-eu-mid" d="M66 176 h14 M98 168 h14 M130 180 h14 M162 172 h14 M194 184 h14"></path>
+            <rect class="fig-eu-mid" x="224" y="196" width="30" height="18" rx="4"></rect>
+            <path class="fig-eu-mid" d="M234 196 v-5 a5 5 0 0 1 10 0 v5 M239 203 v5"></path>
+            <circle class="fig-numbg" cx="244" cy="146" r="11"></circle>
+            <text class="fig-num" x="244" y="150.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M276 190 H430"></path>
+          <path class="fig-flow fig-eu" d="M276 190 H430"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="430" y="132" width="160" height="116" rx="8"></rect>
+            <path class="fig-line" d="M448 156 h124 M448 172 h124 M448 204 h124 M448 220 h92"></path>
+            <path class="fig-eu" d="M448 188 h124"></path>
+            <circle class="fig-dot-gold" cx="572" cy="156" r="4"></circle>
+            <circle class="fig-numbg" cx="590" cy="132" r="11"></circle>
+            <text class="fig-num" x="590" y="136.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc1.leg1">Pregunta desde el turno, en lenguaje corriente</li>
+          <li data-i18n="uc1.leg2">Informes de servicio, actas de ensayo y planes de preparación de la planta</li>
+          <li data-i18n="uc1.leg3">Respuesta con su fuente, comprobable en segundos</li>
+        </ol>
+        <figcaption data-i18n="uc1.fig">La base de conocimiento responde a partir de la documentación de la planta y muestra de qué informe procede la respuesta.</figcaption>
+      </figure>
+
+      <p data-i18n="uc1.p3">Lo que el colega de IA no hace: no ajusta ninguna máquina. Muestra qué estaba ajustado la última vez y quién lo documentó. La decisión se toma en la instalación.</p>
+    </section>
+
+    <!-- ==================== USECASE 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="audits" data-i18n="uc2.h2">Caso de uso 2: preparar las auditorías de clientes y los cuestionarios de proveedores</h2>
+      <p data-i18n="uc2.p1">Un gran cliente envía un cuestionario de proveedores con 120 puntos: deberes de diligencia en la cadena de suministro, pruebas de origen, seguridad de la información. En paralelo avanza la preparación de la próxima auditoría según IFS o BRCGS. Casi toda respuesta está ya en algún sitio de la empresa, en la autodeclaración del año anterior, en un certificado, en una instrucción de procedimiento. Solo que nadie la encuentra en la semana previa a la cita.</p>
+      <p data-i18n="uc2.p2">El colega de IA asigna las preguntas a la documentación existente, genera una lista de lagunas para todo aquello de lo que no hay nada y deja para el resto borradores de respuesta con referencia al documento. El trabajo pasa de buscar a comprobar. La lista de lagunas suele ser la mayor ganancia: muestra antes de la auditoría lo que falta.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 10 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="44" y="32" width="150" height="140" rx="8"></rect>
+            <path class="fig-eu" d="M62 56 h60"></path>
+            <rect class="fig-fill-ice fig-line" x="62" y="76" width="10" height="10" rx="2"></rect>
+            <rect class="fig-fill-ice fig-line" x="62" y="98" width="10" height="10" rx="2"></rect>
+            <rect class="fig-fill-ice fig-line" x="62" y="120" width="10" height="10" rx="2"></rect>
+            <rect class="fig-fill-ice fig-line" x="62" y="142" width="10" height="10" rx="2"></rect>
+            <path class="fig-line" d="M82 81 h94 M82 103 h94 M82 125 h94 M82 147 h64"></path>
+            <circle class="fig-numbg" cx="194" cy="32" r="11"></circle>
+            <text class="fig-num" x="194" y="36.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-fill-tint fig-line" x="44" y="214" width="150" height="24" rx="6"></rect>
+            <rect class="fig-fill-tint fig-line" x="56" y="244" width="150" height="24" rx="6"></rect>
+            <rect class="fig-fill-ice fig-line" x="68" y="274" width="150" height="24" rx="6"></rect>
+            <path class="fig-eu-mid" d="M86 286 h50"></path>
+            <path class="fig-line" d="M62 226 h60 M74 256 h60"></path>
+            <circle class="fig-numbg" cx="218" cy="274" r="11"></circle>
+            <text class="fig-num" x="218" y="278.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M194 102 C246 102 264 134 300 166 M218 250 C256 244 272 202 300 174 M300 166 C348 166 356 92 404 92 M300 174 C348 174 356 250 404 250"></path>
+          <path class="fig-flow fig-eu" d="M194 102 C246 102 264 134 300 166"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="52" width="192" height="80" rx="8"></rect>
+            <path class="fig-eu" d="M422 76 h64"></path>
+            <rect class="fig-fill-ice fig-eu-mid" x="422" y="90" width="10" height="10" rx="2"></rect>
+            <rect class="fig-fill-ice fig-eu-mid" x="422" y="108" width="10" height="10" rx="2"></rect>
+            <path class="fig-line" d="M442 95 h136 M442 113 h104"></path>
+            <circle class="fig-numbg" cx="596" cy="52" r="11"></circle>
+            <text class="fig-num" x="596" y="56.5" text-anchor="middle">3</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="210" width="192" height="80" rx="8"></rect>
+            <path class="fig-eu-mid" d="M422 234 l8 8 14 -16 M422 262 l8 8 14 -16"></path>
+            <path class="fig-line" d="M452 238 h126 M452 266 h96"></path>
+            <circle class="fig-dot-gold" cx="578" cy="266" r="4"></circle>
+            <circle class="fig-numbg" cx="596" cy="210" r="11"></circle>
+            <text class="fig-num" x="596" y="214.5" text-anchor="middle">4</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc2.leg1">Cuestionario y catálogo de auditoría del cliente</li>
+          <li data-i18n="uc2.leg2">Certificados, instrucciones de procedimiento y respuestas anteriores</li>
+          <li data-i18n="uc2.leg3">Lista de lagunas: aquello de lo que no hay nada en la empresa</li>
+          <li data-i18n="uc2.leg4">Borradores de respuesta con referencia al documento, para su aprobación técnica</li>
+        </ol>
+        <figcaption data-i18n="uc2.fig">Las respuestas suelen estar ya en la empresa. El borrador las hace localizables; de cada dato responde la empresa.</figcaption>
+      </figure>
+
+      <p data-i18n="uc2.p3">Aquí está el límite más nítido. Cada respuesta en un cuestionario de proveedores es un compromiso frente a su cliente, cada documento de auditoría una prueba frente a un organismo de certificación. Ambos salen tras la aprobación técnica, nunca de forma automática.</p>
+    </section>
+
+    <!-- ==================== USECASE 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="anweisungen" data-i18n="uc3.h2">Caso de uso 3: instrucciones, etiquetas y manuales en el idioma del turno</h2>
+      <p data-i18n="uc3.p1">En la producción de alimentos y en el montaje, los equipos de turno trabajan con idiomas mezclados. La norma de higiene, la instrucción de preparación de máquina y la versión breve del manual de instrucciones se elaboran a partir del documento aprobado en el idioma de los empleados. El elemento portante es un glosario de empresa: los nombres de las instalaciones, las denominaciones de los componentes y los términos técnicos se fijan una sola vez, para que el mismo conjunto no se llame de otra manera en cada versión.</p>
+      <p data-i18n="uc3.p2">El mismo glosario sostiene los textos de declaración y etiquetado y el manual de instrucciones para la exportación. Sostiene también en sentido inverso: la especificación de proveedor española y el certificado de ensayo italiano se vuelven legibles, sin un portal de traducción ajeno.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 20 640 260" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="44" y="40" width="140" height="104" rx="8"></rect>
+            <path class="fig-eu" d="M62 64 h56"></path>
+            <path class="fig-line" d="M62 84 h104 M62 100 h104 M62 116 h72"></path>
+            <circle class="fig-numbg" cx="184" cy="40" r="11"></circle>
+            <text class="fig-num" x="184" y="44.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-line" x="44" y="180" width="140" height="80" rx="8"></rect>
+            <path class="fig-eu-mid" d="M62 204 h38 M112 204 h54 M62 224 h38 M112 224 h54 M62 244 h38 M112 244 h34"></path>
+            <path class="fig-line" d="M102 204 h8 M102 224 h8 M102 244 h8"></path>
+            <circle class="fig-numbg" cx="184" cy="180" r="11"></circle>
+            <text class="fig-num" x="184" y="184.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M184 92 C240 92 262 128 300 150 M184 220 C240 220 262 180 300 156 M300 150 C348 150 352 70 400 70 M300 153 H400 M300 156 C348 156 352 236 400 236"></path>
+          <path class="fig-flow fig-eu" d="M184 92 C240 92 262 128 300 150"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="400" y="40" width="196" height="60" rx="8"></rect>
+            <path class="fig-eu" d="M418 62 h48"></path>
+            <path class="fig-line" d="M418 80 h160"></path>
+            <circle class="fig-dot-gold" cx="578" cy="62" r="4"></circle>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="400" y="123" width="196" height="60" rx="8"></rect>
+            <path class="fig-eu" d="M418 145 h48"></path>
+            <path class="fig-line" d="M418 163 h160"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="400" y="206" width="196" height="60" rx="8"></rect>
+            <path class="fig-eu" d="M418 228 h48"></path>
+            <path class="fig-line" d="M418 246 h124"></path>
+            <path class="fig-eu-mid" d="M552 244 l8 8 14 -16"></path>
+            <circle class="fig-numbg" cx="596" cy="206" r="11"></circle>
+            <text class="fig-num" x="596" y="210.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc3.leg1">Documento de partida aprobado de la planta</li>
+          <li data-i18n="uc3.leg2">Glosario de empresa: nombres de instalaciones, componentes, términos técnicos</li>
+          <li data-i18n="uc3.leg3">Versiones lingüísticas como borrador, para su aprobación por la persona especialista</li>
+        </ol>
+        <figcaption data-i18n="uc3.fig">El glosario fija los términos para que del mismo conjunto no salga una palabra distinta en cada idioma.</figcaption>
+      </figure>
+
+      <p data-i18n="uc3.p3">También aquí rige el límite: las traducciones son borradores. En las instrucciones relevantes para la seguridad y en las menciones exigidas legalmente sigue siendo determinante la versión aprobada, y quien aprueba es la persona especialista. Los permisos llegan hasta cada herramienta: quien no puede ver el cálculo de costes tampoco lo ve a través de la IA. Cada acceso queda en el registro de auditoría, un registro que anota quién abrió qué documento y cuándo.</p>
+    </section>
+
+    <!-- ==================== KONNEKTOREN ==================== -->
+    <section class="euc-section">
+      <h2 id="konnektoren" data-i18n="konn.h2">Conectores: qué puede conectarse con su ERP</h2>
+      <p data-i18n="konn.p1">Un colega de IA es tan útil como aquello que puede alcanzar. MCP es un estándar abierto que permite a un programa de IA dirigirse a otro programa. Para ello hace falta una interfaz documentada, es decir, un punto de conexión publicado por el que dos programas intercambian datos. Cada herramienta se habilita por separado y cada llamada queda registrada. Valor predeterminado: herramientas de lectura libres, herramientas de escritura solo con confirmación. La tabla muestra hasta dónde llega hoy la conexión de la IA con el software extendido, verificada en agosto de 2026. En la columna central figuran los nombres técnicos de esas interfaces; la que cuenta para usted es la columna derecha.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="konn.th1">Software (país)</th>
+              <th data-i18n="konn.th2">Interfaz</th>
+              <th data-i18n="konn.th3">Conexión con EU Cowork AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="konn.r1c1">Monitor ERP (SE)</td>
+              <td data-i18n="konn.r1c2">Documentación de API de consulta libre, REST para las consultas</td>
+              <td data-i18n="konn.r1c3">Conexión mediante MCP posible; según la documentación del fabricante, las consultas son gratuitas y los accesos de escritura requieren un producto adicional</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r2c1">RamBase (NO)</td>
+              <td data-i18n="konn.r2c2">API REST abierta y documentada, con webhooks y SDK</td>
+              <td data-i18n="konn.r2c3">Conexión mediante MCP posible: aprovisionamiento, producción, calidad</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r3c1">Microsoft Dynamics 365 Business Central (EU)</td>
+              <td data-i18n="konn.r3c2">Interfaces documentadas abiertamente</td>
+              <td data-i18n="konn.r3c3">Servidor MCP disponible de Microsoft, además de Outlook y SharePoint mediante la API Graph</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r4c1">weclapp (DE)</td>
+              <td data-i18n="konn.r4c2">Documentación de API accesible públicamente</td>
+              <td data-i18n="konn.r4c3">Conexión mediante MCP posible: artículos, listas de materiales, pedidos</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r5c1">Xentral (DE)</td>
+              <td data-i18n="konn.r5c2">API REST abierta y documentada, referencia OpenAPI versionada</td>
+              <td data-i18n="konn.r5c3">Conexión mediante MCP posible</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r6c1">SAP Business One (EU)</td>
+              <td data-i18n="konn.r6c2">Portales públicos de documentación y de API, Service Layer</td>
+              <td data-i18n="konn.r6c3">Conexión mediante MCP posible; conviene comprobar antes el alcance</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r7c1">proALPHA (DE)</td>
+              <td data-i18n="konn.r7c2">No se encontró documentación para desarrolladores de consulta pública</td>
+              <td data-i18n="konn.r7c3">El camino pasa por el fabricante o por exportaciones</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r8c1">Odoo (EU)</td>
+              <td data-i18n="konn.r8c2">Interfaz abierta documentada, XML-RPC y JSON-RPC</td>
+              <td data-i18n="konn.r8c3">Conexiones MCP ya listas de la comunidad; el acceso externo depende del plan</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r9c1">Cegid Quadra On Demand (FR)</td>
+              <td data-i18n="konn.r9c2">Documentación de consulta pública, OAuth2, se necesita identificador de partner</td>
+              <td data-i18n="konn.r9c3">Conexión mediante MCP posible; el acceso pasa por la vía de partners de Cegid</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r10c1">Zucchetti (IT)</td>
+              <td data-i18n="konn.r10c2">API de partners, consola tras autenticación</td>
+              <td data-i18n="konn.r10c3">Conexión mediante MCP posible; el acceso pasa por la vía de partners</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r11c1">Holded (ES)</td>
+              <td data-i18n="konn.r11c2">API REST abierta y documentada</td>
+              <td data-i18n="konn.r11c3">Conexión mediante MCP posible: contactos, pedidos, facturas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-i18n="konn.p2">Lo que aquí no encontrará de forma deliberada: el nivel de las máquinas y del MES, es decir, la conducción de la producción. Los controles, la captación de datos de producción y la programación fina no se han verificado. Una promesa de integración que se rompe en la primera conversación cuesta más de lo que aporta. El beneficio surge en la oficina y en la preparación del trabajo. Si falta su software, la base de conocimiento y la preparación de auditorías funcionan igualmente: solo necesitan documentos. Más información en <a class="euc-textlink" href="/es/integrationen">Integraciones</a>.</p>
+      <p data-i18n="konn.p3">La separación tiene también un motivo jurídico. Si una IA se integra como componente de seguridad en un producto regulado, puede considerarse un sistema de alto riesgo del reglamento de IA. Según el Reglamento (UE) 2026/1744, sus obligaciones se aplican a partir del 2 de diciembre de 2027 y, para los sistemas integrados, a partir del 2 de agosto de 2028.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup> Un asistente de oficina, por regla general, no entra ahí.</p>
+    </section>
+
+    <!-- ==================== DATENSCHUTZ ==================== -->
+    <section class="euc-section">
+      <h2 id="datenschutz" data-i18n="ds.h2">Protección de datos y del secreto: las especificaciones se quedan en la planta</h2>
+      <p data-i18n="ds.p1">Las especificaciones de clientes, las recetas, los cálculos de costes y los datos de ensayo son secretos empresariales, a menudo vinculados además por un acuerdo de confidencialidad de su cliente. Para los datos personales rige el Reglamento General de Protección de Datos. La empresa sigue siendo responsable aunque sea una herramienta de IA la que los trate. Si interviene un proveedor, hace falta un acuerdo de encargo de tratamiento, es decir, un contrato que fija qué puede hacer ese proveedor con los datos. Este artículo no sustituye al asesoramiento jurídico.</p>
+      <p data-i18n="ds.p2">Si los datos salen a un país fuera de Europa, se añade el capítulo V del reglamento. Necesitará entonces una base jurídica para la transferencia y, según el instrumento elegido, una evaluación de la situación legal en el país de destino. Si el almacenamiento y el procesamiento de los modelos tienen lugar en el Espacio Económico Europeo, ese paso desaparece. El tratamiento no se vuelve lícito por ello de forma automática, pero sí más fácil de justificar.</p>
+      <p data-i18n="ds.p3">EU Cowork AI funciona en centros de datos certificados según ISO 27001 o en su propio servidor. Las peticiones a los modelos se procesan del lado de la UE y los datos de los clientes no entrenan ningún modelo. La telemetría, es decir, el envío de datos de uso, está desactivada de forma predeterminada. Quien no pueda entregar nada al exterior opera su propia instancia en su propio centro de datos. Una instancia es la instalación que funciona solo para su empresa. El software está bajo licencia MIT. El <a class="euc-textlink" href="/es/avv">acuerdo de encargo de tratamiento</a> y la <a class="euc-textlink" href="/es/subprozessoren">lista de subencargados</a> están publicados abiertamente en el sitio web.</p>
+      <p data-i18n="ds.p4">A ello se añade un punto que la estadística europea muestra bien: en Noruega, el 71 % de las empresas que usan IA emplea software comprado ya hecho, y en Suecia el 62 %.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> Esas herramientas están disponibles enseguida, pero no conocen la empresa: ni informes de servicio, ni actas de ensayo, ni respuestas de auditoría.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Preguntas frecuentes de la fabricación y la producción de alimentos</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">¿Puede la IA controlar nuestras máquinas o ajustar parámetros, o trabaja solo con el ERP y los documentos?</h3>
+          <p data-i18n="faq.a1">Controlar no controla nada. EU Cowork AI es apoyo de oficina: buscar en documentos, redactar borradores y consultar sistemas con interfaz documentada, por ejemplo Monitor ERP, weclapp, SAP Business One u Odoo. El nivel de las máquinas y del MES, es decir, los controles y la conducción de la producción, queda deliberadamente fuera. Una IA en una función de seguridad es otra clase de producto.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">¿Cumplimos así nuestras obligaciones de auditoría, por ejemplo según IFS, BRCGS o HACCP?</h3>
+          <p data-i18n="faq.a2">No. El colega de IA prepara: encuentra las pruebas existentes, muestra lagunas y redacta borradores de respuesta. La verificación, la aprobación y la responsabilidad del plan HACCP siguen en la empresa. El cumplimiento normativo lo realizan personas, no un software.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">¿Cómo llega a la base de conocimiento el saber de las personas con experiencia?</h3>
+          <p data-i18n="faq.a3">A través de lo que ya está escrito: informes de servicio, actas de avería y de ensayo, planes de preparación de máquina, instrucciones de procedimiento e informes de auditoría. Lo que solo está en la cabeza hay que escribirlo o dictarlo antes. Un sustituto de la formación en el puesto no lo es.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">¿Tenemos que hacer algo por el reglamento de IA?</h3>
+          <p data-i18n="faq.a4">Para un asistente interno, el reglamento por regla general no prevé obligaciones de autorización ni de conformidad. Dos cosas afectan a todo responsable del despliegue: procurar un nivel suficiente de alfabetización en IA y comunicar cuándo las personas hablan con un sistema de IA. Hay que ser prudente en cuanto una herramienta decide sobre personas, por ejemplo al preseleccionar candidaturas. Esta respuesta no sustituye al asesoramiento jurídico.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">¿Cuánto cuesta para una planta de ochenta personas?</h3>
+          <p data-i18n="faq.a5">La operación gestionada cuesta 15 € por persona y mes. De ese importe, 8 € son saldo de modelos: un fondo común de su organización con el que se pagan las consultas al modelo de lenguaje. Quien se aloja por su cuenta no paga nada por el software: está bajo licencia MIT, una licencia libre sin coste de licencia. Toda la información está en la página <a class="euc-textlink" href="/es/preise">Precios</a>.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">¿Dónde están nuestros datos?</h3>
+          <p data-i18n="faq.a6">En la variante gestionada, en centros de datos certificados según ISO 27001; en el resto de casos, en su propio servidor. Los datos de los clientes no entrenan ningún modelo y las peticiones a los modelos se procesan del lado de la UE. Los justificantes están en el <a class="euc-textlink" href="/es/sicherheit">Trust Center</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Véalo con un caso propio</h2>
+      <p data-i18n="cta.p">Traiga un cuestionario de proveedores, un acta de ensayo o una instrucción de trabajo y recorreremos el proceso juntos.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Reservar una cita</a>
+        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Únase a la lista de espera</a>
+      </div>
+    </section>
+
+    <!-- ==================== QUELLEN ==================== -->
+    <section class="euc-section">
+      <h2 id="quellen" data-i18n="src.h2">Fuentes</h2>
+      <p data-i18n="src.p">Todas las cifras proceden de estas fuentes, revisadas por última vez en agosto de 2026, con el país de la encuesta correspondiente.</p>
+      <ol class="euc-small">
+        <li data-i18n="src.fn1" id="fn-1">Oficina Federal de Estadística de Alemania, nota de prensa N057 de 14 de agosto de 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a></li>
+        <li data-i18n="src.fn2" id="fn-2">Industrirådet, informe sobre las necesidades de competencias de la industria (SE, encuesta de mayo a octubre de 2025, 1.500 empresas), en Industriarbetsgivarna: <a class="euc-textlink" href="https://industriarbetsgivarna.se/nyheter/kompetensfragor/ny-rapport-sa-har-ser-kompetensbehovet-ut-i-industrin/" target="_blank" rel="noopener">industriarbetsgivarna.se</a></li>
+        <li data-i18n="src.fn3" id="fn-3">Eurostat, conjunto de datos isoc_eb_ai, año de encuesta 2025: uso de la IA por clase de tamaño y vía de obtención (SE, NO): <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu/eurostat</a></li>
+        <li data-i18n="src.fn4" id="fn-4">Norsk Industri sobre el barómetro de competencias NHO 2025, 24 de febrero de 2026 (NO): <a class="euc-textlink" href="https://www.norskindustri.no/dette-jobber-vi-med/kompetanse/aktuelt/kompetansebarometeret-2025-industrien-mangler-fagfolk-og-teknisk-kompetanse/" target="_blank" rel="noopener">norskindustri.no</a></li>
+        <li data-i18n="src.fn5" id="fn-5">ANIA, Nos chiffres cles, sobre la industria alimentaria (FR): <a class="euc-textlink" href="https://www.ania.net/presentation-ania/nos-chiffres-cles" target="_blank" rel="noopener">ania.net</a>; uso de la IA por sector en el Baromètre France Num 2025: <a class="euc-textlink" href="https://www.francenum.gouv.fr/" target="_blank" rel="noopener">francenum.gouv.fr</a></li>
+        <li data-i18n="src.fn6" id="fn-6">INE, Encuesta Trimestral de Coste Laboral, cuarto trimestre de 2025 (ES): <a class="euc-textlink" href="https://www.ine.es/dyngs/Prensa/ETCL4T25.htm" target="_blank" rel="noopener">ine.es</a></li>
+        <li data-i18n="src.fn7" id="fn-7">Ley alemana sobre los deberes de diligencia en las cadenas de suministro, artículo 1, ámbito de aplicación (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/lksg/__1.html" target="_blank" rel="noopener">gesetze-im-internet.de</a></li>
+        <li data-i18n="src.fn8" id="fn-8">Agenzia per la cybersicurezza nazionale, plazos de la transposición italiana de NIS2 (IT): <a class="euc-textlink" href="https://www.acn.gov.it/portale/nis" target="_blank" rel="noopener">acn.gov.it</a></li>
+        <li data-i18n="src.fn9" id="fn-9">Comisión Europea, marco regulador de la inteligencia artificial, con los plazos modificados por el Reglamento (UE) 2026/1744: <a class="euc-textlink" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">digital-strategy.ec.europa.eu</a></li>
+      </ol>
+    </section>
+
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.titel">Continuar</p>
+      <ul>
+        <li><a href="/es/blog/ki-produktion" data-i18n="weiter.l1">La IA en la producción: los mismos procesos en el entorno suizo</a></li>
+        <li><a href="/es/integrationen" data-i18n="weiter.l2">Integraciones: qué sistemas están preparados</a></li>
+        <li><a href="/es/sicherheit" data-i18n="weiter.l3">Trust Center: tratamiento, operación y medidas técnicas</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="geprueft">Última revisión: <time datetime="2026-08">agosto de 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Su colega de IA. Se queda en Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Desplegable en cualquier lugar</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Gestionado, nube propia u on-premise</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">Conforme al RGPD</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">Tratamiento en la UE</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/es/sicherheit"><span data-i18n="chrome.footer.more">Más sobre la seguridad</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Instancia suiza</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc" data-euc-clock>Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Producto</p>
+          <nav aria-label="Produkt">
+            <a href="/es/#funktionen" data-i18n="chrome.footer.link.features">Funciones</a>
+            <a href="/es/preise" data-i18n="chrome.footer.link.pricing">Precios</a>
+            <a href="/es/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Soberanía</a>
+            <a href="/es/integrationen" data-i18n="chrome.footer.link.integrations">Integraciones</a>
+            <a href="/es/vergleich" data-i18n="chrome.footer.link.comparison">Comparativa</a>
+            <a href="/es/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/es/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs/es" data-i18n="chrome.footer.link.docs">Documentación</a>
+            <a href="/es/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/es/vision" data-i18n="chrome.footer.link.vision">Nuestra visión</a>
+            <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="chrome.footer.link.booking">Reservar una cita</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/es/sicherheit" data-i18n="chrome.footer.link.security">Security & Trust</a>
+            <a href="/es/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/es/avv" data-i18n="chrome.footer.link.avv">Acuerdo de encargo (DPA)</a>
+            <a href="/es/sicherheit#toms" data-i18n="chrome.footer.link.toms">Resumen de MTO</a>
+            <a href="/es/subprozessoren" data-i18n="chrome.footer.link.subs">Subencargados</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Legal</p>
+          <nav aria-label="Rechtliches">
+            <a href="/es/impressum" data-i18n="chrome.footer.link.imprint">Aviso legal</a>
+            <a href="/es/datenschutz" data-i18n="chrome.footer.link.privacy">Privacidad</a>
+            <a href="/es/agb" data-i18n="chrome.footer.link.terms">Condiciones generales</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.lang">Idioma</p>
+          <nav aria-label="Sprache">
+            <button type="button" data-euc-lang-to="de">Deutsch</button>
+            <button type="button" data-euc-lang-to="en">English</button>
+            <button type="button" data-euc-lang-to="fr">Français</button>
+            <button type="button" data-euc-lang-to="it">Italiano</button>
+            <button type="button" data-euc-lang-to="es">Español</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI by Herr-Informatik GmbH</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebPage",
+        "FAQPage"
+      ],
+      "@id": "https://eucowork.ai/es/blog/ki-produktion-europa#webpage",
+      "url": "https://eucowork.ai/es/blog/ki-produktion-europa",
+      "name": "La IA en la producción: mantener el saber cuando la gente se va",
+      "inLanguage": "es",
+      "isPartOf": {
+        "@id": "https://eucowork.ai/#website"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "description": "Hacer consultable el saber de la planta, preparar auditorías de clientes, instrucciones multilingües. IA conectada con Monitor ERP, weclapp, Xentral y Odoo.",
+      "primaryImageOfPage": {
+        "@id": "https://eucowork.ai/es/blog/ki-produktion-europa#primaryimage"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://eucowork.ai/es"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://eucowork.ai/es/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "La IA en la producción en Europa",
+            "item": "https://eucowork.ai/es/blog/ki-produktion-europa"
+          }
+        ]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Puede la IA controlar nuestras máquinas o ajustar parámetros, o trabaja solo con el ERP y los documentos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Controlar no controla nada. EU Cowork AI es apoyo de oficina: buscar en documentos, redactar borradores y consultar sistemas con interfaz documentada, por ejemplo Monitor ERP, weclapp, SAP Business One u Odoo. El nivel de las máquinas y del MES, es decir, los controles y la conducción de la producción, queda deliberadamente fuera. Una IA en una función de seguridad es otra clase de producto."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cumplimos así nuestras obligaciones de auditoría, por ejemplo según IFS, BRCGS o HACCP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. El colega de IA prepara: encuentra las pruebas existentes, muestra lagunas y redacta borradores de respuesta. La verificación, la aprobación y la responsabilidad del plan HACCP siguen en la empresa. El cumplimiento normativo lo realizan personas, no un software."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo llega a la base de conocimiento el saber de las personas con experiencia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A través de lo que ya está escrito: informes de servicio, actas de avería y de ensayo, planes de preparación de máquina, instrucciones de procedimiento e informes de auditoría. Lo que solo está en la cabeza hay que escribirlo o dictarlo antes. Un sustituto de la formación en el puesto no lo es."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Tenemos que hacer algo por el reglamento de IA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Para un asistente interno, el reglamento por regla general no prevé obligaciones de autorización ni de conformidad. Dos cosas afectan a todo responsable del despliegue: procurar un nivel suficiente de alfabetización en IA y comunicar cuándo las personas hablan con un sistema de IA. Hay que ser prudente en cuanto una herramienta decide sobre personas, por ejemplo al preseleccionar candidaturas. Esta respuesta no sustituye al asesoramiento jurídico."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta para una planta de ochenta personas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La operación gestionada cuesta 15 € por persona y mes. De ese importe, 8 € son saldo de modelos: un fondo común de su organización con el que se pagan las consultas al modelo de lenguaje. Quien se aloja por su cuenta no paga nada por el software: está bajo licencia MIT, una licencia libre sin coste de licencia. Toda la información está en la página Precios."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Dónde están nuestros datos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En la variante gestionada, en centros de datos certificados según ISO 27001; en el resto de casos, en su propio servidor. Los datos de los clientes no entrenan ningún modelo y las peticiones a los modelos se procesan del lado de la UE. Los justificantes están en el Trust Center."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://eucowork.ai/es/blog/ki-produktion-europa#article",
+      "mainEntityOfPage": {
+        "@id": "https://eucowork.ai/es/blog/ki-produktion-europa#webpage"
+      },
+      "headline": "La IA en la producción: mantener el saber cuando la gente se va",
+      "description": "Hacer consultable el saber de la planta, preparar auditorías de clientes, instrucciones multilingües. IA conectada con Monitor ERP, weclapp, Xentral y Odoo.",
+      "articleSection": "Producción",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-18",
+      "inLanguage": "es",
+      "author": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "publisher": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "image": {
+        "@id": "https://eucowork.ai/es/blog/ki-produktion-europa#primaryimage"
+      },
+      "isPartOf": {
+        "@id": "https://eucowork.ai/es/blog#blog"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "mentions": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Monitor ERP"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "RamBase"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Microsoft Dynamics 365 Business Central"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "weclapp"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Xentral"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "SAP Business One"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "proALPHA"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Odoo"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Cegid Quadra On Demand"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Zucchetti"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Holded"
+        }
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://eucowork.ai/es/blog/ki-produktion-europa#primaryimage",
+      "url": "https://eucowork.ai/og/eucowork-share-es.png",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var rail = document.querySelector('.blog-rail');
+  if (!rail) return;
+  var links = [].slice.call(rail.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+  var targets = links.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  }).filter(Boolean);
+  var hero = document.querySelector('.blog-hero');
+  var footer = document.querySelector('.euc-footer');
+  function setActive(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+    });
+  }
+  function onScroll() {
+    var top = window.scrollY || document.documentElement.scrollTop;
+    var show = hero ? top > hero.offsetTop + hero.offsetHeight - 80 : true;
+    /* Vor der Fussleiste ausblenden: die Leiste ist vertikal zentriert,
+       ihre Unterkante darf den Footer nicht erreichen. */
+    if (show && footer) {
+      var reach = window.innerHeight / 2 + rail.offsetHeight / 2 + 32;
+      show = footer.getBoundingClientRect().top > reach;
+    }
+    rail.classList.toggle('is-visible', show);
+    var line = top + window.innerHeight * 0.35;
+    var current = targets[0];
+    targets.forEach(function (t) {
+      if (t.getBoundingClientRect().top + top <= line) { current = t; }
+    });
+    if (current) setActive(current.id);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    'meta.title': 'AI in manufacturing: connect your ERP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'AI in manufacturing in Europe',
+    'hero.eyebrow': 'AI in everyday work',
+    'hero.h1': 'AI in manufacturing: keeping the knowledge when the people leave',
+    'hero.lead': 'The experienced people are retiring, and the demands of large customers keep arriving: questionnaires, audit catalogues, evidence. This article walks through three workflows to show how an AI colleague works with the knowledge of your plant, and where the line to the machine runs.',
+    'hero.chip': 'Manufacturing',
+    'hero.datum': '18 August 2026',
+    'hero.lesezeit': 'Reading time: 11 minutes',
+    'kurz.titel': 'In brief',
+    'kurz.p1': 'German manufacturing still employed 5.29 million people in mid-2026, 144,100 fewer than a year earlier.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> In Norway, 62% of the industry association’s member companies report unmet skills needs.<sup><a href="#fn-4" aria-label="Footnote 4">4</a></sup>',
+    'kurz.p2': 'EU Cowork AI works with the knowledge of your plant. Service reports, fault and inspection records, setup sheets and past audit answers become a knowledge base: a collection of your own documents that you can question in plain sentences. Every answer names the document it comes from.',
+    'kurz.p3': 'For customer audits and supplier questionnaires you get a gap list and draft answers from your own documentation. Approval happens in the business; no software fulfils compliance.',
+    'kurz.p4': 'An ERP such as Monitor ERP, RamBase or weclapp can be connected if it has a documented interface. An interface is the point where two programs exchange data; the Model Context Protocol (MCP) is the open standard an AI program uses to reach it. Permissions per tool and a log for every access apply. The machine and MES layer, that is controllers and production control, is left out.',
+    'toc.titel': 'On this page',
+    'toc.i1': 'Starting point',
+    'toc.i2': 'The workforce’s knowledge',
+    'toc.i3': 'Audits and questionnaires',
+    'toc.i4': 'Instructions in every language',
+    'toc.i5': 'Connectors to your ERP',
+    'toc.i6': 'Data protection and secrets',
+    'toc.i7': 'Frequently asked questions',
+    'lage.h2': 'Starting point: the knowledge leaves, the evidence obligations arrive',
+    'lage.p1': 'At the end of the first half of 2026, German manufacturing employed 5.29 million people, 144,100 or 2.7% fewer than a year earlier.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup> The documentation has not shrunk with it, it is simply spread across fewer shoulders.',
+    'lage.p2': 'It looks similar across Europe. In Sweden, 87% of the technology and industrial companies surveyed report difficulties recruiting skills in electrical engineering, energy and automation.<sup><a href="#fn-2" aria-label="Footnote 2">2</a></sup> In Norway, 62% of the member companies of Norsk Industri report unmet skills needs and name lost market share as a consequence.<sup><a href="#fn-4" aria-label="Footnote 4">4</a></sup> In Spain, official statistics counted 13,868 vacancies in industry alone in the fourth quarter of 2025.<sup><a href="#fn-6" aria-label="Footnote 6">6</a></sup>',
+    'lage.p3': 'From the other direction come the requirements. The German supply chain due diligence act applies to companies with, as a rule, at least 1,000 employees in Germany. Until the start of 2024 the threshold stood at 3,000.<sup><a href="#fn-7" aria-label="Footnote 7">7</a></sup> The supplier with 60 people is not covered, but the questionnaires of its large customers land on its desk anyway. Cybersecurity follows the same pattern: in Italy the NIS2 baseline measures must be in place by October 2026, and whoever supplies affected customers receives the requirements by contract.<sup><a href="#fn-8" aria-label="Footnote 8">8</a></sup>',
+    'lage.p4': 'With AI itself, the biggest gap runs not between countries but between large and small. In Sweden, 30.7% of companies with 10 to 49 employees use at least one AI technology, against 71.9% from 250 employees upwards.<sup><a href="#fn-3" aria-label="Footnote 3">3</a></sup> In France, only 15% of the small and medium-sized businesses in the food industry, the country’s leading industrial sector, use AI solutions.<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup>',
+    'lage.leg1': 'Experience leaves the business, shift by shift',
+    'lage.leg2': 'Same plant, same documentation, fewer people',
+    'lage.leg3': 'Questionnaires, audit catalogues and evidence from customers',
+    'lage.fig': 'Two movements meet in the same office: the knowledge leaves, the requirements arrive. Both land with the same people.',
+    'uc1.h2': 'Use case 1: the knowledge of the retiring generation becomes queryable',
+    'uc1.p1': 'The maintenance technician who has known for twenty years how this press behaves after a tool change retires in two years. Much of his knowledge is already inside the company, just scattered: in service reports, fault and inspection records, setup sheets and the handwritten settings in the folder next to the machine. A knowledge base built from those documents answers the night shift’s question. It names the source, that is the document and the page the answer comes from: which setting worked for this batch last time, how was this fault fixed.',
+    'uc1.p2': 'The difference to a chat in the browser is the reference. The answer comes from your documents and shows which report it came from. It does not come from the model’s memory, that is from what the program learned in general. What is not written down it will not find, and outdated documents produce outdated answers.',
+    'uc1.leg1': 'A question from the shift, in everyday language',
+    'uc1.leg2': 'The plant’s service reports, inspection records and setup sheets',
+    'uc1.leg3': 'An answer with its source, checkable in seconds',
+    'uc1.fig': 'The knowledge base answers from the plant’s documents and shows which report the answer came from.',
+    'uc1.p3': 'What the AI colleague does not do: it does not set up any machine. It shows what was set last time and who documented it. The decision is made at the machine.',
+    'uc2.h2': 'Use case 2: preparing customer audits and supplier questionnaires',
+    'uc2.p1': 'A large customer sends a supplier questionnaire with 120 items: supply chain due diligence, proof of origin, information security. In parallel, preparation for the next IFS or BRCGS audit is running. Almost every answer is already somewhere inside the company, in last year’s self-declaration, in a certificate, in a procedure. It is just that nobody finds it in the week before the deadline.',
+    'uc2.p2': 'The AI colleague maps the questions to the existing documents, produces a gap list for everything with no evidence on file, and files draft answers with source references for the rest. The work shifts from searching to reviewing. The gap list is often the bigger gain: it shows before the audit what is missing.',
+    'uc2.leg1': 'The customer’s questionnaire and audit catalogue',
+    'uc2.leg2': 'Certificates, procedures and earlier answers',
+    'uc2.leg3': 'Gap list: what the company has nothing on file for',
+    'uc2.leg4': 'Draft answers with source references, for technical approval',
+    'uc2.fig': 'The answers are usually already inside the company. The draft makes them findable; every statement is owned by the business.',
+    'uc2.p3': 'This is the sharpest limit. Every answer in a supplier questionnaire is a commitment to your customer, every audit document is evidence towards a certification body. Both go out after technical approval, never automatically.',
+    'uc3.h2': 'Use case 3: instructions, labels and manuals in the language of the shift',
+    'uc3.p1': 'In food production and in assembly, shift teams work in mixed languages. The hygiene rule, the setup instruction and the short version of the operating manual are generated from the approved document in the language of the employees. The key element is a company glossary: machine names, part designations and technical terms are fixed once, so that the same assembly is not called something different in every version.',
+    'uc3.p2': 'The same glossary carries the declaration and label texts and the operating manual for export. It carries the other way too: the Spanish supplier specification and the Italian test certificate become readable without an outside translation portal.',
+    'uc3.leg1': 'The plant’s approved source document',
+    'uc3.leg2': 'Company glossary: machine names, parts, technical terms',
+    'uc3.leg3': 'Language versions as drafts, for approval by the qualified person',
+    'uc3.fig': 'The glossary fixes the terms so that the same assembly does not end up with a different word in every language.',
+    'uc3.p3': 'The limit applies here too: translations are drafts. For safety-relevant briefings and legally required information, the approved version remains authoritative, and it is the qualified person who approves it. Permissions apply down to individual tools: whoever may not see the costing does not see it through the AI either. Every access is recorded in the audit log, a record of who opened which document and when.',
+    'konn.h2': 'Connectors: what can be linked to your ERP',
+    'konn.p1': 'An AI colleague is only as useful as what it is allowed to reach. MCP is an open standard that lets an AI program address another program. What it needs is a documented interface, that is a published connection point where two programs exchange data. Every single tool is released separately, and every call is logged. Default setting: reading tools free, writing tools only with confirmation. The table shows how far the AI connection to common software reaches today, checked in August 2026. The middle column gives the technical names of those interfaces; the column that matters for you is the right one.',
+    'konn.th1': 'Software (country)',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Connection to EU Cowork AI',
+    'konn.r1c1': 'Monitor ERP (SE)',
+    'konn.r1c2': 'API documentation openly accessible, REST for queries',
+    'konn.r1c3': 'Connection via MCP possible; querying is free according to the vendor documentation, write access requires an additional product',
+    'konn.r2c1': 'RamBase (NO)',
+    'konn.r2c2': 'Open REST API documented, with webhooks and SDK',
+    'konn.r2c3': 'Connection via MCP possible: procurement, production, quality',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central (EU)',
+    'konn.r3c2': 'Openly documented interfaces',
+    'konn.r3c3': 'MCP server available from Microsoft, plus Outlook and SharePoint via the Graph API',
+    'konn.r4c1': 'weclapp (DE)',
+    'konn.r4c2': 'Publicly accessible API documentation',
+    'konn.r4c3': 'Connection via MCP possible: items, bills of materials, orders',
+    'konn.r5c1': 'Xentral (DE)',
+    'konn.r5c2': 'Open REST API documented, versioned OpenAPI reference',
+    'konn.r5c3': 'Connection via MCP possible',
+    'konn.r6c1': 'SAP Business One (EU)',
+    'konn.r6c2': 'Public documentation and API portals, Service Layer',
+    'konn.r6c3': 'Connection via MCP possible, check the scope in advance',
+    'konn.r7c1': 'proALPHA (DE)',
+    'konn.r7c2': 'No publicly accessible developer documentation found',
+    'konn.r7c3': 'Route via the vendor or via exports',
+    'konn.r8c1': 'Odoo (EU)',
+    'konn.r8c2': 'Open interface documented, XML-RPC and JSON-RPC',
+    'konn.r8c3': 'Ready-made MCP connections available from the community, external access depending on the plan',
+    'konn.r9c1': 'Cegid Quadra On Demand (FR)',
+    'konn.r9c2': 'Documentation publicly readable, OAuth2, partner identifier required',
+    'konn.r9c3': 'Connection via MCP possible, access via the Cegid partner channel',
+    'konn.r10c1': 'Zucchetti (IT)',
+    'konn.r10c2': 'Partner API, console behind a login',
+    'konn.r10c3': 'Connection via MCP possible, access via the partner channel',
+    'konn.r11c1': 'Holded (ES)',
+    'konn.r11c2': 'Open REST API documented',
+    'konn.r11c3': 'Connection via MCP possible: contacts, orders, invoices',
+    'konn.p2': 'What you deliberately will not find here: the machine and MES layer, that is production control. Controllers, shop floor data capture and detailed scheduling were not examined. An integration promise that breaks in the first conversation costs more than it brings. The benefit arises in the office and in work preparation. If your software is missing, the knowledge base and audit preparation still work: they only need documents. More under <a class="euc-textlink" href="/es/integrationen">integrations</a>.',
+    'konn.p3': 'The separation also has a legal reason. If AI is built into a regulated product as a safety component, it can qualify as a high-risk system under the AI Regulation. Under Regulation (EU) 2026/1744 its obligations apply from 2 December 2027, and from 2 August 2028 for embedded systems.<sup><a href="#fn-9" aria-label="Footnote 9">9</a></sup> An assistant in the office does not normally fall under this.',
+    'ds.h2': 'Data protection and secrecy: specifications stay in the plant',
+    'ds.p1': 'Customer specifications, recipes, costings and inspection data are trade secrets, often bound by a non-disclosure agreement with your customer on top. For personal data the General Data Protection Regulation applies. The business remains responsible even when an AI tool processes it. If a provider is involved, that requires a data processing agreement, a contract setting out what this provider may do with the data. This article is not legal advice.',
+    'ds.p2': 'If data goes to a country outside Europe, Chapter V of the Regulation applies as well. You then need a legal basis for the transfer and, depending on the instrument you choose, an assessment of the legal situation in the destination country. If storage and model processing take place within the European Economic Area, that step falls away. This does not make the processing lawful automatically, but it does make it easier to justify.',
+    'ds.p3': 'EU Cowork AI runs in ISO 27001 certified data centres or on your own server. Model requests are processed in the EU, and customer data does not train any models. Telemetry, that is the reporting back of usage data, is switched off by default. If nothing at all may go outside, you run your own instance in your own data centre. An instance is the installation that runs for your company alone. The software is MIT licensed. The <a class="euc-textlink" href="/es/avv">data processing agreement</a> and the <a class="euc-textlink" href="/es/subprozessoren">subprocessor list</a> are published openly on the website.',
+    'ds.p4': 'One more point the European statistics show clearly: in Norway, 71% of AI-using companies rely on off-the-shelf software, in Sweden 62%.<sup><a href="#fn-3" aria-label="Footnote 3">3</a></sup> Such tools are available quickly, but they do not know the business: no service reports, no inspection records, no audit answers.',
+    'faq.h2': 'Frequently asked questions from manufacturing and food production',
+    'faq.q1': 'Can the AI control our machines or set parameters, or does it only work with the ERP and documents?',
+    'faq.a1': 'It controls nothing. EU Cowork AI is office support: searching documents, writing drafts and querying systems with a documented interface, for instance Monitor ERP, weclapp, SAP Business One or Odoo. The machine and MES layer, that is controllers and production control, is deliberately left out. AI in a safety function is a different product class.',
+    'faq.q2': 'Does this fulfil our audit obligations, for example under IFS, BRCGS or HACCP?',
+    'faq.a2': 'No. The AI colleague prepares: it finds the existing records, shows gaps and writes draft answers. Verification, approval and responsibility for the HACCP plan stay in the business. Compliance is fulfilled by people, not by software.',
+    'faq.q3': 'How does the knowledge of experienced staff get into the knowledge base?',
+    'faq.a3': 'Through what is already written down: service reports, fault and inspection records, setup sheets, procedures and audit reports. What only exists in someone’s head has to be written down or dictated first. This is not a substitute for being trained in.',
+    'faq.q4': 'Do we have to do anything because of the AI Regulation?',
+    'faq.a4': 'For an internal assistant, the Regulation as a rule provides for no approval or conformity obligations. Two things apply to every deployer: ensuring a sufficient level of AI literacy, and disclosing when people are interacting with an AI system. Caution applies as soon as a tool decides about people, for instance when pre-sorting job applications. This answer is not legal advice.',
+    'faq.q5': 'What does it cost for a plant with eighty people?',
+    'faq.a5': 'Managed operation costs €15 per person per month. Of that, €8 is model credit: a shared pot for your organisation that pays for the requests to the language model. If you self-host, the software costs nothing: it is MIT licensed, a free licence with no licence fee. All details on the <a class="euc-textlink" href="/es/preise">pricing</a> page.',
+    'faq.q6': 'Where is our data held?',
+    'faq.a6': 'In the managed variant in ISO 27001 certified data centres, otherwise on your own server. Customer data does not train any models and model requests are processed in the EU. Evidence in the <a class="euc-textlink" href="/es/sicherheit">Trust Center</a>.',
+    'cta.h2': 'See it on a case of your own',
+    'cta.p': 'Bring a supplier questionnaire, an inspection record or a work instruction, and we will walk through the workflow together.',
+    'cta.btn1': 'Book a call',
+    'cta.btn2': 'Join the waitlist',
+    'src.h2': 'Sources',
+    'src.p': 'All figures come from these sources, last checked in August 2026, with the country each was collected for.',
+    'src.fn1': 'Federal Statistical Office of Germany, press release N057 of 14 August 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
+    'src.fn2': 'Industrirådet, report on the skills needs of industry (SE, survey May to October 2025, 1,500 companies), at Industriarbetsgivarna: <a class="euc-textlink" href="https://industriarbetsgivarna.se/nyheter/kompetensfragor/ny-rapport-sa-har-ser-kompetensbehovet-ut-i-industrin/" target="_blank" rel="noopener">industriarbetsgivarna.se</a>',
+    'src.fn3': 'Eurostat, dataset isoc_eb_ai, survey year 2025: AI use by size class and how AI is sourced (SE, NO): <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu/eurostat</a>',
+    'src.fn4': 'Norsk Industri on the NHO skills barometer 2025, 24 February 2026 (NO): <a class="euc-textlink" href="https://www.norskindustri.no/dette-jobber-vi-med/kompetanse/aktuelt/kompetansebarometeret-2025-industrien-mangler-fagfolk-og-teknisk-kompetanse/" target="_blank" rel="noopener">norskindustri.no</a>',
+    'src.fn5': 'ANIA, Nos chiffres cles, on the food industry (FR): <a class="euc-textlink" href="https://www.ania.net/presentation-ania/nos-chiffres-cles" target="_blank" rel="noopener">ania.net</a>; AI use by sector in the Baromètre France Num 2025: <a class="euc-textlink" href="https://www.francenum.gouv.fr/" target="_blank" rel="noopener">francenum.gouv.fr</a>',
+    'src.fn6': 'INE, Encuesta Trimestral de Coste Laboral, fourth quarter 2025 (ES): <a class="euc-textlink" href="https://www.ine.es/dyngs/Prensa/ETCL4T25.htm" target="_blank" rel="noopener">ine.es</a>',
+    'src.fn7': 'German Supply Chain Due Diligence Act, section 1, scope (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/lksg/__1.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'src.fn8': 'Agenzia per la cybersicurezza nazionale, deadlines of the Italian NIS2 transposition (IT): <a class="euc-textlink" href="https://www.acn.gov.it/portale/nis" target="_blank" rel="noopener">acn.gov.it</a>',
+    'src.fn9': 'European Commission, regulatory framework for artificial intelligence, with the deadlines as amended by Regulation (EU) 2026/1744: <a class="euc-textlink" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">digital-strategy.ec.europa.eu</a>',
+    'weiter.titel': 'Continue',
+    'weiter.l1': 'AI in manufacturing: the same workflows in the Swiss setting',
+    'weiter.l2': 'Integrations: which systems are prepared',
+    'weiter.l3': 'Trust Center: processing, operation and technical measures',
+    'geprueft': 'Last reviewed: <time datetime="2026-08">August 2026</time>'
+  },
+  fr: {
+    'meta.title': 'IA en production : raccorder votre ERP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'L’IA dans la production en Europe',
+    'hero.eyebrow': 'L’IA au quotidien professionnel',
+    'hero.h1': 'L’IA dans la production : garder le savoir quand les gens partent',
+    'hero.lead': 'Les personnes expérimentées partent à la retraite, et les exigences des grands clients arrivent derrière : questionnaires, catalogues d’audit, justificatifs. Cet article montre à travers trois processus comment un collègue IA travaille avec le savoir de votre usine et où passe la limite avec la machine.',
+    'hero.chip': 'Production',
+    'hero.datum': '18 août 2026',
+    'hero.lesezeit': 'Temps de lecture : 11 minutes',
+    'kurz.titel': 'En bref',
+    'kurz.p1': 'Dans l’industrie manufacturière allemande, 5,29 millions de personnes travaillaient encore à la mi-2026, soit 144 100 de moins qu’un an plus tôt.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> En Norvège, 62 % des entreprises de la fédération Norsk Industri signalent des besoins en compétences non couverts.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup>',
+    'kurz.p2': 'EU Cowork AI travaille avec le savoir de votre usine. Les rapports de service, les rapports de panne, les procès-verbaux d’essai, les plans de réglage et les réponses d’audit antérieures deviennent une base de connaissances : un ensemble de vos propres documents, auquel vous posez des questions en phrases ordinaires. Chaque réponse nomme le document dont elle provient.',
+    'kurz.p3': 'Pour les audits clients et les questionnaires fournisseurs, une liste de lacunes et des projets de réponse naissent de votre propre documentation. La validation a lieu dans l’entreprise ; aucun logiciel n’assure la conformité à votre place.',
+    'kurz.p4': 'Un ERP comme Monitor ERP, RamBase ou weclapp peut être raccordé s’il dispose d’une interface documentée. Une interface est l’endroit par lequel deux programmes échangent des données ; le Model Context Protocol (MCP) est le standard ouvert par lequel un programme d’IA l’utilise. Des droits par outil et une trace pour chaque accès s’appliquent. Le niveau des machines et du MES, c’est-à-dire la conduite de production, reste en dehors.',
+    'toc.titel': 'Sur cette page',
+    'toc.i1': 'Situation de départ',
+    'toc.i2': 'Le savoir du personnel',
+    'toc.i3': 'Audits et questionnaires',
+    'toc.i4': 'Des consignes dans chaque langue',
+    'toc.i5': 'Connecteurs vers l’ERP',
+    'toc.i6': 'Protection des données et secrets',
+    'toc.i7': 'Questions fréquentes',
+    'lage.h2': 'Situation de départ : le savoir part, les obligations de preuve arrivent',
+    'lage.p1': 'À la fin du premier semestre 2026, l’industrie manufacturière allemande employait 5,29 millions de personnes, soit 144 100 ou 2,7 % de moins qu’un an plus tôt.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup> La documentation n’a pas diminué pour autant, elle se répartit seulement sur moins d’épaules.',
+    'lage.p2': 'Il en va ainsi dans toute l’Europe. En Suède, 87 % des entreprises technologiques et industrielles interrogées font état de difficultés à recruter des compétences en électricité, en énergie et en automation.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup> En Norvège, 62 % des entreprises de Norsk Industri signalent des besoins en compétences non couverts et citent comme conséquence des parts de marché perdues.<sup><a href="#fn-4" aria-label="Note 4">4</a></sup> En Espagne, la statistique officielle a compté 13 868 postes vacants dans la seule industrie au quatrième trimestre 2025.<sup><a href="#fn-6" aria-label="Note 6">6</a></sup>',
+    'lage.p3': 'Les exigences viennent de l’autre côté. La loi allemande sur le devoir de vigilance dans les chaînes d’approvisionnement s’applique aux entreprises comptant en règle générale au moins 1 000 salariés sur le territoire national. Jusqu’au début 2024, le seuil était fixé à 3 000.<sup><a href="#fn-7" aria-label="Note 7">7</a></sup> Le fournisseur de 60 personnes n’y est pas soumis, mais il reçoit tout de même sur son bureau les questionnaires de ses grands clients. Même schéma pour la cybersécurité : en Italie, les mesures de base NIS2 doivent être mises en œuvre d’ici octobre 2026, et qui livre des clients concernés se voit transmettre les exigences par contrat.<sup><a href="#fn-8" aria-label="Note 8">8</a></sup>',
+    'lage.p4': 'Pour l’IA elle-même, le plus grand écart ne passe pas entre les pays, mais entre les grandes et les petites structures. En Suède, 30,7 % des entreprises de 10 à 49 salariés utilisent au moins une technologie d’IA, contre 71,9 % à partir de 250 salariés.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> En France, seules 15 % des petites et moyennes entreprises de l’industrie agroalimentaire, premier secteur industriel du pays, utilisent des solutions d’IA.<sup><a href="#fn-5" aria-label="Note 5">5</a></sup>',
+    'lage.leg1': 'L’expérience quitte l’entreprise, équipe après équipe',
+    'lage.leg2': 'La même usine, la même documentation, moins de personnes',
+    'lage.leg3': 'Questionnaires, catalogues d’audit et justificatifs du client',
+    'lage.fig': 'Deux mouvements se rejoignent dans le même bureau : le savoir part, les exigences arrivent. Les deux atterrissent chez les mêmes personnes.',
+    'uc1.h2': 'Cas d’usage 1 : le savoir de la génération sortante devient interrogeable',
+    'uc1.p1': 'Le technicien de maintenance qui sait depuis vingt ans comment cette presse se comporte après un changement d’outil part à la retraite dans deux ans. Une grande partie de son savoir se trouve déjà dans l’entreprise, seulement dispersée : dans les rapports de service, les rapports de panne, les procès-verbaux d’essai, les plans de réglage et les paramètres notés à la main dans le classeur à côté de l’installation. Une base de connaissances constituée exactement de ces documents répond à la question de l’équipe de nuit. Elle indique le renvoi, c’est-à-dire le document et la page dont la réponse est tirée : quel réglage a tenu la dernière fois sur ce lot, comment ce défaut a été corrigé.',
+    'uc1.p2': 'La différence avec un chat dans le navigateur tient au rattachement. La réponse provient de vos documents et indique de quel rapport elle est tirée. Elle ne provient pas de la mémoire du modèle, c’est-à-dire de ce que le programme a appris de façon générale. Ce qui n’est pas écrit, elle ne le trouve pas, et des documents périmés produisent des réponses périmées.',
+    'uc1.leg1': 'Question venue de l’équipe, en langage courant',
+    'uc1.leg2': 'Rapports de service, procès-verbaux d’essai et plans de réglage de l’usine',
+    'uc1.leg3': 'Réponse avec sa source, vérifiable en quelques secondes',
+    'uc1.fig': 'La base de connaissances répond à partir des documents de l’usine et montre de quel rapport provient la réponse.',
+    'uc1.p3': 'Ce que le collègue IA ne fait pas : il ne règle aucune machine. Il montre ce qui était réglé la dernière fois et qui l’a documenté. La décision se prend à l’installation.',
+    'uc2.h2': 'Cas d’usage 2 : préparer les audits clients et les questionnaires fournisseurs',
+    'uc2.p1': 'Un grand client envoie un questionnaire fournisseur de 120 positions : devoirs de vigilance dans la chaîne d’approvisionnement, preuves d’origine, sécurité de l’information. En parallèle se prépare le prochain audit selon IFS ou BRCGS. Presque chaque réponse existe déjà quelque part dans l’entreprise, dans l’autodéclaration de l’année précédente, dans un certificat, dans une instruction de procédure. Simplement, personne ne la retrouve dans la semaine qui précède l’échéance.',
+    'uc2.p2': 'Le collègue IA rattache les questions aux documents existants, produit une liste de lacunes pour tout ce dont rien n’est disponible et dépose pour le reste des projets de réponse avec renvoi au document. Le travail passe de la recherche à la vérification. La liste de lacunes est souvent le plus grand gain : elle montre avant l’audit ce qui manque.',
+    'uc2.leg1': 'Questionnaire et catalogue d’audit du client',
+    'uc2.leg2': 'Certificats, instructions de procédure et réponses antérieures',
+    'uc2.leg3': 'Liste de lacunes : ce pour quoi rien n’existe dans l’entreprise',
+    'uc2.leg4': 'Projets de réponse avec renvoi au document, pour validation technique',
+    'uc2.fig': 'Les réponses se trouvent le plus souvent déjà dans l’entreprise. Le projet les rend trouvables ; la responsabilité de chaque indication reste dans l’entreprise.',
+    'uc2.p3': 'C’est ici que la limite est la plus nette. Chaque réponse dans un questionnaire fournisseur est un engagement envers votre client, chaque document d’audit une preuve envers un organisme de certification. Les deux partent après validation technique, jamais automatiquement.',
+    'uc3.h2': 'Cas d’usage 3 : consignes, étiquettes et notices dans la langue de l’équipe',
+    'uc3.p1': 'Dans la production alimentaire et dans le montage, les équipes travaillent avec des langues mélangées. La règle d’hygiène, la consigne de réglage et la version courte de la notice d’utilisation naissent du document validé, dans la langue des collaborateurs. L’élément porteur est un glossaire d’entreprise : noms d’installations, désignations de composants et termes techniques sont fixés une fois pour toutes, afin que le même sous-ensemble ne porte pas un nom différent dans chaque version.',
+    'uc3.p2': 'Le même glossaire porte les textes de déclaration et d’étiquetage ainsi que la notice d’utilisation destinée à l’export. Il porte aussi dans l’autre sens : la spécification fournisseur espagnole et le certificat d’essai italien deviennent lisibles, sans passer par un portail de traduction étranger.',
+    'uc3.leg1': 'Document source validé de l’usine',
+    'uc3.leg2': 'Glossaire d’entreprise : noms d’installations, composants, termes techniques',
+    'uc3.leg3': 'Versions linguistiques en projet, à valider par la personne compétente',
+    'uc3.fig': 'Le glossaire fixe les termes, afin que le même sous-ensemble ne devienne pas un autre mot dans chaque langue.',
+    'uc3.p3': 'La limite vaut ici aussi : les traductions sont des projets. Pour les instructions relevant de la sécurité et les mentions légalement prescrites, la version validée reste déterminante, et c’est la personne compétente qui valide. Les droits descendent jusqu’à chaque outil : qui n’a pas le droit de voir le calcul de prix de revient ne le voit pas non plus via l’IA. Chaque accès figure dans le journal d’audit, un registre qui retient qui a ouvert quel document et quand.',
+    'konn.h2': 'Connecteurs : ce qui peut être raccordé à votre ERP',
+    'konn.p1': 'Un collègue IA est aussi utile que ce qu’il a le droit d’atteindre. MCP est un standard ouvert qui permet à un programme d’IA de solliciter un autre programme. Il faut pour cela une interface documentée, c’est-à-dire un point de raccordement publié par lequel deux programmes échangent des données. Chaque outil est libéré séparément, et chaque appel est consigné. Réglage par défaut : outils de lecture libres, outils d’écriture seulement avec confirmation. Le tableau montre jusqu’où va aujourd’hui le raccordement de l’IA aux logiciels répandus, vérifié en août 2026. La colonne du milieu donne les noms techniques de ces interfaces ; celle qui compte pour vous est la colonne de droite.',
+    'konn.th1': 'Logiciel (pays)',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Raccordement à EU Cowork AI',
+    'konn.r1c1': 'Monitor ERP (SE)',
+    'konn.r1c2': 'Documentation d’API librement consultable, REST pour les requêtes',
+    'konn.r1c3': 'Raccordement possible via MCP ; selon la documentation de l’éditeur, les requêtes sont gratuites, les accès en écriture nécessitent un produit complémentaire',
+    'konn.r2c1': 'RamBase (NO)',
+    'konn.r2c2': 'API REST ouverte, documentée, avec webhooks et SDK',
+    'konn.r2c3': 'Raccordement possible via MCP : approvisionnement, production, qualité',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central (EU)',
+    'konn.r3c2': 'Interfaces documentées ouvertement',
+    'konn.r3c3': 'Serveur MCP disponible chez Microsoft, auquel s’ajoutent Outlook et SharePoint via l’API Graph',
+    'konn.r4c1': 'weclapp (DE)',
+    'konn.r4c2': 'Documentation d’API accessible publiquement',
+    'konn.r4c3': 'Raccordement possible via MCP : articles, nomenclatures, commandes',
+    'konn.r5c1': 'Xentral (DE)',
+    'konn.r5c2': 'API REST ouverte, documentée, référence OpenAPI versionnée',
+    'konn.r5c3': 'Raccordement possible via MCP',
+    'konn.r6c1': 'SAP Business One (EU)',
+    'konn.r6c2': 'Portails de documentation et d’API publics, Service Layer',
+    'konn.r6c3': 'Raccordement possible via MCP, vérifier l’étendue au préalable',
+    'konn.r7c1': 'proALPHA (DE)',
+    'konn.r7c2': 'Aucune documentation développeur publiquement consultable n’a été trouvée',
+    'konn.r7c3': 'La voie passe par l’éditeur ou par des exports',
+    'konn.r8c1': 'Odoo (EU)',
+    'konn.r8c2': 'Interface ouverte documentée, XML-RPC et JSON-RPC',
+    'konn.r8c3': 'Raccordements MCP prêts à l’emploi issus de la communauté, accès externe selon le forfait',
+    'konn.r9c1': 'Cegid Quadra On Demand (FR)',
+    'konn.r9c2': 'Documentation consultable publiquement, OAuth2, identifiant partenaire nécessaire',
+    'konn.r9c3': 'Raccordement possible via MCP, accès par la filière partenaires de Cegid',
+    'konn.r10c1': 'Zucchetti (IT)',
+    'konn.r10c2': 'API partenaires, console derrière une authentification',
+    'konn.r10c3': 'Raccordement possible via MCP, accès par la filière partenaires',
+    'konn.r11c1': 'Holded (ES)',
+    'konn.r11c2': 'API REST ouverte, documentée',
+    'konn.r11c3': 'Raccordement possible via MCP : contacts, commandes, factures',
+    'konn.p2': 'Ce que vous ne trouvez délibérément pas ici : le niveau des machines et du MES, c’est-à-dire la conduite de production. Les commandes, la saisie des données de production et l’ordonnancement fin n’ont pas été examinés. Une promesse d’intégration qui casse dès le premier entretien coûte plus qu’elle ne rapporte. Le bénéfice naît au bureau et à la préparation du travail. Si votre logiciel manque, la base de connaissances et la préparation d’audit fonctionnent quand même : elles n’ont besoin que de documents. Plus d’informations sous <a class="euc-textlink" href="/es/integrationen">Intégrations</a>.',
+    'konn.p3': 'Cette séparation a aussi une raison juridique. Une IA intégrée comme composant de sécurité dans un produit réglementé peut relever des systèmes à haut risque du règlement sur l’IA. En vertu du règlement (UE) 2026/1744, ses obligations s’appliquent à partir du 2 décembre 2027, et à partir du 2 août 2028 pour les systèmes embarqués.<sup><a href="#fn-9" aria-label="Note 9">9</a></sup> Un assistant au bureau n’en relève en règle générale pas.',
+    'ds.h2': 'Protection des données et secrets : les spécifications restent dans l’usine',
+    'ds.p1': 'Les spécifications clients, les recettes, les calculs de prix de revient et les données d’essai sont des secrets d’affaires, souvent liés en plus par un accord de confidentialité de votre client. Pour les données à caractère personnel s’applique le règlement général sur la protection des données. L’entreprise reste responsable, même lorsqu’un outil d’IA les traite. Si un prestataire intervient, cela requiert un contrat de sous-traitance, un contrat qui fixe ce que ce prestataire a le droit de faire des données. Cet article ne remplace pas un conseil juridique.',
+    'ds.p2': 'Si des données partent vers un pays hors d’Europe, le chapitre V du règlement s’y ajoute. Vous avez alors besoin d’une base juridique pour le transfert et, selon l’instrument choisi, d’une évaluation de la situation juridique dans le pays de destination. Si le stockage et le traitement par les modèles ont lieu dans l’Espace économique européen, cette étape disparaît. Le traitement n’en devient pas licite d’office, mais il est plus facile à justifier.',
+    'ds.p3': 'EU Cowork AI fonctionne dans des centres de données certifiés ISO 27001 ou sur votre propre serveur. Les requêtes aux modèles sont traitées du côté de l’UE et les données des clients n’entraînent aucun modèle. La télémétrie, c’est-à-dire la remontée de données d’utilisation, est désactivée par défaut. Qui ne peut rien transmettre à l’extérieur exploite sa propre instance dans son propre centre de données. Une instance est l’installation qui tourne pour votre seule entreprise. Le logiciel est sous licence MIT. Le <a class="euc-textlink" href="/es/avv">contrat de sous-traitance</a> et la <a class="euc-textlink" href="/es/subprozessoren">liste des sous-traitants ultérieurs</a> sont publiés ouvertement sur le site.',
+    'ds.p4': 'S’y ajoute un point que la statistique européenne montre bien : en Norvège, 71 % des entreprises qui utilisent l’IA emploient des logiciels achetés tout faits, en Suède 62 %.<sup><a href="#fn-3" aria-label="Note 3">3</a></sup> De tels outils sont vite disponibles, mais ils ne connaissent pas l’entreprise : ni rapports de service, ni procès-verbaux d’essai, ni réponses d’audit.',
+    'faq.h2': 'Questions fréquentes de la fabrication et de la production alimentaire',
+    'faq.q1': 'L’IA peut-elle piloter nos machines ou régler des paramètres, ou travaille-t-elle seulement avec l’ERP et les documents ?',
+    'faq.a1': 'Elle ne pilote rien. EU Cowork AI est un soutien de bureau : chercher dans les documents, rédiger des projets et interroger les systèmes dotés d’une interface documentée, par exemple Monitor ERP, weclapp, SAP Business One ou Odoo. Le niveau des machines et du MES, c’est-à-dire la conduite de production, reste délibérément en dehors. Une IA dans une fonction de sécurité relève d’une autre classe de produits.',
+    'faq.q2': 'Remplissons-nous ainsi nos obligations d’audit, par exemple selon IFS, BRCGS ou HACCP ?',
+    'faq.a2': 'Non. Le collègue IA prépare : il trouve les preuves existantes, montre les lacunes et rédige des projets de réponse. La vérification, la validation et la responsabilité du concept HACCP restent dans l’entreprise. La conformité est remplie par des personnes, pas par un logiciel.',
+    'faq.q3': 'Comment le savoir des personnes expérimentées entre-t-il dans la base de connaissances ?',
+    'faq.a3': 'Par ce qui est déjà écrit : rapports de service, rapports de panne, procès-verbaux d’essai, plans de réglage, instructions de procédure et rapports d’audit. Ce qui n’existe que dans les têtes doit d’abord être écrit ou dicté. Cela ne remplace pas la formation au poste.',
+    'faq.q4': 'Devons-nous faire quelque chose à cause du règlement sur l’IA ?',
+    'faq.a4': 'Pour un assistant interne, le règlement ne prévoit en règle générale aucune obligation d’autorisation ou de conformité. Deux points concernent chaque déployeur : veiller à un niveau suffisant de maîtrise de l’IA et indiquer clairement lorsque des personnes s’adressent à un système d’IA. La prudence s’impose dès qu’un outil décide au sujet de personnes, par exemple lors de la présélection de candidatures. Cette réponse ne remplace pas un conseil juridique.',
+    'faq.q5': 'Combien cela coûte-t-il pour une usine de quatre-vingts personnes ?',
+    'faq.a5': 'L’exploitation managée coûte 15 € par personne et par mois. Sur ce montant, 8 € sont un crédit de modèles : un pot commun de votre organisation qui paie les requêtes adressées au modèle de langage. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT, une licence libre sans frais de licence. Toutes les indications figurent sur la page <a class="euc-textlink" href="/es/preise">Tarifs</a>.',
+    'faq.q6': 'Où se trouvent nos données ?',
+    'faq.a6': 'Dans la variante managée, dans des centres de données certifiés ISO 27001, sinon sur votre propre serveur. Les données des clients n’entraînent aucun modèle, les requêtes aux modèles sont traitées du côté de l’UE. Les justificatifs figurent dans le <a class="euc-textlink" href="/es/sicherheit">Trust Center</a>.',
+    'cta.h2': 'Voyez-le sur un cas qui vous est propre',
+    'cta.p': 'Apportez un questionnaire fournisseur, un procès-verbal d’essai ou une instruction de travail, et nous parcourrons le processus ensemble.',
+    'cta.btn1': 'Réserver un rendez-vous',
+    'cta.btn2': 'Rejoindre la liste d’attente',
+    'src.h2': 'Sources',
+    'src.p': 'Tous les chiffres proviennent de ces sources, vérifiées pour la dernière fois en août 2026, avec le pays de l’enquête correspondante.',
+    'src.fn1': 'Office fédéral de la statistique d’Allemagne, communiqué de presse N057 du 14 août 2026 (DE) : <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
+    'src.fn2': 'Industrirådet, rapport sur les besoins en compétences de l’industrie (SE, enquête de mai à octobre 2025, 1 500 entreprises), chez Industriarbetsgivarna : <a class="euc-textlink" href="https://industriarbetsgivarna.se/nyheter/kompetensfragor/ny-rapport-sa-har-ser-kompetensbehovet-ut-i-industrin/" target="_blank" rel="noopener">industriarbetsgivarna.se</a>',
+    'src.fn3': 'Eurostat, jeu de données isoc_eb_ai, année d’enquête 2025 : utilisation de l’IA par classe de taille et par mode d’acquisition (SE, NO) : <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu/eurostat</a>',
+    'src.fn4': 'Norsk Industri à propos du baromètre des compétences NHO 2025, 24 février 2026 (NO) : <a class="euc-textlink" href="https://www.norskindustri.no/dette-jobber-vi-med/kompetanse/aktuelt/kompetansebarometeret-2025-industrien-mangler-fagfolk-og-teknisk-kompetanse/" target="_blank" rel="noopener">norskindustri.no</a>',
+    'src.fn5': 'ANIA, Nos chiffres cles, sur l’industrie agroalimentaire (FR) : <a class="euc-textlink" href="https://www.ania.net/presentation-ania/nos-chiffres-cles" target="_blank" rel="noopener">ania.net</a> ; utilisation de l’IA par branche dans le Baromètre France Num 2025 : <a class="euc-textlink" href="https://www.francenum.gouv.fr/" target="_blank" rel="noopener">francenum.gouv.fr</a>',
+    'src.fn6': 'INE, Encuesta Trimestral de Coste Laboral, quatrième trimestre 2025 (ES) : <a class="euc-textlink" href="https://www.ine.es/dyngs/Prensa/ETCL4T25.htm" target="_blank" rel="noopener">ine.es</a>',
+    'src.fn7': 'Loi allemande sur le devoir de vigilance dans les chaînes d’approvisionnement, article 1, champ d’application (DE) : <a class="euc-textlink" href="https://www.gesetze-im-internet.de/lksg/__1.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'src.fn8': 'Agenzia per la cybersicurezza nazionale, délais de la transposition italienne de NIS2 (IT) : <a class="euc-textlink" href="https://www.acn.gov.it/portale/nis" target="_blank" rel="noopener">acn.gov.it</a>',
+    'src.fn9': 'Commission européenne, cadre réglementaire pour l’intelligence artificielle, avec les délais modifiés par le règlement (UE) 2026/1744 : <a class="euc-textlink" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">digital-strategy.ec.europa.eu</a>',
+    'weiter.titel': 'Pour aller plus loin',
+    'weiter.l1': 'L’IA dans la production : les mêmes processus dans le contexte suisse',
+    'weiter.l2': 'Intégrations : quels systèmes sont préparés',
+    'weiter.l3': 'Trust Center : traitement, exploitation et mesures techniques',
+    'geprueft': 'Dernière vérification : <time datetime="2026-08">août 2026</time>'
+  },
+  it: {
+    'meta.title': 'IA nella produzione: collegare l’ERP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'L’IA nella produzione in Europa',
+    'hero.eyebrow': 'L’IA nel lavoro quotidiano',
+    'hero.h1': 'L’IA nella produzione: trattenere il sapere quando le persone se ne vanno',
+    'hero.lead': 'Le persone esperte vanno in pensione e le richieste dei grandi clienti arrivano puntuali: questionari, cataloghi di audit, prove documentali. Questo articolo mostra su tre processi come un collega IA lavora con il sapere del suo stabilimento e dove passa il confine con la macchina.',
+    'hero.chip': 'Produzione',
+    'hero.datum': '18 agosto 2026',
+    'hero.lesezeit': 'Tempo di lettura: 11 minuti',
+    'kurz.titel': 'In breve',
+    'kurz.p1': 'Nell’industria manifatturiera tedesca a metà 2026 lavoravano ancora 5,29 milioni di persone, 144.100 in meno rispetto a un anno prima.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> In Norvegia il 62% delle imprese dell’associazione Norsk Industri segnala un fabbisogno di competenze non coperto.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup>',
+    'kurz.p2': 'EU Cowork AI lavora con il sapere del suo stabilimento. Rapporti di servizio, verbali di guasto e di collaudo, piani di attrezzaggio e risposte di audit precedenti diventano una base di conoscenza: una raccolta dei suoi documenti, alla quale può porre domande in frasi normali. Ogni risposta indica il documento da cui proviene.',
+    'kurz.p3': 'Per gli audit dei clienti e i questionari fornitori nascono un elenco delle lacune e bozze di risposta dalla sua stessa documentazione. L’approvazione avviene in azienda; la conformità non la produce un software.',
+    'kurz.p4': 'Un ERP come Monitor ERP, RamBase o weclapp si può collegare se dispone di un’interfaccia documentata. Un’interfaccia è il punto attraverso il quale due programmi si scambiano dati; il Model Context Protocol (MCP) è lo standard aperto con cui un programma di IA la utilizza. Valgono permessi per singolo strumento e una registrazione per ogni accesso. Il livello delle macchine e del MES, cioè controlli e conduzione della produzione, resta fuori.',
+    'toc.titel': 'In questa pagina',
+    'toc.i1': 'Situazione di partenza',
+    'toc.i2': 'Il sapere del personale',
+    'toc.i3': 'Audit e questionari',
+    'toc.i4': 'Istruzioni in ogni lingua',
+    'toc.i5': 'Connettori verso l’ERP',
+    'toc.i6': 'Protezione dei dati e segreti',
+    'toc.i7': 'Domande frequenti',
+    'lage.h2': 'Situazione di partenza: il sapere se ne va, gli obblighi di prova arrivano',
+    'lage.p1': 'Alla fine del primo semestre 2026 nell’industria manifatturiera tedesca erano occupate 5,29 milioni di persone, 144.100 ovvero il 2,7% in meno rispetto a un anno prima.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> La documentazione non è diventata più piccola per questo, si distribuisce solo su meno spalle.',
+    'lage.p2': 'Va così in tutta Europa. In Svezia l’87% delle imprese tecnologiche e industriali interpellate riferisce difficoltà nel reclutare competenze in elettrotecnica, energia e automazione.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> In Norvegia il 62% delle imprese di Norsk Industri segnala un fabbisogno di competenze non coperto e indica come conseguenza quote di mercato perdute.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> In Spagna la statistica ufficiale ha contato nel quarto trimestre 2025 13.868 posti vacanti nella sola industria.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup>',
+    'lage.p3': 'Dall’altro lato arrivano i requisiti. La legge tedesca sugli obblighi di diligenza nelle catene di fornitura si applica alle imprese con di regola almeno 1.000 dipendenti nel Paese. Fino all’inizio del 2024 la soglia era di 3.000.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> Il fornitore con 60 persone non vi rientra, ma si vede arrivare sul tavolo i questionari dei suoi grandi clienti. Nella sicurezza informatica lo schema è lo stesso: in Italia le misure di base NIS2 devono essere attuate entro ottobre 2026, e chi rifornisce clienti interessati riceve i requisiti per via contrattuale.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup>',
+    'lage.p4': 'Nell’IA stessa la distanza maggiore non passa tra i Paesi, bensì tra grandi e piccoli. In Svezia il 30,7% delle imprese con 10 fino a 49 addetti impiega almeno una tecnologia di IA, dai 250 addetti in su il 71,9%.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> In Francia solo il 15% delle piccole e medie imprese dell’industria alimentare, il principale comparto industriale del Paese, utilizza soluzioni di IA.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup>',
+    'lage.leg1': 'L’esperienza lascia l’azienda, turno dopo turno',
+    'lage.leg2': 'Stesso stabilimento, stessa documentazione, meno persone',
+    'lage.leg3': 'Questionari, cataloghi di audit e prove documentali dal cliente',
+    'lage.fig': 'Due movimenti si incontrano nello stesso ufficio: il sapere se ne va, i requisiti arrivano. Entrambi finiscono presso le stesse persone.',
+    'uc1.h2': 'Caso d’uso 1: il sapere della generazione che esce diventa interrogabile',
+    'uc1.p1': 'Il manutentore che da vent’anni sa come si comporta questa pressa dopo un cambio utensile va in pensione tra due anni. Gran parte del suo sapere è già in azienda, solo sparsa: nei rapporti di servizio, nei verbali di guasto e di collaudo, nei piani di attrezzaggio e nei parametri di regolazione scritti a mano nel raccoglitore accanto all’impianto. Una base di conoscenza costruita esattamente su questi documenti risponde alla domanda del turno di notte. Indica il rimando, cioè il documento e la pagina da cui proviene la risposta: quale regolazione ha tenuto l’ultima volta su questo lotto, come è stato risolto questo guasto.',
+    'uc1.p2': 'La differenza rispetto a una chat nel browser sta nel riferimento. La risposta proviene dai suoi documenti e mostra da quale rapporto arriva. Non proviene dalla memoria del modello, cioè da ciò che il programma ha appreso in generale. Ciò che non è scritto non lo trova, e documenti superati producono risposte superate.',
+    'uc1.leg1': 'Domanda dal turno, in linguaggio comune',
+    'uc1.leg2': 'Rapporti di servizio, verbali di collaudo e piani di attrezzaggio dello stabilimento',
+    'uc1.leg3': 'Risposta con la fonte, verificabile in pochi secondi',
+    'uc1.fig': 'La base di conoscenza risponde a partire dai documenti dello stabilimento e mostra da quale rapporto proviene la risposta.',
+    'uc1.p3': 'Ciò che il collega IA non fa: non regola alcuna macchina. Mostra che cosa era regolato l’ultima volta e chi lo ha documentato. Si decide all’impianto.',
+    'uc2.h2': 'Caso d’uso 2: preparare gli audit dei clienti e i questionari fornitori',
+    'uc2.p1': 'Un grande cliente invia un questionario fornitori con 120 voci: obblighi di diligenza nella catena di fornitura, prove di origine, sicurezza delle informazioni. In parallelo procede la preparazione del prossimo audit secondo IFS o BRCGS. Quasi ogni risposta si trova già da qualche parte in azienda, nell’autodichiarazione dell’anno precedente, in un certificato, in un’istruzione di procedura. Solo che nella settimana prima della scadenza non la trova nessuno.',
+    'uc2.p2': 'Il collega IA associa le domande ai documenti esistenti, genera un elenco delle lacune per tutto ciò di cui non esiste nulla e deposita per il resto bozze di risposta con il rimando al documento. Il lavoro si sposta dal cercare al verificare. L’elenco delle lacune è spesso il guadagno maggiore: mostra prima dell’audit che cosa manca.',
+    'uc2.leg1': 'Questionario e catalogo di audit del cliente',
+    'uc2.leg2': 'Certificati, istruzioni di procedura e risposte precedenti',
+    'uc2.leg3': 'Elenco delle lacune: ciò per cui in azienda non esiste nulla',
+    'uc2.leg4': 'Bozze di risposta con il rimando al documento, per l’approvazione tecnica',
+    'uc2.fig': 'Le risposte per lo più sono già in azienda. La bozza le rende trovabili; di ogni indicazione risponde l’azienda.',
+    'uc2.p3': 'Qui sta il confine più netto. Ogni risposta in un questionario fornitori è un impegno verso il suo cliente, ogni documento di audit una prova verso un organismo di certificazione. Entrambi escono dopo l’approvazione tecnica, mai automaticamente.',
+    'uc3.h2': 'Caso d’uso 3: istruzioni, etichette e manuali nella lingua del turno',
+    'uc3.p1': 'Nella produzione alimentare e nel montaggio i team di turno lavorano con lingue miste. La regola di igiene, l’istruzione di attrezzaggio e la versione breve delle istruzioni per l’uso nascono dal documento approvato nella lingua dei collaboratori. L’elemento portante è un glossario aziendale: nomi degli impianti, denominazioni dei componenti e termini tecnici sono fissati una volta per tutte, così che lo stesso gruppo costruttivo non si chiami in modo diverso in ogni versione.',
+    'uc3.p2': 'Lo stesso glossario sostiene i testi di dichiarazione ed etichettatura e le istruzioni per l’uso destinate all’esportazione. Sostiene anche nella direzione opposta: la specifica del fornitore spagnola e il certificato di collaudo italiano diventano leggibili, senza un portale di traduzione estraneo.',
+    'uc3.leg1': 'Documento di partenza approvato dello stabilimento',
+    'uc3.leg2': 'Glossario aziendale: nomi degli impianti, componenti, termini tecnici',
+    'uc3.leg3': 'Versioni linguistiche come bozza, da approvare da parte della persona competente',
+    'uc3.fig': 'Il glossario fissa i termini, così che dallo stesso gruppo costruttivo non nasca una parola diversa in ogni lingua.',
+    'uc3.p3': 'Anche qui vale il confine: le traduzioni sono bozze. Per le istruzioni rilevanti per la sicurezza e per le indicazioni prescritte per legge resta determinante la versione approvata, e ad approvare è la persona competente. I permessi arrivano fino al singolo strumento: chi non può vedere il calcolo dei costi non lo vede nemmeno tramite l’IA. Ogni accesso finisce nel registro di audit, un verbale che annota chi ha aperto quale documento e quando.',
+    'konn.h2': 'Connettori: che cosa si può collegare al suo ERP',
+    'konn.p1': 'Un collega IA è utile quanto ciò che gli è consentito raggiungere. MCP è uno standard aperto grazie al quale un programma di IA può interpellare un altro programma. Serve a questo scopo un’interfaccia documentata, cioè un punto di collegamento reso pubblico attraverso il quale due programmi si scambiano dati. Ogni singolo strumento viene abilitato a parte e ogni chiamata viene registrata. Impostazione predefinita: strumenti di lettura liberi, strumenti di scrittura solo con conferma. La tabella mostra fino a dove arriva oggi il collegamento dell’IA al software diffuso, verificata nell’agosto 2026. Nella colonna centrale figurano i nomi tecnici di queste interfacce; per lei conta la colonna di destra.',
+    'konn.th1': 'Software (paese)',
+    'konn.th2': 'Interfaccia',
+    'konn.th3': 'Collegamento a EU Cowork AI',
+    'konn.r1c1': 'Monitor ERP (SE)',
+    'konn.r1c2': 'Documentazione API liberamente consultabile, REST per le interrogazioni',
+    'konn.r1c3': 'Collegamento tramite MCP possibile; secondo la documentazione del produttore le interrogazioni sono gratuite, gli accessi in scrittura richiedono un prodotto aggiuntivo',
+    'konn.r2c1': 'RamBase (NO)',
+    'konn.r2c2': 'API REST aperta e documentata, con webhook e SDK',
+    'konn.r2c3': 'Collegamento tramite MCP possibile: approvvigionamento, produzione, qualità',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central (EU)',
+    'konn.r3c2': 'Interfacce documentate apertamente',
+    'konn.r3c3': 'Server MCP disponibile da Microsoft, in aggiunta Outlook e SharePoint tramite l’API Graph',
+    'konn.r4c1': 'weclapp (DE)',
+    'konn.r4c2': 'Documentazione API accessibile pubblicamente',
+    'konn.r4c3': 'Collegamento tramite MCP possibile: articoli, distinte base, ordini',
+    'konn.r5c1': 'Xentral (DE)',
+    'konn.r5c2': 'API REST aperta e documentata, riferimento OpenAPI versionato',
+    'konn.r5c3': 'Collegamento tramite MCP possibile',
+    'konn.r6c1': 'SAP Business One (EU)',
+    'konn.r6c2': 'Portali pubblici di documentazione e API, Service Layer',
+    'konn.r6c3': 'Collegamento tramite MCP possibile, verificare in anticipo la portata',
+    'konn.r7c1': 'proALPHA (DE)',
+    'konn.r7c2': 'Nessuna documentazione per sviluppatori pubblicamente consultabile trovata',
+    'konn.r7c3': 'La via passa dal produttore oppure da esportazioni',
+    'konn.r8c1': 'Odoo (EU)',
+    'konn.r8c2': 'Interfaccia aperta documentata, XML-RPC e JSON-RPC',
+    'konn.r8c3': 'Collegamenti MCP già pronti dalla community, accesso esterno a seconda del piano',
+    'konn.r9c1': 'Cegid Quadra On Demand (FR)',
+    'konn.r9c2': 'Documentazione consultabile pubblicamente, OAuth2, identificativo partner necessario',
+    'konn.r9c3': 'Collegamento tramite MCP possibile, accesso tramite il canale partner di Cegid',
+    'konn.r10c1': 'Zucchetti (IT)',
+    'konn.r10c2': 'API partner, console dietro autenticazione',
+    'konn.r10c3': 'Collegamento tramite MCP possibile, accesso tramite il canale partner',
+    'konn.r11c1': 'Holded (ES)',
+    'konn.r11c2': 'API REST aperta e documentata',
+    'konn.r11c3': 'Collegamento tramite MCP possibile: contatti, ordini, fatture',
+    'konn.p2': 'Ciò che qui consapevolmente non trova: il livello delle macchine e del MES, cioè la conduzione della produzione. Controlli, raccolta dati di produzione e schedulazione fine non sono stati verificati. Una promessa di integrazione che si rompe al primo colloquio costa più di quanto renda. L’utilità nasce in ufficio e nella preparazione del lavoro. Se il suo software manca, la base di conoscenza e la preparazione dell’audit funzionano ugualmente: servono solo documenti. Maggiori informazioni alla pagina <a class="euc-textlink" href="/es/integrationen">Integrazioni</a>.',
+    'konn.p3': 'La separazione ha anche una ragione giuridica. Se un’IA viene integrata come componente di sicurezza in un prodotto regolamentato, può rientrare tra i sistemi ad alto rischio del regolamento sull’IA. In base al regolamento (UE) 2026/1744 i relativi obblighi si applicano dal 2 dicembre 2027, per i sistemi incorporati dal 2 agosto 2028.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup> Un assistente in ufficio di regola non vi rientra.',
+    'ds.h2': 'Protezione dei dati e tutela del segreto: le specifiche restano nello stabilimento',
+    'ds.p1': 'Specifiche dei clienti, ricette, calcoli dei costi e dati di collaudo sono segreti d’affari, spesso vincolati in aggiunta da un accordo di riservatezza del suo cliente. Per i dati personali vale il regolamento generale sulla protezione dei dati. L’azienda resta responsabile anche quando è uno strumento di IA a trattarli. Se collabora un fornitore, serve un accordo sul trattamento dei dati, cioè un contratto che stabilisce che cosa quel fornitore può fare con i dati. Questo articolo non sostituisce una consulenza legale.',
+    'ds.p2': 'Se i dati finiscono in un Paese fuori dall’Europa, si aggiunge il capo V del regolamento. Le serve allora una base giuridica per il trasferimento e, a seconda dello strumento scelto, una valutazione della situazione normativa nel Paese di destinazione. Se conservazione ed elaborazione dei modelli avvengono nello Spazio economico europeo, questo passaggio viene meno. Il trattamento non diventa per questo automaticamente lecito, ma è più facile da motivare.',
+    'ds.p3': 'EU Cowork AI funziona in centri di calcolo certificati ISO 27001 oppure sul suo server. Le richieste ai modelli sono elaborate sul lato UE e i dati dei clienti non addestrano alcun modello. La telemetria, cioè il rinvio di dati di utilizzo, è disattivata per impostazione predefinita. Chi non può cedere nulla all’esterno gestisce la propria istanza nel proprio centro di calcolo. Un’istanza è l’installazione che gira per la sua sola azienda. Il software è rilasciato con licenza MIT. L’<a class="euc-textlink" href="/es/avv">accordo sul trattamento dei dati</a> e l’<a class="euc-textlink" href="/es/subprozessoren">elenco dei sub-responsabili</a> sono pubblicati apertamente sul sito.',
+    'ds.p4': 'A ciò si aggiunge un punto che la statistica europea mostra bene: in Norvegia il 71% delle imprese che usano l’IA impiega software acquistato già pronto, in Svezia il 62%.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> Strumenti simili sono disponibili in fretta, ma non conoscono l’azienda: nessun rapporto di servizio, nessun verbale di collaudo, nessuna risposta di audit.',
+    'faq.h2': 'Domande frequenti dalla fabbricazione e dalla produzione alimentare',
+    'faq.q1': 'L’IA può comandare le nostre macchine o impostare parametri, oppure lavora solo con l’ERP e i documenti?',
+    'faq.a1': 'Comandare non comanda nulla. EU Cowork AI è supporto d’ufficio: cercare nei documenti, scrivere bozze e interrogare sistemi con interfaccia documentata, per esempio Monitor ERP, weclapp, SAP Business One oppure Odoo. Il livello delle macchine e del MES, cioè controlli e conduzione della produzione, resta consapevolmente fuori. Un’IA in una funzione di sicurezza è un’altra classe di prodotto.',
+    'faq.q2': 'Adempiamo così ai nostri obblighi di audit, per esempio secondo IFS, BRCGS o HACCP?',
+    'faq.a2': 'No. Il collega IA prepara: trova le prove esistenti, mostra le lacune e scrive bozze di risposta. La verifica, l’approvazione e la responsabilità per il piano HACCP restano in azienda. La compliance è adempiuta da persone, non da un software.',
+    'faq.q3': 'Come entra nella base di conoscenza il sapere delle persone esperte?',
+    'faq.a3': 'Attraverso ciò che è già scritto: rapporti di servizio, verbali di guasto e di collaudo, piani di attrezzaggio, istruzioni di procedura e rapporti di audit. Ciò che sta solo nella testa va prima scritto o dettato. Un sostituto dell’affiancamento non lo è.',
+    'faq.q4': 'Dobbiamo fare qualcosa a causa del regolamento sull’IA?',
+    'faq.a4': 'Per un assistente interno il regolamento di regola non prevede obblighi di autorizzazione o di conformità. Due cose riguardano ogni deployer: provvedere a un livello sufficiente di alfabetizzazione in materia di IA e dichiarare quando le persone parlano con un sistema di IA. La prudenza vale non appena uno strumento decide su persone, per esempio nella preselezione delle candidature. Questa risposta non sostituisce una consulenza legale.',
+    'faq.q5': 'Quanto costa per uno stabilimento con ottanta persone?',
+    'faq.a5': 'L’esercizio gestito costa 15 € per persona al mese. Di questi, 8 € sono credito modelli: un fondo comune della sua organizzazione dal quale vengono pagate le richieste al modello linguistico. Chi ospita in proprio non paga nulla per il software: è rilasciato con licenza MIT, una licenza libera senza costi di licenza. Tutte le indicazioni si trovano nella pagina <a class="euc-textlink" href="/es/preise">Prezzi</a>.',
+    'faq.q6': 'Dove si trovano i nostri dati?',
+    'faq.a6': 'Nella variante gestita in centri di calcolo certificati ISO 27001, altrimenti sul suo server. I dati dei clienti non addestrano alcun modello, le richieste ai modelli sono elaborate sul lato UE. Le prove si trovano nel <a class="euc-textlink" href="/es/sicherheit">Trust Center</a>.',
+    'cta.h2': 'Lo veda su un suo caso concreto',
+    'cta.p': 'Porti un questionario fornitori, un verbale di collaudo oppure un’istruzione di lavoro, e percorreremo insieme il processo.',
+    'cta.btn1': 'Prenotare un appuntamento',
+    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'src.h2': 'Fonti',
+    'src.p': 'Tutte le cifre provengono da queste fonti, verificate da ultimo nell’agosto 2026, con il rispettivo paese di rilevazione.',
+    'src.fn1': 'Ufficio federale di statistica tedesco, comunicato stampa N057 del 14 agosto 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
+    'src.fn2': 'Industrirådet, rapporto sul fabbisogno di competenze dell’industria (SE, rilevazione da maggio a ottobre 2025, 1.500 imprese), presso Industriarbetsgivarna: <a class="euc-textlink" href="https://industriarbetsgivarna.se/nyheter/kompetensfragor/ny-rapport-sa-har-ser-kompetensbehovet-ut-i-industrin/" target="_blank" rel="noopener">industriarbetsgivarna.se</a>',
+    'src.fn3': 'Eurostat, set di dati isoc_eb_ai, anno di rilevazione 2025: utilizzo dell’IA per classe dimensionale e modalità di acquisizione (SE, NO): <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu/eurostat</a>',
+    'src.fn4': 'Norsk Industri sul barometro delle competenze NHO 2025, 24 febbraio 2026 (NO): <a class="euc-textlink" href="https://www.norskindustri.no/dette-jobber-vi-med/kompetanse/aktuelt/kompetansebarometeret-2025-industrien-mangler-fagfolk-og-teknisk-kompetanse/" target="_blank" rel="noopener">norskindustri.no</a>',
+    'src.fn5': 'ANIA, Nos chiffres cles, sull’industria alimentare (FR): <a class="euc-textlink" href="https://www.ania.net/presentation-ania/nos-chiffres-cles" target="_blank" rel="noopener">ania.net</a>; utilizzo dell’IA per settore nel Baromètre France Num 2025: <a class="euc-textlink" href="https://www.francenum.gouv.fr/" target="_blank" rel="noopener">francenum.gouv.fr</a>',
+    'src.fn6': 'INE, Encuesta Trimestral de Coste Laboral, quarto trimestre 2025 (ES): <a class="euc-textlink" href="https://www.ine.es/dyngs/Prensa/ETCL4T25.htm" target="_blank" rel="noopener">ine.es</a>',
+    'src.fn7': 'Legge tedesca sugli obblighi di diligenza nelle catene di fornitura, articolo 1, ambito di applicazione (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/lksg/__1.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'src.fn8': 'Agenzia per la cybersicurezza nazionale, termini del recepimento italiano di NIS2 (IT): <a class="euc-textlink" href="https://www.acn.gov.it/portale/nis" target="_blank" rel="noopener">acn.gov.it</a>',
+    'src.fn9': 'Commissione europea, quadro normativo per l’intelligenza artificiale, con i termini modificati dal regolamento (UE) 2026/1744: <a class="euc-textlink" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">digital-strategy.ec.europa.eu</a>',
+    'weiter.titel': 'Continua',
+    'weiter.l1': 'L’IA nella produzione: gli stessi processi nel contesto svizzero',
+    'weiter.l2': 'Integrazioni: quali sistemi sono predisposti',
+    'weiter.l3': 'Trust Center: trattamento, esercizio e misure tecniche',
+    'geprueft': 'Ultima verifica: <time datetime="2026-08">agosto 2026</time>'
+  },
+  es: {
+    'meta.title': 'IA en la producción: conectar su ERP | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'La IA en la producción en Europa',
+    'hero.eyebrow': 'La IA en el trabajo diario',
+    'hero.h1': 'La IA en la producción: mantener el saber cuando la gente se va',
+    'hero.lead': 'Las personas con experiencia se jubilan y detrás llegan las exigencias de los grandes clientes: cuestionarios, catálogos de auditoría, justificantes. Este artículo muestra con tres procesos cómo un colega de IA trabaja con el saber de su planta y dónde está el límite con la máquina.',
+    'hero.chip': 'Producción',
+    'hero.datum': '18 de agosto de 2026',
+    'hero.lesezeit': 'Tiempo de lectura: 11 minutos',
+    'kurz.titel': 'En resumen',
+    'kurz.p1': 'En la industria manufacturera alemana trabajaban a mediados de 2026 todavía 5,29 millones de personas, 144.100 menos que un año antes.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> En Noruega, el 62 % de las empresas de la federación Norsk Industri declara necesidades de competencias sin cubrir.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup>',
+    'kurz.p2': 'EU Cowork AI trabaja con el saber de su planta. Los informes de servicio, las actas de avería y de ensayo, los planes de preparación de máquina y las respuestas de auditoría anteriores se convierten en una base de conocimiento: una colección de sus propios documentos a la que usted pregunta en frases normales. Cada respuesta indica el documento del que procede.',
+    'kurz.p3': 'En las auditorías de clientes y en los cuestionarios de proveedores surgen una lista de lagunas y borradores de respuesta a partir de su propia documentación. La aprobación se hace en la empresa; el cumplimiento normativo no lo realiza ningún software.',
+    'kurz.p4': 'Un ERP como Monitor ERP, RamBase o weclapp puede conectarse si dispone de una interfaz documentada. Una interfaz es el punto por el que dos programas intercambian datos; el Model Context Protocol (MCP) es el estándar abierto con el que un programa de IA la utiliza. Rigen permisos por herramienta y un registro de cada acceso. El nivel de las máquinas y del MES, es decir, los controles y la conducción de la producción, queda fuera.',
+    'toc.titel': 'En esta página',
+    'toc.i1': 'Punto de partida',
+    'toc.i2': 'El saber de la plantilla',
+    'toc.i3': 'Auditorías y cuestionarios',
+    'toc.i4': 'Instrucciones en cada idioma',
+    'toc.i5': 'Conectores con el ERP',
+    'toc.i6': 'Protección de datos y secretos',
+    'toc.i7': 'Preguntas frecuentes',
+    'lage.h2': 'Punto de partida: el saber se va, las obligaciones de prueba llegan',
+    'lage.p1': 'Al cierre del primer semestre de 2026, la industria manufacturera alemana ocupaba a 5,29 millones de personas, 144.100 o un 2,7 % menos que un año antes.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup> La documentación no se ha reducido por ello, solo se reparte entre menos hombros.',
+    'lage.p2': 'Así ocurre en toda Europa. En Suecia, el 87 % de las empresas tecnológicas e industriales consultadas informa de dificultades para reclutar competencias en electricidad, energía y automatización.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> En Noruega, el 62 % de las empresas de Norsk Industri declara necesidades de competencias sin cubrir y menciona como consecuencia la pérdida de cuota de mercado.<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup> En España, la estadística oficial contó en el cuarto trimestre de 2025 13.868 vacantes solo en la industria.<sup><a href="#fn-6" aria-label="Nota 6">6</a></sup>',
+    'lage.p3': 'Del otro lado llegan las exigencias. La ley alemana sobre los deberes de diligencia en las cadenas de suministro se aplica a las empresas con, por regla general, al menos 1.000 trabajadores en el país. Hasta principios de 2024 el umbral estaba en 3.000.<sup><a href="#fn-7" aria-label="Nota 7">7</a></sup> El proveedor de 60 personas no está sujeto, pero recibe igualmente sobre su mesa los cuestionarios de sus grandes clientes. En ciberseguridad, el mismo patrón: en Italia las medidas básicas de NIS2 deben estar implantadas antes de octubre de 2026, y quien suministra a clientes afectados recibe las exigencias por vía contractual.<sup><a href="#fn-8" aria-label="Nota 8">8</a></sup>',
+    'lage.p4': 'En la propia IA, la mayor distancia no está entre países, sino entre grandes y pequeños. En Suecia, el 30,7 % de las empresas de 10 a 49 empleados utiliza al menos una tecnología de IA; a partir de 250 empleados, el 71,9 %.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> En Francia, solo el 15 % de las pequeñas y medianas empresas de la industria alimentaria, el principal sector industrial del país, utiliza soluciones de IA.<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup>',
+    'lage.leg1': 'La experiencia abandona la empresa, turno tras turno',
+    'lage.leg2': 'La misma planta, la misma documentación, menos personas',
+    'lage.leg3': 'Cuestionarios, catálogos de auditoría y justificantes del cliente',
+    'lage.fig': 'Dos movimientos se encuentran en la misma oficina: el saber se va, las exigencias llegan. Ambos acaban en las mismas personas.',
+    'uc1.h2': 'Caso de uso 1: el saber de la generación que se marcha se vuelve consultable',
+    'uc1.p1': 'El técnico de mantenimiento que desde hace veinte años sabe cómo se comporta esta prensa tras un cambio de utillaje se jubila en dos años. Buena parte de su saber ya está en la empresa, solo que disperso: en informes de servicio, actas de avería y de ensayo, planes de preparación de máquina y los parámetros anotados a mano en la carpeta junto a la instalación. Una base de conocimiento formada justamente con esos documentos responde a la pregunta del turno de noche. Indica la referencia, es decir, el documento y la página de los que procede la respuesta: qué ajuste funcionó la última vez en ese lote, cómo se resolvió ese fallo.',
+    'uc1.p2': 'La diferencia con un chat en el navegador está en el anclaje. La respuesta procede de sus documentos y muestra de qué informe procede. No procede de la memoria del modelo, es decir, de lo que el programa ha aprendido en general. Lo que no está escrito no lo encuentra, y una documentación desactualizada produce respuestas desactualizadas.',
+    'uc1.leg1': 'Pregunta desde el turno, en lenguaje corriente',
+    'uc1.leg2': 'Informes de servicio, actas de ensayo y planes de preparación de la planta',
+    'uc1.leg3': 'Respuesta con su fuente, comprobable en segundos',
+    'uc1.fig': 'La base de conocimiento responde a partir de la documentación de la planta y muestra de qué informe procede la respuesta.',
+    'uc1.p3': 'Lo que el colega de IA no hace: no ajusta ninguna máquina. Muestra qué estaba ajustado la última vez y quién lo documentó. La decisión se toma en la instalación.',
+    'uc2.h2': 'Caso de uso 2: preparar las auditorías de clientes y los cuestionarios de proveedores',
+    'uc2.p1': 'Un gran cliente envía un cuestionario de proveedores con 120 puntos: deberes de diligencia en la cadena de suministro, pruebas de origen, seguridad de la información. En paralelo avanza la preparación de la próxima auditoría según IFS o BRCGS. Casi toda respuesta está ya en algún sitio de la empresa, en la autodeclaración del año anterior, en un certificado, en una instrucción de procedimiento. Solo que nadie la encuentra en la semana previa a la cita.',
+    'uc2.p2': 'El colega de IA asigna las preguntas a la documentación existente, genera una lista de lagunas para todo aquello de lo que no hay nada y deja para el resto borradores de respuesta con referencia al documento. El trabajo pasa de buscar a comprobar. La lista de lagunas suele ser la mayor ganancia: muestra antes de la auditoría lo que falta.',
+    'uc2.leg1': 'Cuestionario y catálogo de auditoría del cliente',
+    'uc2.leg2': 'Certificados, instrucciones de procedimiento y respuestas anteriores',
+    'uc2.leg3': 'Lista de lagunas: aquello de lo que no hay nada en la empresa',
+    'uc2.leg4': 'Borradores de respuesta con referencia al documento, para su aprobación técnica',
+    'uc2.fig': 'Las respuestas suelen estar ya en la empresa. El borrador las hace localizables; de cada dato responde la empresa.',
+    'uc2.p3': 'Aquí está el límite más nítido. Cada respuesta en un cuestionario de proveedores es un compromiso frente a su cliente, cada documento de auditoría una prueba frente a un organismo de certificación. Ambos salen tras la aprobación técnica, nunca de forma automática.',
+    'uc3.h2': 'Caso de uso 3: instrucciones, etiquetas y manuales en el idioma del turno',
+    'uc3.p1': 'En la producción de alimentos y en el montaje, los equipos de turno trabajan con idiomas mezclados. La norma de higiene, la instrucción de preparación de máquina y la versión breve del manual de instrucciones se elaboran a partir del documento aprobado en el idioma de los empleados. El elemento portante es un glosario de empresa: los nombres de las instalaciones, las denominaciones de los componentes y los términos técnicos se fijan una sola vez, para que el mismo conjunto no se llame de otra manera en cada versión.',
+    'uc3.p2': 'El mismo glosario sostiene los textos de declaración y etiquetado y el manual de instrucciones para la exportación. Sostiene también en sentido inverso: la especificación de proveedor española y el certificado de ensayo italiano se vuelven legibles, sin un portal de traducción ajeno.',
+    'uc3.leg1': 'Documento de partida aprobado de la planta',
+    'uc3.leg2': 'Glosario de empresa: nombres de instalaciones, componentes, términos técnicos',
+    'uc3.leg3': 'Versiones lingüísticas como borrador, para su aprobación por la persona especialista',
+    'uc3.fig': 'El glosario fija los términos para que del mismo conjunto no salga una palabra distinta en cada idioma.',
+    'uc3.p3': 'También aquí rige el límite: las traducciones son borradores. En las instrucciones relevantes para la seguridad y en las menciones exigidas legalmente sigue siendo determinante la versión aprobada, y quien aprueba es la persona especialista. Los permisos llegan hasta cada herramienta: quien no puede ver el cálculo de costes tampoco lo ve a través de la IA. Cada acceso queda en el registro de auditoría, un registro que anota quién abrió qué documento y cuándo.',
+    'konn.h2': 'Conectores: qué puede conectarse con su ERP',
+    'konn.p1': 'Un colega de IA es tan útil como aquello que puede alcanzar. MCP es un estándar abierto que permite a un programa de IA dirigirse a otro programa. Para ello hace falta una interfaz documentada, es decir, un punto de conexión publicado por el que dos programas intercambian datos. Cada herramienta se habilita por separado y cada llamada queda registrada. Valor predeterminado: herramientas de lectura libres, herramientas de escritura solo con confirmación. La tabla muestra hasta dónde llega hoy la conexión de la IA con el software extendido, verificada en agosto de 2026. En la columna central figuran los nombres técnicos de esas interfaces; la que cuenta para usted es la columna derecha.',
+    'konn.th1': 'Software (país)',
+    'konn.th2': 'Interfaz',
+    'konn.th3': 'Conexión con EU Cowork AI',
+    'konn.r1c1': 'Monitor ERP (SE)',
+    'konn.r1c2': 'Documentación de API de consulta libre, REST para las consultas',
+    'konn.r1c3': 'Conexión mediante MCP posible; según la documentación del fabricante, las consultas son gratuitas y los accesos de escritura requieren un producto adicional',
+    'konn.r2c1': 'RamBase (NO)',
+    'konn.r2c2': 'API REST abierta y documentada, con webhooks y SDK',
+    'konn.r2c3': 'Conexión mediante MCP posible: aprovisionamiento, producción, calidad',
+    'konn.r3c1': 'Microsoft Dynamics 365 Business Central (EU)',
+    'konn.r3c2': 'Interfaces documentadas abiertamente',
+    'konn.r3c3': 'Servidor MCP disponible de Microsoft, además de Outlook y SharePoint mediante la API Graph',
+    'konn.r4c1': 'weclapp (DE)',
+    'konn.r4c2': 'Documentación de API accesible públicamente',
+    'konn.r4c3': 'Conexión mediante MCP posible: artículos, listas de materiales, pedidos',
+    'konn.r5c1': 'Xentral (DE)',
+    'konn.r5c2': 'API REST abierta y documentada, referencia OpenAPI versionada',
+    'konn.r5c3': 'Conexión mediante MCP posible',
+    'konn.r6c1': 'SAP Business One (EU)',
+    'konn.r6c2': 'Portales públicos de documentación y de API, Service Layer',
+    'konn.r6c3': 'Conexión mediante MCP posible; conviene comprobar antes el alcance',
+    'konn.r7c1': 'proALPHA (DE)',
+    'konn.r7c2': 'No se encontró documentación para desarrolladores de consulta pública',
+    'konn.r7c3': 'El camino pasa por el fabricante o por exportaciones',
+    'konn.r8c1': 'Odoo (EU)',
+    'konn.r8c2': 'Interfaz abierta documentada, XML-RPC y JSON-RPC',
+    'konn.r8c3': 'Conexiones MCP ya listas de la comunidad; el acceso externo depende del plan',
+    'konn.r9c1': 'Cegid Quadra On Demand (FR)',
+    'konn.r9c2': 'Documentación de consulta pública, OAuth2, se necesita identificador de partner',
+    'konn.r9c3': 'Conexión mediante MCP posible; el acceso pasa por la vía de partners de Cegid',
+    'konn.r10c1': 'Zucchetti (IT)',
+    'konn.r10c2': 'API de partners, consola tras autenticación',
+    'konn.r10c3': 'Conexión mediante MCP posible; el acceso pasa por la vía de partners',
+    'konn.r11c1': 'Holded (ES)',
+    'konn.r11c2': 'API REST abierta y documentada',
+    'konn.r11c3': 'Conexión mediante MCP posible: contactos, pedidos, facturas',
+    'konn.p2': 'Lo que aquí no encontrará de forma deliberada: el nivel de las máquinas y del MES, es decir, la conducción de la producción. Los controles, la captación de datos de producción y la programación fina no se han verificado. Una promesa de integración que se rompe en la primera conversación cuesta más de lo que aporta. El beneficio surge en la oficina y en la preparación del trabajo. Si falta su software, la base de conocimiento y la preparación de auditorías funcionan igualmente: solo necesitan documentos. Más información en <a class="euc-textlink" href="/es/integrationen">Integraciones</a>.',
+    'konn.p3': 'La separación tiene también un motivo jurídico. Si una IA se integra como componente de seguridad en un producto regulado, puede considerarse un sistema de alto riesgo del reglamento de IA. Según el Reglamento (UE) 2026/1744, sus obligaciones se aplican a partir del 2 de diciembre de 2027 y, para los sistemas integrados, a partir del 2 de agosto de 2028.<sup><a href="#fn-9" aria-label="Nota 9">9</a></sup> Un asistente de oficina, por regla general, no entra ahí.',
+    'ds.h2': 'Protección de datos y del secreto: las especificaciones se quedan en la planta',
+    'ds.p1': 'Las especificaciones de clientes, las recetas, los cálculos de costes y los datos de ensayo son secretos empresariales, a menudo vinculados además por un acuerdo de confidencialidad de su cliente. Para los datos personales rige el Reglamento General de Protección de Datos. La empresa sigue siendo responsable aunque sea una herramienta de IA la que los trate. Si interviene un proveedor, hace falta un acuerdo de encargo de tratamiento, es decir, un contrato que fija qué puede hacer ese proveedor con los datos. Este artículo no sustituye al asesoramiento jurídico.',
+    'ds.p2': 'Si los datos salen a un país fuera de Europa, se añade el capítulo V del reglamento. Necesitará entonces una base jurídica para la transferencia y, según el instrumento elegido, una evaluación de la situación legal en el país de destino. Si el almacenamiento y el procesamiento de los modelos tienen lugar en el Espacio Económico Europeo, ese paso desaparece. El tratamiento no se vuelve lícito por ello de forma automática, pero sí más fácil de justificar.',
+    'ds.p3': 'EU Cowork AI funciona en centros de datos certificados según ISO 27001 o en su propio servidor. Las peticiones a los modelos se procesan del lado de la UE y los datos de los clientes no entrenan ningún modelo. La telemetría, es decir, el envío de datos de uso, está desactivada de forma predeterminada. Quien no pueda entregar nada al exterior opera su propia instancia en su propio centro de datos. Una instancia es la instalación que funciona solo para su empresa. El software está bajo licencia MIT. El <a class="euc-textlink" href="/es/avv">acuerdo de encargo de tratamiento</a> y la <a class="euc-textlink" href="/es/subprozessoren">lista de subencargados</a> están publicados abiertamente en el sitio web.',
+    'ds.p4': 'A ello se añade un punto que la estadística europea muestra bien: en Noruega, el 71 % de las empresas que usan IA emplea software comprado ya hecho, y en Suecia el 62 %.<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup> Esas herramientas están disponibles enseguida, pero no conocen la empresa: ni informes de servicio, ni actas de ensayo, ni respuestas de auditoría.',
+    'faq.h2': 'Preguntas frecuentes de la fabricación y la producción de alimentos',
+    'faq.q1': '¿Puede la IA controlar nuestras máquinas o ajustar parámetros, o trabaja solo con el ERP y los documentos?',
+    'faq.a1': 'Controlar no controla nada. EU Cowork AI es apoyo de oficina: buscar en documentos, redactar borradores y consultar sistemas con interfaz documentada, por ejemplo Monitor ERP, weclapp, SAP Business One u Odoo. El nivel de las máquinas y del MES, es decir, los controles y la conducción de la producción, queda deliberadamente fuera. Una IA en una función de seguridad es otra clase de producto.',
+    'faq.q2': '¿Cumplimos así nuestras obligaciones de auditoría, por ejemplo según IFS, BRCGS o HACCP?',
+    'faq.a2': 'No. El colega de IA prepara: encuentra las pruebas existentes, muestra lagunas y redacta borradores de respuesta. La verificación, la aprobación y la responsabilidad del plan HACCP siguen en la empresa. El cumplimiento normativo lo realizan personas, no un software.',
+    'faq.q3': '¿Cómo llega a la base de conocimiento el saber de las personas con experiencia?',
+    'faq.a3': 'A través de lo que ya está escrito: informes de servicio, actas de avería y de ensayo, planes de preparación de máquina, instrucciones de procedimiento e informes de auditoría. Lo que solo está en la cabeza hay que escribirlo o dictarlo antes. Un sustituto de la formación en el puesto no lo es.',
+    'faq.q4': '¿Tenemos que hacer algo por el reglamento de IA?',
+    'faq.a4': 'Para un asistente interno, el reglamento por regla general no prevé obligaciones de autorización ni de conformidad. Dos cosas afectan a todo responsable del despliegue: procurar un nivel suficiente de alfabetización en IA y comunicar cuándo las personas hablan con un sistema de IA. Hay que ser prudente en cuanto una herramienta decide sobre personas, por ejemplo al preseleccionar candidaturas. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'faq.q5': '¿Cuánto cuesta para una planta de ochenta personas?',
+    'faq.a5': 'La operación gestionada cuesta 15 € por persona y mes. De ese importe, 8 € son saldo de modelos: un fondo común de su organización con el que se pagan las consultas al modelo de lenguaje. Quien se aloja por su cuenta no paga nada por el software: está bajo licencia MIT, una licencia libre sin coste de licencia. Toda la información está en la página <a class="euc-textlink" href="/es/preise">Precios</a>.',
+    'faq.q6': '¿Dónde están nuestros datos?',
+    'faq.a6': 'En la variante gestionada, en centros de datos certificados según ISO 27001; en el resto de casos, en su propio servidor. Los datos de los clientes no entrenan ningún modelo y las peticiones a los modelos se procesan del lado de la UE. Los justificantes están en el <a class="euc-textlink" href="/es/sicherheit">Trust Center</a>.',
+    'cta.h2': 'Véalo con un caso propio',
+    'cta.p': 'Traiga un cuestionario de proveedores, un acta de ensayo o una instrucción de trabajo y recorreremos el proceso juntos.',
+    'cta.btn1': 'Reservar una cita',
+    'cta.btn2': 'Únase a la lista de espera',
+    'src.h2': 'Fuentes',
+    'src.p': 'Todas las cifras proceden de estas fuentes, revisadas por última vez en agosto de 2026, con el país de la encuesta correspondiente.',
+    'src.fn1': 'Oficina Federal de Estadística de Alemania, nota de prensa N057 de 14 de agosto de 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
+    'src.fn2': 'Industrirådet, informe sobre las necesidades de competencias de la industria (SE, encuesta de mayo a octubre de 2025, 1.500 empresas), en Industriarbetsgivarna: <a class="euc-textlink" href="https://industriarbetsgivarna.se/nyheter/kompetensfragor/ny-rapport-sa-har-ser-kompetensbehovet-ut-i-industrin/" target="_blank" rel="noopener">industriarbetsgivarna.se</a>',
+    'src.fn3': 'Eurostat, conjunto de datos isoc_eb_ai, año de encuesta 2025: uso de la IA por clase de tamaño y vía de obtención (SE, NO): <a class="euc-textlink" href="https://ec.europa.eu/eurostat/databrowser/view/isoc_eb_ai/default/table" target="_blank" rel="noopener">ec.europa.eu/eurostat</a>',
+    'src.fn4': 'Norsk Industri sobre el barómetro de competencias NHO 2025, 24 de febrero de 2026 (NO): <a class="euc-textlink" href="https://www.norskindustri.no/dette-jobber-vi-med/kompetanse/aktuelt/kompetansebarometeret-2025-industrien-mangler-fagfolk-og-teknisk-kompetanse/" target="_blank" rel="noopener">norskindustri.no</a>',
+    'src.fn5': 'ANIA, Nos chiffres cles, sobre la industria alimentaria (FR): <a class="euc-textlink" href="https://www.ania.net/presentation-ania/nos-chiffres-cles" target="_blank" rel="noopener">ania.net</a>; uso de la IA por sector en el Baromètre France Num 2025: <a class="euc-textlink" href="https://www.francenum.gouv.fr/" target="_blank" rel="noopener">francenum.gouv.fr</a>',
+    'src.fn6': 'INE, Encuesta Trimestral de Coste Laboral, cuarto trimestre de 2025 (ES): <a class="euc-textlink" href="https://www.ine.es/dyngs/Prensa/ETCL4T25.htm" target="_blank" rel="noopener">ine.es</a>',
+    'src.fn7': 'Ley alemana sobre los deberes de diligencia en las cadenas de suministro, artículo 1, ámbito de aplicación (DE): <a class="euc-textlink" href="https://www.gesetze-im-internet.de/lksg/__1.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>',
+    'src.fn8': 'Agenzia per la cybersicurezza nazionale, plazos de la transposición italiana de NIS2 (IT): <a class="euc-textlink" href="https://www.acn.gov.it/portale/nis" target="_blank" rel="noopener">acn.gov.it</a>',
+    'src.fn9': 'Comisión Europea, marco regulador de la inteligencia artificial, con los plazos modificados por el Reglamento (UE) 2026/1744: <a class="euc-textlink" href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">digital-strategy.ec.europa.eu</a>',
+    'weiter.titel': 'Continuar',
+    'weiter.l1': 'La IA en la producción: los mismos procesos en el entorno suizo',
+    'weiter.l2': 'Integraciones: qué sistemas están preparados',
+    'weiter.l3': 'Trust Center: tratamiento, operación y medidas técnicas',
+    'geprueft': 'Última revisión: <time datetime="2026-08">agosto de 2026</time>'
+  }
+};
+</script>
+
+</body>
+</html>

@@ -44,7 +44,6 @@
       'chrome.footer.status': 'Operational',
       'chrome.footer.statusSwiss': 'Swiss instance',
       'chrome.footer.col.product': 'Product',
-      'chrome.footer.col.know': 'Knowledge',
       'chrome.footer.col.trust': 'Trust',
       'chrome.footer.col.legal': 'Legal',
       'chrome.footer.link.features': 'Features',
@@ -54,20 +53,20 @@
       'chrome.footer.link.integrations': 'Integrations',
       'chrome.footer.link.booking': 'Book a call',
       'chrome.footer.link.faq': 'FAQ',
-      'chrome.footer.link.docs': 'Docs',
+      'chrome.footer.link.docs': 'Documentation',
       'chrome.footer.link.blog': 'Blog',
       'chrome.footer.link.comparison': 'Comparison',
       'chrome.footer.link.governance': 'Governance',
-      'chrome.footer.link.vision': 'Vision',
+      'chrome.footer.link.vision': 'Our vision',
       'chrome.footer.link.security': 'Security & Trust',
       'chrome.footer.link.avv': 'DPA',
-      'chrome.footer.link.toms': 'TOMs',
+      'chrome.footer.link.toms': 'TOM overview',
       'chrome.footer.link.subs': 'Subprocessors',
       'chrome.footer.link.imprint': 'Imprint',
       'chrome.footer.link.privacy': 'Privacy',
       'chrome.footer.link.terms': 'Terms (GTC)',
-      'chrome.footer.rights': '© 2026 EU Cowork AI',
-      'chrome.footer.built': 'Built on LibreChat · MIT'
+      'chrome.footer.col.lang': 'Language',
+      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
     },
     fr: {
       'chrome.skip': 'Aller au contenu',
@@ -86,8 +85,7 @@
       'chrome.footer.status': 'Opérationnel',
       'chrome.footer.statusSwiss': 'Instance suisse',
       'chrome.footer.col.product': 'Produit',
-      'chrome.footer.col.know': 'Ressources',
-      'chrome.footer.col.trust': 'Confiance',
+      'chrome.footer.col.trust': 'Trust',
       'chrome.footer.col.legal': 'Juridique',
       'chrome.footer.link.features': 'Fonctionnalités',
       'chrome.footer.link.sovereignty': 'Souveraineté',
@@ -96,20 +94,20 @@
       'chrome.footer.link.integrations': 'Intégrations',
       'chrome.footer.link.booking': 'Réserver un rendez-vous',
       'chrome.footer.link.faq': 'FAQ',
-      'chrome.footer.link.docs': 'Docs',
+      'chrome.footer.link.docs': 'Documentation',
       'chrome.footer.link.blog': 'Blog',
       'chrome.footer.link.comparison': 'Comparatif',
-      'chrome.footer.link.governance': 'Gouvernance',
-      'chrome.footer.link.vision': 'Vision',
+      'chrome.footer.link.governance': 'Governance',
+      'chrome.footer.link.vision': 'Notre vision',
       'chrome.footer.link.security': 'Security & Trust',
       'chrome.footer.link.avv': 'DPA (sous-traitance)',
-      'chrome.footer.link.toms': 'TOMs',
+      'chrome.footer.link.toms': 'Aperçu des MTO',
       'chrome.footer.link.subs': 'Sous-traitants ultérieurs',
       'chrome.footer.link.imprint': 'Mentions légales',
       'chrome.footer.link.privacy': 'Confidentialité',
       'chrome.footer.link.terms': 'CGV',
-      'chrome.footer.rights': '© 2026 EU Cowork AI',
-      'chrome.footer.built': 'Built on LibreChat · MIT'
+      'chrome.footer.col.lang': 'Langue',
+      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
     },
     it: {
       'chrome.skip': 'Vai al contenuto',
@@ -120,17 +118,16 @@
       'chrome.cta.waitlist': 'Iscriviti alla lista d’attesa',
       'chrome.crumb.home': 'Home',
       'chrome.footer.tagline': 'Il vostro collega IA. Resta in Europa.',
-      'chrome.footer.badge1t': 'Installabile ovunque',
-      'chrome.footer.badge1s': 'Gestito, cloud proprio oppure on-premise',
+      'chrome.footer.badge1t': 'Eseguibile ovunque',
+      'chrome.footer.badge1s': 'Gestito, cloud proprio o on-premise',
       'chrome.footer.badge2t': 'Conforme al GDPR',
-      'chrome.footer.badge2s': 'Elaborazione nell’UE',
-      'chrome.footer.more': 'Di più sulla sicurezza',
+      'chrome.footer.badge2s': 'Trattamento nell’UE',
+      'chrome.footer.more': 'Maggiori informazioni sulla sicurezza',
       'chrome.footer.status': 'Operativo',
       'chrome.footer.statusSwiss': 'Istanza svizzera',
       'chrome.footer.col.product': 'Prodotto',
-      'chrome.footer.col.know': 'Risorse',
-      'chrome.footer.col.trust': 'Fiducia',
-      'chrome.footer.col.legal': 'Note legali',
+      'chrome.footer.col.trust': 'Trust',
+      'chrome.footer.col.legal': 'Legale',
       'chrome.footer.link.features': 'Funzionalità',
       'chrome.footer.link.sovereignty': 'Sovranità',
       'chrome.footer.link.pricing': 'Prezzi',
@@ -138,20 +135,20 @@
       'chrome.footer.link.integrations': 'Integrazioni',
       'chrome.footer.link.booking': 'Prenotare un appuntamento',
       'chrome.footer.link.faq': 'FAQ',
-      'chrome.footer.link.docs': 'Docs',
+      'chrome.footer.link.docs': 'Documentazione',
       'chrome.footer.link.blog': 'Blog',
       'chrome.footer.link.comparison': 'Confronto',
       'chrome.footer.link.governance': 'Governance',
-      'chrome.footer.link.vision': 'Visione',
+      'chrome.footer.link.vision': 'La nostra visione',
       'chrome.footer.link.security': 'Security & Trust',
       'chrome.footer.link.avv': 'Accordo sul trattamento (DPA)',
-      'chrome.footer.link.toms': 'TOMs',
+      'chrome.footer.link.toms': 'Panoramica MTO',
       'chrome.footer.link.subs': 'Sub-responsabili',
       'chrome.footer.link.imprint': 'Note legali',
       'chrome.footer.link.privacy': 'Privacy',
       'chrome.footer.link.terms': 'Condizioni generali',
-      'chrome.footer.rights': '© 2026 EU Cowork AI',
-      'chrome.footer.built': 'Built on LibreChat · MIT'
+      'chrome.footer.col.lang': 'Lingua',
+      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
     },
     es: {
       'chrome.skip': 'Saltar al contenido',
@@ -165,13 +162,12 @@
       'chrome.footer.badge1t': 'Desplegable en cualquier lugar',
       'chrome.footer.badge1s': 'Gestionado, nube propia u on-premise',
       'chrome.footer.badge2t': 'Conforme al RGPD',
-      'chrome.footer.badge2s': 'Procesamiento en la UE',
+      'chrome.footer.badge2s': 'Tratamiento en la UE',
       'chrome.footer.more': 'Más sobre la seguridad',
       'chrome.footer.status': 'Operativo',
       'chrome.footer.statusSwiss': 'Instancia suiza',
       'chrome.footer.col.product': 'Producto',
-      'chrome.footer.col.know': 'Recursos',
-      'chrome.footer.col.trust': 'Confianza',
+      'chrome.footer.col.trust': 'Trust',
       'chrome.footer.col.legal': 'Legal',
       'chrome.footer.link.features': 'Funciones',
       'chrome.footer.link.sovereignty': 'Soberanía',
@@ -180,20 +176,20 @@
       'chrome.footer.link.integrations': 'Integraciones',
       'chrome.footer.link.booking': 'Reservar una cita',
       'chrome.footer.link.faq': 'FAQ',
-      'chrome.footer.link.docs': 'Docs',
+      'chrome.footer.link.docs': 'Documentación',
       'chrome.footer.link.blog': 'Blog',
       'chrome.footer.link.comparison': 'Comparativa',
-      'chrome.footer.link.governance': 'Gobernanza',
-      'chrome.footer.link.vision': 'Visión',
+      'chrome.footer.link.governance': 'Governance',
+      'chrome.footer.link.vision': 'Nuestra visión',
       'chrome.footer.link.security': 'Security & Trust',
       'chrome.footer.link.avv': 'Acuerdo de encargo (DPA)',
-      'chrome.footer.link.toms': 'TOMs',
+      'chrome.footer.link.toms': 'Resumen de MTO',
       'chrome.footer.link.subs': 'Subencargados',
       'chrome.footer.link.imprint': 'Aviso legal',
       'chrome.footer.link.privacy': 'Privacidad',
       'chrome.footer.link.terms': 'Condiciones generales',
-      'chrome.footer.rights': '© 2026 EU Cowork AI',
-      'chrome.footer.built': 'Built on LibreChat · MIT'
+      'chrome.footer.col.lang': 'Idioma',
+      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
     }
   };
 
@@ -416,6 +412,9 @@
     document.querySelectorAll('select[data-euc-lang]').forEach(function (s) {
       if (s.value !== lang) s.value = lang;
     });
+    document.querySelectorAll('button[data-euc-lang-to]').forEach(function (b) {
+      b.classList.toggle('is-current', b.getAttribute('data-euc-lang-to') === lang);
+    });
   }
 
   function wire() {
@@ -423,6 +422,30 @@
       s.value = readCurrent();
       s.addEventListener('change', function () { setLang(s.value); });
     });
+    /* Sprachspalte der Fussleiste: jede Sprache hat ihre eigene Adresse,
+       deshalb wird navigiert statt nur ausgetauscht. */
+    document.querySelectorAll('button[data-euc-lang-to]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var l = b.getAttribute('data-euc-lang-to');
+        if (SUPPORTED.indexOf(l) < 0) return;
+        persist(l);
+        var here = location.pathname + location.search + location.hash;
+        var target = urlForLang(l, location.pathname) + location.search + location.hash;
+        if (target !== here) { location.href = target; } else { setLang(l); }
+      });
+    });
+    /* Ortszeit in der Statuszeile, wie auf der Startseite. */
+    var clocks = document.querySelectorAll('[data-euc-clock]');
+    if (clocks.length) {
+      var tickClock = function () {
+        try {
+          var t = new Date().toLocaleTimeString('de-CH', { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          clocks.forEach(function (c) { c.textContent = 'Lupfig ' + t; });
+        } catch (e) {}
+      };
+      tickClock();
+      setInterval(tickClock, 1000);
+    }
     apply(readCurrent());
   }
 

@@ -592,10 +592,10 @@ img { height: auto; }
    -------------------------------------------------------------------------- */
 
 .euc-breadcrumb {
-  font-family: var(--f-mono);
-  font-size: 12px;
+  font-family: var(--f-body);
+  font-size: 13px;
   line-height: 1.4;
-  letter-spacing: .06em;
+  letter-spacing: .01em;
   color: var(--c-body-soft);
   padding-top: clamp(22px, 3vw, 32px);
 }
@@ -1156,10 +1156,10 @@ pre code {
   margin: clamp(36px, 4vw, 48px) 0 clamp(56px, 7vw, 80px);
   padding-top: var(--s-5);
   border-top: 1px solid var(--c-line-soft);
-  font-family: var(--f-mono);
-  font-size: 12px;
+  font-family: var(--f-body);
+  font-size: 13px;
   line-height: 1.4;
-  letter-spacing: .06em;
+  letter-spacing: .01em;
   color: var(--c-body-soft);
 }
 
@@ -1242,6 +1242,7 @@ pre code {
 .euc-footer-more {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   min-height: 44px;
   font-family: var(--f-body);
   font-size: 13.5px;
@@ -1282,7 +1283,7 @@ pre code {
   color: var(--c-on-deep-body);
 }
 .euc-status .euc-status-sep { color: var(--c-on-deep-label); }
-.euc-status .euc-status-loc { color: var(--c-on-deep-muted); }
+.euc-status .euc-status-loc { color: var(--c-on-deep-muted); font-variant-numeric: tabular-nums; }
 
 .euc-footer-cols { display: flex; flex-wrap: wrap; gap: var(--s-7) 56px; }
 .euc-footer-col { min-width: 150px; }
@@ -1297,16 +1298,24 @@ pre code {
   margin: 0;
 }
 .euc-footer-col nav { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
-.euc-footer-col nav a {
+.euc-footer-col nav a,
+.euc-footer-col nav button {
   display: flex;
   align-items: center;
   min-height: 44px;
   font-family: var(--f-body);
   font-size: 14.5px;
+  line-height: 1.35;
+  text-align: left;
   text-decoration: none;
   color: var(--c-on-deep-body);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   transition: color .15s ease;
 }
+.euc-footer-col nav button.is-current { color: var(--c-on-deep); }
 
 .euc-footer-rule { height: 1px; background: rgba(165, 216, 230, .16); margin: var(--s-7) 0 var(--s-5); }
 
@@ -1322,12 +1331,6 @@ pre code {
   line-height: 1.45;
   letter-spacing: .006em;
   color: var(--c-on-deep-muted);
-}
-.euc-footer-bottom .euc-built {
-  font-family: var(--f-mono);
-  font-size: 12px;
-  letter-spacing: .06em;
-  color: var(--c-on-deep-label);
 }
 
 /* --------------------------------------------------------------------------
@@ -1356,7 +1359,8 @@ pre code {
   .euc-textlink:hover { color: var(--c-eu-500); border-color: var(--c-ice-300); }
   .euc-card:hover { box-shadow: var(--sh-2), var(--edge); }
   .euc-weiter a:hover { color: var(--c-eu-700); border-color: var(--c-ice-300); }
-  .euc-footer-col nav a:hover { color: var(--c-ice-300); }
+  .euc-footer-col nav a:hover,
+  .euc-footer-col nav button:hover { color: var(--c-ice-300); }
   .euc-footer-more:hover { color: #C9E9F2; }
   .cta-box .euc-btn-primary:hover { background: #FFFFFF; color: var(--c-deep); }
   .cta-box .euc-btn-secondary:hover { background: rgba(165, 216, 230, .18); }
@@ -1453,3 +1457,397 @@ pre code {
     .euc-mob[open]::details-content { transform: none !important; }
   }
 }
+
+/* --------------------------------------------------------------------------
+   20. Illustrationen: Inline-SVG-Figuren der Blog-Artikel
+
+   Regeln für Autoren:
+   - Das SVG trägt keinen übersetzbaren Text. Beschriftungen stehen in der
+     HTML-Legende (.euc-fig-legend), das SVG nur nummerierte Marker; <text>
+     ist ausschliesslich für sprachneutrale Ziffern erlaubt (.fig-num).
+   - Farben kommen über die Klassen unten aus den Tokens, nie als Literal.
+   - Jede Animation muss im Endzustand die vollständige, korrekte Figur
+     zeigen: der Pauschalfilter oben (Abschnitt 19) klemmt Bewegung ab, und
+     die Scroll-Aufbauten laufen nur mit animation-timeline-Unterstützung.
+   -------------------------------------------------------------------------- */
+
+.euc-fig {
+  margin: var(--s-5) 0 var(--s-6);
+  padding: clamp(16px, 3vw, 28px);
+  background: var(--c-surface);
+  border: var(--bd);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-flat);
+}
+
+.euc-fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--c-ink);
+}
+
+/* Farbrollen: stroke="currentColor" am Wurzel-SVG, die Klasse setzt die Rolle.
+   .fig-panel steht zuerst, damit eine kombinierte Farbklasse (fig-panel fig-eu)
+   die Kontur des Panels gewinnt. */
+.fig-panel  { fill: var(--c-surface); color: var(--c-hairline-strong); }
+.fig-soft   { color: var(--c-hairline-strong); }
+.fig-line   { color: var(--c-hairline); }
+.fig-eu     { color: var(--c-eu-700); }
+.fig-eu-mid { color: var(--c-eu-500); }
+.fig-ice    { color: var(--c-ice-300); }
+.fig-fill-ice  { fill: var(--c-ice-100); }
+.fig-fill-tint { fill: var(--c-ice-tint); }
+.fig-dot-gold  { fill: var(--c-gold-500); stroke: none; }   /* Interpunktion, nie Fläche */
+.fig-numbg  { fill: var(--c-ice-100); color: var(--c-hairline); }
+.fig-num {
+  fill: var(--c-eu-500);
+  stroke: none;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Ein durchlaufender Impuls pro Figur: wandernde Strichlung auf dem Weg.
+   Ohne Bewegung (Abschnitt 19) steht die Strichlung still, die Figur bleibt
+   vollständig. */
+.fig-flow { stroke-dasharray: 5 11; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes euc-fig-flow { to { stroke-dashoffset: -64; } }
+  .fig-flow { animation: euc-fig-flow 2.6s linear infinite; }
+}
+
+/* Scroll-Aufbau als Progressive Enhancement: nur mit Unterstützung und nur
+   ohne Bewegungs-Vorbehalt. Grundzustand ist die fertige Figur. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes euc-fig-in {
+      from { opacity: 0; transform: translateY(10px); }
+    }
+    .fig-reveal {
+      animation: euc-fig-in linear both;
+      animation-timeline: view();
+      animation-range: entry 15% entry 55%;
+    }
+  }
+}
+
+.euc-fig-legend {
+  list-style: none;
+  counter-reset: fig;
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2) var(--s-5);
+}
+@media (min-width: 720px) {
+  .euc-fig-legend { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  /* Vier Eintraege: zwei Spalten zu zwei Zeilen, sonst steht Punkt 4 allein
+     auf der zweiten Zeile. */
+  .euc-fig-legend:has(li:nth-child(4)) { grid-template-columns: repeat(2, 1fr); }
+}
+.euc-fig-legend li {
+  counter-increment: fig;
+  position: relative;
+  padding-left: 30px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--c-body);
+}
+.euc-fig-legend li::before {
+  content: counter(fig);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  line-height: 1;
+  color: var(--c-eu-500);
+  background: var(--c-ice-100);
+  border-radius: var(--r-full);
+  box-shadow: var(--edge-soft);
+}
+
+.euc-fig figcaption {
+  margin-top: var(--s-4);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--c-body-soft);
+}
+
+/* Lange Komposita (Artikel-Fliesstext) brechen um, statt bei 320px zu schieben. */
+.euc-main p, .euc-main li { overflow-wrap: break-word; }
+
+/* Kartenkopf im Blog-Index: Branchen-Chip und Datum in einer Zeile. */
+.euc-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-3);
+}
+.euc-card-meta time {
+  font-family: var(--f-body);
+  font-size: 13px;
+  color: var(--c-body-soft);
+}
+
+/* --------------------------------------------------------------------------
+   21. Blog breit: Artikel-Hero als Band, Index-Karten mit Bild
+
+   Der Blog nutzt wie die Preisliste die breite Spur (.euc-wrap-wide).
+   Artikelseiten tragen .blog-article am <main>, der Index .blog-index
+   (derzeit ohne eigene Regeln, nur als Geltungsbereich reserviert).
+   Die Szenen-SVGs folgen den Farbrollen aus Abschnitt 20.
+   Haltepunkte dieses Abschnitts: 760px zweispaltiges Kartenraster,
+   980px zweispaltiges Hero-Band und quer liegende Feature-Karte,
+   1060px Ausbruch von Figuren und Tabellen aus der Textspalte.
+   -------------------------------------------------------------------------- */
+
+/* Artikel: Textspalte etwas breiter als die Standard-Messe. */
+.blog-article { --w-measure: 780px; }
+
+/* --- Hero-Band: Artikelseiten und Blog-Index --- */
+.blog-hero {
+  background: linear-gradient(180deg, var(--c-ice-tint) 0%, var(--c-bg) 100%);
+  padding-bottom: clamp(28px, 4vw, 48px);
+}
+
+/* align-items center: die Szene steht auf der Hoehe des Titelblocks. Bei
+   kurzen Titeln sass sie sonst unten und liess oben eine leere Ecke. */
+.blog-hero-grid {
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  padding-top: clamp(24px, 3vw, 40px);
+}
+@media (min-width: 980px) {
+  .blog-hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+}
+
+/* Kleiner als display-xl: der Titel steht in einer Spalte, nicht allein.
+   Der 36px-Boden unterschreitet bewusst die 40px-Mobilstufe aus Abschnitt 19,
+   weil Artikeltitel mit bis zu 105 Zeichen laenger sind als Seitentitel. */
+.blog-hero h1 {
+  font-size: clamp(36px, 4.6vw, 46px);
+  margin-bottom: var(--s-4);
+}
+
+.blog-hero-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin: var(--s-5) 0 0;
+}
+/* Datum und Lesezeit bilden ein Paar; der groessere Abstand nach dem Chip
+   trennt die Gruppen, ohne einen Trennpunkt zu brauchen. */
+.blog-hero-meta .chip { margin-right: var(--s-3); }
+.blog-hero-meta > time,
+.blog-hero-meta > span:not(.chip) {
+  font-family: var(--f-body);
+  font-size: 13px;
+  color: var(--c-body-soft);
+}
+
+/* Das Szenen-Bild sitzt als weisses Panel neben dem Titel; Polsterung wie
+   .euc-fig, der weichere Schatten hebt es vom Verlaufsgrund ab. */
+.blog-hero-art {
+  background: var(--c-surface);
+  border: var(--bd);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-soft);
+  padding: clamp(16px, 3vw, 28px);
+}
+.blog-hero-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--c-ink);
+}
+
+/* Figuren und Tabellen duerfen auf grossen Schirmen aus der Textspalte
+   ausbrechen. 100% ist die Spaltenbreite; der negative Rand zentriert das
+   breitere Element auf der Seitenmitte. */
+@media (min-width: 1060px) {
+  .blog-article .euc-fig,
+  .blog-article .table-wrap {
+    --w-blog-wide: min(980px, 100vw - 2 * var(--gutter));
+    width: var(--w-blog-wide);
+    margin-left: calc((100% - var(--w-blog-wide)) / 2);
+  }
+}
+
+/* --- Blog-Index: Karten mit Bildflaeche --- */
+.blog-cards {
+  display: grid;
+  gap: var(--s-5);
+  margin: 0 0 var(--s-6);
+}
+@media (min-width: 760px) {
+  .blog-cards { grid-template-columns: 1fr 1fr; }
+}
+
+.blog-card {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.blog-card-body {
+  padding: 22px;
+}
+.blog-card-body > :last-child { margin-bottom: 0; }
+
+/* Ein Link pro Karte: der Titel-Link spannt sich per Pseudoelement ueber
+   die ganze Flaeche (.euc-card ist position: relative). Die Bildflaeche
+   selbst ist reine Dekoration. */
+.blog-card-body h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.blog-card-media {
+  background: linear-gradient(180deg, var(--c-ice-tint) 0%, var(--c-ice-100) 100%);
+  border-bottom: var(--bd);
+  padding: clamp(16px, 2.5vw, 24px) clamp(20px, 3.5vw, 30px);
+}
+.blog-card-media svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--c-ink);
+}
+
+/* Auf schmalen Schirmen skalieren die 640er-Szenen unter 1 CSS-px Strich;
+   etwas mehr Strichstaerke haelt die feinen Motive sichtbar. */
+@media (max-width: 600px) {
+  .blog-card-media svg,
+  .blog-hero-art svg { stroke-width: 2.4; }
+}
+
+/* Der neueste Artikel liegt als grosse Karte quer ueber beide Spalten.
+   Sonderbehandlung erst ab 980px; im Tablet-Band ist er eine normale Karte. */
+@media (min-width: 980px) {
+  .blog-card-featured { grid-column: 1 / -1; flex-direction: row; align-items: stretch; }
+  .blog-card-featured .blog-card-media {
+    flex: 0 0 44%;
+    border-bottom: 0;
+    border-right: var(--bd);
+    display: grid;
+    align-content: center;
+  }
+  .blog-card-featured .blog-card-body {
+    padding: clamp(24px, 3vw, 44px);
+    align-self: center;
+  }
+  .blog-card-featured .blog-card-body h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; }
+  .blog-card-featured .blog-card-body p { font-size: 15.5px; line-height: 1.55; }
+}
+
+/* Druck: die breite Spur verhaelt sich wie die schmale, das Band verliert
+   seinen Verlauf. */
+@media print {
+  .euc-wrap-wide { max-width: none; padding: 0; }
+  .blog-hero { background: none; }
+}
+
+/* --------------------------------------------------------------------------
+   22. Blog-Artikel: Leseleiste am linken Rand
+
+   Ab 1360px sitzt links der Textspalte eine fixe Abschnittsliste. Sie liegt
+   links der 980px-Ausbruchbreite (Abschnitt 21) und blendet sich erst ein,
+   wenn das Hero-Band aus dem Bild ist; das Skript im Artikel setzt dazu
+   .is-visible und markiert den aktiven Abschnitt mit .is-active.
+   -------------------------------------------------------------------------- */
+
+.blog-rail { display: none; }
+
+@media (min-width: 1360px) {
+  .blog-rail {
+    display: block;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: max(24px, calc(50vw - 640px));
+    width: 140px;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s var(--ease-out);
+  }
+  .blog-rail.is-visible { opacity: 1; pointer-events: auto; }
+
+  .blog-rail ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--c-line);
+    display: grid;
+    gap: var(--s-3);
+  }
+  .blog-rail li { position: relative; padding-left: 16px; }
+  .blog-rail a {
+    font-family: var(--f-body);
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--c-body-soft);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .blog-rail a::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--r-full);
+    background: var(--c-bg);
+    border: 1.7px solid var(--c-hairline-strong);
+    box-sizing: border-box;
+    transition: background var(--d-hover) var(--ease-out),
+                border-color var(--d-hover) var(--ease-out);
+  }
+  .blog-rail a:hover { color: var(--c-ink); }
+  .blog-rail a.is-active { color: var(--c-eu-700); }
+  .blog-rail a.is-active::before {
+    background: var(--c-eu-700);
+    border-color: var(--c-eu-700);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   23. Blog-Index: Branchen-Sektionen, Farbflaechen
+
+   Der Index gliedert die Artikel nach Branche (je eine Sektion mit CH- und
+   Europa-Karte). Die Medien-Farbflaechen sind Tints der
+   bestehenden Markenfarben (Gold, EU-Blau-Stufen, Eis), damit die Karten
+   nicht monoton wirken, ohne eine neue Farbfamilie einzufuehren.
+   -------------------------------------------------------------------------- */
+
+
+.blog-branche h2 {
+  font-size: clamp(24px, 2.6vw, 30px);
+  margin-top: 0;
+}
+
+/* Zwischen Einleitung und erster Branche genuegt eine knappe Zaesur: das
+   Farbband des Kopfbands trennt die beiden Bereiche schon sichtbar. */
+.blog-index .blog-hero { padding-bottom: clamp(14px, 1.8vw, 22px); }
+.blog-index .blog-hero .euc-hero { padding-bottom: clamp(16px, 2vw, 24px); }
+.blog-index .blog-branche:first-of-type { padding-top: clamp(28px, 3.2vw, 38px); }
+
+
+/* Medien-Farbflaechen je Branche: Tint aus einer Markenfarbe in Eis. */
+.blog-card-media.media-handwerk   { background: linear-gradient(165deg, rgba(244, 197, 66, .16) 0%, var(--c-ice-100) 100%); }
+.blog-card-media.media-produktion { background: linear-gradient(165deg, rgba(63, 124, 201, .12) 0%, var(--c-ice-100) 100%); }
+.blog-card-media.media-kanzlei    { background: linear-gradient(165deg, rgba(18, 50, 107, .08) 0%, var(--c-ice-100) 100%); }
+.blog-card-media.media-immobilien { background: linear-gradient(165deg, rgba(165, 216, 230, .28) 0%, var(--c-ice-100) 100%); }
+.blog-card-media.media-praxis     { background: linear-gradient(165deg, rgba(46, 108, 134, .12) 0%, var(--c-ice-100) 100%); }

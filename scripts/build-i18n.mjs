@@ -64,7 +64,17 @@ const PAGES = [
   { key: 'faq',            path: '/faq',             src: 'faq/index.html',         out: 'faq/index.html',             kind: 'static' , lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.8' },
   { key: 'governance',     path: '/governance',      src: 'governance/index.html',  out: 'governance/index.html',      kind: 'static' , lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.8' },
   { key: 'integrationen',  path: '/integrationen',   src: 'integrationen/index.html', out: 'integrationen/index.html', kind: 'static' , lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.7' },
-  { key: 'blog',           path: '/blog',            src: 'blog/index.html',        out: 'blog/index.html',            kind: 'static' , lastmod: '2026-08-11', changefreq: 'weekly', priority: '0.6' },
+  { key: 'blog',           path: '/blog',            src: 'blog/index.html',        out: 'blog/index.html',            kind: 'static' , ldText: true, lastmod: '2026-08-18', changefreq: 'weekly', priority: '0.7' },
+  { key: 'blog-handwerk',  path: '/blog/ki-handwerk-kmu', src: 'blog/ki-handwerk-kmu/index.html', out: 'blog/ki-handwerk-kmu/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-produktion', path: '/blog/ki-produktion', src: 'blog/ki-produktion/index.html', out: 'blog/ki-produktion/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-treuhand',  path: '/blog/ki-treuhand-kanzlei', src: 'blog/ki-treuhand-kanzlei/index.html', out: 'blog/ki-treuhand-kanzlei/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-immobilien', path: '/blog/ki-immobilienverwaltung', src: 'blog/ki-immobilienverwaltung/index.html', out: 'blog/ki-immobilienverwaltung/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-praxis',    path: '/blog/ki-praxis-apotheke', src: 'blog/ki-praxis-apotheke/index.html', out: 'blog/ki-praxis-apotheke/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-handwerk-eu', path: '/blog/ki-handwerk-europa', src: 'blog/ki-handwerk-europa/index.html', out: 'blog/ki-handwerk-europa/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-produktion-eu', path: '/blog/ki-produktion-europa', src: 'blog/ki-produktion-europa/index.html', out: 'blog/ki-produktion-europa/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-kanzlei-eu', path: '/blog/ki-kanzlei-europa', src: 'blog/ki-kanzlei-europa/index.html', out: 'blog/ki-kanzlei-europa/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-immobilien-eu', path: '/blog/ki-immobilien-europa', src: 'blog/ki-immobilien-europa/index.html', out: 'blog/ki-immobilien-europa/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
+  { key: 'blog-praxis-eu', path: '/blog/ki-praxis-europa', src: 'blog/ki-praxis-europa/index.html', out: 'blog/ki-praxis-europa/index.html', kind: 'static', ldText: true, lastmod: '2026-08-18', changefreq: 'monthly', priority: '0.7' },
   { key: 'vision',         path: '/vision',          src: 'vision/index.html',      out: 'vision/index.html',          kind: 'static' , lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.6' },
   { key: 'sicherheit',     path: '/sicherheit',      src: 'sicherheit/index.html',  out: 'sicherheit/index.html',      kind: 'static' , lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.8' },
   { key: 'self-hosting',   path: '/self-hosting',    src: 'self-hosting/index.html', out: 'self-hosting/index.html',   kind: 'static', lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.8' }
@@ -118,7 +128,7 @@ function replaceTagged(html, lookup) {
     }
     if (close < 0) continue;
 
-    const value = lookup(m[1]);
+    const value = lookup(m[1], html.slice(openEnd + 1, close));
     out += html.slice(cursor, openEnd + 1);
     out += (value === null || value === undefined) ? html.slice(openEnd + 1, close) : value;
     cursor = close;
@@ -182,7 +192,7 @@ function injectHreflang(html, pagePath) {
   return html.replace('</head>', `${block}\n</head>`);
 }
 
-function rewriteHead(html, { lang, pagePath, meta }) {
+function rewriteHead(html, { lang, pagePath, meta, ldCtx }) {
   let out = html;
 
   out = out.replace(/<html([^>]*)\slang="[^"]*"/i, `<html$1 lang="${lang}"`);
@@ -217,7 +227,7 @@ function rewriteHead(html, { lang, pagePath, meta }) {
   out = setMeta(out, /(<meta property="og:url" content=")([^"]*)(")/i, ORIGIN + urlFor(lang, pagePath));
   out = out.replace(/(<link rel="canonical" href=")([^"]*)(")/i, `$1${ORIGIN}${urlFor(lang, pagePath)}$3`);
   out = out.replace(/"inLanguage":\s*"[^"]*"/g, `"inLanguage": "${BCP47[lang]}"`);
-  out = localizeJsonLd(out, lang);
+  out = localizeJsonLd(out, lang, ldCtx || null);
 
   return injectHreflang(out, pagePath);
 }
@@ -263,11 +273,77 @@ function localizeUrl(url, lang) {
   return `${ORIGIN}/${lang}${path === '/' ? '' : path}${hash}`;
 }
 
+/* ---------------------- JSON-LD-Text uebersetzen (ldText) ----------------------
+
+   Sichtbarer Text und JSON-LD derselben Seite muessen dieselbe Sprache
+   sprechen: die KI-Crawler fuehren kein JavaScript aus und lesen bevorzugt
+   das strukturierte Datum. Fuer Seiten mit `ldText: true` in PAGES wird
+   deshalb jeder Textwert im JSON-LD gegen den normalisierten deutschen
+   Sichttext aufgeloest. Der Index entsteht aus denselben [data-i18n]-
+   Elementen, die replaceTagged besucht -- eine Quelle, kein zweites
+   Woerterbuch. Ein deutscher String, der unter zwei Schluesseln verschieden
+   uebersetzt ist, fliegt aus dem Index: lieber deutsch stehen lassen als
+   falsch ersetzen. Ohne das Flag aendert sich nichts am Bestand. */
+
+const LD_TEXT_KEYS = new Set(['name', 'headline', 'alternativeHeadline', 'description',
+  'abstract', 'text', 'caption', 'articleSection', 'keywords']);
+
+function normLd(s) {
+  return String(s)
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function buildLdIndex(html, lookup) {
+  const index = new Map();
+  const tainted = new Set();
+  // replaceTagged ist der einzige Ort, der Verschachtelung korrekt zaehlt;
+  // hier dient er nur als Scanner, sein Ergebnis-String wird verworfen.
+  replaceTagged(html, (key, original) => {
+    const v = lookup(key);
+    if (v === null || v === undefined || original === undefined) return null;
+    const de = normLd(original);
+    const tr = normLd(v);
+    if (!de || !tr) return null;
+    if (index.has(de) && index.get(de) !== tr) tainted.add(de);
+    else index.set(de, tr);
+    return null;
+  });
+  for (const t of tainted) index.delete(t);
+  return index;
+}
+
+/* Reihenfolge: erst die Kopf-Metadaten (Titel, Beschreibung, Abstract), dann
+   der Sichttext-Index. Was nirgends passt, bleibt unveraendert. */
+function ldTranslate(value, ctx) {
+  const de = ctx.metaDe, tr = ctx.meta;
+  if (de && tr) {
+    if (de.title !== undefined && value === de.title && tr.title) return tr.title;
+    if (de.description !== undefined && value === de.description && tr.description) return tr.description;
+    if (de.abstract !== undefined && value === de.abstract && tr.abstract) return tr.abstract;
+  }
+  const hit = ctx.index ? ctx.index.get(normLd(value)) : undefined;
+  return hit !== undefined ? hit : value;
+}
+
+/* Das Vorschaubild je Sprache: zeigt ein ImageObject auf das deutsche Bild
+   aus den Metadaten, tritt das Bild der Zielsprache an seine Stelle. */
+function ldImage(value, ctx) {
+  const de = ctx.metaDe, tr = ctx.meta;
+  if (!de || !tr || !de.ogImage || !tr.ogImage) return null;
+  const abs = (u) => (u.startsWith('/') ? ORIGIN + u : u);
+  return value === abs(de.ogImage) || value === de.ogImage ? abs(tr.ogImage) : null;
+}
+
 /* Ein Knoten, der sich als eine der globalen Sachen ausweist, bleibt komplett
    unangetastet: sein @id ist der Bezeichner, und sein url zeigt auf die
    deutsche Wurzel, weil die Organisation genau eine Startseite hat. */
-function localizeNode(node, lang) {
-  if (Array.isArray(node)) return node.map(v => localizeNode(v, lang));
+function localizeNode(node, lang, ctx) {
+  if (Array.isArray(node)) return node.map(v => localizeNode(v, lang, ctx));
   if (node === null || typeof node !== 'object') return node;
 
   if (typeof node['@id'] === 'string' && GLOBAL_IDS.has(node['@id'])) return node;
@@ -275,23 +351,34 @@ function localizeNode(node, lang) {
   const out = {};
   for (const [key, value] of Object.entries(node)) {
     if (LD_URL_KEYS.has(key)) {
-      if (typeof value === 'string') { out[key] = localizeUrl(value, lang); continue; }
+      if (typeof value === 'string') {
+        const img = ctx ? ldImage(value, ctx) : null;
+        out[key] = img ?? localizeUrl(value, lang);
+        continue;
+      }
       if (Array.isArray(value) && value.every(v => typeof v === 'string')) {
         out[key] = value.map(v => localizeUrl(v, lang));
         continue;
       }
     }
-    out[key] = localizeNode(value, lang);
+    if (ctx && LD_TEXT_KEYS.has(key)) {
+      if (typeof value === 'string') { out[key] = ldTranslate(value, ctx); continue; }
+      if (Array.isArray(value) && value.every(v => typeof v === 'string')) {
+        out[key] = value.map(v => ldTranslate(v, ctx));
+        continue;
+      }
+    }
+    out[key] = localizeNode(value, lang, ctx);
   }
   return out;
 }
 
-function localizeJsonLd(html, lang) {
+function localizeJsonLd(html, lang, ctx) {
   if (lang === 'de') return html;
   return html.replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/gi, (full, open, body, close) => {
     let data;
     try { data = JSON.parse(body); } catch { return full; }   // Kaputtes JSON lieber unveraendert lassen.
-    const json = JSON.stringify(localizeNode(data, lang), null, 2).replace(/<\//g, '<\\/');
+    const json = JSON.stringify(localizeNode(data, lang, ctx), null, 2).replace(/<\//g, '<\\/');
     return `${open}\n${json}\n${close}`;
   });
 }
@@ -872,7 +959,7 @@ function noscriptBlock(page, lang) {
 
 /* --------------------------------- Erzeugung --------------------------------- */
 
-async function buildStatic(page, lang, meta, chrome) {
+async function buildStatic(page, lang, meta, chrome, metaDe) {
   const src = await readFile(join(ROOT, page.src), 'utf8');
   const dict = readPageDict(src);
   if (!dict) throw new Error(`${page.src}: kein Seitenwoerterbuch gefunden`);
@@ -889,8 +976,17 @@ async function buildStatic(page, lang, meta, chrome) {
     return v;
   };
 
+  /* Nur wo PAGES es freischaltet: Index aus dem Sichttext fuer die
+     JSON-LD-Textstufe. Der stille lookup meldet nichts nach missing --
+     fehlende Schluessel findet der eigentliche Durchlauf darunter. */
+  let ldCtx = null;
+  if (page.ldText) {
+    const silent = (key) => key.startsWith('chrome.') ? (chrome[lang] || {})[key] : (dict[lang] || {})[key];
+    ldCtx = { index: buildLdIndex(src, silent), meta, metaDe };
+  }
+
   let out = replaceTagged(src, lookup);
-  out = rewriteHead(out, { lang, pagePath: page.path, meta });
+  out = rewriteHead(out, { lang, pagePath: page.path, meta, ldCtx });
   out = prefixLinks(out, lang);
   return { html: out, missing };
 }
@@ -967,7 +1063,7 @@ async function main() {
       const meta = pageMeta ? pageMeta[lang] : null;
       if (pageMeta && !meta) problems.push(`${page.key}/${lang}: Metadaten fehlen`);
       const built = page.kind === 'static'
-        ? await buildStatic(page, lang, meta, chrome)
+        ? await buildStatic(page, lang, meta, chrome, pageMeta ? pageMeta.de : null)
         : await buildDc(page, lang, meta);
       if (built.missing.length) {
         problems.push(`${page.key}/${lang}: ${built.missing.length} Schluessel ohne Uebersetzung (${[...new Set(built.missing)].slice(0, 3).join(', ')})`);

@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="it" data-euc-lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title data-i18n="meta.title">IA e software per amministrazioni immobiliari | EU Cowork AI</title>
+<meta name="description" content="IA collegata a GARAIO REM, Abacus e ImmoTop2: tre processi per richieste degli inquilini, spese accessorie e riconsegne nelle amministrazioni svizzere.">
+<link rel="canonical" href="https://eucowork.ai/it/blog/ki-immobilienverwaltung">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://eucowork.ai/blog/ki-immobilienverwaltung">
+<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/blog/ki-immobilienverwaltung">
+<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/blog/ki-immobilienverwaltung">
+<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/blog/ki-immobilienverwaltung">
+<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/blog/ki-immobilienverwaltung">
+<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/blog/ki-immobilienverwaltung">
+<!-- i18n:hreflang:end -->
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:locale" content="it_IT">
+<meta property="og:url" content="https://eucowork.ai/it/blog/ki-immobilienverwaltung">
+<meta property="og:title" content="IA e software per amministrazioni immobiliari | EU Cowork AI">
+<meta property="og:description" content="Richieste smistate, spese accessorie spiegate, verbali di riconsegna abbozzati: così lavora un collega IA nell’amministrazione immobiliare.">
+<meta property="og:image" content="https://eucowork.ai/og/eucowork-share-it.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EU Cowork AI: Il vostro collega IA. Resta in Europa.">
+<meta property="article:published_time" content="2026-06-09">
+<meta property="article:modified_time" content="2026-08-18">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IA e software per amministrazioni immobiliari | EU Cowork AI">
+<meta name="twitter:description" content="Richieste degli inquilini, spese accessorie e riconsegna: tre processi IA con connettori al software di amministrazione immobiliare.">
+<meta name="twitter:image" content="https://eucowork.ai/og/eucowork-share-it.png">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/content.css">
+</head>
+<body>
+
+<a class="euc-skip" href="#inhalt" data-i18n="chrome.skip">Vai al contenuto</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="euc-header">
+  <a class="euc-brand" href="/it">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
+      <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+    </svg>
+    <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+  </a>
+
+  <nav class="euc-nav" aria-label="Hauptnavigation">
+    <a href="/it/preise" data-i18n="chrome.nav.pricing">Prezzi</a>
+    <a href="/docs/it" data-i18n="chrome.nav.docs">Docs</a>
+    <a href="/it/blog" data-i18n="chrome.nav.blog">Blog</a>
+  </nav>
+
+  <div class="euc-header-cta">
+    <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    <a class="euc-btn-secondary" href="/it/self-hosting" data-i18n="chrome.cta.selfhost">Ospitare in proprio</a>
+    <a class="euc-btn-primary" href="/it/warteliste" data-i18n="chrome.cta.waitlist">Iscriviti alla lista d’attesa</a>
+  </div>
+
+  <details class="euc-mob">
+    <summary aria-label="Menü"><span></span><span></span><span></span></summary>
+    <div class="euc-mob-panel">
+      <a href="/it/preise" data-i18n="chrome.nav.pricing">Prezzi</a>
+      <a href="/docs/it" data-i18n="chrome.nav.docs">Docs</a>
+      <a href="/it/blog" data-i18n="chrome.nav.blog">Blog</a>
+      <a class="euc-btn-primary" href="/it/warteliste" data-i18n="chrome.cta.waitlist">Iscriviti alla lista d’attesa</a>
+      <a class="euc-btn-secondary" href="/it/self-hosting" data-i18n="chrome.cta.selfhost">Ospitare in proprio</a>
+      <select class="euc-lang" data-euc-lang aria-label="Sprache"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option><option value="es">ES</option></select>
+    </div>
+  </details>
+</header>
+
+<main class="euc-main blog-article" id="inhalt">
+
+  <!-- ==================== HERO ==================== -->
+  <div class="blog-hero">
+    <div class="euc-wrap-wide">
+      <nav class="euc-breadcrumb" aria-label="Brotkrumen">
+      <ol>
+        <li><a href="/it" data-i18n="chrome.crumb.home">Home</a></li>
+        <li><a href="/it/blog" data-i18n="crumb.blog">Blog</a></li>
+        <li><span aria-current="page" data-i18n="crumb.current">IA nell’amministrazione immobiliare</span></li>
+      </ol>
+    </nav>
+      <div class="blog-hero-grid">
+        <div class="blog-hero-text">
+          <p class="euc-eyebrow" data-i18n="hero.eyebrow">L’IA nel lavoro quotidiano</p>
+          <h1 data-i18n="hero.h1">IA nell’amministrazione immobiliare: tre processi che alleggeriscono la casella di posta</h1>
+          <p class="euc-lead" data-i18n="hero.lead">Una segnalazione di guasto, una domanda sul conteggio delle spese accessorie, un reclamo per rumore: nella casella di posta comune di un’amministrazione arriva ogni giorno tutto insieme. Questo articolo presenta tre processi. Vede come un collega IA lavora con i documenti dei suoi immobili. Vede anche che cosa si può collegare al suo software di amministrazione immobiliare, da GARAIO REM ad Abacus, e dove stanno i limiti.</p>
+          <p class="blog-hero-meta">
+            <span class="chip" data-i18n="hero.chip">Immobili</span>
+            <time datetime="2026-06-09" data-i18n="hero.datum">9 giugno 2026</time>
+            <span data-i18n="hero.lesezeit">Tempo di lettura: 10 minuti</span>
+          </p>
+        </div>
+        <div class="blog-hero-art" aria-hidden="true">
+          <svg viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path class="fig-soft" d="M40 352 H604"></path>
+
+            <rect class="fig-fill-tint fig-line" x="48" y="48" width="240" height="18" rx="6"></rect>
+            <rect class="fig-panel" x="56" y="66" width="224" height="286" rx="8"></rect>
+
+            <rect class="fig-fill-ice fig-line" x="76" y="92" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="146" y="92" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="216" y="92" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="76" y="154" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="146" y="154" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="216" y="154" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="76" y="216" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="146" y="216" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="216" y="216" width="44" height="40" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="76" y="284" width="44" height="48" rx="4"></rect>
+            <rect class="fig-fill-ice fig-line" x="216" y="284" width="44" height="48" rx="4"></rect>
+            <path class="fig-line" d="M98 92 v40 M168 92 v40 M238 92 v40 M98 154 v40 M168 154 v40 M238 154 v40 M98 216 v40 M168 216 v40 M238 216 v40 M98 284 v48 M238 284 v48"></path>
+
+            <rect class="fig-fill-tint fig-eu-mid" x="130" y="266" width="76" height="12" rx="4"></rect>
+            <path class="fig-eu-mid" d="M140 278 v8 M196 278 v8"></path>
+            <rect class="fig-fill-ice fig-eu-mid" x="144" y="286" width="48" height="66" rx="6"></rect>
+            <circle class="fig-eu-mid" cx="182" cy="320" r="4"></circle>
+
+            <circle class="fig-eu" cx="352" cy="118" r="22"></circle>
+            <circle class="fig-fill-ice fig-line" cx="352" cy="118" r="10"></circle>
+            <path class="fig-eu" d="M374 118 h60 M410 118 v16 M424 118 v20"></path>
+            <path class="fig-line" d="M352 140 v14"></path>
+            <rect class="fig-panel" x="330" y="154" width="44" height="28" rx="7"></rect>
+            <path class="fig-eu-mid" d="M342 168 h20"></path>
+
+            <path class="fig-soft" d="M336 306 v46"></path>
+            <rect class="fig-panel" x="302" y="252" width="68" height="54" rx="6"></rect>
+            <path class="fig-eu-mid" d="M298 252 h76"></path>
+            <rect class="fig-fill-tint fig-eu-mid" x="316" y="266" width="40" height="9" rx="4"></rect>
+            <path class="fig-line" d="M310 292 h52"></path>
+
+            <path class="fig-soft" d="M282 210 C376 204 424 196 510 242"></path>
+            <path class="fig-flow fig-eu" d="M282 210 C376 204 424 196 510 242"></path>
+
+            <rect class="fig-panel" x="452" y="242" width="150" height="110" rx="8"></rect>
+            <path class="fig-eu-mid" d="M472 264 h56"></path>
+            <path class="fig-line" d="M472 286 h110 M472 304 h110 M472 322 h66"></path>
+            <path class="fig-eu" d="M554 322 l8 8 16 -18"></path>
+            <circle class="fig-dot-gold" cx="586" cy="264" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="blog-rail" aria-label="Lesefortschritt">
+    <ol>
+      <li><a href="#lage" data-i18n="toc.i1">Situazione di partenza</a></li>
+      <li><a href="#anfragen" data-i18n="toc.i2">Smistare e rispondere alle richieste degli inquilini</a></li>
+      <li><a href="#nebenkosten" data-i18n="toc.i3">Spiegare il conteggio delle spese accessorie</a></li>
+      <li><a href="#abnahme" data-i18n="toc.i4">Riconsegna dell’appartamento e incarichi agli artigiani</a></li>
+      <li><a href="#konnektoren" data-i18n="toc.i5">Connettori verso il software di amministrazione</a></li>
+      <li><a href="#datenschutz" data-i18n="toc.i6">Protezione dei dati</a></li>
+      <li><a href="#fragen" data-i18n="toc.i7">Domande frequenti</a></li>
+    </ol>
+  </nav>
+
+  <div class="euc-wrap">
+
+    <div class="kurz-gesagt">
+      <p class="kurz-gesagt-titel" data-i18n="kurz.titel">In breve</p>
+      <ul>
+        <li data-i18n="kurz.p1">Nel Digital Real Estate Index 2026 l’amministrazione immobiliare raggiunge 4,4 punti su 10. È il valore più alto dall’inizio della rilevazione. IA e machine learning sono l’unica delle dodici tecnologie esaminate con un progresso netto.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup></li>
+        <li data-i18n="kurz.p2">EU Cowork AI lavora con i documenti dei suoi immobili: contratti di locazione, regolamento interno, regolamenti dello stabile e corrispondenza precedente diventano la base di conoscenza da cui nascono le bozze.</li>
+        <li data-i18n="kurz.p3">Ogni risposta a un inquilino è una bozza soggetta ad approvazione. Le dichiarazioni giuridicamente vincolanti come disdette e adeguamenti della pigione restano all’amministrazione.</li>
+        <li data-i18n="kurz.p4">I dati degli inquilini restano in Svizzera o sul suo server e non addestrano alcun modello. I software con un’interfaccia documentata per lo scambio di dati si possono collegare, per esempio Microsoft 365 o GARAIO REM. Per il collegamento serve il Model Context Protocol (MCP).</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="Inhalt dieser Seite">
+      <p class="toc-titel" data-i18n="toc.titel">In questa pagina</p>
+      <ol>
+        <li><a href="#lage" data-i18n="toc.i1">Situazione di partenza</a></li>
+        <li><a href="#anfragen" data-i18n="toc.i2">Smistare e rispondere alle richieste degli inquilini</a></li>
+        <li><a href="#nebenkosten" data-i18n="toc.i3">Spiegare il conteggio delle spese accessorie</a></li>
+        <li><a href="#abnahme" data-i18n="toc.i4">Riconsegna dell’appartamento e incarichi agli artigiani</a></li>
+        <li><a href="#konnektoren" data-i18n="toc.i5">Connettori verso il software di amministrazione</a></li>
+        <li><a href="#datenschutz" data-i18n="toc.i6">Protezione dei dati</a></li>
+        <li><a href="#fragen" data-i18n="toc.i7">Domande frequenti</a></li>
+      </ol>
+    </nav>
+
+    <!-- ==================== AUSGANGSLAGE ==================== -->
+    <section class="euc-section">
+      <h2 id="lage" data-i18n="lage.h2">Situazione di partenza: più corrispondenza che persone per scriverla</h2>
+      <p data-i18n="lage.p1">La digitalizzazione dell’edilizia e del settore immobiliare svizzeri procede a piccoli passi. Per il Digital Real Estate Index 2026 di pom+ Consulting sono stati interpellati circa 200 specialisti e quadri dirigenti. L’amministrazione immobiliare vi raggiunge 4,4 punti su 10, il valore più alto dall’inizio della rilevazione. L’indice complessivo è di 4,3. IA e machine learning sono l’unica delle dodici tecnologie esaminate con un progresso netto. Due terzi degli interpellati vi vedono una grande utilità. A frenare lo sviluppo sono le questioni di investimento e di costo.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup></p>
+      <p data-i18n="lage.p2">A ciò si aggiunge la carenza di personale qualificato. Il settore non trova abbastanza amministratrici e amministratori formati, il che pregiudica l’efficienza dell’esercizio.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> Chi non riesce a coprire un posto vacante distribuisce il lavoro sul team esistente. A soffrirne per prima è la tempestività delle risposte agli inquilini, e una segnalazione di guasto rimasta senza risposta diventa due settimane dopo un reclamo alla proprietà.</p>
+      <p data-i18n="lage.p3">Gran parte di questo lavoro è corrispondenza secondo schemi fissi: il conteggio delle spese accessorie e le domande che ne seguono, l’adeguamento della pigione al tasso ipotecario di riferimento, le prescrizioni di forma per le disdette, il verbale di riconsegna dell’appartamento con gli incarichi agli artigiani. Si aggiunge il plurilinguismo. La stessa questione esce in tedesco, francese, italiano o inglese a seconda degli inquilini. La domanda non è quindi più se un’amministrazione impieghi l’IA. La domanda è se l’IA lavori con i documenti dei propri immobili e dove si trovino nel frattempo i dati degli inquilini.</p>
+
+        <figure class="euc-fig">
+        <svg viewBox="0 100 640 145" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path class="fig-soft" d="M64 178 H576"></path>
+          <path class="fig-flow fig-eu" d="M64 178 H576"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="40" y="132" width="108" height="92" rx="8"></rect>
+            <rect class="fig-fill-ice fig-line" x="58" y="152" width="72" height="46" rx="6"></rect>
+            <path class="fig-eu-mid" d="M58 158 l36 24 36 -24"></path>
+            <circle class="fig-numbg" cx="148" cy="132" r="11"></circle>
+            <text class="fig-num" x="148" y="136.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="186" y="132" width="108" height="92" rx="8"></rect>
+            <circle class="fig-eu-mid" cx="209" cy="156" r="3"></circle>
+            <circle class="fig-eu-mid" cx="209" cy="178" r="3"></circle>
+            <circle class="fig-eu-mid" cx="209" cy="200" r="3"></circle>
+            <path class="fig-line" d="M222 156 h54 M222 178 h54 M222 200 h38"></path>
+            <circle class="fig-numbg" cx="294" cy="132" r="11"></circle>
+            <text class="fig-num" x="294" y="136.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="332" y="132" width="108" height="92" rx="8"></rect>
+            <path class="fig-eu" d="M350 152 h44"></path>
+            <path class="fig-line" d="M350 168 h72 M350 184 h72 M350 200 h48"></path>
+            <circle class="fig-numbg" cx="440" cy="132" r="11"></circle>
+            <text class="fig-num" x="440" y="136.5" text-anchor="middle">3</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="478" y="132" width="108" height="92" rx="8"></rect>
+            <path class="fig-eu" d="M500 178 l12 12 24 -28"></path>
+            <circle class="fig-dot-gold" cx="558" cy="152" r="4"></circle>
+            <circle class="fig-numbg" cx="586" cy="132" r="11"></circle>
+            <text class="fig-num" x="586" y="136.5" text-anchor="middle">4</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="lage.leg1">La richiesta nella casella di posta comune, così come arriva</li>
+          <li data-i18n="lage.leg2">Attribuzione per tipo di richiesta e per immobile</li>
+          <li data-i18n="lage.leg3">Bozza di risposta dai documenti dell’immobile</li>
+          <li data-i18n="lage.leg4">Lettura e approvazione da parte dell’amministratore</li>
+        </ol>
+        <figcaption data-i18n="lage.fig">Ecco come una richiesta di un inquilino attraversa l’amministrazione: dall’arrivo alla risposta approvata. L’ultimo passo resta all’essere umano.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ==================== USECASE 1 ==================== -->
+    <section class="euc-section">
+      <h2 id="anfragen" data-i18n="uc1.h2">Caso d’uso 1: smistare e rispondere alle richieste degli inquilini</h2>
+      <p data-i18n="uc1.p1">Il lunedì mattina nella casella di posta comune dell’amministrazione ci sono i messaggi del fine settimana: uno scaldacqua che gocciola, domande sul conteggio delle spese accessorie, un reclamo per rumore dal terzo piano, una disdetta per la fine del trimestre, diverse richieste di una seconda chiave. Il collega IA legge la posta in arrivo tramite la casella collegata. Attribuisce ogni messaggio al tipo di richiesta e all’immobile e vi affianca una bozza di risposta.</p>
+      <p data-i18n="uc1.p2">La bozza la ricava dai documenti dell’immobile interessato: contratto di locazione, regolamento interno, regolamento dello stabile e corrispondenza precedente con questo inquilino. Per la segnalazione di guasto la bozza indica chi ripara il difetto e quali informazioni mancano ancora. Per la richiesta della chiave riporta la regola tratta dal regolamento, con il riferimento, così che l’affermazione si possa verificare in pochi secondi. Il messaggio va all’amministratore competente, che legge, corregge e approva.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-fill-ice fig-line" x="48" y="44" width="184" height="52" rx="10"></rect>
+            <path class="fig-eu-mid" d="M66 64 h112 M66 78 h78"></path>
+            <path class="fig-line" d="M84 96 l-10 16 26 -12"></path>
+            <circle class="fig-numbg" cx="232" cy="44" r="11"></circle>
+            <text class="fig-num" x="232" y="48.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M138 118 V136 M322 206 H462"></path>
+          <path class="fig-flow fig-eu" d="M322 206 H462"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="78" y="136" width="244" height="30" rx="8"></rect>
+            <rect class="fig-panel" x="78" y="172" width="244" height="30" rx="8"></rect>
+            <rect class="fig-panel" x="78" y="208" width="244" height="30" rx="8"></rect>
+            <rect class="fig-panel" x="78" y="244" width="244" height="30" rx="8"></rect>
+            <path class="fig-line" d="M96 151 h150 M96 187 h150 M96 223 h150 M96 259 h150"></path>
+            <rect class="fig-eu-mid" x="274" y="143" width="30" height="16" rx="4"></rect>
+            <path class="fig-eu-mid" d="M284 143 v-5 a5 5 0 0 1 10 0 v5 M289 149 v4"></path>
+            <circle class="fig-numbg" cx="322" cy="244" r="11"></circle>
+            <text class="fig-num" x="322" y="248.5" text-anchor="middle">2</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="462" y="150" width="130" height="112" rx="8"></rect>
+            <path class="fig-line" d="M480 174 h94 M480 190 h94 M480 222 h94 M480 238 h64"></path>
+            <path class="fig-eu" d="M480 206 h94"></path>
+            <circle class="fig-dot-gold" cx="574" cy="174" r="4"></circle>
+            <circle class="fig-numbg" cx="592" cy="150" r="11"></circle>
+            <text class="fig-num" x="592" y="154.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc1.leg1">Richiesta dalla casella di posta comune, nella lingua dell’inquilino</li>
+          <li data-i18n="uc1.leg2">Documenti dell’immobile, con permessi per singolo strumento e registro</li>
+          <li data-i18n="uc1.leg3">Bozza di risposta con il riferimento, pronta per l’approvazione</li>
+        </ol>
+        <figcaption data-i18n="uc1.fig">La bozza nasce dai documenti dell’immobile, non da ciò che il modello linguistico ha imparato in generale. L’approvazione avviene nell’amministrazione.</figcaption>
+      </figure>
+
+      <p data-i18n="uc1.p3">Importante nella pratica: non nasce alcun nuovo portale per gli inquilini e nessun secondo sistema. Il collega IA lavora nella casella di posta che lei ha già oggi, e gli inquilini continuano a scrivere allo stesso indirizzo. Restano anche le linee rosse: disdette, adeguamenti della pigione e diffide sono dichiarazioni giuridicamente vincolanti e non escono mai in automatico. Le prescrizioni di forma del diritto di locazione restano compito dell’amministrazione.</p>
+    </section>
+
+    <!-- ==================== USECASE 2 ==================== -->
+    <section class="euc-section">
+      <h2 id="nebenkosten" data-i18n="uc2.h2">Caso d’uso 2: spiegare il conteggio delle spese accessorie in modo comprensibile</h2>
+      <p data-i18n="uc2.p1">Dopo l’invio dei conteggi arriva ogni anno la stessa ondata: perché il mio conteggio è più alto dell’anno scorso. Le domande arrivano tutte nelle stesse due settimane e colpiscono un team che sta trattando contemporaneamente i conguagli e i rimborsi.</p>
+      <p data-i18n="uc2.p2">Il collega IA richiama il conteggio di quell’appartamento, la chiave di riparto e i valori dell’anno precedente e ne ricava una spiegazione in linguaggio comprensibile: quale voce è aumentata, come viene calcolata la quota, che cosa mostra il confronto con l’anno precedente. La bozza nasce nella lingua in cui è arrivata la richiesta, in tedesco, francese, italiano o inglese. L’amministratore verifica le cifre e approva. Così il picco stagionale diventa pianificabile. Non deve più essere assorbito soltanto con personale interinale.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="48" y="60" width="152" height="96" rx="8"></rect>
+            <path class="fig-eu" d="M66 80 h60"></path>
+            <path class="fig-line" d="M66 98 h116 M66 114 h116 M66 130 h86"></path>
+            <circle class="fig-numbg" cx="200" cy="60" r="11"></circle>
+            <text class="fig-num" x="200" y="64.5" text-anchor="middle">1</text>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-fill-tint fig-line" x="48" y="190" width="152" height="26" rx="6"></rect>
+            <rect class="fig-fill-tint fig-line" x="60" y="222" width="152" height="26" rx="6"></rect>
+            <rect class="fig-fill-ice fig-line" x="72" y="254" width="152" height="26" rx="6"></rect>
+            <circle class="fig-numbg" cx="224" cy="254" r="11"></circle>
+            <text class="fig-num" x="224" y="258.5" text-anchor="middle">2</text>
+          </g>
+          <path class="fig-soft" d="M200 112 H420 M150 190 C262 158 322 148 416 120"></path>
+          <path class="fig-flow fig-eu" d="M200 112 H420"></path>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="420" y="56" width="170" height="142" rx="8"></rect>
+            <path class="fig-eu" d="M440 82 h96"></path>
+            <path class="fig-line" d="M440 100 h130 M440 116 h130 M440 132 h130 M440 148 h96"></path>
+            <path class="fig-eu-mid" d="M440 170 l9 9 16 -19"></path>
+            <circle class="fig-dot-gold" cx="566" cy="82" r="4"></circle>
+            <circle class="fig-numbg" cx="590" cy="56" r="11"></circle>
+            <text class="fig-num" x="590" y="60.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc2.leg1">Domanda dell’inquilino sul conteggio</li>
+          <li data-i18n="uc2.leg2">Conteggio, chiave di riparto e valori dell’anno precedente</li>
+          <li data-i18n="uc2.leg3">Spiegazione nella lingua dell’inquilino, pronta per l’approvazione</li>
+        </ol>
+        <figcaption data-i18n="uc2.fig">La spiegazione nasce dal conteggio di quell’appartamento. Verifica e approvazione avvengono nell’amministrazione.</figcaption>
+      </figure>
+
+      <p data-i18n="uc2.p3">Che cosa il processo non fa: non corregge alcun conteggio e non addebita nulla. Spiega ciò che nel conteggio è scritto. Se una voce è effettivamente sbagliata, il caso passa alla contabilità, come finora. E poiché ogni spiegazione si basa sul conteggio depositato, l’amministratore vede subito, mentre verifica, su che cosa la bozza si fonda.</p>
+    </section>
+
+    <!-- ==================== USECASE 3 ==================== -->
+    <section class="euc-section">
+      <h2 id="abnahme" data-i18n="uc3.h2">Caso d’uso 3: dalla riconsegna dell’appartamento agli incarichi agli artigiani</h2>
+      <p data-i18n="uc3.p1">La riconsegna dura un’ora, il lavoro successivo spesso di più. Sulla via del ritorno l’amministratore detta i suoi appunti nel telefono, la funzione di dettatura dell’apparecchio basta, oppure li digita: fronte della cucina graffiato, silicone del bagno da rifare, pareti del soggiorno da tinteggiare, elenco fotografico in allegato.</p>
+      <p data-i18n="uc3.p2">Ne nascono la bozza di verbale nel formato consueto dell’amministrazione e i testi degli incarichi formulati per imbianchino, idraulico e impresa di pulizie, con indirizzo, numero dell’appartamento, modalità di accesso e termine. Ancora lo stesso giorno, invece che nel fine settimana. Chi riceve l’incarico, chi sostiene i costi e dove finisce la normale usura e comincia un danno lo decide l’amministrazione. Il collega IA fornisce il testo.</p>
+
+      <figure class="euc-fig">
+        <svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="56" y="106" width="88" height="120" rx="10"></rect>
+            <rect class="fig-fill-ice fig-line" x="70" y="120" width="60" height="40" rx="4"></rect>
+            <path class="fig-eu-mid" d="M76 152 l14 -16 12 12 8 -8 12 12"></path>
+            <path class="fig-line" d="M70 176 h60 M70 190 h44"></path>
+            <circle class="fig-eu-mid" cx="100" cy="210" r="4"></circle>
+            <circle class="fig-numbg" cx="144" cy="106" r="11"></circle>
+            <text class="fig-num" x="144" y="110.5" text-anchor="middle">1</text>
+          </g>
+          <path class="fig-soft" d="M144 166 H300 M300 166 C348 166 356 74 404 74 M300 166 H404 M300 166 C348 166 356 258 404 258"></path>
+          <path class="fig-flow fig-eu" d="M144 166 H300"></path>
+          <circle class="fig-numbg" cx="300" cy="166" r="11"></circle>
+          <text class="fig-num" x="300" y="170.5" text-anchor="middle">2</text>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="40" width="180" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M422 62 h72"></path>
+            <path class="fig-line" d="M422 78 h144 M422 92 h110"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="132" width="180" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M422 154 h60"></path>
+            <path class="fig-line" d="M422 170 h144 M422 184 h96"></path>
+          </g>
+          <g class="fig-reveal">
+            <rect class="fig-panel" x="404" y="224" width="180" height="68" rx="8"></rect>
+            <path class="fig-eu" d="M422 246 h52"></path>
+            <path class="fig-line" d="M422 262 h144 M422 276 h104"></path>
+            <circle class="fig-dot-gold" cx="566" cy="246" r="4"></circle>
+            <circle class="fig-numbg" cx="584" cy="224" r="11"></circle>
+            <text class="fig-num" x="584" y="228.5" text-anchor="middle">3</text>
+          </g>
+        </svg>
+        <ol class="euc-fig-legend">
+          <li data-i18n="uc3.leg1">Appunti ed elenco fotografico della riconsegna</li>
+          <li data-i18n="uc3.leg2">Un ingresso, tre documenti nel formato consueto dell’amministrazione</li>
+          <li data-i18n="uc3.leg3">Verbale e testi degli incarichi agli artigiani, pronti per l’approvazione</li>
+        </ol>
+        <figcaption data-i18n="uc3.fig">Dagli appunti della riconsegna nascono verbale e testi degli incarichi. Attribuzione e assunzione dei costi le decide l’amministrazione.</figcaption>
+      </figure>
+
+      <p data-i18n="uc3.p3">Anche qui vale: nessun incarico esce senza approvazione e nulla viene addebitato in automatico. Che cosa venga fatturato all’inquilino lo decide l’amministrazione, e ogni modifica alla bozza resta tracciabile.</p>
+    </section>
+
+    <!-- ==================== KONNEKTOREN ==================== -->
+    <section class="euc-section">
+      <h2 id="konnektoren" data-i18n="konn.h2">Connettori: che cosa si può collegare a GARAIO REM, Abacus e al resto del suo software</h2>
+      <p data-i18n="konn.p1">Un collega IA è utile quanto ciò che gli è permesso raggiungere. MCP è uno standard aperto per il collegamento di sistemi esterni. Tramite esso si possono comandare i programmi con interfaccia documentata. Un’interfaccia, spesso chiamata API, è una via descritta lungo la quale due programmi si scambiano dati. I permessi valgono per singolo strumento e ogni chiamata finisce nel registro. Ecco la situazione per i software di amministrazione immobiliare più diffusi, verificata nell’agosto 2026:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="konn.th1">Software</th>
+              <th data-i18n="konn.th2">Interfaccia</th>
+              <th data-i18n="konn.th3">Collegamento a EU Cowork AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="konn.r1c1">Microsoft 365 (casella di posta comune Outlook, SharePoint)</td>
+              <td data-i18n="konn.r1c2">API Graph, documentata apertamente</td>
+              <td data-i18n="konn.r1c3">Server MCP disponibile da Microsoft, la via più diretta per smistare le richieste degli inquilini</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r2c1">GARAIO REM</td>
+              <td data-i18n="konn.r2c2">Interfacce documentate con OAuth2, lo standard consueto per l’accesso sicuro: accesso in lettura e interfaccia per eventi con circa 20 contesti di business, dagli immobili ai contratti fino ai sinistri<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup></td>
+              <td data-i18n="konn.r2c3">Collegamento possibile tramite MCP, l’accesso passa dal produttore come partner di servizio</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r3c1">Abacus con AbaImmo</td>
+              <td data-i18n="konn.r3c2">API REST con OAuth2, accesso tramite il programma partner</td>
+              <td data-i18n="konn.r3c3">Collegamento possibile tramite MCP, l’accesso passa dal canale partner di Abacus</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r4c1">ImmoTop2 (W&amp;W Immo Informatik)</td>
+              <td data-i18n="konn.r4c2">Interfaccia DMS documentata pubblicamente per i processi documentali<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup></td>
+              <td data-i18n="konn.r4c3">Collegamento possibile per l’archiviazione dei documenti</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r5c1">Rimo R5 (W&amp;W Immo Informatik)</td>
+              <td data-i18n="konn.r5c2">Interfacce orientate a file ed esportazioni</td>
+              <td data-i18n="konn.r5c3">La via passa da esportazioni e documenti</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r6c1">SwissRETS</td>
+              <td data-i18n="konn.r6c2">Standard aperto per i dati degli oggetti, esente da licenza e documentato<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup></td>
+              <td data-i18n="konn.r6c3">Collegabile per i dati degli annunci</td>
+            </tr>
+            <tr>
+              <td data-i18n="konn.r8c1">bexio</td>
+              <td data-i18n="konn.r8c2">API REST, documentata apertamente</td>
+              <td data-i18n="konn.r8c3">Collegamento possibile tramite MCP, per amministrazioni più piccole con contabilità propria</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p data-i18n="konn.p2">Il suo software manca nell’elenco? Molto del lavoro quotidiano funziona con casella di posta e documenti e non richiede alcun collegamento di sistema: lo smistamento delle richieste, la spiegazione delle spese accessorie, il verbale di riconsegna. Come funziona in linea di principio un collegamento tramite MCP e quali sistemi sono predisposti è descritto nella pagina <a class="euc-textlink" href="/it/integrationen">Integrazioni</a>.</p>
+    </section>
+
+    <!-- ==================== DATENSCHUTZ ==================== -->
+    <section class="euc-section">
+      <h2 id="datenschutz" data-i18n="ds.h2">Protezione dei dati: i dossier degli inquilini sono delicati</h2>
+      <p data-i18n="ds.p1">Un dossier di inquilino contiene più di nome e indirizzo: estratto del registro delle esecuzioni, informazioni sulla solvibilità, giustificativi di reddito, in parte indicazioni che valgono come dati personali degni di particolare protezione. Secondo la legge svizzera riveduta sulla protezione dei dati l’amministrazione resta responsabile, anche quando è uno strumento di IA a trattare i dati. Se i dati li tratta un fornitore, serve un accordo sul trattamento dei dati. Questo articolo non sostituisce una consulenza legale.</p>
+      <p data-i18n="ds.p2">A ciò si aggiunge l’aspettativa della proprietà. I proprietari istituzionali come casse pensioni e assicurazioni esigono regolarmente nei loro contratti di amministrazione che i dati dei loro immobili siano trattati in Svizzera. EU Cowork AI funziona in centri di calcolo certificati ISO 27001 di Green a Lupfig oppure sul suo server.</p>
+      <p data-i18n="ds.p3">I dati dei clienti non addestrano alcun modello e i permessi arrivano fino al singolo strumento. Ogni accesso figura nel registro di audit, un elenco che si può esportare in qualsiasi momento. L’<a class="euc-textlink" href="/it/avv">accordo sul trattamento dei dati</a> con l’<a class="euc-textlink" href="/it/subprozessoren">elenco dei sub-responsabili</a> è pubblicato apertamente sul sito. Quando la proprietà chiede dove si trovano i dati dei suoi immobili, lei risponde in una frase.</p>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="euc-section">
+      <h2 id="fragen" data-i18n="faq.h2">Domande frequenti dall’amministrazione immobiliare</h2>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3 data-i18n="faq.q1">L’IA risponde direttamente agli inquilini?</h3>
+          <p data-i18n="faq.a1">No. Ogni risposta a un inquilino è una bozza che l’amministratore competente legge, corregge e approva. Un modello linguistico, cioè il programma dietro l’IA, può produrre affermazioni errate. Perciò ogni testo è una bozza da rileggere, non un’informazione verificata.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q2">Che cosa succede con disdette e adeguamenti della pigione?</h3>
+          <p data-i18n="faq.a2">Restano all’amministrazione. Le dichiarazioni giuridicamente vincolanti come disdette, adeguamenti della pigione al tasso ipotecario di riferimento e diffide sono vincolate a prescrizioni di forma e non escono mai in automatico. Disdette e aumenti della pigione richiedono inoltre il modulo ufficiale del Cantone e sono legati a termini. Il collega IA al massimo prepara il testo. Modulo ufficiale, termini e invio sono responsabilità dell’amministrazione. Questa risposta non sostituisce una consulenza legale.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q3">Come fa l’IA a sapere che cosa dice il contratto di locazione?</h3>
+          <p data-i18n="faq.a3">Dalla base di conoscenza. Per ogni immobile carica i contratti di locazione, il regolamento interno, i regolamenti dello stabile e la corrispondenza precedente. La bozza nasce da lì e indica il riferimento, così che l’affermazione si possa verificare in pochi secondi.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q4">I dati degli inquilini possono davvero finire in uno strumento di IA?</h3>
+          <p data-i18n="faq.a4">Secondo la legge svizzera riveduta sulla protezione dei dati l’amministrazione resta responsabile e conclude con il fornitore un accordo sul trattamento dei dati. EU Cowork AI funziona in Svizzera o sul suo server, i dati dei clienti non addestrano alcun modello e ogni accesso figura nel registro di audit. L’<a class="euc-textlink" href="/it/avv">accordo sul trattamento dei dati</a> e l’<a class="euc-textlink" href="/it/subprozessoren">elenco dei sub-responsabili</a> sono pubblicati apertamente sul sito. Questa risposta non sostituisce una consulenza legale.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q5">Ci serve per questo un portale per gli inquilini?</h3>
+          <p data-i18n="faq.a5">No. Il collega IA lavora nella casella di posta comune che lei ha già oggi. Gli inquilini scrivono allo stesso indirizzo di prima e del processo dietro non si accorgono.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q6">EU Cowork AI funziona con GARAIO REM, Abacus o ImmoTop2?</h3>
+          <p data-i18n="faq.a6">Dipende dall’interfaccia. La tabella più sopra mostra la situazione per GARAIO REM, Abacus, ImmoTop2, Rimo R5 e altri programmi. Dove manca un collegamento, la via passa da esportazioni e documenti. I processi con casella di posta e base di conoscenza funzionano comunque senza collegamento di sistema.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q7">Quanto costa per un’amministrazione con quindici persone?</h3>
+          <p data-i18n="faq.a7">L’esercizio gestito costa 15 € per persona al mese, in Svizzera 14 CHF. Di questi, 8 €, rispettivamente 7.50 CHF, sono credito modelli nel pool condiviso della sua organizzazione. Chi ospita in proprio non paga nulla per il software: è rilasciato con licenza MIT. Tutte le indicazioni si trovano nella pagina <a class="euc-textlink" href="/it/preise">Prezzi</a>.</p>
+        </div>
+        <div class="faq-item">
+          <h3 data-i18n="faq.q8">Come cominciamo?</h3>
+          <p data-i18n="faq.a8">Con un immobile. Regolamento interno, regolamenti dello stabile e i contratti di locazione di questo immobile entrano nella base di conoscenza, la casella di posta comune viene collegata e l’amministratore lavora due settimane con le bozze. Ciò che emerge rifluisce nei modelli di testo, poi si aggiungono gli immobili successivi.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA-BOX ==================== -->
+    <section class="cta-box">
+      <h2 data-i18n="cta.h2">Lo veda su un immobile suo</h2>
+      <p data-i18n="cta.p">Porti un regolamento interno e qualche richiesta reale di inquilini e percorriamo insieme il processo. Oppure si iscriva e parta tra i primi.</p>
+      <div class="cta-actions">
+        <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Prenotare un appuntamento</a>
+        <a class="euc-btn-secondary" href="/it/warteliste" data-i18n="cta.btn2">Iscriviti alla lista d’attesa</a>
+      </div>
+    </section>
+
+    <!-- ==================== QUELLEN ==================== -->
+    <section class="euc-section">
+      <h2 id="quellen" data-i18n="src.h2">Fonti</h2>
+      <p data-i18n="src.p">Tutte le cifre e le indicazioni sulle interfacce contenute in questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.</p>
+      <ol class="euc-small">
+        <li data-i18n="src.fn1" id="fn-1">pom+ Consulting, Digital Real Estate Index 2026 (pubblicato nel marzo 2026, circa 200 specialisti e quadri dirigenti interpellati): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a></li>
+        <li data-i18n="src.fn2" id="fn-2">Real Estate Symposium 2025, carenza di personale qualificato nel settore immobiliare svizzero: <a class="euc-textlink" href="https://realestatesymposium.ch/fachkraeftemangel-in-der-schweizer-immobilienbranche-herausforderungen-und-auswirkungen/" target="_blank" rel="noopener">realestatesymposium.ch</a></li>
+        <li data-i18n="src.fn3" id="fn-3">GARAIO REM, manuale per sviluppatori sulle interfacce (OAuth2, accesso in lettura e interfaccia per eventi): <a class="euc-textlink" href="https://github.com/Garaio-REM/grem-dev-guide" target="_blank" rel="noopener">github.com</a></li>
+        <li data-i18n="src.fn4" id="fn-4">W&amp;W Immo Informatik, documentazione dell’interfaccia DMS di ImmoTop2: <a class="euc-textlink" href="https://github.com/wwimmo/immotop2-dms-schnittstelle" target="_blank" rel="noopener">github.com</a></li>
+        <li data-i18n="src.fn5" id="fn-5">SwissRETS, standard aperto per i dati degli oggetti: <a class="euc-textlink" href="https://github.com/qualipool/swissrets" target="_blank" rel="noopener">github.com</a></li>
+      </ol>
+    </section>
+
+    <nav class="euc-weiter" aria-label="Weiterführende Seiten">
+      <p class="euc-weiter-titel" data-i18n="weiter.titel">Continua</p>
+      <ul>
+        <li><a href="/it/blog/ki-praxis-apotheke" data-i18n="weiter.l1">IA in studio medico, farmacia e cure a domicilio: tre processi nella sanità</a></li>
+        <li><a href="/it/integrationen" data-i18n="weiter.l2">Integrazioni: quali sistemi sono predisposti</a></li>
+        <li><a href="/docs/it" data-i18n="weiter.l3">Documentazione: esercizio, installazione e governance nel dettaglio</a></li>
+      </ul>
+    </nav>
+
+    <p class="geprueft" data-i18n="geprueft">Ultima verifica: <time datetime="2026-08">agosto 2026</time></p>
+
+  </div>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="euc-footer">
+  <div class="euc-footer-inner">
+    <div class="euc-footer-top">
+
+      <div class="euc-footer-brandcol">
+        <div class="euc-footer-brand">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
+          </svg>
+          <span>EU Cowork <span class="euc-brand-ai">AI</span></span>
+        </div>
+        <p class="euc-footer-tagline" data-i18n="chrome.footer.tagline">Il vostro collega IA. Resta in Europa.</p>
+
+        <div class="euc-badges">
+          <div class="euc-badge">
+            <span class="euc-badge-ico">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="4.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <rect x="3.5" y="13.5" width="17" height="6" rx="2" stroke="#A5D8E6" stroke-width="1.6"></rect>
+                <circle cx="7" cy="7.5" r="1" fill="#A5D8E6"></circle>
+                <circle cx="7" cy="16.5" r="1" fill="#A5D8E6"></circle>
+              </svg>
+            </span>
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge1t">Eseguibile ovunque</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge1s">Gestito, cloud proprio o on-premise</div>
+            </div>
+          </div>
+          <div class="euc-badge">
+            <img src="/eu-badge.png" width="40" height="40" alt="" loading="lazy">
+            <div>
+              <div class="euc-badge-t" data-i18n="chrome.footer.badge2t">Conforme al GDPR</div>
+              <div class="euc-badge-s" data-i18n="chrome.footer.badge2s">Trattamento nell’UE</div>
+            </div>
+          </div>
+          <a class="euc-footer-more" href="/it/sicherheit"><span data-i18n="chrome.footer.more">Maggiori informazioni sulla sicurezza</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <div class="euc-status">
+          <span class="euc-status-dot" aria-hidden="true"><i></i><b></b></span>
+          <span data-i18n="chrome.footer.statusSwiss">Istanza svizzera</span>
+          <span class="euc-status-sep">·</span>
+          <span class="euc-status-loc" data-euc-clock>Lupfig</span>
+        </div>
+      </div>
+
+      <div class="euc-footer-cols">
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.product">Prodotto</p>
+          <nav aria-label="Produkt">
+            <a href="/it/#funktionen" data-i18n="chrome.footer.link.features">Funzionalità</a>
+            <a href="/it/preise" data-i18n="chrome.footer.link.pricing">Prezzi</a>
+            <a href="/it/#souveraenitaet" data-i18n="chrome.footer.link.sovereignty">Sovranità</a>
+            <a href="/it/integrationen" data-i18n="chrome.footer.link.integrations">Integrazioni</a>
+            <a href="/it/vergleich" data-i18n="chrome.footer.link.comparison">Confronto</a>
+            <a href="/it/self-hosting" data-i18n="chrome.footer.link.selfhost">Self-Host</a>
+            <a href="/it/faq" data-i18n="chrome.footer.link.faq">FAQ</a>
+            <a href="/docs/it" data-i18n="chrome.footer.link.docs">Documentazione</a>
+            <a href="/it/blog" data-i18n="chrome.footer.link.blog">Blog</a>
+            <a href="/it/vision" data-i18n="chrome.footer.link.vision">La nostra visione</a>
+            <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="chrome.footer.link.booking">Prenotare un appuntamento</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.trust">Trust</p>
+          <nav aria-label="Trust">
+            <a href="/it/sicherheit" data-i18n="chrome.footer.link.security">Security & Trust</a>
+            <a href="/it/governance" data-i18n="chrome.footer.link.governance">Governance</a>
+            <a href="/it/avv" data-i18n="chrome.footer.link.avv">Accordo sul trattamento (DPA)</a>
+            <a href="/it/sicherheit#toms" data-i18n="chrome.footer.link.toms">Panoramica MTO</a>
+            <a href="/it/subprozessoren" data-i18n="chrome.footer.link.subs">Sub-responsabili</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.legal">Legale</p>
+          <nav aria-label="Rechtliches">
+            <a href="/it/impressum" data-i18n="chrome.footer.link.imprint">Note legali</a>
+            <a href="/it/datenschutz" data-i18n="chrome.footer.link.privacy">Privacy</a>
+            <a href="/it/agb" data-i18n="chrome.footer.link.terms">Condizioni generali</a>
+          </nav>
+        </div>
+        <div class="euc-footer-col">
+          <p class="euc-footer-coltitle" data-i18n="chrome.footer.col.lang">Lingua</p>
+          <nav aria-label="Sprache">
+            <button type="button" data-euc-lang-to="de">Deutsch</button>
+            <button type="button" data-euc-lang-to="en">English</button>
+            <button type="button" data-euc-lang-to="fr">Français</button>
+            <button type="button" data-euc-lang-to="it">Italiano</button>
+            <button type="button" data-euc-lang-to="es">Español</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="euc-footer-rule"></div>
+
+    <div class="euc-footer-bottom">
+      <span class="euc-rights" data-i18n="chrome.footer.rights">© 2026 EU Cowork AI by Herr-Informatik GmbH</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebPage",
+        "FAQPage"
+      ],
+      "@id": "https://eucowork.ai/it/blog/ki-immobilienverwaltung#webpage",
+      "url": "https://eucowork.ai/it/blog/ki-immobilienverwaltung",
+      "name": "IA nell’amministrazione immobiliare: tre processi che alleggeriscono la casella di posta",
+      "inLanguage": "it",
+      "isPartOf": {
+        "@id": "https://eucowork.ai/#website"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      },
+      "description": "IA collegata a GARAIO REM, Abacus e ImmoTop2: tre processi per richieste degli inquilini, spese accessorie e riconsegne nelle amministrazioni svizzere.",
+      "primaryImageOfPage": {
+        "@id": "https://eucowork.ai/it/blog/ki-immobilienverwaltung#primaryimage"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://eucowork.ai/it"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://eucowork.ai/it/blog"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "IA nell’amministrazione immobiliare",
+            "item": "https://eucowork.ai/it/blog/ki-immobilienverwaltung"
+          }
+        ]
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "L’IA risponde direttamente agli inquilini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Ogni risposta a un inquilino è una bozza che l’amministratore competente legge, corregge e approva. Un modello linguistico, cioè il programma dietro l’IA, può produrre affermazioni errate. Perciò ogni testo è una bozza da rileggere, non un’informazione verificata."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Che cosa succede con disdette e adeguamenti della pigione?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Restano all’amministrazione. Le dichiarazioni giuridicamente vincolanti come disdette, adeguamenti della pigione al tasso ipotecario di riferimento e diffide sono vincolate a prescrizioni di forma e non escono mai in automatico. Disdette e aumenti della pigione richiedono inoltre il modulo ufficiale del Cantone e sono legati a termini. Il collega IA al massimo prepara il testo. Modulo ufficiale, termini e invio sono responsabilità dell’amministrazione. Questa risposta non sostituisce una consulenza legale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Come fa l’IA a sapere che cosa dice il contratto di locazione?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dalla base di conoscenza. Per ogni immobile carica i contratti di locazione, il regolamento interno, i regolamenti dello stabile e la corrispondenza precedente. La bozza nasce da lì e indica il riferimento, così che l’affermazione si possa verificare in pochi secondi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I dati degli inquilini possono davvero finire in uno strumento di IA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Secondo la legge svizzera riveduta sulla protezione dei dati l’amministrazione resta responsabile e conclude con il fornitore un accordo sul trattamento dei dati. EU Cowork AI funziona in Svizzera o sul suo server, i dati dei clienti non addestrano alcun modello e ogni accesso figura nel registro di audit. L’accordo sul trattamento dei dati e l’elenco dei sub-responsabili sono pubblicati apertamente sul sito. Questa risposta non sostituisce una consulenza legale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ci serve per questo un portale per gli inquilini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Il collega IA lavora nella casella di posta comune che lei ha già oggi. Gli inquilini scrivono allo stesso indirizzo di prima e del processo dietro non si accorgono."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "EU Cowork AI funziona con GARAIO REM, Abacus o ImmoTop2?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dipende dall’interfaccia. La tabella più sopra mostra la situazione per GARAIO REM, Abacus, ImmoTop2, Rimo R5 e altri programmi. Dove manca un collegamento, la via passa da esportazioni e documenti. I processi con casella di posta e base di conoscenza funzionano comunque senza collegamento di sistema."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto costa per un’amministrazione con quindici persone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L’esercizio gestito costa 15 € per persona al mese, in Svizzera 14 CHF. Di questi, 8 €, rispettivamente 7.50 CHF, sono credito modelli nel pool condiviso della sua organizzazione. Chi ospita in proprio non paga nulla per il software: è rilasciato con licenza MIT. Tutte le indicazioni si trovano nella pagina Prezzi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Come cominciamo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Con un immobile. Regolamento interno, regolamenti dello stabile e i contratti di locazione di questo immobile entrano nella base di conoscenza, la casella di posta comune viene collegata e l’amministratore lavora due settimane con le bozze. Ciò che emerge rifluisce nei modelli di testo, poi si aggiungono gli immobili successivi."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://eucowork.ai/it/blog/ki-immobilienverwaltung#article",
+      "mainEntityOfPage": {
+        "@id": "https://eucowork.ai/it/blog/ki-immobilienverwaltung#webpage"
+      },
+      "headline": "IA nell’amministrazione immobiliare: tre processi che alleggeriscono la casella di posta",
+      "description": "IA collegata a GARAIO REM, Abacus e ImmoTop2: tre processi per richieste degli inquilini, spese accessorie e riconsegne nelle amministrazioni svizzere.",
+      "articleSection": "Immobili",
+      "mentions": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Microsoft 365"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "GARAIO REM"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Abacus"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "AbaImmo"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "ImmoTop2"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Rimo R5"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "SwissRETS"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "bexio"
+        }
+      ],
+      "datePublished": "2026-06-09",
+      "dateModified": "2026-08-18",
+      "inLanguage": "it",
+      "author": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "publisher": {
+        "@id": "https://eucowork.ai/#organization"
+      },
+      "image": {
+        "@id": "https://eucowork.ai/it/blog/ki-immobilienverwaltung#primaryimage"
+      },
+      "isPartOf": {
+        "@id": "https://eucowork.ai/it/blog#blog"
+      },
+      "about": {
+        "@id": "https://eucowork.ai/#software"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://eucowork.ai/it/blog/ki-immobilienverwaltung#primaryimage",
+      "url": "https://eucowork.ai/og/eucowork-share-it.png",
+      "width": 1200,
+      "height": 630
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var rail = document.querySelector('.blog-rail');
+  if (!rail) return;
+  var links = [].slice.call(rail.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+  var targets = links.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  }).filter(Boolean);
+  var hero = document.querySelector('.blog-hero');
+  var footer = document.querySelector('.euc-footer');
+  function setActive(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+    });
+  }
+  function onScroll() {
+    var top = window.scrollY || document.documentElement.scrollTop;
+    var show = hero ? top > hero.offsetTop + hero.offsetHeight - 80 : true;
+    /* Vor der Fussleiste ausblenden: die Leiste ist vertikal zentriert,
+       ihre Unterkante darf den Footer nicht erreichen. */
+    if (show && footer) {
+      var reach = window.innerHeight / 2 + rail.offsetHeight / 2 + 32;
+      show = footer.getBoundingClientRect().top > reach;
+    }
+    rail.classList.toggle('is-visible', show);
+    var line = top + window.innerHeight * 0.35;
+    var current = targets[0];
+    targets.forEach(function (t) {
+      if (t.getBoundingClientRect().top + top <= line) { current = t; }
+    });
+    if (current) setActive(current.id);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+<script>
+window.EUC_I18N = {
+  en: {
+    'meta.title': 'AI and software in property management | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'AI in property management',
+    'hero.eyebrow': 'AI in everyday work',
+    'hero.h1': 'AI in property management: three workflows that ease the shared inbox',
+    'hero.lead': 'A repair report, a service charge question, a noise complaint: in the shared inbox of a management office, everything lands at once. This article walks through three workflows. You see how an AI colleague works with the documents of your properties. You also see what can be connected to your property management software, from GARAIO REM to Abacus, and where the limits are.',
+    'hero.chip': 'Real estate',
+    'hero.datum': '9 June 2026',
+    'hero.lesezeit': 'Reading time: 10 minutes',
+    'lage.leg1': 'An enquiry in the shared inbox, exactly as it arrives',
+    'lage.leg2': 'Assigned by type of request and by property',
+    'lage.leg3': 'A reply drafted from the property’s own documents',
+    'lage.leg4': 'Review and approval by the property manager',
+    'lage.fig': 'How a tenant enquiry moves through the office: from the inbox to the approved reply. The last step stays with a person.',
+    'kurz.titel': 'In brief',
+    'kurz.p1': 'In the Digital Real Estate Index 2026, property management reaches 4.4 out of 10 points. That is the highest value since the survey began. AI and machine learning are the only one of the twelve technologies surveyed with clear progress.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI works with the documents of your properties: tenancy agreements, house rules, regulations and past correspondence become the knowledge base the drafts are built from.',
+    'kurz.p3': 'Every reply to a tenant is a draft that someone approves. Legally binding notices such as terminations and rent adjustments stay with the property manager.',
+    'kurz.p4': 'Tenant data stays in Switzerland or on your own server and does not train any models. Software with a documented interface for exchanging data can be connected, for example Microsoft 365 or GARAIO REM. The Model Context Protocol (MCP) is what carries that connection.',
+    'toc.titel': 'On this page',
+    'toc.i1': 'Starting point',
+    'toc.i2': 'Sorting and answering tenant enquiries',
+    'toc.i3': 'Explaining the service charge statement',
+    'toc.i4': 'Handover reports and contractor orders',
+    'toc.i5': 'Connectors to property management software',
+    'toc.i6': 'Data protection',
+    'toc.i7': 'Frequently asked questions',
+    'lage.h2': 'Starting point: more correspondence than people to write it',
+    'lage.p1': 'Digitalisation in the Swiss construction and real estate sector is moving in small steps. For the Digital Real Estate Index 2026 by pom+ Consulting, around 200 specialists and executives were surveyed. Property management reaches 4.4 out of 10 points, the highest value since the survey began. The overall index stands at 4.3. AI and machine learning are the only one of the twelve technologies surveyed with clear progress. Two thirds of respondents see high value in them. What slows the development down are questions of investment and cost.<sup><a href="#fn-1" aria-label="Footnote 1">1</a></sup>',
+    'lage.p2': 'On top of that comes the shortage of qualified staff. The sector does not find enough trained property managers, which gets in the way of efficient operation.<sup><a href="#fn-2" aria-label="Footnote 2">2</a></sup> Whoever cannot fill an open position spreads the work across the existing team. The first thing to suffer is the response time towards tenants, and an unanswered repair report turns into a complaint to the owner two weeks later.',
+    'lage.p3': 'A large part of that work is correspondence that follows a fixed pattern: the service charge statement and the questions that follow it, the rent adjustment tied to the reference interest rate, the formal requirements for terminations, the handover report with the orders to the contractors. Then there is the language mix. The same matter goes out in German, French, Italian or English depending on the tenant. So the question is no longer whether a management office uses AI. The question is whether the AI works with the documents of its own properties, and where the tenant data sits while it does.',
+    'uc1.h2': 'Use case 1: sorting and answering tenant enquiries',
+    'uc1.p1': 'On Monday morning the shared inbox holds the messages from the weekend: a dripping boiler, questions about the service charge statement, a noise complaint from the third floor, a termination for the end of the quarter, several requests for a spare key. The AI colleague reads the inbox through the connected mailbox. It assigns each message to a type of request and to a property, and places a draft reply next to it.',
+    'uc1.p2': 'The draft comes from the documents of the property concerned: the tenancy agreement, the house rules, the regulations and the previous correspondence with this tenant. For the repair report, the draft states who fixes the fault and what information is still missing. For the spare key request, it states the rule from the regulations, with the source reference, so the statement can be checked in seconds. The message goes to the responsible property manager, who reads it, corrects it and approves it.',
+    'uc1.leg1': 'An enquiry from the shared inbox, in the tenant’s language',
+    'uc1.leg2': 'The property’s documents, with permissions per tool and a full log',
+    'uc1.leg3': 'A draft reply with its source, ready for approval',
+    'uc1.fig': 'The draft is built from the property’s documents, not from what the language model has learned in general. Approval happens in the office.',
+    'uc1.p3': 'What matters in practice: no new tenant portal and no second system appear. The AI colleague works in the mailbox you already have, and tenants keep writing to the same address. The red lines stay in place too: terminations, rent adjustments and formal warnings are legally binding notices and never go out automatically. The formal requirements of Swiss tenancy law remain the responsibility of the management office.',
+    'uc2.h2': 'Use case 2: explaining the service charge statement in plain words',
+    'uc2.p1': 'After the statements go out, the same wave arrives every year: why is my statement higher than last year. The questions all land within the same two weeks, and they land on a team that is processing the additional payments and the refunds at the same time.',
+    'uc2.p2': 'The AI colleague pulls up the statement for that apartment, the allocation key and the figures from the previous year, and drafts an explanation in plain language: which item has gone up, how the share is calculated, what the comparison with last year shows. The draft is written in the language the enquiry came in, in German, French, Italian or English. The property manager checks the figures and approves. That makes the seasonal peak manageable. It no longer has to be absorbed through temporary staff alone.',
+    'uc2.leg1': 'The tenant’s question about the statement',
+    'uc2.leg2': 'The statement, the allocation key and last year’s figures',
+    'uc2.leg3': 'An explanation in the tenant’s language, ready for approval',
+    'uc2.fig': 'The explanation is built from the statement for that apartment. Checking and approval happen in the office.',
+    'uc2.p3': 'What the workflow does not do: it does not correct a statement and it does not charge anything. It explains what the statement says. If an item really is wrong, the case goes to accounting, as before. And because every explanation rests on the stored statement, the property manager sees immediately what the draft is based on.',
+    'uc3.h2': 'Use case 3: from the handover to the contractor orders',
+    'uc3.p1': 'The handover takes an hour, the paperwork afterwards often takes longer. On the way back the property manager dictates the notes into the phone, the device’s dictation function is enough, or types them in: kitchen front scratched, silicone in the bathroom to be renewed, living room walls to be painted, photo list attached.',
+    'uc3.p2': 'Out of that come the draft handover report in the company format and the worded orders to the painter, the plumber and the cleaning company, with address, apartment number, access arrangements and deadline. On the same day, instead of at the weekend. Who gets the job, who bears the cost and where normal wear ends and damage begins is decided by the management office. The AI colleague supplies the text.',
+    'uc3.leg1': 'Notes and photo list from the handover',
+    'uc3.leg2': 'One input, three documents in the company format',
+    'uc3.leg3': 'Report and contractor orders, ready for approval',
+    'uc3.fig': 'The notes from the handover become a report and contractor orders. Allocation and cost decisions stay with the management office.',
+    'uc3.p3': 'Here too: no order goes out without approval, and nothing is charged automatically. What is billed to the tenant is decided by the office, and every change to a draft stays traceable.',
+    'konn.h2': 'Connectors: what can be linked to GARAIO REM, Abacus and the rest of your software',
+    'konn.p1': 'An AI colleague is only as useful as what it is allowed to reach. MCP is an open standard for connecting external systems. Through it, programs with a documented interface can be addressed. An interface, often called an API, is a described route along which two programs exchange data. Permissions apply per individual tool, and every call is written to the log. This is the state of play for common property management software, checked in August 2026:',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Connection to EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (shared Outlook mailbox, SharePoint)',
+    'konn.r1c2': 'Graph API, openly documented',
+    'konn.r1c3': 'MCP server available from Microsoft, the most direct route for sorting tenant enquiries',
+    'konn.r2c1': 'GARAIO REM',
+    'konn.r2c2': 'Documented interfaces with OAuth2, the common standard for secure sign-in: read access and an event interface covering around 20 business contexts, from properties to contracts to damage cases<sup><a href="#fn-3" aria-label="Footnote 3">3</a></sup>',
+    'konn.r2c3': 'Connection via MCP possible; access runs through the vendor as a service partner',
+    'konn.r3c1': 'Abacus with AbaImmo',
+    'konn.r3c2': 'REST API with OAuth2, access through the partner programme',
+    'konn.r3c3': 'Connection via MCP possible; access runs through the Abacus partner channel',
+    'konn.r4c1': 'ImmoTop2 (W&amp;W Immo Informatik)',
+    'konn.r4c2': 'Publicly documented DMS interface for document workflows<sup><a href="#fn-4" aria-label="Footnote 4">4</a></sup>',
+    'konn.r4c3': 'Connection possible for document filing',
+    'konn.r5c1': 'Rimo R5 (W&amp;W Immo Informatik)',
+    'konn.r5c2': 'File and export oriented interfaces',
+    'konn.r5c3': 'The route runs via exports and documents',
+    'konn.r6c1': 'SwissRETS',
+    'konn.r6c2': 'Open standard for property data, licence-free and documented<sup><a href="#fn-5" aria-label="Footnote 5">5</a></sup>',
+    'konn.r6c3': 'Connectable for listing data',
+    'konn.r8c1': 'bexio',
+    'konn.r8c2': 'REST API, openly documented',
+    'konn.r8c3': 'Connection via MCP possible, for smaller offices with their own accounting',
+    'konn.p2': 'Is your software missing from the list? Much of the daily work runs on the mailbox and on documents and needs no system connection at all: sorting the enquiries, the service charge explanation, the handover report. How a connection via MCP works in principle, and which systems are prepared, is described on the <a class="euc-textlink" href="/it/integrationen">integrations</a> page.',
+    'ds.h2': 'Data protection: tenant files are sensitive',
+    'ds.p1': 'A tenant file holds more than a name and an address: debt collection register extracts, credit reports, proof of income, sometimes details that count as sensitive personal data. Under the revised Swiss Data Protection Act, the management office remains responsible for that data even when an AI tool processes it. If a provider processes the data, a data processing agreement is required. This article is not legal advice.',
+    'ds.p2': 'On top of that come the expectations of the owners. Institutional owners such as pension funds and insurers regularly require in their management contracts that the data of their properties is processed in Switzerland. EU Cowork AI runs in ISO 27001 certified data centres operated by Green in Lupfig, or on your own server.',
+    'ds.p3': 'Customer data does not train any models, and permissions apply down to individual tools. Every access is recorded in the audit log, a record you can export at any time. The <a class="euc-textlink" href="/it/avv">data processing agreement</a> and the <a class="euc-textlink" href="/it/subprozessoren">subprocessor list</a> are published openly on the website. When an owner asks where the data of their properties is held, you answer in one sentence.',
+    'faq.h2': 'Frequently asked questions from property management',
+    'faq.q1': 'Does the AI reply to tenants directly?',
+    'faq.a1': 'No. Every reply to a tenant is a draft that the responsible property manager reads, corrects and approves. A language model, the program behind the AI, can produce errors. That is why every text is a draft for review, not a verified statement.',
+    'faq.q2': 'What about terminations and rent adjustments?',
+    'faq.a2': 'They stay with the management office. Legally binding notices such as terminations, rent adjustments tied to the reference interest rate and formal warnings are subject to formal requirements and never go out automatically. Terminations and rent increases also require the official cantonal form and are tied to deadlines. At most, the AI colleague prepares text. The form, the deadlines and the dispatch remain the responsibility of the office. This answer is not legal advice.',
+    'faq.q3': 'How does the AI know what the tenancy agreement says?',
+    'faq.a3': 'From the knowledge base. For each property you upload the tenancy agreements, the house rules, the regulations and the previous correspondence. The draft is built from them and names the source, so the statement can be checked in seconds.',
+    'faq.q4': 'May tenant data go into an AI tool at all?',
+    'faq.a4': 'Under the revised Swiss Data Protection Act the management office remains responsible and signs a data processing agreement with the provider. EU Cowork AI runs in Switzerland or on your own server, customer data does not train any models, and every access is recorded in the audit log. The <a class="euc-textlink" href="/it/avv">data processing agreement</a> and the <a class="euc-textlink" href="/it/subprozessoren">subprocessor list</a> are published openly on the website. This answer is not legal advice.',
+    'faq.q5': 'Do we need a tenant portal for this?',
+    'faq.a5': 'No. The AI colleague works in the shared inbox you already have. Tenants write to the same address as before and notice nothing of the workflow behind it.',
+    'faq.q6': 'Does EU Cowork AI work with GARAIO REM, Abacus or ImmoTop2?',
+    'faq.a6': 'That depends on the interface. The table above shows the state of play for GARAIO REM, Abacus, ImmoTop2, Rimo R5 and other programs. Where a connection is missing, the route runs via exports and documents. The workflows built on the mailbox and the knowledge base work without any system connection anyway.',
+    'faq.q7': 'What does it cost for an office with fifteen people?',
+    'faq.a7': 'Managed operation costs €15 per person per month, in Switzerland CHF 14. Of that, €8 or CHF 7.50 is model credit in your organisation’s shared pool. If you self-host, the software costs nothing: it is MIT licensed. All details are on the <a class="euc-textlink" href="/it/preise">pricing</a> page.',
+    'faq.q8': 'How do we start?',
+    'faq.a8': 'With one property. The house rules, the regulations and the tenancy agreements of that property go into the knowledge base, the shared inbox is connected, and the property manager works with drafts for two weeks. Whatever comes up flows back into the templates, and the next properties follow.',
+    'cta.h2': 'See it on a property of your own',
+    'cta.p': 'Bring a set of house rules and a few real tenant enquiries, and we will walk through the workflow together. Or sign up and be among the first to start.',
+    'cta.btn1': 'Book a call',
+    'cta.btn2': 'Join the waitlist',
+    'src.h2': 'Sources',
+    'src.p': 'All figures and interface details in this article come from the following sources, last checked in August 2026.',
+    'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (published March 2026, around 200 specialists and executives surveyed): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
+    'src.fn2': 'Real Estate Symposium 2025, shortage of qualified staff in the Swiss real estate sector: <a class="euc-textlink" href="https://realestatesymposium.ch/fachkraeftemangel-in-der-schweizer-immobilienbranche-herausforderungen-und-auswirkungen/" target="_blank" rel="noopener">realestatesymposium.ch</a>',
+    'src.fn3': 'GARAIO REM, developer guide to the interfaces (OAuth2, read access and event interface): <a class="euc-textlink" href="https://github.com/Garaio-REM/grem-dev-guide" target="_blank" rel="noopener">github.com</a>',
+    'src.fn4': 'W&amp;W Immo Informatik, documentation of the ImmoTop2 DMS interface: <a class="euc-textlink" href="https://github.com/wwimmo/immotop2-dms-schnittstelle" target="_blank" rel="noopener">github.com</a>',
+    'src.fn5': 'SwissRETS, open standard for property data: <a class="euc-textlink" href="https://github.com/qualipool/swissrets" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Continue',
+    'weiter.l1': 'AI in practices, pharmacies and home care: three workflows in healthcare',
+    'weiter.l2': 'Integrations: which systems are prepared',
+    'weiter.l3': 'Documentation: operation, installation and governance in detail',
+    'geprueft': 'Last reviewed: <time datetime="2026-08">August 2026</time>'
+  },
+  fr: {
+    'meta.title': 'IA et logiciels en gérance immobilière | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'IA en gérance immobilière',
+    'hero.eyebrow': 'L’IA au quotidien professionnel',
+    'hero.h1': 'IA en gérance immobilière : trois processus qui soulagent la boîte de réception',
+    'hero.lead': 'Un signalement de réparation, une question sur le décompte de charges, une plainte pour bruit : dans la boîte mail commune d’une gérance, tout arrive en même temps, chaque jour. Cet article présente trois processus. Vous voyez comment un collègue IA travaille avec les documents de vos immeubles. Vous voyez aussi ce qui peut être raccordé à votre logiciel de gérance, de GARAIO REM à Abacus, et où se situent les limites.',
+    'hero.chip': 'Immobilier',
+    'hero.datum': '9 juin 2026',
+    'hero.lesezeit': 'Temps de lecture : 10 minutes',
+    'lage.leg1': 'La demande dans la boîte mail commune, telle qu’elle arrive',
+    'lage.leg2': 'Attribution par type de demande et par immeuble',
+    'lage.leg3': 'Projet de réponse issu des documents de l’immeuble',
+    'lage.leg4': 'Relecture et validation par la gérante',
+    'lage.fig': 'Voici le parcours d’une demande de locataire dans la gérance : de la réception à la réponse validée. La dernière étape reste humaine.',
+    'kurz.titel': 'En bref',
+    'kurz.p1': 'Dans le Digital Real Estate Index 2026, la gérance atteint 4,4 points sur 10. C’est la valeur la plus élevée depuis le début de l’enquête. L’IA et l’apprentissage automatique sont la seule des douze technologies étudiées à progresser nettement.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI travaille avec les documents de vos immeubles : les contrats de bail, les règlements de maison, les règlements d’immeuble et la correspondance antérieure deviennent la base de connaissances dont naissent les projets de réponse.',
+    'kurz.p3': 'Chaque réponse à un locataire est un projet soumis à validation. Les déclarations juridiquement contraignantes telles que les résiliations et les adaptations de loyer restent du ressort de la gérance.',
+    'kurz.p4': 'Les données des locataires restent en Suisse ou sur votre propre serveur et n’entraînent aucun modèle. Les logiciels dotés d’une interface documentée pour l’échange de données peuvent être raccordés, par exemple Microsoft 365 ou GARAIO REM. Le raccordement passe par le Model Context Protocol (MCP).',
+    'toc.titel': 'Sur cette page',
+    'toc.i1': 'Situation de départ',
+    'toc.i2': 'Trier et traiter les demandes des locataires',
+    'toc.i3': 'Expliquer le décompte de charges',
+    'toc.i4': 'État des lieux et mandats aux artisans',
+    'toc.i5': 'Connecteurs vers le logiciel de gérance',
+    'toc.i6': 'Protection des données',
+    'toc.i7': 'Questions fréquentes',
+    'lage.h2': 'Situation de départ : plus de correspondance que de personnes pour l’écrire',
+    'lage.p1': 'La numérisation de la construction et de l’immobilier suisses avance à petits pas. Pour le Digital Real Estate Index 2026 de pom+ Consulting, environ 200 spécialistes et cadres ont été interrogés. La gérance y atteint 4,4 points sur 10, la valeur la plus élevée depuis le début de l’enquête. L’indice global s’établit à 4,3. L’IA et l’apprentissage automatique sont la seule des douze technologies étudiées à progresser nettement. Deux tiers des personnes interrogées y voient une grande utilité. Ce qui freine le mouvement, ce sont les questions d’investissement et de coûts.<sup><a href="#fn-1" aria-label="Note 1">1</a></sup>',
+    'lage.p2': 'S’y ajoute la pénurie de personnel qualifié. La branche ne trouve pas assez de gérantes et de gérants formés, ce qui nuit à l’efficacité de l’exploitation.<sup><a href="#fn-2" aria-label="Note 2">2</a></sup> Qui ne parvient pas à repourvoir un poste répartit le travail sur l’équipe en place. Le premier à en souffrir est le délai de réponse aux locataires, et un signalement de réparation resté sans réponse devient deux semaines plus tard une réclamation auprès de la propriété.',
+    'lage.p3': 'Une grande partie de ce travail est une correspondance qui suit un schéma fixe : le décompte de charges et les questions qui s’ensuivent, l’adaptation du loyer au taux d’intérêt de référence, les exigences de forme en cas de résiliation, le procès-verbal de l’état des lieux avec les mandats aux artisans. S’y ajoute le plurilinguisme. Le même sujet part en allemand, en français, en italien ou en anglais selon les locataires. La question n’est donc plus de savoir si une gérance utilise l’IA. La question est de savoir si l’IA travaille avec les documents de ses propres immeubles et où se trouvent les données des locataires pendant ce temps.',
+    'uc1.h2': 'Cas d’usage 1 : trier et traiter les demandes des locataires',
+    'uc1.p1': 'Le lundi matin, la boîte mail commune de la gérance contient les messages du week-end : un chauffe-eau qui goutte, des questions sur le décompte de charges, une plainte pour bruit venue du troisième étage, une résiliation pour la fin du trimestre, plusieurs demandes de double de clé. Le collègue IA lit la réception via la boîte mail raccordée. Il attribue chaque message à un type de demande et à un immeuble, et place un projet de réponse à côté.',
+    'uc1.p2': 'Ce projet, il le tire des documents de l’immeuble concerné : contrat de bail, règlement de maison, règlement d’immeuble et correspondance antérieure avec ce locataire. Pour le signalement de réparation, le projet indique qui répare le dérangement et quelles informations manquent encore. Pour la demande de clé, il reprend la règle du règlement, avec la référence, afin que l’affirmation se vérifie en quelques secondes. Le message part vers la gérante compétente, qui lit, corrige et valide.',
+    'uc1.leg1': 'Demande issue de la boîte mail commune, dans la langue du locataire',
+    'uc1.leg2': 'Documents de l’immeuble, avec des droits par outil et un journal',
+    'uc1.leg3': 'Projet de réponse avec la référence, prêt pour la validation',
+    'uc1.fig': 'Le projet naît des documents de l’immeuble, non de ce que le modèle de langage a appris en général. La validation a lieu dans la gérance.',
+    'uc1.p3': 'Important en pratique : il n’apparaît ni nouveau portail des locataires ni second système. Le collègue IA travaille dans la boîte mail que vous avez déjà, et les locataires continuent d’écrire à la même adresse. Les lignes rouges restent elles aussi en place : les résiliations, les adaptations de loyer et les mises en demeure sont des déclarations juridiquement contraignantes et ne partent jamais automatiquement. Les exigences de forme du droit du bail restent l’affaire de la gérance.',
+    'uc2.h2': 'Cas d’usage 2 : expliquer le décompte de charges de façon compréhensible',
+    'uc2.p1': 'Après l’envoi des décomptes arrive chaque année la même vague : pourquoi mon décompte est-il plus élevé que l’an dernier. Les questions tombent toutes dans les mêmes deux semaines, et elles tombent sur une équipe qui traite en même temps les soldes à payer et les remboursements.',
+    'uc2.p2': 'Le collègue IA reprend le décompte de cet appartement, la clé de répartition et les valeurs de l’année précédente, et en tire une explication en langage clair : quel poste a augmenté, comment la part est calculée, ce que montre la comparaison avec l’année précédente. Le projet est rédigé dans la langue dans laquelle la demande est arrivée, en allemand, en français, en italien ou en anglais. La gérante vérifie les chiffres et valide. Le pic saisonnier devient ainsi planifiable. Il n’a plus à être absorbé uniquement par du personnel temporaire.',
+    'uc2.leg1': 'Question du locataire sur le décompte',
+    'uc2.leg2': 'Décompte, clé de répartition et valeurs de l’année précédente',
+    'uc2.leg3': 'Explication dans la langue du locataire, prête pour la validation',
+    'uc2.fig': 'L’explication naît du décompte de cet appartement. La vérification et la validation ont lieu dans la gérance.',
+    'uc2.p3': 'Ce que le processus ne fait pas : il ne corrige aucun décompte et ne facture rien. Il explique ce qui figure dans le décompte. Si un poste est effectivement faux, le cas part à la comptabilité, comme auparavant. Et comme chaque explication repose sur le décompte déposé, la gérante voit immédiatement, en vérifiant, sur quoi le projet s’appuie.',
+    'uc3.h2': 'Cas d’usage 3 : de l’état des lieux aux mandats aux artisans',
+    'uc3.p1': 'L’état des lieux dure une heure, le travail qui suit souvent plus longtemps. Sur le chemin du retour, la gérante dicte ses notes dans son téléphone, la fonction de dictée de l’appareil suffit, ou elle les saisit : façade de cuisine rayée, silicone de la salle de bains à refaire, murs du salon à repeindre, liste de photos en annexe.',
+    'uc3.p2': 'Il en résulte le projet de procès-verbal au format de la gérance et les textes de mandat rédigés pour le peintre, le sanitaire et le nettoyage, avec l’adresse, le numéro d’appartement, les modalités d’accès et le délai. Le jour même, plutôt que le week-end. Qui reçoit le mandat, qui supporte les coûts et où l’usure normale s’arrête pour laisser place à un dommage, c’est la gérance qui en décide. Le collègue IA fournit le texte.',
+    'uc3.leg1': 'Notes et liste de photos de l’état des lieux',
+    'uc3.leg2': 'Une entrée, trois documents au format de la gérance',
+    'uc3.leg3': 'Procès-verbal et textes de mandat aux artisans, prêts pour la validation',
+    'uc3.fig': 'Les notes de l’état des lieux deviennent un procès-verbal et des textes de mandat. L’attribution et la prise en charge des coûts sont décidées par la gérance.',
+    'uc3.p3': 'Ici aussi : aucun mandat ne part sans validation, et rien n’est facturé automatiquement. Ce qui est mis à la charge du locataire, c’est la gérance qui en décide, et chaque modification apportée à un projet reste traçable.',
+    'konn.h2': 'Connecteurs : ce qui peut être raccordé à GARAIO REM, Abacus et à vos autres logiciels',
+    'konn.p1': 'Un collègue IA est aussi utile que ce qu’il a le droit d’atteindre. MCP est un standard ouvert pour le raccordement de systèmes externes. Il permet de piloter les programmes dotés d’une interface documentée. Une interface, souvent appelée API, est un chemin décrit par lequel deux programmes échangent des données. Les droits valent par outil individuel, et chaque appel est inscrit au journal. Voici la situation pour les logiciels de gérance les plus répandus, vérifiée en août 2026 :',
+    'konn.th1': 'Logiciel',
+    'konn.th2': 'Interface',
+    'konn.th3': 'Raccordement à EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (boîte mail commune Outlook, SharePoint)',
+    'konn.r1c2': 'API Graph, documentée ouvertement',
+    'konn.r1c3': 'Serveur MCP disponible chez Microsoft, la voie la plus directe pour trier les demandes des locataires',
+    'konn.r2c1': 'GARAIO REM',
+    'konn.r2c2': 'Interfaces documentées avec OAuth2, le standard courant pour la connexion sécurisée : accès en lecture et interface d’événements couvrant environ 20 contextes métier, des immeubles aux contrats jusqu’aux sinistres<sup><a href="#fn-3" aria-label="Note 3">3</a></sup>',
+    'konn.r2c3': 'Raccordement possible via MCP, l’accès passe par le fabricant en qualité de partenaire de service',
+    'konn.r3c1': 'Abacus avec AbaImmo',
+    'konn.r3c2': 'API REST avec OAuth2, accès via le programme de partenariat',
+    'konn.r3c3': 'Raccordement possible via MCP, l’accès passe par la voie des partenaires Abacus',
+    'konn.r4c1': 'ImmoTop2 (W&amp;W Immo Informatik)',
+    'konn.r4c2': 'Interface DMS publiquement documentée pour les processus documentaires<sup><a href="#fn-4" aria-label="Note 4">4</a></sup>',
+    'konn.r4c3': 'Raccordement possible pour le classement des documents',
+    'konn.r5c1': 'Rimo R5 (W&amp;W Immo Informatik)',
+    'konn.r5c2': 'Interfaces orientées fichiers et exports',
+    'konn.r5c3': 'La voie passe par les exports et les documents',
+    'konn.r6c1': 'SwissRETS',
+    'konn.r6c2': 'Standard ouvert pour les données d’objets, libre de licence et documenté<sup><a href="#fn-5" aria-label="Note 5">5</a></sup>',
+    'konn.r6c3': 'Raccordable pour les données d’annonces',
+    'konn.r8c1': 'bexio',
+    'konn.r8c2': 'API REST, documentée ouvertement',
+    'konn.r8c3': 'Raccordement possible via MCP, pour les petites gérances qui tiennent leur propre comptabilité',
+    'konn.p2': 'Votre logiciel manque à la liste ? Une grande partie du quotidien fonctionne avec la boîte mail et les documents et n’a besoin d’aucun raccordement système : le tri des demandes, l’explication des charges, le procès-verbal d’état des lieux. Le fonctionnement de principe d’un raccordement via MCP et la liste des systèmes préparés figurent sur la page <a class="euc-textlink" href="/it/integrationen">Intégrations</a>.',
+    'ds.h2': 'Protection des données : les dossiers de locataires sont sensibles',
+    'ds.p1': 'Un dossier de locataire contient plus qu’un nom et une adresse : extrait du registre des poursuites, renseignement de solvabilité, justificatifs de revenus, parfois des indications qui comptent comme données personnelles sensibles. Selon la loi suisse révisée sur la protection des données, la gérance en reste responsable, même lorsqu’un outil d’IA traite ces données. Si un prestataire traite les données, un contrat de sous-traitance est nécessaire. Cet article ne remplace pas un conseil juridique.',
+    'ds.p2': 'S’y ajoutent les attentes de la propriété. Les propriétaires institutionnels tels que les caisses de pension et les assurances exigent régulièrement, dans leurs contrats de gérance, que les données de leurs immeubles soient traitées en Suisse. EU Cowork AI fonctionne dans des centres de données certifiés ISO 27001 de Green à Lupfig ou sur votre propre serveur.',
+    'ds.p3': 'Les données des clients n’entraînent aucun modèle, et les droits descendent jusqu’à chaque outil. Chaque accès figure dans le journal d’audit, un relevé que vous pouvez exporter à tout moment. Le <a class="euc-textlink" href="/it/avv">contrat de sous-traitance</a> ainsi que la <a class="euc-textlink" href="/it/subprozessoren">liste des sous-traitants ultérieurs</a> sont publiés ouvertement sur le site. Lorsque la propriété demande où se trouvent les données de ses immeubles, vous répondez en une phrase.',
+    'faq.h2': 'Questions fréquentes venues de la gérance',
+    'faq.q1': 'L’IA répond-elle directement aux locataires ?',
+    'faq.a1': 'Non. Chaque réponse à un locataire est un projet que la gérante compétente lit, corrige et valide. Un modèle de langage, c’est-à-dire le programme derrière l’IA, peut produire des erreurs. C’est pourquoi chaque texte est un projet à relire, non un renseignement vérifié.',
+    'faq.q2': 'Qu’en est-il des résiliations et des adaptations de loyer ?',
+    'faq.a2': 'Elles restent du ressort de la gérance. Les déclarations juridiquement contraignantes telles que les résiliations, les adaptations de loyer au taux d’intérêt de référence et les mises en demeure sont soumises à des exigences de forme et ne partent jamais automatiquement. Les résiliations et les hausses de loyer exigent en outre la formule officielle du canton et sont liées à des délais. Le collègue IA prépare tout au plus le texte. La formule officielle, les délais et l’envoi relèvent de la gérance. Cette réponse ne remplace pas un conseil juridique.',
+    'faq.q3': 'Comment l’IA sait-elle ce que contient le contrat de bail ?',
+    'faq.a3': 'Par la base de connaissances. Vous y téléversez, pour chaque immeuble, les contrats de bail, le règlement de maison, les règlements d’immeuble et la correspondance antérieure. Le projet en découle et cite la référence, afin que l’affirmation se vérifie en quelques secondes.',
+    'faq.q4': 'Les données des locataires ont-elles seulement le droit d’entrer dans un outil d’IA ?',
+    'faq.a4': 'Selon la loi suisse révisée sur la protection des données, la gérance reste responsable et conclut un contrat de sous-traitance avec le prestataire. EU Cowork AI fonctionne en Suisse ou sur votre propre serveur, les données des clients n’entraînent aucun modèle, et chaque accès figure dans le journal d’audit. Le <a class="euc-textlink" href="/it/avv">contrat de sous-traitance</a> et la <a class="euc-textlink" href="/it/subprozessoren">liste des sous-traitants ultérieurs</a> sont publiés ouvertement sur le site. Cette réponse ne remplace pas un conseil juridique.',
+    'faq.q5': 'Avons-nous besoin d’un portail des locataires pour cela ?',
+    'faq.a5': 'Non. Le collègue IA travaille dans la boîte mail commune que vous avez déjà. Les locataires écrivent à la même adresse qu’auparavant et ne remarquent rien du processus qui se déroule derrière.',
+    'faq.q6': 'EU Cowork AI fonctionne-t-il avec GARAIO REM, Abacus ou ImmoTop2 ?',
+    'faq.a6': 'Cela dépend de l’interface. Le tableau plus haut montre la situation pour GARAIO REM, Abacus, ImmoTop2, Rimo R5 et d’autres programmes. Là où un raccordement manque, la voie passe par les exports et les documents. Les processus qui reposent sur la boîte mail et la base de connaissances fonctionnent de toute façon sans raccordement système.',
+    'faq.q7': 'Combien cela coûte-t-il pour une gérance de quinze personnes ?',
+    'faq.a7': 'L’exploitation managée coûte 15 € par personne et par mois, 14 CHF en Suisse. Sur ce montant, 8 €, respectivement 7.50 CHF, sont un crédit de modèles dans le pool commun de votre organisation. Qui héberge lui-même ne paie rien pour le logiciel : il est sous licence MIT. Toutes les indications figurent sur la page <a class="euc-textlink" href="/it/preise">Tarifs</a>.',
+    'faq.q8': 'Comment commençons-nous ?',
+    'faq.a8': 'Avec un immeuble. Le règlement de maison, les règlements d’immeuble et les contrats de bail de cet immeuble entrent dans la base de connaissances, la boîte mail commune est raccordée, et la gérante travaille deux semaines avec des projets. Ce qui ressort de cette phase revient dans les modèles de texte, puis les immeubles suivants s’ajoutent.',
+    'cta.h2': 'Voyez-le sur un de vos propres immeubles',
+    'cta.p': 'Apportez un règlement de maison et quelques vraies demandes de locataires, et nous parcourons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.',
+    'cta.btn1': 'Réserver un rendez-vous',
+    'cta.btn2': 'Rejoindre la liste d’attente',
+    'src.h2': 'Sources',
+    'src.p': 'Tous les chiffres et toutes les indications sur les interfaces figurant dans cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.',
+    'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (publié en mars 2026, environ 200 spécialistes et cadres interrogés) : <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
+    'src.fn2': 'Real Estate Symposium 2025, pénurie de personnel qualifié dans la branche immobilière suisse : <a class="euc-textlink" href="https://realestatesymposium.ch/fachkraeftemangel-in-der-schweizer-immobilienbranche-herausforderungen-und-auswirkungen/" target="_blank" rel="noopener">realestatesymposium.ch</a>',
+    'src.fn3': 'GARAIO REM, manuel du développeur sur les interfaces (OAuth2, accès en lecture et interface d’événements) : <a class="euc-textlink" href="https://github.com/Garaio-REM/grem-dev-guide" target="_blank" rel="noopener">github.com</a>',
+    'src.fn4': 'W&amp;W Immo Informatik, documentation de l’interface DMS d’ImmoTop2 : <a class="euc-textlink" href="https://github.com/wwimmo/immotop2-dms-schnittstelle" target="_blank" rel="noopener">github.com</a>',
+    'src.fn5': 'SwissRETS, standard ouvert pour les données d’objets : <a class="euc-textlink" href="https://github.com/qualipool/swissrets" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Pour aller plus loin',
+    'weiter.l1': 'IA au cabinet médical, en pharmacie et dans les soins à domicile : trois processus dans la santé',
+    'weiter.l2': 'Intégrations : quels systèmes sont préparés',
+    'weiter.l3': 'Documentation : exploitation, installation et gouvernance en détail',
+    'geprueft': 'Dernière vérification : <time datetime="2026-08">août 2026</time>'
+  },
+  it: {
+    'meta.title': 'IA e software per amministrazioni immobiliari | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'IA nell’amministrazione immobiliare',
+    'hero.eyebrow': 'L’IA nel lavoro quotidiano',
+    'hero.h1': 'IA nell’amministrazione immobiliare: tre processi che alleggeriscono la casella di posta',
+    'hero.lead': 'Una segnalazione di guasto, una domanda sul conteggio delle spese accessorie, un reclamo per rumore: nella casella di posta comune di un’amministrazione arriva ogni giorno tutto insieme. Questo articolo presenta tre processi. Vede come un collega IA lavora con i documenti dei suoi immobili. Vede anche che cosa si può collegare al suo software di amministrazione immobiliare, da GARAIO REM ad Abacus, e dove stanno i limiti.',
+    'hero.chip': 'Immobili',
+    'hero.datum': '9 giugno 2026',
+    'hero.lesezeit': 'Tempo di lettura: 10 minuti',
+    'lage.leg1': 'La richiesta nella casella di posta comune, così come arriva',
+    'lage.leg2': 'Attribuzione per tipo di richiesta e per immobile',
+    'lage.leg3': 'Bozza di risposta dai documenti dell’immobile',
+    'lage.leg4': 'Lettura e approvazione da parte dell’amministratore',
+    'lage.fig': 'Ecco come una richiesta di un inquilino attraversa l’amministrazione: dall’arrivo alla risposta approvata. L’ultimo passo resta all’essere umano.',
+    'kurz.titel': 'In breve',
+    'kurz.p1': 'Nel Digital Real Estate Index 2026 l’amministrazione immobiliare raggiunge 4,4 punti su 10. È il valore più alto dall’inizio della rilevazione. IA e machine learning sono l’unica delle dodici tecnologie esaminate con un progresso netto.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI lavora con i documenti dei suoi immobili: contratti di locazione, regolamento interno, regolamenti dello stabile e corrispondenza precedente diventano la base di conoscenza da cui nascono le bozze.',
+    'kurz.p3': 'Ogni risposta a un inquilino è una bozza soggetta ad approvazione. Le dichiarazioni giuridicamente vincolanti come disdette e adeguamenti della pigione restano all’amministrazione.',
+    'kurz.p4': 'I dati degli inquilini restano in Svizzera o sul suo server e non addestrano alcun modello. I software con un’interfaccia documentata per lo scambio di dati si possono collegare, per esempio Microsoft 365 o GARAIO REM. Per il collegamento serve il Model Context Protocol (MCP).',
+    'toc.titel': 'In questa pagina',
+    'toc.i1': 'Situazione di partenza',
+    'toc.i2': 'Smistare e rispondere alle richieste degli inquilini',
+    'toc.i3': 'Spiegare il conteggio delle spese accessorie',
+    'toc.i4': 'Riconsegna dell’appartamento e incarichi agli artigiani',
+    'toc.i5': 'Connettori verso il software di amministrazione',
+    'toc.i6': 'Protezione dei dati',
+    'toc.i7': 'Domande frequenti',
+    'lage.h2': 'Situazione di partenza: più corrispondenza che persone per scriverla',
+    'lage.p1': 'La digitalizzazione dell’edilizia e del settore immobiliare svizzeri procede a piccoli passi. Per il Digital Real Estate Index 2026 di pom+ Consulting sono stati interpellati circa 200 specialisti e quadri dirigenti. L’amministrazione immobiliare vi raggiunge 4,4 punti su 10, il valore più alto dall’inizio della rilevazione. L’indice complessivo è di 4,3. IA e machine learning sono l’unica delle dodici tecnologie esaminate con un progresso netto. Due terzi degli interpellati vi vedono una grande utilità. A frenare lo sviluppo sono le questioni di investimento e di costo.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'lage.p2': 'A ciò si aggiunge la carenza di personale qualificato. Il settore non trova abbastanza amministratrici e amministratori formati, il che pregiudica l’efficienza dell’esercizio.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> Chi non riesce a coprire un posto vacante distribuisce il lavoro sul team esistente. A soffrirne per prima è la tempestività delle risposte agli inquilini, e una segnalazione di guasto rimasta senza risposta diventa due settimane dopo un reclamo alla proprietà.',
+    'lage.p3': 'Gran parte di questo lavoro è corrispondenza secondo schemi fissi: il conteggio delle spese accessorie e le domande che ne seguono, l’adeguamento della pigione al tasso ipotecario di riferimento, le prescrizioni di forma per le disdette, il verbale di riconsegna dell’appartamento con gli incarichi agli artigiani. Si aggiunge il plurilinguismo. La stessa questione esce in tedesco, francese, italiano o inglese a seconda degli inquilini. La domanda non è quindi più se un’amministrazione impieghi l’IA. La domanda è se l’IA lavori con i documenti dei propri immobili e dove si trovino nel frattempo i dati degli inquilini.',
+    'uc1.h2': 'Caso d’uso 1: smistare e rispondere alle richieste degli inquilini',
+    'uc1.p1': 'Il lunedì mattina nella casella di posta comune dell’amministrazione ci sono i messaggi del fine settimana: uno scaldacqua che gocciola, domande sul conteggio delle spese accessorie, un reclamo per rumore dal terzo piano, una disdetta per la fine del trimestre, diverse richieste di una seconda chiave. Il collega IA legge la posta in arrivo tramite la casella collegata. Attribuisce ogni messaggio al tipo di richiesta e all’immobile e vi affianca una bozza di risposta.',
+    'uc1.p2': 'La bozza la ricava dai documenti dell’immobile interessato: contratto di locazione, regolamento interno, regolamento dello stabile e corrispondenza precedente con questo inquilino. Per la segnalazione di guasto la bozza indica chi ripara il difetto e quali informazioni mancano ancora. Per la richiesta della chiave riporta la regola tratta dal regolamento, con il riferimento, così che l’affermazione si possa verificare in pochi secondi. Il messaggio va all’amministratore competente, che legge, corregge e approva.',
+    'uc1.leg1': 'Richiesta dalla casella di posta comune, nella lingua dell’inquilino',
+    'uc1.leg2': 'Documenti dell’immobile, con permessi per singolo strumento e registro',
+    'uc1.leg3': 'Bozza di risposta con il riferimento, pronta per l’approvazione',
+    'uc1.fig': 'La bozza nasce dai documenti dell’immobile, non da ciò che il modello linguistico ha imparato in generale. L’approvazione avviene nell’amministrazione.',
+    'uc1.p3': 'Importante nella pratica: non nasce alcun nuovo portale per gli inquilini e nessun secondo sistema. Il collega IA lavora nella casella di posta che lei ha già oggi, e gli inquilini continuano a scrivere allo stesso indirizzo. Restano anche le linee rosse: disdette, adeguamenti della pigione e diffide sono dichiarazioni giuridicamente vincolanti e non escono mai in automatico. Le prescrizioni di forma del diritto di locazione restano compito dell’amministrazione.',
+    'uc2.h2': 'Caso d’uso 2: spiegare il conteggio delle spese accessorie in modo comprensibile',
+    'uc2.p1': 'Dopo l’invio dei conteggi arriva ogni anno la stessa ondata: perché il mio conteggio è più alto dell’anno scorso. Le domande arrivano tutte nelle stesse due settimane e colpiscono un team che sta trattando contemporaneamente i conguagli e i rimborsi.',
+    'uc2.p2': 'Il collega IA richiama il conteggio di quell’appartamento, la chiave di riparto e i valori dell’anno precedente e ne ricava una spiegazione in linguaggio comprensibile: quale voce è aumentata, come viene calcolata la quota, che cosa mostra il confronto con l’anno precedente. La bozza nasce nella lingua in cui è arrivata la richiesta, in tedesco, francese, italiano o inglese. L’amministratore verifica le cifre e approva. Così il picco stagionale diventa pianificabile. Non deve più essere assorbito soltanto con personale interinale.',
+    'uc2.leg1': 'Domanda dell’inquilino sul conteggio',
+    'uc2.leg2': 'Conteggio, chiave di riparto e valori dell’anno precedente',
+    'uc2.leg3': 'Spiegazione nella lingua dell’inquilino, pronta per l’approvazione',
+    'uc2.fig': 'La spiegazione nasce dal conteggio di quell’appartamento. Verifica e approvazione avvengono nell’amministrazione.',
+    'uc2.p3': 'Che cosa il processo non fa: non corregge alcun conteggio e non addebita nulla. Spiega ciò che nel conteggio è scritto. Se una voce è effettivamente sbagliata, il caso passa alla contabilità, come finora. E poiché ogni spiegazione si basa sul conteggio depositato, l’amministratore vede subito, mentre verifica, su che cosa la bozza si fonda.',
+    'uc3.h2': 'Caso d’uso 3: dalla riconsegna dell’appartamento agli incarichi agli artigiani',
+    'uc3.p1': 'La riconsegna dura un’ora, il lavoro successivo spesso di più. Sulla via del ritorno l’amministratore detta i suoi appunti nel telefono, la funzione di dettatura dell’apparecchio basta, oppure li digita: fronte della cucina graffiato, silicone del bagno da rifare, pareti del soggiorno da tinteggiare, elenco fotografico in allegato.',
+    'uc3.p2': 'Ne nascono la bozza di verbale nel formato consueto dell’amministrazione e i testi degli incarichi formulati per imbianchino, idraulico e impresa di pulizie, con indirizzo, numero dell’appartamento, modalità di accesso e termine. Ancora lo stesso giorno, invece che nel fine settimana. Chi riceve l’incarico, chi sostiene i costi e dove finisce la normale usura e comincia un danno lo decide l’amministrazione. Il collega IA fornisce il testo.',
+    'uc3.leg1': 'Appunti ed elenco fotografico della riconsegna',
+    'uc3.leg2': 'Un ingresso, tre documenti nel formato consueto dell’amministrazione',
+    'uc3.leg3': 'Verbale e testi degli incarichi agli artigiani, pronti per l’approvazione',
+    'uc3.fig': 'Dagli appunti della riconsegna nascono verbale e testi degli incarichi. Attribuzione e assunzione dei costi le decide l’amministrazione.',
+    'uc3.p3': 'Anche qui vale: nessun incarico esce senza approvazione e nulla viene addebitato in automatico. Che cosa venga fatturato all’inquilino lo decide l’amministrazione, e ogni modifica alla bozza resta tracciabile.',
+    'konn.h2': 'Connettori: che cosa si può collegare a GARAIO REM, Abacus e al resto del suo software',
+    'konn.p1': 'Un collega IA è utile quanto ciò che gli è permesso raggiungere. MCP è uno standard aperto per il collegamento di sistemi esterni. Tramite esso si possono comandare i programmi con interfaccia documentata. Un’interfaccia, spesso chiamata API, è una via descritta lungo la quale due programmi si scambiano dati. I permessi valgono per singolo strumento e ogni chiamata finisce nel registro. Ecco la situazione per i software di amministrazione immobiliare più diffusi, verificata nell’agosto 2026:',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interfaccia',
+    'konn.th3': 'Collegamento a EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (casella di posta comune Outlook, SharePoint)',
+    'konn.r1c2': 'API Graph, documentata apertamente',
+    'konn.r1c3': 'Server MCP disponibile da Microsoft, la via più diretta per smistare le richieste degli inquilini',
+    'konn.r2c1': 'GARAIO REM',
+    'konn.r2c2': 'Interfacce documentate con OAuth2, lo standard consueto per l’accesso sicuro: accesso in lettura e interfaccia per eventi con circa 20 contesti di business, dagli immobili ai contratti fino ai sinistri<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup>',
+    'konn.r2c3': 'Collegamento possibile tramite MCP, l’accesso passa dal produttore come partner di servizio',
+    'konn.r3c1': 'Abacus con AbaImmo',
+    'konn.r3c2': 'API REST con OAuth2, accesso tramite il programma partner',
+    'konn.r3c3': 'Collegamento possibile tramite MCP, l’accesso passa dal canale partner di Abacus',
+    'konn.r4c1': 'ImmoTop2 (W&amp;W Immo Informatik)',
+    'konn.r4c2': 'Interfaccia DMS documentata pubblicamente per i processi documentali<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup>',
+    'konn.r4c3': 'Collegamento possibile per l’archiviazione dei documenti',
+    'konn.r5c1': 'Rimo R5 (W&amp;W Immo Informatik)',
+    'konn.r5c2': 'Interfacce orientate a file ed esportazioni',
+    'konn.r5c3': 'La via passa da esportazioni e documenti',
+    'konn.r6c1': 'SwissRETS',
+    'konn.r6c2': 'Standard aperto per i dati degli oggetti, esente da licenza e documentato<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup>',
+    'konn.r6c3': 'Collegabile per i dati degli annunci',
+    'konn.r8c1': 'bexio',
+    'konn.r8c2': 'API REST, documentata apertamente',
+    'konn.r8c3': 'Collegamento possibile tramite MCP, per amministrazioni più piccole con contabilità propria',
+    'konn.p2': 'Il suo software manca nell’elenco? Molto del lavoro quotidiano funziona con casella di posta e documenti e non richiede alcun collegamento di sistema: lo smistamento delle richieste, la spiegazione delle spese accessorie, il verbale di riconsegna. Come funziona in linea di principio un collegamento tramite MCP e quali sistemi sono predisposti è descritto nella pagina <a class="euc-textlink" href="/it/integrationen">Integrazioni</a>.',
+    'ds.h2': 'Protezione dei dati: i dossier degli inquilini sono delicati',
+    'ds.p1': 'Un dossier di inquilino contiene più di nome e indirizzo: estratto del registro delle esecuzioni, informazioni sulla solvibilità, giustificativi di reddito, in parte indicazioni che valgono come dati personali degni di particolare protezione. Secondo la legge svizzera riveduta sulla protezione dei dati l’amministrazione resta responsabile, anche quando è uno strumento di IA a trattare i dati. Se i dati li tratta un fornitore, serve un accordo sul trattamento dei dati. Questo articolo non sostituisce una consulenza legale.',
+    'ds.p2': 'A ciò si aggiunge l’aspettativa della proprietà. I proprietari istituzionali come casse pensioni e assicurazioni esigono regolarmente nei loro contratti di amministrazione che i dati dei loro immobili siano trattati in Svizzera. EU Cowork AI funziona in centri di calcolo certificati ISO 27001 di Green a Lupfig oppure sul suo server.',
+    'ds.p3': 'I dati dei clienti non addestrano alcun modello e i permessi arrivano fino al singolo strumento. Ogni accesso figura nel registro di audit, un elenco che si può esportare in qualsiasi momento. L’<a class="euc-textlink" href="/it/avv">accordo sul trattamento dei dati</a> con l’<a class="euc-textlink" href="/it/subprozessoren">elenco dei sub-responsabili</a> è pubblicato apertamente sul sito. Quando la proprietà chiede dove si trovano i dati dei suoi immobili, lei risponde in una frase.',
+    'faq.h2': 'Domande frequenti dall’amministrazione immobiliare',
+    'faq.q1': 'L’IA risponde direttamente agli inquilini?',
+    'faq.a1': 'No. Ogni risposta a un inquilino è una bozza che l’amministratore competente legge, corregge e approva. Un modello linguistico, cioè il programma dietro l’IA, può produrre affermazioni errate. Perciò ogni testo è una bozza da rileggere, non un’informazione verificata.',
+    'faq.q2': 'Che cosa succede con disdette e adeguamenti della pigione?',
+    'faq.a2': 'Restano all’amministrazione. Le dichiarazioni giuridicamente vincolanti come disdette, adeguamenti della pigione al tasso ipotecario di riferimento e diffide sono vincolate a prescrizioni di forma e non escono mai in automatico. Disdette e aumenti della pigione richiedono inoltre il modulo ufficiale del Cantone e sono legati a termini. Il collega IA al massimo prepara il testo. Modulo ufficiale, termini e invio sono responsabilità dell’amministrazione. Questa risposta non sostituisce una consulenza legale.',
+    'faq.q3': 'Come fa l’IA a sapere che cosa dice il contratto di locazione?',
+    'faq.a3': 'Dalla base di conoscenza. Per ogni immobile carica i contratti di locazione, il regolamento interno, i regolamenti dello stabile e la corrispondenza precedente. La bozza nasce da lì e indica il riferimento, così che l’affermazione si possa verificare in pochi secondi.',
+    'faq.q4': 'I dati degli inquilini possono davvero finire in uno strumento di IA?',
+    'faq.a4': 'Secondo la legge svizzera riveduta sulla protezione dei dati l’amministrazione resta responsabile e conclude con il fornitore un accordo sul trattamento dei dati. EU Cowork AI funziona in Svizzera o sul suo server, i dati dei clienti non addestrano alcun modello e ogni accesso figura nel registro di audit. L’<a class="euc-textlink" href="/it/avv">accordo sul trattamento dei dati</a> e l’<a class="euc-textlink" href="/it/subprozessoren">elenco dei sub-responsabili</a> sono pubblicati apertamente sul sito. Questa risposta non sostituisce una consulenza legale.',
+    'faq.q5': 'Ci serve per questo un portale per gli inquilini?',
+    'faq.a5': 'No. Il collega IA lavora nella casella di posta comune che lei ha già oggi. Gli inquilini scrivono allo stesso indirizzo di prima e del processo dietro non si accorgono.',
+    'faq.q6': 'EU Cowork AI funziona con GARAIO REM, Abacus o ImmoTop2?',
+    'faq.a6': 'Dipende dall’interfaccia. La tabella più sopra mostra la situazione per GARAIO REM, Abacus, ImmoTop2, Rimo R5 e altri programmi. Dove manca un collegamento, la via passa da esportazioni e documenti. I processi con casella di posta e base di conoscenza funzionano comunque senza collegamento di sistema.',
+    'faq.q7': 'Quanto costa per un’amministrazione con quindici persone?',
+    'faq.a7': 'L’esercizio gestito costa 15 € per persona al mese, in Svizzera 14 CHF. Di questi, 8 €, rispettivamente 7.50 CHF, sono credito modelli nel pool condiviso della sua organizzazione. Chi ospita in proprio non paga nulla per il software: è rilasciato con licenza MIT. Tutte le indicazioni si trovano nella pagina <a class="euc-textlink" href="/it/preise">Prezzi</a>.',
+    'faq.q8': 'Come cominciamo?',
+    'faq.a8': 'Con un immobile. Regolamento interno, regolamenti dello stabile e i contratti di locazione di questo immobile entrano nella base di conoscenza, la casella di posta comune viene collegata e l’amministratore lavora due settimane con le bozze. Ciò che emerge rifluisce nei modelli di testo, poi si aggiungono gli immobili successivi.',
+    'cta.h2': 'Lo veda su un immobile suo',
+    'cta.p': 'Porti un regolamento interno e qualche richiesta reale di inquilini e percorriamo insieme il processo. Oppure si iscriva e parta tra i primi.',
+    'cta.btn1': 'Prenotare un appuntamento',
+    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'src.h2': 'Fonti',
+    'src.p': 'Tutte le cifre e le indicazioni sulle interfacce contenute in questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.',
+    'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (pubblicato nel marzo 2026, circa 200 specialisti e quadri dirigenti interpellati): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
+    'src.fn2': 'Real Estate Symposium 2025, carenza di personale qualificato nel settore immobiliare svizzero: <a class="euc-textlink" href="https://realestatesymposium.ch/fachkraeftemangel-in-der-schweizer-immobilienbranche-herausforderungen-und-auswirkungen/" target="_blank" rel="noopener">realestatesymposium.ch</a>',
+    'src.fn3': 'GARAIO REM, manuale per sviluppatori sulle interfacce (OAuth2, accesso in lettura e interfaccia per eventi): <a class="euc-textlink" href="https://github.com/Garaio-REM/grem-dev-guide" target="_blank" rel="noopener">github.com</a>',
+    'src.fn4': 'W&amp;W Immo Informatik, documentazione dell’interfaccia DMS di ImmoTop2: <a class="euc-textlink" href="https://github.com/wwimmo/immotop2-dms-schnittstelle" target="_blank" rel="noopener">github.com</a>',
+    'src.fn5': 'SwissRETS, standard aperto per i dati degli oggetti: <a class="euc-textlink" href="https://github.com/qualipool/swissrets" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Continua',
+    'weiter.l1': 'IA in studio medico, farmacia e cure a domicilio: tre processi nella sanità',
+    'weiter.l2': 'Integrazioni: quali sistemi sono predisposti',
+    'weiter.l3': 'Documentazione: esercizio, installazione e governance nel dettaglio',
+    'geprueft': 'Ultima verifica: <time datetime="2026-08">agosto 2026</time>'
+  },
+  es: {
+    'meta.title': 'IA y software en administración de inmuebles | EU Cowork AI',
+    'crumb.blog': 'Blog',
+    'crumb.current': 'IA en la administración de inmuebles',
+    'hero.eyebrow': 'La IA en el trabajo diario',
+    'hero.h1': 'IA en la administración de inmuebles: tres procesos que alivian la bandeja de entrada',
+    'hero.lead': 'Un aviso de reparación, una pregunta sobre la liquidación de gastos accesorios, una queja por ruido: en el buzón común de una administración llega cada día todo a la vez. Este artículo presenta tres procesos. Verá cómo un colega de IA trabaja con la documentación de sus inmuebles. Verá también qué se puede conectar a su software de administración de inmuebles, de GARAIO REM a Abacus, y dónde están los límites.',
+    'hero.chip': 'Inmobiliario',
+    'hero.datum': '9 de junio de 2026',
+    'hero.lesezeit': 'Tiempo de lectura: 10 minutos',
+    'lage.leg1': 'La consulta en el buzón común, tal como llega',
+    'lage.leg2': 'Asignación por tipo de consulta y por inmueble',
+    'lage.leg3': 'Borrador de respuesta a partir de la documentación del inmueble',
+    'lage.leg4': 'Revisión y aprobación por parte de la administradora',
+    'lage.fig': 'Así recorre una consulta de un inquilino la administración: desde la entrada hasta la respuesta aprobada. El último paso sigue siendo humano.',
+    'kurz.titel': 'En resumen',
+    'kurz.p1': 'En el Digital Real Estate Index 2026 la administración de inmuebles alcanza 4,4 puntos de 10. Es el valor más alto desde el inicio del estudio. La IA y el aprendizaje automático son la única de las doce tecnologías analizadas con un avance claro.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'kurz.p2': 'EU Cowork AI trabaja con la documentación de sus inmuebles: los contratos de arrendamiento, el reglamento de la casa, los reglamentos del inmueble y la correspondencia anterior se convierten en la base de conocimiento de la que salen los borradores.',
+    'kurz.p3': 'Cada respuesta a un inquilino es un borrador sujeto a aprobación. Las declaraciones jurídicamente vinculantes, como las rescisiones de contrato y las adaptaciones del alquiler, siguen en manos de la administración.',
+    'kurz.p4': 'Los datos de los inquilinos permanecen en Suiza o en su propio servidor y no entrenan ningún modelo. El software con una interfaz documentada para el intercambio de datos se puede conectar, por ejemplo Microsoft 365 o GARAIO REM. Para la conexión sirve el Model Context Protocol (MCP).',
+    'toc.titel': 'En esta página',
+    'toc.i1': 'Punto de partida',
+    'toc.i2': 'Clasificar y responder las consultas de los inquilinos',
+    'toc.i3': 'Explicar la liquidación de gastos accesorios',
+    'toc.i4': 'Entrega de la vivienda y encargos a los profesionales',
+    'toc.i5': 'Conectores con el software de administración',
+    'toc.i6': 'Protección de datos',
+    'toc.i7': 'Preguntas frecuentes',
+    'lage.h2': 'Punto de partida: más correspondencia que personas para escribirla',
+    'lage.p1': 'La digitalización del sector suizo de la construcción y de la vivienda avanza a pasos pequeños. Para el Digital Real Estate Index 2026 de pom+ Consulting se encuestó a unos 200 especialistas y directivos. La administración de inmuebles alcanza en él 4,4 puntos de 10, el valor más alto desde el inicio del estudio. El índice global se sitúa en 4,3. La IA y el aprendizaje automático son la única de las doce tecnologías analizadas con un avance claro. Dos tercios de los encuestados les atribuyen una gran utilidad. Lo que frena el desarrollo son las cuestiones de inversión y de coste.<sup><a href="#fn-1" aria-label="Nota 1">1</a></sup>',
+    'lage.p2': 'A ello se suma la falta de personal cualificado. El sector no encuentra suficientes administradoras y administradores con formación, lo que perjudica la eficiencia de la gestión.<sup><a href="#fn-2" aria-label="Nota 2">2</a></sup> Quien no logra cubrir un puesto vacante reparte el trabajo entre el equipo existente. Lo primero que se resiente es el tiempo de respuesta a los inquilinos, y un aviso de reparación sin contestar se convierte dos semanas después en una reclamación ante la propiedad.',
+    'lage.p3': 'Buena parte de ese trabajo es correspondencia con un patrón fijo: la liquidación de gastos accesorios y las preguntas que la siguen, la adaptación del alquiler al tipo de interés de referencia suizo, los requisitos de forma en las rescisiones, el acta de entrega de la vivienda con los encargos a los profesionales. A ello se añade el plurilingüismo. El mismo asunto sale en alemán, francés, italiano o inglés según el inquilino. La pregunta ya no es, por tanto, si una administración utiliza IA. La pregunta es si la IA trabaja con la documentación de sus propios inmuebles y dónde están mientras tanto los datos de los inquilinos.',
+    'uc1.h2': 'Caso de uso 1: clasificar y responder las consultas de los inquilinos',
+    'uc1.p1': 'El lunes por la mañana, en el buzón común de la administración están los mensajes del fin de semana: un calentador de agua que gotea, preguntas sobre la liquidación de gastos accesorios, una queja por ruido del tercer piso, una rescisión para final de trimestre, varias solicitudes de una segunda llave. El colega de IA lee la entrada a través del buzón conectado. Asigna cada mensaje al tipo de consulta y al inmueble y coloca a su lado un borrador de respuesta.',
+    'uc1.p2': 'El borrador lo extrae de la documentación del inmueble afectado: contrato de arrendamiento, reglamento de la casa, reglamento del inmueble y correspondencia anterior con este inquilino. En el aviso de reparación, el borrador indica quién soluciona la avería y qué datos faltan todavía. En la solicitud de llave figura la regla del reglamento, con la referencia, para que la afirmación pueda comprobarse en segundos. El mensaje va a la administradora responsable, que lo lee, lo corrige y lo aprueba.',
+    'uc1.leg1': 'Consulta del buzón común, en el idioma del inquilino',
+    'uc1.leg2': 'Documentación del inmueble, con permisos por herramienta y registro',
+    'uc1.leg3': 'Borrador de respuesta con la referencia, listo para la aprobación',
+    'uc1.fig': 'El borrador nace de la documentación del inmueble, no de lo que el modelo de lenguaje ha aprendido en general. La aprobación se da en la administración.',
+    'uc1.p3': 'Importante en la práctica: no surge ningún portal nuevo para inquilinos ni un segundo sistema. El colega de IA trabaja en el buzón que usted ya tiene hoy, y los inquilinos siguen escribiendo a la misma dirección. Las líneas rojas también se mantienen: las rescisiones, las adaptaciones del alquiler y los requerimientos formales son declaraciones jurídicamente vinculantes y nunca salen de forma automática. Los requisitos de forma del derecho de arrendamiento suizo siguen siendo asunto de la administración.',
+    'uc2.h2': 'Caso de uso 2: explicar la liquidación de gastos accesorios de forma comprensible',
+    'uc2.p1': 'Después del envío de las liquidaciones llega cada año la misma ola: por qué mi liquidación es más alta que el año pasado. Las preguntas llegan todas en las mismas dos semanas y caen sobre un equipo que al mismo tiempo tramita los pagos adicionales y las devoluciones.',
+    'uc2.p2': 'El colega de IA toma la liquidación de esa vivienda, la clave de reparto y los valores del año anterior y redacta con ello una explicación en lenguaje comprensible: qué partida ha subido, cómo se calcula la cuota, qué muestra la comparación con el año anterior. El borrador se redacta en el idioma en el que llegó la consulta, en alemán, francés, italiano o inglés. La administradora comprueba las cifras y aprueba. Así el pico estacional se vuelve planificable. Ya no tiene que absorberse solo con personal temporal.',
+    'uc2.leg1': 'Pregunta del inquilino sobre la liquidación',
+    'uc2.leg2': 'Liquidación, clave de reparto y valores del año anterior',
+    'uc2.leg3': 'Explicación en el idioma del inquilino, lista para la aprobación',
+    'uc2.fig': 'La explicación nace de la liquidación de esa vivienda. La comprobación y la aprobación se dan en la administración.',
+    'uc2.p3': 'Lo que el proceso no hace: no corrige ninguna liquidación ni cobra nada. Explica lo que dice la liquidación. Si una partida es realmente incorrecta, el caso pasa a contabilidad, como hasta ahora. Y como cada explicación se apoya en la liquidación depositada, la administradora ve de inmediato, al comprobarla, en qué se basa el borrador.',
+    'uc3.h2': 'Caso de uso 3: de la entrega de la vivienda a los encargos a los profesionales',
+    'uc3.p1': 'La entrega dura una hora; el trabajo posterior, a menudo más. De regreso, la administradora dicta sus notas en el móvil, la función de dictado del aparato basta, o las escribe: frente de cocina rayado, silicona del baño por renovar, paredes del salón por pintar, lista de fotos adjunta.',
+    'uc3.p2': 'De ahí salen el borrador del acta en el formato habitual de la administración y los textos de encargo redactados para el pintor, el fontanero y la empresa de limpieza, con dirección, número de vivienda, forma de acceso y plazo. El mismo día, en lugar del fin de semana. Quién recibe el encargo, quién asume los costes y dónde termina el desgaste normal y empieza un daño lo decide la administración. El colega de IA aporta el texto.',
+    'uc3.leg1': 'Notas y lista de fotos de la entrega',
+    'uc3.leg2': 'Una entrada, tres documentos en el formato habitual de la administración',
+    'uc3.leg3': 'Acta y textos de encargo para los profesionales, listos para la aprobación',
+    'uc3.fig': 'De las notas de la entrega salen el acta y los textos de encargo. La asignación y la asunción de costes las decide la administración.',
+    'uc3.p3': 'También aquí rige: ningún encargo sale sin aprobación y nada se cobra de forma automática. Lo que se factura al inquilino lo decide la administración, y cada cambio en el borrador queda trazable.',
+    'konn.h2': 'Conectores: qué se puede conectar a GARAIO REM, Abacus y al resto de su software',
+    'konn.p1': 'Un colega de IA es tan útil como aquello a lo que se le permite llegar. MCP es un estándar abierto para conectar sistemas externos. A través de él se pueden manejar los programas con interfaz documentada. Una interfaz, a menudo llamada API, es un camino descrito por el que dos programas intercambian datos. Los permisos valen por cada herramienta y cada llamada queda en el registro. Esta es la situación del software de administración más extendido, comprobada en agosto de 2026:',
+    'konn.th1': 'Software',
+    'konn.th2': 'Interfaz',
+    'konn.th3': 'Conexión con EU Cowork AI',
+    'konn.r1c1': 'Microsoft 365 (buzón común de Outlook, SharePoint)',
+    'konn.r1c2': 'API Graph, documentada abiertamente',
+    'konn.r1c3': 'Servidor MCP disponible de Microsoft, la vía más directa para clasificar las consultas de los inquilinos',
+    'konn.r2c1': 'GARAIO REM',
+    'konn.r2c2': 'Interfaces documentadas con OAuth2, el estándar habitual para el inicio de sesión seguro: acceso de lectura e interfaz de eventos con unos 20 contextos de negocio, desde inmuebles y contratos hasta siniestros<sup><a href="#fn-3" aria-label="Nota 3">3</a></sup>',
+    'konn.r2c3': 'Conexión posible mediante MCP; el acceso se tramita con el fabricante como socio de servicio',
+    'konn.r3c1': 'Abacus con AbaImmo',
+    'konn.r3c2': 'API REST con OAuth2, acceso a través del programa de socios',
+    'konn.r3c3': 'Conexión posible mediante MCP; el acceso se tramita por la vía de socios de Abacus',
+    'konn.r4c1': 'ImmoTop2 (W&amp;W Immo Informatik)',
+    'konn.r4c2': 'Interfaz DMS documentada públicamente para procesos documentales<sup><a href="#fn-4" aria-label="Nota 4">4</a></sup>',
+    'konn.r4c3': 'Conexión posible para el archivo de documentos',
+    'konn.r5c1': 'Rimo R5 (W&amp;W Immo Informatik)',
+    'konn.r5c2': 'Interfaces orientadas a archivos y exportaciones',
+    'konn.r5c3': 'La vía pasa por exportaciones y documentos',
+    'konn.r6c1': 'SwissRETS',
+    'konn.r6c2': 'Estándar abierto para datos de inmuebles, libre de licencia y documentado<sup><a href="#fn-5" aria-label="Nota 5">5</a></sup>',
+    'konn.r6c3': 'Conectable para los datos de los anuncios',
+    'konn.r8c1': 'bexio',
+    'konn.r8c2': 'API REST, documentada abiertamente',
+    'konn.r8c3': 'Conexión posible mediante MCP, para administraciones pequeñas con contabilidad propia',
+    'konn.p2': '¿Falta su software en la lista? Buena parte del día a día funciona con el buzón y los documentos y no necesita ninguna conexión de sistema: la clasificación de las consultas, la explicación de los gastos accesorios, el acta de entrega. Cómo funciona en principio una conexión mediante MCP y qué sistemas están preparados se explica en la página <a class="euc-textlink" href="/it/integrationen">Integraciones</a>.',
+    'ds.h2': 'Protección de datos: los expedientes de inquilinos son delicados',
+    'ds.p1': 'Un expediente de inquilino contiene más que el nombre y la dirección: el extracto del registro de embargos suizo, el informe de solvencia, los justificantes de ingresos y, en parte, datos que se consideran datos personales especialmente dignos de protección. Según la ley suiza revisada de protección de datos, la administración sigue siendo responsable, incluso cuando es una herramienta de IA la que trata los datos. Si los datos los trata un proveedor, hace falta un acuerdo de encargo de tratamiento. Este artículo no sustituye al asesoramiento jurídico.',
+    'ds.p2': 'A ello se suma la expectativa de la propiedad. Los propietarios institucionales, como las cajas de pensiones y las aseguradoras, exigen con frecuencia en sus contratos de administración que los datos de sus inmuebles se traten en Suiza. EU Cowork AI funciona en centros de datos certificados según ISO 27001 de Green en Lupfig o en su propio servidor.',
+    'ds.p3': 'Los datos de los clientes no entrenan ningún modelo y los permisos llegan hasta cada herramienta. Cada acceso figura en el registro de auditoría, un listado que puede exportarse en cualquier momento. El <a class="euc-textlink" href="/it/avv">acuerdo de encargo de tratamiento</a> junto con la <a class="euc-textlink" href="/it/subprozessoren">lista de subencargados</a> está publicado abiertamente en el sitio web. Cuando la propiedad pregunta dónde están los datos de sus inmuebles, usted responde en una frase.',
+    'faq.h2': 'Preguntas frecuentes desde la administración de inmuebles',
+    'faq.q1': '¿Responde la IA directamente a los inquilinos?',
+    'faq.a1': 'No. Cada respuesta a un inquilino es un borrador que la administradora responsable lee, corrige y aprueba. Un modelo de lenguaje, es decir, el programa detrás de la IA, puede producir afirmaciones falsas. Por eso cada texto es un borrador para revisar, no una información verificada.',
+    'faq.q2': '¿Qué ocurre con las rescisiones y las adaptaciones del alquiler?',
+    'faq.a2': 'Siguen en manos de la administración. Las declaraciones jurídicamente vinculantes, como las rescisiones, las adaptaciones del alquiler al tipo de interés de referencia suizo y los requerimientos formales, están sujetas a requisitos de forma y nunca salen de forma automática. Las rescisiones y los aumentos del alquiler exigen además el formulario oficial del cantón y están sujetos a plazos. El colega de IA prepara, como mucho, el texto. El formulario oficial, los plazos y el envío son responsabilidad de la administración. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'faq.q3': '¿Cómo sabe la IA lo que dice el contrato de arrendamiento?',
+    'faq.a3': 'Por la base de conocimiento. Para cada inmueble carga los contratos de arrendamiento, el reglamento de la casa, los reglamentos del inmueble y la correspondencia anterior. El borrador nace de ahí e indica la referencia, para que la afirmación pueda comprobarse en segundos.',
+    'faq.q4': '¿Pueden los datos de los inquilinos entrar siquiera en una herramienta de IA?',
+    'faq.a4': 'Según la ley suiza revisada de protección de datos, la administración sigue siendo responsable y firma con el proveedor un acuerdo de encargo de tratamiento. EU Cowork AI funciona en Suiza o en su propio servidor, los datos de los clientes no entrenan ningún modelo y cada acceso figura en el registro de auditoría. El <a class="euc-textlink" href="/it/avv">acuerdo de encargo de tratamiento</a> y la <a class="euc-textlink" href="/it/subprozessoren">lista de subencargados</a> están publicados abiertamente en el sitio web. Esta respuesta no sustituye al asesoramiento jurídico.',
+    'faq.q5': '¿Necesitamos para esto un portal para inquilinos?',
+    'faq.a5': 'No. El colega de IA trabaja en el buzón común que usted ya tiene hoy. Los inquilinos escriben a la misma dirección que antes y no notan nada del proceso que hay detrás.',
+    'faq.q6': '¿Funciona EU Cowork AI con GARAIO REM, Abacus o ImmoTop2?',
+    'faq.a6': 'Eso depende de la interfaz. La tabla anterior muestra la situación de GARAIO REM, Abacus, ImmoTop2, Rimo R5 y otros programas. Donde falta una conexión, la vía pasa por exportaciones y documentos. Los procesos con buzón y base de conocimiento funcionan de todos modos sin conexión de sistema.',
+    'faq.q7': '¿Cuánto cuesta para una administración de quince personas?',
+    'faq.a7': 'La operación gestionada cuesta 15 € por persona y mes, en Suiza 14 CHF. De ellos, 8 €, respectivamente 7.50 CHF, son saldo de modelos en el fondo común de su organización. Quien se autoaloja no paga nada por el software: está bajo licencia MIT. Toda la información está en la página <a class="euc-textlink" href="/it/preise">Precios</a>.',
+    'faq.q8': '¿Cómo empezamos?',
+    'faq.a8': 'Con un inmueble. El reglamento de la casa, los reglamentos del inmueble y los contratos de arrendamiento de ese inmueble entran en la base de conocimiento, se conecta el buzón común y la administradora trabaja dos semanas con borradores. Lo que se detecte vuelve a las plantillas, y después se añaden los siguientes inmuebles.',
+    'cta.h2': 'Véalo en un inmueble propio',
+    'cta.p': 'Traiga un reglamento de la casa y unas cuantas consultas reales de inquilinos y recorremos el proceso juntos. O bien inscríbase y empiece entre los primeros.',
+    'cta.btn1': 'Reservar una cita',
+    'cta.btn2': 'Únase a la lista de espera',
+    'src.h2': 'Fuentes',
+    'src.p': 'Todas las cifras y los datos sobre interfaces de este artículo proceden de las siguientes fuentes, revisadas por última vez en agosto de 2026.',
+    'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (publicado en marzo de 2026, unos 200 especialistas y directivos encuestados): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
+    'src.fn2': 'Real Estate Symposium 2025, falta de personal cualificado en el sector inmobiliario suizo: <a class="euc-textlink" href="https://realestatesymposium.ch/fachkraeftemangel-in-der-schweizer-immobilienbranche-herausforderungen-und-auswirkungen/" target="_blank" rel="noopener">realestatesymposium.ch</a>',
+    'src.fn3': 'GARAIO REM, manual para desarrolladores sobre las interfaces (OAuth2, acceso de lectura e interfaz de eventos): <a class="euc-textlink" href="https://github.com/Garaio-REM/grem-dev-guide" target="_blank" rel="noopener">github.com</a>',
+    'src.fn4': 'W&amp;W Immo Informatik, documentación de la interfaz DMS de ImmoTop2: <a class="euc-textlink" href="https://github.com/wwimmo/immotop2-dms-schnittstelle" target="_blank" rel="noopener">github.com</a>',
+    'src.fn5': 'SwissRETS, estándar abierto para datos de inmuebles: <a class="euc-textlink" href="https://github.com/qualipool/swissrets" target="_blank" rel="noopener">github.com</a>',
+    'weiter.titel': 'Continuar',
+    'weiter.l1': 'IA en consultas médicas, farmacias y atención domiciliaria: tres procesos en la sanidad',
+    'weiter.l2': 'Integraciones: qué sistemas están preparados',
+    'weiter.l3': 'Documentación: operación, instalación y gobernanza en detalle',
+    'geprueft': 'Última revisión: <time datetime="2026-08">agosto de 2026</time>'
+  }
+};
+</script>
+
+</body>
+</html>
