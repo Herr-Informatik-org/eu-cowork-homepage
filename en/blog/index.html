@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -165,7 +180,7 @@
                   <span class="chip" data-i18n="c1.chip">Switzerland</span>
                   <time datetime="2026-02-10" data-i18n="c1.datum">10 February 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/en/blog/ki-handwerk-kmu" data-i18n="c1.titel">AI in trades and SMEs: three workflows that give office time back</a></h3>
+                <h3><a href="/en/blog/ki-handwerk-kmu" data-i18n="c1.titel">AI in trades and SMEs: three workflows that give office time back</a></h3>
                 <p data-i18n="c1.teaser">Quotes from your own company knowledge, site notes turned into clean reports, a queryable knowledge base: three AI use cases for trades and SMEs in Switzerland.</p>
             </div>
           </article>
@@ -212,7 +227,7 @@
               <span class="chip" data-i18n="c6.chip">Europe</span>
               <time datetime="2026-08-18" data-i18n="c6.datum">18 August 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/en/blog/ki-handwerk-europa" data-i18n="c6.titel">AI in trades and SMEs across Europe: three workflows that give office time back</a></h3>
+            <h3><a href="/en/blog/ki-handwerk-europa" data-i18n="c6.titel">AI in trades and SMEs across Europe: three workflows that give office time back</a></h3>
             <p data-i18n="c6.teaser">Bureaucracy in Germany, e-invoicing in France, late payments in Spain: three workflows in which an AI colleague turns company knowledge into quotes, reports and answers.</p>
           </div>
         </article>
@@ -274,7 +289,7 @@
                   <span class="chip" data-i18n="c2.chip">Switzerland</span>
                   <time datetime="2026-03-17" data-i18n="c2.datum">17 March 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/en/blog/ki-produktion" data-i18n="c2.titel">AI in manufacturing: three workflows that keep knowledge in the company</a></h3>
+                <h3><a href="/en/blog/ki-produktion" data-i18n="c2.titel">AI in manufacturing: three workflows that keep knowledge in the company</a></h3>
                 <p data-i18n="c2.teaser">Preserving knowledge from service reports, checking specifications before quoting, preparing audits: three AI use cases for Swiss manufacturers.</p>
             </div>
           </article>
@@ -329,7 +344,7 @@
               <span class="chip" data-i18n="c7.chip">Europe</span>
               <time datetime="2026-08-18" data-i18n="c7.datum">18 August 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/en/blog/ki-produktion-europa" data-i18n="c7.titel">AI in manufacturing: keeping the knowledge when the people leave</a></h3>
+            <h3><a href="/en/blog/ki-produktion-europa" data-i18n="c7.titel">AI in manufacturing: keeping the knowledge when the people leave</a></h3>
             <p data-i18n="c7.teaser">Experienced people leave, the big customers’ questionnaires arrive. Three workflows: make shop-floor knowledge queryable, prepare customer audits, instructions in the language of the shift.</p>
           </div>
         </article>
@@ -395,7 +410,7 @@
                   <span class="chip" data-i18n="c3.chip">Switzerland</span>
                   <time datetime="2026-04-28" data-i18n="c3.datum">28 April 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/en/blog/ki-treuhand-kanzlei" data-i18n="c3.titel">AI in law firms and fiduciary offices: three workflows that respect professional secrecy</a></h3>
+                <h3><a href="/en/blog/ki-treuhand-kanzlei" data-i18n="c3.titel">AI in law firms and fiduciary offices: three workflows that respect professional secrecy</a></h3>
                 <p data-i18n="c3.teaser">Opening a case file, checking contracts, drafting client letters: three AI use cases for Swiss law firms and fiduciary offices, with confidentiality first.</p>
             </div>
           </article>
@@ -451,7 +466,7 @@
               <span class="chip" data-i18n="c8.chip">Europe</span>
               <time datetime="2026-08-18" data-i18n="c8.datum">18 August 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/en/blog/ki-kanzlei-europa" data-i18n="c8.titel">Fewer professionals, more rules: three AI workflows in the firm</a></h3>
+            <h3><a href="/en/blog/ki-kanzlei-europa" data-i18n="c8.titel">Fewer professionals, more rules: three AI workflows in the firm</a></h3>
             <p data-i18n="c8.teaser">The profession is shrinking while the rulebooks grow: opening files, sharing firm knowledge, guiding clients through deadlines. Three workflows, eight markets, clearly named limits.</p>
           </div>
         </article>
@@ -515,7 +530,7 @@
                   <span class="chip" data-i18n="c4.chip">Switzerland</span>
                   <time datetime="2026-06-09" data-i18n="c4.datum">9 June 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/en/blog/ki-immobilienverwaltung" data-i18n="c4.titel">AI in property management: three workflows that ease the shared inbox</a></h3>
+                <h3><a href="/en/blog/ki-immobilienverwaltung" data-i18n="c4.titel">AI in property management: three workflows that ease the shared inbox</a></h3>
                 <p data-i18n="c4.teaser">Tenant enquiries sorted and answered, service charges explained, handover reports drafted: three AI workflows for Swiss property management.</p>
             </div>
           </article>
@@ -580,7 +595,7 @@
               <span class="chip" data-i18n="c9.chip">Europe</span>
               <time datetime="2026-08-18" data-i18n="c9.datum">18 August 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/en/blog/ki-immobilien-europa" data-i18n="c9.titel">AI in property management: three workflows for when capacity runs short</a></h3>
+            <h3><a href="/en/blog/ki-immobilien-europa" data-i18n="c9.titel">AI in property management: three workflows for when capacity runs short</a></h3>
             <p data-i18n="c9.teaser">In this industry it is not demand that is scarce but processing capacity. Three workflows show how an AI colleague works with the resolutions, minutes and contracts of your properties.</p>
           </div>
         </article>
@@ -640,7 +655,7 @@
                   <span class="chip" data-i18n="c5.chip">Switzerland</span>
                   <time datetime="2026-08-17" data-i18n="c5.datum">17 August 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/en/blog/ki-praxis-apotheke" data-i18n="c5.titel">AI in practice and pharmacy: three workflows that give writing time back</a></h3>
+                <h3><a href="/en/blog/ki-praxis-apotheke" data-i18n="c5.titel">AI in practice and pharmacy: three workflows that give writing time back</a></h3>
                 <p data-i18n="c5.teaser">Report drafts for insurers and authorities, a queryable knowledge base, multilingual patient information: three AI workflows for practices and pharmacies.</p>
             </div>
           </article>
@@ -697,7 +712,7 @@
               <span class="chip" data-i18n="c10.chip">Europe</span>
               <time datetime="2026-08-18" data-i18n="c10.datum">18 August 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/en/blog/ki-praxis-europa" data-i18n="c10.titel">AI in practices and pharmacies: three workflows that give care time back</a></h3>
+            <h3><a href="/en/blog/ki-praxis-europa" data-i18n="c10.titel">AI in practices and pharmacies: three workflows that give care time back</a></h3>
             <p data-i18n="c10.teaser">In Germany, 91 percent of practice owners feel overloaded by administration, and each German pharmacy loses over 20 hours a week to supply shortages. Three workflows, and where the hard limit lies.</p>
           </div>
         </article>

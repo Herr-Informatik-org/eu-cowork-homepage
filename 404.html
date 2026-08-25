@@ -13,6 +13,14 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Bewusst ohne externe Stylesheets und ohne i18n.js: eine Fehlerseite muss
      auch dann lesbar bleiben, wenn genau das kaputt ist, was den Fehler
@@ -52,6 +60,15 @@
   .euc-404-links a:first-child:hover{background:#123456}
   a:focus-visible{outline:2px solid var(--c-eu-700); outline-offset:2px}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es

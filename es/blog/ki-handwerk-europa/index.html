@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -475,7 +490,7 @@
       <p data-i18n="cta.p">Traiga una oferta, un parte de trabajo o un pliego de prestaciones y recorremos juntos el proceso.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Reservar una cita</a>
-        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Únase a la lista de espera</a>
+        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Solicitar acceso beta</a>
       </div>
     </section>
 
@@ -976,7 +991,7 @@ window.EUC_I18N = {
     'cta.h2': 'See it on a case of your own',
     'cta.p': 'Bring a quote, a site report or a bill of quantities, and we will walk through the workflow together.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures come from these sources, last checked in August 2026. National surveys carry their country.',
     'src.fn1': 'ZDH, special survey on bureaucratic burden in the trades (2023, DE, 10,630 businesses): <a class="euc-textlink" href="https://www.zdh.de/ueber-uns/fachbereich-wirtschaft-energie-umwelt/sonderumfragen/sonderumfrage-buerokratiebelastung-im-handwerk/" target="_blank" rel="noopener">zdh.de</a>',
@@ -1107,7 +1122,7 @@ window.EUC_I18N = {
     'cta.h2': 'Voyez-le sur un cas qui vous appartient',
     'cta.p': 'Apportez une offre, un rapport de chantier ou un descriptif des prestations, et nous parcourons le processus ensemble.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres proviennent de ces sources, vérifiées pour la dernière fois en août 2026. Les enquêtes nationales portent la mention de leur pays.',
     'src.fn1': 'ZDH, enquête spéciale sur la charge bureaucratique dans l’artisanat (2023, DE, 10 630 entreprises) : <a class="euc-textlink" href="https://www.zdh.de/ueber-uns/fachbereich-wirtschaft-energie-umwelt/sonderumfragen/sonderumfrage-buerokratiebelastung-im-handwerk/" target="_blank" rel="noopener">zdh.de</a>',
@@ -1238,7 +1253,7 @@ window.EUC_I18N = {
     'cta.h2': 'Lo veda su un caso suo',
     'cta.p': 'Porti un’offerta, un rapporto di cantiere o un elenco delle prestazioni e percorriamo insieme il processo.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre provengono da queste fonti, verificate l’ultima volta nell’agosto 2026. Le rilevazioni nazionali portano l’indicazione del loro paese.',
     'src.fn1': 'ZDH, sondaggio speciale sul carico burocratico nell’artigianato (2023, DE, 10.630 aziende): <a class="euc-textlink" href="https://www.zdh.de/ueber-uns/fachbereich-wirtschaft-energie-umwelt/sonderumfragen/sonderumfrage-buerokratiebelastung-im-handwerk/" target="_blank" rel="noopener">zdh.de</a>',
@@ -1369,7 +1384,7 @@ window.EUC_I18N = {
     'cta.h2': 'Véalo con un caso propio',
     'cta.p': 'Traiga una oferta, un parte de trabajo o un pliego de prestaciones y recorremos juntos el proceso.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras proceden de estas fuentes, revisadas por última vez en agosto de 2026. Las encuestas nacionales llevan la indicación de su país.',
     'src.fn1': 'ZDH, encuesta especial sobre la carga burocrática en los oficios (2023, DE, 10.630 empresas): <a class="euc-textlink" href="https://www.zdh.de/ueber-uns/fachbereich-wirtschaft-energie-umwelt/sonderumfragen/sonderumfrage-buerokratiebelastung-im-handwerk/" target="_blank" rel="noopener">zdh.de</a>',

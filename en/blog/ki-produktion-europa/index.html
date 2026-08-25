@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -538,7 +553,7 @@
       <p data-i18n="cta.p">Bring a supplier questionnaire, an inspection record or a work instruction, and we will walk through the workflow together.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Book a call</a>
-        <a class="euc-btn-secondary" href="/en/warteliste" data-i18n="cta.btn2">Join the waitlist</a>
+        <a class="euc-btn-secondary" href="/en/warteliste" data-i18n="cta.btn2">Request beta access</a>
       </div>
     </section>
 
@@ -1020,7 +1035,7 @@ window.EUC_I18N = {
     'cta.h2': 'See it on a case of your own',
     'cta.p': 'Bring a supplier questionnaire, an inspection record or a work instruction, and we will walk through the workflow together.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures come from these sources, last checked in August 2026, with the country each was collected for.',
     'src.fn1': 'Federal Statistical Office of Germany, press release N057 of 14 August 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
@@ -1156,7 +1171,7 @@ window.EUC_I18N = {
     'cta.h2': 'Voyez-le sur un cas qui vous est propre',
     'cta.p': 'Apportez un questionnaire fournisseur, un procès-verbal d’essai ou une instruction de travail, et nous parcourrons le processus ensemble.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres proviennent de ces sources, vérifiées pour la dernière fois en août 2026, avec le pays de l’enquête correspondante.',
     'src.fn1': 'Office fédéral de la statistique d’Allemagne, communiqué de presse N057 du 14 août 2026 (DE) : <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
@@ -1292,7 +1307,7 @@ window.EUC_I18N = {
     'cta.h2': 'Lo veda su un suo caso concreto',
     'cta.p': 'Porti un questionario fornitori, un verbale di collaudo oppure un’istruzione di lavoro, e percorreremo insieme il processo.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre provengono da queste fonti, verificate da ultimo nell’agosto 2026, con il rispettivo paese di rilevazione.',
     'src.fn1': 'Ufficio federale di statistica tedesco, comunicato stampa N057 del 14 agosto 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',
@@ -1428,7 +1443,7 @@ window.EUC_I18N = {
     'cta.h2': 'Véalo con un caso propio',
     'cta.p': 'Traiga un cuestionario de proveedores, un acta de ensayo o una instrucción de trabajo y recorreremos el proceso juntos.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras proceden de estas fuentes, revisadas por última vez en agosto de 2026, con el país de la encuesta correspondiente.',
     'src.fn1': 'Oficina Federal de Estadística de Alemania, nota de prensa N057 de 14 de agosto de 2026 (DE): <a class="euc-textlink" href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/08/PD26_N057_42.html" target="_blank" rel="noopener">destatis.de</a>',

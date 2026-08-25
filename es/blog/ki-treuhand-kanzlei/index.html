@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -526,7 +541,7 @@
       <p data-i18n="cta.p">Traiga un asunto anonimizado, un modelo o una ficha informativa y recorremos juntos el proceso. O apúntese y empiece entre los primeros.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Reservar una cita</a>
-        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Únase a la lista de espera</a>
+        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Solicitar acceso beta</a>
       </div>
     </section>
 
@@ -1026,7 +1041,7 @@ window.EUC_I18N = {
     'cta.h2': 'Walk through it on a matter of your own',
     'cta.p': 'Bring an anonymised matter, a template or a fact sheet, and we will walk through the workflow together. Or sign up and be among the first to start.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures in this article come from the following sources, last checked in August 2026. The utilisation figure is marked as an international benchmark and does not come from a Swiss survey.',
     'src.fn1': 'Swiss Bar Association and Swiss LegalTech Association, survey on digitalisation in Swiss law firms, Anwaltsrevue 10/2022: <a class="euc-textlink" href="https://www.sav-fsa.ch/documents/672183/2086852/423arv1022.pdf" target="_blank" rel="noopener">sav-fsa.ch</a>',
@@ -1160,7 +1175,7 @@ window.EUC_I18N = {
     'cta.h2': 'Déroulez le processus sur une affaire à vous',
     'cta.p': 'Apportez une affaire anonymisée, un modèle ou une notice, et nous parcourons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026. Le chiffre du taux d’utilisation est signalé comme comparaison internationale et ne provient pas d’une enquête suisse.',
     'src.fn1': 'Fédération Suisse des Avocats et Swiss LegalTech Association, enquête sur la numérisation dans les études d’avocats suisses, Anwaltsrevue 10/2022 : <a class="euc-textlink" href="https://www.sav-fsa.ch/documents/672183/2086852/423arv1022.pdf" target="_blank" rel="noopener">sav-fsa.ch</a>',
@@ -1294,7 +1309,7 @@ window.EUC_I18N = {
     'cta.h2': 'Percorra il processo su una sua pratica',
     'cta.p': 'Porti una pratica anonimizzata, un modello o un promemoria e percorreremo insieme il processo. Oppure si iscriva e parta fra i primi.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre di questo articolo provengono dalle fonti seguenti, verificate l’ultima volta nell’agosto 2026. La cifra sul tasso di utilizzo è contrassegnata come confronto internazionale e non proviene da un’indagine svizzera.',
     'src.fn1': 'Federazione Svizzera degli Avvocati e Swiss LegalTech Association, indagine sulla digitalizzazione negli studi legali svizzeri, Anwaltsrevue 10/2022: <a class="euc-textlink" href="https://www.sav-fsa.ch/documents/672183/2086852/423arv1022.pdf" target="_blank" rel="noopener">sav-fsa.ch</a>',
@@ -1428,7 +1443,7 @@ window.EUC_I18N = {
     'cta.h2': 'Recórralo con un asunto propio',
     'cta.p': 'Traiga un asunto anonimizado, un modelo o una ficha informativa y recorremos juntos el proceso. O apúntese y empiece entre los primeros.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras de este artículo proceden de las fuentes siguientes, comprobadas por última vez en agosto de 2026. La cifra de aprovechamiento está marcada como comparativa internacional y no procede de una encuesta suiza.',
     'src.fn1': 'Federación Suiza de Abogados (SAV/FSA) y Swiss LegalTech Association, encuesta sobre la digitalización en los despachos de abogados suizos, Anwaltsrevue 10/2022: <a class="euc-textlink" href="https://www.sav-fsa.ch/documents/672183/2086852/423arv1022.pdf" target="_blank" rel="noopener">sav-fsa.ch</a>',

@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -496,7 +511,7 @@
       <p data-i18n="cta.p">Traiga una oferta, un parte de trabajo o una ficha informativa y recorremos juntos el proceso. O bien se inscribe y empieza entre los primeros.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Reservar una cita</a>
-        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Únase a la lista de espera</a>
+        <a class="euc-btn-secondary" href="/es/warteliste" data-i18n="cta.btn2">Solicitar acceso beta</a>
       </div>
     </section>
 
@@ -963,7 +978,7 @@ window.EUC_I18N = {
     'cta.h2': 'See it on a case of your own',
     'cta.p': 'Bring a quote, a work report or a fact sheet, and we will walk through the workflow together. Or sign up and be among the first to start.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures in this article come from the following sources, last checked in August 2026. The German association survey is marked as a Germany figure.',
     'src.fn1': 'SECO Bürokratiemonitor (bureaucracy monitor, survey 2022, published 2023), perceived regulatory burden: <a class="euc-textlink" href="https://www.seco.admin.ch/de/unternehmensentlastung" target="_blank" rel="noopener">seco.admin.ch</a>',
@@ -1084,7 +1099,7 @@ window.EUC_I18N = {
     'cta.h2': 'Voyez-le sur un cas qui vous appartient',
     'cta.p': 'Apportez une offre, un rapport ou une fiche d’information, et nous parcourons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026. L’enquête d’association allemande est signalée comme un chiffre allemand.',
     'src.fn1': 'SECO, Bürokratiemonitor (moniteur de la bureaucratie, enquête 2022, publiée en 2023), charge réglementaire perçue : <a class="euc-textlink" href="https://www.seco.admin.ch/de/unternehmensentlastung" target="_blank" rel="noopener">seco.admin.ch</a>',
@@ -1205,7 +1220,7 @@ window.EUC_I18N = {
     'cta.h2': 'Lo veda su un caso suo',
     'cta.p': 'Porti un’offerta, un rapporto o un promemoria e percorriamo insieme il processo. Oppure si iscriva e parta tra i primi.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre di questo articolo provengono dalle fonti seguenti, verificate l’ultima volta nell’agosto 2026. Il sondaggio di categoria tedesco è contrassegnato come cifra riferita alla Germania.',
     'src.fn1': 'SECO, Bürokratiemonitor (monitoraggio della burocrazia, rilevazione 2022, pubblicato nel 2023), carico regolatorio percepito: <a class="euc-textlink" href="https://www.seco.admin.ch/de/unternehmensentlastung" target="_blank" rel="noopener">seco.admin.ch</a>',
@@ -1326,7 +1341,7 @@ window.EUC_I18N = {
     'cta.h2': 'Véalo con un caso propio',
     'cta.p': 'Traiga una oferta, un parte de trabajo o una ficha informativa y recorremos juntos el proceso. O bien se inscribe y empieza entre los primeros.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras de este artículo proceden de las fuentes siguientes, revisadas por última vez en agosto de 2026. La encuesta sectorial alemana está señalada como cifra de Alemania.',
     'src.fn1': 'SECO, Bürokratiemonitor (monitor de burocracia, encuesta de 2022, publicada en 2023), carga regulatoria percibida: <a class="euc-textlink" href="https://www.seco.admin.ch/de/unternehmensentlastung" target="_blank" rel="noopener">seco.admin.ch</a>',

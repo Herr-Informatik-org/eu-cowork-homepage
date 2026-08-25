@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -341,9 +356,9 @@
     <!-- ==================== CTA-BOX ==================== -->
     <section class="cta-box">
       <h2 data-i18n="cta.h2">¿Le queda alguna pregunta?</h2>
-      <p data-i18n="cta.p">La instancia suiza gestionada está en construcción. Quien figura en la lista de espera obtiene acceso anticipado y puede aclarar las preguntas abiertas directamente en su propia instancia.</p>
+      <p data-i18n="cta.p">La instancia suiza gestionada está en construcción. Quien dispone de un acceso beta entra primero y puede aclarar las preguntas abiertas directamente en su propia instancia.</p>
       <div class="cta-actions">
-        <a class="euc-btn-primary" href="/es/warteliste" data-i18n="cta.primary">Únase a la lista de espera</a>
+        <a class="euc-btn-primary" href="/es/warteliste" data-i18n="cta.primary">Solicitar acceso beta</a>
         <a class="euc-btn-secondary" href="/es/self-hosting" data-i18n="cta.secondary">Alojar por cuenta propia</a>
       </div>
     </section>
@@ -952,8 +967,8 @@ window.EUC_I18N = {
     's5.q5': 'Who is behind EU Cowork AI?',
     's5.a5': 'Behind EU Cowork AI stands Herr Informatik GmbH in Windisch, Switzerland, which uses the platform internally itself. Product-related details may still change before launch. Anyone who only wants to run the software themselves does not need a contract with us. Why we are building the product is explained on the <a class="euc-textlink" href="/es/vision">vision</a> page.',
     'cta.h2': 'Still have a question?',
-    'cta.p': 'The hosted Swiss instance is under construction. Anyone on the waitlist gets early access and can clarify open questions directly on their own instance.',
-    'cta.primary': 'Join the waitlist',
+    'cta.p': 'The hosted Swiss instance is under construction. Anyone with beta access is in early and can clarify open questions directly on their own instance.',
+    'cta.primary': 'Request beta access',
     'cta.secondary': 'Self-host',
     'weiter.titel': 'Next',
     'weiter.l1': 'EU Cowork AI compared with other AI platforms',
@@ -1072,8 +1087,8 @@ window.EUC_I18N = {
     's5.q5': 'Qui est derrière EU Cowork AI ?',
     's5.a5': 'Derrière EU Cowork AI se trouve Herr Informatik GmbH à Windisch, en Suisse, qui utilise elle-même la plateforme en interne. Les informations produit peuvent encore évoluer d’ici au lancement. Si vous souhaitez seulement exploiter le logiciel vous-même, aucun contrat avec nous n’est nécessaire. Les raisons pour lesquelles nous construisons ce produit figurent sur la page <a class="euc-textlink" href="/es/vision">Vision</a>.',
     'cta.h2': 'Une question reste sans réponse ?',
-    'cta.p': 'L’instance suisse hébergée est en construction. Les personnes inscrites sur la liste d’attente bénéficient d’un accès anticipé et peuvent clarifier leurs questions directement sur leur propre instance.',
-    'cta.primary': 'Rejoindre la liste d’attente',
+    'cta.p': 'L’instance suisse hébergée est en construction. Les personnes disposant d’un accès bêta sont servies en premier et peuvent clarifier leurs questions directement sur leur propre instance.',
+    'cta.primary': 'Demander un accès bêta',
     'cta.secondary': 'Auto-héberger',
     'weiter.titel': 'Pour aller plus loin',
     'weiter.l1': 'EU Cowork AI comparé à d’autres plateformes d’IA',
@@ -1192,8 +1207,8 @@ window.EUC_I18N = {
     's5.q5': 'Chi c’è dietro EU Cowork AI?',
     's5.a5': 'Dietro EU Cowork AI c’è Herr Informatik GmbH di Windisch, in Svizzera, che utilizza essa stessa la piattaforma al proprio interno. Le indicazioni relative al prodotto possono ancora cambiare fino al lancio. Chi desidera solo gestire il software in proprio non ha bisogno di alcun contratto con noi. Il motivo per cui costruiamo questo prodotto è illustrato nella pagina <a class="euc-textlink" href="/es/vision">Visione</a>.',
     'cta.h2': 'Ha ancora una domanda?',
-    'cta.p': 'L’istanza svizzera gestita è in fase di sviluppo. Chi è iscritto alla lista d’attesa ottiene un accesso anticipato e può chiarire le domande aperte direttamente sulla propria istanza.',
-    'cta.primary': 'Iscriviti alla lista d’attesa',
+    'cta.p': 'L’istanza svizzera gestita è in fase di sviluppo. Chi dispone di un accesso beta è servito per primo e può chiarire le domande aperte direttamente sulla propria istanza.',
+    'cta.primary': 'Richiedere l’accesso beta',
     'cta.secondary': 'Ospitare in proprio',
     'weiter.titel': 'Continua',
     'weiter.l1': 'EU Cowork AI a confronto con altre piattaforme di IA',
@@ -1312,8 +1327,8 @@ window.EUC_I18N = {
     's5.q5': '¿Quién está detrás de EU Cowork AI?',
     's5.a5': 'Detrás de EU Cowork AI está Herr Informatik GmbH en Windisch, Suiza, que utiliza la plataforma internamente. Los datos relativos al producto pueden cambiar aún antes del lanzamiento. Quien solo quiera operar el software por su cuenta no necesita ningún contrato con nosotros. Por qué construimos este producto se explica en la página <a class="euc-textlink" href="/es/vision">Visión</a>.',
     'cta.h2': '¿Le queda alguna pregunta?',
-    'cta.p': 'La instancia suiza gestionada está en construcción. Quien figura en la lista de espera obtiene acceso anticipado y puede aclarar las preguntas abiertas directamente en su propia instancia.',
-    'cta.primary': 'Únase a la lista de espera',
+    'cta.p': 'La instancia suiza gestionada está en construcción. Quien dispone de un acceso beta entra primero y puede aclarar las preguntas abiertas directamente en su propia instancia.',
+    'cta.primary': 'Solicitar acceso beta',
     'cta.secondary': 'Alojar por cuenta propia',
     'weiter.titel': 'Continuar',
     'weiter.l1': 'EU Cowork AI en comparación con otras plataformas de IA',

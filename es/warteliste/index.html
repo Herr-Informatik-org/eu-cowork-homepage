@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Conseguir acceso anticipado | EU Cowork AI</title>
-<meta name="description" content="Consiga acceso anticipado a EU Cowork AI: indique su correo profesional y le contactamos en cuanto su acceso esté listo. Sin spam, baja cuando quiera.">
+<title>Solicitar acceso beta | EU Cowork AI</title>
+<meta name="description" content="La beta de EU Cowork AI está abierta. Solicite acceso con su correo profesional, saldo de modelos incluido. Sin spam, puede darse de baja cuando quiera.">
 <link rel="canonical" href="https://eucowork.ai/es/warteliste">
 <!-- i18n:hreflang:start -->
 <link rel="alternate" hreflang="de" href="https://eucowork.ai/warteliste">
@@ -18,21 +18,53 @@
 <meta property="og:site_name" content="EU Cowork AI">
 <meta property="og:locale" content="es_ES">
 <meta property="og:url" content="https://eucowork.ai/es/warteliste">
-<meta property="og:title" content="Conseguir acceso anticipado | EU Cowork AI">
-<meta property="og:description" content="El acceso se abre por etapas. Inscríbase y empiece entre los primeros.">
+<meta property="og:title" content="Solicitar acceso beta | EU Cowork AI">
+<meta property="og:description" content="La beta está abierta. Solicite acceso y empiece con un saldo de modelos de regalo.">
 <meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Conseguir acceso anticipado | EU Cowork AI">
-<meta name="twitter:description" content="El acceso se abre por etapas. Inscríbase y empiece entre los primeros.">
+<meta name="twitter:title" content="Solicitar acceso beta | EU Cowork AI">
+<meta name="twitter:description" content="La beta está abierta. Solicite acceso y empiece con un saldo de modelos de regalo.">
 <meta name="twitter:image" content="https://eucowork.ai/og/eucowork-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- React, Kopf und Fuss haengen heute hintereinander an support.js: gemessen
+     97, 193 und 206 Millisekunden. Vorgeladen starten sie alle bei null. -->
+<!-- crossorigin ist Pflicht, nicht Zierde: support.js haengt die beiden
+     Skripte mit integrity und damit crossOrigin="anonymous" ein. Ohne das
+     Attribut hier passt die Vorladung nicht zur spaeteren Anfrage, und der
+     Browser laedt beide Dateien ein zweites Mal. Gemessen und geprueft. -->
+<link rel="preload" href="/vendor/react.production.min.js" as="script" crossorigin>
+<link rel="preload" href="/vendor/react-dom.production.min.js" as="script" crossorigin>
+<!-- Die beiden Adressen stehen relativ und nicht wurzelabsolut: Der
+     Laufzeitteil loest sie ueber "." gegen die Seite auf, aus /fr/warteliste
+     wird also /fr/SiteHeader.dc.html (vercel.json schreibt das auf die
+     Wurzel um). Stand hier eine Wurzeladresse, passte die Vorladung in
+     vier von fuenf Sprachen nicht zur spaeteren Anfrage, und der Browser
+     lud beide Bruchstuecke ein zweites Mal. Gemessen am 25.08.2026. -->
+<link rel="preload" href="./SiteHeader.dc.html" as="fetch">
+<link rel="preload" href="./SiteFooter.dc.html" as="fetch">
 <script src="/assets/i18n.js"></script>
 <script src="/support.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -46,11 +78,15 @@
 <p><a href="/es">EU Cowork AI</a></p>
 <p><a href="/es/preise">Precios</a> <a href="/docs/es">Docs</a> <a href="/es/blog">Blog</a></p>
 <p>ES</p>
-<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Únase a la lista de espera</a></p>
-<h1>Obtenga acceso anticipado a EU Cowork AI.</h1>
+<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Solicitar acceso beta</a></p>
+<h1>La beta está abierta. Solicite su acceso.</h1>
 <p>La plataforma de IA europea para su empresa: todos los mejores modelos con un solo acceso, sus datos en Suiza o en su propio servidor.</p>
-<p>Las primeras invitaciones se envían por tandas.</p>
-<ol><li>1. Usted confirma su dirección mediante el enlace del correo electrónico.</li><li>2. Nos ponemos en contacto en cuanto su acceso esté listo y definimos con usted la forma de operación adecuada: gestionada en Suiza o en su propio servidor.</li><li>3. Empieza en su propia instancia, con todas las funciones desde el primer día.</li></ol>
+<p>// Para empezar</p>
+<p>55 €</p>
+<p>de saldo de modelos de regalo</p>
+<p>Cada acceso beta empieza con 55 € de saldo de modelos. Sin datos de pago.</p>
+<ol><li>Usted confirma su dirección mediante el enlace del correo electrónico.</li><li>Revisamos su solicitud y preparamos su acceso.</li><li>Empieza con todas las funciones y 55 € de saldo de modelos listos.</li></ol>
+<p>Habilitamos los accesos uno a uno y le respondemos en cuanto hayamos revisado su solicitud.</p>
 <p>Dirección de correo electrónico profesional *</p>
 <p>Empresa opcional</p>
 <p>Tamaño del equipo opcional</p>
@@ -64,10 +100,84 @@
 <p>Alojado en Suiza</p>
 <p>Self-hosting</p>
 <p>Ambos</p>
-<p>Solicitar acceso anticipado</p>
-<p>Sin spam. Solo le escribimos sobre el acceso beta y el lanzamiento. Puede darse de baja en cualquier momento. <a href="/es/datenschutz">Política de privacidad</a></p>
+<p>Solicitar acceso beta</p>
+<p>Sus datos se quedan con nosotros y no se ceden a nadie. Solo le escribimos sobre su acceso y la publicación, y puede darse de baja en cualquier momento. <a href="/es/datenschutz">Política de privacidad</a></p>
 <p>¿Prefiere hablar primero? <a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled">Reservar una cita</a></p>
 <p>¿Prefiere probarlo usted mismo? <a href="/docs/es/betrieb/installation">A la guía de instalación</a></p>
+<h2>Preguntas frecuentes.</h2>
+<p>Lo que nos preguntan los interesados antes de registrarse, y lo que respondemos.</p>
+<p>Abrir todas las respuestas</p>
+<p>Así funciona la solicitud de acceso</p>
+<p>¿El producto ya existe, o esto es solo una página con un formulario? +</p>
+<p>La plataforma funciona y está en uso interno en Herr Informatik GmbH. La documentación de operación completa es de acceso público: requisitos del sistema, instalación, configuración y comandos. Lo que hoy queda pendiente no es el software, sino el acceso general.</p>
+<p><a href="/docs/es">Ver la documentación</a></p>
+<p>¿Qué ocurre después de enviar el formulario? +</p>
+<p>Recibirá un correo electrónico con un enlace de confirmación, válido durante 48 horas. En cuanto usted lo confirme, la solicitud llega a nosotros y se tramita paso a paso.</p>
+<p>¿Cuánto tiempo pasa hasta que tenga el acceso? +</p>
+<p>Habilitamos los accesos solicitud por solicitud. Quien desee ver la plataforma de inmediato puede reservar una cita.</p>
+<p><a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled">Reservar una cita</a></p>
+<p>¿Por qué exigen una dirección de correo electrónico profesional? +</p>
+<p>Cada acceso se asigna a una organización, por eso el formulario no admite direcciones de buzones públicos. El caso de las empresas sin dominio propio lo aclaramos en una conversación.</p>
+<p><a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled">Reservar una cita</a></p>
+<p>¿Recibiré después publicidad o llamadas? +</p>
+<p>No. Sus datos se quedan con nosotros y no se ceden a nadie. El formulario no pide ningún número de teléfono.</p>
+<p>¿Me comprometo a algo si participo? +</p>
+<p>No. No hay obligación de dar valoraciones, ni reuniones, ni nada que firmar. Puede dejarlo en cualquier momento.</p>
+<p>¿No puedo instalar el software yo mismo en lugar de solicitarlo? +</p>
+<p>Hoy todavía no: el repositorio de publicación permanece cerrado hasta el lanzamiento. La guía de instalación completa ya es de acceso público. El acceso beta es por ahora la única vía para trabajar con la plataforma.</p>
+<p><a href="/docs/es/betrieb/installation">A la guía de instalación</a></p>
+<p>Saldo inicial y costes</p>
+<p>¿Qué es exactamente el saldo inicial de 55 €? +</p>
+<p>Un saldo único para el consumo de modelos en su acceso. Cada petición a un modelo cuesta tokens, y esos tokens se cargan al saldo. Mientras alcance, no se generan costes.</p>
+<p>¿Hasta dónde llego con 55 €? +</p>
+<p>Depende del modelo: el trabajo con textos cortos es barato, y el análisis de documentos largos con los modelos más grandes resulta bastante más caro. Como referencia: la operación gestionada incluye 8 € de saldo de modelos por persona y mes, y el saldo inicial es más de seis veces esa cantidad.</p>
+<p>¿Tengo que registrar datos de pago? +</p>
+<p>No, ni para la solicitud ni para el acceso beta. No queda registrada ninguna tarjeta que se cargue al vencer el plazo.</p>
+<p>¿Qué pasa cuando se agota el saldo? +</p>
+<p>El consumo se detiene y no se genera ninguna factura. Después usted decide si la operación gestionada debe continuar: 15 € por persona y mes, con 8 € de saldo de modelos por persona en el fondo común de su organización.</p>
+<p><a href="/es/preise">Ver todos los precios</a></p>
+<p>¿Cómo mantenemos los costes bajo control si se factura por consumo? +</p>
+<p>El consumo se desglosa por persona, grupo y modelo, y un presupuesto mensual común lo limita para toda la organización. Cuando se alcanza, actúa un bloqueo suave (soft block): las peticiones se detienen en lugar de seguir en silencio, y la administración puede aumentar el presupuesto o habilitar a determinadas personas. Además se puede fijar un límite mensual por persona.</p>
+<p>¿Hay un número mínimo de usuarios? +</p>
+<p>No. El autoalojamiento es gratuito desde una sola persona y sin límite de usuarios, y la operación gestionada se factura por persona. No hay ningún paquete ligado a un tamaño de empresa fijo ni cuota de instalación.</p>
+<p>¿Vale el saldo inicial también si nos autoalojamos? +</p>
+<p>No. Está ligado a un acceso gestionado, porque solo allí el consumo de modelos pasa por nosotros; en el autoalojamiento usted factura directamente con su proveedor de modelos. En el formulario puede marcar ambas opciones, y el paso posterior de la operación gestionada a su propio servidor está previsto.</p>
+<p>Datos y confidencialidad</p>
+<p>¿Se utilizan nuestras entradas para entrenar modelos? +</p>
+<p>No. Los datos de clientes no entrenan ningún modelo, ni en el proveedor de inferencia ni con nosotros. La telemetría está desactivada de forma predeterminada en todos los componentes, y sin consentimiento activo no se realiza ningún seguimiento.</p>
+<p>Ustedes ofrecen los grandes modelos de OpenAI y Anthropic. ¿Nuestros datos acaban entonces en Estados Unidos? +</p>
+<p>Para el almacenamiento y la inferencia, no: las conversaciones, los archivos y las cuentas están en Suiza, y las peticiones a los modelos pasan por EuRouter y se procesan en la UE, también en el caso de modelos de fabricantes estadounidenses. Lo decisivo no es solo dónde reposan los datos, sino dónde se calcula la petición. Hay una excepción: la búsqueda web transmite la consulta a motores de búsqueda externos sin la identidad del usuario, por eso no afirmamos de forma general que todo permanezca en Europa.</p>
+<p><a href="/es/sicherheit">Las rutas de los datos en detalle</a></p>
+<p>¿De qué sirve el alojamiento en Suiza si la US Cloud Act se aplica de todos modos? +</p>
+<p>Además de la ubicación, decide quién controla al operador. Detrás de EU Cowork AI está Herr Informatik GmbH, en Windisch (Suiza), sin matriz estadounidense; la operación se realiza en los centros de datos de Green en Lupfig. A quien eso no le baste, puede operar la plataforma en su propio hardware.</p>
+<p>¿Cuánto tiempo guardan nuestras conversaciones? +</p>
+<p>De fábrica no hay fijado ningún plazo de conservación; las conversaciones permanecen hasta que el usuario o la administración las borra. En el panel de administración se puede fijar un plazo libremente, y después los contenidos vencidos se eliminan junto con sus entradas en el índice de búsqueda. La exportación y el borrado de los datos de una sola persona los realiza la administración también allí.</p>
+<p>¿Puede alguien de su empresa leer nuestros chats? +</p>
+<p>Quien se autoaloja no da acceso a ningún tercero. En la operación gestionada, el operador accede solo para el mantenimiento, algo regulado en el contrato de encargo del tratamiento y en la lista de subencargados. Dentro de su instancia, los usuarios ven exactamente lo que su rol y su grupo permiten, y cada acceso a un sistema conectado queda registrado.</p>
+<p>¿Recibimos un contrato de encargo del tratamiento, y quiénes son sus subencargados? +</p>
+<p>Sí. El texto completo del contrato y la lista nominal de todos los subencargados, con su finalidad y su ubicación, están publicados en este sitio web, antes del registro y sin conversación comercial.</p>
+<p><a href="/es/avv">Leer el contrato de encargo del tratamiento</a></p>
+<p>¿Tienen ISO 27001 o SOC 2? +</p>
+<p>Certificados según ISO 27001 están los centros de datos de Green en los que se opera EU Cowork AI; los certificados corresponden a Green y no a nosotros. Una certificación ISO 27001 propia está en curso. Las medidas técnicas y organizativas están documentadas de forma pública.</p>
+<p><a href="/es/sicherheit">A las medidas</a></p>
+<p>Trabajamos sujetos a secreto profesional. ¿Podemos siquiera utilizar esta herramienta? +</p>
+<p>Esa valoración corresponde a usted y a su autoridad de supervisión. Las bases están disponibles: contrato de encargo del tratamiento, lista nominal de subencargados, almacenamiento en Suiza, procesamiento de los modelos en la UE y la operación en hardware propio. Esto no constituye asesoramiento jurídico.</p>
+<p>Producto y operación</p>
+<p>Ya tenemos ChatGPT o Microsoft Copilot. ¿Para qué algo más? +</p>
+<p>ChatGPT en el navegador es una cuenta personal sin conexión con los sistemas de su empresa y sin control central, y Copilot está atado a un entorno y a un modelo. EU Cowork AI es una instancia corporativa con roles, permisos, registro de auditoría y control de costes, con más de 100 modelos a elegir y con la conexión de sus propios sistemas. Los modelos son en parte los mismos; la diferencia está en la ruta de los datos, en la selección y en el control.</p>
+<p><a href="/es/vergleich">La comparativa en detalle</a></p>
+<p>¿Por qué no operar simplemente Open WebUI o LibreChat por nuestra cuenta? +</p>
+<p>Es posible, y EU Cowork AI es a su vez un fork ligero de LibreChat; el autoalojamiento sigue siendo gratuito y sin límite de usuarios. A eso se añaden permisos hasta el nivel de herramienta, registro de auditoría, consumo y presupuesto con bloqueo suave, conexiones preparadas y, si lo desea, la operación con actualizaciones y copia de seguridad.</p>
+<p>¿Qué modelos obtenemos, y obtenemos realmente el que hemos elegido? +</p>
+<p>Más de 100 modelos con un solo acceso, entre ellos los grandes de Anthropic, OpenAI, Mistral y Meta. Como cada petición se procesa del lado de la UE, el catálogo no tiene que limitarse a fabricantes europeos. La administración cura la selección y fija un modelo predeterminado; el consumo se desglosa por modelo y queda así comprobable.</p>
+<p>¿Podemos integrar nuestros propios documentos? +</p>
+<p>Sí, como base de conocimiento; además están preparados SharePoint desde Microsoft 365 y los sistemas ERP a través de la pasarela MCP. La calidad de las respuestas depende del material: los textos bien maquetados funcionan bien, y los formularios escaneados y las tablas anidadas son difíciles para cualquier sistema. Al principio, un conjunto claramente delimitado da mejores resultados que una unidad de red entera.</p>
+<p><a href="/es/integrationen">Ver todas las integraciones</a></p>
+<p>¿Necesitamos un departamento de informática, y en cuánto tiempo estamos listos para empezar? +</p>
+<p>Para la operación gestionada, no: el operador asume la operación, las actualizaciones y la copia de seguridad, y usted gestiona usuarios, roles y permisos en el panel de administración. La parte técnica dura minutos. Más tiempo lleva lo que viene después: definir los roles, conectar los sistemas, recorrer el primer caso de uso. Una implantación productiva se cuenta en días, no en minutos.</p>
+<p>Hoy la mitad de nuestra plantilla usa ChatGPT por su cuenta. ¿Conseguimos así ponerlo bajo control? +</p>
+<p>En una instancia corporativa, el consumo se desglosa por persona, grupo y modelo, cada acceso a un sistema conectado figura en el registro de auditoría, y los roles determinan quién ve qué modelos y qué bases de conocimiento. Hasta dónde llega esa visibilidad lo define usted mediante roles y permisos; una normativa aclarada de antemano facilita la implantación.</p>
+<p>¿Le queda alguna duda? <a href="/es/faq">A la lista completa de preguntas</a></p>
 <p>EU Cowork AI</p>
 <p>Su colega de IA. Se queda en Europa.</p>
 <p>Desplegable en cualquier lugar</p>
@@ -113,12 +223,14 @@
      in Klassen, nicht in inline-styles: nur so greifen :hover, :focus-visible
      und :active (Inline-Stile schlagen jede Regel). --------------------- */
   :root{
+    interpolate-size:allow-keywords;   /* macht height:0 → auto animierbar */
     --f-display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
     --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
     --c-bg:#FBFAF6; --c-surface:#FFFFFF; --c-deep:#0B1E33;
     --c-ink:#0B1E33; --c-body:#41505E; --c-body-soft:#5A6472; --c-muted:#8A96A2;
     --c-eu-700:#12326B; --c-eu-500:#2E6C86; --c-ice-300:#A5D8E6;
     --c-danger:#B4472F;
+    --c-gold:#F4C542;   /* wie --c-gold-500 in assets/content.css: Interpunktion, nie Flaeche */
     --c-hairline:#DDE4EA; --c-hairline-strong:#C6D0DA;
     --bd:1px solid var(--c-hairline);
     --r-control:4px;   /* Knopf, Eingabefeld, Segment */
@@ -146,7 +258,11 @@
 
   /* ---- Bühne und Kachel ------------------------------------------------ */
   /* 68 px Kopfhoehe plus Luft: die Leiste liegt fest ueber der Seite. */
-  .wl-main{
+  .wl-main{ flex:1 1 auto; display:flex; flex-direction:column; }
+  /* Die Buehne traegt die Kachel und haelt sie senkrecht in der Mitte. Die
+     Fragen liegen ausserhalb: staenden sie im selben Flussraum, zoege ihr
+     Gewicht die Kachel aus der Mitte nach oben. */
+  .wl-stage{
     flex:1 1 auto; display:flex; align-items:center;
     padding:calc(68px + clamp(24px,3.5vw,48px)) 0 clamp(40px,5vw,72px);
   }
@@ -157,7 +273,7 @@
     position:relative; isolation:isolate; overflow:hidden;
     width:min(1240px, calc(100vw - 80px)); min-height:620px; margin:0 auto;
     border-radius:var(--r-tile); box-shadow:var(--sh-soft);
-    display:grid; grid-template-columns:44% 56%; align-items:center;
+    display:grid; grid-template-columns:48% 52%; align-items:center;
     gap:clamp(32px,4vw,56px); padding:clamp(56px,5vw,72px);
   }
   /* Die Kante liegt als eigene Ebene ÜBER dem Verlauf — genau wie auf der
@@ -214,24 +330,137 @@
   .wl-col{ position:relative; z-index:1; min-width:0; }
 
   /* ---- Linke Spalte ---------------------------------------------------- */
-  .wl-msg{ max-width:430px; }
+  /* 480 px, weil die laengste der fuenf Ueberschriftzeilen ("Richieda il Suo
+     accesso.") bei 40 px Schriftgrad 458 px misst. Enger, und die italienische
+     Fassung bricht dort um, wo die deutsche noch steht. */
+  .wl-msg{ max-width:480px; }
+  /* Zwei Zeilen, zwei Saetze. Ueberlassen wir den Umbruch dem Browser,
+     faellt "Jetzt Zugang anfragen." in drei Stuecke auseinander und die
+     Aufforderung verliert ihren Ton. Jede Zeile ist ein eigener Block. */
   .wl-h1{
     font-family:var(--f-display); font-weight:400;
-    font-size:clamp(34px,4.6vw,58px); line-height:1.07; letter-spacing:-.024em;
+    font-size:clamp(30px,3.2vw,40px); line-height:1.12; letter-spacing:-.02em;
     color:var(--c-ink); margin:0;
   }
+  .wl-h1-l{ display:block; text-wrap:balance; }
+  .wl-h1-l + .wl-h1-l{ margin-top:.12em; }
   .wl-sub{
     font-size:clamp(15.5px,1.2vw,17px); line-height:1.58; letter-spacing:-.004em;
     color:#3D4B59; margin:20px 0 0;
   }
   .wl-hint{ margin:22px 0 0; font-size:13px; line-height:1.5; color:#7A6535; }
 
-  /* Was nach dem Absenden geschieht, in drei Schritten. Die Ziffer steht im
-     Text selbst und nicht in einer Listenmarke, damit sie in allen fünf
-     Sprachfassungen wortgleich mit dem Satz übersetzt wird. */
-  .wl-steps{ list-style:none; margin:26px 0 0; padding:0; max-width:430px; }
-  .wl-steps li{ margin:0; font-size:14px; line-height:1.55; color:#4B5765; }
-  .wl-steps li + li{ margin-top:10px; padding-top:10px; border-top:1px solid var(--c-hairline); }
+  /* Das Startguthaben. Es steht als eigener Block und nicht als Nebensatz,
+     weil es der einzige Grund ist, heute zu fragen statt irgendwann. Der
+     Betrag traegt die Anzeigeschrift wie die Preise, damit beide Seiten
+     dieselbe Stimme haben. Die Kante links statt eines Kastens: der Block
+     soll auffallen, ohne mit der Formularkarte rechts zu konkurrieren. */
+  .wl-credit{
+    margin:26px 0 0; padding:16px 0 16px 18px; max-width:480px;
+    border-left:3px solid var(--c-gold);
+  }
+  .wl-credit-eyebrow{
+    display:block; font-family:var(--f-mono); font-size:11.5px;
+    letter-spacing:.06em; color:#7A6535;
+  }
+  .wl-credit-amount{
+    font-family:var(--f-display); font-weight:400;
+    font-size:clamp(30px,3.2vw,40px); line-height:1.05; letter-spacing:-.02em;
+    color:var(--c-ink); margin:8px 0 0;
+  }
+  .wl-credit-lead{
+    margin:2px 0 0; font-size:14.5px; line-height:1.4; color:#3D4B59;
+  }
+  .wl-credit-body{
+    margin:10px 0 0; font-size:13.5px; line-height:1.55; color:#4B5765;
+  }
+
+  /* Was nach dem Absenden geschieht, in drei Schritten. Die Ziffer setzt der
+     Zaehler, nicht der Satz: eine Zahl ist in allen fünf Sprachfassungen
+     dieselbe, und als Marke steht sie sauber neben dem Text statt in ihm. */
+  .wl-steps{ list-style:none; counter-reset:wl-s; margin:24px 0 0; padding:0; max-width:480px; }
+  .wl-steps li{
+    display:flex; gap:12px; align-items:flex-start; margin:0;
+    font-size:14px; line-height:1.55; color:#4B5765;
+  }
+  .wl-steps li::before{
+    counter-increment:wl-s; content:counter(wl-s);
+    flex:0 0 auto; width:22px; height:22px; margin-top:1px;
+    display:grid; place-items:center; border-radius:50%;
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500;
+    color:#7A6535; background:rgba(244,197,66,.16);
+    box-shadow:inset 0 0 0 1px rgba(244,197,66,.55);
+  }
+  .wl-steps li + li{ margin-top:12px; padding-top:12px; border-top:1px solid var(--c-hairline); }
+  .wl-hint{ padding-left:34px; }
+
+  /* ---- Häufige Fragen ---------------------------------------------------
+     Bauform wortgleich zur Startseite: 820 px Satzbreite, Haarlinie als
+     Zeilentrenner, die Frage in der Anzeigeschrift, das Vorzeichen rechts in
+     der Monoschrift. Nur die Fragen sind andere — hier stehen die, die
+     jemand VOR dem Absenden noch hat. Die Gruppenmarken tragen den Satz der
+     Augenbrauen aus assets/content.css.
+
+     Geoeffnet wird ueber grid-template-rows 0fr → 1fr und nicht ueber eine
+     feste max-height: eine geratene Hoehe schneidet die lange Antwort ab,
+     sobald eine Uebersetzung breiter ausfaellt als das deutsche Original. */
+  .wl-faq{ padding:0 clamp(16px,4vw,40px) clamp(56px,7vw,104px); }
+  .wl-faq-in{ max-width:820px; margin:0 auto; }
+  .wl-faq-h2{
+    font-family:var(--f-display); font-weight:400;
+    font-size:clamp(30px,4.2vw,50px); line-height:1.10; letter-spacing:-.019em;
+    color:var(--c-ink); margin:0; text-wrap:balance;
+  }
+  .wl-faq-lead{
+    font-size:clamp(16px,1.3vw,18.5px); line-height:1.58; letter-spacing:-.005em;
+    color:var(--c-body); margin:14px 0 0; max-width:54ch;
+  }
+  .wl-faq-all{
+    margin:18px 0 0; padding:0; border:0; background:none; cursor:pointer;
+    font-family:var(--f-mono); font-size:12px; letter-spacing:.04em;
+    color:var(--c-eu-700); text-decoration:underline; text-underline-offset:3px;
+  }
+  .wl-faq-group{
+    font-family:var(--f-mono); font-size:11.5px; font-weight:500;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--c-eu-500);
+    margin:38px 0 10px;
+  }
+  .wl-faq-list{ border-top:1px solid #E8E9E6; }
+  .wl-faq-row{ border-bottom:1px solid #E8E9E6; }
+  .wl-faq-q{
+    width:100%; display:flex; align-items:center; justify-content:space-between;
+    gap:16px; border:0; background:none; cursor:pointer; text-align:left;
+    padding:19px 4px; transition:background-color 120ms ease;
+    font-family:var(--f-display); font-size:clamp(16.5px,1.8vw,19px);
+    font-weight:500; line-height:1.35; color:var(--c-ink);
+  }
+  .wl-faq-q:active{ background-color:rgba(11,30,51,.045); }
+  .wl-faq-sign{
+    flex:0 0 auto; width:20px; text-align:center; line-height:1;
+    font-family:var(--f-mono); font-size:22px; color:var(--c-eu-500);
+  }
+  /* Geoeffnet wird von 0 auf die natuerliche Hoehe, freigeschaltet durch
+     interpolate-size. Keine geratene max-height wie auf der Startseite: Die
+     schneidet die lange Antwort ab, sobald eine Uebersetzung mehr Zeilen
+     braucht als das deutsche Original, und beim Schliessen laeuft die
+     Bewegung erst durch die ungenutzte Reserve, bevor sichtbar etwas
+     geschieht. Wo interpolate-size fehlt, gilt die Regel trotzdem: Die
+     Antwort springt dann auf, statt aufzugehen. Falsch steht nichts. */
+  .wl-faq-a{
+    height:0; overflow:hidden; opacity:0;
+    transition:height .35s var(--wl-ease), opacity .28s ease;
+  }
+  .wl-faq-a.is-open{ height:auto; opacity:1; }
+  .wl-faq-a p{
+    margin:0; padding:0 4px 20px; max-width:700px;
+    font-size:15.5px; line-height:1.62; color:#556170;
+  }
+  .wl-faq-a p + .wl-faq-l{ margin-top:-8px; }
+  .wl-faq-l a{ font-size:14.5px; font-weight:500; text-decoration:none; }
+  .wl-faq-l a::after{ content:' \2192'; font-family:var(--f-mono); }
+  .wl-faq-more{ margin:32px 0 0; font-size:15px; line-height:1.6; color:#556170; }
+  .wl-faq-more a{ font-weight:600; text-decoration:none; }
+  .wl-faq-more a::after{ content:' \2192'; font-family:var(--f-mono); }
 
   /* ---- Rechte Formularkarte ------------------------------------------- */
   .wl-cardcol{ display:flex; justify-content:flex-end; }
@@ -359,13 +588,13 @@
 
   /* ---- Unter 860 px: eine Spalte, dieselbe Kachel. -------------------- */
   @media (max-width:860px){
-    .wl-main{ padding:calc(68px + 16px) 0 28px; align-items:flex-start; }
+    .wl-stage{ padding:calc(68px + 16px) 0 28px; align-items:flex-start; }
     .wl-tile{
       width:calc(100% - 32px); min-height:0; grid-template-columns:1fr;
       padding:24px; gap:28px; align-items:start;
     }
     .wl-msg{ max-width:none; }
-    .wl-h1{ font-size:clamp(29px,7.4vw,36px); letter-spacing:-.018em; }
+    .wl-h1{ font-size:clamp(28px,6.4vw,34px); letter-spacing:-.018em; }
     .wl-cardcol{ justify-content:stretch; }
     .wl-card{ max-width:none; }
   }
@@ -391,22 +620,32 @@
     <!-- Eine Kachel, zwei Spalten: links die Botschaft, rechts das Formular.
          Der Verlauf liegt UNTER beiden, damit die Seite als ein Gegenstand
          gelesen wird und nicht als Text neben einem Kasten. -->
+    <div class="wl-stage">
     <div class="wl-tile">
       <div class="wl-sg" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>
       <div class="wl-grain" aria-hidden="true"></div>
 
       <div class="wl-col">
         <div class="wl-msg">
-          <h1 class="wl-h1">{{ t.h1 }}</h1>
+          <h1 class="wl-h1"><span class="wl-h1-l">{{ t.h1a }}</span><span class="wl-h1-l">{{ t.h1b }}</span></h1>
           <p class="wl-sub">{{ t.sub }}</p>
-          <p class="wl-hint">{{ t.hint }}</p>
+          <!-- Der Betrag kommt aus dem Zustand, nicht aus der Übersetzung:
+               er hängt am Land des Besuchers, nicht an seiner Sprache. Wer
+               die Seite aus der Schweiz auf Englisch liest, sieht Franken. -->
+          <div class="wl-credit">
+            <span class="wl-credit-eyebrow">{{ t.credit.eyebrow }}</span>
+            <p class="wl-credit-amount">{{ creditAmount }}</p>
+            <p class="wl-credit-lead">{{ t.credit.lead }}</p>
+            <p class="wl-credit-body">{{ creditBody }}</p>
+          </div>
           <!-- Der Eintrag ist kein blinder Einwurf: hier steht, was danach
                geschieht. Keine Fristzusage, nur die Reihenfolge. -->
           <ol class="wl-steps">
-            <sc-for list="{{ t.steps }}" as="s" hint-placeholder-count="3">
+            <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
               <li>{{ s }}</li>
             </sc-for>
           </ol>
+          <p class="wl-hint">{{ t.hint }}</p>
         </div>
       </div>
 
@@ -514,7 +753,7 @@
             <div class="wl-done">
               <div class="wl-done-k">{{ t.success.eyebrow }}</div>
               <div class="wl-done-t">{{ t.success.title }}</div>
-              <p class="wl-done-b">{{ t.success.body }}</p>
+              <p class="wl-done-b">{{ successBody }}</p>
               <a href="/" class="wl-done-a">{{ t.success.home }}<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
 
               <div class="wl-done-hr"></div>
@@ -552,6 +791,52 @@
         </div>
       </div>
     </div>
+    </div>
+
+    <!-- Was jemand VOR dem Absenden noch wissen will. Die Antworten stehen
+         hier und nicht nur auf /faq, weil der Weg auf eine zweite Seite die
+         haeufigste Stelle ist, an der eine Anmeldung abbricht. Aufbau und
+         Masse folgen der Startseite; die Fragen selbst stammen aus dem, was
+         Leute in Foren und Bewertungen ueber KI-Werkzeuge im Betrieb fragen. -->
+    <section class="wl-faq" aria-labelledby="wl-faq-h2">
+      <div class="wl-faq-in">
+        <h2 class="wl-faq-h2" id="wl-faq-h2">{{ t.faq.h2 }}</h2>
+        <p class="wl-faq-lead">{{ t.faq.lead }}</p>
+        <button type="button" class="wl-faq-all" onClick="{{ faqAll }}" aria-pressed="{{ faqAllPressed }}">{{ faqAllLabel }}</button>
+
+        <sc-for list="{{ faqGroups }}" as="g" hint-placeholder-count="4">
+          <div>
+            <p class="wl-faq-group">{{ g.label }}</p>
+            <div class="wl-faq-list">
+              <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                <div class="wl-faq-row">
+                  <button type="button" class="wl-faq-q" onClick="{{ it.toggle }}"
+                          aria-expanded="{{ it.expanded }}" aria-controls="{{ it.aid }}">
+                    <span>{{ it.q }}</span>
+                    <span class="wl-faq-sign" aria-hidden="true">{{ it.sign }}</span>
+                  </button>
+                  <div class="wl-faq-a {{ it.cls }}" id="{{ it.aid }}">
+                    <div>
+                      <p>{{ it.a }}</p>
+                      <sc-if value="{{ it.toPreise }}"><p class="wl-faq-l"><a href="/preise">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toAvv }}"><p class="wl-faq-l"><a href="/avv">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toSec }}"><p class="wl-faq-l"><a href="/sicherheit">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toInst }}"><p class="wl-faq-l"><a href="/docs/betrieb/installation">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toVgl }}"><p class="wl-faq-l"><a href="/vergleich">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toInt }}"><p class="wl-faq-l"><a href="/integrationen">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toDocs }}"><p class="wl-faq-l"><a href="/docs">{{ it.linkText }}</a></p></sc-if>
+                      <sc-if value="{{ it.toCall }}"><p class="wl-faq-l"><a href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener">{{ it.linkText }}</a></p></sc-if>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+
+        <p class="wl-faq-more">{{ t.faq.moreLead }} <a href="/faq">{{ t.faq.moreLink }}</a></p>
+      </div>
+    </section>
   </main>
 
   <dc-import name="SiteFooter" on-landing="{{ false }}" hint-size="100%,440px"></dc-import>
@@ -588,19 +873,32 @@ class Component extends DCLogic {
     // geht beim Absenden unverändert zurück. Früher stand hier eine eigene
     // Zeitfalle im Browser — die entscheidet jetzt der Server, denn eine Regel
     // im Quelltext liest ein Bot mit und geht ihr aus dem Weg.
-    this.state = { lang: initLang, email:'', company:'', interest:'', hp:'',
-      users:'', usecase:'', view:'form', ask:'closed', busy:false,
+    this.state = { lang: initLang, cur:'eur', email:'', company:'', interest:'', hp:'',
+      users:'', usecase:'', view:'form', ask:'closed', busy:false, faqOpen:[],
       challenge:'', eEmail:'', eForm:'', eLink:'' };
     this._onLang = (e)=>this.setState({ lang:e.detail });
+
+    /* Das Startguthaben ist EIN Betrag in zwei Waehrungen, kein Wechselkurs.
+       Der Franken ist der Anker, der Euro folgt derselben Hausumrechnung wie
+       auf der Preisseite (dort 14 CHF / 15 EUR und 7.50 CHF / 8 EUR), nach
+       oben gerundet: 50 Franken sind rund 53 Euro, ausgewiesen werden 55.
+       Wer den Betrag aendert, aendert ihn hier und auf der Preisseite. */
+    this.GUTHABEN = { chf:'50 CHF', eur:'55 €' };
+    /* Die beiden anderen Betraege, die in den Antworten stehen, liegen je
+       Sprache unter `money`: der Satz um sie herum ist uebersetzt, die Zahl
+       nicht. Wortgleich zur Preisseite, damit niemand zwei Zahlen fuer
+       dieselbe Sache liest. Wer sie aendert, aendert sie dort und hier. */
     this.C = {
       de: {
-        h1:'Frühen Zugang zu EU Cowork AI sichern.',
+        h1a:'Die Beta ist offen.', h1b:'Jetzt Zugang anfragen.',
         sub:'Die europäische KI-Plattform für Ihr Unternehmen: alle Top-Modelle über einen Zugang, Ihre Daten in der Schweiz oder auf Ihrem eigenen Server.',
-        hint:'Die ersten Einladungen werden schrittweise verschickt.',
+        hint:'Wir schalten die Zugänge einzeln frei und melden uns, sobald wir Ihre Anfrage angesehen haben.',
+        credit:{ eyebrow:'// Zum Start', lead:'Modellguthaben geschenkt',
+                 body:'Auf jedem Beta-Zugang liegt ein Startguthaben von {credit}. Sie hinterlegen dafür keine Zahlungsdaten.' },
         steps:[
-          '1. Sie bestätigen Ihre Adresse über den Link in der E-Mail.',
-          '2. Wir melden uns, sobald Ihr Zugang bereitsteht, und klären mit Ihnen den passenden Betriebsweg: betreut in der Schweiz oder auf Ihrem eigenen Server.',
-          '3. Sie starten auf Ihrer eigenen Instanz, mit vollem Funktionsumfang ab dem ersten Tag.'
+          'Sie bestätigen Ihre Adresse über den Link in der E-Mail.',
+          'Wir sehen uns die Anfrage an und richten Ihren Zugang ein.',
+          'Sie starten mit vollem Funktionsumfang, das Startguthaben von {credit} liegt bereit.'
         ],
         alt:{
           callLead:'Lieber zuerst sprechen?', callLink:'Termin buchen',
@@ -612,9 +910,98 @@ class Component extends DCLogic {
           interest:'Interesse',
           users:'Teamgrösse', usersPh:'Bitte wählen …',
           usecase:'Wofür möchten Sie EU Cowork AI einsetzen?', usecasePh:'Ein, zwei Sätze genügen',
-          submit:'Frühen Zugang anfragen', sending:'Wird gesendet …',
-          note:'Kein Spam. Wir informieren Sie nur über Beta-Zugang und Veröffentlichung. Jederzeit abmeldbar.',
+          submit:'Beta-Zugang anfragen', sending:'Wird gesendet …',
+          note:'Ihre Angaben bleiben bei uns und werden nicht weitergegeben. Wir schreiben Ihnen nur zu Ihrem Zugang und zur Veröffentlichung, jederzeit abmeldbar.',
           noteLink:'Datenschutzerklärung'
+        },
+        money:{ chf:{ preis:'14 CHF pro Person und Monat', inkl:'7.50 CHF' }, eur:{ preis:'15 € pro Person und Monat', inkl:'8 €' } },
+        /* Die Fragen stammen aus dem, was Leute ueber KI-Werkzeuge im Betrieb
+           tatsaechlich fragen: Foren, Bewertungsportale, Fehlerberichte offener
+           Projekte. Sortiert ist nach dem, was eine Anmeldung am haeufigsten
+           aufhaelt. Der Ton folgt dem Rest des Auftritts: Antwort zuerst, zwei
+           bis vier Saetze, keine Bemerkung ueber die eigene Auskunft. */
+        faq:{
+          h2:'Häufige Fragen.',
+          lead:'Was uns Interessenten vor der Anmeldung fragen, und was wir darauf antworten.',
+          openAll:'Alle Antworten öffnen', closeAll:'Alle Antworten schliessen',
+          groups:[
+            { label:'So läuft die Anmeldung ab', items:[
+              { q:'Gibt es das Produkt schon, oder ist das nur eine Seite mit einem Formular?',
+                a:'Die Plattform läuft und ist bei der Herr Informatik GmbH im internen Einsatz. Die vollständige Betriebsdokumentation ist offen einsehbar: Systemanforderungen, Installation, Konfiguration und Befehle. Offen ist heute nicht die Software, sondern der allgemeine Zugang.',
+                to:'docs', linkText:'Dokumentation ansehen' },
+              { q:'Was passiert, nachdem ich das Formular abgeschickt habe?',
+                a:'Sie erhalten eine E-Mail mit einem Bestätigungslink, gültig für 48 Stunden. Sobald Sie bestätigt haben, kommt die Anfrage bei uns an und wird Schritt für Schritt bearbeitet.' },
+              { q:'Wie lange dauert es, bis ich den Zugang habe?',
+                a:'Wir stellen die Zugänge Anfrage für Anfrage bereit. Wer die Plattform sofort sehen möchte, bucht einen Termin.',
+                to:'termin', linkText:'Termin buchen' },
+              { q:'Warum verlangen Sie eine geschäftliche E-Mail-Adresse?',
+                a:'Jeder Zugang wird einer Organisation zugeordnet, deshalb nimmt das Formular keine Adressen öffentlicher Postfächer an. Unternehmen ohne eigene Domain klären wir im Gespräch.',
+                to:'termin', linkText:'Termin buchen' },
+              { q:'Bekomme ich danach Werbung oder Anrufe?',
+                a:'Nein. Ihre Angaben bleiben bei uns und gehen an niemanden sonst. Eine Telefonnummer wird nicht abgefragt.' },
+              { q:'Verpflichte ich mich zu etwas, wenn ich mitmache?',
+                a:'Nein. Es gibt keine Pflicht zu Rückmeldungen, keine Termine und nichts zu unterschreiben. Ein Ausstieg ist jederzeit möglich.' },
+              { q:'Kann ich die Software nicht einfach selbst installieren, statt zu fragen?',
+                a:'Heute noch nicht: Das Release-Repository ist bis zum Start geschlossen. Die vollständige Installationsanleitung ist bereits offen einsehbar. Der Beta-Zugang ist derzeit der einzige Weg, mit der Plattform zu arbeiten.',
+                to:'installation', linkText:'Zur Installationsanleitung' }
+            ]},
+            { label:'Startguthaben und Kosten', items:[
+              { q:'Was ist das Startguthaben von {credit} genau?',
+                a:'Ein einmaliges Guthaben für den Modellverbrauch auf Ihrem Zugang. Jede Anfrage an ein Modell kostet Token, und diese Token gehen zulasten des Guthabens. Solange es reicht, entstehen keine Kosten.' },
+              { q:'Wie weit komme ich mit {credit}?',
+                a:'Das hängt vom Modell ab: Kurze Textarbeit ist günstig, die Auswertung langer Dokumente mit den grössten Modellen deutlich teurer. Zum Vergleich: Im betreuten Betrieb sind {inkl} Modellguthaben pro Person und Monat enthalten, das Startguthaben ist mehr als das Sechsfache davon.' },
+              { q:'Muss ich Zahlungsdaten hinterlegen?',
+                a:'Nein, weder für die Anfrage noch für den Beta-Zugang. Es liegt keine Karte hinterlegt, die nach Ablauf belastet wird.' },
+              { q:'Was passiert, wenn das Guthaben aufgebraucht ist?',
+                a:'Der Verbrauch stoppt, eine Rechnung entsteht nicht. Danach entscheiden Sie, ob der betreute Betrieb weiterlaufen soll: {preis}, darin enthalten {inkl} Modellguthaben je Person im gemeinsamen Pool Ihrer Organisation.',
+                to:'preise', linkText:'Alle Preise ansehen' },
+              { q:'Wie behalten wir die Kosten im Griff, wenn nach Verbrauch abgerechnet wird?',
+                a:'Der Verbrauch wird pro Person, Gruppe und Modell ausgewiesen, ein gemeinsames Monatsbudget begrenzt ihn für die ganze Organisation. Ist es erreicht, greift eine weiche Sperre (Soft-Block): Anfragen werden gestoppt, statt still weiterzulaufen, und die Administration kann das Budget erhöhen oder einzelne Personen gezielt freigeben. Ein zusätzliches Monatslimit pro Person lässt sich setzen.' },
+              { q:'Gibt es eine Mindestanzahl an Nutzern?',
+                a:'Nein. Der Selbstbetrieb ist ab einer einzigen Person gratis und ohne Nutzerlimit, der betreute Betrieb wird pro Person abgerechnet. Es gibt weder ein Paket für eine feste Firmengrösse noch eine Einrichtungsgebühr.' },
+              { q:'Gilt das Startguthaben auch, wenn wir selbst hosten?',
+                a:'Nein. Es liegt auf einem betreuten Zugang, weil nur dort der Modellverbrauch über uns läuft; beim Selbstbetrieb rechnen Sie direkt mit Ihrem Modellanbieter ab. Im Formular sind beide Angaben zugleich möglich, und ein späterer Wechsel vom betreuten Betrieb auf den eigenen Server ist vorgesehen.' }
+            ]},
+            { label:'Daten und Vertraulichkeit', items:[
+              { q:'Werden unsere Eingaben zum Training von Modellen verwendet?',
+                a:'Nein. Kundendaten trainieren keine Modelle, weder beim Inferenz-Anbieter noch bei uns. Telemetrie ist in allen Komponenten standardmässig ausgeschaltet, und ohne aktive Zustimmung findet kein Tracking statt.' },
+              { q:'Sie bieten die grossen Modelle von OpenAI und Anthropic an. Gehen unsere Daten damit doch in die USA?',
+                a:'Für Speicherung und Inferenz nicht: Konversationen, Dateien und Konten liegen in der Schweiz, die Modellanfragen laufen über EuRouter und werden in der EU verarbeitet, auch bei Modellen amerikanischer Hersteller. Entscheidend ist dabei nicht nur, wo die Daten ruhen, sondern wo die Anfrage gerechnet wird. Eine Ausnahme nennen wir offen: Die Websuche gibt die Suchanfrage ohne Nutzeridentität an externe Suchmaschinen weiter, deshalb behaupten wir nicht pauschal, dass alles in Europa bleibt.',
+                to:'sicherheit', linkText:'Datenwege im Detail' },
+              { q:'Was nützt Schweizer Hosting, wenn der US Cloud Act ohnehin greift?',
+                a:'Neben dem Standort entscheidet, wer den Betreiber beherrscht. Hinter EU Cowork AI steht die Herr Informatik GmbH in Windisch, Schweiz, ohne amerikanische Muttergesellschaft; betrieben wird in den Rechenzentren von Green in Lupfig. Wem das nicht genügt, betreibt die Plattform auf eigener Hardware.' },
+              { q:'Wie lange speichern Sie unsere Konversationen?',
+                a:'Ab Werk ist keine Aufbewahrungsfrist gesetzt; Konversationen bleiben, bis Nutzer oder Administration sie löschen. Eine Frist lässt sich im Admin-Panel frei einstellen, danach werden abgelaufene Inhalte samt Suchindex-Einträgen entfernt. Export und Löschung der Daten einer einzelnen Person führt die Administration ebenfalls dort aus.' },
+              { q:'Kann jemand bei Ihnen unsere Chats lesen?',
+                a:'Wer selbst hostet, gibt keinem Dritten Zugriff. Im betreuten Betrieb greift der Betreiber nur für Wartung zu, geregelt im Auftragsverarbeitungsvertrag und in der Subprozessorenliste. Innerhalb Ihrer Instanz sehen Nutzer genau das, was Rolle und Gruppe erlauben, und jeder Zugriff auf ein angebundenes System wird protokolliert.' },
+              { q:'Bekommen wir einen Auftragsverarbeitungsvertrag, und wer sind Ihre Subprozessoren?',
+                a:'Ja. Der vollständige Vertragstext und die namentliche Liste aller Subprozessoren mit Zweck und Standort stehen offen auf dieser Website, vor der Anmeldung und ohne Verkaufsgespräch.',
+                to:'avv', linkText:'Auftragsverarbeitungsvertrag lesen' },
+              { q:'Haben Sie ISO 27001 oder SOC 2?',
+                a:'Nach ISO 27001 zertifiziert sind die Rechenzentren von Green, in denen EU Cowork AI betrieben wird; die Zertifikate liegen bei Green und nicht bei uns. Eine eigene ISO-27001-Zertifizierung ist in Arbeit. Die technischen und organisatorischen Massnahmen sind offen dokumentiert.',
+                to:'sicherheit', linkText:'Zu den Massnahmen' },
+              { q:'Wir arbeiten unter Berufsgeheimnis. Können wir das Werkzeug überhaupt einsetzen?',
+                a:'Diese Beurteilung liegt bei Ihnen und Ihrer Aufsicht. Die Grundlagen dafür stehen bereit: Auftragsverarbeitungsvertrag, namentliche Subprozessorenliste, Speicherung in der Schweiz, Modellverarbeitung in der EU und der Betrieb auf eigener Hardware. Eine Rechtsberatung ist das nicht.' }
+            ]},
+            { label:'Produkt und Betrieb', items:[
+              { q:'Wir haben schon ChatGPT oder Microsoft Copilot. Warum noch etwas?',
+                a:'ChatGPT im Browser ist ein persönliches Konto ohne Verbindung zu Ihren Firmensystemen und ohne zentrale Kontrolle, Copilot ist an eine Umgebung und an ein Modell gebunden. EU Cowork AI ist eine Firmeninstanz mit Rollen, Rechten, Audit-Log und Kostenübersicht, mit über 100 Modellen zur Auswahl und mit der Anbindung eigener Systeme. Die Modelle sind teilweise dieselben, der Unterschied liegt im Datenweg, in der Auswahl und in der Steuerung.',
+                to:'vergleich', linkText:'Vergleich im Detail' },
+              { q:'Warum nicht einfach Open WebUI oder LibreChat selbst betreiben?',
+                a:'Das ist möglich, und EU Cowork AI ist selbst ein dünner Fork von LibreChat; der Selbstbetrieb bleibt gratis und ohne Nutzerlimit. Dazu kommen Rechte bis auf Werkzeugebene, Audit-Log, Verbrauch und Budget mit weicher Sperre, vorbereitete Anbindungen und auf Wunsch der Betrieb samt Updates und Sicherung.' },
+              { q:'Welche Modelle bekommen wir, und bekommen wir wirklich das gewählte?',
+                a:'Über 100 Modelle über einen Zugang, darunter die grossen von Anthropic, OpenAI, Mistral und Meta. Weil jede Anfrage EU-seitig verarbeitet wird, muss der Katalog nicht auf europäische Hersteller beschränkt bleiben. Die Administration kuratiert die Auswahl und legt ein Standardmodell fest; der Verbrauch wird pro Modell ausgewiesen und bleibt damit nachvollziehbar.' },
+              { q:'Können wir unsere eigenen Dokumente einbinden?',
+                a:'Ja, als Wissensbasis; vorbereitet sind ausserdem SharePoint aus Microsoft 365 und ERP-Systeme über das MCP-Gateway. Wie gut die Antworten werden, hängt am Material: Sauber gesetzte Texte funktionieren gut, eingescannte Formulare und verschachtelte Tabellen sind für jedes System schwierig. Ein klar abgegrenzter Bestand bringt zum Anfang bessere Ergebnisse als ein ganzes Laufwerk.',
+                to:'integrationen', linkText:'Alle Anbindungen ansehen' },
+              { q:'Brauchen wir eine IT-Abteilung, und wie schnell sind wir startklar?',
+                a:'Für den betreuten Betrieb nicht: Betrieb, Updates und Sicherung übernimmt der Betreiber, Sie verwalten Nutzer, Rollen und Rechte im Admin-Panel. Der technische Teil dauert Minuten. Länger dauert, was danach kommt: Rollen festlegen, Systeme anbinden, den ersten Anwendungsfall durchspielen. Rechnen Sie für eine produktive Einführung mit Tagen, nicht mit Minuten.' },
+              { q:'Die Hälfte unserer Leute nutzt heute privat ChatGPT. Bekommen wir das damit in den Griff?',
+                a:'Auf einer Firmeninstanz wird der Verbrauch pro Person, Gruppe und Modell ausgewiesen, jeder Zugriff auf ein angebundenes System steht im Audit-Log, und Rollen bestimmen, wer welche Modelle und Wissensbestände sieht. Wie weit die Einsicht reicht, legen Sie über Rollen und Rechte fest; eine vorab geklärte Regelung erleichtert die Einführung.' }
+            ]}
+          ],
+          moreLead:'Noch etwas offen?',
+          moreLink:'Zur vollständigen Fragensammlung'
         },
         userOptions:['1','2–10','11–50','51–200','200+'],
         interestOptions:[{label:'Gehostet in der Schweiz',value:'hosted'},{label:'Self-Hosting',value:'selfhost'},{label:'Beides',value:'both'}],
@@ -630,28 +1017,30 @@ class Component extends DCLogic {
           title:'Bitte bestätigen Sie Ihre E-Mail-Adresse.',
           // {email} wird in renderVals eingesetzt: die Adresse steht im
           // Zustand, nicht in der Übersetzung.
-          body:'Wir haben Ihnen soeben eine E-Mail an {email} geschickt. Klicken Sie auf den Bestätigungslink, um Ihren Platz auf der Liste zu sichern. Der Link ist 48 Stunden gültig.',
+          body:'Wir haben Ihnen soeben eine E-Mail an {email} geschickt. Klicken Sie auf den Bestätigungslink, um Ihre Anfrage abzuschliessen. Der Link ist 48 Stunden gültig.',
           spam:'Keine E-Mail erhalten? Bitte sehen Sie auch im Spam-Ordner nach.'
         },
         success:{
-          eyebrow:'// Eintrag bestätigt',
-          title:'Vielen Dank. Sie stehen auf der Liste.',
-          body:'Wir melden uns, sobald wir Ihnen frühen Zugang zu EU Cowork AI anbieten können.',
+          eyebrow:'// Anfrage bestätigt',
+          title:'Danke. Ihre Anfrage ist bei uns.',
+          body:'Wir sehen sie uns an und melden uns mit Ihren Zugangsdaten. Das Startguthaben von {credit} liegt dann bereit.',
           ask:'Möchten Sie uns bereits etwas zu Ihrem Unternehmen erzählen?',
           askBtn:'Eine kurze Frage beantworten',
           askSubmit:'Angaben senden',
           askThanks:'Danke, das hilft uns bei der Priorisierung.',
-          home:'Zur Startseite', again:'Andere E-Mail eintragen'
+          home:'Zur Startseite', again:'Andere E-Mail angeben'
         }
       },
       en: {
-        h1:'Get early access to EU Cowork AI.',
+        h1a:'The beta is open.', h1b:'Request your access.',
         sub:'The European AI platform for your company: all top models through one account, your data in Switzerland or on your own server.',
-        hint:'The first invitations go out in batches.',
+        hint:'We open accounts one at a time and get back to you once we have looked at your request.',
+        credit:{ eyebrow:'// To get started', lead:'of model credit on us',
+                 body:'Every beta account starts with {credit} of model credit. No payment details required.' },
         steps:[
-          '1. You confirm your address via the link in the email.',
-          '2. We get in touch as soon as your access is ready and agree with you on the right way to run it: managed in Switzerland or on your own server.',
-          '3. You start on your own instance, with the full feature set from day one.'
+          'You confirm your address via the link in the email.',
+          'We look at your request and set up your access.',
+          'You start with the full feature set, with {credit} of model credit ready to use.'
         ],
         alt:{
           callLead:'Prefer to talk first?', callLink:'Book a call',
@@ -663,9 +1052,98 @@ class Component extends DCLogic {
           interest:'Interested in',
           users:'Team size', usersPh:'Please choose …',
           usecase:'What would you use EU Cowork AI for?', usecasePh:'A sentence or two is enough',
-          submit:'Request early access', sending:'Sending …',
-          note:'No spam. We only write about beta access and launch. Unsubscribe anytime.',
+          submit:'Request beta access', sending:'Sending …',
+          note:'Your details stay with us and are not shared with anyone. We only write about your access and the launch, and you can unsubscribe at any time.',
           noteLink:'Privacy policy'
+        },
+        money:{ chf:{ preis:'CHF 14 per person and month', inkl:'CHF 7.50' }, eur:{ preis:'€15 per person and month', inkl:'€8' } },
+        /* Die Fragen stammen aus dem, was Leute ueber KI-Werkzeuge im Betrieb
+           tatsaechlich fragen: Foren, Bewertungsportale, Fehlerberichte offener
+           Projekte. Sortiert ist nach dem, was eine Anmeldung am haeufigsten
+           aufhaelt. Der Ton folgt dem Rest des Auftritts: Antwort zuerst, zwei
+           bis vier Saetze, keine Bemerkung ueber die eigene Auskunft. */
+        faq:{
+          h2:'Frequently asked questions.',
+          lead:'What prospective customers ask us before signing up, and what we answer.',
+          openAll:'Open all answers', closeAll:'Close all answers',
+          groups:[
+            { label:'How signing up works', items:[
+              { q:'Does the product already exist, or is this just a page with a form?',
+                a:'The platform is running and in internal use at Herr Informatik GmbH. The complete operating documentation is openly available: system requirements, installation, configuration and commands. What is still pending today is not the software but general access.',
+                to:'docs', linkText:'View the documentation' },
+              { q:'What happens after I have submitted the form?',
+                a:'You receive an email with a confirmation link, valid for 48 hours. Once you have confirmed, the request reaches us and is processed step by step.' },
+              { q:'How long does it take until I have access?',
+                a:'We set up accounts one request at a time. Anyone who wants to see the platform straight away books a call.',
+                to:'termin', linkText:'Book a call' },
+              { q:'Why do you ask for a work email address?',
+                a:'Every account is assigned to an organisation, so the form does not accept addresses from public mailbox providers. Companies without a domain of their own are sorted out in a call.',
+                to:'termin', linkText:'Book a call' },
+              { q:'Will I get advertising or phone calls afterwards?',
+                a:'No. Your details stay with us and are not shared with anyone. We do not ask for a phone number.' },
+              { q:'Am I committing to anything if I take part?',
+                a:'No. There is no obligation to give feedback, no meetings and nothing to sign. You can stop at any time.' },
+              { q:'Can I not simply install the software myself instead of asking?',
+                a:'Not yet: the release repository stays closed until launch. The complete installation guide is already openly available. Beta access is currently the only way to work with the platform.',
+                to:'installation', linkText:'To the installation guide' }
+            ]},
+            { label:'Starting credit and costs', items:[
+              { q:'What exactly is the starting credit of {credit}?',
+                a:'A one-off credit for the model usage on your account. Every request to a model costs tokens, and those tokens are charged against the credit. For as long as it lasts, no costs arise.' },
+              { q:'How far do I get with {credit}?',
+                a:'That depends on the model: short text work is cheap, analysing long documents with the largest models considerably more expensive. For comparison: managed operation includes {inkl} of model credit per person and month, and the starting credit is more than six times that.' },
+              { q:'Do I have to provide payment details?',
+                a:'No, neither for the request nor for beta access. There is no card on file that would be charged when the credit expires.' },
+              { q:'What happens when the credit is used up?',
+                a:'Usage stops, and no invoice arises. You then decide whether managed operation should continue: {preis}, including {inkl} of model credit per person in your organisation’s shared pool.',
+                to:'preise', linkText:'View all prices' },
+              { q:'How do we keep costs under control when billing follows usage?',
+                a:'Usage is broken down per person, group and model, and a shared monthly budget caps it for the whole organisation. Once it is reached, a soft block takes effect: requests are stopped rather than quietly running on, and the administration can raise the budget or release individual people. An additional monthly limit per person can be set.' },
+              { q:'Is there a minimum number of users?',
+                a:'No. Self-hosting is free from a single person upwards and has no seat limit, managed operation is billed per person. There is neither a package for a fixed company size nor a setup fee.' },
+              { q:'Does the starting credit also apply if we host it ourselves?',
+                a:'No. It sits on a managed account, because only there does the model usage run through us; with self-hosting you settle directly with your model provider. The form accepts both at once, and a later move from managed operation to your own server is provided for.' }
+            ]},
+            { label:'Data and confidentiality', items:[
+              { q:'Are our inputs used to train models?',
+                a:'No. Customer data does not train any models, neither at the inference provider nor at our end. Telemetry is switched off by default in all components, and no tracking takes place without active consent.' },
+              { q:'You offer the large models from OpenAI and Anthropic. Does that mean our data goes to the United States after all?',
+                a:'Not for storage and inference: conversations, files and accounts are held in Switzerland, and model requests run through EuRouter and are processed in the EU, including models from American vendors. What matters is not only where the data rests, but where the request is computed. There is one exception: web search passes the search query on to external search engines without the identity of the user, so we do not claim across the board that everything stays in Europe.',
+                to:'sicherheit', linkText:'The data paths in detail' },
+              { q:'What good is Swiss hosting if the US Cloud Act applies anyway?',
+                a:'Besides the location, what counts is who controls the operator. Behind EU Cowork AI stands Herr Informatik GmbH in Windisch, Switzerland, with no American parent company; operations run in the data centres of Green in Lupfig. Anyone for whom that is not enough runs the platform on their own hardware.' },
+              { q:'How long do you store our conversations?',
+                a:'Out of the box no retention period is set; conversations stay until users or the administration delete them. A period can be configured freely in the admin panel, after which expired content is removed together with its search index entries. Exporting and deleting the data of an individual person is carried out by the administration there as well.' },
+              { q:'Can anyone at your end read our chats?',
+                a:'Anyone who self-hosts gives no third party any access. In managed operation the operator accesses the system only for maintenance, governed by the data processing agreement and the list of subprocessors. Inside your instance, users see exactly what their role and group allow, and every access to a connected system is logged.' },
+              { q:'Do we get a data processing agreement, and who are your subprocessors?',
+                a:'Yes. The full contract text and the named list of all subprocessors, with purpose and location, are openly available on this website, before signing up and without a sales call.',
+                to:'avv', linkText:'Read the data processing agreement' },
+              { q:'Do you have ISO 27001 or SOC 2?',
+                a:'Certified to ISO 27001 are the data centres of Green in which EU Cowork AI is operated; the certificates are held by Green and not by us. A certification of our own to ISO 27001 is in preparation. The technical and organisational measures are documented openly.',
+                to:'sicherheit', linkText:'To the measures' },
+              { q:'We work under professional secrecy. Can we use the tool at all?',
+                a:'That assessment rests with you and your supervisory body. The basis for it is in place: the data processing agreement, the named list of subprocessors, storage in Switzerland, model processing in the EU and operation on your own hardware. This is not legal advice.' }
+            ]},
+            { label:'Product and operations', items:[
+              { q:'We already have ChatGPT or Microsoft Copilot. Why add something else?',
+                a:'ChatGPT in the browser is a personal account with no connection to your company systems and no central control, and Copilot is tied to one environment and one model. EU Cowork AI is a company instance with roles, permissions, an audit log and a cost overview, with over 100 models to choose from and with your own systems connected. The models are partly the same; the difference lies in the data path, in the choice and in the control.',
+                to:'vergleich', linkText:'The comparison in detail' },
+              { q:'Why not simply run Open WebUI or LibreChat ourselves?',
+                a:'That is possible, and EU Cowork AI is itself a thin fork of LibreChat; self-hosting stays free and without a seat limit. On top of that come permissions down to tool level, an audit log, usage and budget with a soft block, prepared integrations and, on request, operation including updates and backup.' },
+              { q:'Which models do we get, and do we really get the one we chose?',
+                a:'Over 100 models through one account, among them the large ones from Anthropic, OpenAI, Mistral and Meta. Because every request is processed on the EU side, the catalogue does not have to be limited to European vendors. The administration curates the selection and sets a default model; usage is broken down per model and can therefore be traced.' },
+              { q:'Can we connect our own documents?',
+                a:'Yes, as a knowledge base; SharePoint from Microsoft 365 and ERP systems through the MCP gateway are prepared as well. How good the answers turn out depends on the material: cleanly typeset texts work well, scanned forms and nested tables are difficult for any system. A clearly delimited set of documents gives better results at the start than a whole drive.',
+                to:'integrationen', linkText:'View all integrations' },
+              { q:'Do we need an IT department, and how quickly are we ready to start?',
+                a:'Not for managed operation: the operator handles operation, updates and backup, and you manage users, roles and permissions in the admin panel. The technical part takes minutes. What comes afterwards takes longer: defining roles, connecting systems, working through the first use case. A productive rollout takes days rather than minutes.' },
+              { q:'Half of our people use ChatGPT privately today. Will this get it under control?',
+                a:'On a company instance, usage is broken down per person, group and model, every access to a connected system appears in the audit log, and roles determine who sees which models and knowledge sets. How far that visibility reaches is set through roles and permissions; a rule settled in advance makes the rollout easier.' }
+            ]}
+          ],
+          moreLead:'Still something open?',
+          moreLink:'To the full collection of questions'
         },
         userOptions:['1','2–10','11–50','51–200','200+'],
         interestOptions:[{label:'Hosted in Switzerland',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Both',value:'both'}],
@@ -679,13 +1157,13 @@ class Component extends DCLogic {
         pending:{
           eyebrow:'// Almost there',
           title:'Please confirm your email address.',
-          body:'We have just sent an email to {email}. Click the confirmation link to secure your place on the list. The link is valid for 48 hours.',
+          body:'We have just sent an email to {email}. Click the confirmation link to complete your request. The link is valid for 48 hours.',
           spam:'Nothing in your inbox? Please check your spam folder as well.'
         },
         success:{
-          eyebrow:'// Signup confirmed',
-          title:'Thank you. You are on the list.',
-          body:'We will get in touch as soon as we can offer you early access to EU Cowork AI.',
+          eyebrow:'// Request confirmed',
+          title:'Thank you. Your request is with us.',
+          body:'We will look at it and get back to you with your credentials. Your {credit} of model credit will be waiting.',
           ask:'Would you like to tell us a little about your company already?',
           askBtn:'Answer one short question',
           askSubmit:'Send details',
@@ -694,13 +1172,15 @@ class Component extends DCLogic {
         }
       },
       fr: {
-        h1:'Obtenez un accès anticipé à EU Cowork AI.',
+        h1a:'La bêta est ouverte.', h1b:'Demandez votre accès.',
         sub:'La plateforme IA européenne pour votre entreprise : tous les grands modèles via un seul accès, vos données en Suisse ou sur votre propre serveur.',
-        hint:'Les premières invitations partent par vagues.',
+        hint:'Nous ouvrons les accès un par un et revenons vers vous dès que nous avons examiné votre demande.',
+        credit:{ eyebrow:'// Pour démarrer', lead:'de crédit de modèles offert',
+                 body:'Chaque accès bêta démarre avec {credit} de crédit de modèles. Aucune donnée de paiement requise.' },
         steps:[
-          '1. Vous confirmez votre adresse via le lien contenu dans l’e-mail.',
-          '2. Nous vous contactons dès que votre accès est prêt et déterminons avec vous le mode d’exploitation adapté : géré en Suisse ou sur votre propre serveur.',
-          '3. Vous démarrez sur votre propre instance, avec toutes les fonctions dès le premier jour.'
+          'Vous confirmez votre adresse via le lien contenu dans l’e-mail.',
+          'Nous examinons votre demande et préparons votre accès.',
+          'Vous démarrez avec toutes les fonctions, {credit} de crédit de modèles vous attendent.'
         ],
         alt:{
           callLead:'Vous préférez en parler d’abord ?', callLink:'Réserver un rendez-vous',
@@ -712,9 +1192,98 @@ class Component extends DCLogic {
           interest:'Intérêt',
           users:'Taille de l’équipe', usersPh:'Veuillez choisir …',
           usecase:'Pour quels usages souhaitez-vous utiliser EU Cowork AI ?', usecasePh:'Une ou deux phrases suffisent',
-          submit:'Demander un accès anticipé', sending:'Envoi en cours …',
-          note:'Pas de spam. Nous vous écrivons uniquement au sujet de l’accès bêta et du lancement. Désinscription à tout moment.',
+          submit:'Demander un accès bêta', sending:'Envoi en cours …',
+          note:'Vos données restent chez nous et ne sont transmises à personne. Nous vous écrivons uniquement au sujet de votre accès et de la publication, avec désinscription à tout moment.',
           noteLink:'Politique de confidentialité'
+        },
+        money:{ chf:{ preis:'14 CHF par personne et par mois', inkl:'7.50 CHF' }, eur:{ preis:'15 € par personne et par mois', inkl:'8 €' } },
+        /* Die Fragen stammen aus dem, was Leute ueber KI-Werkzeuge im Betrieb
+           tatsaechlich fragen: Foren, Bewertungsportale, Fehlerberichte offener
+           Projekte. Sortiert ist nach dem, was eine Anmeldung am haeufigsten
+           aufhaelt. Der Ton folgt dem Rest des Auftritts: Antwort zuerst, zwei
+           bis vier Saetze, keine Bemerkung ueber die eigene Auskunft. */
+        faq:{
+          h2:'Questions fréquentes.',
+          lead:'Ce que les personnes intéressées nous demandent avant de s’inscrire, et ce que nous leur répondons.',
+          openAll:'Ouvrir toutes les réponses', closeAll:'Fermer toutes les réponses',
+          groups:[
+            { label:'Comment se déroule l’inscription', items:[
+              { q:'Le produit existe-t-il déjà, ou s’agit-il seulement d’une page avec un formulaire ?',
+                a:'La plateforme fonctionne et elle est utilisée en interne chez Herr Informatik GmbH. La documentation d’exploitation complète est publique : prérequis système, installation, configuration et commandes. Ce qui manque aujourd’hui, ce n’est pas le logiciel, c’est l’accès pour tous.',
+                to:'docs', linkText:'Voir la documentation' },
+              { q:'Que se passe-t-il après l’envoi du formulaire ?',
+                a:'Vous recevez un e-mail contenant un lien de confirmation, valable 48 heures. Dès que vous avez confirmé, la demande nous parvient et nous la traitons étape par étape.' },
+              { q:'Combien de temps faut-il avant d’avoir l’accès ?',
+                a:'Nous préparons les accès demande après demande. Pour voir la plateforme immédiatement, il est possible de réserver un rendez-vous.',
+                to:'termin', linkText:'Réserver un rendez-vous' },
+              { q:'Pourquoi demandez-vous une adresse e-mail professionnelle ?',
+                a:'Chaque accès est rattaché à une organisation, le formulaire n’accepte donc pas les adresses de messageries publiques. Pour les entreprises sans domaine propre, nous clarifions cela lors d’un entretien.',
+                to:'termin', linkText:'Réserver un rendez-vous' },
+              { q:'Vais-je ensuite recevoir de la publicité ou des appels ?',
+                a:'Non. Vos données restent chez nous et ne sont transmises à personne. Aucun numéro de téléphone n’est demandé.' },
+              { q:'Est-ce que je m’engage à quelque chose en participant ?',
+                a:'Non. Aucun retour n’est obligatoire, il n’y a ni rendez-vous imposé ni document à signer. Vous pouvez arrêter à tout moment.' },
+              { q:'Ne puis-je pas installer le logiciel moi-même, au lieu de le demander ?',
+                a:'Pas encore aujourd’hui : le dépôt des versions reste fermé jusqu’au lancement. Le guide d’installation complet est déjà public. L’accès bêta est actuellement la seule voie pour travailler avec la plateforme.',
+                to:'installation', linkText:'Vers le guide d’installation' }
+            ]},
+            { label:'Crédit de démarrage et coûts', items:[
+              { q:'En quoi consiste exactement le crédit de démarrage de {credit} ?',
+                a:'Un crédit unique pour la consommation des modèles sur votre accès. Chaque requête adressée à un modèle coûte des jetons, et ces jetons sont imputés au crédit. Tant qu’il suffit, aucun coût n’apparaît.' },
+              { q:'Jusqu’où puis-je aller avec {credit} ?',
+                a:'Cela dépend du modèle : le travail sur des textes courts est peu coûteux, l’analyse de longs documents avec les plus grands modèles nettement plus chère. À titre de comparaison : en exploitation gérée, {inkl} de crédit de modèles par personne et par mois sont inclus, le crédit de démarrage représente plus de six fois cela.' },
+              { q:'Dois-je enregistrer des données de paiement ?',
+                a:'Non, ni pour la demande ni pour l’accès bêta. Aucune carte n’est enregistrée qui serait débitée à l’échéance.' },
+              { q:'Que se passe-t-il lorsque le crédit est épuisé ?',
+                a:'La consommation s’arrête, aucune facture n’est établie. Vous décidez ensuite si l’exploitation gérée doit se poursuivre : {preis}, dont {inkl} de crédit de modèles par personne dans l’enveloppe commune de votre organisation.',
+                to:'preise', linkText:'Voir tous les prix' },
+              { q:'Comment gardons-nous les coûts sous contrôle si la facturation se fait à la consommation ?',
+                a:'La consommation est présentée par personne, par groupe et par modèle, et un budget mensuel commun la limite pour toute l’organisation. Une fois ce budget atteint, un blocage souple (soft block) s’applique : les requêtes sont arrêtées au lieu de se poursuivre en silence, et l’administration peut augmenter le budget ou débloquer certaines personnes de manière ciblée. Une limite mensuelle supplémentaire par personne peut être définie.' },
+              { q:'Y a-t-il un nombre minimum d’utilisateurs ?',
+                a:'Non. L’auto-hébergement est gratuit dès une seule personne et sans limite d’utilisateurs, l’exploitation gérée est facturée par personne. Il n’existe ni forfait lié à une taille d’entreprise fixe ni frais de mise en service.' },
+              { q:'Le crédit de démarrage vaut-il aussi si nous hébergeons nous-mêmes ?',
+                a:'Non. Il se trouve sur un accès géré, parce que la consommation des modèles ne passe par nous que dans ce cas ; en auto-hébergement, vous réglez directement auprès de votre fournisseur de modèles. Le formulaire accepte les deux indications à la fois, et un passage ultérieur de l’exploitation gérée vers votre propre serveur est prévu.' }
+            ]},
+            { label:'Données et confidentialité', items:[
+              { q:'Nos saisies servent-elles à l’entraînement des modèles ?',
+                a:'Non. Les données des clients n’entraînent aucun modèle, ni chez le fournisseur d’inférence ni chez nous. La télémétrie est désactivée par défaut dans tous les composants, et aucun suivi n’a lieu sans accord actif.' },
+              { q:'Vous proposez les grands modèles d’OpenAI et d’Anthropic. Nos données partent-elles donc quand même aux États-Unis ?',
+                a:'Pas pour le stockage ni pour l’inférence : les conversations, les fichiers et les comptes se trouvent en Suisse, les requêtes adressées aux modèles passent par EuRouter et sont traitées dans l’UE, y compris pour les modèles de fabricants américains. Ce qui est déterminant n’est pas seulement l’endroit où les données reposent, mais celui où la requête est calculée. Nous nommons ouvertement une exception : la recherche web transmet la requête de recherche à des moteurs de recherche externes, sans l’identité de l’utilisateur, et nous n’affirmons donc pas de façon générale que tout reste en Europe.',
+                to:'sicherheit', linkText:'Les chemins de données en détail' },
+              { q:'À quoi sert un hébergement suisse si le Cloud Act américain s’applique de toute façon ?',
+                a:'Au-delà du site, ce qui est déterminant, c’est qui contrôle l’exploitant. Derrière EU Cowork AI se tient Herr Informatik GmbH à Windisch, en Suisse, sans société mère américaine ; l’exploitation a lieu dans les centres de données de Green à Lupfig. Si cela ne suffit pas, la plateforme s’exploite sur votre propre matériel.' },
+              { q:'Combien de temps conservez-vous nos conversations ?',
+                a:'Aucune durée de conservation n’est fixée par défaut ; les conversations restent jusqu’à ce que les utilisateurs ou l’administration les suppriment. Une durée se règle librement dans le panneau d’administration, après quoi les contenus expirés sont supprimés avec leurs entrées dans l’index de recherche. L’exportation et la suppression des données d’une personne donnée s’effectuent également à cet endroit, par l’administration.' },
+              { q:'Quelqu’un chez vous peut-il lire nos conversations ?',
+                a:'Qui héberge lui-même ne donne accès à aucun tiers. En exploitation gérée, l’exploitant n’accède qu’à des fins de maintenance, ce qui est réglé dans le contrat de sous-traitance et dans la liste des sous-traitants. À l’intérieur de votre instance, les utilisateurs voient exactement ce que leur rôle et leur groupe permettent, et chaque accès à un système raccordé est journalisé.' },
+              { q:'Obtenons-nous un contrat de sous-traitance, et qui sont vos sous-traitants ?',
+                a:'Oui. Le texte contractuel complet et la liste nominative de tous les sous-traitants, avec leur finalité et leur localisation, sont publiés sur ce site, avant l’inscription et sans entretien commercial.',
+                to:'avv', linkText:'Lire le contrat de sous-traitance' },
+              { q:'Avez-vous ISO 27001 ou SOC 2 ?',
+                a:'La certification ISO 27001 porte sur les centres de données de Green, dans lesquels EU Cowork AI est exploité ; les certificats se trouvent chez Green et non chez nous. Une certification ISO 27001 propre est en préparation. Les mesures techniques et organisationnelles sont documentées publiquement.',
+                to:'sicherheit', linkText:'Vers les mesures' },
+              { q:'Nous travaillons sous secret professionnel. Pouvons-nous seulement utiliser cet outil ?',
+                a:'Cette appréciation vous revient, à vous et à votre autorité de surveillance. Les bases sont réunies : contrat de sous-traitance, liste nominative des sous-traitants, stockage en Suisse, traitement par les modèles dans l’UE et exploitation sur votre propre matériel. Ce n’est pas un conseil juridique.' }
+            ]},
+            { label:'Produit et exploitation', items:[
+              { q:'Nous avons déjà ChatGPT ou Microsoft Copilot. Pourquoi encore autre chose ?',
+                a:'ChatGPT dans le navigateur est un compte personnel sans lien avec les systèmes de votre entreprise et sans contrôle central, Copilot est lié à un environnement et à un modèle. EU Cowork AI est une instance d’entreprise avec des rôles, des droits, un journal d’audit et une vue des coûts, avec plus de 100 modèles au choix et le raccordement de vos propres systèmes. Les modèles sont en partie les mêmes, la différence tient au chemin des données, au choix et au pilotage.',
+                to:'vergleich', linkText:'Le comparatif en détail' },
+              { q:'Pourquoi ne pas simplement exploiter Open WebUI ou LibreChat nous-mêmes ?',
+                a:'C’est possible, et EU Cowork AI est lui-même un fork allégé de LibreChat ; l’auto-hébergement reste gratuit et sans limite d’utilisateurs. S’y ajoutent des droits jusqu’au niveau des outils, un journal d’audit, la consommation et le budget avec blocage souple, des raccordements préparés et, sur demande, l’exploitation avec mises à jour et sauvegarde.' },
+              { q:'Quels modèles obtenons-nous, et obtenons-nous vraiment celui que nous avons choisi ?',
+                a:'Plus de 100 modèles via un seul accès, dont les grands d’Anthropic, d’OpenAI, de Mistral et de Meta. Parce que chaque requête est traitée du côté de l’UE, le catalogue n’a pas à se limiter aux fabricants européens. L’administration compose la sélection et fixe un modèle par défaut ; la consommation est présentée par modèle et reste ainsi traçable.' },
+              { q:'Pouvons-nous intégrer nos propres documents ?',
+                a:'Oui, comme base de connaissances ; sont en outre préparés SharePoint depuis Microsoft 365 et les systèmes ERP via la passerelle MCP. La qualité des réponses dépend du matériau : des textes proprement composés fonctionnent bien, les formulaires scannés et les tableaux imbriqués sont difficiles pour tout système. Au début, un ensemble clairement délimité donne de meilleurs résultats qu’un lecteur réseau entier.',
+                to:'integrationen', linkText:'Voir tous les raccordements' },
+              { q:'Avons-nous besoin d’un service informatique, et en combien de temps sommes-nous prêts à démarrer ?',
+                a:'Pas pour l’exploitation gérée : l’exploitant prend en charge l’exploitation, les mises à jour et la sauvegarde, vous gérez les utilisateurs, les rôles et les droits dans le panneau d’administration. La partie technique prend quelques minutes. Ce qui vient ensuite prend plus de temps : définir les rôles, raccorder les systèmes, dérouler le premier cas d’usage. Pour une mise en production, il faut compter des jours plutôt que des minutes.' },
+              { q:'La moitié de nos collaborateurs utilisent aujourd’hui ChatGPT à titre privé. Cela nous permet-il de reprendre la main ?',
+                a:'Sur une instance d’entreprise, la consommation est présentée par personne, par groupe et par modèle, chaque accès à un système raccordé figure dans le journal d’audit, et les rôles déterminent qui voit quels modèles et quels fonds de connaissances. L’étendue de cette visibilité se définit par les rôles et les droits ; une règle clarifiée à l’avance facilite l’introduction.' }
+            ]}
+          ],
+          moreLead:'Une question reste ouverte ?',
+          moreLink:'Vers la liste complète des questions'
         },
         userOptions:['1','2–10','11–50','51–200','200+'],
         interestOptions:[{label:'Hébergé en Suisse',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Les deux',value:'both'}],
@@ -728,13 +1297,13 @@ class Component extends DCLogic {
         pending:{
           eyebrow:'// Presque terminé',
           title:'Veuillez confirmer votre adresse e-mail.',
-          body:'Nous venons de vous envoyer un e-mail à {email}. Cliquez sur le lien de confirmation pour réserver votre place sur la liste. Le lien est valable 48 heures.',
+          body:'Nous venons de vous envoyer un e-mail à {email}. Cliquez sur le lien de confirmation pour finaliser votre demande. Le lien est valable 48 heures.',
           spam:'Rien dans votre boîte de réception ? Veuillez également regarder dans vos spams.'
         },
         success:{
-          eyebrow:'// Inscription confirmée',
-          title:'Merci. Vous êtes sur la liste.',
-          body:'Nous vous contacterons dès que nous pourrons vous proposer un accès anticipé à EU Cowork AI.',
+          eyebrow:'// Demande confirmée',
+          title:'Merci. Nous avons bien votre demande.',
+          body:'Nous l’examinons et revenons vers vous avec vos identifiants. Vos {credit} de crédit de modèles seront prêts.',
           ask:'Souhaitez-vous déjà nous en dire un peu plus sur votre entreprise ?',
           askBtn:'Répondre à une courte question',
           askSubmit:'Envoyer les informations',
@@ -743,13 +1312,15 @@ class Component extends DCLogic {
         }
       },
       it: {
-        h1:'Ottenga l’accesso anticipato a EU Cowork AI.',
+        h1a:'La beta è aperta.', h1b:'Richieda il Suo accesso.',
         sub:'La piattaforma IA europea per la Sua azienda: tutti i migliori modelli con un unico accesso, i Suoi dati in Svizzera o sul Suo server.',
-        hint:'I primi inviti vengono spediti a gruppi.',
+        hint:'Attiviamo gli accessi uno alla volta e La ricontattiamo non appena abbiamo esaminato la richiesta.',
+        credit:{ eyebrow:'// Per iniziare', lead:'di credito modelli in omaggio',
+                 body:'Ogni accesso beta parte con {credit} di credito modelli. Nessun dato di pagamento richiesto.' },
         steps:[
-          '1. Conferma il Suo indirizzo tramite il link contenuto nell’e-mail.',
-          '2. La contattiamo non appena il Suo accesso è pronto e definiamo insieme il modo di esercizio adatto: gestito in Svizzera o sul Suo server.',
-          '3. Inizia sulla Sua istanza dedicata, con tutte le funzioni dal primo giorno.'
+          'Conferma il Suo indirizzo tramite il link contenuto nell’e-mail.',
+          'Esaminiamo la richiesta e prepariamo il Suo accesso.',
+          'Inizia con tutte le funzioni, con {credit} di credito modelli già pronti.'
         ],
         alt:{
           callLead:'Preferisce parlarne prima?', callLink:'Prenotare un appuntamento',
@@ -761,9 +1332,98 @@ class Component extends DCLogic {
           interest:'Interesse',
           users:'Dimensione del team', usersPh:'Selezioni …',
           usecase:'Per che cosa desidera utilizzare EU Cowork AI?', usecasePh:'Bastano una o due frasi',
-          submit:'Richiedi accesso anticipato', sending:'Invio in corso …',
-          note:'Niente spam. Scriviamo solo in merito all’accesso beta e al lancio. Disiscrizione in qualsiasi momento.',
+          submit:'Richiedere l’accesso beta', sending:'Invio in corso …',
+          note:'I Suoi dati restano da noi e non vengono trasmessi a nessuno. Le scriviamo solo in merito al Suo accesso e alla pubblicazione, con disiscrizione in qualsiasi momento.',
           noteLink:'Informativa sulla privacy'
+        },
+        money:{ chf:{ preis:'14 CHF per persona al mese', inkl:'7.50 CHF' }, eur:{ preis:'15 € per persona al mese', inkl:'8 €' } },
+        /* Die Fragen stammen aus dem, was Leute ueber KI-Werkzeuge im Betrieb
+           tatsaechlich fragen: Foren, Bewertungsportale, Fehlerberichte offener
+           Projekte. Sortiert ist nach dem, was eine Anmeldung am haeufigsten
+           aufhaelt. Der Ton folgt dem Rest des Auftritts: Antwort zuerst, zwei
+           bis vier Saetze, keine Bemerkung ueber die eigene Auskunft. */
+        faq:{
+          h2:'Domande frequenti.',
+          lead:'Quello che gli interessati ci chiedono prima di registrarsi, e come rispondiamo.',
+          openAll:'Aprire tutte le risposte', closeAll:'Chiudere tutte le risposte',
+          groups:[
+            { label:'Come si svolge la registrazione', items:[
+              { q:'Il prodotto esiste già, oppure questa è solo una pagina con un modulo?',
+                a:'La piattaforma è in funzione ed è in uso interno presso la Herr Informatik GmbH. La documentazione operativa completa è consultabile apertamente: requisiti di sistema, installazione, configurazione e comandi. Quello che oggi resta in sospeso non è il software, ma l’accesso generale.',
+                to:'docs', linkText:'Consultare la documentazione' },
+              { q:'Che cosa succede dopo che ho inviato il modulo?',
+                a:'Riceve un’e-mail con un link di conferma, valido per 48 ore. Appena ha confermato, la richiesta arriva da noi e viene elaborata passo dopo passo.' },
+              { q:'Quanto tempo passa prima che io abbia l’accesso?',
+                a:'Prepariamo gli accessi una richiesta dopo l’altra. Chi desidera vedere subito la piattaforma prenota un appuntamento.',
+                to:'termin', linkText:'Prenotare un appuntamento' },
+              { q:'Perché richiedete un indirizzo e-mail aziendale?',
+                a:'Ogni accesso viene assegnato a un’organizzazione, perciò il modulo non accetta indirizzi di caselle di posta pubbliche. Con le aziende senza un dominio proprio ne parliamo in un colloquio.',
+                to:'termin', linkText:'Prenotare un appuntamento' },
+              { q:'Riceverò poi pubblicità o telefonate?',
+                a:'No. I Suoi dati restano da noi e non vengono trasmessi a nessun altro. Il numero di telefono non viene richiesto.' },
+              { q:'Mi impegno a qualcosa se partecipo?',
+                a:'No. Non c’è alcun obbligo di riscontro, nessun appuntamento e nulla da firmare. L’uscita è possibile in qualsiasi momento.' },
+              { q:'Non posso semplicemente installare il software da solo, invece di chiedere?',
+                a:'Oggi non ancora: il repository dei rilasci resta chiuso fino al lancio. La guida completa all’installazione è già consultabile apertamente. L’accesso beta è al momento l’unica via per lavorare con la piattaforma.',
+                to:'installation', linkText:'Alla guida all’installazione' }
+            ]},
+            { label:'Credito iniziale e costi', items:[
+              { q:'Che cos’è esattamente il credito iniziale di {credit}?',
+                a:'Un credito una tantum per il consumo dei modelli sul Suo accesso. Ogni richiesta a un modello costa token, e questi token vanno a carico del credito. Finché il credito basta, non nascono costi.' },
+              { q:'Fin dove arrivo con {credit}?',
+                a:'Dipende dal modello: il lavoro su testi brevi costa poco, l’analisi di documenti lunghi con i modelli più grandi è nettamente più cara. Per confronto: nell’esercizio gestito sono inclusi {inkl} di credito modelli per persona al mese, il credito iniziale è più del sestuplo.' },
+              { q:'Devo registrare dati di pagamento?',
+                a:'No, né per la richiesta né per l’accesso beta. Non resta registrata alcuna carta che venga addebitata alla scadenza.' },
+              { q:'Che cosa succede quando il credito è esaurito?',
+                a:'Il consumo si ferma e non nasce alcuna fattura. Poi decide Lei se l’esercizio gestito debba proseguire: {preis}, di cui {inkl} di credito modelli per persona nel fondo comune della Sua organizzazione.',
+                to:'preise', linkText:'Vedere tutti i prezzi' },
+              { q:'Come teniamo sotto controllo i costi, se la fatturazione avviene a consumo?',
+                a:'Il consumo viene indicato per persona, gruppo e modello, e un budget mensile comune lo limita per tutta l’organizzazione. Una volta raggiunto, scatta un blocco morbido (soft block): le richieste vengono fermate invece di proseguire in silenzio, e l’amministrazione può aumentare il budget o sbloccare in modo mirato singole persone. Si può impostare anche un limite mensile aggiuntivo per persona.' },
+              { q:'Esiste un numero minimo di utenti?',
+                a:'No. L’esercizio autonomo è gratuito a partire da una sola persona e senza limiti di utenti, l’esercizio gestito viene fatturato per persona. Non esiste né un pacchetto per una dimensione aziendale fissa né un costo di attivazione.' },
+              { q:'Il credito iniziale vale anche se ospitiamo la piattaforma da soli?',
+                a:'No. Si trova su un accesso gestito, perché solo lì il consumo dei modelli passa da noi; nell’esercizio autonomo il conteggio avviene direttamente con il Suo fornitore di modelli. Nel modulo può indicare entrambe le opzioni, e un passaggio successivo dall’esercizio gestito al proprio server è previsto.' }
+            ]},
+            { label:'Dati e riservatezza', items:[
+              { q:'I nostri input vengono utilizzati per addestrare i modelli?',
+                a:'No. I dati dei clienti non addestrano alcun modello, né presso il fornitore di inferenza né da noi. La telemetria è disattivata di serie in tutti i componenti, e senza un consenso attivo non avviene alcun tracciamento.' },
+              { q:'Offrite i grandi modelli di OpenAI e Anthropic. I nostri dati finiscono quindi comunque negli Stati Uniti?',
+                a:'Per l’archiviazione e per l’inferenza no: conversazioni, file e account risiedono in Svizzera, le richieste ai modelli passano da EuRouter e vengono elaborate nell’UE, anche per i modelli di produttori americani. Non conta solo dove riposano i dati, ma dove viene calcolata la richiesta. Un’eccezione la dichiariamo apertamente: la ricerca web trasmette la richiesta di ricerca a motori di ricerca esterni senza l’identità dell’utente, perciò non affermiamo in modo generalizzato che tutto resti in Europa.',
+                to:'sicherheit', linkText:'I percorsi dei dati in dettaglio' },
+              { q:'A che serve l’hosting svizzero, se il US Cloud Act si applica comunque?',
+                a:'Oltre alla sede conta chi controlla il gestore. Dietro EU Cowork AI c’è la Herr Informatik GmbH di Windisch, in Svizzera, senza società madre americana; l’esercizio avviene nei centri di calcolo di Green a Lupfig. A chi questo non basta resta la possibilità di far funzionare la piattaforma su hardware proprio.' },
+              { q:'Per quanto tempo conservate le nostre conversazioni?',
+                a:'Di fabbrica non è impostato alcun termine di conservazione; le conversazioni restano finché gli utenti o l’amministrazione non le cancellano. Un termine si può impostare liberamente nel pannello di amministrazione, dopodiché i contenuti scaduti vengono rimossi insieme alle voci dell’indice di ricerca. Anche l’esportazione e la cancellazione dei dati di una singola persona vengono eseguite lì dall’amministrazione.' },
+              { q:'Qualcuno da voi può leggere le nostre chat?',
+                a:'Chi ospita da sé non dà accesso a nessun terzo. Nell’esercizio gestito il gestore accede soltanto per la manutenzione, come regolato nell’accordo sul trattamento dei dati e nell’elenco dei sub-responsabili. All’interno della Sua istanza gli utenti vedono esattamente quello che ruolo e gruppo consentono, e ogni accesso a un sistema collegato viene registrato.' },
+              { q:'Riceviamo un accordo sul trattamento dei dati, e chi sono i vostri sub-responsabili?',
+                a:'Sì. Il testo contrattuale completo e l’elenco nominativo di tutti i sub-responsabili, con scopo e sede, sono pubblici su questo sito, prima della registrazione e senza colloquio di vendita.',
+                to:'avv', linkText:'Leggere l’accordo sul trattamento dei dati' },
+              { q:'Avete la ISO 27001 o la SOC 2?',
+                a:'Certificati secondo la ISO 27001 sono i centri di calcolo di Green nei quali EU Cowork AI viene gestita; i certificati sono di Green e non nostri. Una certificazione ISO 27001 propria è in preparazione. Le misure tecniche e organizzative sono documentate apertamente.',
+                to:'sicherheit', linkText:'Alle misure' },
+              { q:'Lavoriamo sotto segreto professionale. Possiamo comunque utilizzare lo strumento?',
+                a:'Questa valutazione spetta a Lei e alla Sua autorità di vigilanza. Le basi sono pronte: accordo sul trattamento dei dati, elenco nominativo dei sub-responsabili, archiviazione in Svizzera, elaborazione dei modelli nell’UE ed esercizio su hardware proprio. Una consulenza legale questa non lo è.' }
+            ]},
+            { label:'Prodotto ed esercizio', items:[
+              { q:'Abbiamo già ChatGPT o Microsoft Copilot. Perché serve ancora qualcosa?',
+                a:'ChatGPT nel browser è un account personale senza collegamento ai sistemi della Sua azienda e senza controllo centrale, Copilot è legato a un ambiente e a un modello. EU Cowork AI è un’istanza aziendale con ruoli, diritti, registro di audit e panoramica dei costi, con oltre 100 modelli a scelta e con il collegamento dei sistemi propri. I modelli sono in parte gli stessi, la differenza sta nel percorso dei dati, nella scelta e nel controllo.',
+                to:'vergleich', linkText:'Il confronto in dettaglio' },
+              { q:'Perché non gestire semplicemente Open WebUI o LibreChat per conto proprio?',
+                a:'È possibile, ed EU Cowork AI è a sua volta un fork snello di LibreChat; l’esercizio autonomo resta gratuito e senza limiti di utenti. Si aggiungono diritti fino al livello dei singoli strumenti, registro di audit, consumo e budget con blocco morbido, collegamenti già predisposti e, su richiesta, l’esercizio con aggiornamenti e backup.' },
+              { q:'Quali modelli riceviamo, e riceviamo davvero quello scelto?',
+                a:'Oltre 100 modelli con un unico accesso, tra cui i grandi di Anthropic, OpenAI, Mistral e Meta. Poiché ogni richiesta viene elaborata sul lato UE, il catalogo non deve restare limitato ai produttori europei. L’amministrazione cura la selezione e stabilisce un modello predefinito; il consumo viene indicato per modello e resta così ricostruibile.' },
+              { q:'Possiamo integrare i nostri documenti?',
+                a:'Sì, come base di conoscenza; sono inoltre predisposti SharePoint da Microsoft 365 e i sistemi ERP tramite il gateway MCP. Quanto buone diventano le risposte dipende dal materiale: i testi impaginati in modo pulito funzionano bene, i moduli scansionati e le tabelle annidate sono difficili per qualsiasi sistema. All’inizio un insieme ben delimitato dà risultati migliori di un’intera unità di rete.',
+                to:'integrationen', linkText:'Vedere tutti i collegamenti' },
+              { q:'Ci serve un reparto IT, e quanto in fretta siamo pronti a partire?',
+                a:'Per l’esercizio gestito no: esercizio, aggiornamenti e backup li assume il gestore, Lei amministra utenti, ruoli e diritti nel pannello di amministrazione. La parte tecnica richiede minuti. Più lungo è quello che viene dopo: definire i ruoli, collegare i sistemi, percorrere il primo caso d’uso. Per un’introduzione produttiva metta in conto giorni, non minuti.' },
+              { q:'Metà delle nostre persone usa oggi ChatGPT in privato. Con questo riusciamo a tenerlo sotto controllo?',
+                a:'Su un’istanza aziendale il consumo viene indicato per persona, gruppo e modello, ogni accesso a un sistema collegato compare nel registro di audit, e i ruoli determinano chi vede quali modelli e quali basi di conoscenza. Fin dove arriva la visibilità lo stabilisce Lei tramite ruoli e diritti; una regolamentazione chiarita in anticipo agevola l’introduzione.' }
+            ]}
+          ],
+          moreLead:'È rimasto qualcosa in sospeso?',
+          moreLink:'Alla raccolta completa delle domande'
         },
         userOptions:['1','2–10','11–50','51–200','200+'],
         interestOptions:[{label:'Ospitato in Svizzera',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Entrambi',value:'both'}],
@@ -777,13 +1437,13 @@ class Component extends DCLogic {
         pending:{
           eyebrow:'// Quasi fatto',
           title:'La preghiamo di confermare il Suo indirizzo e-mail.',
-          body:'Le abbiamo appena inviato un’e-mail a {email}. Clicchi sul link di conferma per assicurarsi il Suo posto nella lista. Il link è valido 48 ore.',
+          body:'Le abbiamo appena inviato un’e-mail a {email}. Clicchi sul link di conferma per completare la richiesta. Il link è valido 48 ore.',
           spam:'Non ha ricevuto nessuna e-mail? Controlli anche la cartella spam.'
         },
         success:{
-          eyebrow:'// Iscrizione confermata',
-          title:'Grazie. È nella lista.',
-          body:'La contatteremo non appena potremo offrirLe l’accesso anticipato a EU Cowork AI.',
+          eyebrow:'// Richiesta confermata',
+          title:'Grazie. Abbiamo la Sua richiesta.',
+          body:'La esaminiamo e Le inviamo le credenziali. I {credit} di credito modelli saranno già pronti.',
           ask:'Desidera già dirci qualcosa sulla Sua azienda?',
           askBtn:'Rispondere a una breve domanda',
           askSubmit:'Invia i dati',
@@ -792,13 +1452,15 @@ class Component extends DCLogic {
         }
       },
       es: {
-        h1:'Obtenga acceso anticipado a EU Cowork AI.',
+        h1a:'La beta está abierta.', h1b:'Solicite su acceso.',
         sub:'La plataforma de IA europea para su empresa: todos los mejores modelos con un solo acceso, sus datos en Suiza o en su propio servidor.',
-        hint:'Las primeras invitaciones se envían por tandas.',
+        hint:'Habilitamos los accesos uno a uno y le respondemos en cuanto hayamos revisado su solicitud.',
+        credit:{ eyebrow:'// Para empezar', lead:'de saldo de modelos de regalo',
+                 body:'Cada acceso beta empieza con {credit} de saldo de modelos. Sin datos de pago.' },
         steps:[
-          '1. Usted confirma su dirección mediante el enlace del correo electrónico.',
-          '2. Nos ponemos en contacto en cuanto su acceso esté listo y definimos con usted la forma de operación adecuada: gestionada en Suiza o en su propio servidor.',
-          '3. Empieza en su propia instancia, con todas las funciones desde el primer día.'
+          'Usted confirma su dirección mediante el enlace del correo electrónico.',
+          'Revisamos su solicitud y preparamos su acceso.',
+          'Empieza con todas las funciones y {credit} de saldo de modelos listos.'
         ],
         alt:{
           callLead:'¿Prefiere hablar primero?', callLink:'Reservar una cita',
@@ -810,9 +1472,98 @@ class Component extends DCLogic {
           interest:'Interés',
           users:'Tamaño del equipo', usersPh:'Elija una opción …',
           usecase:'¿Para qué desea utilizar EU Cowork AI?', usecasePh:'Bastan una o dos frases',
-          submit:'Solicitar acceso anticipado', sending:'Enviando …',
-          note:'Sin spam. Solo le escribimos sobre el acceso beta y el lanzamiento. Puede darse de baja en cualquier momento.',
+          submit:'Solicitar acceso beta', sending:'Enviando …',
+          note:'Sus datos se quedan con nosotros y no se ceden a nadie. Solo le escribimos sobre su acceso y la publicación, y puede darse de baja en cualquier momento.',
           noteLink:'Política de privacidad'
+        },
+        money:{ chf:{ preis:'14 CHF por persona y mes', inkl:'7.50 CHF' }, eur:{ preis:'15 € por persona y mes', inkl:'8 €' } },
+        /* Die Fragen stammen aus dem, was Leute ueber KI-Werkzeuge im Betrieb
+           tatsaechlich fragen: Foren, Bewertungsportale, Fehlerberichte offener
+           Projekte. Sortiert ist nach dem, was eine Anmeldung am haeufigsten
+           aufhaelt. Der Ton folgt dem Rest des Auftritts: Antwort zuerst, zwei
+           bis vier Saetze, keine Bemerkung ueber die eigene Auskunft. */
+        faq:{
+          h2:'Preguntas frecuentes.',
+          lead:'Lo que nos preguntan los interesados antes de registrarse, y lo que respondemos.',
+          openAll:'Abrir todas las respuestas', closeAll:'Cerrar todas las respuestas',
+          groups:[
+            { label:'Así funciona la solicitud de acceso', items:[
+              { q:'¿El producto ya existe, o esto es solo una página con un formulario?',
+                a:'La plataforma funciona y está en uso interno en Herr Informatik GmbH. La documentación de operación completa es de acceso público: requisitos del sistema, instalación, configuración y comandos. Lo que hoy queda pendiente no es el software, sino el acceso general.',
+                to:'docs', linkText:'Ver la documentación' },
+              { q:'¿Qué ocurre después de enviar el formulario?',
+                a:'Recibirá un correo electrónico con un enlace de confirmación, válido durante 48 horas. En cuanto usted lo confirme, la solicitud llega a nosotros y se tramita paso a paso.' },
+              { q:'¿Cuánto tiempo pasa hasta que tenga el acceso?',
+                a:'Habilitamos los accesos solicitud por solicitud. Quien desee ver la plataforma de inmediato puede reservar una cita.',
+                to:'termin', linkText:'Reservar una cita' },
+              { q:'¿Por qué exigen una dirección de correo electrónico profesional?',
+                a:'Cada acceso se asigna a una organización, por eso el formulario no admite direcciones de buzones públicos. El caso de las empresas sin dominio propio lo aclaramos en una conversación.',
+                to:'termin', linkText:'Reservar una cita' },
+              { q:'¿Recibiré después publicidad o llamadas?',
+                a:'No. Sus datos se quedan con nosotros y no se ceden a nadie. El formulario no pide ningún número de teléfono.' },
+              { q:'¿Me comprometo a algo si participo?',
+                a:'No. No hay obligación de dar valoraciones, ni reuniones, ni nada que firmar. Puede dejarlo en cualquier momento.' },
+              { q:'¿No puedo instalar el software yo mismo en lugar de solicitarlo?',
+                a:'Hoy todavía no: el repositorio de publicación permanece cerrado hasta el lanzamiento. La guía de instalación completa ya es de acceso público. El acceso beta es por ahora la única vía para trabajar con la plataforma.',
+                to:'installation', linkText:'A la guía de instalación' }
+            ]},
+            { label:'Saldo inicial y costes', items:[
+              { q:'¿Qué es exactamente el saldo inicial de {credit}?',
+                a:'Un saldo único para el consumo de modelos en su acceso. Cada petición a un modelo cuesta tokens, y esos tokens se cargan al saldo. Mientras alcance, no se generan costes.' },
+              { q:'¿Hasta dónde llego con {credit}?',
+                a:'Depende del modelo: el trabajo con textos cortos es barato, y el análisis de documentos largos con los modelos más grandes resulta bastante más caro. Como referencia: la operación gestionada incluye {inkl} de saldo de modelos por persona y mes, y el saldo inicial es más de seis veces esa cantidad.' },
+              { q:'¿Tengo que registrar datos de pago?',
+                a:'No, ni para la solicitud ni para el acceso beta. No queda registrada ninguna tarjeta que se cargue al vencer el plazo.' },
+              { q:'¿Qué pasa cuando se agota el saldo?',
+                a:'El consumo se detiene y no se genera ninguna factura. Después usted decide si la operación gestionada debe continuar: {preis}, con {inkl} de saldo de modelos por persona en el fondo común de su organización.',
+                to:'preise', linkText:'Ver todos los precios' },
+              { q:'¿Cómo mantenemos los costes bajo control si se factura por consumo?',
+                a:'El consumo se desglosa por persona, grupo y modelo, y un presupuesto mensual común lo limita para toda la organización. Cuando se alcanza, actúa un bloqueo suave (soft block): las peticiones se detienen en lugar de seguir en silencio, y la administración puede aumentar el presupuesto o habilitar a determinadas personas. Además se puede fijar un límite mensual por persona.' },
+              { q:'¿Hay un número mínimo de usuarios?',
+                a:'No. El autoalojamiento es gratuito desde una sola persona y sin límite de usuarios, y la operación gestionada se factura por persona. No hay ningún paquete ligado a un tamaño de empresa fijo ni cuota de instalación.' },
+              { q:'¿Vale el saldo inicial también si nos autoalojamos?',
+                a:'No. Está ligado a un acceso gestionado, porque solo allí el consumo de modelos pasa por nosotros; en el autoalojamiento usted factura directamente con su proveedor de modelos. En el formulario puede marcar ambas opciones, y el paso posterior de la operación gestionada a su propio servidor está previsto.' }
+            ]},
+            { label:'Datos y confidencialidad', items:[
+              { q:'¿Se utilizan nuestras entradas para entrenar modelos?',
+                a:'No. Los datos de clientes no entrenan ningún modelo, ni en el proveedor de inferencia ni con nosotros. La telemetría está desactivada de forma predeterminada en todos los componentes, y sin consentimiento activo no se realiza ningún seguimiento.' },
+              { q:'Ustedes ofrecen los grandes modelos de OpenAI y Anthropic. ¿Nuestros datos acaban entonces en Estados Unidos?',
+                a:'Para el almacenamiento y la inferencia, no: las conversaciones, los archivos y las cuentas están en Suiza, y las peticiones a los modelos pasan por EuRouter y se procesan en la UE, también en el caso de modelos de fabricantes estadounidenses. Lo decisivo no es solo dónde reposan los datos, sino dónde se calcula la petición. Hay una excepción: la búsqueda web transmite la consulta a motores de búsqueda externos sin la identidad del usuario, por eso no afirmamos de forma general que todo permanezca en Europa.',
+                to:'sicherheit', linkText:'Las rutas de los datos en detalle' },
+              { q:'¿De qué sirve el alojamiento en Suiza si la US Cloud Act se aplica de todos modos?',
+                a:'Además de la ubicación, decide quién controla al operador. Detrás de EU Cowork AI está Herr Informatik GmbH, en Windisch (Suiza), sin matriz estadounidense; la operación se realiza en los centros de datos de Green en Lupfig. A quien eso no le baste, puede operar la plataforma en su propio hardware.' },
+              { q:'¿Cuánto tiempo guardan nuestras conversaciones?',
+                a:'De fábrica no hay fijado ningún plazo de conservación; las conversaciones permanecen hasta que el usuario o la administración las borra. En el panel de administración se puede fijar un plazo libremente, y después los contenidos vencidos se eliminan junto con sus entradas en el índice de búsqueda. La exportación y el borrado de los datos de una sola persona los realiza la administración también allí.' },
+              { q:'¿Puede alguien de su empresa leer nuestros chats?',
+                a:'Quien se autoaloja no da acceso a ningún tercero. En la operación gestionada, el operador accede solo para el mantenimiento, algo regulado en el contrato de encargo del tratamiento y en la lista de subencargados. Dentro de su instancia, los usuarios ven exactamente lo que su rol y su grupo permiten, y cada acceso a un sistema conectado queda registrado.' },
+              { q:'¿Recibimos un contrato de encargo del tratamiento, y quiénes son sus subencargados?',
+                a:'Sí. El texto completo del contrato y la lista nominal de todos los subencargados, con su finalidad y su ubicación, están publicados en este sitio web, antes del registro y sin conversación comercial.',
+                to:'avv', linkText:'Leer el contrato de encargo del tratamiento' },
+              { q:'¿Tienen ISO 27001 o SOC 2?',
+                a:'Certificados según ISO 27001 están los centros de datos de Green en los que se opera EU Cowork AI; los certificados corresponden a Green y no a nosotros. Una certificación ISO 27001 propia está en curso. Las medidas técnicas y organizativas están documentadas de forma pública.',
+                to:'sicherheit', linkText:'A las medidas' },
+              { q:'Trabajamos sujetos a secreto profesional. ¿Podemos siquiera utilizar esta herramienta?',
+                a:'Esa valoración corresponde a usted y a su autoridad de supervisión. Las bases están disponibles: contrato de encargo del tratamiento, lista nominal de subencargados, almacenamiento en Suiza, procesamiento de los modelos en la UE y la operación en hardware propio. Esto no constituye asesoramiento jurídico.' }
+            ]},
+            { label:'Producto y operación', items:[
+              { q:'Ya tenemos ChatGPT o Microsoft Copilot. ¿Para qué algo más?',
+                a:'ChatGPT en el navegador es una cuenta personal sin conexión con los sistemas de su empresa y sin control central, y Copilot está atado a un entorno y a un modelo. EU Cowork AI es una instancia corporativa con roles, permisos, registro de auditoría y control de costes, con más de 100 modelos a elegir y con la conexión de sus propios sistemas. Los modelos son en parte los mismos; la diferencia está en la ruta de los datos, en la selección y en el control.',
+                to:'vergleich', linkText:'La comparativa en detalle' },
+              { q:'¿Por qué no operar simplemente Open WebUI o LibreChat por nuestra cuenta?',
+                a:'Es posible, y EU Cowork AI es a su vez un fork ligero de LibreChat; el autoalojamiento sigue siendo gratuito y sin límite de usuarios. A eso se añaden permisos hasta el nivel de herramienta, registro de auditoría, consumo y presupuesto con bloqueo suave, conexiones preparadas y, si lo desea, la operación con actualizaciones y copia de seguridad.' },
+              { q:'¿Qué modelos obtenemos, y obtenemos realmente el que hemos elegido?',
+                a:'Más de 100 modelos con un solo acceso, entre ellos los grandes de Anthropic, OpenAI, Mistral y Meta. Como cada petición se procesa del lado de la UE, el catálogo no tiene que limitarse a fabricantes europeos. La administración cura la selección y fija un modelo predeterminado; el consumo se desglosa por modelo y queda así comprobable.' },
+              { q:'¿Podemos integrar nuestros propios documentos?',
+                a:'Sí, como base de conocimiento; además están preparados SharePoint desde Microsoft 365 y los sistemas ERP a través de la pasarela MCP. La calidad de las respuestas depende del material: los textos bien maquetados funcionan bien, y los formularios escaneados y las tablas anidadas son difíciles para cualquier sistema. Al principio, un conjunto claramente delimitado da mejores resultados que una unidad de red entera.',
+                to:'integrationen', linkText:'Ver todas las integraciones' },
+              { q:'¿Necesitamos un departamento de informática, y en cuánto tiempo estamos listos para empezar?',
+                a:'Para la operación gestionada, no: el operador asume la operación, las actualizaciones y la copia de seguridad, y usted gestiona usuarios, roles y permisos en el panel de administración. La parte técnica dura minutos. Más tiempo lleva lo que viene después: definir los roles, conectar los sistemas, recorrer el primer caso de uso. Una implantación productiva se cuenta en días, no en minutos.' },
+              { q:'Hoy la mitad de nuestra plantilla usa ChatGPT por su cuenta. ¿Conseguimos así ponerlo bajo control?',
+                a:'En una instancia corporativa, el consumo se desglosa por persona, grupo y modelo, cada acceso a un sistema conectado figura en el registro de auditoría, y los roles determinan quién ve qué modelos y qué bases de conocimiento. Hasta dónde llega esa visibilidad lo define usted mediante roles y permisos; una normativa aclarada de antemano facilita la implantación.' }
+            ]}
+          ],
+          moreLead:'¿Le queda alguna duda?',
+          moreLink:'A la lista completa de preguntas'
         },
         userOptions:['1','2–10','11–50','51–200','200+'],
         interestOptions:[{label:'Alojado en Suiza',value:'hosted'},{label:'Self-hosting',value:'selfhost'},{label:'Ambos',value:'both'}],
@@ -826,13 +1577,13 @@ class Component extends DCLogic {
         pending:{
           eyebrow:'// Casi listo',
           title:'Confirme su dirección de correo electrónico.',
-          body:'Acabamos de enviarle un correo electrónico a {email}. Haga clic en el enlace de confirmación para asegurar su lugar en la lista. El enlace es válido durante 48 horas.',
+          body:'Acabamos de enviarle un correo electrónico a {email}. Haga clic en el enlace de confirmación para completar su solicitud. El enlace es válido durante 48 horas.',
           spam:'¿No ha recibido nada? Consulte también su carpeta de spam.'
         },
         success:{
-          eyebrow:'// Registro confirmado',
-          title:'Gracias. Está en la lista.',
-          body:'Nos pondremos en contacto en cuanto podamos ofrecerle acceso anticipado a EU Cowork AI.',
+          eyebrow:'// Solicitud confirmada',
+          title:'Gracias. Tenemos su solicitud.',
+          body:'La revisamos y le enviamos sus credenciales. Su saldo de {credit} estará listo.',
           ask:'¿Desea contarnos ya algo sobre su empresa?',
           askBtn:'Responder una breve pregunta',
           askSubmit:'Enviar los datos',
@@ -842,8 +1593,28 @@ class Component extends DCLogic {
       }
     };
   }
+  /* Waehrung bestimmen, in dieser Reihenfolge:
+       1. was der Besucher auf der Preisseite zuletzt selbst gewaehlt hat
+       2. der Standort aus der Anfrage-IP, geliefert von /api/locale
+       3. Euro
+     Derselbe Speicherschluessel wie auf der Preisseite, damit ein Besucher
+     nicht auf der einen Seite Franken und auf der anderen Euro sieht.
+     Liechtenstein steht neben der Schweiz, weil dort derselbe Franken gilt.
+     Faellt die Abfrage aus, bleibt es beim Euro: ein Betrag wird nie leer. */
+  _initCur(){
+    let gespeichert = null;
+    try { gespeichert = localStorage.getItem('eucowork_currency'); } catch(e){}
+    if (gespeichert === 'chf' || gespeichert === 'eur') { this.setState({ cur: gespeichert }); return; }
+    if (typeof fetch !== 'function') return;
+    fetch('/api/locale', { headers:{ 'Accept':'application/json' } })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && (d.country === 'CH' || d.country === 'LI')) this.setState({ cur: 'chf' }); })
+      .catch(() => {});
+  }
+
   componentDidMount(){
     window.addEventListener('eucowork:langchange', this._onLang);
+    this._initCur();
     // Das Token wird sofort geholt, nicht erst beim Klick: so wartet niemand
     // beim Absenden auf zwei Anfragen nacheinander.
     this._loadChallenge();
@@ -1034,6 +1805,7 @@ class Component extends DCLogic {
   }
   renderVals(){
     const c = this._copy();
+    const guthaben = this.GUTHABEN[this.state.cur === 'chf' ? 'chf' : 'eur'];
     // Genau EIN Knopf der Gruppe liegt in der Tab-Reihenfolge: der gewaehlte,
     // sonst der erste. Innerhalb wird mit den Pfeiltasten gewechselt.
     const sel = c.interestOptions.findIndex(o => o.value === this.state.interest);
@@ -1045,14 +1817,65 @@ class Component extends DCLogic {
         onClick:()=>this.setInterest(o.value), onKey:(e)=>this.segKey(i, e) };
     });
     const confirmed = this.state.view === 'confirmed';
+
+    /* Die Fragen liegen nach Gruppen sortiert in der Tabelle, geoeffnet ist
+       immer hoechstens eine. Der Zaehler laeuft ueber alle Gruppen hinweg
+       weiter, sonst traegt die zweite Gruppe dieselben Nummern wie die erste
+       und das Oeffnen einer Frage klappt eine zweite mit auf. */
+    const waehrung = this.state.cur === 'chf' ? 'chf' : 'eur';
+    const offen = this.state.faqOpen;
+    const anzahl = c.faq.groups.reduce((n, g) => n + g.items.length, 0);
+    const alleAuf = offen.length >= anzahl;
+    let fi = -1;
+    const faqGroups = c.faq.groups.map(g => ({
+      label: g.label,
+      items: g.items.map(it => {
+        const i = ++fi;
+        const auf = offen.indexOf(i) !== -1;
+        /* Der Betrag steht auch in zwei Fragen, nicht nur in den Antworten. */
+        const einsetzen = (x) => x.replace('{credit}', guthaben)
+                                  .replace('{preis}', c.money[waehrung].preis)
+                                  .replace('{inkl}', c.money[waehrung].inkl);
+        return {
+          q: einsetzen(it.q),
+          a: einsetzen(it.a),
+          linkText: it.linkText || '',
+          toPreise: it.to === 'preise', toAvv: it.to === 'avv',
+          toSec: it.to === 'sicherheit', toInst: it.to === 'installation',
+          toVgl: it.to === 'vergleich', toCall: it.to === 'termin',
+          toInt: it.to === 'integrationen', toDocs: it.to === 'docs',
+          aid: 'wl-faq-a-' + i,
+          cls: auf ? 'is-open' : '',
+          expanded: auf ? 'true' : 'false',
+          sign: auf ? '\u2212' : '+',
+          toggle: () => this.setState({
+            faqOpen: auf ? offen.filter(x => x !== i) : offen.concat(i)
+          })
+        };
+      })
+    }));
+
     return {
       t: c,
       interestChips,
+      faqGroups,
+      faqAllLabel: alleAuf ? c.faq.closeAll : c.faq.openAll,
+      faqAllPressed: alleAuf ? 'true' : 'false',
+      faqAll: () => this.setState({
+        faqOpen: alleAuf ? [] : Array.from({ length: anzahl }, (_, i) => i)
+      }),
       showForm:    this.state.view === 'form',
       isPending:   this.state.view === 'pending',
       isConfirmed: confirmed,
       // Die Adresse gehört in den Satz, nicht in die Übersetzungstabelle.
       pendingBody: c.pending.body.replace('{email}', (this.state.email || '').trim()),
+      // Der Betrag gehoert in den Satz, nicht in die Uebersetzungstabelle:
+      // er haengt am Land des Besuchers, die Uebersetzung an seiner Sprache.
+      // Ein Schweizer, der die Seite auf Englisch liest, sieht Franken.
+      creditAmount: guthaben,
+      creditBody:   c.credit.body.replace('{credit}', guthaben),
+      steps:        c.steps.map(x => x.replace('{credit}', guthaben)),
+      successBody:  c.success.body.replace('{credit}', guthaben),
       askClosed: confirmed && this.state.ask === 'closed',
       askOpen:   confirmed && this.state.ask === 'open',
       askDone:   confirmed && this.state.ask === 'done',
@@ -1079,7 +1902,7 @@ class Component extends DCLogic {
   "@type": "WebPage",
   "@id": "https://eucowork.ai/es/warteliste#webpage",
   "url": "https://eucowork.ai/es/warteliste",
-  "name": "Frühen Zugang zu EU Cowork AI sichern",
+  "name": "Beta-Zugang zu EU Cowork AI anfragen",
   "inLanguage": "es",
   "isPartOf": {
     "@id": "https://eucowork.ai/#website"
@@ -1087,7 +1910,7 @@ class Component extends DCLogic {
   "about": {
     "@id": "https://eucowork.ai/#software"
   },
-  "description": "Wer sich einträgt, erhält frühen Zugang zu EU Cowork AI, der europäischen KI-Plattform, betreut in der Schweiz oder auf dem eigenen Server. Die Anmeldung verlangt nur die geschäftliche E-Mail-Adresse; Unternehmen und das Interesse an Hosting in der Schweiz, Self-Hosting oder beidem sind freiwillig. Kein Spam, jederzeit abmeldbar; die ersten Einladungen werden schrittweise verschickt.",
+  "description": "Die Beta von EU Cowork AI ist offen. Wer einen Zugang anfragt, startet mit einem Modellguthaben und wählt den Betriebsweg: betreut in der Schweiz oder auf dem eigenen Server. Die Anfrage verlangt nur die geschäftliche E-Mail-Adresse; Unternehmen, Teamgrösse und Interesse sind freiwillig. Kein Spam, jederzeit abmeldbar; die Zugänge werden einzeln freigeschaltet.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -1100,7 +1923,7 @@ class Component extends DCLogic {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Früher Zugang",
+        "name": "Beta-Zugang",
         "item": "https://eucowork.ai/es/warteliste"
       }
     ]

@@ -31,13 +31,45 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- React, Kopf und Fuss haengen heute hintereinander an support.js: gemessen
+     97, 193 und 206 Millisekunden. Vorgeladen starten sie alle bei null. -->
+<!-- crossorigin ist Pflicht, nicht Zierde: support.js haengt die beiden
+     Skripte mit integrity und damit crossOrigin="anonymous" ein. Ohne das
+     Attribut hier passt die Vorladung nicht zur spaeteren Anfrage, und der
+     Browser laedt beide Dateien ein zweites Mal. Gemessen und geprueft. -->
+<link rel="preload" href="/vendor/react.production.min.js" as="script" crossorigin>
+<link rel="preload" href="/vendor/react-dom.production.min.js" as="script" crossorigin>
+<!-- Die beiden Adressen stehen relativ und nicht wurzelabsolut: Der
+     Laufzeitteil loest sie ueber "." gegen die Seite auf, aus /fr/warteliste
+     wird also /fr/SiteHeader.dc.html (vercel.json schreibt das auf die
+     Wurzel um). Stand hier eine Wurzeladresse, passte die Vorladung in
+     vier von fuenf Sprachen nicht zur spaeteren Anfrage, und der Browser
+     lud beide Bruchstuecke ein zweites Mal. Gemessen am 25.08.2026. -->
+<link rel="preload" href="./SiteHeader.dc.html" as="fetch">
+<link rel="preload" href="./SiteFooter.dc.html" as="fetch">
 <!-- Das gemeinsame Blatt der Website: Tokens, Schrift, Knoepfe, Textlinks,
      Schlusskasten. Dadurch gilt hier dasselbe System wie auf allen
      Inhaltsseiten, und Kopf- und Fussleiste kommen als echte Bauteile. -->
 <link rel="stylesheet" href="/assets/content.css">
 <script src="/assets/i18n.js"></script>
 <script src="/support.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -51,7 +83,7 @@
 <p><a href="/en">EU Cowork AI</a></p>
 <p><a href="/en/preise">Pricing</a> <a href="/docs/en">Docs</a> <a href="/en/blog">Blog</a></p>
 <p>EN</p>
-<p><a href="/en/self-hosting">Self-host for free</a> <a href="/en/warteliste">Join the waitlist</a></p>
+<p><a href="/en/self-hosting">Self-host for free</a> <a href="/en/warteliste">Request beta access</a></p>
 <h1>One software. Two ways to run it.</h1>
 <p>You always get the complete feature set. You only decide who runs it.</p>
 <p>EUR</p>
@@ -71,6 +103,7 @@
 <p><a href="/en/warteliste">Request managed operation</a></p>
 <dl><dt>Feature set</dt><dd>complete</dd><dt>Operations</dt><dd>by EU Cowork AI</dd><dt>Updates and backups</dt><dd>included</dd><dt>Model usage</dt><dd>credit included</dd><dt>Database and keys</dt><dd>dedicated Swiss instance</dd><dt>Switching</dt><dd>to self-hosting possible</dd></dl>
 <p>Includes €8 of model credit per person, shared in your organisation’s pool.</p>
+<p>Beta: a one-off €55 of starting credit on every new account.</p>
 <h2>No stripped-down edition.</h2>
 <p>Both paths include the same complete feature set: models and web search, files and agents, roles and groups, audit log, central budgets, enterprise login and integrations. There is no second edition, no seat limit and no feature behind a gate, not even when you run it yourself.</p>
 <p><a href="/en/#funktionen">Features →</a> <a href="/en/governance">Governance →</a> <a href="/en/integrationen">Integrations →</a> <a href="/en/self-hosting">Self-hosting →</a> <a href="/docs/en">Documentation →</a></p>
@@ -204,6 +237,12 @@
      Rechtsbuendig ueber dem Vergleich, in der Groesse der Zeilenbeschriftungen
      darunter. Er soll auffindbar sein, wenn man ihn sucht, und sonst nicht
      stoeren: die Erkennung liegt fast immer richtig. */
+  /* Der Beta-Hinweis traegt als einziges Element der Karte den goldenen
+     Punkt: er ist zeitlich befristet, im Gegensatz zu allem anderen auf
+     dieser Seite. Gold bleibt Interpunktion, nie Flaeche. */
+  .pr-beta-note { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; color: var(--c-ink); }
+  .pr-beta-note::before { content: ''; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--c-gold-500, #F4C542); transform: translateY(-1px); }
+
   .pr-cur { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin: 0 0 12px; flex-wrap: wrap; }
   .pr-cur-hint { font-size: 12.5px; color: var(--c-muted); }
   .pr-cur-grp { display: inline-flex; border: var(--bd); border-radius: var(--r-status); overflow: hidden; background: #FFFFFF; }
@@ -406,6 +445,11 @@
               <div class="pr-row"><dt>{{ t.rowSwitch }}</dt><dd>{{ t.mgdSwitch }}</dd></div>
             </dl>
             <p class="pr-rows-note">{{ t.mgdNote }}</p>
+            <!-- Das einmalige Startguthaben der Beta steht getrennt vom
+                 monatlichen Guthaben: das eine laeuft jeden Monat neu an,
+                 das andere gibt es genau einmal. Zusammengezogen waere es
+                 eine Zahl, die niemand mehr nachrechnen kann. -->
+            <p class="pr-rows-note pr-beta-note">{{ t.betaNote }}</p>
           </div>
 
         </div>
@@ -785,33 +829,43 @@ class Component extends DCLogic {
     this.M = {
       de: {
         eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
-              mgdNote:'Inklusive 8 € Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.' },
+              mgdNote:'Inklusive 8 € Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.',
+              betaNote:'Beta: einmalig 55 € Startguthaben auf jedem neuen Zugang.' },
         chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
-              mgdNote:'Inklusive 7.50 CHF Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.' }
+              mgdNote:'Inklusive 7.50 CHF Modellguthaben pro Person, gemeinsam im Pool Ihrer Organisation.',
+              betaNote:'Beta: einmalig 50 CHF Startguthaben auf jedem neuen Zugang.' }
       },
       en: {
         eur:{ selfAmount:'€0',   mgdAmount:'€15',    sup1Price:'€0',
-              mgdNote:'Includes €8 of model credit per person, shared in your organisation’s pool.' },
+              mgdNote:'Includes €8 of model credit per person, shared in your organisation’s pool.',
+              betaNote:'Beta: a one-off €55 of starting credit on every new account.' },
         chf:{ selfAmount:'CHF 0', mgdAmount:'CHF 14', sup1Price:'CHF 0',
-              mgdNote:'Includes CHF 7.50 of model credit per person, shared in your organisation’s pool.' }
+              mgdNote:'Includes CHF 7.50 of model credit per person, shared in your organisation’s pool.',
+              betaNote:'Beta: a one-off CHF 50 of starting credit on every new account.' }
       },
       fr: {
         eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
-              mgdNote:'Crédit de modèles de 8 € par personne inclus, mutualisé dans le pool de votre organisation.' },
+              mgdNote:'Crédit de modèles de 8 € par personne inclus, mutualisé dans le pool de votre organisation.',
+              betaNote:'Bêta : 55 € de crédit de démarrage, une fois, sur chaque nouvel accès.' },
         chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
-              mgdNote:'Crédit de modèles de 7.50 CHF par personne inclus, mutualisé dans le pool de votre organisation.' }
+              mgdNote:'Crédit de modèles de 7.50 CHF par personne inclus, mutualisé dans le pool de votre organisation.',
+              betaNote:'Bêta : 50 CHF de crédit de démarrage, une fois, sur chaque nouvel accès.' }
       },
       it: {
         eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
-              mgdNote:'Incluso un credito modelli di 8 € per persona, condiviso nel pool della Sua organizzazione.' },
+              mgdNote:'Incluso un credito modelli di 8 € per persona, condiviso nel pool della Sua organizzazione.',
+              betaNote:'Beta: 55 € di credito iniziale, una tantum, su ogni nuovo accesso.' },
         chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
-              mgdNote:'Incluso un credito modelli di 7.50 CHF per persona, condiviso nel pool della Sua organizzazione.' }
+              mgdNote:'Incluso un credito modelli di 7.50 CHF per persona, condiviso nel pool della Sua organizzazione.',
+              betaNote:'Beta: 50 CHF di credito iniziale, una tantum, su ogni nuovo accesso.' }
       },
       es: {
         eur:{ selfAmount:'0 €',   mgdAmount:'15 €',   sup1Price:'0 €',
-              mgdNote:'Incluye un saldo de modelos de 8 € por persona, compartido en el fondo común de su organización.' },
+              mgdNote:'Incluye un saldo de modelos de 8 € por persona, compartido en el fondo común de su organización.',
+              betaNote:'Beta: 55 € de saldo inicial, una sola vez, en cada acceso nuevo.' },
         chf:{ selfAmount:'0 CHF', mgdAmount:'14 CHF', sup1Price:'0 CHF',
-              mgdNote:'Incluye un saldo de modelos de 7.50 CHF por persona, compartido en el fondo común de su organización.' }
+              mgdNote:'Incluye un saldo de modelos de 7.50 CHF por persona, compartido en el fondo común de su organización.',
+              betaNote:'Beta: 50 CHF de saldo inicial, una sola vez, en cada acceso nuevo.' }
       }
     };
 

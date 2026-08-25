@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -479,7 +494,7 @@
       <p data-i18n="cta.p">Bring a client file or a briefing note, and we will walk through the workflow together.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Book a call</a>
-        <a class="euc-btn-secondary" href="/en/warteliste" data-i18n="cta.btn2">Join the waitlist</a>
+        <a class="euc-btn-secondary" href="/en/warteliste" data-i18n="cta.btn2">Request beta access</a>
       </div>
     </section>
 
@@ -957,7 +972,7 @@ window.EUC_I18N = {
     'cta.h2': 'See it on an engagement of your own',
     'cta.p': 'Bring a client file or a briefing note, and we will walk through the workflow together.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures come from these sources, last checked in August 2026.',
     'src.fn1': 'Bundessteuerberaterkammer, professional statistics 2025 (DE): <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
@@ -1085,7 +1100,7 @@ window.EUC_I18N = {
     'cta.h2': 'Voyez-le sur un mandat à vous',
     'cta.p': 'Apportez un dossier ou une notice, et nous parcourons le processus ensemble.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres proviennent de ces sources, vérifiées pour la dernière fois en août 2026.',
     'src.fn1': 'Bundessteuerberaterkammer, statistique professionnelle 2025 (DE) : <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
@@ -1213,7 +1228,7 @@ window.EUC_I18N = {
     'cta.h2': 'Lo veda su un mandato suo',
     'cta.p': 'Porti un incarto o un promemoria e percorreremo insieme il processo.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre provengono da queste fonti, verificate da ultimo nell’agosto 2026.',
     'src.fn1': 'Bundessteuerberaterkammer, statistica professionale 2025 (DE): <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',
@@ -1341,7 +1356,7 @@ window.EUC_I18N = {
     'cta.h2': 'Véalo con un mandato propio',
     'cta.p': 'Traiga un expediente o una ficha informativa y recorremos juntos el proceso.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras proceden de estas fuentes, comprobadas por última vez en agosto de 2026.',
     'src.fn1': 'Bundessteuerberaterkammer, estadística profesional 2025 (DE): <a class="euc-textlink" href="https://www.bstbk.de/downloads/bstbk/ebooks/Berufsstatistik-2025.pdf" target="_blank" rel="noopener">bstbk.de</a>',

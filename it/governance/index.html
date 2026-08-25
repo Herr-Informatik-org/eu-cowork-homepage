@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -354,9 +369,9 @@
     <!-- ==================== CTA-BOX ==================== -->
     <section class="cta-box">
       <h2 data-i18n="cta.h2">Chiarire la governance prima del rollout</h2>
-      <p data-i18n="cta.p">Iscriviti alla lista d’attesa. Ottiene per primo l’accesso all’istanza svizzera gestita e configuriamo insieme a Lei diritti, registro e budget prima che parta il primo reparto.</p>
+      <p data-i18n="cta.p">Richiedere l’accesso beta. Ottiene per primo l’accesso all’istanza svizzera gestita e configuriamo insieme a Lei diritti, registro e budget prima che parta il primo reparto.</p>
       <div class="cta-actions">
-        <a class="euc-btn-primary" href="/it/warteliste" data-i18n="cta.btn1">Iscriviti alla lista d’attesa</a>
+        <a class="euc-btn-primary" href="/it/warteliste" data-i18n="cta.btn1">Richiedere l’accesso beta</a>
         <a class="euc-btn-secondary" href="/it/self-hosting" data-i18n="cta.btn2">Ospitare in proprio</a>
       </div>
     </section>
@@ -588,10 +603,10 @@
 <script>window.EUC_I18N = {
   "en": {
     "crumb.current": "Governance",
-    "cta.btn1": "Join the waitlist",
+    "cta.btn1": "Request beta access",
     "cta.btn2": "Self-host",
     "cta.h2": "Settle governance before the rollout",
-    "cta.p": "Join the waitlist. You get access to the managed Swiss instance first, and we set up permissions, logging and budget together with you before the first department starts.",
+    "cta.p": "Request beta access. You get access to the managed Swiss instance first, and we set up permissions, logging and budget together with you before the first department starts.",
     "faq.a1": "By offering an approved route that is more convenient than the private detour. EU Cowork AI gives you your own instance with your accounts, your systems and your log. A mere ban only shifts usage into private accounts that you can neither inspect nor switch off.",
     "faq.a2": "Only if you release the corresponding tool. The connection consists of individual tools, and each of them is released or denied separately. Reading invoices can be allowed while reading payroll data remains blocked for the same person. In addition, your ERP’s access rules continue to apply.",
     "faq.a3": "Through groups and per-tool rules. You create groups or take them from Entra ID and release to each group the tools it needs. The check runs in the order individual user, role, group, server default, with the first matching rule deciding.",
@@ -722,10 +737,10 @@
   },
   "fr": {
     "crumb.current": "Gouvernance",
-    "cta.btn1": "Rejoindre la liste d’attente",
+    "cta.btn1": "Demander un accès bêta",
     "cta.btn2": "Héberger soi-même",
     "cta.h2": "Clarifier la gouvernance avant le déploiement",
-    "cta.p": "Inscrivez-vous sur la liste d’attente. Vous accédez en premier à l’instance suisse gérée, et nous configurons avec vous les droits, le journal et le budget avant le démarrage du premier service.",
+    "cta.p": "Demandez un accès bêta. Vous accédez en premier à l’instance suisse gérée, et nous configurons avec vous les droits, le journal et le budget avant le démarrage du premier service.",
     "faq.a1": "En proposant une voie autorisée plus pratique que le détour privé. EU Cowork AI vous donne pour cela une instance dédiée avec vos comptes, vos systèmes et votre journal. Une simple interdiction ne fait que déplacer l’usage vers des comptes privés que vous ne pouvez ni consulter ni désactiver.",
     "faq.a2": "Uniquement si vous autorisez l’outil correspondant. La connexion se compose d’outils individuels, et chacun est autorisé ou refusé séparément. La lecture des factures peut être autorisée tandis que la lecture des salaires reste bloquée pour la même personne. En outre, les règles d’accès de votre ERP continuent de s’appliquer.",
     "faq.a3": "Via des groupes et des règles par outil. Vous créez des groupes ou les reprenez depuis Entra ID et autorisez à chaque groupe les outils dont il a besoin. Le contrôle s’effectue dans l’ordre utilisateur individuel, rôle, groupe, réglage par défaut du serveur, la première règle correspondante décidant.",
@@ -856,10 +871,10 @@
   },
   "it": {
     "crumb.current": "Governance",
-    "cta.btn1": "Iscriviti alla lista d’attesa",
+    "cta.btn1": "Richiedere l’accesso beta",
     "cta.btn2": "Ospitare in proprio",
     "cta.h2": "Chiarire la governance prima del rollout",
-    "cta.p": "Iscriviti alla lista d’attesa. Ottiene per primo l’accesso all’istanza svizzera gestita e configuriamo insieme a Lei diritti, registro e budget prima che parta il primo reparto.",
+    "cta.p": "Richiedere l’accesso beta. Ottiene per primo l’accesso all’istanza svizzera gestita e configuriamo insieme a Lei diritti, registro e budget prima che parta il primo reparto.",
     "faq.a1": "Offrendo una via autorizzata più comoda della scorciatoia privata. EU Cowork AI Le mette a disposizione un’istanza dedicata con i Suoi account, i Suoi sistemi e il Suo registro. Un semplice divieto sposta l’uso solo su account privati che non può né consultare né disattivare.",
     "faq.a2": "Solo se abilita il relativo strumento. Il collegamento è composto da singoli strumenti e ognuno viene abilitato o negato separatamente. La lettura delle fatture può essere consentita mentre quella dei dati salariali resta bloccata per la stessa persona. Inoltre continuano a valere le regole di accesso del Suo ERP.",
     "faq.a3": "Tramite gruppi e regole per singolo strumento. Crea i gruppi oppure li importa da Entra ID e abilita a ogni gruppo gli strumenti che gli servono. La verifica avviene nell’ordine singolo utente, ruolo, gruppo, impostazione predefinita del server, e decide la prima regola corrispondente.",
@@ -990,10 +1005,10 @@
   },
   "es": {
     "crumb.current": "Gobernanza",
-    "cta.btn1": "Únase a la lista de espera",
+    "cta.btn1": "Solicitar acceso beta",
     "cta.btn2": "Alojar por cuenta propia",
     "cta.h2": "Aclarar la gobernanza antes del despliegue",
-    "cta.p": "Apúntese a la lista de espera. Obtendrá primero el acceso a la instancia suiza gestionada y configuraremos con usted los permisos, el registro y el presupuesto antes de que empiece el primer departamento.",
+    "cta.p": "Solicite un acceso beta. Obtendrá primero el acceso a la instancia suiza gestionada y configuraremos con usted los permisos, el registro y el presupuesto antes de que empiece el primer departamento.",
     "faq.a1": "Ofreciendo una vía autorizada más cómoda que el rodeo privado. EU Cowork AI le da para ello una instancia propia con sus cuentas, sus sistemas y su registro. Una simple prohibición solo traslada el uso a cuentas privadas que usted no puede consultar ni desactivar.",
     "faq.a2": "Solo si habilita la herramienta correspondiente. La conexión se compone de herramientas individuales y cada una se habilita o se deniega por separado. Leer facturas puede estar permitido mientras que leer nóminas sigue bloqueado para la misma persona. Además, siguen aplicándose las reglas de acceso de su ERP.",
     "faq.a3": "Mediante grupos y reglas por herramienta. Usted crea grupos o los toma de Entra ID y habilita a cada grupo las herramientas que necesita. La comprobación se realiza en el orden usuario individual, rol, grupo y valor predeterminado del servidor, y decide la primera regla que coincide.",

@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -501,7 +516,7 @@
       <p data-i18n="cta.p">Apportez un cahier des charges, une pile de rapports de service ou votre catalogue de questions d’audit, et nous parcourrons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Réserver un rendez-vous</a>
-        <a class="euc-btn-secondary" href="/fr/warteliste" data-i18n="cta.btn2">Rejoindre la liste d’attente</a>
+        <a class="euc-btn-secondary" href="/fr/warteliste" data-i18n="cta.btn2">Demander un accès bêta</a>
       </div>
     </section>
 
@@ -965,7 +980,7 @@ window.EUC_I18N = {
     'cta.h2': 'See it on a case of your own',
     'cta.p': 'Bring a customer specification, a stack of service reports or your audit question catalogue, and we will walk through the workflow together. Or sign up and be among the first to start.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures and legal references in this article come from the following sources, last checked in August 2026.',
     'src.fn1': 'Swissmem, survey on Industry 4.0 in the Swiss mechanical and electrical engineering industry (267 companies in German-speaking Switzerland, 54 in the French-speaking part), digital strategy in SMEs and large companies: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
@@ -1087,7 +1102,7 @@ window.EUC_I18N = {
     'cta.h2': 'Voyez-le sur un cas qui vous est propre',
     'cta.p': 'Apportez un cahier des charges, une pile de rapports de service ou votre catalogue de questions d’audit, et nous parcourrons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres et toutes les indications juridiques de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.',
     'src.fn1': 'Swissmem, enquête sur l’industrie 4.0 dans la branche MEM (267 entreprises de Suisse alémanique, 54 de Suisse romande), stratégie numérique dans les PME et les grandes entreprises : <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
@@ -1209,7 +1224,7 @@ window.EUC_I18N = {
     'cta.h2': 'Lo veda su un suo caso concreto',
     'cta.p': 'Porti un capitolato, una pila di rapporti di servizio oppure il suo catalogo di domande di audit, e percorreremo insieme il processo. Oppure si iscriva e parta tra i primi.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre e le indicazioni giuridiche di questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.',
     'src.fn1': 'Swissmem, indagine sull’industria 4.0 nel settore MEM (267 imprese della Svizzera tedesca, 54 della Svizzera romanda), strategia digitale nelle PMI e nelle grandi imprese: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',
@@ -1331,7 +1346,7 @@ window.EUC_I18N = {
     'cta.h2': 'Véalo con un caso propio',
     'cta.p': 'Traiga un pliego de condiciones, un montón de informes de servicio o su catálogo de preguntas de auditoría y recorreremos el proceso juntos. O apúntese y empiece entre los primeros.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras y las indicaciones jurídicas de este artículo proceden de las siguientes fuentes, revisadas por última vez en agosto de 2026.',
     'src.fn1': 'Swissmem, encuesta sobre la industria 4.0 en el sector MEM (267 empresas de la Suiza alemana, 54 de la Suiza francesa), estrategia digital en pymes y grandes empresas: <a class="euc-textlink" href="https://www.swissmem.ch/de/was-tut-sich-in-der-mem-branche-beim-thema-industrie-40.html" target="_blank" rel="noopener">swissmem.ch</a>',

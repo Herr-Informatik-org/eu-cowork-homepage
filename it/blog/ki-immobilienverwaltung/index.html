@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -505,7 +520,7 @@
       <p data-i18n="cta.p">Porti un regolamento interno e qualche richiesta reale di inquilini e percorriamo insieme il processo. Oppure si iscriva e parta tra i primi.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Prenotare un appuntamento</a>
-        <a class="euc-btn-secondary" href="/it/warteliste" data-i18n="cta.btn2">Iscriviti alla lista d’attesa</a>
+        <a class="euc-btn-secondary" href="/it/warteliste" data-i18n="cta.btn2">Richiedere l’accesso beta</a>
       </div>
     </section>
 
@@ -976,7 +991,7 @@ window.EUC_I18N = {
     'cta.h2': 'See it on a property of your own',
     'cta.p': 'Bring a set of house rules and a few real tenant enquiries, and we will walk through the workflow together. Or sign up and be among the first to start.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures and interface details in this article come from the following sources, last checked in August 2026.',
     'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (published March 2026, around 200 specialists and executives surveyed): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
@@ -1097,7 +1112,7 @@ window.EUC_I18N = {
     'cta.h2': 'Voyez-le sur un de vos propres immeubles',
     'cta.p': 'Apportez un règlement de maison et quelques vraies demandes de locataires, et nous parcourons le processus ensemble. Ou inscrivez-vous et démarrez parmi les premiers.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres et toutes les indications sur les interfaces figurant dans cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.',
     'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (publié en mars 2026, environ 200 spécialistes et cadres interrogés) : <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
@@ -1218,7 +1233,7 @@ window.EUC_I18N = {
     'cta.h2': 'Lo veda su un immobile suo',
     'cta.p': 'Porti un regolamento interno e qualche richiesta reale di inquilini e percorriamo insieme il processo. Oppure si iscriva e parta tra i primi.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutte le cifre e le indicazioni sulle interfacce contenute in questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.',
     'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (pubblicato nel marzo 2026, circa 200 specialisti e quadri dirigenti interpellati): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',
@@ -1339,7 +1354,7 @@ window.EUC_I18N = {
     'cta.h2': 'Véalo en un inmueble propio',
     'cta.p': 'Traiga un reglamento de la casa y unas cuantas consultas reales de inquilinos y recorremos el proceso juntos. O bien inscríbase y empiece entre los primeros.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras y los datos sobre interfaces de este artículo proceden de las siguientes fuentes, revisadas por última vez en agosto de 2026.',
     'src.fn1': 'pom+ Consulting, Digital Real Estate Index 2026 (publicado en marzo de 2026, unos 200 especialistas y directivos encuestados): <a class="euc-textlink" href="https://www.pom.ch/de/investitions-und-kostenfragen-bremsen-die-digitale-transformation-der-bau-und-immobilienwirtschaft" target="_blank" rel="noopener">pom.ch</a>',

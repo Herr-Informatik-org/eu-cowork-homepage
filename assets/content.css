@@ -1713,6 +1713,22 @@ pre code {
   inset: 0;
 }
 
+/* Der Kartentitel liest sich als Ueberschrift, nicht als Textlink: wie die
+   Kacheltitel der Startseite in Tinte und ohne Unterstreichung. Dass die
+   Karte klickbar ist, zeigt die Karte selbst (Schatten und Kante beim
+   Ueberfahren); eine Linie unter jedem Titel machte den Index unruhig. */
+.blog-card-body h3 { text-wrap: balance; }
+.blog-card-body h3 a {
+  color: var(--c-ink);
+  text-decoration: none;
+  border-bottom: 0;
+  padding-bottom: 0;
+  transition: color .18s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .blog-card:hover .blog-card-body h3 a { color: var(--c-eu-700); }
+}
+
 .blog-card-media {
   background: linear-gradient(180deg, var(--c-ice-tint) 0%, var(--c-ice-100) 100%);
   border-bottom: var(--bd);

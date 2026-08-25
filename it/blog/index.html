@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -165,7 +180,7 @@
                   <span class="chip" data-i18n="c1.chip">Svizzera</span>
                   <time datetime="2026-02-10" data-i18n="c1.datum">10 febbraio 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/it/blog/ki-handwerk-kmu" data-i18n="c1.titel">L’IA nell’artigianato e nelle PMI: tre processi che restituiscono tempo d’ufficio</a></h3>
+                <h3><a href="/it/blog/ki-handwerk-kmu" data-i18n="c1.titel">L’IA nell’artigianato e nelle PMI: tre processi che restituiscono tempo d’ufficio</a></h3>
                 <p data-i18n="c1.teaser">Offerte dal sapere aziendale, rapporti puliti da note dettate, una base di conoscenza interrogabile: tre casi d’uso dell’IA per artigianato e PMI in Svizzera.</p>
             </div>
           </article>
@@ -212,7 +227,7 @@
               <span class="chip" data-i18n="c6.chip">Europa</span>
               <time datetime="2026-08-18" data-i18n="c6.datum">18 agosto 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/it/blog/ki-handwerk-europa" data-i18n="c6.titel">L’IA nell’artigianato e nelle PMI in Europa: tre processi che restituiscono tempo d’ufficio</a></h3>
+            <h3><a href="/it/blog/ki-handwerk-europa" data-i18n="c6.titel">L’IA nell’artigianato e nelle PMI in Europa: tre processi che restituiscono tempo d’ufficio</a></h3>
             <p data-i18n="c6.teaser">Burocrazia in Germania, fatturazione elettronica in Francia, ritardi di pagamento in Spagna: tre processi con cui un collega IA ricava dal sapere aziendale offerte, rapporti e risposte.</p>
           </div>
         </article>
@@ -274,7 +289,7 @@
                   <span class="chip" data-i18n="c2.chip">Svizzera</span>
                   <time datetime="2026-03-17" data-i18n="c2.datum">17 marzo 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/it/blog/ki-produktion" data-i18n="c2.titel">L’IA nella produzione: tre processi che trattengono il sapere in azienda</a></h3>
+                <h3><a href="/it/blog/ki-produktion" data-i18n="c2.titel">L’IA nella produzione: tre processi che trattengono il sapere in azienda</a></h3>
                 <p data-i18n="c2.teaser">Preservare il sapere dai rapporti di servizio, esaminare i capitolati prima dell’offerta, preparare gli audit: tre casi d’uso IA per la produzione.</p>
             </div>
           </article>
@@ -329,7 +344,7 @@
               <span class="chip" data-i18n="c7.chip">Europa</span>
               <time datetime="2026-08-18" data-i18n="c7.datum">18 agosto 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/it/blog/ki-produktion-europa" data-i18n="c7.titel">L’IA nella produzione: trattenere il sapere quando le persone se ne vanno</a></h3>
+            <h3><a href="/it/blog/ki-produktion-europa" data-i18n="c7.titel">L’IA nella produzione: trattenere il sapere quando le persone se ne vanno</a></h3>
             <p data-i18n="c7.teaser">Le persone esperte se ne vanno, i questionari dei grandi clienti arrivano. Tre processi: rendere interrogabile il sapere di fabbrica, preparare gli audit dei clienti, istruzioni nella lingua del turno.</p>
           </div>
         </article>
@@ -395,7 +410,7 @@
                   <span class="chip" data-i18n="c3.chip">Svizzera</span>
                   <time datetime="2026-04-28" data-i18n="c3.datum">28 aprile 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/it/blog/ki-treuhand-kanzlei" data-i18n="c3.titel">L’IA nello studio legale e nella fiduciaria: tre processi che rispettano il segreto professionale</a></h3>
+                <h3><a href="/it/blog/ki-treuhand-kanzlei" data-i18n="c3.titel">L’IA nello studio legale e nella fiduciaria: tre processi che rispettano il segreto professionale</a></h3>
                 <p data-i18n="c3.teaser">Indicizzare l’incarto, verificare contratti, redigere lettere: tre casi d’uso dell’IA per studi legali e fiduciari svizzeri, segreto professionale incluso.</p>
             </div>
           </article>
@@ -451,7 +466,7 @@
               <span class="chip" data-i18n="c8.chip">Europa</span>
               <time datetime="2026-08-18" data-i18n="c8.datum">18 agosto 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/it/blog/ki-kanzlei-europa" data-i18n="c8.titel">Meno professionisti, più regole: tre processi di IA nello studio</a></h3>
+            <h3><a href="/it/blog/ki-kanzlei-europa" data-i18n="c8.titel">Meno professionisti, più regole: tre processi di IA nello studio</a></h3>
             <p data-i18n="c8.teaser">La professione si riduce, le regole crescono: indicizzare il dossier, condividere il sapere dello studio, guidare i mandanti tra le scadenze. Tre processi, otto mercati, limiti chiari.</p>
           </div>
         </article>
@@ -515,7 +530,7 @@
                   <span class="chip" data-i18n="c4.chip">Svizzera</span>
                   <time datetime="2026-06-09" data-i18n="c4.datum">9 giugno 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/it/blog/ki-immobilienverwaltung" data-i18n="c4.titel">IA nell’amministrazione immobiliare: tre processi che alleggeriscono la casella di posta</a></h3>
+                <h3><a href="/it/blog/ki-immobilienverwaltung" data-i18n="c4.titel">IA nell’amministrazione immobiliare: tre processi che alleggeriscono la casella di posta</a></h3>
                 <p data-i18n="c4.teaser">Richieste degli inquilini smistate e risolte, spese accessorie spiegate, riconsegne verbalizzate: tre processi IA per le amministrazioni svizzere.</p>
             </div>
           </article>
@@ -580,7 +595,7 @@
               <span class="chip" data-i18n="c9.chip">Europa</span>
               <time datetime="2026-08-18" data-i18n="c9.datum">18 agosto 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/it/blog/ki-immobilien-europa" data-i18n="c9.titel">IA nell’amministrazione immobiliare: tre processi quando manca la capacità</a></h3>
+            <h3><a href="/it/blog/ki-immobilien-europa" data-i18n="c9.titel">IA nell’amministrazione immobiliare: tre processi quando manca la capacità</a></h3>
             <p data-i18n="c9.teaser">In questo settore non manca la domanda, ma la capacità di lavoro. Tre processi mostrano come un collega IA lavora con delibere, verbali e contratti degli immobili amministrati.</p>
           </div>
         </article>
@@ -640,7 +655,7 @@
                   <span class="chip" data-i18n="c5.chip">Svizzera</span>
                   <time datetime="2026-08-17" data-i18n="c5.datum">17 agosto 2026</time>
                 </p>
-                <h3><a class="euc-textlink" href="/it/blog/ki-praxis-apotheke" data-i18n="c5.titel">L’IA in studio medico e in farmacia: tre processi che restituiscono tempo di scrittura</a></h3>
+                <h3><a href="/it/blog/ki-praxis-apotheke" data-i18n="c5.titel">L’IA in studio medico e in farmacia: tre processi che restituiscono tempo di scrittura</a></h3>
                 <p data-i18n="c5.teaser">Rapporti e richieste degli assicuratori come bozza, base di conoscenza per il team, schede plurilingui: tre processi di IA per studio e farmacia.</p>
             </div>
           </article>
@@ -697,7 +712,7 @@
               <span class="chip" data-i18n="c10.chip">Europa</span>
               <time datetime="2026-08-18" data-i18n="c10.datum">18 agosto 2026</time>
             </p>
-            <h3><a class="euc-textlink" href="/it/blog/ki-praxis-europa" data-i18n="c10.titel">L’IA in studio medico e in farmacia: tre processi che restituiscono tempo di cura</a></h3>
+            <h3><a href="/it/blog/ki-praxis-europa" data-i18n="c10.titel">L’IA in studio medico e in farmacia: tre processi che restituiscono tempo di cura</a></h3>
             <p data-i18n="c10.teaser">In Germania il 91% dei medici ambulatoriali si sente oberato dall’amministrazione e ogni farmacia tedesca perde oltre 20 ore a settimana per le carenze di farmaci. Tre processi, e dove sta il limite netto.</p>
           </div>
         </article>

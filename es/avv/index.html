@@ -24,9 +24,41 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- React, Kopf und Fuss haengen heute hintereinander an support.js: gemessen
+     97, 193 und 206 Millisekunden. Vorgeladen starten sie alle bei null. -->
+<!-- crossorigin ist Pflicht, nicht Zierde: support.js haengt die beiden
+     Skripte mit integrity und damit crossOrigin="anonymous" ein. Ohne das
+     Attribut hier passt die Vorladung nicht zur spaeteren Anfrage, und der
+     Browser laedt beide Dateien ein zweites Mal. Gemessen und geprueft. -->
+<link rel="preload" href="/vendor/react.production.min.js" as="script" crossorigin>
+<link rel="preload" href="/vendor/react-dom.production.min.js" as="script" crossorigin>
+<!-- Die beiden Adressen stehen relativ und nicht wurzelabsolut: Der
+     Laufzeitteil loest sie ueber "." gegen die Seite auf, aus /fr/warteliste
+     wird also /fr/SiteHeader.dc.html (vercel.json schreibt das auf die
+     Wurzel um). Stand hier eine Wurzeladresse, passte die Vorladung in
+     vier von fuenf Sprachen nicht zur spaeteren Anfrage, und der Browser
+     lud beide Bruchstuecke ein zweites Mal. Gemessen am 25.08.2026. -->
+<link rel="preload" href="./SiteHeader.dc.html" as="fetch">
+<link rel="preload" href="./SiteFooter.dc.html" as="fetch">
 <script src="/assets/i18n.js"></script>
 <script src="/support.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -40,7 +72,7 @@
 <p><a href="/es">EU Cowork AI</a></p>
 <p><a href="/es/preise">Precios</a> <a href="/docs/es">Docs</a> <a href="/es/blog">Blog</a></p>
 <p>ES</p>
-<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Únase a la lista de espera</a></p>
+<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Solicitar acceso beta</a></p>
 <p><a href="/es/sicherheit">← Volver al Trust Center</a></p>
 <p>Estado: agosto de 2026</p>
 <h1>Acuerdo de encargo de tratamiento (DPA)</h1>

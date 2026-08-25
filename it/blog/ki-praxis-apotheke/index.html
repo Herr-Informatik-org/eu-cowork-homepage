@@ -36,10 +36,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -517,7 +532,7 @@
       <p data-i18n="cta.p">Porti una richiesta di un assicuratore, una scheda informativa o un capitolo del manuale di gestione della qualità e percorriamo insieme il processo, senza dati dei pazienti. Oppure si iscriva e parta tra i primi.</p>
       <div class="cta-actions">
         <a class="euc-btn-primary" href="https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled" target="_blank" rel="noopener" data-i18n="cta.btn1">Prenotare un appuntamento</a>
-        <a class="euc-btn-secondary" href="/it/warteliste" data-i18n="cta.btn2">Iscriviti alla lista d’attesa</a>
+        <a class="euc-btn-secondary" href="/it/warteliste" data-i18n="cta.btn2">Richiedere l’accesso beta</a>
       </div>
     </section>
 
@@ -1017,7 +1032,7 @@ window.EUC_I18N = {
     'cta.h2': 'Walk through a case of your own with us',
     'cta.p': 'Bring an insurance enquiry, a fact sheet or a chapter from your quality manual, and we will walk through the workflow together, without patient data. Or sign up and be among the first to start.',
     'cta.btn1': 'Book a call',
-    'cta.btn2': 'Join the waitlist',
+    'cta.btn2': 'Request beta access',
     'src.h2': 'Sources',
     'src.p': 'All figures in this article come from the following sources, last checked in August 2026.',
     'src.fn1': 'gfs.bern on behalf of the FMH, survey on the medical working environment 2025 (N = 1,532, of which 330 in ambulatory care): <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
@@ -1151,7 +1166,7 @@ window.EUC_I18N = {
     'cta.h2': 'Parcourez avec nous un cas qui vous est propre',
     'cta.p': 'Apportez une demande d’assureur, une fiche d’information ou un chapitre du manuel de gestion de la qualité, et nous parcourons le processus ensemble, sans données de patients. Ou inscrivez-vous et démarrez parmi les premiers.',
     'cta.btn1': 'Réserver un rendez-vous',
-    'cta.btn2': 'Rejoindre la liste d’attente',
+    'cta.btn2': 'Demander un accès bêta',
     'src.h2': 'Sources',
     'src.p': 'Tous les chiffres de cet article proviennent des sources suivantes, vérifiées pour la dernière fois en août 2026.',
     'src.fn1': 'gfs.bern sur mandat de la FMH, enquête sur l’environnement de travail des médecins 2025 (N = 1 532, dont 330 praticiens ambulatoires) : <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
@@ -1285,7 +1300,7 @@ window.EUC_I18N = {
     'cta.h2': 'Percorra con noi un caso suo',
     'cta.p': 'Porti una richiesta di un assicuratore, una scheda informativa o un capitolo del manuale di gestione della qualità e percorriamo insieme il processo, senza dati dei pazienti. Oppure si iscriva e parta tra i primi.',
     'cta.btn1': 'Prenotare un appuntamento',
-    'cta.btn2': 'Iscriviti alla lista d’attesa',
+    'cta.btn2': 'Richiedere l’accesso beta',
     'src.h2': 'Fonti',
     'src.p': 'Tutti i dati di questo articolo provengono dalle fonti seguenti, verificate da ultimo nell’agosto 2026.',
     'src.fn1': 'gfs.bern su incarico della FMH, indagine sull’ambiente di lavoro dei medici 2025 (N = 1.532, di cui 330 attivi in ambulatorio): <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',
@@ -1419,7 +1434,7 @@ window.EUC_I18N = {
     'cta.h2': 'Recorra con nosotros un caso propio',
     'cta.p': 'Traiga una solicitud de una aseguradora, una hoja informativa o un capítulo del manual de gestión de la calidad y recorremos juntos el proceso, sin datos de pacientes. O inscríbase y empiece entre los primeros.',
     'cta.btn1': 'Reservar una cita',
-    'cta.btn2': 'Únase a la lista de espera',
+    'cta.btn2': 'Solicitar acceso beta',
     'src.h2': 'Fuentes',
     'src.p': 'Todas las cifras de este artículo proceden de las fuentes siguientes, comprobadas por última vez en agosto de 2026.',
     'src.fn1': 'gfs.bern por encargo de la FMH, encuesta sobre el entorno laboral de los médicos 2025 (N = 1.532, de los cuales 330 en el ámbito ambulatorio): <a class="euc-textlink" href="https://cockpit.gfsbern.ch/de/cockpit/befragung-zum-aerztlichen-arbeitsumfeld-im-auftrag-der-fmh-2025" target="_blank" rel="noopener">cockpit.gfsbern.ch</a>',

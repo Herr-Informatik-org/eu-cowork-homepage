@@ -31,8 +31,41 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
+<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- React, Kopf und Fuss haengen heute hintereinander an support.js: gemessen
+     97, 193 und 206 Millisekunden. Vorgeladen starten sie alle bei null. -->
+<!-- crossorigin ist Pflicht, nicht Zierde: support.js haengt die beiden
+     Skripte mit integrity und damit crossOrigin="anonymous" ein. Ohne das
+     Attribut hier passt die Vorladung nicht zur spaeteren Anfrage, und der
+     Browser laedt beide Dateien ein zweites Mal. Gemessen und geprueft. -->
+<link rel="preload" href="/vendor/react.production.min.js" as="script" crossorigin>
+<link rel="preload" href="/vendor/react-dom.production.min.js" as="script" crossorigin>
+<!-- Die beiden Adressen stehen relativ und nicht wurzelabsolut: Der
+     Laufzeitteil loest sie ueber "." gegen die Seite auf, aus /fr/warteliste
+     wird also /fr/SiteHeader.dc.html (vercel.json schreibt das auf die
+     Wurzel um). Stand hier eine Wurzeladresse, passte die Vorladung in
+     vier von fuenf Sprachen nicht zur spaeteren Anfrage, und der Browser
+     lud beide Bruchstuecke ein zweites Mal. Gemessen am 25.08.2026. -->
+<link rel="preload" href="./SiteHeader.dc.html" as="fetch">
+<link rel="preload" href="./SiteFooter.dc.html" as="fetch">
 <script src="/assets/i18n.js"></script>
 <script src="/support.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -46,10 +79,10 @@
 <p><a href="#top">EU Cowork AI</a></p>
 <p><a href="/es/preise">Precios</a> <a href="/docs/es">Docs</a> <a href="/es/blog">Blog</a></p>
 <p>ES</p>
-<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Únase a la lista de espera</a></p>
+<p><a href="/es/self-hosting">Alojar usted mismo</a> <a href="/es/warteliste">Solicitar acceso beta</a></p>
 <h1>La plataforma de IA para su empresa. Se queda en Europa.</h1>
 <p>Operada en Suiza o en su propio servidor. Más de 100 modelos, procesados en la UE, sin entrenamiento con sus datos. Código abierto con licencia MIT desde el lanzamiento.</p>
-<p><a href="/es/warteliste">Únase a la lista de espera</a> <a href="/es/self-hosting">Alojar usted mismo</a></p>
+<p><a href="/es/warteliste">Solicitar acceso beta</a> <a href="/es/self-hosting">Alojar usted mismo</a></p>
 <h2>Una sola herramienta. Toda la jornada laboral.</h2>
 <p>Seis tareas de una jornada de trabajo normal. Todas en un mismo lugar.</p>
 <p>Modelos</p>
@@ -231,7 +264,7 @@
 <p>Envíe documentos y enlaces desde cualquier aplicación directamente a EU Cowork AI.</p>
 <p>Descárgalo en el App Store</p>
 <p>Disponible en Google Play</p>
-<p>Los distintivos son marcadores de posición. Avisaremos a todas las personas de la lista de espera en cuanto esté listo.</p>
+<p>Los distintivos son marcadores de posición. Avisaremos a quienes tengan acceso beta en cuanto esté listo.</p>
 <p><a href="/es/warteliste">Recibir aviso en el lanzamiento</a></p>
 <p>9:41</p>
 <p>EU Cowork AI EU Cowork AI Auto</p>
@@ -285,7 +318,8 @@
 <p><a href="/es/faq">Todas las preguntas y respuestas</a></p>
 <h2>Listos cuando usted lo esté.</h2>
 <p>Alojado en Suiza o gestionado por usted. Operativo en minutos.</p>
-<p><a href="/es/warteliste">Únase a la lista de espera</a> <a href="/es/self-hosting">Alojar usted mismo</a></p>
+<p><a href="/es/warteliste">Solicitar acceso beta</a> <a href="/es/self-hosting">Alojar usted mismo</a></p>
+<p>55 € de saldo de modelos incluido. Sin datos de pago.</p>
 <p>EU Cowork AI</p>
 <p>Su colega de IA. Se queda en Europa.</p>
 <p>Desplegable en cualquier lugar</p>
@@ -311,7 +345,6 @@
 </noscript>
 <x-dc>
 <helmet>
-<link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   /* ======================================================================
      Schriften: selbst gehostet (D8). Kein Google-Fonts-Aufruf, damit die IP
@@ -525,6 +558,23 @@
      ein Strich als Atempause, dann die drei Belege, dann die Handlung. Der
      Eyebrow steht deshalb NICHT mehr über dem Titel — oberhalb las er sich als
      Kleingedrucktes vor der Schlagzeile und nahm ihr den Auftakt. */
+  /* Der Beta-Hinweis unter den Knoepfen. Der goldene Punkt ist die einzige
+     Farbe im Hero ausser der Marke: er macht die Zeile auffindbar, ohne sie
+     zu einem zweiten Aufruf zu machen. Gold bleibt Interpunktion. */
+  .euc-beta-note{
+    display:flex; align-items:baseline; gap:9px;
+    margin:16px 0 0; max-width:520px;
+    font-family:'Inter',sans-serif; font-size:14px; line-height:1.5;
+    color:var(--c-body-soft,#5A6472);
+  }
+  .euc-beta-note::before{
+    content:''; flex:0 0 auto; width:6px; height:6px; border-radius:50%;
+    background:var(--c-gold-500,#F4C542); transform:translateY(-1px);
+  }
+  .euc-beta-note.is-deep{
+    justify-content:center; margin:18px auto 0; color:#9FB0C2;
+  }
+
   .euc-hero-sub{ font-family:var(--f-body); font-size:clamp(17px,1.55vw,21px); line-height:1.5; letter-spacing:-.005em; color:var(--c-body); margin:clamp(22px,2.6vw,32px) 0 0; max-width:38ch; text-wrap:pretty; }
   /* ---------- Hero: genau ein Bildschirm ----------
      100svh statt 100vh: auf dem Telefon waechst und schrumpft die Adressleiste,
@@ -3370,6 +3420,7 @@
           <a href="/warteliste" class="euc-btn is-secondary is-deep is-hero">{{ t.finalcta.primary }}</a>
           <a href="/self-hosting" class="euc-btn is-hero" style="color:#F7FAFC; border-color:rgba(165,216,230,.34);">{{ t.finalcta.secondary }}</a>
         </div>
+        <p class="euc-beta-note is-deep">{{ betaNoteFinal }}</p>
       </div>
     </section>
 
@@ -3748,7 +3799,12 @@ this.mobRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
     /* copied traegt die Nummer der Karte (0 = keine), damit die Rueckmeldung
        an dem Knopf steht, den man gedrueckt hat. */
-    this.state = { lang: initLang, mobPhase: 0, olkPhase: 0, copied:0, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
+    this.state = { lang: initLang, cur:'eur', mobPhase: 0, olkPhase: 0, copied:0, faqOpen:-1, storeNote:false, capI:0, capTick:0 };
+    /* Startguthaben der Beta, ein Betrag in zwei Waehrungen. Anker ist der
+       Franken; der Euro folgt der Hausumrechnung der Preisseite, nach oben
+       gerundet. Aendert sich der Betrag, aendert er sich an drei Stellen:
+       hier, in Waitlist.dc.html und in Preise.dc.html. */
+    this.GUTHABEN = { chf:'50 CHF', eur:'55 €' };
     /* `lang` am <html> mitziehen. Ohne das steht auf der englischen Fassung
        weiterhin lang="de": Screenreader sprechen englischen Text mit deutscher
        Aussprache, Browser bieten eine Übersetzung an, die niemand braucht, und
@@ -4204,11 +4260,11 @@ this.mobRef = React.createRef();
         }
       },
       finalcta: {
-        de: { h2:'Bereit, wenn Sie es sind.', sub:'In der Schweiz gehostet oder selbst betrieben. In Minuten startklar.', primary:'Auf die Warteliste', secondary:'Selbst betreiben' },
-        en: { h2:'Ready when you are.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Join the waitlist', secondary:'Self-host for free' },
-        fr: { h2:'Prêt quand vous l’êtes.', sub:'Hébergé en Suisse ou exploité par vos soins. Opérationnel en quelques minutes.', primary:'Rejoindre la liste d’attente', secondary:'Héberger vous-même' },
-        it: { h2:'Pronti quando lo siete voi.', sub:'Ospitato in Svizzera o gestito da voi. Operativo in pochi minuti.', primary:'Iscriviti alla lista d’attesa', secondary:'Ospitare in proprio' },
-        es: { h2:'Listos cuando usted lo esté.', sub:'Alojado en Suiza o gestionado por usted. Operativo en minutos.', primary:'Únase a la lista de espera', secondary:'Alojar usted mismo' }
+        de: { h2:'Bereit, wenn Sie es sind.', sub:'In der Schweiz gehostet oder selbst betrieben. In Minuten startklar.', primary:'Beta-Zugang anfragen', secondary:'Selbst betreiben', betaNote:'Startguthaben von {credit} inklusive. Keine Zahlungsdaten nötig.' },
+        en: { h2:'Ready when you are.', sub:'Hosted in Switzerland or run it yourself. Ready in minutes.', primary:'Request beta access', secondary:'Self-host for free', betaNote:'{credit} of model credit included. No payment details needed.' },
+        fr: { h2:'Prêt quand vous l’êtes.', sub:'Hébergé en Suisse ou exploité par vos soins. Opérationnel en quelques minutes.', primary:'Demander un accès bêta', secondary:'Héberger vous-même', betaNote:'{credit} de crédit de modèles inclus. Aucune donnée de paiement.' },
+        it: { h2:'Pronti quando lo siete voi.', sub:'Ospitato in Svizzera o gestito da voi. Operativo in pochi minuti.', primary:'Richiedere l’accesso beta', secondary:'Ospitare in proprio', betaNote:'{credit} di credito modelli inclusi. Nessun dato di pagamento.' },
+        es: { h2:'Listos cuando usted lo esté.', sub:'Alojado en Suiza o gestionado por usted. Operativo en minutos.', primary:'Solicitar acceso beta', secondary:'Alojar usted mismo', betaNote:'{credit} de saldo de modelos incluido. Sin datos de pago.' }
       }
 ,
 hero2: {
@@ -4218,31 +4274,31 @@ hero2: {
              ihr Satz bricht, ohne HTML durch die Uebersetzung zu schleusen. */
           h1a: 'Die KI-Plattform', h1b: 'für Ihr Unternehmen.', h1c: 'Bleibt in Europa.',
           sub: 'Betrieben in der Schweiz oder auf Ihrem eigenen Server. Über 100 Modelle, EU-verarbeitet, kein Training auf Ihren Daten. Quelloffen unter MIT-Lizenz ab Start.',
-          ctaPrimary: 'Auf die Warteliste',
+          ctaPrimary: 'Beta-Zugang anfragen',
           ctaSecondary: 'Selbst betreiben',
         },
         en: {
           h1a: 'The AI platform', h1b: 'for your company.', h1c: 'Stays in Europe.',
           sub: 'Operated in Switzerland or on your own server. Over 100 models, EU-processed, no training on your data. Open source under the MIT license from launch.',
-          ctaPrimary: 'Join the waitlist',
+          ctaPrimary: 'Request beta access',
           ctaSecondary: 'Self-host for free',
         },
         fr: {
           h1a: 'La plateforme IA', h1b: 'pour votre entreprise.', h1c: 'Reste en Europe.',
           sub: 'Exploitée en Suisse ou sur votre propre serveur. Plus de 100 modèles, traités dans l’UE, aucun entraînement sur vos données. Code source ouvert sous licence MIT dès le lancement.',
-          ctaPrimary: 'Rejoindre la liste d’attente',
+          ctaPrimary: 'Demander un accès bêta',
           ctaSecondary: 'Héberger vous-même',
         },
         it: {
           h1a: 'La piattaforma IA', h1b: 'per la vostra azienda.', h1c: 'Resta in Europa.',
           sub: 'Gestita in Svizzera o sul vostro server. Oltre 100 modelli, elaborati nell’UE, nessun addestramento sui vostri dati. Codice sorgente aperto con licenza MIT dal lancio.',
-          ctaPrimary: 'Iscriviti alla lista d’attesa',
+          ctaPrimary: 'Richiedere l’accesso beta',
           ctaSecondary: 'Ospitare in proprio',
         },
         es: {
           h1a: 'La plataforma de IA', h1b: 'para su empresa.', h1c: 'Se queda en Europa.',
           sub: 'Operada en Suiza o en su propio servidor. Más de 100 modelos, procesados en la UE, sin entrenamiento con sus datos. Código abierto con licencia MIT desde el lanzamiento.',
-          ctaPrimary: 'Únase a la lista de espera',
+          ctaPrimary: 'Solicitar acceso beta',
           ctaSecondary: 'Alojar usted mismo',
         }
       },
@@ -4256,7 +4312,7 @@ mob: {
           b3t:'Share-Sheet', b3d:'Dokumente und Links aus jeder App direkt an EU Cowork AI übergeben.',
           applePre:'Laden im', appleName:'App Store',
           googlePre:'Jetzt bei', googleName:'Google Play',
-          storeNote:'Die Abzeichen sind Platzhalter. Wir melden uns bei den Leuten auf der Warteliste, sobald es so weit ist.',
+          storeNote:'Die Abzeichen sind Platzhalter. Wir melden uns bei allen mit Beta-Zugang, sobald es so weit ist.',
           notify:'Benachrichtigung zum Start erhalten',
           replay:'Nochmal abspielen',
           mock:{ time:'9:41', app:'EU Cowork AI', model:'EU Cowork AI Auto',
@@ -4277,7 +4333,7 @@ mob: {
           b3t:'Share sheet', b3d:'Hand over documents and links from any app straight to EU Cowork AI.',
           applePre:'Download on the', appleName:'App Store',
           googlePre:'Get it on', googleName:'Google Play',
-          storeNote:'These badges are placeholders. We will get in touch with everyone on the waitlist as soon as it is ready.',
+          storeNote:'These badges are placeholders. We will get in touch with everyone who has beta access as soon as it is ready.',
           notify:'Get notified at launch',
           replay:'Play again',
           mock:{
@@ -4307,7 +4363,7 @@ mob: {
           b3t:'Feuille de partage', b3d:'Transmettez documents et liens depuis n’importe quelle application directement à EU Cowork AI.',
           applePre:'Télécharger dans l’', appleName:'App Store',
           googlePre:'Disponible sur', googleName:'Google Play',
-          storeNote:'Ces badges sont des espaces réservés. Nous contacterons toutes les personnes inscrites sur la liste d’attente dès que ce sera prêt.',
+          storeNote:'Ces badges sont des espaces réservés. Nous contacterons toutes les personnes disposant d’un accès bêta dès que ce sera prêt.',
           notify:'Être averti au lancement',
           replay:'Rejouer',
           mock:{
@@ -4337,7 +4393,7 @@ mob: {
           b3t:'Foglio di condivisione', b3d:'Inviate documenti e link da qualsiasi app direttamente a EU Cowork AI.',
           applePre:'Scarica su', appleName:'App Store',
           googlePre:'Disponibile su', googleName:'Google Play',
-          storeNote:'I badge sono segnaposto. Contatteremo chi è in lista d’attesa non appena sarà il momento.',
+          storeNote:'I badge sono segnaposto. Contatteremo chi ha un accesso beta non appena sarà il momento.',
           notify:'Ricevi una notifica al lancio',
           replay:'Riproduci di nuovo',
           mock:{
@@ -4367,7 +4423,7 @@ mob: {
           b3t:'Hoja para compartir', b3d:'Envíe documentos y enlaces desde cualquier aplicación directamente a EU Cowork AI.',
           applePre:'Descárgalo en el', appleName:'App Store',
           googlePre:'Disponible en', googleName:'Google Play',
-          storeNote:'Los distintivos son marcadores de posición. Avisaremos a todas las personas de la lista de espera en cuanto esté listo.',
+          storeNote:'Los distintivos son marcadores de posición. Avisaremos a quienes tengan acceso beta en cuanto esté listo.',
           notify:'Recibir aviso en el lanzamiento',
           replay:'Reproducir de nuevo',
           mock:{
@@ -5114,8 +5170,23 @@ sov: {
       /*__COPY__*/
     };
   }
+  /* Waehrung wie auf der Preisseite: gespeicherte Wahl, sonst das Land aus
+     der Anfrage-IP, sonst Euro. Derselbe Speicherschluessel, damit ein
+     Besucher nicht hier Franken und dort Euro sieht. */
+  _initCur(){
+    let gespeichert = null;
+    try { gespeichert = localStorage.getItem('eucowork_currency'); } catch(e){}
+    if (gespeichert === 'chf' || gespeichert === 'eur') { this.setState({ cur: gespeichert }); return; }
+    if (typeof fetch !== 'function') return;
+    fetch('/api/locale', { headers:{ 'Accept':'application/json' } })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && (d.country === 'CH' || d.country === 'LI')) this.setState({ cur: 'chf' }); })
+      .catch(() => {});
+  }
+
   componentDidMount(){
     this._setDocLang(this.state.lang);
+    this._initCur();
     window.addEventListener('eucowork:langchange', this._onLang);
     this._initShaders();
     this._initRail();
@@ -5770,7 +5841,14 @@ clearTimeout(this._mobTimer);
 
     this._pgLoad = () => { sample(); };
     img.addEventListener('load', this._pgLoad);
-    img.src = '/globe-europe.jpg';
+    /* Als WebP 23 KB statt 74 KB als JPEG, bei gleicher Kantenlaenge von
+       800x600. Das Bild ist nur die Farbvorlage fuer den Globus, es wird nie
+       direkt gezeigt; der Unterschied ist auf dem Kugelausschnitt nicht
+       sichtbar. Der Ruecksprung auf JPEG deckt Browser ohne WebP ab, also
+       Safari vor 14. */
+    this._pgFallback = () => { img.src = '/globe-europe.jpg'; };
+    img.addEventListener('error', this._pgFallback, { once: true });
+    img.src = '/globe-europe.webp';
 
     if ('ResizeObserver' in window){
       this._pgRo = new ResizeObserver(() => resize());
@@ -6339,7 +6417,10 @@ _mobInit(){
     const lang = this.state.lang || 'de';
     const t = {};
     for (const k in this.C){ t[k] = this.C[k][lang] || this.C[k].de; }
+    const guthaben = this.GUTHABEN[this.state.cur === 'chf' ? 'chf' : 'eur'];
     const vm = { t, github: this.selfhostHref, rootRef: this.rootRef };
+    // Der Betrag haengt am Land, der Satz an der Sprache: darum getrennt.
+    vm.betaNoteFinal = t.finalcta.betaNote.replace('{credit}', guthaben);
     /* „Nochmal abspielen" erscheint erst, wenn der Ablauf im Endzustand steht. */
     vm.replayOlk  = () => this.replayOlk();
     vm.replayMob  = () => this.replayMob();

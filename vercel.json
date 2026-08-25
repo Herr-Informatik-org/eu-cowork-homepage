@@ -65,8 +65,38 @@
       ]
     },
     {
+      "source": "/fonts/(.*)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" } ]
+    },
+    {
+      "source": "/vendor/(.*)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" } ]
+    },
+    {
+      "source": "/og/(.*)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" } ]
+    },
+    {
+      "source": "/(.*).(jpg|jpeg|png|webp|avif|svg|ico)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=2592000" } ]
+    },
+    {
+      "source": "/(.*).(css|js)",
+      "headers": [ { "key": "Cache-Control", "value": "public, max-age=600" } ]
+    },
+    {
       "source": "/(SiteHeader|SiteFooter).dc.html",
-      "headers": [ { "key": "X-Robots-Tag", "value": "noindex" } ]
+      "headers": [
+        { "key": "X-Robots-Tag",  "value": "noindex" },
+        { "key": "Cache-Control", "value": "public, max-age=600" }
+      ]
+    },
+    {
+      "source": "/:lang(en|fr|it|es)/(SiteHeader|SiteFooter).dc.html",
+      "headers": [
+        { "key": "X-Robots-Tag",  "value": "noindex" },
+        { "key": "Cache-Control", "value": "public, max-age=600" }
+      ]
     },
     {
       "source": "/docs/404.html",

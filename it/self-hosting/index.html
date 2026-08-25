@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -219,7 +234,7 @@
       <p data-i18n="inst.p1">L’installazione di EU Cowork AI consiste in due script e in una voce nel file <code>.env</code>. Su una macchina in cui Docker è già in esecuzione, il primo passaggio non è necessario.</p>
 
       <h3 data-i18n="inst.h3a">Passo 1: preparare il server</h3>
-      <p data-i18n="inst.pa">Il repository di rilascio verrà pubblicato con il lancio. Chi desidera provarlo già oggi richiede l’accesso tramite la <a class="euc-textlink" href="/it/warteliste">lista d’attesa</a>. I comandi mostrano come si presenta poi l’installazione: clonare il repository, passare alla directory <code>distribution</code>, avviare lo script di preparazione.</p>
+      <p data-i18n="inst.pa">Il repository di rilascio verrà pubblicato con il lancio. Chi desidera provarlo già oggi richiede l’accesso beta tramite la <a class="euc-textlink" href="/it/warteliste">lista d’attesa</a>. I comandi mostrano come si presenta poi l’installazione: clonare il repository, passare alla directory <code>distribution</code>, avviare lo script di preparazione.</p>
       <pre><code>cd distribution
 ./setup-server.sh</code></pre>
       <p data-i18n="inst.pa2">Lo script è idempotente e installa Docker Engine con Compose v2 dalla fonte ufficiale di Docker, poiché il pacchetto Ubuntu <code>docker.io</code> non include Compose v2. Si aggiungono la rotazione dei log, le regole di firewall per le porte 22, 80 e 443, lo swap, il fuso orario e gli aggiornamenti di sicurezza automatici. Al termine occorre effettuare nuovamente il login.</p>
@@ -369,7 +384,7 @@ docker compose up -d</code></pre>
       <h2 data-i18n="cta.h2">Preferisce partire con la gestione affidata a noi?</h2>
       <p data-i18n="cta.p">Se non desidera gestire lo stack in proprio: ci occupiamo di installazione, aggiornamenti, backup e monitoraggio su infrastruttura svizzera. L’offerta gestita è in fase di costruzione e l’accesso passa dalla lista d’attesa.</p>
       <div class="cta-actions">
-        <a class="euc-btn-primary" href="/it/warteliste" data-i18n="cta.btn1">Iscriviti alla lista d’attesa</a>
+        <a class="euc-btn-primary" href="/it/warteliste" data-i18n="cta.btn1">Richiedere l’accesso beta</a>
         <a class="euc-btn-secondary" href="/it/sicherheit" data-i18n="cta.btn2">Sicurezza e protezione dei dati</a>
       </div>
     </section>
@@ -660,7 +675,7 @@ window.EUC_I18N = {
     "inst.h2": "Installation in three steps",
     "inst.p1": "Installing EU Cowork AI consists of two scripts and one entry in the <code>.env</code>. On a machine where Docker is already running, the first step is not needed.",
     "inst.h3a": "Step 1: prepare the server",
-    "inst.pa": "The release repository will be published at launch. Anyone who wants to test today can request access via the <a class=\"euc-textlink\" href=\"/warteliste\">waitlist</a>. The commands show what the installation looks like afterwards: clone the repository, change into the <code>distribution</code> directory, run the preparation script.",
+    "inst.pa": "The release repository will be published at launch. Anyone who wants to test today can request beta access via the <a class=\"euc-textlink\" href=\"/warteliste\">waitlist</a>. The commands show what the installation looks like afterwards: clone the repository, change into the <code>distribution</code> directory, run the preparation script.",
     "inst.pa2": "The script is idempotent and installs Docker Engine including Compose v2 from the official Docker source, because the Ubuntu package <code>docker.io</code> does not ship Compose v2. It also sets up log rotation, firewall rules for ports 22, 80 and 443, swap, time zone and automatic security updates. Then log in again once.",
     "inst.h3b": "Step 2: install the stack",
     "inst.pb": "The installer checks Docker and Compose v2, creates the <code>.env</code> from the template, generates all secrets, sets up data directories and the sandbox network, pulls the images and starts the stack. The <code>production</code> profile includes the reverse proxy, which obtains the TLS certificate automatically.",
@@ -720,7 +735,7 @@ window.EUC_I18N = {
     "faq.a6": "Yes, in both directions. Both models use the same architecture, which is why the switch is a migration: create an archive, copy it to the new machine, restore it there. Conversations, accounts, settings and uploads are preserved, provided the encryption keys are carried over.",
     "cta.h2": "Prefer to start managed?",
     "cta.p": "If you would rather not operate the stack yourself: we take care of installation, updates, backups and monitoring on Swiss infrastructure. The managed offering is being built up, and access runs through the waitlist.",
-    "cta.btn1": "Join the waitlist",
+    "cta.btn1": "Request beta access",
     "cta.btn2": "Security and data protection",
     "weiter.title": "Next",
     "weiter.li1": "How permissions, budgets and audit logs are controlled in operation",
@@ -788,7 +803,7 @@ window.EUC_I18N = {
     "inst.h2": "Installation en trois étapes",
     "inst.p1": "L’installation d’EU Cowork AI se résume à deux scripts et à une entrée dans le fichier <code>.env</code>. Sur une machine où Docker tourne déjà, la première étape est superflue.",
     "inst.h3a": "Étape 1 : préparer le serveur",
-    "inst.pa": "Le dépôt de release sera publié au lancement. Si vous souhaitez tester dès aujourd’hui, demandez l’accès via la <a class=\"euc-textlink\" href=\"/warteliste\">liste d’attente</a>. Les commandes montrent à quoi ressemble ensuite l’installation : cloner le dépôt, se placer dans le répertoire <code>distribution</code>, lancer le script de préparation.",
+    "inst.pa": "Le dépôt de release sera publié au lancement. Si vous souhaitez tester dès aujourd’hui, demandez l’accès bêta via la <a class=\"euc-textlink\" href=\"/warteliste\">liste d’attente</a>. Les commandes montrent à quoi ressemble ensuite l’installation : cloner le dépôt, se placer dans le répertoire <code>distribution</code>, lancer le script de préparation.",
     "inst.pa2": "Le script est idempotent et installe Docker Engine ainsi que Compose v2 depuis la source officielle de Docker, car le paquet Ubuntu <code>docker.io</code> ne fournit pas Compose v2. S’y ajoutent la rotation des journaux, des règles de pare-feu pour les ports 22, 80 et 443, le swap, le fuseau horaire et les mises à jour de sécurité automatiques. Reconnectez-vous ensuite une fois.",
     "inst.h3b": "Étape 2 : installer le stack",
     "inst.pb": "L’installateur vérifie Docker et Compose v2, crée le fichier <code>.env</code> à partir du modèle, génère tous les secrets, crée les répertoires de données et le réseau du bac à sable, télécharge les images et démarre le stack. Le profil <code>production</code> inclut le reverse proxy, qui obtient automatiquement le certificat TLS.",
@@ -848,7 +863,7 @@ window.EUC_I18N = {
     "faq.a6": "Oui, dans les deux sens. Les deux modèles utilisent la même architecture ; le changement se ramène donc à une migration : créer une archive, la copier sur la nouvelle machine, l’y restaurer. Conversations, comptes, paramètres et téléversements sont conservés, à condition de reprendre les clés de chiffrement.",
     "cta.h2": "Vous préférez démarrer en mode géré ?",
     "cta.p": "Si vous ne souhaitez pas exploiter le stack vous-même : nous prenons en charge l’installation, les mises à jour, la sauvegarde et la supervision sur une infrastructure suisse. L’offre gérée est en cours de constitution et l’accès passe par la liste d’attente.",
-    "cta.btn1": "Rejoindre la liste d’attente",
+    "cta.btn1": "Demander un accès bêta",
     "cta.btn2": "Sécurité et protection des données",
     "weiter.title": "Poursuivre",
     "weiter.li1": "Comment les droits, les budgets et les journaux d’audit sont pilotés en exploitation",
@@ -916,7 +931,7 @@ window.EUC_I18N = {
     "inst.h2": "Installazione in tre passaggi",
     "inst.p1": "L’installazione di EU Cowork AI consiste in due script e in una voce nel file <code>.env</code>. Su una macchina in cui Docker è già in esecuzione, il primo passaggio non è necessario.",
     "inst.h3a": "Passo 1: preparare il server",
-    "inst.pa": "Il repository di rilascio verrà pubblicato con il lancio. Chi desidera provarlo già oggi richiede l’accesso tramite la <a class=\"euc-textlink\" href=\"/warteliste\">lista d’attesa</a>. I comandi mostrano come si presenta poi l’installazione: clonare il repository, passare alla directory <code>distribution</code>, avviare lo script di preparazione.",
+    "inst.pa": "Il repository di rilascio verrà pubblicato con il lancio. Chi desidera provarlo già oggi richiede l’accesso beta tramite la <a class=\"euc-textlink\" href=\"/warteliste\">lista d’attesa</a>. I comandi mostrano come si presenta poi l’installazione: clonare il repository, passare alla directory <code>distribution</code>, avviare lo script di preparazione.",
     "inst.pa2": "Lo script è idempotente e installa Docker Engine con Compose v2 dalla fonte ufficiale di Docker, poiché il pacchetto Ubuntu <code>docker.io</code> non include Compose v2. Si aggiungono la rotazione dei log, le regole di firewall per le porte 22, 80 e 443, lo swap, il fuso orario e gli aggiornamenti di sicurezza automatici. Al termine occorre effettuare nuovamente il login.",
     "inst.h3b": "Passo 2: installare lo stack",
     "inst.pb": "L’installer verifica Docker e Compose v2, crea il file <code>.env</code> dal modello, genera tutti i secret, predispone le directory dati e la rete della sandbox, scarica le immagini e avvia lo stack. Il profilo <code>production</code> include il reverse proxy, che ottiene automaticamente il certificato TLS.",
@@ -976,7 +991,7 @@ window.EUC_I18N = {
     "faq.a6": "Sì, in entrambe le direzioni. Entrambi i modelli utilizzano la stessa architettura, perciò il passaggio è una migrazione: creare un archivio, copiarlo sulla nuova macchina e ripristinarlo lì. Conversazioni, account, impostazioni e file caricati restano intatti, a condizione che le chiavi di cifratura vengano riprese.",
     "cta.h2": "Preferisce partire con la gestione affidata a noi?",
     "cta.p": "Se non desidera gestire lo stack in proprio: ci occupiamo di installazione, aggiornamenti, backup e monitoraggio su infrastruttura svizzera. L’offerta gestita è in fase di costruzione e l’accesso passa dalla lista d’attesa.",
-    "cta.btn1": "Iscriviti alla lista d’attesa",
+    "cta.btn1": "Richiedere l’accesso beta",
     "cta.btn2": "Sicurezza e protezione dei dati",
     "weiter.title": "Continua",
     "weiter.li1": "Come vengono governati diritti, budget e log di audit nell’esercizio",
@@ -1044,7 +1059,7 @@ window.EUC_I18N = {
     "inst.h2": "Instalación en tres pasos",
     "inst.p1": "La instalación de EU Cowork AI consta de dos scripts y una entrada en el archivo <code>.env</code>. En una máquina en la que Docker ya está en marcha, el primer paso no es necesario.",
     "inst.h3a": "Paso 1: preparar el servidor",
-    "inst.pa": "El repositorio de publicación se difundirá con el lanzamiento. Quien quiera probarlo ya hoy solicita el acceso a través de la <a class=\"euc-textlink\" href=\"/warteliste\">lista de espera</a>. Los comandos muestran cómo es la instalación después: clonar el repositorio, cambiar al directorio <code>distribution</code> y ejecutar el script de preparación.",
+    "inst.pa": "El repositorio de publicación se difundirá con el lanzamiento. Quien quiera probarlo ya hoy solicita el acceso beta a través de la <a class=\"euc-textlink\" href=\"/warteliste\">lista de espera</a>. Los comandos muestran cómo es la instalación después: clonar el repositorio, cambiar al directorio <code>distribution</code> y ejecutar el script de preparación.",
     "inst.pa2": "El script es idempotente e instala Docker Engine junto con Compose v2 desde la fuente oficial de Docker, ya que el paquete de Ubuntu <code>docker.io</code> no incluye Compose v2. A ello se suman la rotación de registros, reglas de cortafuegos para los puertos 22, 80 y 443, swap, zona horaria y actualizaciones de seguridad automáticas. Después hay que volver a iniciar sesión una vez.",
     "inst.h3b": "Paso 2: instalar el stack",
     "inst.pb": "El instalador comprueba Docker y Compose v2, crea el archivo <code>.env</code> a partir de la plantilla, genera todos los secretos, crea los directorios de datos y la red del entorno aislado, descarga las imágenes e inicia el stack. El perfil <code>production</code> incluye el proxy inverso, que obtiene automáticamente el certificado TLS.",
@@ -1104,7 +1119,7 @@ window.EUC_I18N = {
     "faq.a6": "Sí, en ambos sentidos. Ambos modelos utilizan la misma arquitectura, por lo que el cambio es un traslado: generar un archivo, copiarlo a la nueva máquina y restaurarlo allí. Conversaciones, cuentas, ajustes y archivos subidos se conservan, siempre que se hereden las claves de cifrado.",
     "cta.h2": "¿Prefiere empezar con el servicio gestionado?",
     "cta.p": "Si no desea operar el stack usted mismo: nos encargamos de la instalación, las actualizaciones, las copias de seguridad y la supervisión en infraestructura suiza. La oferta gestionada está en construcción y el acceso se gestiona a través de la lista de espera.",
-    "cta.btn1": "Únase a la lista de espera",
+    "cta.btn1": "Solicitar acceso beta",
     "cta.btn2": "Seguridad y protección de datos",
     "weiter.title": "Continuar",
     "weiter.li1": "Cómo se gobiernan los permisos, los presupuestos y los registros de auditoría en la operación",

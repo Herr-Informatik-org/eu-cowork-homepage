@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -300,9 +315,9 @@
     <!-- ==================== CTA ==================== -->
     <section class="cta-box">
       <h2 data-i18n="cta.h2">Votre système figure-t-il sur la liste ?</h2>
-      <p data-i18n="cta.p">Inscrivez-vous sur la liste d’attente. Indiquez-nous quels systèmes vous souhaitez connecter : cela influence l’ordre dans lequel nous finalisons les connexions.</p>
+      <p data-i18n="cta.p">Demandez un accès bêta. Indiquez-nous quels systèmes vous souhaitez connecter : cela influence l’ordre dans lequel nous finalisons les connexions.</p>
       <div class="cta-actions">
-        <a class="euc-btn-primary" href="/fr/warteliste" data-i18n="cta.btn1">Rejoindre la liste d’attente</a>
+        <a class="euc-btn-primary" href="/fr/warteliste" data-i18n="cta.btn1">Demander un accès bêta</a>
         <a class="euc-btn-secondary" href="/fr/self-hosting" data-i18n="cta.btn2">Héberger soi-même</a>
       </div>
     </section>
@@ -523,10 +538,10 @@
 <script>window.EUC_I18N = {
   "en": {
     "crumb.current": "Integrations",
-    "cta.btn1": "Join the waitlist",
+    "cta.btn1": "Request beta access",
     "cta.btn2": "Self-host",
     "cta.h2": "Is your system on the list?",
-    "cta.p": "Join the waitlist. Tell us which systems you want to connect; that feeds into the order in which we complete connections.",
+    "cta.p": "Request beta access. Tell us which systems you want to connect; that feeds into the order in which we complete connections.",
     "faq.a1": "An MCP server is a small program that makes an application accessible to AI systems. It speaks the Model Context Protocol, an open standard, and reports to the AI a list of named tools such as “search records” or “store file”. The AI calls these tools instead of accessing the application directly.",
     "faq.a2": "Yes. Permissions apply per server and per individual tool, not only per system. A tool for reading invoices can be released to accounting while the tool for payroll data remains blocked for everyone except the management. If the user identity is additionally passed through to the ERP, the existing user permissions apply there as well.",
     "faq.a3": "Then you build one in front of it, provided your system has a REST API. The server translates between the protocol and the interface and defines which tools exist. The business logic stays in your system. Because MCP is an open standard, this server also keeps working with other AI applications.",
@@ -637,10 +652,10 @@
   },
   "fr": {
     "crumb.current": "Intégrations",
-    "cta.btn1": "Rejoindre la liste d’attente",
+    "cta.btn1": "Demander un accès bêta",
     "cta.btn2": "Héberger soi-même",
     "cta.h2": "Votre système figure-t-il sur la liste ?",
-    "cta.p": "Inscrivez-vous sur la liste d’attente. Indiquez-nous quels systèmes vous souhaitez connecter : cela influence l’ordre dans lequel nous finalisons les connexions.",
+    "cta.p": "Demandez un accès bêta. Indiquez-nous quels systèmes vous souhaitez connecter : cela influence l’ordre dans lequel nous finalisons les connexions.",
     "faq.a1": "Un serveur MCP est un petit programme qui rend une application accessible aux systèmes d’IA. Il parle le Model Context Protocol, un standard ouvert, et communique à l’IA une liste d’outils nommés comme « rechercher des enregistrements » ou « déposer un fichier ». L’IA appelle ces outils au lieu d’accéder directement à l’application.",
     "faq.a2": "Oui. Les droits s’appliquent par serveur et par outil individuel, et pas seulement par système. Un outil de lecture des factures peut être autorisé à la comptabilité tandis que l’outil des données salariales reste bloqué pour tous sauf la direction. Si l’identité de l’utilisateur est en plus transmise à l’ERP, les droits utilisateur existants s’y appliquent également.",
     "faq.a3": "Alors vous en construisez un en amont, à condition que votre système dispose d’une API REST. Le serveur traduit entre le protocole et l’interface et définit les outils disponibles. La logique métier reste dans votre système. MCP étant un standard ouvert, ce serveur continue également de fonctionner avec d’autres applications d’IA.",
@@ -751,10 +766,10 @@
   },
   "it": {
     "crumb.current": "Integrazioni",
-    "cta.btn1": "Iscriviti alla lista d’attesa",
+    "cta.btn1": "Richiedere l’accesso beta",
     "cta.btn2": "Ospitare in proprio",
     "cta.h2": "Il Suo sistema è nell’elenco?",
-    "cta.p": "Iscriviti alla lista d’attesa. Ci scriva quali sistemi desidera collegare: questo influisce sull’ordine in cui completiamo i collegamenti.",
+    "cta.p": "Richiedere l’accesso beta. Ci scriva quali sistemi desidera collegare: questo influisce sull’ordine in cui completiamo i collegamenti.",
     "faq.a1": "Un server MCP è un piccolo programma che rende un’applicazione accessibile ai sistemi di IA. Parla il Model Context Protocol, uno standard aperto, e comunica all’IA un elenco di strumenti denominati come «cercare record» o «archiviare un file». L’IA richiama questi strumenti invece di accedere direttamente all’applicazione.",
     "faq.a2": "Sì. I diritti valgono per server e per singolo strumento, non solo per sistema. Uno strumento per leggere le fatture può essere abilitato alla contabilità, mentre quello per i dati salariali resta bloccato per tutti tranne la direzione. Se inoltre l’identità dell’utente viene trasmessa all’ERP, lì valgono anche i diritti utente esistenti.",
     "faq.a3": "Allora ne costruisce uno davanti, purché il Suo sistema disponga di un’API REST. Il server traduce tra protocollo e interfaccia e stabilisce quali strumenti esistono. La logica applicativa resta nel Suo sistema. Poiché MCP è uno standard aperto, questo server continua a funzionare anche con altre applicazioni di IA.",
@@ -865,10 +880,10 @@
   },
   "es": {
     "crumb.current": "Integraciones",
-    "cta.btn1": "Únase a la lista de espera",
+    "cta.btn1": "Solicitar acceso beta",
     "cta.btn2": "Alojar por cuenta propia",
     "cta.h2": "¿Está su sistema en la lista?",
-    "cta.p": "Apúntese a la lista de espera. Indíquenos qué sistemas desea conectar; eso influye en el orden en el que completamos las conexiones.",
+    "cta.p": "Solicite un acceso beta. Indíquenos qué sistemas desea conectar; eso influye en el orden en el que completamos las conexiones.",
     "faq.a1": "Un servidor MCP es un pequeño programa que hace accesible una aplicación para los sistemas de IA. Habla el Model Context Protocol, un estándar abierto, y comunica a la IA una lista de herramientas con nombre como «buscar registros» o «guardar archivo». La IA invoca esas herramientas en lugar de acceder directamente a la aplicación.",
     "faq.a2": "Sí. Los permisos se aplican por servidor y por herramienta individual, no solo por sistema. Una herramienta para leer facturas puede habilitarse a contabilidad, mientras que la de datos salariales sigue bloqueada para todos salvo la dirección. Si además se transmite la identidad del usuario al ERP, allí rigen también los permisos de usuario existentes.",
     "faq.a3": "Entonces construye uno delante, siempre que su sistema tenga una API REST. El servidor traduce entre el protocolo y la interfaz y define qué herramientas existen. La lógica de negocio permanece en su sistema. Como MCP es un estándar abierto, ese servidor sigue funcionando también con otras aplicaciones de IA.",

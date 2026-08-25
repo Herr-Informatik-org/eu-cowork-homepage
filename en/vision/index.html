@@ -34,10 +34,25 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<!-- Kritischer Pfad. Ohne diese Zeilen entdeckt der Browser die Schriften erst,
+     wenn er den Stilblock im Rumpf erreicht hat: am 25.08.2026 gemessen starteten
+     sie bei 255 Millisekunden statt bei null. Weil font-display auf swap steht,
+     tauschen sie danach mitten im Lesen aus, und genau das war der Sprung im
+     Seitenaufbau. Latin-Teilmenge, drei Schnitte, zusammen 73 KB. -->
 <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="/assets/i18n.js"></script>
 <link rel="stylesheet" href="/assets/content.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394206044"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18394206044');
+</script>
 <!-- Vercel Web Analytics: zaehlt Seitenaufrufe, setzt keine Cookies und
      legt kein Profil ueber Sitzungen hinweg an. Bewusst als Skript und nicht
      als npm-Paket @vercel/analytics: die Seite hat keinen Build-Schritt, es
@@ -115,7 +130,7 @@
         <li data-i18n="kurz.li2">The reasons most frequently cited against adopting AI are a lack of in-house expertise (70.9 %), unclear legal consequences (52.5 %) and data protection concerns (48.8 %); Eurostat survey 2025.</li>
         <li data-i18n="kurz.li3">EU Cowork AI is a thin fork of LibreChat and is published under the MIT licence: no seat minimum, no mandatory branding, free self-hosting from a single user upwards. The licence does not depend on the number of workplaces.</li>
         <li data-i18n="kurz.li4">The offering of Herr Informatik GmbH includes training courses and training materials, from the first prompt through to analyses in Excel and presentations in PowerPoint.</li>
-        <li data-i18n="kurz.li5">EU Cowork AI is under construction; access to the hosted Swiss instance currently runs through the waitlist.</li>
+        <li data-i18n="kurz.li5">EU Cowork AI is under construction; access to the hosted Swiss instance currently runs through a beta request.</li>
       </ul>
     </div>
 
@@ -287,7 +302,7 @@
       </div>
 
       <h3 data-i18n="s6.h3">What is in place today and what is not</h3>
-      <p data-i18n="s6.p2">EU Cowork AI is under construction, and we spell out what that means. Available today are operation on your own infrastructure, registration for the hosted Swiss instance through the waitlist, use as an installable PWA, and a configurable retention period including export and deletion of individual user accounts.</p>
+      <p data-i18n="s6.p2">EU Cowork AI is under construction, and we spell out what that means. Available today are operation on your own infrastructure, requesting beta access to the hosted Swiss instance, use as an installable PWA, and a configurable retention period including export and deletion of individual user accounts.</p>
       <ul>
         <li data-i18n="s6.li1">In progress: the publication of our own extensions under the MIT licence at launch, the dedicated ISO 27001 certification of EU Cowork AI, and the general rollout of the Outlook add-in, which currently runs internally in beta, and of the Excel add-in.</li>
         <li data-i18n="s6.li2">In progress: TOMs document, hosting fact sheet, no-training statement, and an audit and access concept.</li>
@@ -322,17 +337,17 @@
         </div>
         <div class="faq-item">
           <h3 data-i18n="faq.q3">Can I already use EU Cowork AI today?</h3>
-          <p data-i18n="faq.a3">EU Cowork AI is under construction. Anyone self-hosting can already run the open-source platform on their own infrastructure. Access to the hosted Swiss instance runs through the waitlist. A dedicated ISO 27001 certification of EU Cowork AI is in progress, and native apps for iOS and Android are planned.</p>
+          <p data-i18n="faq.a3">EU Cowork AI is under construction. Anyone self-hosting can already run the open-source platform on their own infrastructure. Access to the hosted Swiss instance runs through a beta request. A dedicated ISO 27001 certification of EU Cowork AI is in progress, and native apps for iOS and Android are planned.</p>
         </div>
       </div>
     </section>
 
     <!-- ==================== CTA-BOX ==================== -->
     <section class="cta-box">
-      <h2 data-i18n="cta.h2">Secure early access</h2>
-      <p data-i18n="cta.p">Anyone on the waitlist receives access to the hosted Swiss instance first and helps shape the direction in which EU Cowork AI grows.</p>
+      <h2 data-i18n="cta.h2">Request beta access</h2>
+      <p data-i18n="cta.p">Anyone requesting beta access receives the hosted Swiss instance first and helps shape the direction in which EU Cowork AI grows.</p>
       <div class="cta-actions">
-        <a data-i18n="cta.btn1" class="euc-btn-primary" href="/en/warteliste">Join the waitlist</a>
+        <a data-i18n="cta.btn1" class="euc-btn-primary" href="/en/warteliste">Request beta access</a>
         <a data-i18n="cta.btn2" class="euc-btn-secondary" href="/en/self-hosting">Self-host</a>
       </div>
     </section>
@@ -530,7 +545,7 @@
       "name": "Kann ich EU Cowork AI heute schon einsetzen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "EU Cowork AI befindet sich im Aufbau. Wer selbst hostet, kann die quelloffene Plattform bereits auf eigener Infrastruktur betreiben. Der Zugang zur gehosteten Schweizer Instanz läuft über die Warteliste. Eine eigene ISO-27001-Zertifizierung von EU Cowork AI ist in Arbeit, native Apps für iOS und Android sind geplant."
+        "text": "EU Cowork AI befindet sich im Aufbau. Wer selbst hostet, kann die quelloffene Plattform bereits auf eigener Infrastruktur betreiben. Der Zugang zur gehosteten Schweizer Instanz läuft über eine Beta-Anfrage. Eine eigene ISO-27001-Zertifizierung von EU Cowork AI ist in Arbeit, native Apps für iOS und Android sind geplant."
       }
     }
   ]
@@ -551,7 +566,7 @@ window.EUC_I18N = {
   'kurz.li2': 'The reasons most frequently cited against adopting AI are a lack of in-house expertise (70.9 %), unclear legal consequences (52.5 %) and data protection concerns (48.8 %); Eurostat survey 2025.',
   'kurz.li3': 'EU Cowork AI is a thin fork of LibreChat and is published under the MIT licence: no seat minimum, no mandatory branding, free self-hosting from a single user upwards. The licence does not depend on the number of workplaces.',
   'kurz.li4': 'The offering of Herr Informatik GmbH includes training courses and training materials, from the first prompt through to analyses in Excel and presentations in PowerPoint.',
-  'kurz.li5': 'EU Cowork AI is under construction; access to the hosted Swiss instance currently runs through the waitlist.',
+  'kurz.li5': 'EU Cowork AI is under construction; access to the hosted Swiss instance currently runs through a beta request.',
 
   'toc.titel': 'On this page',
   'toc.i1': 'Why Europe\'s companies hesitate',
@@ -632,7 +647,7 @@ window.EUC_I18N = {
   'tbl2.r6c1': 'Traceable',
   'tbl2.r6c2': 'Every tool call, every admin action and every login is logged and can be exported.',
   's6.h3': 'What is in place today and what is not',
-  's6.p2': 'EU Cowork AI is under construction, and we spell out what that means. Available today are operation on your own infrastructure, registration for the hosted Swiss instance through the waitlist, use as an installable PWA, and a configurable retention period including export and deletion of individual user accounts.',
+  's6.p2': 'EU Cowork AI is under construction, and we spell out what that means. Available today are operation on your own infrastructure, requesting beta access to the hosted Swiss instance, use as an installable PWA, and a configurable retention period including export and deletion of individual user accounts.',
   's6.li1': 'In progress: the publication of our own extensions under the MIT licence at launch, the dedicated ISO 27001 certification of EU Cowork AI, and the general rollout of the Outlook add-in, which currently runs internally in beta, and of the Excel add-in.',
   's6.li2': 'In progress: TOMs document, hosting fact sheet, no-training statement, and an audit and access concept.',
   's6.li3': 'Planned: native apps for iOS and Android, SCIM provisioning, an egress proxy with an allow list for code execution, and hardened sandbox isolation.',
@@ -649,11 +664,11 @@ window.EUC_I18N = {
   'faq.q2': 'Are training courses part of the offering, or does every company have to teach itself?',
   'faq.a2': 'Training courses and training materials are part of the offering of Herr Informatik GmbH. They range from an introduction for all employees through to in-depth support for individual teams, from the first prompt to analyses in Excel and presentations in PowerPoint. Scope and format are agreed with the company.',
   'faq.q3': 'Can I already use EU Cowork AI today?',
-  'faq.a3': 'EU Cowork AI is under construction. Anyone self-hosting can already run the open-source platform on their own infrastructure. Access to the hosted Swiss instance runs through the waitlist. A dedicated ISO 27001 certification of EU Cowork AI is in progress, and native apps for iOS and Android are planned.',
+  'faq.a3': 'EU Cowork AI is under construction. Anyone self-hosting can already run the open-source platform on their own infrastructure. Access to the hosted Swiss instance runs through a beta request. A dedicated ISO 27001 certification of EU Cowork AI is in progress, and native apps for iOS and Android are planned.',
 
-  'cta.h2': 'Secure early access',
-  'cta.p': 'Anyone on the waitlist receives access to the hosted Swiss instance first and helps shape the direction in which EU Cowork AI grows.',
-  'cta.btn1': 'Join the waitlist',
+  'cta.h2': 'Request beta access',
+  'cta.p': 'Anyone requesting beta access receives the hosted Swiss instance first and helps shape the direction in which EU Cowork AI grows.',
+  'cta.btn1': 'Request beta access',
   'cta.btn2': 'Self-host',
 
   'weiter.titel': 'Next',
@@ -674,7 +689,7 @@ window.EUC_I18N = {
   'kurz.li2': 'Les raisons les plus souvent citées contre l’adoption de l’IA sont le manque d’expertise interne (70,9 %), l’incertitude sur les conséquences juridiques (52,5 %) et les préoccupations liées à la protection des données (48,8 %) ; enquête Eurostat 2025.',
   'kurz.li3': 'EU Cowork AI est un fork léger de LibreChat publié sous licence MIT : aucun nombre minimal de sièges, aucune obligation de marquage, auto-hébergement gratuit dès un seul utilisateur. La licence ne dépend pas du nombre de postes de travail.',
   'kurz.li4': 'L’offre de Herr Informatik GmbH comprend des formations et des supports de formation, du premier prompt jusqu’aux analyses dans Excel et aux présentations dans PowerPoint.',
-  'kurz.li5': 'EU Cowork AI est en cours de construction ; l’accès à l’instance suisse hébergée passe aujourd’hui par la liste d’attente.',
+  'kurz.li5': 'EU Cowork AI est en cours de construction ; l’accès à l’instance suisse hébergée passe aujourd’hui par une demande d’accès bêta.',
 
   'toc.titel': 'Sur cette page',
   'toc.i1': 'Pourquoi les entreprises européennes hésitent',
@@ -755,7 +770,7 @@ window.EUC_I18N = {
   'tbl2.r6c1': 'Traçabilité',
   'tbl2.r6c2': 'Chaque appel d’outil, chaque action d’administration et chaque connexion est journalisé et exportable.',
   's6.h3': 'Ce qui existe aujourd’hui et ce qui n’existe pas encore',
-  's6.p2': 'EU Cowork AI est en cours de construction, et nous écrivons ce que cela signifie. Sont disponibles aujourd’hui l’exploitation sur votre propre infrastructure, l’inscription à l’instance suisse hébergée via la liste d’attente, l’utilisation comme PWA installable ainsi qu’une durée de conservation réglable avec export et suppression de comptes utilisateurs individuels.',
+  's6.p2': 'EU Cowork AI est en cours de construction, et nous écrivons ce que cela signifie. Sont disponibles aujourd’hui l’exploitation sur votre propre infrastructure, la demande d’un accès bêta à l’instance suisse hébergée, l’utilisation comme PWA installable ainsi qu’une durée de conservation réglable avec export et suppression de comptes utilisateurs individuels.',
   's6.li1': 'En cours : la publication de nos propres extensions sous licence MIT au lancement, la certification ISO 27001 propre à EU Cowork AI ainsi que le déploiement général du complément Outlook, aujourd’hui en bêta en interne, et du complément Excel.',
   's6.li2': 'En cours : document sur les mesures techniques et organisationnelles, fiche technique d’hébergement, déclaration de non-entraînement ainsi que concept d’audit et d’accès.',
   's6.li3': 'Planifié : applications natives pour iOS et Android, provisionnement SCIM, un proxy de sortie avec liste d’autorisation pour l’exécution de code et l’isolation renforcée du bac à sable.',
@@ -772,11 +787,11 @@ window.EUC_I18N = {
   'faq.q2': 'Les formations font-elles partie de l’offre ou chaque entreprise doit-elle se former elle-même ?',
   'faq.a2': 'Les formations et les supports de formation font partie de l’offre de Herr Informatik GmbH. Ils vont de l’introduction pour tous les collaborateurs à l’accompagnement approfondi d’équipes particulières, du premier prompt aux analyses dans Excel et aux présentations dans PowerPoint. L’étendue et le format sont convenus avec l’entreprise.',
   'faq.q3': 'Puis-je déjà utiliser EU Cowork AI aujourd’hui ?',
-  'faq.a3': 'EU Cowork AI est en cours de construction. Qui héberge lui-même peut déjà exploiter la plateforme open source sur sa propre infrastructure. L’accès à l’instance suisse hébergée passe par la liste d’attente. Une certification ISO 27001 propre à EU Cowork AI est en cours, des applications natives pour iOS et Android sont planifiées.',
+  'faq.a3': 'EU Cowork AI est en cours de construction. Qui héberge lui-même peut déjà exploiter la plateforme open source sur sa propre infrastructure. L’accès à l’instance suisse hébergée passe par une demande d’accès bêta. Une certification ISO 27001 propre à EU Cowork AI est en cours, des applications natives pour iOS et Android sont planifiées.',
 
-  'cta.h2': 'Obtenir un accès anticipé',
-  'cta.p': 'Qui figure sur la liste d’attente obtient en premier l’accès à l’instance suisse hébergée et contribue à orienter la croissance d’EU Cowork AI.',
-  'cta.btn1': 'Rejoindre la liste d’attente',
+  'cta.h2': 'Demander un accès bêta',
+  'cta.p': 'Qui demande un accès bêta obtient en premier l’instance suisse hébergée et contribue à orienter la croissance d’EU Cowork AI.',
+  'cta.btn1': 'Demander un accès bêta',
   'cta.btn2': 'Héberger soi-même',
 
   'weiter.titel': 'Suite',
@@ -797,7 +812,7 @@ window.EUC_I18N = {
   'kurz.li2': 'Le ragioni più citate contro l’adozione dell’IA sono la mancanza di competenze interne (70,9 %), l’incertezza sulle conseguenze giuridiche (52,5 %) e le preoccupazioni sulla protezione dei dati (48,8 %); indagine Eurostat 2025.',
   'kurz.li3': 'EU Cowork AI è un fork leggero di LibreChat ed è pubblicato con licenza MIT: nessun numero minimo di postazioni, nessun obbligo di branding, self-hosting gratuito già a partire da un solo utente. La licenza non dipende dal numero di postazioni di lavoro.',
   'kurz.li4': 'L’offerta di Herr Informatik GmbH comprende corsi di formazione e materiali didattici, dal primo prompt fino alle analisi in Excel e alle presentazioni in PowerPoint.',
-  'kurz.li5': 'EU Cowork AI è in costruzione; l’accesso all’istanza svizzera gestita passa oggi dalla lista d’attesa.',
+  'kurz.li5': 'EU Cowork AI è in costruzione; l’accesso all’istanza svizzera gestita passa oggi da una richiesta di accesso beta.',
 
   'toc.titel': 'In questa pagina',
   'toc.i1': 'Perché le imprese europee esitano',
@@ -878,7 +893,7 @@ window.EUC_I18N = {
   'tbl2.r6c1': 'Tracciabilità',
   'tbl2.r6c2': 'Ogni chiamata di strumento, ogni azione amministrativa e ogni accesso viene registrato ed è esportabile.',
   's6.h3': 'Che cosa c’è oggi e che cosa non c’è ancora',
-  's6.p2': 'EU Cowork AI è in costruzione e scriviamo per esteso che cosa significhi. Sono disponibili oggi l’esercizio sulla propria infrastruttura, l’iscrizione all’istanza svizzera gestita tramite la lista d’attesa, l’uso come PWA installabile nonché una durata di conservazione impostabile con esportazione e cancellazione dei singoli account utente.',
+  's6.p2': 'EU Cowork AI è in costruzione e scriviamo per esteso che cosa significhi. Sono disponibili oggi l’esercizio sulla propria infrastruttura, la richiesta di un accesso beta all’istanza svizzera gestita, l’uso come PWA installabile nonché una durata di conservazione impostabile con esportazione e cancellazione dei singoli account utente.',
   's6.li1': 'In lavorazione: la pubblicazione delle nostre estensioni con licenza MIT al lancio, la certificazione ISO 27001 propria di EU Cowork AI nonché il rollout generale del componente aggiuntivo per Outlook, oggi in beta all’interno, e del componente aggiuntivo per Excel.',
   's6.li2': 'In lavorazione: documento sulle misure tecniche e organizzative, scheda informativa sull’hosting, dichiarazione di non addestramento nonché concetto di audit e di accesso.',
   's6.li3': 'Pianificato: app native per iOS e Android, provisioning SCIM, un proxy di uscita con lista di autorizzazione per l’esecuzione di codice e l’isolamento rafforzato della sandbox.',
@@ -895,11 +910,11 @@ window.EUC_I18N = {
   'faq.q2': 'La formazione fa parte dell’offerta o ogni azienda deve imparare da sola?',
   'faq.a2': 'Corsi e materiali di formazione fanno parte dell’offerta di Herr Informatik GmbH. Vanno dall’introduzione per tutti i collaboratori all’accompagnamento approfondito di singoli team, dal primo prompt alle analisi in Excel e alle presentazioni in PowerPoint. Portata e formato vengono concordati con l’impresa.',
   'faq.q3': 'Posso già utilizzare EU Cowork AI oggi?',
-  'faq.a3': 'EU Cowork AI è in costruzione. Chi effettua il self-hosting può già gestire la piattaforma open source sulla propria infrastruttura. L’accesso all’istanza svizzera gestita passa dalla lista d’attesa. Una certificazione ISO 27001 propria di EU Cowork AI è in corso, app native per iOS e Android sono pianificate.',
+  'faq.a3': 'EU Cowork AI è in costruzione. Chi effettua il self-hosting può già gestire la piattaforma open source sulla propria infrastruttura. L’accesso all’istanza svizzera gestita passa da una richiesta di accesso beta. Una certificazione ISO 27001 propria di EU Cowork AI è in corso, app native per iOS e Android sono pianificate.',
 
-  'cta.h2': 'Assicuratevi l’accesso anticipato',
-  'cta.p': 'Chi è in lista d’attesa riceve per primo l’accesso all’istanza svizzera gestita e contribuisce a definire la direzione in cui cresce EU Cowork AI.',
-  'cta.btn1': 'Iscriviti alla lista d’attesa',
+  'cta.h2': 'Richiedete l’accesso beta',
+  'cta.p': 'Chi richiede un accesso beta riceve per primo l’istanza svizzera gestita e contribuisce a definire la direzione in cui cresce EU Cowork AI.',
+  'cta.btn1': 'Richiedere l’accesso beta',
   'cta.btn2': 'Ospitare in proprio',
 
   'weiter.titel': 'Avanti',
@@ -920,7 +935,7 @@ window.EUC_I18N = {
   'kurz.li2': 'Los motivos más citados en contra del uso de la IA son la falta de conocimientos internos (70,9 %), la incertidumbre sobre las consecuencias jurídicas (52,5 %) y las preocupaciones por la protección de datos (48,8 %); encuesta de Eurostat de 2025.',
   'kurz.li3': 'EU Cowork AI es un fork ligero de LibreChat y se publica bajo licencia MIT: sin número mínimo de puestos, sin marca obligatoria, alojamiento propio gratuito desde un solo usuario. La licencia no depende del número de puestos de trabajo.',
   'kurz.li4': 'La oferta de Herr Informatik GmbH incluye formaciones y materiales de formación, desde el primer prompt hasta los análisis en Excel y las presentaciones en PowerPoint.',
-  'kurz.li5': 'EU Cowork AI está en construcción; el acceso a la instancia suiza gestionada se realiza hoy a través de la lista de espera.',
+  'kurz.li5': 'EU Cowork AI está en construcción; el acceso a la instancia suiza gestionada se realiza hoy mediante una solicitud de acceso beta.',
 
   'toc.titel': 'En esta página',
   'toc.i1': 'Por qué dudan las empresas europeas',
@@ -1001,7 +1016,7 @@ window.EUC_I18N = {
   'tbl2.r6c1': 'Trazabilidad',
   'tbl2.r6c2': 'Cada llamada a una herramienta, cada acción de administración y cada inicio de sesión queda registrada y es exportable.',
   's6.h3': 'Qué hay hoy y qué todavía no',
-  's6.p2': 'EU Cowork AI está en construcción y explicamos qué significa eso. Hoy están disponibles la operación en infraestructura propia, el registro para la instancia suiza gestionada a través de la lista de espera, el uso como PWA instalable y un periodo de conservación configurable con exportación y eliminación de cuentas de usuario concretas.',
+  's6.p2': 'EU Cowork AI está en construcción y explicamos qué significa eso. Hoy están disponibles la operación en infraestructura propia, la solicitud de un acceso beta a la instancia suiza gestionada, el uso como PWA instalable y un periodo de conservación configurable con exportación y eliminación de cuentas de usuario concretas.',
   's6.li1': 'En curso: la publicación de nuestras propias extensiones bajo licencia MIT con el lanzamiento, la certificación ISO 27001 propia de EU Cowork AI, así como el despliegue general del complemento de Outlook, hoy en fase beta de uso interno, y del complemento de Excel.',
   's6.li2': 'En curso: documento de medidas técnicas y organizativas, ficha técnica de alojamiento, declaración de no entrenamiento y concepto de auditoría y de accesos.',
   's6.li3': 'Planificado: aplicaciones nativas para iOS y Android, aprovisionamiento SCIM, un proxy de salida con lista de permitidos para la ejecución de código y el aislamiento reforzado del entorno aislado.',
@@ -1018,11 +1033,11 @@ window.EUC_I18N = {
   'faq.q2': '¿Las formaciones forman parte de la oferta o cada empresa tiene que aprender por su cuenta?',
   'faq.a2': 'Las formaciones y los materiales de formación forman parte de la oferta de Herr Informatik GmbH. Van desde la introducción para toda la plantilla hasta el acompañamiento en profundidad de equipos concretos, desde el primer prompt hasta los análisis en Excel y las presentaciones en PowerPoint. El alcance y el formato se acuerdan con la empresa.',
   'faq.q3': '¿Puedo utilizar EU Cowork AI ya hoy?',
-  'faq.a3': 'EU Cowork AI está en construcción. Quien se autoaloja ya puede operar la plataforma de código abierto en su propia infraestructura. El acceso a la instancia suiza gestionada se realiza a través de la lista de espera. Una certificación ISO 27001 propia de EU Cowork AI está en curso y hay aplicaciones nativas para iOS y Android planificadas.',
+  'faq.a3': 'EU Cowork AI está en construcción. Quien se autoaloja ya puede operar la plataforma de código abierto en su propia infraestructura. El acceso a la instancia suiza gestionada se realiza mediante una solicitud de acceso beta. Una certificación ISO 27001 propia de EU Cowork AI está en curso y hay aplicaciones nativas para iOS y Android planificadas.',
 
-  'cta.h2': 'Asegure el acceso anticipado',
-  'cta.p': 'Quien figura en la lista de espera recibe primero el acceso a la instancia suiza gestionada y contribuye a decidir en qué dirección crece EU Cowork AI.',
-  'cta.btn1': 'Únase a la lista de espera',
+  'cta.h2': 'Solicite el acceso beta',
+  'cta.p': 'Quien solicita un acceso beta recibe primero la instancia suiza gestionada y contribuye a decidir en qué dirección crece EU Cowork AI.',
+  'cta.btn1': 'Solicitar acceso beta',
   'cta.btn2': 'Alojar por cuenta propia',
 
   'weiter.titel': 'Continuar',
