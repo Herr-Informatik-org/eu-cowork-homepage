@@ -81,10 +81,9 @@
 <p><a href="/fr/self-hosting">Héberger vous-même</a> <a href="/fr/warteliste">Demander un accès bêta</a></p>
 <h1>La bêta est ouverte. Demandez votre accès.</h1>
 <p>La plateforme IA européenne pour votre entreprise : tous les grands modèles via un seul accès, vos données en Suisse ou sur votre propre serveur.</p>
-<p>// Pour démarrer</p>
-<p>55 €</p>
-<p>de crédit de modèles offert</p>
-<p>Chaque accès bêta démarre avec 55 € de crédit de modèles. Aucune donnée de paiement requise.</p>
+<p>// Offert pour démarrer</p>
+<p>55 € de crédit de modèles</p>
+<p>La bêta elle-même ne coûte rien. Aucune donnée de paiement requise.</p>
 <ol><li>Vous confirmez votre adresse via le lien contenu dans l’e-mail.</li><li>Nous examinons votre demande et préparons votre accès.</li><li>Vous démarrez avec toutes les fonctions, 55 € de crédit de modèles vous attendent.</li></ol>
 <p>Nous ouvrons les accès un par un et revenons vers vous dès que nous avons examiné votre demande.</p>
 <p>Adresse e-mail professionnelle *</p>
@@ -368,8 +367,14 @@
     font-size:clamp(30px,3.2vw,40px); line-height:1.05; letter-spacing:-.02em;
     color:var(--c-ink); margin:8px 0 0;
   }
-  .wl-credit-lead{
-    margin:2px 0 0; font-size:14.5px; line-height:1.4; color:#3D4B59;
+  /* Die Einheit steht auf derselben Zeile wie der Betrag und nicht darunter.
+     Eine grosse Zahl mit Waehrung liest sich sonst als Preis: Genau das ist
+     beim Gegenlesen passiert, bevor jemand die Zeile darunter erreicht hat.
+     Als inline-block bricht sie im Ganzen um, statt mitten im Wort. */
+  .wl-credit-unit{
+    display:inline-block; margin-left:9px;
+    font-family:var(--f-display); font-size:15.5px; font-weight:500;
+    line-height:1.3; letter-spacing:0; color:#3D4B59;
   }
   .wl-credit-body{
     margin:10px 0 0; font-size:13.5px; line-height:1.55; color:#4B5765;
@@ -634,8 +639,7 @@
                die Seite aus der Schweiz auf Englisch liest, sieht Franken. -->
           <div class="wl-credit">
             <span class="wl-credit-eyebrow">{{ t.credit.eyebrow }}</span>
-            <p class="wl-credit-amount">{{ creditAmount }}</p>
-            <p class="wl-credit-lead">{{ t.credit.lead }}</p>
+            <p class="wl-credit-amount">{{ creditAmount }}<span class="wl-credit-unit">{{ t.credit.unit }}</span></p>
             <p class="wl-credit-body">{{ creditBody }}</p>
           </div>
           <!-- Der Eintrag ist kein blinder Einwurf: hier steht, was danach
@@ -893,8 +897,8 @@ class Component extends DCLogic {
         h1a:'Die Beta ist offen.', h1b:'Jetzt Zugang anfragen.',
         sub:'Die europäische KI-Plattform für Ihr Unternehmen: alle Top-Modelle über einen Zugang, Ihre Daten in der Schweiz oder auf Ihrem eigenen Server.',
         hint:'Wir schalten die Zugänge einzeln frei und melden uns, sobald wir Ihre Anfrage angesehen haben.',
-        credit:{ eyebrow:'// Zum Start', lead:'Modellguthaben geschenkt',
-                 body:'Auf jedem Beta-Zugang liegt ein Startguthaben von {credit}. Sie hinterlegen dafür keine Zahlungsdaten.' },
+        credit:{ eyebrow:'// Geschenkt zum Start', unit:'Modellguthaben',
+                 body:'Die Beta selbst kostet nichts. Sie hinterlegen keine Zahlungsdaten.' },
         steps:[
           'Sie bestätigen Ihre Adresse über den Link in der E-Mail.',
           'Wir sehen uns die Anfrage an und richten Ihren Zugang ein.',
@@ -1035,8 +1039,8 @@ class Component extends DCLogic {
         h1a:'The beta is open.', h1b:'Request your access.',
         sub:'The European AI platform for your company: all top models through one account, your data in Switzerland or on your own server.',
         hint:'We open accounts one at a time and get back to you once we have looked at your request.',
-        credit:{ eyebrow:'// To get started', lead:'of model credit on us',
-                 body:'Every beta account starts with {credit} of model credit. No payment details required.' },
+        credit:{ eyebrow:'// Free to get started', unit:'of model credit',
+                 body:'The beta itself costs nothing. No payment details required.' },
         steps:[
           'You confirm your address via the link in the email.',
           'We look at your request and set up your access.',
@@ -1175,8 +1179,8 @@ class Component extends DCLogic {
         h1a:'La bêta est ouverte.', h1b:'Demandez votre accès.',
         sub:'La plateforme IA européenne pour votre entreprise : tous les grands modèles via un seul accès, vos données en Suisse ou sur votre propre serveur.',
         hint:'Nous ouvrons les accès un par un et revenons vers vous dès que nous avons examiné votre demande.',
-        credit:{ eyebrow:'// Pour démarrer', lead:'de crédit de modèles offert',
-                 body:'Chaque accès bêta démarre avec {credit} de crédit de modèles. Aucune donnée de paiement requise.' },
+        credit:{ eyebrow:'// Offert pour démarrer', unit:'de crédit de modèles',
+                 body:'La bêta elle-même ne coûte rien. Aucune donnée de paiement requise.' },
         steps:[
           'Vous confirmez votre adresse via le lien contenu dans l’e-mail.',
           'Nous examinons votre demande et préparons votre accès.',
@@ -1315,8 +1319,8 @@ class Component extends DCLogic {
         h1a:'La beta è aperta.', h1b:'Richieda il Suo accesso.',
         sub:'La piattaforma IA europea per la Sua azienda: tutti i migliori modelli con un unico accesso, i Suoi dati in Svizzera o sul Suo server.',
         hint:'Attiviamo gli accessi uno alla volta e La ricontattiamo non appena abbiamo esaminato la richiesta.',
-        credit:{ eyebrow:'// Per iniziare', lead:'di credito modelli in omaggio',
-                 body:'Ogni accesso beta parte con {credit} di credito modelli. Nessun dato di pagamento richiesto.' },
+        credit:{ eyebrow:'// In regalo per iniziare', unit:'di credito modelli',
+                 body:'La beta in sé non costa nulla. Nessun dato di pagamento richiesto.' },
         steps:[
           'Conferma il Suo indirizzo tramite il link contenuto nell’e-mail.',
           'Esaminiamo la richiesta e prepariamo il Suo accesso.',
@@ -1455,8 +1459,8 @@ class Component extends DCLogic {
         h1a:'La beta está abierta.', h1b:'Solicite su acceso.',
         sub:'La plataforma de IA europea para su empresa: todos los mejores modelos con un solo acceso, sus datos en Suiza o en su propio servidor.',
         hint:'Habilitamos los accesos uno a uno y le respondemos en cuanto hayamos revisado su solicitud.',
-        credit:{ eyebrow:'// Para empezar', lead:'de saldo de modelos de regalo',
-                 body:'Cada acceso beta empieza con {credit} de saldo de modelos. Sin datos de pago.' },
+        credit:{ eyebrow:'// De regalo para empezar', unit:'de saldo de modelos',
+                 body:'La beta en sí no cuesta nada. Sin datos de pago.' },
         steps:[
           'Usted confirma su dirección mediante el enlace del correo electrónico.',
           'Revisamos su solicitud y preparamos su acceso.',
