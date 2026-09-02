@@ -1692,6 +1692,11 @@ pre code {
   .blog-cards { grid-template-columns: 1fr 1fr; }
 }
 
+/* Eine Sektion mit nur einem Artikel bekommt keine zweite Spalte: sonst stuende
+   die Karte im Tablet-Band halbbreit und rechts daneben nichts. Ab 980px macht
+   .blog-card-featured daraus wieder eine Querkarte. */
+.blog-cards:has(> .blog-card:only-child) { grid-template-columns: 1fr; }
+
 .blog-card {
   margin: 0;
   padding: 0;
@@ -1867,3 +1872,4 @@ pre code {
 .blog-card-media.media-kanzlei    { background: linear-gradient(165deg, rgba(18, 50, 107, .08) 0%, var(--c-ice-100) 100%); }
 .blog-card-media.media-immobilien { background: linear-gradient(165deg, rgba(165, 216, 230, .28) 0%, var(--c-ice-100) 100%); }
 .blog-card-media.media-praxis     { background: linear-gradient(165deg, rgba(46, 108, 134, .12) 0%, var(--c-ice-100) 100%); }
+.blog-card-media.media-modelle    { background: linear-gradient(165deg, rgba(18, 50, 107, .14) 0%, var(--c-ice-100) 100%); }
