@@ -26,7 +26,9 @@
    ACHTUNG zur Reihenfolge: Dieses Skript loescht /en, /fr, /it und /es zu
    Beginn vollstaendig. Dabei verschwinden auch die dort liegenden llms.txt und
    llms-full.txt. Danach muss deshalb immer scripts/build-llms.mjs laufen. Der
-   gemeinsame Einstiegspunkt dafuer ist `npm run build`.
+   gemeinsame Einstiegspunkt dafuer ist `npm run build:all`. Das Skript darf
+   NICHT `build` heissen: Vercel fuehrt ein Skript dieses Namens automatisch aus
+   und behandelt das Projekt dann nicht mehr als statische Seite.
 
    Aufruf: node scripts/build-i18n.mjs   (danach zwingend build-llms.mjs)
    ============================================================================= */
