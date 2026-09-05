@@ -1,0 +1,113 @@
+# EU Cowork AI
+
+> Plataforma de trabajo con IA de código abierto para empresas. Acceso a más de 100 modelos de lenguaje, procesados en la UE. Autoalojable desde un solo usuario bajo licencia MIT, u operada en centros de datos certificados ISO 27001 en Suiza. Una oferta de Herr Informatik GmbH, Windisch (CH).
+
+EU Cowork AI es un colega de IA para empresas: una plataforma de chat en el navegador que conecta los modelos de lenguaje con los sistemas de la empresa, en lugar de ser una ventana de chat aislada más. El producto es un fork ligero de LibreChat (MIT, más de 40.000 estrellas en GitHub), ampliado con servicios propios para la empresa.
+
+El posicionamiento central es la soberanía europea de los datos sin renunciar a funciones. La operación se realiza en Suiza, la inferencia se procesa en la UE a través de EuRouter, la telemetría está desactivada de forma predeterminada y los datos de los clientes no entrenan ningún modelo. Quien se autoaloja conserva sus datos por completo en su propia infraestructura: desde un solo usuario, sin límite de puestos y sin marca impuesta.
+
+## Qué hace EU Cowork AI
+
+- Todos los modelos: más de 100 modelos de primer nivel desde un único acceso, procesados en la UE, incluidos los grandes modelos de Anthropic y OpenAI. Sin dependencia de un proveedor; clave de proveedor y punto de acceso propios mediante configuración.
+- Búsqueda web: respuestas actuales con indicación de fuentes directamente en el chat, autoalojada mediante SearXNG.
+- Generación de archivos: pedir una hoja de cálculo y descargar el archivo terminado (Excel, Word, PDF).
+- Agentes de rol y habilidades: colegas de IA preparados para tareas recurrentes, habilitados por grupo.
+- Conexión con el ERP con control de permisos: el ERP se conecta mediante una pasarela MCP. Los permisos llegan hasta la herramienta concreta: leer facturas sí, salarios no. Cada llamada a una herramienta queda auditada.
+- Memoria proactiva: recuerda por sí misma lo que importa. Auditable, borrable, en el servidor propio.
+
+## Gobernanza y administración
+
+- Roles y grupos: invitar usuarios, asignar roles y grupos, desde Entra ID (OIDC) o gestionados localmente.
+- Permisos MCP hasta el nivel de herramienta: permitir o denegar por servidor y por herramienta concreta. Cadena de reglas: usuario, rol, grupo, valor predeterminado del servidor; gana la primera coincidencia.
+- Costes y presupuesto común: consumo por usuario, grupo y modelo, en tokens y en euros. Un presupuesto mensual común para la organización, con bloqueo suave en lugar de un exceso silencioso.
+- Registro de auditoría: cada llamada a una herramienta a través de la pasarela MCP, cada acción de administración y cada inicio de sesión queda registrado y es exportable.
+
+## Protección de datos y cumplimiento
+
+- Operación en centros de datos certificados ISO 27001 de Green, Campus Lupfig (cantón de Argovia), Suiza. La certificación pertenece a Green; una certificación ISO 27001 propia de EU Cowork AI está en curso.
+- LPD revisada (Suiza) y RGPD, garantizados contractualmente.
+- Sin entrenamiento: los datos de los clientes no entrenan ningún modelo.
+- Telemetría desactivada de forma predeterminada, sin seguimiento sin consentimiento activo.
+- Una limitación que nombramos abiertamente: la búsqueda web transmite la consulta a buscadores externos, sin identidad del usuario. Todo se queda en Europa vale para el almacenamiento y la inferencia, no para la consulta de búsqueda en sí.
+
+## Conexiones
+
+Preparadas y activadas por cliente durante la configuración: ERP (clientes, facturas, proyectos), SharePoint (documentos de Microsoft 365), búsqueda web con fuentes, generación de archivos, conocimiento de la empresa como base de conocimiento. Complemento de Outlook: en beta, hoy en uso interno. Complemento de Excel: en curso. Todo lo demás a través del Model Context Protocol (MCP): para muchas herramientas extendidas (HubSpot, Slack, Jira, Confluence, Notion, Linear, GitHub, Sentry, PostgreSQL, Stripe, Google Drive) existen servidores MCP ya listos; para los sistemas propios basta con una API REST. Las conexiones con una cuenta de servicio común pasan por la pasarela MCP, donde cada llamada se comprueba y se anota en el registro de auditoría. Cuando la identidad de la persona se transmite hasta el sistema de destino, como en SharePoint mediante la cuenta de Microsoft, es ese sistema el que aplica los permisos y rige su propio registro.
+
+## Diferencias con el mercado
+
+Frente a Claude, Microsoft 365 Copilot, Langdock, Swisscom AI y Open WebUI, EU Cowork AI es la única opción que es a la vez de código abierto bajo MIT, autoalojable desde un solo usuario (Open WebUI exige una licencia empresarial o una autorización escrita para retirar la marca a partir de 50 usuarios en un periodo móvil de 30 días), alojada en Suiza y con conexión al ERP con control de acceso por rol y auditoría.
+
+## Páginas
+
+- [EU Cowork AI: su colega de IA. Se queda en Europa.](https://eucowork.ai/es): IA soberana para empresas: open source, alojada en Suiza o autoalojada desde 1 usuario (MIT). Más de 100 modelos procesados en Europa y acceso ERP auditado.
+- [Precios: autoalojar o servicio gestionado](https://eucowork.ai/es/preise): Un software, dos formas de operarlo: autoalojamiento gratuito, código fuente en breve y servicio gestionado en Suiza por 15 € por persona y mes.
+- [Empezar: solicitar acceso](https://eucowork.ai/es/warteliste): EU Cowork AI es utilizable en producción. Solicite acceso: gratis durante la fase de prueba, saldo de modelos incluido. Accesos asignados por fases.
+- [Plataformas de IA comparadas: 7 proveedores](https://eucowork.ai/es/vergleich): ChatGPT, Microsoft 365 Copilot, Claude, Langdock, Open WebUI, LibreChat y EU Cowork AI comparados: ruta de datos, permisos, licencia y modelos, con fuentes.
+- [Preguntas frecuentes de la plataforma de IA](https://eucowork.ai/es/faq): 41 preguntas y respuestas sobre EU Cowork AI: alojado en Suiza, sin entrenamiento, 100+ modelos procesados en la UE, permisos por herramienta y licencia MIT.
+- [Seguridad, protección y residencia de datos](https://eucowork.ai/es/sicherheit): EU Cowork AI funciona en centros de datos ISO 27001 de Green en Lupfig y la inferencia se procesa en la UE con EuRouter. revDSG y RGPD, sin entrenar con sus datos.
+- [Gobernanza: permisos, presupuestos, auditoría](https://eucowork.ai/es/governance): ¿Quién usa qué herramienta, quién ve qué datos, cuánto cuesta? Permisos hasta cada herramienta, auditoría por llamada y presupuesto mensual con bloqueo suave.
+- [Integraciones: ERP y sistemas mediante MCP](https://eucowork.ai/es/integrationen): EU Cowork AI conecta su ERP, SharePoint y cualquier sistema con API mediante MCP. Cinco conexiones listas, permisos por herramienta y auditoría por llamada.
+- [Alojar una plataforma de IA de código abierto](https://eucowork.ai/es/self-hosting): Aloje EU Cowork AI por su cuenta: un stack Docker Compose en una VM Ubuntu, dos scripts, unos 0,7 GB de RAM en reposo y licencia MIT, sin límite de puestos.
+- [Nuestra visión: Europa preparada para la IA](https://eucowork.ai/es/vision): Por qué nace EU Cowork AI: en 2025, el 20,0 % de las empresas de la UE con 10 o más empleados usaba IA. Construimos IA soberana de código abierto con licencia MIT.
+- [Blog](https://eucowork.ai/es/blog): Cómo trabajan las pymes de Suiza y Europa con un colega de IA: dieciséis artículos sobre procesos, conectores y los límites que conllevan.
+- [Docs](https://eucowork.ai/docs/es): Documentación: visión general, funciones, administración, autoalojamiento y MCP. Su propia llms.txt en /docs/llms.txt, texto completo en /docs/llms-full.txt.
+
+## Artículos
+
+Artículos de fondo sobre derecho, operación y práctica sectorial, cada uno con fuentes numeradas.
+
+- [Lo que Suiza mantiene fuera de la nube](https://eucowork.ai/es/blog/ki-datenhaltung-schweiz): La autoridad federal suiza logró que GEVER y Outlook sigan en la Administración federal, pese a la implantación en curso de Microsoft 365.
+- [Dos plazos que casi nadie tiene en agenda](https://eucowork.ai/es/blog/ai-act-fristen-dezember-2026): El 2 de diciembre de 2026 y el 12 de enero de 2027: qué dejan abierto los plazos aplazados, qué prohíbe el Data Act y a quién afecta de verdad cada uno.
+- [IA agéntica: quién autoriza las herramientas](https://eucowork.ai/es/blog/ki-agenten-governance): En una nota del 20 de julio de 2026, la CNIL describe los riesgos de la IA agéntica. Tres procesos muestran cómo encajan permisos, aprobación y registro.
+- [Decretos de IA en Italia: aún no en vigor](https://eucowork.ai/es/blog/ki-haftung-italien): El Consejo de Ministros italiano aprobó dos decretos de IA: prisión por la supervisión omitida. Aún no están publicados ni en vigor.
+- [48 sentencias inventadas: multa al abogado](https://eucowork.ai/es/blog/ki-quellen-statt-halluzination): Un tribunal español multó a un abogado por 48 citas inventadas. Tres procesos en los que cada afirmación muestra el lugar del que procede, y sus límites.
+- [Claude Opus y Sonnet a través de Amazon Bedrock](https://eucowork.ai/es/blog/anthropic-modelle-schweiz): Claude Opus y Sonnet desde EU Cowork AI, ejecutados en Amazon Bedrock con el perfil europeo: tres procesos, la arquitectura y el alcance de la CLOUD Act.
+- [IA para oficios en Europa: Holded, Pennylane](https://eucowork.ai/es/blog/ki-handwerk-europa): Tres flujos de IA para oficios y pymes en Europa: ofertas, partes de obra, conocimiento de la empresa. Conexión con Lexware Office, Pennylane, Holded, Fortnox.
+- [IA en la producción: conectar su ERP](https://eucowork.ai/es/blog/ki-produktion-europa): Hacer consultable el saber de la planta, preparar auditorías de clientes, instrucciones multilingües. IA conectada con Monitor ERP, weclapp, Xentral y Odoo.
+- [IA para despachos y gestorías con DATEV](https://eucowork.ai/es/blog/ki-kanzlei-europa): Indexar un mandato, compartir el saber del despacho, guiar a los mandantes: tres procesos de IA para despachos, con conexión de IA a DATEV y Holded.
+- [IA y software de administración en Europa](https://eucowork.ai/es/blog/ki-immobilien-europa): La situación real de los conectores, de casavi a Fortnox, y tres procesos de IA para la administración de inmuebles en Europa que funcionan sin interfaz.
+- [IA y software de consulta en Europa](https://eucowork.ai/es/blog/ki-praxis-europa): Informes para pagadores, conocimiento de la consulta consultable, info multilingüe. Y cómo está la conexión de la IA con medatixx, IXOS, Kaddio y awinta.
+- [IA para oficios y pymes: bexio, KLARA](https://eucowork.ai/es/blog/ki-handwerk-kmu): Tres casos de uso de la IA para oficios y pymes en Suiza: ofertas, partes, conocimiento de la empresa. Con conexión a bexio, KLARA, CashCtrl y Microsoft 365.
+- [IA en la producción: ERP, Abacus, SAP](https://eucowork.ai/es/blog/ki-produktion): Conservar el saber de los informes de servicio, revisar pliegos y preparar auditorías. IA conectada con Abacus, SAP Business One y Odoo.
+- [IA para despacho y fiduciaria con Vertec](https://eucowork.ai/es/blog/ki-treuhand-kanzlei): Indexar el expediente, revisar contratos, redactar escritos: tres procesos de IA para despachos y fiduciarias, con conexión de IA a Vertec y bexio.
+- [IA y software en administración de inmuebles](https://eucowork.ai/es/blog/ki-immobilienverwaltung): IA conectada a GARAIO REM, Abacus e ImmoTop2: tres procesos para consultas de inquilinos, gastos accesorios y entregas en administraciones suizas.
+- [IA y software de consulta y farmacia](https://eucowork.ai/es/blog/ki-praxis-apotheke): Borradores de informe, manual de calidad consultable, hojas multilingües. Y cómo está la conexión de la IA con vitomed, Elexis, OneDoc y Documedis.
+
+## Aviso legal
+
+- [Contrato de encargo de tratamiento](https://eucowork.ai/es/avv): Regula el tratamiento de datos personales por cuenta del cliente conforme al art. 28 del RGPD y la revDSG suiza, con obligaciones claras para ambas partes.
+- [Subencargados](https://eucowork.ai/es/subprozessoren): Lista actualizada de los subencargados del tratamiento de EU Cowork AI. Los cambios se anuncian con antelación y la lista forma parte del contrato DPA.
+- [Política de privacidad](https://eucowork.ai/es/datenschutz): Cómo trata EU Cowork AI los datos personales según la revDSG suiza y el RGPD. Breve, porque recopilamos pocos datos. Telemetría desactivada por defecto.
+- [Condiciones generales](https://eucowork.ai/es/agb): Condiciones generales de uso del servicio EU Cowork AI de Herr Informatik GmbH, Windisch (Suiza): derechos, obligaciones y detalles contractuales.
+- [Aviso legal](https://eucowork.ai/es/impressum): EU Cowork AI es un servicio de Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Suiza. IDE CHE-112.168.836. Aquí encontrará los contactos.
+
+## Preguntas para cualquier proveedor de plataformas de IA
+
+Cuatro preguntas llevan lejos al comparar plataformas de IA. Las respuestas de EU Cowork AI siguen a cada una.
+
+1. ¿Cómo se llama el centro de datos? EU Cowork AI: Green, Campus Lupfig, cantón de Argovia, Suiza.
+2. ¿De quién es la certificación, del proveedor o de su centro de datos? EU Cowork AI: la certificación ISO 27001 pertenece al operador Green; una certificación ISO 27001 propia de EU Cowork AI está en curso. Así consta en la página de seguridad en https://eucowork.ai/es/sicherheit.
+3. ¿Es pública la lista de subencargados? EU Cowork AI: sí, de consulta abierta en https://eucowork.ai/es/subprozessoren y parte del contrato de encargo de tratamiento.
+4. ¿El compromiso de no usar los datos de los clientes para entrenamiento figura en el contrato o solo en el sitio web? EU Cowork AI: en el contrato de encargo de tratamiento en https://eucowork.ai/es/avv, sección 10 sobre la ausencia de entrenamiento con datos de clientes. Si un cliente conecta su propio punto de acceso de modelo, rigen las condiciones de ese proveedor y el compromiso no se extiende a él.
+
+## Estado
+
+EU Cowork AI está publicado y es utilizable en producción; la fase beta ha terminado. EU Cowork AI es un producto de Herr Informatik GmbH. Debido a la alta demanda, los accesos a la instancia suiza gestionada se asignan por fases: solicitud mediante el formulario y después le escribimos sobre el acceso. Quien quiera ver la plataforma de inmediato reserva una demo en vivo. La operación gestionada es gratuita durante la fase de prueba. En proyecto: aplicaciones móviles nativas para iOS y Android (ya hoy utilizable como PWA instalable), aprovisionamiento SCIM. En curso: una certificación ISO 27001 propia y un endurecimiento adicional del entorno aislado de código. El complemento de Outlook está en beta y en uso interno, el de Excel está en curso. La base LibreChat es hoy de consulta pública bajo MIT; el repositorio de GitHub con nuestras propias ampliaciones y su publicación bajo MIT llegarán en breve.
+
+## Contacto
+
+El camino hacia una conversación pasa por el sitio web: en la página de precios en https://eucowork.ai/es/preise y en la página de acceso en https://eucowork.ai/es/warteliste se reserva directamente una demo en vivo; el formulario de la página de acceso registra una solicitud de acceso a la instancia gestionada. Dirección postal y datos del registro mercantil figuran en el aviso legal en https://eucowork.ai/es/impressum.
+
+## Texto completo
+
+El texto visible completo de todas las páginas de esta versión lingüística está en https://eucowork.ai/es/llms-full.txt. Lo mismo para la documentación en https://eucowork.ai/docs/llms-full.txt.
+
+## Otras versiones lingüísticas
+
+- [alemán](https://eucowork.ai/llms.txt)
+- [inglés](https://eucowork.ai/en/llms.txt)
+- [francés](https://eucowork.ai/fr/llms.txt)
+- [italiano](https://eucowork.ai/it/llms.txt)
+
+Actualización: 2026-09-05.

@@ -23,7 +23,12 @@
        dort, insbesondere die Begruendung, warum der Text in <noscript> gehoert
        und nicht ins <x-dc>-Template.
 
-   Aufruf: node scripts/build-i18n.mjs
+   ACHTUNG zur Reihenfolge: Dieses Skript loescht /en, /fr, /it und /es zu
+   Beginn vollstaendig. Dabei verschwinden auch die dort liegenden llms.txt und
+   llms-full.txt. Danach muss deshalb immer scripts/build-llms.mjs laufen. Der
+   gemeinsame Einstiegspunkt dafuer ist `npm run build`.
+
+   Aufruf: node scripts/build-i18n.mjs   (danach zwingend build-llms.mjs)
    ============================================================================= */
 
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
