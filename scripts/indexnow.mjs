@@ -153,7 +153,22 @@ async function main() {
     const teil = urls.slice(i, i + GRENZE);
     const { status, text } = await melden(key, ort, teil);
     const wort = BEDEUTUNG[status] || 'unbekannter Status';
-    console.log(`\n${teil.length} Adressen gemeldet -> HTTP ${status} (${wort})${text ? ': ' + text : ''}`);
+    console.log(`\n${teil.length} Adressen gemeldet -> HTTP ${status} (${wort})`);
+
+    // Der Antwortrumpf ist bei Fehlern JSON mit einem errorCode. Ohne ihn
+    // liest sich jeder 403 wie ein falscher Schluessel, auch der Normalfall
+    // beim allerersten Mal.
+    let code = null;
+    if (text) {
+      try { code = JSON.parse(text).errorCode; } catch { /* kein JSON */ }
+      console.log('  ' + text);
+    }
+    if (code === 'SiteVerificationNotCompleted') {
+      console.log('\n  Das ist beim ersten Mal der Normalfall: IndexNow holt die');
+      console.log('  Schluesseldatei erst selbst ab. Nichts zu tun ausser abwarten');
+      console.log('  und den Aufruf spaeter wiederholen.');
+      return;
+    }
     if (status >= 400) process.exitCode = 1;
   }
 }
