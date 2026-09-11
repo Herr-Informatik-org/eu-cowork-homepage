@@ -22,8 +22,11 @@ Die deutsche Quelle ist `maintenance/index.html`. Die vier Sprachfassungen
 entstehen weiterhin aus `scripts/build-i18n.mjs`. Dafür ergänzt der Eintrag `maintenance` den bestehenden Seitenkatalog
 unter `/wartung`; seine eigene `origin` hält die Kisuno-Wartungsseite
 unabhängig von den noch nicht umbenannten Unterseiten. Die bisherigen
-Startseiten bleiben vollständig im Repository erhalten. Vercel ordnet nur
-`/`, `/en`, `/fr`, `/it` und `/es` vorübergehend den Wartungsseiten zu. Impressum, Datenschutz, Dokumentation, Blog und Warteliste sind
+Startseiten bleiben vollständig im Repository erhalten. Vercel ordnet `/`
+intern der Wartungsseite zu; `/en`, `/fr`, `/it` und `/es` führen mit einer
+temporären Weiterleitung zur jeweiligen Wartungsseite. Das ist erforderlich,
+weil vorhandene Sprachverzeichnisse Vorrang vor einem Rewrite haben.
+Impressum, Datenschutz, Dokumentation, Blog und Warteliste sind
 weiterhin über ihre bestehenden Adressen erreichbar.
 
 ## Prüfen und veröffentlichen
