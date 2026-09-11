@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="fr" data-euc-lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101914">
+  <title>Kisuno AI · Une petite pause thé</title>
+  <meta name="description" content="Nous créons un nouveau foyer pour l’IA ouverte. Kisuno AI sera bientôt accessible à tous.">
+  <link rel="canonical" href="https://kisuno.ai/fr/wartung">
+<!-- i18n:hreflang:start -->
+<link rel="alternate" hreflang="de" href="https://kisuno.ai/wartung">
+<link rel="alternate" hreflang="en" href="https://kisuno.ai/en/wartung">
+<link rel="alternate" hreflang="fr" href="https://kisuno.ai/fr/wartung">
+<link rel="alternate" hreflang="it" href="https://kisuno.ai/it/wartung">
+<link rel="alternate" hreflang="es" href="https://kisuno.ai/es/wartung">
+<link rel="alternate" hreflang="x-default" href="https://kisuno.ai/wartung">
+<!-- i18n:hreflang:end -->
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Kisuno AI · Une petite pause thé">
+  <meta property="og:description" content="Nous créons un nouveau foyer pour l’IA ouverte. Kisuno AI sera bientôt accessible à tous.">
+  <meta property="og:url" content="https://kisuno.ai/fr/wartung">
+  <meta property="og:image" content="https://kisuno.ai/assets/maintenance/urahara-workshop.webp">
+  <meta property="og:image:alt" content="Kisuke Urahara · Kisuno AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/assets/maintenance/icon.svg">
+  <link rel="preload" href="/assets/maintenance/manrope.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/assets/maintenance/urahara-workshop.webp" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="/assets/maintenance/maintenance.css">
+  <script defer src="/assets/maintenance/maintenance.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+  <div class="scene" aria-hidden="true">
+    <div class="scene-art"></div>
+    <div class="scene-shade"></div>
+    <div class="scene-glow"></div>
+    <div class="scene-grain"></div>
+  </div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="/fr" aria-label="Kisuno AI">
+        <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M10 8v24M30 8 18 20l12 12M10 20h8" stroke="currentColor" stroke-width="3" stroke-linecap="square"/><path d="M6 4h28v32H6z" stroke="currentColor" stroke-opacity=".4"/></svg>
+        <span>kisuno<span class="brand-ai">AI</span></span>
+      </a>
+      <div class="header-right">
+        <span class="status"><span class="status-dot"></span><span data-i18n="status">Un nouveau chapitre se prépare</span></span>
+        <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" hidden><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6c3-5 5 5 8 0s5 0 6 0M3 13c3-5 5 5 8 0s5 0 6 0" stroke="currentColor" stroke-width="1.5"/></svg><span data-i18n="motion">Effets</span></button>
+      </div>
+    </header>
+
+    <main id="main" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="eyebrow">L’atelier est ouvert. Le site, bientôt.</span></p>
+        <h1><span data-i18n="headline">De belles choses.</span><br><em data-i18n="headlineAccent">Une pause thé.</em></h1>
+        <p class="intro" data-i18n="intro">Nous créons un nouveau foyer pour l’IA ouverte.<br>Kisuno AI sera bientôt accessible à tous.</p>
+
+        <section class="speech" aria-labelledby="speaker">
+          <div class="stitch stitch-top" aria-hidden="true"></div>
+          <div class="stitch stitch-bottom" aria-hidden="true"></div>
+          <div class="stitch stitch-left" aria-hidden="true"></div>
+          <div class="stitch stitch-right" aria-hidden="true"></div>
+          <div class="speech-tail" aria-hidden="true"></div>
+          <div class="speaker-line"><span class="speaker-symbol" aria-hidden="true">✳</span><h2 id="speaker">Kisuke Urahara</h2><span class="speaker-role" data-i18n="speakerRole">Commerçant &amp; inventeur</span></div>
+          <div id="speech-content" aria-live="polite" aria-atomic="true">
+            <p class="speech-text" data-i18n="speech">Oh, de la visite ! Je suis Kisuke Urahara. Je travaille encore sur quelques petites … disons, <em>améliorations.</em> Kisuno AI sera bientôt accessible à tous.</p>
+            <p class="tea-question" data-i18n="question">Un thé pour patienter ?</p>
+          </div>
+          <div class="speech-actions">
+            <button class="tea-button" id="tea-button" type="button" hidden>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-5Zm13 1h2a3 3 0 1 1 0 6h-2M3 22h17M8 3c-2 2 2 2 0 4M13 2c-2 2 2 2 0 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span id="tea-label" data-i18n="tea">Avec plaisir, un thé</span><span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+            <span class="tea-note" data-i18n="teaNote">C’est offert. Évidemment.</span>
+          </div>
+          <noscript><p class="no-script" data-i18n="noScript">Le thé est prêt. Active JavaScript pour la pause thé interactive.</p></noscript>
+        </section>
+        <div class="hero-signoff"><span class="tiny-star" aria-hidden="true">✳</span><span data-i18n="signoff">L’open source au cœur. Un peu de magie autour.</span></div>
+      </div>
+      <div class="character-caption" aria-hidden="true"><span class="caption-line"></span><span>URAHARA SHŌTEN</span><small data-i18n="characterCaption">Recherche. Création. Thé.</small></div>
+      <div class="tea-tray" id="tea-tray" aria-hidden="true">
+        <span class="steam steam-one"></span><span class="steam steam-two"></span><span class="steam steam-three"></span>
+        <div class="teacup"><div class="tea-surface"></div><span class="cup-mark">喜</span></div><div class="saucer"></div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span class="footer-note"><span class="footer-dot"></span><span data-i18n="footer">Les bonnes choses prennent du temps. L’IA aussi.</span></span>
+      <div class="footer-links"><a href="/fr/impressum" data-i18n="imprint">Mentions légales</a><a href="/fr/datenschutz" data-i18n="privacy">Confidentialité</a><span class="copyright">© <span id="year">2026</span> Kisuno AI</span></div>
+    </footer>
+  </div>
+  <script>
+    window.EUC_I18N = {
+  "de": {
+    "skip": "Zum Inhalt",
+    "status": "Ein neues Kapitel entsteht",
+    "motion": "Effekte",
+    "eyebrow": "Die Werkstatt ist geöffnet. Die Website bald auch.",
+    "headline": "Grosse Dinge.",
+    "headlineAccent": "Kurze Teepause.",
+    "intro": "Wir geben offener KI ein neues Zuhause.<br>Kisuno AI ist bald für alle da.",
+    "speakerRole": "Ladenbesitzer &amp; Problemlöser",
+    "speech": "Oh, Besuch! Ich bin Kisuke Urahara. Ich arbeite noch an ein paar kleinen … sagen wir, <em>Verbesserungen.</em> Kisuno AI ist bald offen für alle.",
+    "question": "Möchtest du in der Zwischenzeit einen Tee?",
+    "tea": "Sehr gern, einen Tee",
+    "teaNote": "Geht aufs Haus. Natürlich.",
+    "signoff": "Open Source im Kern. Ein bisschen Magie drumherum.",
+    "characterCaption": "Forschung. Entwicklung. Tee.",
+    "footer": "Gute Dinge brauchen Zeit. Gute KI auch.",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "teaClosing": "Lehn dich zurück. Ich kümmere mich um den Rest.",
+    "moreTea": "Noch eine Tasse",
+    "teaReply1": "Eine ausgezeichnete Wahl. Frisch aufgebrüht, selbstverständlich. Die letzte Tasse hat nur ganz kurz geleuchtet.",
+    "teaReply2": "Noch eine Tasse? Du hast Geschmack. Der Tee ist bereits produktionsreif. Die KI bekommt noch den letzten Schliff.",
+    "teaReply3": "Langsam glaube ich, du bist gar nicht wegen der KI hier. Keine Sorge. Das bleibt unter uns.",
+    "teaReply4": "Mein Vorrat ist unerschöpflich. Im Gegensatz zum Geduldsfaden meiner Entwickler. Noch ein Schluck?",
+    "pauseMotion": "Effekte pausieren",
+    "enableMotion": "Effekte einschalten",
+    "systemMotion": "Reduzierte Bewegung ist in deinen Systemeinstellungen aktiviert.",
+    "noScript": "Der Tee steht schon bereit. Für die interaktive Teepause kannst du JavaScript aktivieren."
+  },
+  "en": {
+    "skip": "Skip to content",
+    "status": "A new chapter is taking shape",
+    "motion": "Effects",
+    "eyebrow": "The workshop is open. The website will be soon.",
+    "headline": "Great things.",
+    "headlineAccent": "A little tea break.",
+    "intro": "We are giving open AI a new home.<br>Kisuno AI will soon be open to everyone.",
+    "speakerRole": "Shopkeeper &amp; problem solver",
+    "speech": "Oh, a visitor! I’m Kisuke Urahara. I’m still working on a few little … shall we say, <em>improvements.</em> Kisuno AI will soon be open to everyone.",
+    "question": "Would you like some tea in the meantime?",
+    "tea": "Yes please, some tea",
+    "teaNote": "On the house. Naturally.",
+    "signoff": "Open source at heart. A little magic around it.",
+    "characterCaption": "Research. Development. Tea.",
+    "footer": "Good things take time. Good AI, too.",
+    "imprint": "Legal notice",
+    "privacy": "Privacy",
+    "teaClosing": "Sit back. I’ll take care of the rest.",
+    "moreTea": "Another cup",
+    "teaReply1": "An excellent choice. Freshly brewed, of course. The last cup only glowed for a moment.",
+    "teaReply2": "Another cup? You have good taste. The tea is production-ready. The AI just needs a finishing touch.",
+    "teaReply3": "I’m beginning to suspect you’re not here for the AI. Don’t worry. Your secret is safe with me.",
+    "teaReply4": "My supply is endless. Unlike my developers’ patience. Another sip?",
+    "pauseMotion": "Pause effects",
+    "enableMotion": "Enable effects",
+    "systemMotion": "Reduced motion is enabled in your system settings.",
+    "noScript": "The tea is ready. Enable JavaScript for the interactive tea break."
+  },
+  "fr": {
+    "skip": "Aller au contenu",
+    "status": "Un nouveau chapitre se prépare",
+    "motion": "Effets",
+    "eyebrow": "L’atelier est ouvert. Le site, bientôt.",
+    "headline": "De belles choses.",
+    "headlineAccent": "Une pause thé.",
+    "intro": "Nous créons un nouveau foyer pour l’IA ouverte.<br>Kisuno AI sera bientôt accessible à tous.",
+    "speakerRole": "Commerçant &amp; inventeur",
+    "speech": "Oh, de la visite ! Je suis Kisuke Urahara. Je travaille encore sur quelques petites … disons, <em>améliorations.</em> Kisuno AI sera bientôt accessible à tous.",
+    "question": "Un thé pour patienter ?",
+    "tea": "Avec plaisir, un thé",
+    "teaNote": "C’est offert. Évidemment.",
+    "signoff": "L’open source au cœur. Un peu de magie autour.",
+    "characterCaption": "Recherche. Création. Thé.",
+    "footer": "Les bonnes choses prennent du temps. L’IA aussi.",
+    "imprint": "Mentions légales",
+    "privacy": "Confidentialité",
+    "teaClosing": "Installe-toi. Je m’occupe du reste.",
+    "moreTea": "Encore une tasse",
+    "teaReply1": "Excellent choix. Fraîchement infusé, bien sûr. La dernière tasse n’a brillé qu’un tout petit instant.",
+    "teaReply2": "Encore une tasse ? Tu as du goût. Le thé est prêt. L’IA a encore besoin d’une dernière retouche.",
+    "teaReply3": "Je commence à croire que tu n’es pas là pour l’IA. Ne t’inquiète pas. Ça reste entre nous.",
+    "teaReply4": "Mes réserves sont infinies. Contrairement à la patience de mes développeurs. Une autre gorgée ?",
+    "pauseMotion": "Mettre les effets en pause",
+    "enableMotion": "Activer les effets",
+    "systemMotion": "La réduction des animations est activée dans les réglages de ton système.",
+    "noScript": "Le thé est prêt. Active JavaScript pour la pause thé interactive."
+  },
+  "it": {
+    "skip": "Vai al contenuto",
+    "status": "Un nuovo capitolo prende forma",
+    "motion": "Effetti",
+    "eyebrow": "Il laboratorio è aperto. Il sito, presto.",
+    "headline": "Grandi cose.",
+    "headlineAccent": "Una pausa tè.",
+    "intro": "Stiamo dando una nuova casa all’IA aperta.<br>Kisuno AI sarà presto accessibile a tutti.",
+    "speakerRole": "Negoziante &amp; inventore",
+    "speech": "Oh, una visita! Sono Kisuke Urahara. Sto ancora lavorando a qualche piccolo … diciamo, <em>miglioramento.</em> Kisuno AI sarà presto accessibile a tutti.",
+    "question": "Ti va un tè nell’attesa?",
+    "tea": "Volentieri, un tè",
+    "teaNote": "Offre la casa. Naturalmente.",
+    "signoff": "Open source nel cuore. Un po’ di magia intorno.",
+    "characterCaption": "Ricerca. Sviluppo. Tè.",
+    "footer": "Le cose belle richiedono tempo. Anche una buona IA.",
+    "imprint": "Note legali",
+    "privacy": "Privacy",
+    "teaClosing": "Mettiti comodo. Al resto penso io.",
+    "moreTea": "Un’altra tazza",
+    "teaReply1": "Ottima scelta. Appena preparato, ovviamente. L’ultima tazza si è illuminata solo per un attimo.",
+    "teaReply2": "Un’altra tazza? Hai buon gusto. Il tè è pronto. All’IA manca solo l’ultimo ritocco.",
+    "teaReply3": "Comincio a sospettare che tu non sia qui per l’IA. Tranquillo. Resta tra noi.",
+    "teaReply4": "Le mie scorte sono infinite. A differenza della pazienza dei miei sviluppatori. Un altro sorso?",
+    "pauseMotion": "Metti in pausa gli effetti",
+    "enableMotion": "Attiva gli effetti",
+    "systemMotion": "La riduzione delle animazioni è attiva nelle impostazioni del sistema.",
+    "noScript": "Il tè è pronto. Attiva JavaScript per la pausa tè interattiva."
+  },
+  "es": {
+    "skip": "Ir al contenido",
+    "status": "Un nuevo capítulo toma forma",
+    "motion": "Efectos",
+    "eyebrow": "El taller está abierto. La web, muy pronto.",
+    "headline": "Grandes cosas.",
+    "headlineAccent": "Una pausa de té.",
+    "intro": "Estamos creando un nuevo hogar para la IA abierta.<br>Kisuno AI pronto estará disponible para todos.",
+    "speakerRole": "Tendero &amp; inventor",
+    "speech": "¡Oh, una visita! Soy Kisuke Urahara. Todavía estoy trabajando en unas pequeñas … digamos, <em>mejoras.</em> Kisuno AI pronto estará disponible para todos.",
+    "question": "¿Te apetece un té mientras tanto?",
+    "tea": "Sí, un té, por favor",
+    "teaNote": "Invita la casa. Por supuesto.",
+    "signoff": "Open source en el corazón. Un poco de magia alrededor.",
+    "characterCaption": "Investigación. Desarrollo. Té.",
+    "footer": "Las cosas buenas llevan tiempo. Una buena IA también.",
+    "imprint": "Aviso legal",
+    "privacy": "Privacidad",
+    "teaClosing": "Ponte cómodo. Yo me encargo del resto.",
+    "moreTea": "Otra taza",
+    "teaReply1": "Excelente elección. Recién preparado, por supuesto. La última taza solo brilló un instante.",
+    "teaReply2": "¿Otra taza? Tienes buen gusto. El té ya está listo. A la IA le falta el último retoque.",
+    "teaReply3": "Empiezo a sospechar que no estás aquí por la IA. Tranquilo. Queda entre nosotros.",
+    "teaReply4": "Mis reservas son infinitas. A diferencia de la paciencia de mis desarrolladores. ¿Otro sorbo?",
+    "pauseMotion": "Pausar efectos",
+    "enableMotion": "Activar efectos",
+    "systemMotion": "La reducción de movimiento está activada en los ajustes de tu sistema.",
+    "noScript": "El té está listo. Activa JavaScript para la pausa de té interactiva."
+  }
+};
+  </script>
+</body>
+</html>

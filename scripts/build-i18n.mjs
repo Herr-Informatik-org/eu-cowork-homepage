@@ -60,6 +60,7 @@ const BCP47 = { de: 'de-CH', en: 'en', fr: 'fr', it: 'it', es: 'es' };
    gepflegte Daten waren zuletzt eine Woche zu alt. */
 const PAGES = [
   { key: 'landing',        path: '/',                src: 'Landing.dc.html',        out: 'index.html',                 kind: 'dc' , lastmod: '2026-08-05', changefreq: 'weekly', priority: '1.0' },
+  { key: 'maintenance', path: '/wartung', src: 'maintenance/index.html', out: 'wartung/index.html', kind: 'static', origin: 'https://kisuno.ai', lastmod: '2026-09-11', changefreq: 'weekly', priority: '0.3' },
   { key: 'preise',         path: '/preise',          src: 'Preise.dc.html',         out: 'preise/index.html',          kind: 'dc' , lastmod: '2026-08-13', changefreq: 'monthly', priority: '0.9' },
   { key: 'warteliste',     path: '/warteliste',      src: 'Waitlist.dc.html',       out: 'warteliste/index.html',      kind: 'dc' , lastmod: '2026-08-05', changefreq: 'monthly', priority: '0.9' },
   { key: 'impressum',      path: '/impressum',       src: 'Impressum.dc.html',      out: 'impressum/index.html',       kind: 'dc' , lastmod: '2026-08-05', changefreq: 'yearly', priority: '0.3' },
@@ -179,12 +180,12 @@ function escapeText(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function hreflangBlock(pagePath) {
+function hreflangBlock(pagePath, origin = ORIGIN) {
   const lines = ['<!-- i18n:hreflang:start -->'];
   for (const l of LANGS) {
-    lines.push(`<link rel="alternate" hreflang="${l}" href="${ORIGIN}${urlFor(l, pagePath)}">`);
+    lines.push(`<link rel="alternate" hreflang="${l}" href="${origin}${urlFor(l, pagePath)}">`);
   }
-  lines.push(`<link rel="alternate" hreflang="x-default" href="${ORIGIN}${pagePath}">`);
+  lines.push(`<link rel="alternate" hreflang="x-default" href="${origin}${pagePath}">`);
   lines.push('<!-- i18n:hreflang:end -->');
   return lines.join('\n');
 }
@@ -194,8 +195,8 @@ function urlFor(lang, pagePath) {
   return pagePath === '/' ? `/${lang}` : `/${lang}${pagePath}`;
 }
 
-function injectHreflang(html, pagePath) {
-  const block = hreflangBlock(pagePath);
+function injectHreflang(html, pagePath, origin = ORIGIN) {
+  const block = hreflangBlock(pagePath, origin);
   const existing = /<!-- i18n:hreflang:start -->[\s\S]*?<!-- i18n:hreflang:end -->/;
   if (existing.test(html)) return html.replace(existing, block);
   // Direkt nach dem canonical einhaengen, sonst vor </head>.
@@ -205,7 +206,7 @@ function injectHreflang(html, pagePath) {
   return html.replace('</head>', `${block}\n</head>`);
 }
 
-function rewriteHead(html, { lang, pagePath, meta, ldCtx }) {
+function rewriteHead(html, { lang, pagePath, meta, ldCtx, origin = ORIGIN }) {
   let out = html;
 
   out = out.replace(/<html([^>]*)\slang="[^"]*"/i, `<html$1 lang="${lang}"`);
@@ -237,12 +238,12 @@ function rewriteHead(html, { lang, pagePath, meta, ldCtx }) {
   }
 
   out = setMeta(out, /(<meta property="og:locale" content=")([^"]*)(")/i, OG_LOCALE[lang]);
-  out = setMeta(out, /(<meta property="og:url" content=")([^"]*)(")/i, ORIGIN + urlFor(lang, pagePath));
-  out = out.replace(/(<link rel="canonical" href=")([^"]*)(")/i, `$1${ORIGIN}${urlFor(lang, pagePath)}$3`);
+  out = setMeta(out, /(<meta property="og:url" content=")([^"]*)(")/i, origin + urlFor(lang, pagePath));
+  out = out.replace(/(<link rel="canonical" href=")([^"]*)(")/i, `$1${origin}${urlFor(lang, pagePath)}$3`);
   out = out.replace(/"inLanguage":\s*"[^"]*"/g, `"inLanguage": "${BCP47[lang]}"`);
   out = localizeJsonLd(out, lang, ldCtx || null);
 
-  return injectHreflang(out, pagePath);
+  return injectHreflang(out, pagePath, origin);
 }
 
 /* ------------------------------ JSON-LD-Adressen ------------------------------ */
@@ -999,7 +1000,7 @@ async function buildStatic(page, lang, meta, chrome, metaDe) {
   }
 
   let out = replaceTagged(src, lookup);
-  out = rewriteHead(out, { lang, pagePath: page.path, meta, ldCtx });
+  out = rewriteHead(out, { lang, pagePath: page.path, meta, ldCtx, origin: page.origin });
   out = prefixLinks(out, lang);
   return { html: out, missing };
 }
@@ -1059,7 +1060,7 @@ async function main() {
        und seit dem Vorrenderer auch den erzeugten noscript-Block, denn die
        deutsche Fassung wird direkt aus *.dc.html ausgeliefert. */
     const deSrc = await readFile(join(ROOT, page.src), 'utf8');
-    let deOut = injectHreflang(deSrc, page.path);
+    let deOut = injectHreflang(deSrc, page.path, page.origin);
     if (page.kind === 'dc') {
       try {
         deOut = injectNoscript(deOut, noscriptBlock(page, 'de'));
@@ -1144,13 +1145,14 @@ async function writeSitemap() {
   ];
   for (const page of PAGES) {
     const m = { ...page, lastmod: gitDatum(page.src, page.lastmod) };
+    const origin = page.origin || ORIGIN;
     for (const lang of LANGS) {
       lines.push('  <url>');
-      lines.push(`    <loc>${ORIGIN}${urlFor(lang, page.path)}</loc>`);
+      lines.push(`    <loc>${origin}${urlFor(lang, page.path)}</loc>`);
       for (const alt of LANGS) {
-        lines.push(`    <xhtml:link rel="alternate" hreflang="${alt}" href="${ORIGIN}${urlFor(alt, page.path)}"/>`);
+        lines.push(`    <xhtml:link rel="alternate" hreflang="${alt}" href="${origin}${urlFor(alt, page.path)}"/>`);
       }
-      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${ORIGIN}${page.path}"/>`);
+      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${origin}${page.path}"/>`);
       lines.push(`    <lastmod>${m.lastmod}</lastmod>`);
       lines.push(`    <changefreq>${m.changefreq}</changefreq>`);
       // Uebersetzungen stehen eine Stufe unter der deutschen Fassung.
