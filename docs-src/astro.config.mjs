@@ -4,7 +4,7 @@ import starlight from '@astrojs/starlight';
 import sitemap from '@astrojs/sitemap';
 
 /**
- * Dokumentation von EU Cowork AI.
+ * Dokumentation von Kisuno.
  *
  * Ausgabe geht nach ../docs, also website/docs. Die Website selbst ist eine
  * reine Sammlung statischer Dateien ohne Build-Schritt und wird per Vercel-CLI
@@ -17,7 +17,7 @@ import sitemap from '@astrojs/sitemap';
  * Klick eine Weiterleitung auslösen.
  */
 export default defineConfig({
-  site: 'https://eucowork.ai',
+  site: 'https://kisuno.ai',
   base: '/docs',
   outDir: '../docs',
   trailingSlash: 'never',
@@ -33,16 +33,16 @@ export default defineConfig({
       },
     }),
     starlight({
-      title: 'EU Cowork AI',
+      title: 'Kisuno',
       description:
-        'Dokumentation von EU Cowork AI: Installation, Betrieb, Administration und eigene Konnektoren.',
+        'Dokumentation von Kisuno: Installation, Betrieb, Administration und eigene Konnektoren.',
       tagline: 'Dokumentation',
       logo: {
         light: './src/assets/logo-light.svg',
         dark: './src/assets/logo-dark.svg',
       },
       favicon: '/favicon.ico',
-      customCss: ['./src/styles/eucowork.css'],
+      customCss: ['./src/styles/kisuno.css'],
       expressiveCode: {
         // Lange Befehlszeilen umbrechen statt waagrecht scrollen. Eine Zeile,
         // die man erst scrollen muss, wird beim Kopieren gern halbiert.
@@ -74,7 +74,7 @@ export default defineConfig({
       head: [
         {
           tag: 'meta',
-          attrs: { property: 'og:image', content: 'https://eucowork.ai/og/eucowork-og.png' },
+          attrs: { property: 'og:image', content: 'https://kisuno.ai/og/kisuno-og.png' },
         },
         {
           tag: 'meta',

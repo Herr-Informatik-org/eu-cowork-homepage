@@ -2,7 +2,7 @@
  * `/docs/llms.txt` — der Wegweiser durch die Dokumentation für Sprachmodelle.
  *
  * Wegen `base: '/docs'` landet diese Datei im Ausgabeverzeichnis als
- * `docs/llms.txt` und wird unter `https://eucowork.ai/docs/llms.txt`
+ * `docs/llms.txt` und wird unter `https://kisuno.ai/docs/llms.txt`
  * ausgeliefert. Sie ergänzt die `llms.txt` im Wurzelverzeichnis, die die
  * Marketing-Website beschreibt.
  *
@@ -22,14 +22,14 @@ export const GET: APIRoute = async () => {
   const seiten = await getCollection('docs');
   const zeilen: string[] = [];
 
-  zeilen.push('# EU Cowork AI: Dokumentation');
+  zeilen.push('# Kisuno: Dokumentation');
   zeilen.push('');
   zeilen.push(
-    '> Dokumentation von EU Cowork AI: Überblick, Installation und Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration sowie der Anschluss eigener Systeme über das Model Context Protocol.'
+    '> Dokumentation von Kisuno: Überblick, Installation und Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration sowie der Anschluss eigener Systeme über das Model Context Protocol.'
   );
   zeilen.push('');
   zeilen.push(
-    'EU Cowork AI ist eine quelloffene KI-Arbeitsplattform für Unternehmen, ein Angebot der'
+    'Kisuno ist eine quelloffene KI-Arbeitsplattform für Unternehmen, ein Angebot der'
   );
   zeilen.push(
     'Herr Informatik GmbH, Windisch (CH). Die Dokumentation liegt in fünf Sprachen vor; die'
@@ -38,7 +38,7 @@ export const GET: APIRoute = async () => {
     'deutsche Fassung ist die Quelle, die übrigen sind Übersetzungen davon. Den Volltext der'
   );
   zeilen.push(`deutschen Fassung gibt es unter ${BASIS}/llms-full.txt.`);
-  zeilen.push('Die Website selbst ist unter https://eucowork.ai/llms.txt beschrieben.');
+  zeilen.push('Die Website selbst ist unter https://kisuno.ai/llms.txt beschrieben.');
 
   for (const sprache of SPRACHEN) {
     const startseite = seiten.find((s) => s.id === (sprache.praefix ?? 'index'));

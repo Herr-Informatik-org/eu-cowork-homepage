@@ -15,7 +15,7 @@ import starlightConfig from 'virtual:starlight/user-config';
 export type Seite = CollectionEntry<'docs'>;
 
 /** Adresse, unter der die Dokumentation ausgeliefert wird, ohne Schrägstrich am Ende. */
-export const BASIS = 'https://eucowork.ai/docs';
+export const BASIS = 'https://kisuno.ai/docs';
 
 /**
  * Eine Sprachfassung der Dokumentation. `praefix` ist das Pfadsegment der

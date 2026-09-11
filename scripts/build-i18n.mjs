@@ -41,7 +41,7 @@ import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const ORIGIN = 'https://eucowork.ai';
+const ORIGIN = 'https://kisuno.ai';
 const LANGS = ['de', 'en', 'fr', 'it', 'es'];
 const OTHER = LANGS.filter(l => l !== 'de');
 
@@ -258,7 +258,7 @@ const GLOBAL_IDS = new Set([
   `${ORIGIN}/#software`
 ]);
 
-/* Alles andere im JSON-LD, was auf eucowork.ai zeigt, ist eine Adresse: die
+/* Alles andere im JSON-LD, was auf kisuno.ai zeigt, ist eine Adresse: die
    Adresse der Seite selbst (url, @id der WebPage), ihre Einordnung
    (mainEntityOfPage) und vor allem die Brotkrumen (item). Blieben die deutsch,
    widerspraeche das strukturierte Datum dem canonical derselben Seite --
@@ -646,7 +646,7 @@ function skipSubtree(html, from, tag) {
    unten muessen deshalb nur das aushalten, was ein Konstruktor beruehrt.
 
    localStorage ist der Hebel fuer die Sprache: die Komponenten lesen dort
-   'eucowork_lang'. Wir antworten mit der Zielsprache und bekommen damit
+   'kisuno_lang'. Wir antworten mit der Zielsprache und bekommen damit
    denselben Weg wie im Browser, ohne einen zweiten einzubauen. */
 function makeSandbox(lang) {
   const noop = () => {};
@@ -681,7 +681,7 @@ function makeSandbox(lang) {
   win.document = doc;
   const sandbox = {
     window: win, document: doc, navigator: win.navigator, location: win.location,
-    localStorage: { getItem: (k) => (k === 'eucowork_lang' ? lang : null), setItem: noop, removeItem: noop },
+    localStorage: { getItem: (k) => (k === 'kisuno_lang' ? lang : null), setItem: noop, removeItem: noop },
     sessionStorage: { getItem: () => null, setItem: noop, removeItem: noop },
     console: { log: noop, warn: noop, error: noop, info: noop, debug: noop },
     setTimeout: () => 0, clearTimeout: noop, setInterval: () => 0, clearInterval: noop,

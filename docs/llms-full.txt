@@ -1,16 +1,16 @@
-# EU Cowork AI: Dokumentation im Volltext
+# Kisuno: Dokumentation im Volltext
 
-> Der vollständige Text der Dokumentation von EU Cowork AI: Überblick, Installation und
+> Der vollständige Text der Dokumentation von Kisuno: Überblick, Installation und
 > Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration und der
 > Anschluss eigener Systeme über das Model Context Protocol.
 
 Diese Datei enthält die deutsche Fassung; sie ist die Quelle. Dieselben Seiten gibt es
 übersetzt auf Englisch, Französisch, Italienisch und Spanisch als HTML unter
-https://eucowork.ai/docs/en/…, https://eucowork.ai/docs/fr/…, https://eucowork.ai/docs/it/… und https://eucowork.ai/docs/es/….
-Eine reine Übersicht aller Seiten aller Sprachen steht unter https://eucowork.ai/docs/llms.txt,
-die Marketing-Website ist unter https://eucowork.ai/llms.txt beschrieben.
+https://kisuno.ai/docs/en/…, https://kisuno.ai/docs/fr/…, https://kisuno.ai/docs/it/… und https://kisuno.ai/docs/es/….
+Eine reine Übersicht aller Seiten aller Sprachen steht unter https://kisuno.ai/docs/llms.txt,
+die Marketing-Website ist unter https://kisuno.ai/llms.txt beschrieben.
 
-EU Cowork AI ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a,
+Kisuno ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a,
 5210 Windisch, Schweiz.
 
 Die Reihenfolge folgt der Gliederung der Dokumentation.
@@ -18,9 +18,9 @@ Die Reihenfolge folgt der Gliederung der Dokumentation.
 ---
 
 # Dokumentation
-Quelle: https://eucowork.ai/docs
+Quelle: https://kisuno.ai/docs
 
-Dokumentation von EU Cowork AI. Überblick, Betrieb auf dem eigenen Server, Administration und der Anschluss an eigene Systeme.
+Dokumentation von Kisuno. Überblick, Betrieb auf dem eigenen Server, Administration und der Anschluss an eigene Systeme.
 
 ## Wo möchten Sie anfangen?
 
@@ -29,7 +29,7 @@ Dokumentation von EU Cowork AI. Überblick, Betrieb auf dem eigenen Server, Admi
 **Erste Schritte**
 
 Überblick, Architektur, Systemanforderungen und der Weg zu einer eigenen Instanz.
-Beginnen Sie hier, wenn Sie EU Cowork AI zum ersten Mal ansehen.
+Beginnen Sie hier, wenn Sie Kisuno zum ersten Mal ansehen.
 
 **Installation und Betrieb**
 
@@ -58,7 +58,7 @@ weiterführt.
 
 ## Diese Dokumentation und LibreChat
 
-EU Cowork AI baut auf [LibreChat](https://www.librechat.ai) auf, einer quelloffenen
+Kisuno baut auf [LibreChat](https://www.librechat.ai) auf, einer quelloffenen
 Chat-Plattform unter MIT-Lizenz. Die Chat-Oberfläche, das Agenten-System, die
 Dateiverarbeitung und die Modellanbindung stammen von dort. Ergänzt haben wir alles,
 was ein Unternehmen für den geregelten Betrieb braucht: Administration, Rechteverwaltung vor
@@ -69,11 +69,11 @@ Diese Dokumentation gibt den Überblick und sagt, woher ein Baustein kommt. Wo d
 Dokumentation von LibreChat tiefer geht, verweisen wir dorthin, statt sie schlechter
 nachzuerzählen. Die Unterlagen zur Einrichtung im Einzelnen liegen der Auslieferung bei.
 Welcher Baustein von wem stammt, steht unter
-[LibreChat und EU Cowork](/docs/referenz/librechat-und-eu-cowork).
+[LibreChat und Kisuno](/docs/referenz/librechat-und-kisuno).
 
 <div class="euc-footnote">
 Fehlt etwas oder stimmt eine Angabe nicht? Schreiben Sie an
-<a href="mailto:hallo@eucowork.ai">hallo@eucowork.ai</a>.
+<a href="mailto:hallo@kisuno.ai">hallo@kisuno.ai</a>.
 </div>
 
 ---
@@ -82,13 +82,13 @@ Fehlt etwas oder stimmt eine Angabe nicht? Schreiben Sie an
 
 ---
 
-# Was ist EU Cowork AI?
-Quelle: https://eucowork.ai/docs/erste-schritte/ueberblick
+# Was ist Kisuno?
+Quelle: https://kisuno.ai/docs/erste-schritte/ueberblick
 Kapitel: Erste Schritte
 
-Überblick über die Plattform, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob EU Cowork AI passt.
+Überblick über die Plattform, ihre Grenzen und die Lizenz. Für IT-Verantwortliche, die entscheiden, ob Kisuno passt.
 
-EU Cowork AI ist eine KI-Chatplattform für Unternehmen, die auf einem eigenen Server läuft.
+Kisuno ist eine KI-Chatplattform für Unternehmen, die auf einem eigenen Server läuft.
 Diese Seite sagt in wenigen Minuten, was das System ist, woraus es besteht, was es kann und
 was es bewusst nicht kann. Sie richtet sich an IT-Verantwortliche, die vor der Entscheidung
 stehen, ob sie die Plattform einsetzen.
@@ -151,7 +151,8 @@ Bausteine brauchen und sonst zu einem toten Knopf führen würden:
 
 ## Was Open Source hier bedeutet
 
-Das Gesamtprodukt steht unter der MIT-Lizenz. Praktisch heisst das:
+Das Gesamtprodukt erscheint unter der MIT-Lizenz, das Repository folgt demnächst. Praktisch
+heisst das:
 
 - **Kein Per-Seat-Gating.** Die Nutzerzahl ist technisch nirgends begrenzt und wird nirgends
   lizenzrechtlich gedeckelt.
@@ -203,12 +204,12 @@ die nicht im Lieferumfang stehen oder bei der Einrichtung eine Entscheidung verl
 ---
 
 # Architektur
-Quelle: https://eucowork.ai/docs/erste-schritte/architektur
+Quelle: https://kisuno.ai/docs/erste-schritte/architektur
 Kapitel: Erste Schritte
 
 Der Aufbau in groben Zügen. Zugang über einen Reverse-Proxy, die Anwendung dahinter, die Datenhaltung daneben und die Modellanbieter ausserhalb.
 
-EU Cowork AI läuft in Containern auf einer Linux-Maschine. Diese Seite zeigt den
+Kisuno läuft in Containern auf einer Linux-Maschine. Diese Seite zeigt den
 Aufbau in groben Zügen. Sie beschreibt, welchen Weg eine Anfrage nimmt und welche
 Entscheidungen dahinterstehen, nicht die Einrichtung im Einzelnen.
 
@@ -233,7 +234,7 @@ Datenbank der Instanz, dazu kommen ein Suchindex über die eigenen Chats und die
 Dateien auf demselben Server. Die Datenbank ist die Quelle der Wahrheit, der Suchindex lässt
 sich daraus jederzeit neu aufbauen.
 
-**Ergänzungen von EU Cowork AI.** Um LibreChat herum liegen eigene Dienste für Administration,
+**Ergänzungen von Kisuno.** Um LibreChat herum liegen eigene Dienste für Administration,
 Rechteverwaltung und Verbrauchsübersicht sowie die Anbindung an Fremdsysteme. Sie sind nur
 innerhalb der Instanz erreichbar und stehen nicht im Netz.
 
@@ -244,7 +245,7 @@ einer eigenen, abgetrennten Umgebung neben der Anwendung.
 **Was von LibreChat kommt**
 
 Chat, Agenten, Dateiverarbeitung und Modellanbindung stammen von LibreChat und sind dort
-öffentlich dokumentiert. Die Ergänzungen von EU Cowork AI setzen darauf auf, ohne den Kern zu
+öffentlich dokumentiert. Die Ergänzungen von Kisuno setzen darauf auf, ohne den Kern zu
 verändern; deshalb bleiben Aktualisierungen von LibreChat möglich.
 
 ## Warum eine Instanz je Kunde
@@ -269,7 +270,7 @@ Betrieb zu beachten ist, beschreiben die Unterlagen, die der Auslieferung beilie
 ---
 
 # Systemanforderungen
-Quelle: https://eucowork.ai/docs/erste-schritte/systemanforderungen
+Quelle: https://kisuno.ai/docs/erste-schritte/systemanforderungen
 Kapitel: Erste Schritte
 
 Was eine selbst betriebene Instanz an CPU, Arbeitsspeicher, Plattenplatz und Betriebssystem braucht.
@@ -350,7 +351,7 @@ die der Auslieferung beiliegen. Sie gehören zum Installationspaket.
 ---
 
 # Schnellstart
-Quelle: https://eucowork.ai/docs/erste-schritte/schnellstart
+Quelle: https://kisuno.ai/docs/erste-schritte/schnellstart
 Kapitel: Erste Schritte
 
 Der Weg zu einer eigenen Instanz in groben Zügen, von der Serverwahl bis zum ersten Konto.
@@ -407,12 +408,12 @@ Installationspaket.
 ---
 
 # Server vorbereiten
-Quelle: https://eucowork.ai/docs/betrieb/server-vorbereiten
+Quelle: https://kisuno.ai/docs/betrieb/server-vorbereiten
 Kapitel: Installation und Betrieb
 
-Welche Grundlagen eine Maschine mitbringen muss, bevor EU Cowork AI darauf installiert wird.
+Welche Grundlagen eine Maschine mitbringen muss, bevor Kisuno darauf installiert wird.
 
-EU Cowork AI wird self-hosted betrieben und läuft als Docker-Compose-Anwendung, so wie
+Kisuno wird self-hosted betrieben und läuft als Docker-Compose-Anwendung, so wie
 LibreChat selbst es für den eigenen Betrieb vorsieht. Bevor die Anwendung installiert wird,
 muss die Maschine dafür vorbereitet sein.
 
@@ -445,10 +446,10 @@ das dem Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 ---
 
 # Installation
-Quelle: https://eucowork.ai/docs/betrieb/installation
+Quelle: https://kisuno.ai/docs/betrieb/installation
 Kapitel: Installation und Betrieb
 
-Wie eine Instanz von EU Cowork AI eingerichtet wird und welche Schritte nach dem ersten Start anstehen.
+Wie eine Instanz von Kisuno eingerichtet wird und welche Schritte nach dem ersten Start anstehen.
 
 Die Einrichtung erfolgt geführt anhand des Auslieferungspakets. Dabei entstehen die
 Konfiguration und die Geheimnisse der Instanz, danach startet die Anwendung. Voraussetzung
@@ -517,12 +518,12 @@ Zugang.
 ---
 
 # Konfiguration
-Quelle: https://eucowork.ai/docs/betrieb/konfiguration
+Quelle: https://kisuno.ai/docs/betrieb/konfiguration
 Kapitel: Installation und Betrieb
 
-Die drei Konfigurationsebenen von EU Cowork AI, welche Ebene bei einem Widerspruch gewinnt und wie der Domain-Lock gesetzt wird.
+Die drei Konfigurationsebenen von Kisuno, welche Ebene bei einem Widerspruch gewinnt und wie der Domain-Lock gesetzt wird.
 
-EU Cowork AI wird an drei Stellen konfiguriert. Wer weiss, welche Stelle wofür zuständig ist
+Kisuno wird an drei Stellen konfiguriert. Wer weiss, welche Stelle wofür zuständig ist
 und welche Ebene bei einem Widerspruch gewinnt, spart sich das Suchen.
 
 ## Die drei Ebenen
@@ -600,10 +601,10 @@ zusammen mit dem Zugang.
 ---
 
 # Domain und Zertifikat
-Quelle: https://eucowork.ai/docs/betrieb/domain-und-tls
+Quelle: https://kisuno.ai/docs/betrieb/domain-und-tls
 Kapitel: Installation und Betrieb
 
-Die drei TLS-Varianten von EU Cowork AI, also öffentliches Zertifikat, interne CA im LAN und Betrieb hinter einer bestehenden WAF.
+Die drei TLS-Varianten von Kisuno, also öffentliches Zertifikat, interne CA im LAN und Betrieb hinter einer bestehenden WAF.
 
 Der Zugriff auf eine Instanz läuft über einen mitgelieferten Reverse-Proxy. Er verteilt die
 Anfragen auf die Bestandteile der Anwendung und kümmert sich um das Zertifikat. Welche
@@ -666,10 +667,10 @@ Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 ---
 
 # Aktualisieren
-Quelle: https://eucowork.ai/docs/betrieb/aktualisieren
+Quelle: https://kisuno.ai/docs/betrieb/aktualisieren
 Kapitel: Installation und Betrieb
 
-Wie eine laufende Instanz von EU Cowork AI auf einen neuen Stand kommt, warum vorher gesichert wird und wie der Rückweg aussieht.
+Wie eine laufende Instanz von Kisuno auf einen neuen Stand kommt, warum vorher gesichert wird und wie der Rückweg aussieht.
 
 Ein Update besteht aus vier Handgriffen: neuen Stand holen, die eigene Konfiguration gegen die
 Vorlage vergleichen, sichern, installieren. Es läuft über denselben geführten Weg wie die
@@ -707,7 +708,7 @@ zurück. Nutzen Sie deshalb den vorgesehenen Update-Weg und keine Handgriffe dan
 
 Die Images sind bewusst nicht auf `latest` gesetzt, sondern auf eine feste, unveränderliche
 Version. Der Grund: `latest` zieht auf jedem Server und bei jedem Abruf einen anderen Stand.
-Ein Release von EU Cowork AI ist aber eine **getestete Kombination** aus LibreChat-Version und
+Ein Release von Kisuno ist aber eine **getestete Kombination** aus LibreChat-Version und
 den ergänzenden Bestandteilen. Nur mit einer festen Version fährt jeder Server genau die
 Kombination, die auch geprüft wurde.
 
@@ -737,10 +738,10 @@ Auslieferungspaket beiliegt. Kunden erhalten es zusammen mit dem Zugang.
 ---
 
 # Backup und Umzug
-Quelle: https://eucowork.ai/docs/betrieb/backup-und-umzug
+Quelle: https://kisuno.ai/docs/betrieb/backup-und-umzug
 Kapitel: Installation und Betrieb
 
-Was eine Sicherung von EU Cowork AI umfasst, wie ein Restore wirkt und worauf ein Umzug auf einen neuen Server hinausläuft.
+Was eine Sicherung von Kisuno umfasst, wie ein Restore wirkt und worauf ein Umzug auf einen neuen Server hinausläuft.
 
 Sicherung und Umzug gehören zusammen: Ein Umzug ist technisch nichts anderes als eine Sicherung
 auf der alten Maschine und deren Wiederherstellung auf der neuen. Für beides liegen dem
@@ -812,10 +813,10 @@ Zugang.
 ---
 
 # Fehlerbehebung
-Quelle: https://eucowork.ai/docs/betrieb/fehlerbehebung
+Quelle: https://kisuno.ai/docs/betrieb/fehlerbehebung
 Kapitel: Installation und Betrieb
 
-Wo Sie bei einer Störung zuerst hinschauen und welche Ursachengruppen im Betrieb von EU Cowork AI am häufigsten dahinterstecken.
+Wo Sie bei einer Störung zuerst hinschauen und welche Ursachengruppen im Betrieb von Kisuno am häufigsten dahinterstecken.
 
 Die meisten Störungen lassen sich in wenigen Minuten einer Ursachengruppe zuordnen. Diese Seite
 zeigt, wo Sie dafür hinschauen. Die ausführliche Fehlerbehebung steht im Betriebshandbuch, das
@@ -859,7 +860,7 @@ Kommen Sie damit nicht weiter, hilft der Support-Weg aus Ihrem Vertrag weiter.
 ---
 
 # Chat und Modelle
-Quelle: https://eucowork.ai/docs/funktionen/chat-und-modelle
+Quelle: https://kisuno.ai/docs/funktionen/chat-und-modelle
 Kapitel: Für Mitarbeitende
 
 Wie der Chat funktioniert, wie Modellkarten aufgebaut sind, wie Erinnerungen und die automatische Kompaktierung langer Gespräche arbeiten.
@@ -1039,7 +1040,7 @@ anderen Rollen erben das ausgeschaltete Verhalten.
 ---
 
 # Dateien und Wissen
-Quelle: https://eucowork.ai/docs/funktionen/dateien-und-wissen
+Quelle: https://kisuno.ai/docs/funktionen/dateien-und-wissen
 Kapitel: Für Mitarbeitende
 
 Dateien an eine Nachricht anhängen, die Dateisuche über einen Dokumentenbestand und die Suche über eigene Chats. Was standardmässig an ist und was nicht.
@@ -1167,7 +1168,7 @@ an, weil die Auskunft nach DSGVO vor der Löschung erfolgen muss.
 ---
 
 # Web-Suche
-Quelle: https://eucowork.ai/docs/funktionen/web-suche
+Quelle: https://kisuno.ai/docs/funktionen/web-suche
 Kapitel: Für Mitarbeitende
 
 Wie die Web-Suche im Chat funktioniert, aus welchen Bausteinen sie besteht und was bei der Einrichtung zu entscheiden ist.
@@ -1268,7 +1269,7 @@ Unterscheidung am besten wörtlich auf.
 ---
 
 # Auswertungen, Tabellen und Code
-Quelle: https://eucowork.ai/docs/funktionen/code-und-auswertungen
+Quelle: https://kisuno.ai/docs/funktionen/code-und-auswertungen
 Kapitel: Für Mitarbeitende
 
 Excel-Auswertungen und PDF als Download aus dem Chat, Diagramme und Oberflächen als Artefakte, und was die Code-Ausführung voraussetzt.
@@ -1368,7 +1369,7 @@ Auslieferungszustand ist sie ausgeschaltet.
 ---
 
 # Agenten und Skills
-Quelle: https://eucowork.ai/docs/funktionen/agenten-und-skills
+Quelle: https://kisuno.ai/docs/funktionen/agenten-und-skills
 Kapitel: Für Mitarbeitende
 
 Was ein Agent ist, was ein Skill ist, wie beide zusammenspielen und warum Skills nie pauschal an alle ausgerollt werden.
@@ -1541,7 +1542,7 @@ Dasselbe Prinzip gilt bei Konnektoren: wenige, klar beschriebene Werkzeuge schla
 ---
 
 # Outlook-Add-in
-Quelle: https://eucowork.ai/docs/funktionen/outlook-add-in
+Quelle: https://kisuno.ai/docs/funktionen/outlook-add-in
 Kapitel: Für Mitarbeitende
 
 Der KI-Kollege im Posteingang: Mails zusammenfassen, Antworten entwerfen, Aufgaben herausziehen. Mit Anhängen, Anmeldung und Verteilung.
@@ -1747,12 +1748,12 @@ Die Einträge werden nach Ablauf der Aufbewahrungsfrist automatisch entfernt.
 ---
 
 # Admin-Panel
-Quelle: https://eucowork.ai/docs/administration/admin-panel
+Quelle: https://kisuno.ai/docs/administration/admin-panel
 Kapitel: Administration
 
 Was das Admin-Panel leistet und in welcher Reihenfolge eine neue Administratorin vorgeht.
 
-Das Admin-Panel ist die Oberfläche, über die EU Cowork AI verwaltet wird: Konten, Rollen, Gruppen, Konnektoren, Modelle, Verbrauch und Protokolle. Diese Seite gibt den Überblick, die einzelnen Bereiche sind in den folgenden Kapiteln beschrieben. Zielgruppe ist die Person, die die Instanz betreut.
+Das Admin-Panel ist die Oberfläche, über die Kisuno verwaltet wird: Konten, Rollen, Gruppen, Konnektoren, Modelle, Verbrauch und Protokolle. Diese Seite gibt den Überblick, die einzelnen Bereiche sind in den folgenden Kapiteln beschrieben. Zielgruppe ist die Person, die die Instanz betreut.
 
 ## Zugang
 
@@ -1807,7 +1808,7 @@ Die Schritt-für-Schritt-Anleitungen zur Einrichtung Ihrer Instanz gehören zur 
 ---
 
 # Benutzer, Gruppen und Rollen
-Quelle: https://eucowork.ai/docs/administration/benutzer-und-gruppen
+Quelle: https://kisuno.ai/docs/administration/benutzer-und-gruppen
 Kapitel: Administration
 
 Konten einladen und anlegen, Rechte über Rollen vergeben, Gruppen führen, Konten sperren und löschen.
@@ -1872,7 +1873,7 @@ Zu jeder Person gibt es eine Übersicht ihrer Zugriffe: Rolle, Gruppen, erlaubte
 ---
 
 # Modelle und Modellkarten
-Quelle: https://eucowork.ai/docs/administration/modelle-und-karten
+Quelle: https://kisuno.ai/docs/administration/modelle-und-karten
 Kapitel: Administration
 
 Was Modellkarten sind und wie ihre Sichtbarkeit pro Rolle und Gruppe gesteuert wird.
@@ -1926,7 +1927,7 @@ Der Router ist im Kunden-Template **nicht** ausgerollt. Nach der Installation se
 ---
 
 # Verbrauch, Budgets und Abrechnung
-Quelle: https://eucowork.ai/docs/administration/verbrauch-und-budgets
+Quelle: https://kisuno.ai/docs/administration/verbrauch-und-budgets
 Kapitel: Administration
 
 Wie der Verbrauch gemessen wird, wie Monatsbudget und persönliche Limits zusammenspielen und wie Belege entstehen.
@@ -1993,7 +1994,7 @@ Für die Frage nach einer einzelnen Anfrage ist keine der beiden zuständig, daf
 ---
 
 # Protokolle und Audit
-Quelle: https://eucowork.ai/docs/administration/protokolle-und-audit
+Quelle: https://kisuno.ai/docs/administration/protokolle-und-audit
 Kapitel: Administration
 
 Nutzungsprotokoll, Änderungshistorie und der Nachweis über Konnektor-Zugriffe.
@@ -2033,7 +2034,7 @@ Wie lange die Einträge aufbewahrt werden, legen Sie in Ihrem Löschkonzept fest
 ---
 
 # Datenschutz und Aufbewahrung
-Quelle: https://eucowork.ai/docs/administration/datenschutz-und-aufbewahrung
+Quelle: https://kisuno.ai/docs/administration/datenschutz-und-aufbewahrung
 Kapitel: Administration
 
 Aufbewahrung, Auskunft und Löschung pro Person, Telemetrie und was die Instanz verlässt.
@@ -2101,10 +2102,10 @@ Beachten Sie ausserdem, dass Herkunftsangaben zu Anbietern von diesen selbst sta
 ---
 
 # Was ist MCP
-Quelle: https://eucowork.ai/docs/konnektoren/was-ist-mcp
+Quelle: https://kisuno.ai/docs/konnektoren/was-ist-mcp
 Kapitel: Konnektoren und MCP
 
-Das Model Context Protocol von Grund auf erklärt, damit Sie verstehen, wie EU Cowork AI an Ihre eigenen Systeme angeschlossen wird.
+Das Model Context Protocol von Grund auf erklärt, damit Sie verstehen, wie Kisuno an Ihre eigenen Systeme angeschlossen wird.
 
 Diese Seite erklärt, wie ein Sprachmodell an Daten aus Ihren eigenen Systemen kommt. Sie richtet sich an IT-Verantwortliche, die den Begriff MCP noch nie gehört haben, und legt die Grundlage für alle weiteren Seiten dieses Kapitels.
 
@@ -2112,9 +2113,9 @@ Diese Seite erklärt, wie ein Sprachmodell an Daten aus Ihren eigenen Systemen k
 
 Ein Sprachmodell kennt nur, was in seinem Trainingsmaterial stand, und was im laufenden Gespräch steht. Es weiss nichts über Ihre Kunden, Ihre Rechnungen oder Ihre Geräte. Damit es solche Fragen beantworten kann, braucht es einen Weg, während des Gesprächs bei einem Ihrer Fachsysteme nachzufragen.
 
-Genau dafür gibt es das **Model Context Protocol**, kurz MCP. Es ist eine gemeinsame Sprache dafür, wie ein Chat-System einem Fachsystem Fragen stellt und Antworten zurückbekommt. MCP ist ein **offener Standard mit öffentlicher Spezifikation**, ursprünglich von Anthropic veröffentlicht und inzwischen von vielen Herstellern übernommen. Es ist keine Erfindung von EU Cowork AI, und Sie binden sich damit nicht an uns.
+Genau dafür gibt es das **Model Context Protocol**, kurz MCP. Es ist eine gemeinsame Sprache dafür, wie ein Chat-System einem Fachsystem Fragen stellt und Antworten zurückbekommt. MCP ist ein **offener Standard mit öffentlicher Spezifikation**, ursprünglich von Anthropic veröffentlicht und inzwischen von vielen Herstellern übernommen. Es ist keine Erfindung von Kisuno, und Sie binden sich damit nicht an uns.
 
-Für Sie heisst das zweierlei. Erstens: Für viele verbreitete Produkte existiert bereits ein fertiger MCP-Server, den Sie anschliessen können. Zweitens: Was Sie einmal für EU Cowork AI bauen, funktioniert auch mit anderer Software, die MCP spricht.
+Für Sie heisst das zweierlei. Erstens: Für viele verbreitete Produkte existiert bereits ein fertiger MCP-Server, den Sie anschliessen können. Zweitens: Was Sie einmal für Kisuno bauen, funktioniert auch mit anderer Software, die MCP spricht.
 
 ## Drei Begriffe, die Sie brauchen
 
@@ -2122,7 +2123,7 @@ Für Sie heisst das zweierlei. Erstens: Für viele verbreitete Produkte existier
 
 **Konnektor, technisch MCP-Server.** Ein Konnektor ist ein kleiner Dienst, der eine Sammlung von Werkzeugen anbietet und dahinter mit dem eigentlichen Zielsystem spricht. In dieser Dokumentation nennen wir ihn Konnektor, weil das für Nicht-Entwickler verständlicher ist. In der Konfiguration und im Admin-Panel heisst er MCP-Server.
 
-**Client.** Der Client ist die Seite, der die Werkzeuge angeboten werden und die sie aufruft. Bei uns ist das LibreChat, die Chat-Schicht von EU Cowork AI.
+**Client.** Der Client ist die Seite, der die Werkzeuge angeboten werden und die sie aufruft. Bei uns ist das LibreChat, die Chat-Schicht von Kisuno.
 
 Ein Konnektor ist häufig eine **Brücke**: Das Zielsystem selbst spricht kein MCP, sondern hat nur eine gewöhnliche Programmierschnittstelle. Der Konnektor übersetzt dann zwischen beiden Welten. So funktionieren die meisten Anbindungen an ein ERP, ein Monitoring-System oder ein Ticketsystem.
 
@@ -2147,13 +2148,13 @@ Jeder Konnektor muss sich beim Zielsystem anmelden. Dafür gibt es zwei grundsä
 |---|---|---|
 | Wer meldet sich an | jede Person mit dem eigenen Konto | ein einziges technisches Konto für alle |
 | Wer kennt die Rechte | das Zielsystem selbst | das Zielsystem kennt nur das Dienstkonto |
-| Berechtigungsgrenze | die Rechte der Person im Zielsystem | die Freigaben in EU Cowork AI plus die Rechte des Dienstkontos |
+| Berechtigungsgrenze | die Rechte der Person im Zielsystem | die Freigaben in Kisuno plus die Rechte des Dienstkontos |
 | Feinheit | bis auf Dokument- und Feldebene | bis auf Konnektor- und Werkzeugebene |
 | Typisch für | Dateiablage, Dokumentenmanagement, Cloud-Speicher | ERP, Warenwirtschaft, Buchhaltung, Monitoring |
 
 **Anmeldung pro Person** bedeutet: Beim ersten Gebrauch wird die Person zum Anmeldedialog des Zielsystems geschickt, bestätigt dort den Zugriff, und der Konnektor arbeitet ab dann mit ihrem persönlichen Zugang. Wer in Ihrer Dateiablage einen Ordner nicht sehen darf, sieht ihn auch im Chat nicht. Das Zielsystem bleibt die massgebliche Instanz, und Sie müssen die Rechte nicht ein zweites Mal nachbauen.
 
-**Dienstkonto** bedeutet: Der Konnektor hält einen einzigen Schlüssel und meldet sich für alle gleich an. Das Zielsystem sieht nur dieses eine Konto und kann deshalb nicht zwischen Ihren Mitarbeitenden unterscheiden. Die Trennung muss dann davor passieren, über die Freigaben in EU Cowork AI.
+**Dienstkonto** bedeutet: Der Konnektor hält einen einzigen Schlüssel und meldet sich für alle gleich an. Das Zielsystem sieht nur dieses eine Konto und kann deshalb nicht zwischen Ihren Mitarbeitenden unterscheiden. Die Trennung muss dann davor passieren, über die Freigaben in Kisuno.
 
 **Faustregel**
 
@@ -2170,10 +2171,10 @@ Dazu kommt ein zweiter Effekt: Je mehr ähnlich klingende Werkzeuge im Katalog s
 ---
 
 # Rechte und Freigaben
-Quelle: https://eucowork.ai/docs/konnektoren/gateway-und-rechte
+Quelle: https://kisuno.ai/docs/konnektoren/gateway-und-rechte
 Kapitel: Konnektoren und MCP
 
-Wie EU Cowork AI entscheidet, wer welchen Konnektor benutzen darf, und wo Sie die Freigaben pflegen.
+Wie Kisuno entscheidet, wer welchen Konnektor benutzen darf, und wo Sie die Freigaben pflegen.
 
 Vor den Konnektoren steht eine Rechteprüfung. Sie entscheidet, ob die anfragende Person einen Konnektor benutzen darf, und hält die Entscheidung fest. Diese Seite erklärt, warum es diese Schicht braucht, wonach sie entscheidet und wo Sie die Freigaben pflegen.
 
@@ -2224,10 +2225,10 @@ Welche Ansicht wo liegt und wie sie bedient wird, beschreibt die Anleitung, die 
 ---
 
 # Eigenen Konnektor anbinden
-Quelle: https://eucowork.ai/docs/konnektoren/eigenen-konnektor-anbinden
+Quelle: https://kisuno.ai/docs/konnektoren/eigenen-konnektor-anbinden
 Kapitel: Konnektoren und MCP
 
-Was Sie klären, bevor Sie ein eigenes System an EU Cowork AI anschliessen, und woran Sie einen fremden Konnektor messen.
+Was Sie klären, bevor Sie ein eigenes System an Kisuno anschliessen, und woran Sie einen fremden Konnektor messen.
 
 Ein eigenes System wird als Konnektor angebunden: ein Dienst, der eine überschaubare Zahl von Werkzeugen anbietet und dahinter die Schnittstelle Ihres Systems aufruft. Angelegt und freigegeben wird er im Admin-Panel, ohne Zugriff auf den Server.
 
@@ -2277,7 +2278,7 @@ Prüfen Sie die Freigabe zum Schluss mit zwei Testpersonen mit unterschiedlichen
 ---
 
 # Muster für Konnektoren
-Quelle: https://eucowork.ai/docs/konnektoren/muster
+Quelle: https://kisuno.ai/docs/konnektoren/muster
 Kapitel: Konnektoren und MCP
 
 Drei bewährte Bauformen für Konnektoren, jeweils mit Einsatzgebiet, Verlauf der Rechte und den Punkten, auf die Sie im Betrieb achten müssen.
@@ -2294,7 +2295,7 @@ Drei Bauformen decken praktisch alles ab, was in einem KMU anfällt. Diese Seite
 
 Die Antwort darauf ist nicht ein Filter im Prompt, sondern die Struktur der Konten: **pro Rechteprofil ein eigenes Dienstkonto und eine eigene Konnektor-Instanz**, statt eines Generalschlüssels für alle. Ein Zugangsschlüssel erbt vollständig die Rechte seines Kontos im Zielsystem. Damit ist das Konto hinter dem Schlüssel die eigentliche Datengrenze, nicht die Konfiguration und nicht der Prompt. Was das Konto nicht sehen darf, sieht auch der Chat nicht, unabhängig davon, was das Modell versucht.
 
-Die Freigaben in EU Cowork AI kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Ist eine Freigabe im Panel einmal zu weit gesetzt, trägt immer noch die Rechtegrenze des Dienstkontos.
+Die Freigaben in Kisuno kommen **zusätzlich** dazu. Sie entscheiden, wer welche Instanz überhaupt zu sehen bekommt. Ist eine Freigabe im Panel einmal zu weit gesetzt, trägt immer noch die Rechtegrenze des Dienstkontos.
 
 | Instanz mit eigenem Dienstkonto | Gedacht für |
 |---|---|
@@ -2384,7 +2385,7 @@ Schalten Sie Werkzeuge deshalb einzeln und auf Nachfrage frei, nicht vorsorglich
 ---
 
 # Best Practices für Konnektoren
-Quelle: https://eucowork.ai/docs/konnektoren/best-practices
+Quelle: https://kisuno.ai/docs/konnektoren/best-practices
 Kapitel: Konnektoren und MCP
 
 Zehn Regeln mit Begründung, dazu eine Checkliste vor der Freigabe eines neuen Konnektors.
@@ -2499,7 +2500,7 @@ Gehen Sie diese Punkte durch, bevor die erste Person den Konnektor benutzt:
 ---
 
 # Umgebungsvariablen
-Quelle: https://eucowork.ai/docs/referenz/umgebungsvariablen
+Quelle: https://kisuno.ai/docs/referenz/umgebungsvariablen
 Kapitel: Referenz
 
 Wie eine Instanz konfiguriert wird, was Sie selbst setzen und wo die vollständige Referenz liegt.
@@ -2555,12 +2556,12 @@ Für alles, was Standard von LibreChat ist, gilt zusätzlich die dortige Dokumen
 ---
 
 # Dienste und Ports
-Quelle: https://eucowork.ai/docs/referenz/dienste-und-ports
+Quelle: https://kisuno.ai/docs/referenz/dienste-und-ports
 Kapitel: Referenz
 
 Wie der Stack grundsätzlich aufgebaut ist und was von aussen erreichbar ist.
 
-EU Cowork AI läuft als Docker-Compose-Stack. Die Chat-Anwendung und die Dienste, die sie
+Kisuno läuft als Docker-Compose-Stack. Die Chat-Anwendung und die Dienste, die sie
 benötigt, laufen jeweils in einem eigenen Container und sprechen untereinander über ein
 internes Netz.
 
@@ -2592,7 +2593,7 @@ Wie der Stack im Alltag gestartet, gestoppt und beobachtet wird, steht in der
 ---
 
 # Befehlsübersicht
-Quelle: https://eucowork.ai/docs/referenz/befehle
+Quelle: https://kisuno.ai/docs/referenz/befehle
 Kapitel: Referenz
 
 Womit eine Instanz im Alltag verwaltet wird und wo die ausführliche Anleitung liegt.
@@ -2634,12 +2635,12 @@ enthält Zugangsdaten und wird entsprechend geschützt aufbewahrt.
 ---
 
 # Was von LibreChat kommt
-Quelle: https://eucowork.ai/docs/referenz/librechat-und-eu-cowork
+Quelle: https://kisuno.ai/docs/referenz/librechat-und-kisuno
 Kapitel: Referenz
 
 Einordnung, welche Teile der Plattform von LibreChat stammen und welche wir selbst gebaut haben, und warum der Fork bewusst dünn bleibt.
 
-EU Cowork AI ist keine Neuentwicklung von Grund auf. Die Chat-Oberfläche und ein grosser Teil
+Kisuno ist keine Neuentwicklung von Grund auf. Die Chat-Oberfläche und ein grosser Teil
 der Anwendungslogik stammen aus einem bestehenden Open-Source-Projekt, unsere Arbeit liegt in
 der Schicht darum herum. Diese Seite trennt beides sauber, damit Sie wissen, wo Sie eine
 Antwort suchen müssen und wem Sie einen Fehler melden.
@@ -2689,7 +2690,7 @@ Quellcode. Ein Versionssprung ist eine bewusste Handlung mit einer eigenen Prüf
 
 **Code-Ausführung**
 
-Für die Code-Ausführung bindet EU Cowork AI etablierte Backends ein, statt einen eigenen Runner
+Für die Code-Ausführung bindet Kisuno etablierte Backends ein, statt einen eigenen Runner
 mitzuliefern. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf Host-
 oder Netzebene fest.
 
@@ -2715,7 +2716,7 @@ alle so gebaut.
 
 Praktisch heisst das für Sie: Ein Update von LibreChat berührt unsere Dienste nicht, und eine
 neue Fassung des Admin-Panels berührt LibreChat nicht. Beides wird getrennt aktualisiert. Eine
-Freigabe von EU Cowork AI ist immer ein gemeinsam getesteter Stand.
+Freigabe von Kisuno ist immer ein gemeinsam getesteter Stand.
 
 ## Die Datei `librechat.yaml`
 
@@ -2759,10 +2760,10 @@ OIDC, LDAP und SAML.
 | Der Fehler betrifft | Zuständig |
 |---|---|
 | Chat-Oberfläche, Agenten, Modell-Anbindung, Dateiverarbeitung | LibreChat |
-| Admin-Panel, Verbrauchsanzeige, Budget, Aufbewahrung | EU Cowork AI |
-| Rechte auf Konnektoren, Protokoll der Werkzeug-Aufrufe | EU Cowork AI |
-| Installation, Backup, Umzug, TLS | EU Cowork AI |
-| Outlook-Add-in | EU Cowork AI |
+| Admin-Panel, Verbrauchsanzeige, Budget, Aufbewahrung | Kisuno |
+| Rechte auf Konnektoren, Protokoll der Werkzeug-Aufrufe | Kisuno |
+| Installation, Backup, Umzug, TLS | Kisuno |
+| Outlook-Add-in | Kisuno |
 
 Die Lizenzen aller beteiligten Bausteine stehen unter
 [Lizenzen und Herkunft](/docs/referenz/lizenzen).
@@ -2770,21 +2771,22 @@ Die Lizenzen aller beteiligten Bausteine stehen unter
 ---
 
 # Lizenzen und Herkunft
-Quelle: https://eucowork.ai/docs/referenz/lizenzen
+Quelle: https://kisuno.ai/docs/referenz/lizenzen
 Kapitel: Referenz
 
-Unter welcher Lizenz EU Cowork AI steht, was das für Sie als Kunde bedeutet und welche Lizenz jeder mitgelieferte Baustein trägt.
+Unter welcher Lizenz Kisuno steht, was das für Sie als Kunde bedeutet und welche Lizenz jeder mitgelieferte Baustein trägt.
 
-EU Cowork AI ist echtes Open Source, und die mitgelieferten Fremdkomponenten stehen unter
-ihren eigenen Lizenzen. Diese Seite sagt, was das praktisch bedeutet, und listet jeden
-Baustein mit seiner Lizenz auf. Sie richtet sich an alle, die vor einer Beschaffung wissen
-müssen, worauf sie sich einlassen.
+Kisuno erscheint als echtes Open Source unter der MIT-Lizenz, das Repository folgt demnächst;
+die mitgelieferten Fremdkomponenten stehen unter ihren eigenen Lizenzen. Diese Seite sagt, was
+das praktisch bedeutet, und listet jeden Baustein mit seiner Lizenz auf. Sie richtet sich an
+alle, die vor einer Beschaffung wissen müssen, worauf sie sich einlassen.
 
 ## Die Lizenz des Gesamtprodukts
 
-Unser gesamter eigener Code steht unter der **MIT-Lizenz**. Das ist eine der freizügigsten
-Lizenzen überhaupt: Sie dürfen die Software nutzen, verändern, weitergeben und kommerziell
-einsetzen, solange der Lizenztext und der Urheberrechtshinweis erhalten bleiben.
+Unser gesamter eigener Code erscheint unter der **MIT-Lizenz**, das Repository folgt demnächst.
+Das ist eine der freizügigsten Lizenzen überhaupt: Sie dürfen die Software nutzen, verändern,
+weitergeben und kommerziell einsetzen, solange der Lizenztext und der Urheberrechtshinweis
+erhalten bleiben.
 
 Was das für Sie als Kunde konkret heisst:
 
@@ -2880,18 +2882,18 @@ Für ein Produkt, das ausdrücklich permissiv bleiben soll, ist das der falsche 
 
 - **Das AGPL-Panel ist nicht Teil der Distribution.** Es war eine Übergangslösung für interne
   Tests, bevor unser eigenes Panel fertig war.
-- **Unser Panel ist ein eigenständiger Neubau** unter MIT-Lizenz. Es arbeitet gegen dieselbe
-  Administrations-Schnittstelle von LibreChat, die selbst unter MIT steht.
+- **Unser Panel ist ein eigenständiger Neubau** und erscheint unter der MIT-Lizenz. Es arbeitet
+  gegen dieselbe Administrations-Schnittstelle von LibreChat, die selbst unter MIT steht.
 - **Es wurde kein Code aus dem AGPL-Panel übernommen.** Das Panel diente als Vorbild für die
   Bedienung, nicht als Quelle. Dieselbe Regel gilt für Beiträge von aussen.
 
-Das Ergebnis: Sie können EU Cowork AI selbst hosten, verändern und weitergeben, ohne
+Das Ergebnis: Sie können Kisuno selbst hosten, verändern und weitergeben, ohne
 Copyleft-Pflichten. Das ist der eigentliche Grund für den Mehraufwand.
 
 ## Beitragen
 
-Der Quellcode liegt im Repository **`eu-cowork`** auf GitHub. Die konkrete Adresse steht in
-Ihrer Bezugsquelle beziehungsweise wird Ihnen vom Anbieter mitgeteilt.
+Der Quellcode erscheint demnächst im Repository von Kisuno auf GitHub. Die konkrete Adresse
+steht dann in Ihrer Bezugsquelle beziehungsweise wird Ihnen vom Anbieter mitgeteilt.
 
 Beiträge gehen als Pull Request gegen `main`. Vor dem ersten Beitrag lohnt ein Blick in die
 Datei `CONTRIBUTING.md` im Repository, dort steht der Ablauf. Die verbindlichen Konventionen

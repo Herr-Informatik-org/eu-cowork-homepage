@@ -1,14 +1,14 @@
-# EU Cowork AI
+# Kisuno
 
-> Plateforme de travail IA open source pour les entreprises. Accès à plus de 100 modèles de langage, traités dans l'UE. Auto-hébergeable dès un utilisateur sous licence MIT, ou exploitée dans des centres de données certifiés ISO 27001 en Suisse. Une offre de Herr Informatik GmbH, Windisch (CH).
+> Plateforme de travail IA pour les entreprises, qui paraîtra prochainement sous licence MIT. Accès aux modèles actuels d'OpenAI (ChatGPT) et d'Anthropic (Claude), exécutés dans le centre de données AWS de Francfort, et à des modèles ouverts de premier plan comme GLM, Kimi et DeepSeek, exploités par des entreprises européennes sur des serveurs en Europe. Auto-hébergeable dès un utilisateur, ou exploitée dans des centres de données certifiés ISO 27001 en Suisse. Une offre de Herr Informatik GmbH, Windisch (CH).
 
-EU Cowork AI est un collègue IA pour les entreprises : une plateforme de chat dans le navigateur qui relie les modèles de langage aux systèmes de la société, au lieu d'être une fenêtre de chat isolée de plus. Le produit est un fork léger de LibreChat (MIT, plus de 40 000 étoiles sur GitHub), complété par nos propres services pour l'entreprise.
+Kisuno est un collègue IA pour les entreprises : une plateforme de chat dans le navigateur qui relie les modèles de langage aux systèmes de la société, au lieu d'être une fenêtre de chat isolée de plus. Le produit est un fork léger de LibreChat (MIT, plus de 40 000 étoiles sur GitHub), complété par nos propres services pour l'entreprise. Kisuno s'appelait EU Cowork AI jusqu'en septembre 2026 ; l'éditeur, le produit et l'exploitation restent les mêmes.
 
-Le positionnement central est la souveraineté européenne des données sans renoncer aux fonctions. L'exploitation a lieu en Suisse, l'inférence est traitée dans l'UE via EuRouter, la télémétrie est désactivée par défaut et les données clients n'entraînent aucun modèle. Qui héberge lui-même garde ses données entièrement sur sa propre infrastructure : dès un utilisateur, sans limite de sièges et sans marque imposée.
+Le positionnement central est la souveraineté européenne des données sans renoncer aux fonctions. L'exploitation a lieu en Suisse, les modèles sont exécutés dans le centre de données AWS de Francfort ou chez des entreprises européennes sur des serveurs en Europe, la télémétrie est désactivée par défaut et les données clients n'entraînent aucun modèle. Qui héberge lui-même garde ses données entièrement sur sa propre infrastructure : dès un utilisateur, sans limite de sièges et sans marque imposée.
 
-## Ce que fait EU Cowork AI
+## Ce que fait Kisuno
 
-- Tous les modèles : plus de 100 modèles de premier plan par un seul accès, traités dans l'UE, y compris les grands modèles d'Anthropic et d'OpenAI. Aucun enfermement propriétaire ; clé de fournisseur et point de terminaison propres par configuration.
+- Tous les modèles : les modèles actuels d'OpenAI (ChatGPT) et d'Anthropic (Claude) par un seul accès, ainsi que des modèles ouverts de premier plan comme GLM, Kimi et DeepSeek. Aucun enfermement propriétaire ; clé de fournisseur et point de terminaison propres par configuration.
 - Recherche web : des réponses actuelles avec indication des sources directement dans le chat, auto-hébergée via SearXNG.
 - Génération de fichiers : demander un tableur et télécharger le fichier terminé (Excel, Word, PDF).
 - Agents de rôle et compétences : des collègues IA préparés pour les tâches récurrentes, libérés par groupe.
@@ -24,9 +24,11 @@ Le positionnement central est la souveraineté européenne des données sans ren
 
 ## Protection des données et conformité
 
-- Exploitation dans des centres de données certifiés ISO 27001 de Green, Campus Lupfig (canton d'Argovie), Suisse. La certification appartient à Green ; une certification ISO 27001 propre à EU Cowork AI est en cours.
+- Exploitation dans des centres de données certifiés ISO 27001 de Green, Campus Lupfig (canton d'Argovie), Suisse. La certification appartient à Green ; une certification ISO 27001 propre à Kisuno est en cours.
+- Où les modèles calculent : Kisuno propose les modèles actuels d'OpenAI (ChatGPT) et d'Anthropic (Claude) ; ils sont exécutés dans le centre de données AWS de Francfort. AWS est une entreprise américaine, le US CLOUD Act s'applique donc même avec des serveurs à Francfort, et nous le disons ouvertement. Pour les clients aux exigences élevées en matière de protection des données, des modèles ouverts de premier plan comme GLM, Kimi et DeepSeek sont disponibles, exploités par des entreprises européennes sur des serveurs en Europe ; le CLOUD Act ne s'y applique pas.
 - LPD révisée (Suisse) et RGPD, garantis contractuellement.
-- Pas d'entraînement : les données clients n'entraînent aucun modèle.
+- Aucun entraînement avec les données clients : quel que soit le modèle choisi, les saisies et les données téléversées ne sont ni conservées par le fournisseur de modèle ni utilisées pour l'entraînement. C'est inscrit au contrat de sous-traitance, section sur l'absence d'entraînement avec les données clients.
+- Une exception que nous nommons ouvertement : la détection d'abus d'AWS peut marquer des messages, par exemple en cas d'indices d'attaques, de code malveillant ou de contenus interdits. AWS conserve jusqu'à 30 jours les messages marqués des modèles GPT et l'ensemble des requêtes de Claude Fable 5 et 5.1, pour examiner et stopper les abus ; rien n'est transmis aux fournisseurs de modèles ni utilisé pour l'entraînement. Source : https://docs.aws.amazon.com/bedrock/latest/userguide/abuse-detection.html.
 - Télémétrie désactivée par défaut, aucun suivi sans consentement actif.
 - Une limite que nous nommons ouvertement : la recherche web transmet la requête à des moteurs de recherche externes, sans identité de l'utilisateur. Tout reste en Europe vaut pour le stockage et l'inférence, pas pour la requête elle-même.
 
@@ -36,78 +38,78 @@ Préparées et activées par client lors de la mise en place : ERP (clients, fac
 
 ## Différences avec le marché
 
-Face à Claude, Microsoft 365 Copilot, Langdock, Swisscom AI et Open WebUI, EU Cowork AI est la seule option qui soit à la fois open source sous MIT, auto-hébergeable dès un utilisateur (Open WebUI exige une licence entreprise ou une autorisation écrite pour retirer la marque au-delà de 50 utilisateurs sur une période glissante de 30 jours), hébergée en Suisse, et qui offre une connexion à l'ERP avec contrôle d'accès par rôle et audit.
+Face à Claude, Microsoft 365 Copilot, Langdock, Swisscom AI et Open WebUI, Kisuno est la seule option qui soit à la fois bientôt open source sous MIT, auto-hébergeable dès un utilisateur (Open WebUI exige une licence entreprise ou une autorisation écrite pour retirer la marque au-delà de 50 utilisateurs sur une période glissante de 30 jours), hébergée en Suisse, et qui offre une connexion à l'ERP avec contrôle d'accès par rôle et audit.
 
 ## Pages
 
-- [EU Cowork AI : votre collègue IA. Reste en Europe.](https://eucowork.ai/fr): IA souveraine pour entreprises : open source, hébergée en Suisse ou auto-hébergeable dès 1 utilisateur (MIT). 100+ modèles traités en Europe, accès ERP audité.
-- [Tarifs : héberger soi-même ou nous confier](https://eucowork.ai/fr/preise): Un logiciel, deux modes : auto-hébergement gratuit, code source à venir, exploitation gérée en Suisse à 15 € par personne et par mois.
-- [Commencer : demander un accès](https://eucowork.ai/fr/warteliste): EU Cowork AI est utilisable en production. Demandez un accès : gratuit pendant la phase de test, crédit de modèles inclus. Accès par vagues.
-- [Plateformes d’IA comparées : 7 fournisseurs](https://eucowork.ai/fr/vergleich): ChatGPT, Microsoft 365 Copilot, Claude, Langdock, Open WebUI, LibreChat et EU Cowork AI comparés : flux des données, droits, licence et modèles, avec sources.
-- [Questions fréquentes sur la plateforme d’IA](https://eucowork.ai/fr/faq): 41 questions et réponses sur EU Cowork AI : hébergé en Suisse, aucun entraînement, 100+ modèles traités dans l’UE, droits par outil, audit et licence MIT.
-- [Sécurité, protection et résidence des données](https://eucowork.ai/fr/sicherheit): EU Cowork AI tourne dans des centres de données ISO 27001 de Green à Lupfig, l’inférence est traitée dans l’UE via EuRouter. revDSG et RGPD, aucun entraînement.
-- [Gouvernance : droits, budgets, audit](https://eucowork.ai/fr/governance): Qui utilise quel outil, qui voit quelles données, combien cela coûte ? Droits jusqu’à l’outil, audit par appel, budget mensuel à blocage souple.
-- [Intégrations : ERP et systèmes via MCP](https://eucowork.ai/fr/integrationen): EU Cowork AI relie votre ERP, SharePoint et tout système doté d’une API via MCP. Cinq connexions prêtes, droits jusqu’à l’outil, journal d’audit par appel.
-- [Plateforme d’IA open source auto-hébergée](https://eucowork.ai/fr/self-hosting): Hébergez EU Cowork AI vous-même : une pile Docker Compose sur une VM Ubuntu, deux scripts, environ 0,7 GB de RAM au repos, licence MIT, sans limite de postes.
-- [Notre vision : l’Europe prête pour l’IA](https://eucowork.ai/fr/vision): Pourquoi EU Cowork AI existe : en 2025, 20,0 % des entreprises de l’UE d’au moins 10 salariés utilisaient l’IA. Nous bâtissons une IA souveraine sous licence MIT.
-- [Blog](https://eucowork.ai/fr/blog): Comment les PME de Suisse et d’Europe travaillent avec un collègue IA : seize articles sur les processus, les connecteurs et les limites qui vont avec.
-- [Docs](https://eucowork.ai/docs/fr): Documentation : aperçu, fonctions, administration, auto-hébergement et MCP. Sa propre llms.txt à /docs/llms.txt, texte intégral à /docs/llms-full.txt.
+- [Kisuno : votre collègue IA. Reste en Europe.](https://kisuno.ai/fr): IA souveraine pour entreprises : open source, hébergée en Suisse ou auto-hébergeable dès 1 utilisateur (MIT). GPT, Claude, GLM, Kimi et DeepSeek, accès ERP audité.
+- [Tarifs : héberger soi-même ou nous confier](https://kisuno.ai/fr/preise): Un logiciel, deux modes : auto-hébergement gratuit, code source à venir, exploitation gérée en Suisse à 7 CHF (7,50 €) par personne et par mois.
+- [Commencer : demander un accès](https://kisuno.ai/fr/warteliste): Kisuno est utilisable en production. Demandez un accès : l’essai est gratuit et sans limite de durée, avec un crédit de démarrage de 50 CHF (55 €). Accès par vagues.
+- [Plateformes d’IA comparées : 7 fournisseurs](https://kisuno.ai/fr/vergleich): ChatGPT, Microsoft 365 Copilot, Claude, Langdock, Open WebUI, LibreChat et Kisuno comparés : flux des données, droits, licence et modèles, avec sources.
+- [Questions fréquentes sur la plateforme d’IA](https://kisuno.ai/fr/faq): 41 questions et réponses sur Kisuno : hébergement en Suisse, aucun entraînement avec les données clients, modèles à Francfort ou chez des fournisseurs européens, journal d’audit et licence MIT.
+- [Sécurité, protection et résidence des données](https://kisuno.ai/fr/sicherheit): Kisuno tourne dans des centres de données ISO 27001 de Green à Lupfig ; les modèles calculent dans le centre de données AWS de Francfort ou chez des fournisseurs européens sur des serveurs en Europe. nLPD et RGPD, aucun entraînement.
+- [Gouvernance : droits, budgets, audit](https://kisuno.ai/fr/governance): Qui utilise quel outil, qui voit quelles données, combien cela coûte ? Droits jusqu’à l’outil, audit par appel, budget mensuel à blocage souple.
+- [Intégrations : ERP et systèmes via MCP](https://kisuno.ai/fr/integrationen): Kisuno relie votre ERP, SharePoint et tout système doté d’une API via MCP. Cinq connexions prêtes, droits jusqu’à l’outil, journal d’audit par appel.
+- [Plateforme d’IA open source auto-hébergée](https://kisuno.ai/fr/self-hosting): Hébergez Kisuno vous-même : une pile Docker Compose sur une VM Ubuntu, deux scripts, environ 0,7 GB de RAM au repos, licence MIT, sans limite de postes.
+- [Notre vision : l’Europe prête pour l’IA](https://kisuno.ai/fr/vision): Pourquoi Kisuno existe : en 2025, 20,0 % des entreprises de l’UE d’au moins 10 salariés utilisaient l’IA. Nous bâtissons une IA souveraine sous licence MIT.
+- [Blog](https://kisuno.ai/fr/blog): Comment les PME de Suisse et d’Europe travaillent avec un collègue IA : seize articles sur les processus, les connecteurs et les limites qui vont avec.
+- [Docs](https://kisuno.ai/docs/fr): Documentation : aperçu, fonctions, administration, auto-hébergement et MCP. Sa propre llms.txt à /docs/llms.txt, texte intégral à /docs/llms-full.txt.
 
 ## Articles
 
 Articles de fond sur le droit, l'exploitation et la pratique sectorielle, chacun avec des sources numérotées.
 
-- [Ce que la Confédération garde hors du cloud](https://eucowork.ai/fr/blog/ki-datenhaltung-schweiz): Le Préposé fédéral est intervenu avec succès pour que GEVER et Outlook restent à la Confédération, malgré l’introduction en cours de Microsoft 365.
-- [Deux échéances qui manquent dans les agendas](https://eucowork.ai/fr/blog/ai-act-fristen-dezember-2026): 2 décembre 2026 et 12 janvier 2027 : ce que les échéances reportées laissent ouvert, ce que le Data Act interdit et qui les deux dates visent vraiment.
-- [IA agentique : qui autorise les outils](https://eucowork.ai/fr/blog/ki-agenten-governance): Dans une note du 20 juillet 2026, la CNIL décrit les risques de l’IA agentique. Trois processus montrent comment droits, validation et journal s’articulent.
-- [Décrets IA italiens : pas encore en vigueur](https://eucowork.ai/fr/blog/ki-haftung-italien): Le Conseil des ministres italien a adopté deux décrets IA : prison pour un défaut de surveillance des IA à haut risque. Ni publiés ni en vigueur.
-- [48 décisions inventées : amende pour l’avocat](https://eucowork.ai/fr/blog/ki-quellen-statt-halluzination): Un tribunal espagnol a sanctionné un avocat pour 48 références inventées. Trois processus où chaque affirmation montre d’où elle vient, et leurs limites.
-- [Claude Opus et Sonnet via Amazon Bedrock](https://eucowork.ai/fr/blog/anthropic-modelle-schweiz): Comment EU Cowork AI pilote Claude Opus et Claude Sonnet via Amazon Bedrock sur le profil européen : trois processus, l’architecture derrière et le CLOUD Act.
-- [IA pour l’artisanat en Europe : Pennylane](https://eucowork.ai/fr/blog/ki-handwerk-europa): Trois processus IA pour l’artisanat et les PME en Europe : offres, rapports, savoir d’entreprise. Raccordement à Lexware Office, Pennylane, Holded, Fortnox.
-- [IA en production : raccorder votre ERP](https://eucowork.ai/fr/blog/ki-produktion-europa): Rendre le savoir de l’usine interrogeable, préparer les audits clients, consignes multilingues. IA raccordée à Monitor ERP, weclapp, Xentral et Odoo.
-- [IA pour cabinet et fiduciaire avec DATEV](https://eucowork.ai/fr/blog/ki-kanzlei-europa): Indexer un mandat, partager le savoir du cabinet, guider les mandants : trois processus IA en cabinet, avec raccordement IA à DATEV et Pennylane.
-- [IA et logiciels de gérance en Europe](https://eucowork.ai/fr/blog/ki-immobilien-europa): L’état réel des connecteurs, de casavi à Fortnox, et trois processus IA pour la gérance immobilière en Europe qui fonctionnent aussi sans interface.
-- [IA et logiciels de cabinet en Europe](https://eucowork.ai/fr/blog/ki-praxis-europa): Rapports aux payeurs, savoir du cabinet interrogeable, info patient multilingue. Et où en est le raccordement de l’IA à medatixx, IXOS, Kaddio et awinta.
-- [IA pour l’artisanat et les PME : bexio, KLARA](https://eucowork.ai/fr/blog/ki-handwerk-kmu): Trois cas d’usage de l’IA pour l’artisanat et les PME en Suisse : offres, rapports, savoir d’entreprise. Raccordement à bexio, KLARA, CashCtrl, Microsoft 365.
-- [IA en production : ERP, Abacus, SAP](https://eucowork.ai/fr/blog/ki-produktion): Préserver le savoir des rapports de service, examiner les cahiers des charges, préparer les audits. IA raccordée à Abacus, SAP Business One et Odoo.
-- [IA pour étude et fiduciaire avec Vertec](https://eucowork.ai/fr/blog/ki-treuhand-kanzlei): Indexer le dossier, vérifier des contrats, rédiger des courriers : trois processus IA pour études et fiduciaires, avec raccordement IA à Vertec et bexio.
-- [IA et logiciels en gérance immobilière](https://eucowork.ai/fr/blog/ki-immobilienverwaltung): IA raccordée à GARAIO REM, Abacus et ImmoTop2 : trois processus pour les demandes des locataires, les charges et les états des lieux en Suisse.
-- [IA et logiciels de cabinet et pharmacie](https://eucowork.ai/fr/blog/ki-praxis-apotheke): Projets de rapports, manuel qualité interrogeable, fiches multilingues. Et où en est le raccordement de l’IA à vitomed, Elexis, OneDoc et Documedis.
+- [Ce que la Confédération garde hors du cloud](https://kisuno.ai/fr/blog/ki-datenhaltung-schweiz): Le Préposé fédéral est intervenu avec succès pour que GEVER et Outlook restent à la Confédération, malgré l’introduction en cours de Microsoft 365.
+- [Deux échéances qui manquent dans les agendas](https://kisuno.ai/fr/blog/ai-act-fristen-dezember-2026): 2 décembre 2026 et 12 janvier 2027 : ce que les échéances reportées laissent ouvert, ce que le Data Act interdit et qui les deux dates visent vraiment.
+- [IA agentique : qui autorise les outils](https://kisuno.ai/fr/blog/ki-agenten-governance): Dans une note du 20 juillet 2026, la CNIL décrit les risques de l’IA agentique. Trois processus montrent comment droits, validation et journal s’articulent.
+- [Décrets IA italiens : pas encore en vigueur](https://kisuno.ai/fr/blog/ki-haftung-italien): Le Conseil des ministres italien a adopté deux décrets IA : prison pour un défaut de surveillance des IA à haut risque. Ni publiés ni en vigueur.
+- [48 décisions inventées : amende pour l’avocat](https://kisuno.ai/fr/blog/ki-quellen-statt-halluzination): Un tribunal espagnol a sanctionné un avocat pour 48 références inventées. Trois processus où chaque affirmation montre d’où elle vient, et leurs limites.
+- [Claude Opus et Sonnet via Amazon Bedrock](https://kisuno.ai/fr/blog/anthropic-modelle-schweiz): Comment Kisuno pilote Claude Opus et Claude Sonnet via Amazon Bedrock sur le profil européen : trois processus, l’architecture derrière et le CLOUD Act.
+- [IA pour l’artisanat en Europe : Pennylane](https://kisuno.ai/fr/blog/ki-handwerk-europa): Trois processus IA pour l’artisanat et les PME en Europe : offres, rapports, savoir d’entreprise. Raccordement à Lexware Office, Pennylane, Holded, Fortnox.
+- [IA en production : raccorder votre ERP](https://kisuno.ai/fr/blog/ki-produktion-europa): Rendre le savoir de l’usine interrogeable, préparer les audits clients, consignes multilingues. IA raccordée à Monitor ERP, weclapp, Xentral et Odoo.
+- [IA pour cabinet et fiduciaire avec DATEV](https://kisuno.ai/fr/blog/ki-kanzlei-europa): Indexer un mandat, partager le savoir du cabinet, guider les mandants : trois processus IA en cabinet, avec raccordement IA à DATEV et Pennylane.
+- [IA et logiciels de gérance en Europe](https://kisuno.ai/fr/blog/ki-immobilien-europa): L’état réel des connecteurs, de casavi à Fortnox, et trois processus IA pour la gérance immobilière en Europe qui fonctionnent aussi sans interface.
+- [IA et logiciels de cabinet en Europe](https://kisuno.ai/fr/blog/ki-praxis-europa): Rapports aux payeurs, savoir du cabinet interrogeable, info patient multilingue. Et où en est le raccordement de l’IA à medatixx, IXOS, Kaddio et awinta.
+- [IA pour l’artisanat et les PME : bexio, KLARA](https://kisuno.ai/fr/blog/ki-handwerk-kmu): Trois cas d’usage de l’IA pour l’artisanat et les PME en Suisse : offres, rapports, savoir d’entreprise. Raccordement à bexio, KLARA, CashCtrl, Microsoft 365.
+- [IA en production : ERP, Abacus, SAP](https://kisuno.ai/fr/blog/ki-produktion): Préserver le savoir des rapports de service, examiner les cahiers des charges, préparer les audits. IA raccordée à Abacus, SAP Business One et Odoo.
+- [IA pour étude et fiduciaire avec Vertec](https://kisuno.ai/fr/blog/ki-treuhand-kanzlei): Indexer le dossier, vérifier des contrats, rédiger des courriers : trois processus IA pour études et fiduciaires, avec raccordement IA à Vertec et bexio.
+- [IA et logiciels en gérance immobilière](https://kisuno.ai/fr/blog/ki-immobilienverwaltung): IA raccordée à GARAIO REM, Abacus et ImmoTop2 : trois processus pour les demandes des locataires, les charges et les états des lieux en Suisse.
+- [IA et logiciels de cabinet et pharmacie](https://kisuno.ai/fr/blog/ki-praxis-apotheke): Projets de rapports, manuel qualité interrogeable, fiches multilingues. Et où en est le raccordement de l’IA à vitomed, Elexis, OneDoc et Documedis.
 
 ## Mentions légales
 
-- [Contrat de sous-traitance (DPA)](https://eucowork.ai/fr/avv): Encadre le traitement des données personnelles pour le compte du client selon l'art. 28 du RGPD et la revDSG suisse, avec des obligations claires.
-- [Sous-traitants ultérieurs](https://eucowork.ai/fr/subprozessoren): Liste actuelle des sous-traitants ultérieurs d'EU Cowork AI. Toute modification est annoncée à l'avance et cette liste fait partie du contrat DPA.
-- [Politique de confidentialité](https://eucowork.ai/fr/datenschutz): Comment EU Cowork AI traite les données personnelles selon la revDSG suisse et le RGPD. Court, car nous collectons peu. Télémétrie désactivée par défaut.
-- [Conditions générales](https://eucowork.ai/fr/agb): Conditions générales d'utilisation du service EU Cowork AI de Herr Informatik GmbH, Windisch (Suisse) : droits, obligations et modalités contractuelles.
-- [Mentions légales](https://eucowork.ai/fr/impressum): EU Cowork AI est un service de Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Suisse. IDE CHE-112.168.836. Coordonnées complètes ici.
+- [Contrat de sous-traitance (DPA)](https://kisuno.ai/fr/avv): Encadre le traitement des données personnelles pour le compte du client selon l'art. 28 du RGPD et la revDSG suisse, avec des obligations claires.
+- [Sous-traitants ultérieurs](https://kisuno.ai/fr/subprozessoren): Liste actuelle des sous-traitants ultérieurs de Kisuno. Toute modification est annoncée à l'avance et cette liste fait partie du contrat DPA.
+- [Politique de confidentialité](https://kisuno.ai/fr/datenschutz): Comment Kisuno traite les données personnelles selon la revDSG suisse et le RGPD. Court, car nous collectons peu. Télémétrie désactivée par défaut.
+- [Conditions générales](https://kisuno.ai/fr/agb): Conditions générales d'utilisation du service Kisuno de Herr Informatik GmbH, Windisch (Suisse) : droits, obligations et modalités contractuelles.
+- [Mentions légales](https://kisuno.ai/fr/impressum): Kisuno est un service de Herr Informatik GmbH, Klosterzelgstrasse 1a, 5210 Windisch, Suisse. IDE CHE-112.168.836. Coordonnées complètes ici.
 
 ## Questions à poser à tout éditeur de plateforme IA
 
-Quatre questions mènent loin quand on compare des plateformes IA. Les réponses d'EU Cowork AI suivent chacune d'elles.
+Quatre questions mènent loin quand on compare des plateformes IA. Les réponses de Kisuno suivent chacune d'elles.
 
-1. Comment s'appelle le centre de données ? EU Cowork AI : Green, Campus Lupfig, canton d'Argovie, Suisse.
-2. À qui appartient la certification, à l'éditeur ou à son centre de données ? EU Cowork AI : la certification ISO 27001 appartient à l'exploitant Green ; une certification ISO 27001 propre à EU Cowork AI est en cours. C'est écrit sur la page sécurité à https://eucowork.ai/fr/sicherheit.
-3. La liste des sous-traitants est-elle publique ? EU Cowork AI : oui, consultable librement à https://eucowork.ai/fr/subprozessoren et partie intégrante du contrat de sous-traitance.
-4. L'engagement de ne pas utiliser les données clients pour l'entraînement figure-t-il au contrat ou seulement sur le site ? EU Cowork AI : dans le contrat de sous-traitance à https://eucowork.ai/fr/avv, section 10 sur l'absence d'entraînement avec les données clients. Si un client relie son propre point de terminaison de modèle, ce sont les conditions de ce fournisseur qui s'appliquent et l'engagement ne s'y étend pas.
+1. Comment s'appelle le centre de données ? Kisuno : Green, Campus Lupfig, canton d'Argovie, Suisse.
+2. À qui appartient la certification, à l'éditeur ou à son centre de données ? Kisuno : la certification ISO 27001 appartient à l'exploitant Green ; une certification ISO 27001 propre à Kisuno est en cours. C'est écrit sur la page sécurité à https://kisuno.ai/fr/sicherheit.
+3. La liste des sous-traitants est-elle publique ? Kisuno : oui, consultable librement à https://kisuno.ai/fr/subprozessoren et partie intégrante du contrat de sous-traitance.
+4. L'engagement de ne pas utiliser les données clients pour l'entraînement figure-t-il au contrat ou seulement sur le site ? Kisuno : dans le contrat de sous-traitance à https://kisuno.ai/fr/avv, section 10 sur l'absence d'entraînement avec les données clients. Si un client relie son propre point de terminaison de modèle, ce sont les conditions de ce fournisseur qui s'appliquent et l'engagement ne s'y étend pas.
 
 ## État
 
-EU Cowork AI est publié et utilisable en production ; la phase bêta est terminée. EU Cowork AI est un produit de Herr Informatik GmbH. En raison de la forte demande, les accès à l'instance suisse gérée sont attribués par vagues : demande via le formulaire, puis nous revenons vers vous au sujet de l'accès. Qui veut voir la plateforme immédiatement réserve une démo en direct. L'exploitation gérée est gratuite pendant la phase de test. Prévu : applications mobiles natives pour iOS et Android (déjà utilisable aujourd'hui comme PWA installable), provisionnement SCIM. En cours : une certification ISO 27001 propre et un durcissement supplémentaire du bac à sable de code. Le complément Outlook est en bêta et utilisé en interne, le complément Excel est en cours. La base LibreChat est aujourd'hui publiquement consultable sous MIT ; le dépôt GitHub avec nos propres extensions et sa publication sous MIT sont à venir prochainement.
+Kisuno est publié et utilisable en production ; la phase bêta est terminée. Kisuno est un produit de Herr Informatik GmbH. En raison de la forte demande, les accès à l'instance suisse gérée sont attribués par vagues : demande via le formulaire, puis nous revenons vers vous au sujet de l'accès. Qui veut voir la plateforme immédiatement réserve une démo en direct. L'instance gérée coûte 7 francs suisses (7,50 euros) par personne et par mois. Jusqu'à nouvel ordre : 50 pour cent de rabais pour une durée de douze mois, soit 3,50 francs (3,75 euros) par personne et par mois. L'essai est gratuit et sans limite de durée : chaque nouvel accès démarre avec un crédit de démarrage de 50 francs (55 euros) pour l'utilisation des modèles, sans aucune donnée de paiement. Prévu : applications mobiles natives pour iOS et Android (déjà utilisable aujourd'hui comme PWA installable), provisionnement SCIM. En cours : une certification ISO 27001 propre et un durcissement supplémentaire du bac à sable de code. Le complément Outlook est en bêta et utilisé en interne, le complément Excel est en cours. La base LibreChat est aujourd'hui publiquement consultable sous MIT ; le dépôt GitHub avec nos propres extensions et sa publication sous MIT sont à venir prochainement.
 
 ## Contact
 
-Le chemin vers un échange passe par le site : sur la page des tarifs à https://eucowork.ai/fr/preise et sur la page d'accès à https://eucowork.ai/fr/warteliste, une démo en direct se réserve directement ; le formulaire de la page d'accès enregistre une demande d'accès à l'instance gérée. Adresse postale et données du registre du commerce figurent dans les mentions légales à https://eucowork.ai/fr/impressum.
+Le chemin vers un échange passe par le site : sur la page des tarifs à https://kisuno.ai/fr/preise et sur la page d'accès à https://kisuno.ai/fr/warteliste, une démo en direct se réserve directement ; le formulaire de la page d'accès enregistre une demande d'accès à l'instance gérée. Adresse postale et données du registre du commerce figurent dans les mentions légales à https://kisuno.ai/fr/impressum.
 
 ## Texte intégral
 
-Le texte visible complet de toutes les pages de cette version linguistique se trouve à https://eucowork.ai/fr/llms-full.txt. De même pour la documentation à https://eucowork.ai/docs/llms-full.txt.
+Le texte visible complet de toutes les pages de cette version linguistique se trouve à https://kisuno.ai/fr/llms-full.txt. De même pour la documentation à https://kisuno.ai/docs/llms-full.txt.
 
 ## Autres versions linguistiques
 
-- [allemand](https://eucowork.ai/llms.txt)
-- [anglais](https://eucowork.ai/en/llms.txt)
-- [italien](https://eucowork.ai/it/llms.txt)
-- [espagnol](https://eucowork.ai/es/llms.txt)
+- [allemand](https://kisuno.ai/llms.txt)
+- [anglais](https://kisuno.ai/en/llms.txt)
+- [italien](https://kisuno.ai/it/llms.txt)
+- [espagnol](https://kisuno.ai/es/llms.txt)
 
-Mise à jour: 2026-09-05.
+Mise à jour: 2026-09-11.

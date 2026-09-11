@@ -10,7 +10,7 @@
    Aufnahmen aus der Verwaltungsoberflaeche.
 
    Quellen der Bildteile:
-     - Text, Farben, Wortmarke: dieselben Werte wie og/eucowork-share-*.png
+     - Text, Farben, Wortmarke: dieselben Werte wie og/kisuno-share-*.png
        (scripts/build-og.mjs), Schlagzeile aus assets/seo-meta-dc.json.
      - Produktaufnahmen: assets/shots/*.webp. Google nimmt nur PNG oder JPG,
        deshalb werden sie hier nach PNG gewandelt und eingesetzt.
@@ -21,9 +21,9 @@
    Pruefung am Ende meldet jede Zeile, die darueber hinauslaeuft.
 
    Aufruf:  node scripts/build-ads.mjs [--langs de,en,fr,it,es]
-   Erzeugt: ads/google/eucowork-<lang>-<format>-<breite>x<hoehe>-<motiv>.png
-            ads/google/eucowork-logo-quadrat-1200x1200.png (Pflicht-Asset Logo)
-            ads/google/eucowork-logo-querformat-1200x300.png (optionales 4:1)
+   Erzeugt: ads/google/kisuno-<lang>-<format>-<breite>x<hoehe>-<motiv>.png
+            ads/google/kisuno-logo-quadrat-1200x1200.png (Pflicht-Asset Logo)
+            ads/google/kisuno-logo-querformat-1200x300.png (optionales 4:1)
    ============================================================================= */
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -72,7 +72,7 @@ const CONTENT = {
     badges: ['Rechenzentrum Schweiz', 'Quellcode ab Start', 'revDSG & DSGVO'],
     shots: {
       rechte: 'ERP-Anbindung mit Rechte-Kontrolle. Jeder Aufruf auditiert.',
-      verbrauch: '100+ Top-Modelle über einen Zugang, EU-verarbeitet.'
+      verbrauch: 'GPT, Claude, GLM, Kimi und DeepSeek über einen Zugang.'
     },
     label: { rechte: 'admin · anbindungen', verbrauch: 'admin · verbrauch' }
   },
@@ -84,7 +84,7 @@ const CONTENT = {
     badges: ['Swiss data centre', 'Source code at launch', 'revDSG & GDPR'],
     shots: {
       rechte: 'ERP integration with access control. Every call audited.',
-      verbrauch: '100+ top models through one access point, EU-processed.'
+      verbrauch: 'GPT, Claude, GLM, Kimi and DeepSeek through one access point.'
     },
     label: { rechte: 'admin · integrations', verbrauch: 'admin · usage' }
   },
@@ -96,7 +96,7 @@ const CONTENT = {
     badges: ['Centre de données suisse', 'Code source au lancement', 'nLPD & RGPD'],
     shots: {
       rechte: 'ERP avec contrôle des droits. Chaque appel est audité.',
-      verbrauch: 'Plus de 100 modèles via un seul accès, traités dans l’UE.'
+      verbrauch: 'GPT, Claude, GLM, Kimi et DeepSeek via un seul accès.'
     },
     label: { rechte: 'admin · connexions', verbrauch: 'admin · consommation' }
   },
@@ -108,7 +108,7 @@ const CONTENT = {
     badges: ['Data center svizzero', 'Codice sorgente dal lancio', 'nLPD & GDPR'],
     shots: {
       rechte: 'ERP con controllo dei diritti. Ogni chiamata è tracciata.',
-      verbrauch: 'Oltre 100 modelli con un unico accesso, elaborati nell’UE.'
+      verbrauch: 'GPT, Claude, GLM, Kimi e DeepSeek con un unico accesso.'
     },
     label: { rechte: 'admin · collegamenti', verbrauch: 'admin · consumo' }
   },
@@ -120,7 +120,7 @@ const CONTENT = {
     badges: ['Centro de datos suizo', 'Código fuente al lanzamiento', 'nLPD & RGPD'],
     shots: {
       rechte: 'ERP con control de permisos. Cada llamada queda auditada.',
-      verbrauch: 'Más de 100 modelos con un único acceso, procesados en la UE.'
+      verbrauch: 'GPT, Claude, GLM, Kimi y DeepSeek con un solo acceso.'
     },
     label: { rechte: 'admin · conexiones', verbrauch: 'admin · consumo' }
   }
@@ -233,7 +233,7 @@ function fit(text, font, size, maxWidth) {
    links als Wortmarke steht, und das letzte Wort der zweiten Zeile bekommt
    die goldene Lasur. */
 function headline(ogTitle) {
-  const withoutBrand = ogTitle.replace(/^EU Cowork AI\s*:\s*/i, '').trim();
+  const withoutBrand = ogTitle.replace(/^Kisuno\s*:\s*/i, '').trim();
   const sentences = withoutBrand.match(/[^.]+\.?/g)?.map(s => s.trim()).filter(Boolean) ?? [];
   const lines = sentences.length === 2 ? sentences : [withoutBrand];
   lines[0] = lines[0].charAt(0).toUpperCase() + lines[0].slice(1);
@@ -293,10 +293,8 @@ function brand(x, baseline, size) {
     </g>
   </g>`;
   const tx = x + box + size * 0.52;
-  const name = 'EU Cowork ';
-  return mark +
-    textPath(name, FONTS.semibold, size, tx, baseline, C.ink) +
-    textPath('AI', FONTS.semibold, size, tx + measure(name, FONTS.semibold, size), baseline, C.eu700);
+  const name = 'Kisuno';
+  return mark + textPath(name, FONTS.semibold, size, tx, baseline, C.ink);
 }
 
 function highlight(line, word, font, size, x, baseline) {
@@ -524,7 +522,7 @@ async function shotFor(motiv, card) {
    1200 x 1200), 4:1 ist optional (empfohlen 1200 x 300). Es wird klein
    ausgespielt und in manchen Platzierungen rund beschnitten.
 
-   Deshalb steht im Quadrat nur das Zeichen und kein Schriftzug: "EU Cowork AI"
+   Deshalb steht im Quadrat nur das Zeichen und kein Schriftzug: "Kisuno"
    waere bei 48 px Anzeigegroesse ein grauer Strich. Das Zeichen ist dasselbe
    wie in icon.svg, nur gross gerechnet: dunkle Kachel mit dem Rundungsmass
    7/32, darin der Linienzug und der goldene Punkt. Die Ecken liegen ausserhalb
@@ -562,8 +560,8 @@ function logoQuer() {
   const H = 300;
   const s = 168;
   const schrift = 92;
-  const wort = 'EU Cowork ';
-  const breite = s + 44 + measure(wort + 'AI', FONTS.semibold, schrift);
+  const wort = 'Kisuno';
+  const breite = s + 44 + measure(wort, FONTS.semibold, schrift);
   const x = Math.round((W - breite) / 2);
   const y = Math.round((H - s) / 2);
   const tx = x + s + 44;
@@ -572,7 +570,6 @@ function logoQuer() {
     `<rect width="${W}" height="${H}" fill="${C.bg}"/>` +
     zeichen(x, y, s) +
     textPath(wort, FONTS.semibold, schrift, tx, grundlinie, C.ink) +
-    textPath('AI', FONTS.semibold, schrift, tx + measure(wort, FONTS.semibold, schrift), grundlinie, C.eu700) +
     '</svg>';
 }
 
@@ -618,7 +615,7 @@ async function main() {
         .png({ palette: false, compressionLevel: 9, effort: 10 })
         .toBuffer();
 
-      const name = `eucowork-${lang}-${item.format}-${f.w}x${f.h}-${item.motiv}.png`;
+      const name = `kisuno-${lang}-${item.format}-${f.w}x${f.h}-${item.motiv}.png`;
       await writeFile(join(ROOT, 'ads/google', name), png);
 
       /* Pruefung statt Vertrauen: kein Text darf ueber den sicheren Bereich
@@ -639,8 +636,8 @@ async function main() {
      im Querformat der Schriftzug, und der ist in allen fuenf Sprachen
      derselbe. */
   for (const [name, svg] of [
-    ['eucowork-logo-quadrat-1200x1200.png', logoQuadrat()],
-    ['eucowork-logo-querformat-1200x300.png', logoQuer()]
+    ['kisuno-logo-quadrat-1200x1200.png', logoQuadrat()],
+    ['kisuno-logo-querformat-1200x300.png', logoQuer()]
   ]) {
     const roh = await sharp(Buffer.from(svg), { density: 72 }).png().toBuffer();
     const png = await sharp(roh)

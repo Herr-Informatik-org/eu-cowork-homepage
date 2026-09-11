@@ -32,7 +32,7 @@ import { readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const HOST = 'eucowork.ai';
+const HOST = 'kisuno.ai';
 const ORIGIN = `https://${HOST}`;
 const ENDPUNKT = 'https://api.indexnow.org/indexnow';
 const SITEMAPS = [`${ORIGIN}/sitemap.xml`, `${ORIGIN}/docs/sitemap-index.xml`];
@@ -54,7 +54,7 @@ async function schluessel() {
 }
 
 async function hole(url) {
-  const antwort = await fetch(url, { headers: { 'user-agent': 'eucowork-indexnow/1.0' } });
+  const antwort = await fetch(url, { headers: { 'user-agent': 'kisuno-indexnow/1.0' } });
   if (!antwort.ok) throw new Error(`${url}: HTTP ${antwort.status}`);
   return antwort.text();
 }

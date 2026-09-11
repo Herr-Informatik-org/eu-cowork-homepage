@@ -1,7 +1,7 @@
 /* =============================================================================
    Erzeugt die Vorschaubilder (Open Graph) fuer die Startseite, eines je Sprache.
 
-   Warum es die gibt: Wer eucowork.ai in WhatsApp, LinkedIn oder Slack teilt,
+   Warum es die gibt: Wer kisuno.ai in WhatsApp, LinkedIn oder Slack teilt,
    sieht zuerst diese Karte, sonst nichts. Sie muss deshalb in drei Sekunden
    sagen, worum es geht, und darf nichts behaupten, was die Website nicht
    belegt.
@@ -20,7 +20,7 @@
    bekannt und damit pruefbar (siehe fit() weiter unten).
 
    Aufruf: node scripts/build-og.mjs
-   Erzeugt: og/eucowork-share-<lang>.png und daneben das SVG unter og/src/.
+   Erzeugt: og/kisuno-share-<lang>.png und daneben das SVG unter og/src/.
    ============================================================================= */
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -36,6 +36,11 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const sharp = require(join(ROOT, 'docs-src/node_modules/sharp/lib/index.js'));
 
 const LANGS = ['de', 'en', 'fr', 'it', 'es'];
+
+/* og/kisuno-og.png ist das generische Vorschaubild der uebrigen Seiten
+   (Rechtstexte, /docs usw.). Es ist schlicht die deutsche Karte unter zweitem
+   Namen, damit Bild und og:image:alt ueberall zusammenpassen. */
+const GENERISCH = 'kisuno-og.png';
 
 /* --------------------------------- Farben ---------------------------------
    Alle Werte stammen aus assets/content.css, damit die Karte dieselbe
@@ -74,12 +79,12 @@ const C = {
    Die Abzeichenzeile trug bis hierher "MIT-Lizenz", "ISO 27001" und "revDSG".
    Zwei davon stimmten so nicht:
      - ISO 27001 ist die Zertifizierung von Green als Rechenzentrumsbetreiber,
-       nicht von EU Cowork AI (sicherheit/index.html:181 und :304). Geblieben
+       nicht von Kisuno (sicherheit/index.html:181 und :304). Geblieben
        ist die Aussage, die traegt und stimmt: das Rechenzentrum steht in der
        Schweiz.
      - "MIT-Lizenz" las sich wie "liegt offen da". Das Release-Repository ist
        heute nicht oeffentlich; die Website schreibt seit dieser Woche
-       "Quellcode ab Start" (Landing.dc.html, Schluessel selfhost.badge).
+       "Quellcode folgt demnächst" (Landing.dc.html, Schluessel selfhost.badge).
    revDSG stimmt und bleibt; dazu die DSGVO, beides vertraglich zugesichert
    (llms.txt, Abschnitt Datenschutz und Compliance). In FR, IT und ES heisst
    das Schweizer Gesetz auf der Website "nLPD", nicht "revDSG"; die Karte
@@ -91,35 +96,35 @@ const CONTENT = {
       'Ein Chat für Ihre Firma: Fragen, Recherche, Dateien.',
       'Verbunden mit Ihren eigenen Daten. Betrieben in der Schweiz.'
     ],
-    badges: ['Rechenzentrum Schweiz', 'Quellcode ab Start', 'revDSG & DSGVO']
+    badges: ['Rechenzentrum Schweiz', 'Quellcode folgt demnächst', 'revDSG & DSGVO']
   },
   en: {
     sub: [
       'A chat for your company: questions, research, files.',
       'Connected to your own data. Operated in Switzerland.'
     ],
-    badges: ['Swiss data centre', 'Source code at launch', 'revDSG & GDPR']
+    badges: ['Swiss data centre', 'Source code coming soon', 'revDSG & GDPR']
   },
   fr: {
     sub: [
       'Un chat pour votre entreprise : questions, recherche, fichiers.',
       'Relié à vos propres données. Exploité en Suisse.'
     ],
-    badges: ['Centre de données suisse', 'Code source au lancement', 'nLPD & RGPD']
+    badges: ['Centre de données suisse', 'Code source à venir', 'nLPD & RGPD']
   },
   it: {
     sub: [
       'Una chat per la sua azienda: domande, ricerca, file.',
       'Collegata ai suoi dati. Gestita in Svizzera.'
     ],
-    badges: ['Data center svizzero', 'Codice sorgente dal lancio', 'nLPD & GDPR']
+    badges: ['Data center svizzero', 'Codice sorgente in arrivo', 'nLPD & GDPR']
   },
   es: {
     sub: [
       'Un chat para su empresa: preguntas, búsqueda, archivos.',
       'Conectado a sus propios datos. Operado en Suiza.'
     ],
-    badges: ['Centro de datos suizo', 'Código fuente al lanzamiento', 'nLPD & RGPD']
+    badges: ['Centro de datos suizo', 'Código fuente en breve', 'nLPD & RGPD']
   }
 };
 
@@ -147,7 +152,7 @@ const BADGE_GAP = 14;
 
 /* ------------------------- Schlagzeile aus dem Titel -------------------------
 
-   Der Titel lautet "EU Cowork AI: Ihr KI-Kollege. Bleibt in Europa." (FR mit
+   Der Titel lautet "Kisuno: Ihr KI-Kollege. Bleibt in Europa." (FR mit
    Leerzeichen vor dem Doppelpunkt). Weg faellt der Markenname, denn der steht
    oben links schon als Wortmarke; uebrig bleiben zwei Saetze, und die werden
    die zwei Zeilen der Schlagzeile. Faellt der Titel einmal anders aus, nimmt
@@ -157,11 +162,11 @@ const BADGE_GAP = 14;
    "Europa" gelb hinterlegt war. Die Regel traegt auch, wenn der Satz
    spaeter wieder "100 % europaeisch" heisst. */
 function headline(ogTitle) {
-  const withoutBrand = ogTitle.replace(/^EU Cowork AI\s*:\s*/i, '').trim();
+  const withoutBrand = ogTitle.replace(/^Kisuno\s*:\s*/i, '').trim();
   const sentences = withoutBrand.match(/[^.]+\.?/g)?.map(s => s.trim()).filter(Boolean) ?? [];
   const lines = sentences.length === 2 ? sentences : [withoutBrand];
   /* In FR, IT und ES faengt der Titel hinter dem Doppelpunkt klein an
-     ("EU Cowork AI : votre collegue IA."). Als eigenstaendige Zeile ohne den
+     ("Kisuno : votre collegue IA."). Als eigenstaendige Zeile ohne den
      Markennamen davor muss der Satz gross beginnen. */
   lines[0] = lines[0].charAt(0).toUpperCase() + lines[0].slice(1);
   const last = lines[lines.length - 1];
@@ -262,8 +267,9 @@ function background() {
   <rect width="${W}" height="${H}" fill="url(#veil)"/>`;
 }
 
-/* Die Wortmarke: dasselbe Zeichen wie icon.svg, daneben "EU Cowork" in Tinte
-   und "AI" im Europa-Blau. */
+/* Die Wortmarke: dasselbe Zeichen wie icon.svg, daneben "Kisuno" in Tinte.
+   Der blaue Zusatz "AI" ist mit der Umbenennung entfallen, genau wie in der
+   Kopfleiste der Website (assets/i18n.js, BRAND_MAIN ohne Beiwort). */
 function brand() {
   const size = 34;
   const y = BRAND_Y - 25;
@@ -276,10 +282,8 @@ function brand() {
     </g>
   </g>`;
   const x = PAD + size + 14;
-  const name = 'EU Cowork ';
-  const wordmark =
-    textPath(name, FONTS.semibold, 27, x, BRAND_Y, C.ink) +
-    textPath('AI', FONTS.semibold, 27, x + measure(name, FONTS.semibold, 27), BRAND_Y, C.eu700);
+  const name = 'Kisuno';
+  const wordmark = textPath(name, FONTS.semibold, 27, x, BRAND_Y, C.ink);
   return mark + wordmark;
 }
 
@@ -362,7 +366,7 @@ async function main() {
     const head = headline(meta[lang].ogTitle ?? meta[lang].title);
     alts[lang] = altText(meta[lang].ogTitle ?? meta[lang].title, lang);
     const svg = buildSvg(lang, head, report);
-    const svgPath = join(ROOT, `og/src/eucowork-share-${lang}.svg`);
+    const svgPath = join(ROOT, `og/src/kisuno-share-${lang}.svg`);
     await writeFile(svgPath, svg + '\n', 'utf8');
 
     /* Palettiertes PNG mit voller Fehlerstreuung. Die Karte ist Flaeche,
@@ -375,8 +379,9 @@ async function main() {
       .png({ palette: true, colours: 256, dither: 1, compressionLevel: 9, effort: 10 })
       .toBuffer();
 
-    const out = join(ROOT, `og/eucowork-share-${lang}.png`);
+    const out = join(ROOT, `og/kisuno-share-${lang}.png`);
     await writeFile(out, png);
+    if (lang === 'de') await writeFile(join(ROOT, 'og', GENERISCH), png);
 
     const widest = Math.max(...report.map(r => r.width));
     console.log(

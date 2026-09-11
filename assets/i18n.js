@@ -1,10 +1,10 @@
 /* =============================================================================
-   eucowork.ai Sprach-Laufzeit.
+   kisuno.ai Sprach-Laufzeit.
 
    Aufgaben:
    1. Sprachwahl beim ersten Besuch: gespeicherte Wahl -> Browsersprache ->
       IP-Land (/api/locale, ohne Geolocation-Freigabe) -> Englisch.
-      Das Ergebnis landet in localStorage('eucowork_lang'), wo die
+      Das Ergebnis landet in localStorage('kisuno_lang'), wo die
       React-Komponenten der .dc-Seiten es beim Mounten lesen.
    2. Statische Seiten: Elemente mit [data-i18n] werden beim Sprachwechsel
       aus dem Woerterbuch ersetzt. Deutsch ist die Inline-Fassung im Markup
@@ -12,7 +12,7 @@
       liefert window.EUC_I18N (pro Seite), Kopf-/Fussleiste und Brotkrumen
       das eingebaute CHROME-Woerterbuch.
    3. Sprachumschalter: <select data-euc-lang> wird verdrahtet; Wechsel
-      feuern dasselbe Event 'eucowork:langchange' wie die React-Umschalter,
+      feuern dasselbe Event 'kisuno:langchange' wie die React-Umschalter,
       damit beide Welten synchron bleiben.
 
    Einbindung: <script src="/assets/i18n.js"></script> im <head>, vor
@@ -23,7 +23,7 @@
   'use strict';
 
   var SUPPORTED = ['de', 'en', 'fr', 'it', 'es'];
-  var KEY = 'eucowork_lang';
+  var KEY = 'kisuno_lang';
 
   /* ------------------------- Kopf/Fuss der statischen Seiten ------------------------- */
   var CHROME = {
@@ -66,7 +66,7 @@
       'chrome.footer.link.privacy': 'Privacy',
       'chrome.footer.link.terms': 'Terms (GTC)',
       'chrome.footer.col.lang': 'Language',
-      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
+      'chrome.footer.rights': '© 2026 Kisuno by Herr-Informatik GmbH'
     },
     fr: {
       'chrome.skip': 'Aller au contenu',
@@ -107,7 +107,7 @@
       'chrome.footer.link.privacy': 'Confidentialité',
       'chrome.footer.link.terms': 'CGV',
       'chrome.footer.col.lang': 'Langue',
-      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
+      'chrome.footer.rights': '© 2026 Kisuno by Herr-Informatik GmbH'
     },
     it: {
       'chrome.skip': 'Vai al contenuto',
@@ -148,7 +148,7 @@
       'chrome.footer.link.privacy': 'Privacy',
       'chrome.footer.link.terms': 'Condizioni generali',
       'chrome.footer.col.lang': 'Lingua',
-      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
+      'chrome.footer.rights': '© 2026 Kisuno by Herr-Informatik GmbH'
     },
     es: {
       'chrome.skip': 'Saltar al contenido',
@@ -189,7 +189,7 @@
       'chrome.footer.link.privacy': 'Privacidad',
       'chrome.footer.link.terms': 'Condiciones generales',
       'chrome.footer.col.lang': 'Idioma',
-      'chrome.footer.rights': '© 2026 EU Cowork AI by Herr-Informatik GmbH'
+      'chrome.footer.rights': '© 2026 Kisuno by Herr-Informatik GmbH'
     }
   };
 
@@ -223,7 +223,7 @@
     document.documentElement.lang = l;
     // Dasselbe Event, das auch die React-Umschalter feuern; beide Seiten
     // (Komponenten und diese Laufzeit) hoeren darauf.
-    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
+    window.dispatchEvent(new CustomEvent('kisuno:langchange', { detail: l }));
   }
 
   /* ------------------------- Sprache und Adresse -------------------------
@@ -349,7 +349,7 @@
   /* Ein Sprachwechsel ist ein Seitenwechsel. Die Umschalter in Kopf- und
      Fussleiste melden ihn nur; hierher gehoert der Sprung auf die passende
      Adresse. */
-  window.addEventListener('eucowork:langchange', function (e) {
+  window.addEventListener('kisuno:langchange', function (e) {
     var l = e.detail;
     if (SUPPORTED.indexOf(l) < 0) return;
     var target = urlForLang(l, location.pathname);
@@ -453,7 +453,7 @@
     return stored() || current;
   }
 
-  window.addEventListener('eucowork:langchange', function (e) {
+  window.addEventListener('kisuno:langchange', function (e) {
     var l = e.detail;
     if (SUPPORTED.indexOf(l) < 0) return;
     current = l;

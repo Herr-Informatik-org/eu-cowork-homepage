@@ -32,9 +32,9 @@ import { getEntry } from 'astro:content';
 const { entry, id, lang, locale, head, sidebar } = Astro.locals.starlightRoute;
 
 /** Bezeichner der Marketing-Website, zeichengenau aus `Landing.dc.html`. */
-const ORGANISATION_ID = 'https://eucowork.ai/#organization';
-const WEBSITE_ID = 'https://eucowork.ai/#website';
-const SOFTWARE_ID = 'https://eucowork.ai/#software';
+const ORGANISATION_ID = 'https://kisuno.ai/#organization';
+const WEBSITE_ID = 'https://kisuno.ai/#website';
+const SOFTWARE_ID = 'https://kisuno.ai/#software';
 
 /**
  * Kanonische Adresse und Sprachalternativen nicht selbst ausrechnen, sondern
@@ -71,14 +71,14 @@ const istStartseite = entry.data.template === 'splash';
  */
 const startseite = await getEntry('docs', locale ?? 'index');
 const dokuTitel = startseite?.data.title ?? 'Dokumentation';
-const dokuUrl = locale ? `https://eucowork.ai/docs/${locale}` : 'https://eucowork.ai/docs';
+const dokuUrl = locale ? `https://kisuno.ai/docs/${locale}` : 'https://kisuno.ai/docs';
 
 /**
  * Erste Stufe der Brotkrume ist die Startseite der Website in derselben
  * Sprache. Der Name "Start" ist derselbe, den die Marketing-Website in ihren
  * Brotkrumen verwendet; er bleibt dort in allen Sprachen unübersetzt.
  */
-const websiteUrl = locale ? `https://eucowork.ai/${locale}` : 'https://eucowork.ai/';
+const websiteUrl = locale ? `https://kisuno.ai/${locale}` : 'https://kisuno.ai/';
 
 /**
  * Kapitel der aktuellen Seite, in der Sprache der Seite. Starlight hat die
@@ -153,11 +153,10 @@ const artikel = {
 const organisation = {
   '@type': 'Organization',
   '@id': ORGANISATION_ID,
-  name: 'EU Cowork AI',
-  alternateName: ['EU-Cowork', 'EU-Cowork AI'],
-  url: 'https://eucowork.ai/',
+  name: 'Kisuno',
+  url: 'https://kisuno.ai/',
   description:
-    'EU Cowork AI ist eine quelloffene KI-Arbeitsplattform für Unternehmen mit Datenresidenz in der Schweiz und Europa.',
+    'Kisuno ist eine quelloffene KI-Arbeitsplattform für Unternehmen mit Datenresidenz in der Schweiz und Europa.',
   parentOrganization: {
     '@type': 'Organization',
     name: 'Herr Informatik GmbH',
@@ -184,8 +183,8 @@ const organisation = {
 const website = {
   '@type': 'WebSite',
   '@id': WEBSITE_ID,
-  url: 'https://eucowork.ai/',
-  name: 'EU Cowork AI',
+  url: 'https://kisuno.ai/',
+  name: 'Kisuno',
   description:
     'Ihr KI-Kollege. Bleibt in Europa. Open Source, self-hostbar ab 1 User oder gehostet in der Schweiz.',
   inLanguage: lang,

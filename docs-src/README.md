@@ -1,6 +1,6 @@
-# Dokumentation von EU Cowork AI
+# Dokumentation von Kisuno
 
-Quelle der Doku unter `https://eucowork.ai/docs`. Gebaut mit [Astro](https://astro.build)
+Quelle der Doku unter `https://kisuno.ai/docs`. Gebaut mit [Astro](https://astro.build)
 und [Starlight](https://starlight.astro.build), beide MIT-Lizenz.
 
 ## Wie das mit der Website zusammenpasst
@@ -48,7 +48,7 @@ src/
 │   ├── referenz/          Variablen, Dienste, Befehle, Lizenzen
 │   └── en/                dieselbe Struktur auf Englisch
 ├── components/            SiteTitle (Markenzeile in der Kopfleiste)
-├── styles/eucowork.css    Theme, nutzt dieselben Token wie assets/content.css
+├── styles/kisuno.css      Theme, nutzt dieselben Token wie assets/content.css
 └── assets/                Logo hell und dunkel
 ```
 

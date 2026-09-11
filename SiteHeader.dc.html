@@ -168,7 +168,6 @@
   .euc-hd.is-on-dark.is-scrolled{ background:rgba(11,30,51,.72); }
   .euc-hd.is-on-dark::after{ background:linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,0)); }
   .euc-hd.is-on-dark .euc-hd-word{ color:#F7FAFC; }
-  .euc-hd.is-on-dark .euc-hd-ai{ color:#A5D8E6; }
   .euc-hd.is-on-dark .euc-hd-brand svg path{ stroke:#F7FAFC; }
   /* Spiegelbild der hellen Seite: dort Tinte statt Grau, hier fast Weiss
      statt Blaugrau. Dieselbe Begruendung, umgedrehtes Vorzeichen. */
@@ -216,13 +215,12 @@
     min-height:44px; flex:0 0 auto; text-decoration:none;
   }
   .euc-hd-brand svg{ display:block; }
+  /* Wortmarke: „Kisuno", ein Wort in Tinte. In allen fuenf Sprachen gleich. */
   .euc-hd-word{
     font-family:var(--f-display);
     font-weight:600; font-size:19px; letter-spacing:-.010em; color:#0B1E33;
     transition:color 200ms var(--hd-ease);
   }
-  /* Wortmarke: „EU Cowork" in Tinte, „AI" in Europa-Blau. DE wie EN. */
-  .euc-hd-ai{ color:#12326B; font-style:normal; transition:color 200ms var(--hd-ease); }
   .euc-hd-brand svg path{ transition:stroke 200ms var(--hd-ease); }
 
   .euc-hd-nav{ display:flex; align-items:center; gap:30px; margin-left:auto; margin-right:8px; }
@@ -398,7 +396,7 @@
       <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
       <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
     </svg>
-    <span class="euc-hd-word">{{ brandMain }} <span class="euc-hd-ai">{{ brandAi }}</span></span>
+    <span class="euc-hd-word">{{ brandMain }}</span>
   </a>
 
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
@@ -437,7 +435,7 @@
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <div class="euc-hd-sheet">
       <div class="euc-hd-sheet-top">
-        <span class="euc-hd-word">{{ brandMain }} <span class="euc-hd-ai">{{ brandAi }}</span></span>
+        <span class="euc-hd-word">{{ brandMain }}</span>
         <button onClick="{{ toggleMenu }}" aria-label="Close" class="euc-hd-close">&times;</button>
       </div>
       <nav>
@@ -462,12 +460,12 @@
 class Component extends DCLogic {
   constructor(props){
     super(props);
-    this.BRAND = 'EU Cowork AI';
-    this.BRAND_MAIN = 'EU Cowork';
-    this.BRAND_AI = 'AI';
+    this.BRAND = 'Kisuno';
+    this.BRAND_MAIN = 'Kisuno';
+    this.BRAND_AI = '';
     this.SELFHOST = '/self-hosting'; // Release-Repository wird zum Launch veroeffentlicht
     this.headerRef = React.createRef();
-    const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
+    const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('kisuno_lang')) || 'de';
     const initMobile = (typeof window !== 'undefined' && window.innerWidth < 940) || false;
     this.state = { lang: initLang, scrolled: false, menuOpen: false, isMobile: initMobile, onDark: false, langOpen: false };
     // Klick ausserhalb der Leiste klappt das Sprachmenue zu.
@@ -495,7 +493,7 @@ class Component extends DCLogic {
   componentDidMount(){
     window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onResize);
-    window.addEventListener('eucowork:langchange', this._onLang);
+    window.addEventListener('kisuno:langchange', this._onLang);
     document.addEventListener('pointerdown', this._onDocDown);
     this._onScroll();
     this._findDarkSections(0);
@@ -503,7 +501,7 @@ class Component extends DCLogic {
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onResize);
-    window.removeEventListener('eucowork:langchange', this._onLang);
+    window.removeEventListener('kisuno:langchange', this._onLang);
     document.removeEventListener('pointerdown', this._onDocDown);
     clearTimeout(this._darkFindT);
     clearTimeout(this._darkResizeT);
@@ -543,8 +541,8 @@ class Component extends DCLogic {
     this._darkEls.forEach(el => this._darkIo.observe(el));
   }
   setLang(l){
-    try { localStorage.setItem('eucowork_lang', l); } catch(e){}
-    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
+    try { localStorage.setItem('kisuno_lang', l); } catch(e){}
+    window.dispatchEvent(new CustomEvent('kisuno:langchange', { detail: l }));
   }
   renderVals(){
     const lang = this.state.lang || 'de';

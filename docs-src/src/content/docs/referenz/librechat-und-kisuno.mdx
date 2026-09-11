@@ -1,0 +1,169 @@
+---
+title: Was von LibreChat kommt
+description: Einordnung, welche Teile der Plattform von LibreChat stammen und welche wir selbst gebaut haben, und warum der Fork bewusst dünn bleibt.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Kisuno ist keine Neuentwicklung von Grund auf. Die Chat-Oberfläche und ein grosser Teil
+der Anwendungslogik stammen aus einem bestehenden Open-Source-Projekt, unsere Arbeit liegt in
+der Schicht darum herum. Diese Seite trennt beides sauber, damit Sie wissen, wo Sie eine
+Antwort suchen müssen und wem Sie einen Fehler melden.
+
+## Was LibreChat ist
+
+[LibreChat](https://www.librechat.ai) ist eine quelloffene Chat-Plattform unter der
+**MIT-Lizenz**. Sie bringt die Oberfläche, die Anbindung an beliebige Modell-Anbieter, das
+Agenten- und Dateisystem sowie eine Administrations-Schnittstelle mit. Das Projekt ist
+ausgereift und wird aktiv weiterentwickelt.
+
+Eine Auslieferung setzt eine **geprüfte Fassung** von LibreChat ein, nicht einfach den jeweils
+neuesten Stand. Wer die Plattform nur betreiben will, baut LibreChat also nie aus dem
+Quellcode. Ein Versionssprung ist eine bewusste Handlung mit einer eigenen Prüfliste.
+
+## Was von LibreChat kommt
+
+| Bereich | Was es umfasst |
+|---|---|
+| **Chat** | Streaming, Verlauf, automatische Titel, Verzweigen von Konversationen, geteilte Links, temporäre Chats, Mehrfach-Chats |
+| **Agenten** | Agenten anlegen und nutzen, Werkzeug-Auswahl pro Agent, Agent-Marketplace |
+| **Skills** | hinterlegte Standard-Prozesse, die ein Modell auf Zuruf abarbeitet |
+| **Memory** | Langzeitgedächtnis über Konversationen hinweg, mit Opt-out im Chat |
+| **Artifacts** | React, HTML, Mermaid und SVG direkt im Chat, unabhängig von der Code-Ausführung |
+| **Dateien** | Upload als Kontext, Bildverständnis, die Dateisuche über hochgeladene Dokumente |
+| **Web-Suche** | das Gerüst dafür samt Anbindung einer Suchmaschine |
+| **Code-Ausführung** | die steckbare Schnittstelle zum Sandbox-Backend |
+| **MCP-Client** | die Fähigkeit, mit Konnektoren über das Model Context Protocol zu sprechen |
+| **Presets und Prompts** | Prompt-Bibliothek, Voreinstellungen, Lesezeichen |
+| **Volltextsuche** | Suche über frühere Konversationen |
+| **Administration** | die Administrations-Schnittstelle samt fortlaufender Audit-Kette |
+| **Identität** | OIDC inklusive Entra ID, LDAP und SAML, dazu der Rollen-Abgleich |
+| **Verbrauchsmessung** | Token-Erfassung und Guthaben pro Person |
+
+## Was wir gebaut haben
+
+| Baustein | Was es tut |
+|---|---|
+| **Admin-Panel** | eigenes, permissiv lizenziertes Panel gegen die MIT-Schnittstelle von LibreChat, dazu die Funktionen, die diese Schnittstelle nicht abdeckt: Verbrauch in Euro, gemeinsames Monatsbudget, Aufbewahrung, Datenexport und Löschung pro Konto |
+| **MCP-Gateway** | Rechteprüfung und Protokoll vor jedem Zugriff auf ein Fremdsystem, entlang der Kette Benutzer, Rolle, Gruppe, Standard. Fällt die Prüfung aus, wird verweigert |
+| **Model-Router** | verteilt Anfragen je nach Aufgabe auf unterschiedliche Modelle und Denkaufwände |
+| **Beispiel-Konnektor-Brücke** | ausschliesslich lesender Zugang zu einem Fachsystem, als Vorlage für eigene Anbindungen |
+| **Outlook-Add-in** | seitliches Chat-Pane in Outlook mit der geöffneten Mail als Kontext, gegen dieselbe Instanz und dieselben Rechte |
+| **Modellkarten und Systemprompt** | die kuratierte Auswahl im Modell-Picker und der deutsche Systemprompt, der serverseitig eingefügt wird |
+| **Installationspaket** | Server-Vorbereitung, Installer, Backup und Umzug, Branding |
+| **Konfigurationsprofile** | vorbereitete Varianten für die verschiedenen Ausbaustufen einer Instanz |
+
+<Aside type="note" title="Code-Ausführung">
+Für die Code-Ausführung bindet Kisuno etablierte Backends ein, statt einen eigenen Runner
+mitzuliefern. Welche Ziele ausgeführter Code nach aussen erreichen darf, legen Sie auf Host-
+oder Netzebene fest.
+</Aside>
+
+## Warum der Fork dünn bleibt
+
+LibreChat ist geforkt, aber der Fork bleibt absichtlich nah am Original. Der Grund ist
+schlicht: je weiter ein Fork abdriftet, desto teurer wird jede Aktualisierung, und irgendwann
+findet sie nicht mehr statt. Eine Chat-Plattform, die zwei Jahre hinter dem Original
+zurückhängt, ist kein Vorteil, sondern ein Risiko.
+
+Daraus folgt eine feste Reihenfolge, in der eine Änderung versucht wird:
+
+1. **Konfiguration.** Lässt sich das in der `librechat.yaml`, in der Umgebungsdatei oder im
+   Admin-Panel lösen?
+2. **CSS.** Reicht eine Anpassung der Darstellung?
+3. **Kleiner Patch.** Eine eng begrenzte Änderung im Fork.
+4. **Eigene Komponente.** Erst wenn nichts anderes trägt.
+
+Alles, was ohne Eingriff in LibreChat lösbar ist, wird deshalb als eigener Dienst daneben
+gebaut. Diese Dienste heissen Sidecars: Sie haben einen eigenen Lebenszyklus und sprechen über
+normale Netzwerk-Schnittstellen mit LibreChat. Die eigenen Bausteine aus der Tabelle oben sind
+alle so gebaut.
+
+Praktisch heisst das für Sie: Ein Update von LibreChat berührt unsere Dienste nicht, und eine
+neue Fassung des Admin-Panels berührt LibreChat nicht. Beides wird getrennt aktualisiert. Eine
+Freigabe von Kisuno ist immer ein gemeinsam getesteter Stand.
+
+## Die Datei `librechat.yaml`
+
+Die zentrale Konfigurationsdatei der Chat-Anwendung ist die `librechat.yaml`. Sie steuert,
+welche Modelle es gibt, wie die Oberfläche aussieht, welche Konnektoren eingebunden sind und
+wie die Web-Suche arbeitet.
+
+**Die vollständige Feldreferenz steht bei LibreChat**, unter
+[www.librechat.ai/docs](https://www.librechat.ai/docs). Wie die Datei in einer Auslieferung
+vorbelegt ist, steht in den mitgelieferten Betriebsunterlagen.
+
+Einzelne Felder wirken anders, als ihr Name vermuten lässt: manche gelten global statt pro
+Rolle, andere ersetzen eine Vorgabeliste, statt sie zu ergänzen. Die Bedeutung jedes Feldes
+steht in der Dokumentation von LibreChat. Prüfen Sie sie, bevor Sie einen Wert ändern.
+
+<Aside type="tip" title="Das Panel gewinnt gegen die Datei">
+Was Sie im Admin-Panel unter **Konfiguration** setzen, liegt als Override über der
+`librechat.yaml` und wirkt sofort, ohne Neustart. Betroffene Abschnitte tragen im Panel den
+Hinweis **aus DB-Override**. Wer eine Änderung in der Datei macht und sie nicht sieht, hat
+vermutlich einen Override darüber liegen.
+</Aside>
+
+## Wo Sie weiterlesen
+
+Die Aufteilung ist einfach: Alles, was die Chat-Anwendung selbst betrifft, steht bei
+LibreChat. Alles, was mit Betrieb, Rechten, Verbrauch und Konnektoren zu tun hat, steht hier.
+
+### Bei LibreChat
+
+Für Chat-Funktionen im Detail, Agenten, Skills, Memory, Artifacts und die vollständige
+Feldreferenz der Konfiguration:
+**[www.librechat.ai/docs](https://www.librechat.ai/docs)**
+
+Dort finden Sie auch die Beschreibung von Feldern, die wir nicht setzen, sowie die Details zu
+OIDC, LDAP und SAML.
+
+### In dieser Dokumentation
+
+<CardGrid>
+  <LinkCard
+    title="Installation und Betrieb"
+    href="/docs/betrieb/installation"
+    description="Vom leeren Server zur laufenden Instanz, Aktualisieren, Backup und Umzug."
+  />
+  <LinkCard
+    title="Rechte und Gateway"
+    href="/docs/konnektoren/gateway-und-rechte"
+    description="Wer welchen Konnektor sehen darf, wie die Rechtekaskade greift und was protokolliert wird."
+  />
+  <LinkCard
+    title="Verbrauch und Budgets"
+    href="/docs/administration/verbrauch-und-budgets"
+    description="Tokens in Euro, gemeinsames Monatsbudget, persönliche Limits und Belege."
+  />
+  <LinkCard
+    title="Eigenen Konnektor anbinden"
+    href="/docs/konnektoren/eigenen-konnektor-anbinden"
+    description="Einen MCP-Server anlegen, über das Gateway routen und gezielt freigeben."
+  />
+  <LinkCard
+    title="Admin-Panel"
+    href="/docs/administration/admin-panel"
+    description="Aufbau des Panels, Seite für Seite, und die Reihenfolge für einen neuen Admin."
+  />
+  <LinkCard
+    title="Umgebungsvariablen"
+    href="/docs/referenz/umgebungsvariablen"
+    description="Wie eine Instanz konfiguriert wird und was Sie selbst setzen."
+  />
+</CardGrid>
+
+## Wohin mit einem Fehler
+
+| Der Fehler betrifft | Zuständig |
+|---|---|
+| Chat-Oberfläche, Agenten, Modell-Anbindung, Dateiverarbeitung | LibreChat |
+| Admin-Panel, Verbrauchsanzeige, Budget, Aufbewahrung | Kisuno |
+| Rechte auf Konnektoren, Protokoll der Werkzeug-Aufrufe | Kisuno |
+| Installation, Backup, Umzug, TLS | Kisuno |
+| Outlook-Add-in | Kisuno |
+
+Die Lizenzen aller beteiligten Bausteine stehen unter
+[Lizenzen und Herkunft](/docs/referenz/lizenzen).

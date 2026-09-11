@@ -15,7 +15,7 @@
 // alles andere. Der <style>-Block ergaenzt nur; wer ihn verwirft, sieht
 // dieselbe Mail, bloss ohne die Anpassung an schmale Bildschirme.
 //
-// Aussehen: Die Mail traegt dieselben Werte wie eucowork.ai. Farben, Radien
+// Aussehen: Die Mail traegt dieselben Werte wie kisuno.ai. Farben, Radien
 // und die Schriftreihenfolge stammen aus assets/content.css und stehen hier
 // ausgeschrieben, weil kein Mailprogramm CSS-Variablen aufloest.
 //
@@ -28,7 +28,7 @@
 // externe Ressourcen gibt es weiterhin keine.
 
 const SMTP2GO_ENDPOINT = 'https://api.smtp2go.com/v3/email/send';
-const DEFAULT_FROM = 'EU Cowork AI <noreply@eucowork.ai>';
+const DEFAULT_FROM = 'Kisuno <noreply@kisuno.ai>';
 const DEFAULT_LEAD_TO = 'info@herr-informatik.ch';
 
 /**
@@ -46,7 +46,7 @@ const C = {
   bodySoft: '#5A6472', // --c-body-soft, Nebentext und Kleingedrucktes
   line: '#E7ECF0', // --c-line, Trenner in der Karte
   hairline: '#DDE4EA', // --c-hairline, Kartenkante (--bd)
-  link: '#12326B' // --c-eu-700, Europa-Blau: Links, und das AI der Wortmarke
+  link: '#12326B' // --c-eu-700, Europa-Blau: Links
 };
 // Das Gold der Website (--c-gold-500) taucht hier nicht als Wert auf: es steckt
 // im Punkt des Logos und bleibt damit das, was es auf der Website ist, naemlich
@@ -65,7 +65,7 @@ const FONT = "'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neu
 
 /**
  * Das Logo, erzeugt aus icon.svg und im Repository als
- * assets/eucowork-mail-logo.png abgelegt. Zweimal so gross wie die
+ * assets/kisuno-mail-logo.png abgelegt. Zweimal so gross wie die
  * Darstellung (80 px Bild, 40 px im HTML), damit es auf feinen Bildschirmen
  * nicht ausfranst.
  *
@@ -80,7 +80,7 @@ const FONT = "'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neu
  * aus assets/ dort nicht liegen. Neu erzeugen laesst sich das Bild mit sharp:
  *   sharp('icon.svg', { density: 900 }).resize(80, 80).png({ palette: true })
  */
-const LOGO_FILENAME = 'eucowork-mail-logo.png';
+const LOGO_FILENAME = 'kisuno-mail-logo.png';
 const LOGO_MIMETYPE = 'image/png';
 const LOGO_BASE64 =
   'iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAMAAAC5zwKfAAAAh1BMVEVMaXEMHDMKHTIKHTILHTIK' +
@@ -104,82 +104,81 @@ const LOGO_BASE64 =
 const COPY = {
   de: {
     subject: 'Bitte bestätigen Sie Ihre E-Mail-Adresse',
-    preheader: 'Ein Klick, dann steht Ihr Platz auf der Warteliste von EU Cowork AI fest.',
+    preheader: 'Ein Klick, dann steht Ihr Platz auf der Warteliste von Kisuno fest.',
     heading: 'Bitte bestätigen Sie Ihre E-Mail-Adresse',
-    intro: 'Sie haben sich auf eucowork.ai für den frühen Zugang zu EU Cowork AI eingetragen: der KI-Plattform für Unternehmen, die in Europa betrieben und in der Schweiz gehostet wird.',
+    intro: 'Sie haben sich auf kisuno.ai für den frühen Zugang zu Kisuno eingetragen: der KI-Plattform für Unternehmen, die in Europa betrieben und in der Schweiz gehostet wird.',
     why: 'Damit wir sicher sind, dass diese Adresse wirklich Ihnen gehört, bestätigen Sie bitte einmal kurz:',
     button: 'E-Mail-Adresse bestätigen',
     fallback: 'Falls der Knopf nicht funktioniert, öffnen Sie diese Adresse im Browser:',
     validity: 'Der Link gilt 48 Stunden. Danach tragen Sie sich einfach erneut ein.',
     ignore: 'Falls Sie sich nicht eingetragen haben, ignorieren Sie diese E-Mail. Ohne Bestätigung wird Ihre Adresse nicht weiter verwendet.',
     signoff: 'Freundliche Grüsse',
-    team: 'Ihr Team von EU Cowork AI',
-    footerNote: 'Diese Nachricht wurde automatisch versendet, weil auf eucowork.ai eine Anmeldung mit dieser Adresse erfolgt ist.'
+    team: 'Ihr Team von Kisuno',
+    footerNote: 'Diese Nachricht wurde automatisch versendet, weil auf kisuno.ai eine Anmeldung mit dieser Adresse erfolgt ist.'
   },
   en: {
     subject: 'Please confirm your email address',
-    preheader: 'One click and your spot on the EU Cowork AI waiting list is set.',
+    preheader: 'One click and your spot on the Kisuno waiting list is set.',
     heading: 'Please confirm your email address',
-    intro: 'You signed up on eucowork.ai for early access to EU Cowork AI: the AI platform for businesses, operated in Europe and hosted in Switzerland.',
+    intro: 'You signed up on kisuno.ai for early access to Kisuno: the AI platform for businesses, operated in Europe and hosted in Switzerland.',
     why: 'To make sure this address really belongs to you, please confirm once:',
     button: 'Confirm email address',
     fallback: 'If the button does not work, open this address in your browser:',
     validity: 'The link is valid for 48 hours. After that, simply sign up again.',
     ignore: 'If you did not sign up, please ignore this email. Without confirmation your address will not be used any further.',
     signoff: 'Kind regards',
-    team: 'The EU Cowork AI team',
-    footerNote: 'This message was sent automatically because someone signed up on eucowork.ai using this address.'
+    team: 'The Kisuno team',
+    footerNote: 'This message was sent automatically because someone signed up on kisuno.ai using this address.'
   },
   fr: {
     subject: 'Veuillez confirmer votre adresse e-mail',
-    preheader: 'Un clic et votre place sur la liste d’attente d’EU Cowork AI est assurée.',
+    preheader: 'Un clic et votre place sur la liste d’attente de Kisuno est assurée.',
     heading: 'Veuillez confirmer votre adresse e-mail',
-    intro: 'Vous vous êtes inscrit sur eucowork.ai pour un accès anticipé à EU Cowork AI : la plateforme d’IA pour les entreprises, exploitée en Europe et hébergée en Suisse.',
+    intro: 'Vous vous êtes inscrit sur kisuno.ai pour un accès anticipé à Kisuno : la plateforme d’IA pour les entreprises, exploitée en Europe et hébergée en Suisse.',
     why: 'Afin que nous soyons certains que cette adresse vous appartient réellement, veuillez la confirmer une fois :',
     button: 'Confirmer l’adresse e-mail',
     fallback: 'Si le bouton ne fonctionne pas, ouvrez cette adresse dans votre navigateur :',
     validity: 'Le lien est valable 48 heures. Passé ce délai, il vous suffit de vous inscrire à nouveau.',
     ignore: 'Si vous n’êtes pas à l’origine de cette inscription, ignorez cet e-mail. Sans confirmation, votre adresse ne sera pas utilisée davantage.',
     signoff: 'Cordialement',
-    team: 'Votre équipe EU Cowork AI',
-    footerNote: 'Ce message a été envoyé automatiquement parce qu’une inscription avec cette adresse a été effectuée sur eucowork.ai.'
+    team: 'Votre équipe Kisuno',
+    footerNote: 'Ce message a été envoyé automatiquement parce qu’une inscription avec cette adresse a été effectuée sur kisuno.ai.'
   },
   it: {
     subject: 'La preghiamo di confermare il Suo indirizzo e-mail',
-    preheader: 'Un clic e il Suo posto nella lista d’attesa di EU Cowork AI è assicurato.',
+    preheader: 'Un clic e il Suo posto nella lista d’attesa di Kisuno è assicurato.',
     heading: 'La preghiamo di confermare il Suo indirizzo e-mail',
-    intro: 'Si è registrato su eucowork.ai per l’accesso anticipato a EU Cowork AI: la piattaforma di IA per le aziende, gestita in Europa e ospitata in Svizzera.',
+    intro: 'Si è registrato su kisuno.ai per l’accesso anticipato a Kisuno: la piattaforma di IA per le aziende, gestita in Europa e ospitata in Svizzera.',
     why: 'Per essere certi che questo indirizzo appartenga davvero a Lei, La preghiamo di confermarlo una volta:',
     button: 'Conferma indirizzo e-mail',
     fallback: 'Se il pulsante non funziona, apra questo indirizzo nel Suo browser:',
     validity: 'Il link è valido 48 ore. Trascorso questo termine, è sufficiente registrarsi di nuovo.',
     ignore: 'Se non si è registrato, ignori questa e-mail. Senza conferma il Suo indirizzo non verrà utilizzato oltre.',
     signoff: 'Cordiali saluti',
-    team: 'Il Suo team di EU Cowork AI',
-    footerNote: 'Questo messaggio è stato inviato automaticamente perché su eucowork.ai è stata effettuata una registrazione con questo indirizzo.'
+    team: 'Il Suo team di Kisuno',
+    footerNote: 'Questo messaggio è stato inviato automaticamente perché su kisuno.ai è stata effettuata una registrazione con questo indirizzo.'
   },
   es: {
     subject: 'Confirme su dirección de correo electrónico',
-    preheader: 'Un clic y su lugar en la lista de espera de EU Cowork AI queda asegurado.',
+    preheader: 'Un clic y su lugar en la lista de espera de Kisuno queda asegurado.',
     heading: 'Confirme su dirección de correo electrónico',
-    intro: 'Se ha registrado en eucowork.ai para el acceso anticipado a EU Cowork AI: la plataforma de IA para empresas, operada en Europa y alojada en Suiza.',
+    intro: 'Se ha registrado en kisuno.ai para el acceso anticipado a Kisuno: la plataforma de IA para empresas, operada en Europa y alojada en Suiza.',
     why: 'Para asegurarnos de que esta dirección le pertenece realmente, confírmela una vez:',
     button: 'Confirmar dirección de correo electrónico',
     fallback: 'Si el botón no funciona, abra esta dirección en su navegador:',
     validity: 'El enlace es válido durante 48 horas. Transcurrido ese plazo, basta con registrarse de nuevo.',
     ignore: 'Si no se ha registrado, ignore este correo electrónico. Sin confirmación, su dirección no se utilizará más.',
     signoff: 'Atentamente',
-    team: 'Su equipo de EU Cowork AI',
-    footerNote: 'Este mensaje se ha enviado automáticamente porque en eucowork.ai se ha realizado un registro con esta dirección.'
+    team: 'Su equipo de Kisuno',
+    footerNote: 'Este mensaje se ha enviado automáticamente porque en kisuno.ai se ha realizado un registro con esta dirección.'
   }
 };
 
 /** Standardsprache, sobald etwas Unbekanntes hereinkommt. */
 const FALLBACK_LANG = 'de';
 
-/** Die Wortmarke, wie sie die Kopfleiste der Website fuehrt. */
-const BRAND_MAIN = 'EU Cowork';
-const BRAND_AI = 'AI';
+/** Die Wortmarke, wie sie die Kopfleiste der Website fuehrt: ein Wort. */
+const BRAND_MAIN = 'Kisuno';
 
 /** Auswahlwerte des Formulars in lesbaren Klartext. */
 const INTEREST_LABEL = {
@@ -335,10 +334,10 @@ ${preheaderHtml}
                        Kaestchen haetten. Klein gesetzt, damit er das Kaestchen
                        nicht sprengt; lesbar bleibt die Marke ohnehin durch die
                        Wortmarke rechts daneben. -->
-                  <img src="cid:${LOGO_FILENAME}" width="40" height="40" alt="EU Cowork AI" style="display:block;width:40px;height:40px;border:0;outline:none;text-decoration:none;border-radius:9px;font-family:${FONT};font-size:9px;line-height:1.1;color:${C.ink};background-color:${C.bg};">
+                  <img src="cid:${LOGO_FILENAME}" width="40" height="40" alt="Kisuno" style="display:block;width:40px;height:40px;border:0;outline:none;text-decoration:none;border-radius:9px;font-family:${FONT};font-size:9px;line-height:1.1;color:${C.ink};background-color:${C.bg};">
                 </td>
                 <td class="euc-ink" valign="middle" style="font-family:${FONT};font-size:19px;font-weight:600;letter-spacing:-.010em;line-height:1.2;color:${C.ink};background-color:${C.bg};white-space:nowrap;">
-                  ${escapeHtml(BRAND_MAIN)} <span class="euc-link" style="color:${C.link};background-color:${C.bg};">${escapeHtml(BRAND_AI)}</span>
+                  ${escapeHtml(BRAND_MAIN)}
                 </td>
               </tr>
             </table>
@@ -371,7 +370,7 @@ export function buildConfirmationMail({ lang, confirmUrl }) {
   // Programm zeigen kann. Entsprechend vollstaendig ist sie aufgebaut, und sie
   // nennt die Absenderin gleich in der ersten Zeile.
   const text = [
-    BRAND_MAIN + ' ' + BRAND_AI,
+    BRAND_MAIN,
     '',
     t.heading,
     '',
@@ -473,7 +472,7 @@ export function buildLeadMail({ lead, confirmedAt }) {
   const footerNote = 'Antworten auf diese Mail gehen direkt an den Interessenten.';
 
   const text = [
-    BRAND_MAIN + ' ' + BRAND_AI,
+    BRAND_MAIN,
     '',
     heading,
     '',

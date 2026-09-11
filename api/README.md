@@ -95,8 +95,8 @@ vercel env add LEAD_TO production       # optional
 | --- | --- | --- | --- |
 | `SMTP2GO_API_KEY` | ja | — | API-Schluessel aus dem SMTP2GO-Konto. Steht nur in der Kopfzeile der Anfrage und taucht in keiner Antwort und keinem Log auf. |
 | `TOKEN_SECRET` | ja | — | Basis des Schluessels fuer die Tokens (`sha256` davon ergibt die 256 Bit fuer AES). Erzeugen mit `openssl rand -hex 32`. Wird er geaendert, werden alle noch offenen Bestaetigungslinks ungueltig — mehr passiert nicht. |
-| `SITE_URL` | nein | `https://eucowork.ai` | Grundadresse fuer den Bestaetigungslink. Fuer eine Vorschau-Umgebung setzen, sonst zeigt der Link aus der Testmail auf die Produktion. |
-| `MAIL_FROM` | nein | `EU Cowork AI <noreply@eucowork.ai>` | Absender beider Mails. |
+| `SITE_URL` | nein | `https://kisuno.ai` | Grundadresse fuer den Bestaetigungslink. Fuer eine Vorschau-Umgebung setzen, sonst zeigt der Link aus der Testmail auf die Produktion. |
+| `MAIL_FROM` | nein | `Kisuno <noreply@kisuno.ai>` | Absender beider Mails. |
 | `LEAD_TO` | nein | `info@herr-informatik.ch` | Empfaenger der Lead-Mail. |
 
 Wer dieselben Werte auch fuer Vorschau-Deployments braucht, wiederholt die
@@ -108,7 +108,7 @@ Befehle mit `preview` statt `production`.
    auf **"Email Send"** beschraenken. Ein Schluessel, der nur senden darf,
    richtet bei einem Leck deutlich weniger Schaden an als ein
    Vollzugriffs-Schluessel.
-2. **Sender-Domain `eucowork.ai` verifizieren** (*Settings → Sender Domains*)
+2. **Sender-Domain `kisuno.ai` verifizieren** (*Settings → Sender Domains*)
    und die genannten **SPF- und DKIM-Eintraege** im DNS setzen. Ohne diese
    Eintraege landen beide Mails zuverlaessig im Spam — und eine
    Bestaetigungsmail im Spam ist eine verlorene Anmeldung.

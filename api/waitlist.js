@@ -279,7 +279,7 @@ export async function handleWaitlist(req, res, deps) {
       iat: now()
     }, env);
 
-    const siteUrl = (env.SITE_URL || 'https://eucowork.ai').replace(/\/+$/, '');
+    const siteUrl = (env.SITE_URL || 'https://kisuno.ai').replace(/\/+$/, '');
     confirmUrl = `${siteUrl}/api/confirm?t=${encodeURIComponent(token)}`;
   } catch (err) {
     log('Bestaetigungs-Token konnte nicht erzeugt werden:', err && err.message);

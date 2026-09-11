@@ -1,6 +1,6 @@
 ---
 title: Qué es MCP
-description: El Model Context Protocol explicado desde cero, para que entienda cómo se conecta EU Cowork AI a sus propios sistemas.
+description: El Model Context Protocol explicado desde cero, para que entienda cómo se conecta Kisuno a sus propios sistemas.
 sidebar:
   order: 1
 ---
@@ -13,9 +13,9 @@ Esta página explica cómo llega un modelo de lenguaje a los datos de sus propio
 
 Un modelo de lenguaje solo conoce lo que estaba en su material de entrenamiento y lo que hay en la conversación en curso. No sabe nada de sus clientes, de sus facturas ni de sus equipos. Para que pueda responder a preguntas de ese tipo necesita una vía para consultar a uno de sus sistemas especializados mientras la conversación transcurre.
 
-Justamente para eso existe el **Model Context Protocol**, MCP en forma abreviada. Es un lenguaje común para que un sistema de chat plantee preguntas a un sistema especializado y reciba respuestas. MCP es un **estándar abierto con especificación pública**, publicado originalmente por Anthropic y adoptado entretanto por numerosos fabricantes. No es una invención de EU Cowork AI, y con él usted no queda atado a nosotros.
+Justamente para eso existe el **Model Context Protocol**, MCP en forma abreviada. Es un lenguaje común para que un sistema de chat plantee preguntas a un sistema especializado y reciba respuestas. MCP es un **estándar abierto con especificación pública**, publicado originalmente por Anthropic y adoptado entretanto por numerosos fabricantes. No es una invención de Kisuno, y con él usted no queda atado a nosotros.
 
-Para usted eso significa dos cosas. Primera: para muchos productos extendidos ya existe un servidor MCP terminado que puede conectar. Segunda: lo que construya una vez para EU Cowork AI funciona también con otro software que hable MCP.
+Para usted eso significa dos cosas. Primera: para muchos productos extendidos ya existe un servidor MCP terminado que puede conectar. Segunda: lo que construya una vez para Kisuno funciona también con otro software que hable MCP.
 
 ## Tres términos que va a necesitar
 
@@ -23,7 +23,7 @@ Para usted eso significa dos cosas. Primera: para muchos productos extendidos ya
 
 **Conector, técnicamente servidor MCP.** Un conector es un pequeño servicio que ofrece un conjunto de herramientas y que, por detrás, habla con el sistema de destino propiamente dicho. En esta documentación lo llamamos conector, porque resulta más comprensible para quien no es desarrollador. En la configuración y en el panel de administración se llama **«MCP-Server»** (servidor MCP).
 
-**Cliente.** El cliente es la parte a la que se le ofrecen las herramientas y que las llama. En nuestro caso es LibreChat, la capa de chat de EU Cowork AI.
+**Cliente.** El cliente es la parte a la que se le ofrecen las herramientas y que las llama. En nuestro caso es LibreChat, la capa de chat de Kisuno.
 
 Un conector es a menudo un **puente**: el sistema de destino no habla MCP, solo dispone de una interfaz de programación corriente. El conector traduce entonces entre ambos mundos. Así funcionan la mayoría de las conexiones a un ERP, a un sistema de monitorización o a un sistema de tickets.
 
@@ -48,13 +48,13 @@ Todo conector tiene que autenticarse en el sistema de destino. Para ello existen
 |---|---|---|
 | Quién se autentica | cada persona con su propia cuenta | una única cuenta técnica para todos |
 | Quién conoce los permisos | el propio sistema de destino | el sistema de destino solo conoce la cuenta de servicio |
-| Límite de permisos | los permisos de la persona en el sistema de destino | las habilitaciones en EU Cowork AI más los permisos de la cuenta de servicio |
+| Límite de permisos | los permisos de la persona en el sistema de destino | las habilitaciones en Kisuno más los permisos de la cuenta de servicio |
 | Granularidad | hasta el nivel de documento y de campo | hasta el nivel de conector y de herramienta |
 | Típico para | almacenamiento de archivos, gestión documental, almacenamiento en la nube | ERP, gestión de mercancías, contabilidad, monitorización |
 
 **Autenticación por persona** significa: en el primer uso, la persona es enviada al diálogo de acceso del sistema de destino, confirma allí el acceso y, a partir de ese momento, el conector trabaja con su acceso personal. Quien no puede ver una carpeta en su almacenamiento de archivos tampoco la ve en el chat. El sistema de destino sigue siendo la autoridad decisiva, y usted no tiene que reconstruir los permisos una segunda vez.
 
-**Cuenta de servicio** significa: el conector guarda una única clave y se autentica igual para todos. El sistema de destino solo ve esa única cuenta y por eso no puede distinguir entre los miembros de su personal. La separación tiene que producirse entonces antes, mediante las habilitaciones en EU Cowork AI.
+**Cuenta de servicio** significa: el conector guarda una única clave y se autentica igual para todos. El sistema de destino solo ve esa única cuenta y por eso no puede distinguir entre los miembros de su personal. La separación tiene que producirse entonces antes, mediante las habilitaciones en Kisuno.
 
 <Aside type="tip" title="Regla práctica">
 Elija la **autenticación por persona** siempre que el sistema de destino la ofrezca. Es la variante más segura, porque los permisos se mantienen allí donde de todos modos se mantienen. Una cuenta de servicio es la solución de emergencia para sistemas que no ofrecen acceso personal a través de una interfaz. Si necesita una cuenta de servicio, cree mejor varias cuentas estrechas que una sola amplia.
@@ -72,7 +72,7 @@ A ello se añade un segundo efecto: cuantas más herramientas de nombre parecido
   <LinkCard
     title="Permisos y habilitaciones"
     href="/docs/es/konnektoren/gateway-und-rechte"
-    description="Cómo hace valer EU Cowork AI quién puede utilizar qué conector, y por qué hace falta esta capa."
+    description="Cómo hace valer Kisuno quién puede utilizar qué conector, y por qué hace falta esta capa."
   />
   <LinkCard
     title="Conectar un conector propio"

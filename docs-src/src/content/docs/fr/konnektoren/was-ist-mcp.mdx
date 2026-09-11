@@ -1,6 +1,6 @@
 ---
 title: Qu’est-ce que MCP
-description: Le Model Context Protocol expliqué depuis la base, pour que vous compreniez comment EU Cowork AI est raccordé à vos propres systèmes.
+description: Le Model Context Protocol expliqué depuis la base, pour que vous compreniez comment Kisuno est raccordé à vos propres systèmes.
 sidebar:
   order: 1
 ---
@@ -13,9 +13,9 @@ Cette page explique comment un modèle de langage accède aux données de vos pr
 
 Un modèle de langage ne connaît que ce qui figurait dans ses données d’entraînement et ce qui figure dans la conversation en cours. Il ne sait rien de vos clients, de vos factures ni de vos appareils. Pour qu’il puisse répondre à de telles questions, il lui faut un moyen d’interroger l’un de vos systèmes métier pendant la conversation.
 
-C’est exactement à cela que sert le **Model Context Protocol**, MCP en abrégé. C’est un langage commun qui décrit comment un système de chat pose une question à un système métier et en reçoit la réponse. MCP est une **norme ouverte avec une spécification publique**, publiée à l’origine par Anthropic et reprise depuis par de nombreux éditeurs. Ce n’est pas une invention d’EU Cowork AI, et vous ne vous liez pas à nous en l’adoptant.
+C’est exactement à cela que sert le **Model Context Protocol**, MCP en abrégé. C’est un langage commun qui décrit comment un système de chat pose une question à un système métier et en reçoit la réponse. MCP est une **norme ouverte avec une spécification publique**, publiée à l’origine par Anthropic et reprise depuis par de nombreux éditeurs. Ce n’est pas une invention de Kisuno, et vous ne vous liez pas à nous en l’adoptant.
 
-Pour vous, cela signifie deux choses. Premièrement, pour beaucoup de produits répandus, il existe déjà un serveur MCP prêt à l’emploi que vous pouvez raccorder. Deuxièmement, ce que vous construisez une fois pour EU Cowork AI fonctionne aussi avec d’autres logiciels qui parlent MCP.
+Pour vous, cela signifie deux choses. Premièrement, pour beaucoup de produits répandus, il existe déjà un serveur MCP prêt à l’emploi que vous pouvez raccorder. Deuxièmement, ce que vous construisez une fois pour Kisuno fonctionne aussi avec d’autres logiciels qui parlent MCP.
 
 ## Trois termes dont vous avez besoin
 
@@ -23,7 +23,7 @@ Pour vous, cela signifie deux choses. Premièrement, pour beaucoup de produits r
 
 **Connecteur, techniquement serveur MCP.** Un connecteur est un petit service qui propose un ensemble d’outils et qui, derrière eux, dialogue avec le système cible proprement dit. Dans cette documentation, nous l’appelons connecteur, parce que c’est plus parlant pour qui n’est pas développeur. Dans la configuration et dans le panneau d’administration, il s’appelle **« MCP-Server »** (serveur MCP).
 
-**Client.** Le client est la partie à laquelle les outils sont proposés et qui les appelle. Chez nous, c’est LibreChat, la couche de chat d’EU Cowork AI.
+**Client.** Le client est la partie à laquelle les outils sont proposés et qui les appelle. Chez nous, c’est LibreChat, la couche de chat de Kisuno.
 
 Un connecteur est souvent un **pont** : le système cible lui-même ne parle pas MCP, il n’a qu’une interface de programmation ordinaire. Le connecteur traduit alors entre les deux mondes. C’est ainsi que fonctionnent la plupart des raccordements à un ERP, à un système de supervision ou à un système de tickets.
 
@@ -48,13 +48,13 @@ Chaque connecteur doit s’authentifier auprès du système cible. Il existe pou
 |---|---|---|
 | Qui s’authentifie | chaque personne avec son propre compte | un seul compte technique pour tous |
 | Qui connaît les droits | le système cible lui-même | le système cible ne connaît que le compte de service |
-| Limite des droits | les droits de la personne dans le système cible | les autorisations dans EU Cowork AI plus les droits du compte de service |
+| Limite des droits | les droits de la personne dans le système cible | les autorisations dans Kisuno plus les droits du compte de service |
 | Granularité | jusqu’au niveau du document et du champ | jusqu’au niveau du connecteur et de l’outil |
 | Typique pour | espace de stockage de fichiers, gestion documentaire, stockage cloud | ERP, gestion commerciale, comptabilité, supervision |
 
 **Authentification par personne** signifie ceci : à la première utilisation, la personne est envoyée vers la boîte de dialogue de connexion du système cible, y confirme l’accès, et le connecteur travaille dès lors avec son accès personnel. Qui n’a pas le droit de voir un dossier dans votre espace de stockage de fichiers ne le voit pas non plus dans le chat. Le système cible reste l’instance de référence, et vous n’avez pas à reconstruire les droits une deuxième fois.
 
-**Compte de service** signifie ceci : le connecteur détient une clé unique et s’authentifie de la même manière pour tout le monde. Le système cible ne voit que ce seul compte et ne peut donc pas distinguer vos collaborateurs les uns des autres. La séparation doit alors se faire en amont, par les autorisations dans EU Cowork AI.
+**Compte de service** signifie ceci : le connecteur détient une clé unique et s’authentifie de la même manière pour tout le monde. Le système cible ne voit que ce seul compte et ne peut donc pas distinguer vos collaborateurs les uns des autres. La séparation doit alors se faire en amont, par les autorisations dans Kisuno.
 
 <Aside type="tip" title="Règle empirique">
 Prenez l'**authentification par personne** chaque fois que le système cible la propose. C’est la variante la plus sûre, parce que les droits y sont gérés là où ils sont gérés de toute façon. Un compte de service est la solution de repli pour les systèmes qui n’offrent aucun accès nominatif par une interface. Si vous avez besoin d’un compte de service, créez plutôt plusieurs comptes aux droits restreints qu’un seul compte aux droits étendus.
@@ -72,7 +72,7 @@ L’ordre de grandeur est considérable. Un connecteur volumineux peut facilemen
   <LinkCard
     title="Droits et autorisations"
     href="/docs/fr/konnektoren/gateway-und-rechte"
-    description="Comment EU Cowork AI fait respecter qui a le droit d’utiliser quel connecteur, et pourquoi cette couche est nécessaire."
+    description="Comment Kisuno fait respecter qui a le droit d’utiliser quel connecteur, et pourquoi cette couche est nécessaire."
   />
   <LinkCard
     title="Raccorder votre propre connecteur"

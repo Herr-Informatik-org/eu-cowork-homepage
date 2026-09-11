@@ -76,7 +76,7 @@ unter sechs Woertern, sonst ist sie in ihrer Standzeit nicht lesbar.
 | 0.0 bis 2.8 s | Clip A, Talkessel im Morgenlicht | Wortmarke, darunter: Die KI-Plattform fuer Ihr Unternehmen. |
 | 2.8 bis 5.6 s | `assets/shots/admin-mcp-rechte.webp`, langsamer Zoom | Verbunden mit Ihren Daten. Alles auditiert. |
 | 5.6 bis 8.0 s | Clip B, Serverreihe | Betrieben in der Schweiz. |
-| 8.0 bis 10.0 s | Standbild aus `eucowork-de-querformat-1200x628-claim.png` | eucowork.ai, Auf die Warteliste |
+| 8.0 bis 10.0 s | Standbild aus `kisuno-de-querformat-1200x628-claim.png` | kisuno.ai, Auf die Warteliste |
 
 Die Schlusstafel bekommt volle zwei Sekunden. Weniger reicht nicht, um eine
 Adresse zu lesen und zu behalten, und sie ist der einzige Grund, warum die
@@ -134,11 +134,11 @@ hologram, glossy 3D render.
 
 > Ein KI-Kollege fuer Ihre Firma, verbunden mit Ihren eigenen Systemen und
 > betrieben in der Schweiz oder auf Ihrem Server. Auf die Warteliste:
-> eucowork punkt ai.
+> kisuno punkt ai.
 
 25 Woerter, das ist bei Anzeigentempo die Obergrenze fuer zehn Sekunden. Wer
 mehr unterbringen will, kuerzt das Bild, nicht die Sprechpausen. Nicht vom
-Generator sprechen lassen: die Aussprache von "eucowork.ai" und die Betonung im
+Generator sprechen lassen: die Aussprache von "kisuno.ai" und die Betonung im
 Deutschen sind zu unsicher.
 
 ## Fassung B: 6 Sekunden, Bumper
@@ -147,7 +147,7 @@ Ein Clip, ein Satz, eine Schlusstafel: Clip A auf 4 Sekunden, danach 2 Sekunden
 Schlusstafel. Laeuft als eigenes Format neben Fassung A und braucht keinen
 zweiten Dreh, weil derselbe Clip A genuegt.
 
-Sprechertext: *Der KI-Kollege fuer Ihre Firma. Auf die Warteliste: eucowork
+Sprechertext: *Der KI-Kollege fuer Ihre Firma. Auf die Warteliste: kisuno
 punkt ai.* Text im Bild wie in Fassung A, Einstellung 1 und 4.
 
 ## Hochformat 9:16 und Quadrat 1:1

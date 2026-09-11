@@ -2,7 +2,7 @@
 
 Erzeugt mit `node scripts/build-ads.mjs` aus den eigenen Assets der Website:
 Schlagzeile, Farben und Wortmarke wie beim Vorschaubild
-(`og/eucowork-share-de.png`), Produktaufnahmen aus `assets/shots/`. Keine
+(`og/kisuno-share-de.png`), Produktaufnahmen aus `assets/shots/`. Keine
 gekauften Symbolbilder.
 
 Die Dateien werden bei Google Ads hochgeladen und **nicht** von der Website
@@ -12,12 +12,12 @@ ausgeliefert; `ads/` steht deshalb in `.vercelignore`.
 
 | Datei | Format | Groesse | Motiv |
 |---|---|---|---|
-| `eucowork-de-querformat-1200x628-claim.png` | 1.91:1, Pflicht | 1200 x 628 | Aussage der Startseite, Abzeichenzeile |
-| `eucowork-de-querformat-1200x628-verbrauch.png` | 1.91:1, Pflicht | 1200 x 628 | Text links, Verbrauchsdiagramm rechts |
-| `eucowork-de-quadrat-1200x1200-rechte.png` | 1:1, Pflicht | 1200 x 1200 | Anbindungen mit Gateway und Direkt |
-| `eucowork-de-quadrat-1200x1200-verbrauch.png` | 1:1, Pflicht | 1200 x 1200 | Verbrauch pro Tag, nach Modell |
-| `eucowork-de-hochformat-960x1200-rechte.png` | 4:5, optional | 960 x 1200 | Anbindungen mit Gateway und Direkt |
-| `eucowork-de-hochformat-960x1200-verbrauch.png` | 4:5, optional | 960 x 1200 | Verbrauch pro Tag, nach Modell |
+| `kisuno-de-querformat-1200x628-claim.png` | 1.91:1, Pflicht | 1200 x 628 | Aussage der Startseite, Abzeichenzeile |
+| `kisuno-de-querformat-1200x628-verbrauch.png` | 1.91:1, Pflicht | 1200 x 628 | Text links, Verbrauchsdiagramm rechts |
+| `kisuno-de-quadrat-1200x1200-rechte.png` | 1:1, Pflicht | 1200 x 1200 | Anbindungen mit Gateway und Direkt |
+| `kisuno-de-quadrat-1200x1200-verbrauch.png` | 1:1, Pflicht | 1200 x 1200 | Verbrauch pro Tag, nach Modell |
+| `kisuno-de-hochformat-960x1200-rechte.png` | 4:5, optional | 960 x 1200 | Anbindungen mit Gateway und Direkt |
+| `kisuno-de-hochformat-960x1200-verbrauch.png` | 4:5, optional | 960 x 1200 | Verbrauch pro Tag, nach Modell |
 
 Sechs verschiedene Bilder, also mehr als die vier, die Google empfiehlt. Alle
 als PNG in echtem RGB ohne Alphaebene, alle weit unter der Obergrenze von
@@ -27,8 +27,8 @@ Dazu die Logo-Assets, die Google getrennt von den Bildern fuehrt:
 
 | Datei | Format | Groesse |
 |---|---|---|
-| `eucowork-logo-quadrat-1200x1200.png` | 1:1, Pflicht | 1200 x 1200 |
-| `eucowork-logo-querformat-1200x300.png` | 4:1, optional | 1200 x 300 |
+| `kisuno-logo-quadrat-1200x1200.png` | 1:1, Pflicht | 1200 x 1200 |
+| `kisuno-logo-querformat-1200x300.png` | 4:1, optional | 1200 x 300 |
 
 Im Quadrat steht nur das Zeichen aus `icon.svg`. Ein Schriftzug waere bei den
 48 Pixeln, mit denen Google das Logo oft ausspielt, nur noch ein grauer

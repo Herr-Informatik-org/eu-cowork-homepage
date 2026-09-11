@@ -133,9 +133,9 @@ export const GET: APIRoute = async () => {
 
   abschnitte.push(
     [
-      '# EU Cowork AI: Dokumentation im Volltext',
+      '# Kisuno: Dokumentation im Volltext',
       '',
-      '> Der vollständige Text der Dokumentation von EU Cowork AI: Überblick, Installation und',
+      '> Der vollständige Text der Dokumentation von Kisuno: Überblick, Installation und',
       '> Betrieb auf dem eigenen Server, Funktionen aus Nutzersicht, Administration und der',
       '> Anschluss eigener Systeme über das Model Context Protocol.',
       '',
@@ -143,9 +143,9 @@ export const GET: APIRoute = async () => {
       'übersetzt auf Englisch, Französisch, Italienisch und Spanisch als HTML unter',
       `${BASIS}/en/…, ${BASIS}/fr/…, ${BASIS}/it/… und ${BASIS}/es/….`,
       `Eine reine Übersicht aller Seiten aller Sprachen steht unter ${BASIS}/llms.txt,`,
-      'die Marketing-Website ist unter https://eucowork.ai/llms.txt beschrieben.',
+      'die Marketing-Website ist unter https://kisuno.ai/llms.txt beschrieben.',
       '',
-      'EU Cowork AI ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a,',
+      'Kisuno ist ein Angebot der Herr Informatik GmbH, Klosterzelgstrasse 1a,',
       '5210 Windisch, Schweiz.',
       '',
       'Die Reihenfolge folgt der Gliederung der Dokumentation.',

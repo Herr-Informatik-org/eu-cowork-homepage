@@ -36,7 +36,7 @@ import { PROSA, SPRACHNAMEN } from './llms-prose.mjs';
 import { LINKS } from './llms-links.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const ORIGIN = 'https://eucowork.ai';
+const ORIGIN = 'https://kisuno.ai';
 const LANGS = ['de', 'en', 'fr', 'it', 'es'];
 
 /* Die Gliederung der Linkliste. Reihenfolge und Gruppierung sind bewusst
@@ -87,7 +87,7 @@ const RECHT = [
 /* Die Dokumentation bringt ihre eigene Zweisprachigkeit mit und hat eigene
    llms-Dateien; sie wird deshalb nur verwiesen, nicht ausgelesen. */
 const DOCS = {
-  de: { pfad: '/docs',    text: 'Dokumentation auf Deutsch, Englisch, Französisch, Italienisch und Spanisch: Überblick, Funktionen aus Nutzersicht, Administration und die Konzepte hinter Self-Hosting und MCP-Anbindungen. Wegweiser durch alle Seiten aller Sprachen: https://eucowork.ai/docs/llms.txt, Volltext: https://eucowork.ai/docs/llms-full.txt.' },
+  de: { pfad: '/docs',    text: 'Dokumentation auf Deutsch, Englisch, Französisch, Italienisch und Spanisch: Überblick, Funktionen aus Nutzersicht, Administration und die Konzepte hinter Self-Hosting und MCP-Anbindungen. Wegweiser durch alle Seiten aller Sprachen: https://kisuno.ai/docs/llms.txt, Volltext: https://kisuno.ai/docs/llms-full.txt.' },
   en: { pfad: '/docs/en', text: 'Documentation: overview, features, administration, self-hosting and MCP. Its own llms.txt at /docs/llms.txt, full text at /docs/llms-full.txt.' },
   fr: { pfad: '/docs/fr', text: 'Documentation : aperçu, fonctions, administration, auto-hébergement et MCP. Sa propre llms.txt à /docs/llms.txt, texte intégral à /docs/llms-full.txt.' },
   it: { pfad: '/docs/it', text: 'Documentazione: panoramica, funzioni, amministrazione, self-hosting e MCP. Una propria llms.txt a /docs/llms.txt, testo integrale a /docs/llms-full.txt.' },
@@ -160,8 +160,8 @@ function heute() {
 
 /* Eine Linkzeile. Wo eine handgeschriebene Beschreibung vorliegt, gewinnt
    sie; sonst die SEO-Beschreibung aus assets/seo-meta-*.json. Der Titelzusatz
-   " | EU Cowork AI" faellt weg, in einer Liste unter der Ueberschrift
-   "EU Cowork AI" ist er nur Wiederholung. */
+   " | Kisuno" faellt weg, in einer Liste unter der Ueberschrift
+   "Kisuno" ist er nur Wiederholung. */
 function liste(lang, meta, eintraege) {
   const eigen = LINKS[lang] || {};
   const zeilen = [];
@@ -169,7 +169,7 @@ function liste(lang, meta, eintraege) {
     const hand = eigen[e.key];
     const m = meta[e.key] && meta[e.key][lang];
     if (!hand && !m) { zeilen.push(`  FEHLT: ${e.key}/${lang}`); continue; }
-    const titel = (hand && hand.titel) || m.title.replace(/\s*\|\s*EU Cowork AI\s*$/, '');
+    const titel = (hand && hand.titel) || m.title.replace(/\s*\|\s*Kisuno\s*$/, '');
     const text = (hand && hand.text) || m.description;
     zeilen.push(`- [${titel}](${url(lang, e.path)}): ${text}`);
   }
@@ -227,7 +227,7 @@ async function baueVolltext(lang, meta, stand) {
     if (!existsSync(p)) { fehlend.push(p); continue; }
     const m = meta[e.key] && meta[e.key][lang];
     roh.push({
-      titel: m ? m.title.replace(/\s*\|\s*EU Cowork AI\s*$/, '') : e.key,
+      titel: m ? m.title.replace(/\s*\|\s*Kisuno\s*$/, '') : e.key,
       url: url(lang, e.path),
       text: sichttext(await readFile(p, 'utf8'))
     });

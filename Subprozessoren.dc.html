@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Subprozessoren | EU Cowork AI</title>
-<meta name="description" content="Aktuelle Liste der Unterauftragsverarbeiter von EU Cowork AI. Änderungen werden vorab angekündigt. Diese Liste ist Teil des AVV.">
-<link rel="canonical" href="https://eucowork.ai/subprozessoren">
+<title>Subprozessoren | Kisuno</title>
+<meta name="description" content="Aktuelle Liste der Unterauftragsverarbeiter von Kisuno. Änderungen werden vorab angekündigt. Diese Liste ist Teil des AVV.">
+<link rel="canonical" href="https://kisuno.ai/subprozessoren">
 <!-- i18n:hreflang:start -->
-<link rel="alternate" hreflang="de" href="https://eucowork.ai/subprozessoren">
-<link rel="alternate" hreflang="en" href="https://eucowork.ai/en/subprozessoren">
-<link rel="alternate" hreflang="fr" href="https://eucowork.ai/fr/subprozessoren">
-<link rel="alternate" hreflang="it" href="https://eucowork.ai/it/subprozessoren">
-<link rel="alternate" hreflang="es" href="https://eucowork.ai/es/subprozessoren">
-<link rel="alternate" hreflang="x-default" href="https://eucowork.ai/subprozessoren">
+<link rel="alternate" hreflang="de" href="https://kisuno.ai/subprozessoren">
+<link rel="alternate" hreflang="en" href="https://kisuno.ai/en/subprozessoren">
+<link rel="alternate" hreflang="fr" href="https://kisuno.ai/fr/subprozessoren">
+<link rel="alternate" hreflang="it" href="https://kisuno.ai/it/subprozessoren">
+<link rel="alternate" hreflang="es" href="https://kisuno.ai/es/subprozessoren">
+<link rel="alternate" hreflang="x-default" href="https://kisuno.ai/subprozessoren">
 <!-- i18n:hreflang:end -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="EU Cowork AI">
+<meta property="og:site_name" content="Kisuno">
 <meta property="og:locale" content="de_CH">
-<meta property="og:url" content="https://eucowork.ai/subprozessoren">
-<meta property="og:title" content="Subprozessoren | EU Cowork AI">
+<meta property="og:url" content="https://kisuno.ai/subprozessoren">
+<meta property="og:title" content="Subprozessoren | Kisuno">
 <meta property="og:description" content="Liste der Unterauftragsverarbeiter. Teil des AVV.">
-<meta property="og:image" content="https://eucowork.ai/og/eucowork-og.png">
+<meta property="og:image" content="https://kisuno.ai/og/kisuno-og.png">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -69,7 +69,7 @@
 <body>
 <noscript>
 <!-- i18n:noscript:start -->
-<p><a href="/">EU Cowork AI</a></p>
+<p><a href="/">Kisuno</a></p>
 <p><a href="/preise">Preise</a> <a href="/docs">Docs</a> <a href="/blog">Blog</a></p>
 <p>DE</p>
 <p><a href="/self-hosting">Selbst betreiben</a> <a href="/warteliste">Jetzt starten</a></p>
@@ -84,16 +84,20 @@
 <p>Hosting &amp; Rechenzentrum, ISO 27001</p>
 <p>Lupfig, Schweiz</p>
 <p>CH</p>
-<p>EuRouter</p>
-<p>Modell-Inferenz, EU-verarbeitet</p>
+<p>Amazon Web Services EMEA SARL</p>
+<p>Modell-Inferenz der OpenAI- und Anthropic-Modelle (Amazon Bedrock)</p>
+<p>Rechenzentrum Frankfurt, Deutschland</p>
 <p>EU</p>
+<p>Europäische Inferenz-Anbieter (GLM, Kimi, DeepSeek)</p>
+<p>Modell-Inferenz der offenen Spitzenmodelle</p>
+<p>Server in Europa</p>
 <p>EU</p>
 <p>SearXNG (self-hosted)</p>
 <p>Websuche, ohne Drittanbieter-Tracking</p>
-<p>Auf Infrastruktur von EU Cowork AI</p>
+<p>Auf Infrastruktur von Kisuno</p>
 <p>CH/EU</p>
 <p>Stand: laufend gepflegt. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den von euch selbst gewählten Modellanbietern.</p>
-<p>EU Cowork AI</p>
+<p>Kisuno</p>
 <p>Ihr KI-Kollege. Bleibt in Europa.</p>
 <p>Überall betreibbar</p>
 <p>Managed, eigene Cloud oder On-Prem</p>
@@ -113,7 +117,7 @@
 <p>Français</p>
 <p>Italiano</p>
 <p>Español</p>
-<p>© 2026 EU Cowork AI by Herr-Informatik GmbH</p>
+<p>© 2026 Kisuno by Herr-Informatik GmbH</p>
 <!-- i18n:noscript:end -->
 </noscript>
 <x-dc>
@@ -191,7 +195,7 @@
 class Component extends DCLogic {
   constructor(props){
     super(props);
-    this.state = { lang: (typeof localStorage!=='undefined' && localStorage.getItem('eucowork_lang')) || 'de' };
+    this.state = { lang: (typeof localStorage!=='undefined' && localStorage.getItem('kisuno_lang')) || 'de' };
     this._onLang = (e)=>this.setState({ lang:e.detail });
     this.C = {
       de: {
@@ -200,8 +204,9 @@ class Component extends DCLogic {
         head:['Anbieter','Zweck','Standort','Region'],
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Hosting & Rechenzentrum, ISO 27001', location:'Lupfig, Schweiz', region:'CH', eu:true },
-          { name:'EuRouter', purpose:'Modell-Inferenz, EU-verarbeitet', location:'EU', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Websuche, ohne Drittanbieter-Tracking', location:'Auf Infrastruktur von EU Cowork AI', region:'CH/EU', eu:true }
+          { name:'Amazon Web Services EMEA SARL', purpose:'Modell-Inferenz der OpenAI- und Anthropic-Modelle (Amazon Bedrock)', location:'Rechenzentrum Frankfurt, Deutschland', region:'EU', eu:true },
+          { name:'Europäische Inferenz-Anbieter (GLM, Kimi, DeepSeek)', purpose:'Modell-Inferenz der offenen Spitzenmodelle', location:'Server in Europa', region:'EU', eu:true },
+          { name:'SearXNG (self-hosted)', purpose:'Websuche, ohne Drittanbieter-Tracking', location:'Auf Infrastruktur von Kisuno', region:'CH/EU', eu:true }
         ],
         note:'Stand: laufend gepflegt. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den von euch selbst gewählten Modellanbietern.'
       },
@@ -211,8 +216,9 @@ class Component extends DCLogic {
         head:['Provider','Purpose','Location','Region'],
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Hosting & data centre, ISO 27001', location:'Lupfig, Switzerland', region:'CH', eu:true },
-          { name:'EuRouter', purpose:'Model inference, EU-processed', location:'EU', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Web search, no third-party tracking', location:'On EU Cowork AI infrastructure', region:'CH/EU', eu:true }
+          { name:'Amazon Web Services EMEA SARL', purpose:'Model inference for the OpenAI and Anthropic models (Amazon Bedrock)', location:'Frankfurt data centre, Germany', region:'EU', eu:true },
+          { name:'European inference providers (GLM, Kimi, DeepSeek)', purpose:'Model inference for the open frontier models', location:'Servers in Europe', region:'EU', eu:true },
+          { name:'SearXNG (self-hosted)', purpose:'Web search, no third-party tracking', location:'On Kisuno infrastructure', region:'CH/EU', eu:true }
         ],
         note:'Status: continuously maintained. When self-hosting, all subprocessors are removed except the model providers you choose yourself.'
       },
@@ -222,8 +228,9 @@ class Component extends DCLogic {
         head:['Fournisseur','Finalité','Lieu','Région'],
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Hébergement et centre de données, ISO 27001', location:'Lupfig, Suisse', region:'CH', eu:true },
-          { name:'EuRouter', purpose:'Inférence des modèles, traitée dans l\'UE', location:'UE', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Recherche web, sans traceurs tiers', location:'Sur l\'infrastructure d\'EU Cowork AI', region:'CH/EU', eu:true }
+          { name:'Amazon Web Services EMEA SARL', purpose:'Inférence des modèles OpenAI et Anthropic (Amazon Bedrock)', location:'Centre de données de Francfort, Allemagne', region:'EU', eu:true },
+          { name:'Fournisseurs d\'inférence européens (GLM, Kimi, DeepSeek)', purpose:'Inférence des modèles ouverts de premier plan', location:'Serveurs en Europe', region:'EU', eu:true },
+          { name:'SearXNG (self-hosted)', purpose:'Recherche web, sans traceurs tiers', location:'Sur l\'infrastructure de Kisuno', region:'CH/EU', eu:true }
         ],
         note:'État : mis à jour en continu. En auto-hébergement, tous les sous-traitants ultérieurs disparaissent, à l\'exception des fournisseurs de modèles que vous choisissez vous-même.'
       },
@@ -233,8 +240,9 @@ class Component extends DCLogic {
         head:['Fornitore','Finalità','Sede','Regione'],
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Hosting e centro dati, ISO 27001', location:'Lupfig, Svizzera', region:'CH', eu:true },
-          { name:'EuRouter', purpose:'Inferenza dei modelli, elaborata nell\'UE', location:'UE', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Ricerca web, senza tracciamento di terzi', location:'Sull\'infrastruttura di EU Cowork AI', region:'CH/EU', eu:true }
+          { name:'Amazon Web Services EMEA SARL', purpose:'Inferenza dei modelli OpenAI e Anthropic (Amazon Bedrock)', location:'Data center di Francoforte, Germania', region:'EU', eu:true },
+          { name:'Fornitori di inferenza europei (GLM, Kimi, DeepSeek)', purpose:'Inferenza dei modelli aperti di punta', location:'Server in Europa', region:'EU', eu:true },
+          { name:'SearXNG (self-hosted)', purpose:'Ricerca web, senza tracciamento di terzi', location:'Sull\'infrastruttura di Kisuno', region:'CH/EU', eu:true }
         ],
         note:'Stato: aggiornato costantemente. In caso di self-hosting decadono tutti i sub-responsabili del trattamento, ad eccezione dei fornitori di modelli scelti da Lei.'
       },
@@ -244,15 +252,16 @@ class Component extends DCLogic {
         head:['Proveedor','Finalidad','Ubicación','Región'],
         rows:[
           { name:'Green (Lupfig AG)', purpose:'Alojamiento y centro de datos, ISO 27001', location:'Lupfig, Suiza', region:'CH', eu:true },
-          { name:'EuRouter', purpose:'Inferencia de modelos, procesada en la UE', location:'UE', region:'EU', eu:true },
-          { name:'SearXNG (self-hosted)', purpose:'Búsqueda web, sin rastreo de terceros', location:'En la infraestructura de EU Cowork AI', region:'CH/EU', eu:true }
+          { name:'Amazon Web Services EMEA SARL', purpose:'Inferencia de los modelos de OpenAI y Anthropic (Amazon Bedrock)', location:'Centro de datos de Fráncfort, Alemania', region:'EU', eu:true },
+          { name:'Proveedores de inferencia europeos (GLM, Kimi, DeepSeek)', purpose:'Inferencia de los modelos abiertos de primer nivel', location:'Servidores en Europa', region:'EU', eu:true },
+          { name:'SearXNG (self-hosted)', purpose:'Búsqueda web, sin rastreo de terceros', location:'En la infraestructura de Kisuno', region:'CH/EU', eu:true }
         ],
         note:'Estado: actualizado de forma continua. En el self-hosting desaparecen todos los subencargados del tratamiento, salvo los proveedores de modelos que usted mismo elija.'
       }
     };
   }
-  componentDidMount(){ window.addEventListener('eucowork:langchange', this._onLang); }
-  componentWillUnmount(){ window.removeEventListener('eucowork:langchange', this._onLang); }
+  componentDidMount(){ window.addEventListener('kisuno:langchange', this._onLang); }
+  componentWillUnmount(){ window.removeEventListener('kisuno:langchange', this._onLang); }
   renderVals(){
     const lang = this.state.lang || 'de';
     const base = this.C[lang] || this.C.de;
@@ -266,19 +275,19 @@ class Component extends DCLogic {
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "@id": "https://eucowork.ai/subprozessoren#webpage",
-  "url": "https://eucowork.ai/subprozessoren",
+  "@id": "https://kisuno.ai/subprozessoren#webpage",
+  "url": "https://kisuno.ai/subprozessoren",
   "name": "Subprozessoren",
   "inLanguage": "de-CH",
-  "isPartOf": { "@id": "https://eucowork.ai/#website" },
-  "about": { "@id": "https://eucowork.ai/#software" },
-  "description": "Aktuelle Liste der Unterauftragsverarbeiter von EU Cowork AI; sie ist Teil des AVV, Änderungen werden vorab angekündigt. Green (Lupfig AG) stellt Hosting und Rechenzentrum nach ISO 27001 in Lupfig, Schweiz. EuRouter übernimmt die Modell-Inferenz, EU-verarbeitet. SearXNG läuft self-hosted auf Infrastruktur von EU Cowork AI und liefert Websuche ohne Drittanbieter-Tracking. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den selbst gewählten Modellanbietern.",
+  "isPartOf": { "@id": "https://kisuno.ai/#website" },
+  "about": { "@id": "https://kisuno.ai/#software" },
+  "description": "Aktuelle Liste der Unterauftragsverarbeiter von Kisuno; sie ist Teil des AVV, Änderungen werden vorab angekündigt. Green (Lupfig AG) stellt Hosting und Rechenzentrum nach ISO 27001 in Lupfig, Schweiz. Amazon Web Services EMEA SARL übernimmt im Rechenzentrum Frankfurt die Modell-Inferenz der OpenAI- und Anthropic-Modelle über Amazon Bedrock. Europäische Inferenz-Anbieter übernehmen die Modell-Inferenz der offenen Spitzenmodelle GLM, Kimi und DeepSeek auf Servern in Europa. SearXNG läuft self-hosted auf Infrastruktur von Kisuno und liefert Websuche ohne Drittanbieter-Tracking. Bei Self-Hosting entfallen sämtliche Subprozessoren ausser den selbst gewählten Modellanbietern.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://eucowork.ai/" },
-      { "@type": "ListItem", "position": 2, "name": "Trust Center", "item": "https://eucowork.ai/sicherheit" },
-      { "@type": "ListItem", "position": 3, "name": "Subprozessoren", "item": "https://eucowork.ai/subprozessoren" }
+      { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://kisuno.ai/" },
+      { "@type": "ListItem", "position": 2, "name": "Trust Center", "item": "https://kisuno.ai/sicherheit" },
+      { "@type": "ListItem", "position": 3, "name": "Subprozessoren", "item": "https://kisuno.ai/subprozessoren" }
     ]
   }
 }

@@ -36,12 +36,11 @@
 
   .euc-ft-brandcol{ flex:1 1 300px; max-width:360px; }
   .euc-ft-brand{ display:flex; align-items:center; gap:11px; }
+  /* Wortmarke: „Kisuno", ein Wort. Auf Navy steht es in Knochenweiss. */
   .euc-ft-word{
     font-family:var(--ft-disp); font-weight:600; font-size:19px;
     letter-spacing:-.010em; color:#F7FAFC;
   }
-  /* Auf Navy trägt Europa-Blau keinen Kontrast: dort steht „AI" in Eisblau. */
-  .euc-ft-ai{ color:#A5D8E6; font-style:normal; }
 
   .euc-ft-tagline{
     font-family:var(--ft-disp); font-weight:400; font-size:17px;
@@ -140,7 +139,7 @@
             <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
             <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
           </svg>
-          <span class="euc-ft-word">{{ brandMain }} <span class="euc-ft-ai">{{ brandAi }}</span></span>
+          <span class="euc-ft-word">{{ brandMain }}</span>
         </div>
         <p class="euc-ft-tagline">{{ tagline }}</p>
         <div class="euc-ft-badges">
@@ -216,15 +215,15 @@
 class Component extends DCLogic {
   constructor(props){
     super(props);
-    this.BRAND = 'EU Cowork AI';
-    this.BRAND_MAIN = 'EU Cowork';
-    this.BRAND_AI = 'AI';
+    this.BRAND = 'Kisuno';
+    this.BRAND_MAIN = 'Kisuno';
+    this.BRAND_AI = '';
     /* Terminbuchung laeuft ueber Microsoft Bookings, also ausserhalb dieser
        Website. Die Adresse steht einmal hier und wird gebunden, damit sie in
        allen fuenf Sprachfassungen zeichengleich bleibt. */
     this.BOOKING = 'https://bookings.cloud.microsoft/book/EUCoworkAI@herr-informatik.ch/s/iV6m40hkW0inG5cSVxP46Q2?ismsaljsauthenabled';
     this.clockRef = React.createRef();
-    const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('eucowork_lang')) || 'de';
+    const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('kisuno_lang')) || 'de';
     this.state = { lang: initLang };
     this._onLang = (e) => this.setState({ lang: e.detail });
     this._tick = () => {
@@ -236,17 +235,17 @@ class Component extends DCLogic {
     };
   }
   componentDidMount(){
-    window.addEventListener('eucowork:langchange', this._onLang);
+    window.addEventListener('kisuno:langchange', this._onLang);
     this._tick();
     this._timer = setInterval(this._tick, 1000);
   }
   componentWillUnmount(){
-    window.removeEventListener('eucowork:langchange', this._onLang);
+    window.removeEventListener('kisuno:langchange', this._onLang);
     clearInterval(this._timer);
   }
   setLang(l){
-    try { localStorage.setItem('eucowork_lang', l); } catch(e){}
-    window.dispatchEvent(new CustomEvent('eucowork:langchange', { detail: l }));
+    try { localStorage.setItem('kisuno_lang', l); } catch(e){}
+    window.dispatchEvent(new CustomEvent('kisuno:langchange', { detail: l }));
   }
   renderVals(){
     const lang = this.state.lang || 'de';
@@ -256,7 +255,7 @@ class Component extends DCLogic {
       de: {
         tagline:'Ihr KI-Kollege. Bleibt in Europa.',
         status:'Schweizer Instanz',
-        rights:'© 2026 EU Cowork AI by Herr-Informatik GmbH',
+        rights:'© 2026 Kisuno by Herr-Informatik GmbH',
         product:'Produkt', trust:'Trust', legal:'Rechtliches',
         pricing:'Preise', booking:'Live-Demo buchen',
         funktionen:'Funktionen', souver:'Souveränität', selfhost:'Self-Host',
@@ -271,7 +270,7 @@ class Component extends DCLogic {
       en: {
         tagline:'Your AI coworker. Stays in Europe.',
         status:'Swiss instance',
-        rights:'© 2026 EU Cowork AI by Herr-Informatik GmbH',
+        rights:'© 2026 Kisuno by Herr-Informatik GmbH',
         product:'Product', trust:'Trust', legal:'Legal',
         pricing:'Pricing', booking:'Book a live demo',
         funktionen:'Features', souver:'Sovereignty', selfhost:'Self-Host',
@@ -286,7 +285,7 @@ class Component extends DCLogic {
       fr: {
         tagline:'Votre collègue IA. Il reste en Europe.',
         status:'Instance suisse',
-        rights:'© 2026 EU Cowork AI by Herr-Informatik GmbH',
+        rights:'© 2026 Kisuno by Herr-Informatik GmbH',
         product:'Produit', trust:'Trust', legal:'Juridique',
         pricing:'Tarifs', booking:'Réserver une démo',
         funktionen:'Fonctionnalités', souver:'Souveraineté', selfhost:'Self-Host',
@@ -301,7 +300,7 @@ class Component extends DCLogic {
       it: {
         tagline:'Il vostro collega IA. Resta in Europa.',
         status:'Istanza svizzera',
-        rights:'© 2026 EU Cowork AI by Herr-Informatik GmbH',
+        rights:'© 2026 Kisuno by Herr-Informatik GmbH',
         product:'Prodotto', trust:'Trust', legal:'Legale',
         pricing:'Prezzi', booking:'Prenotare una demo',
         funktionen:'Funzionalità', souver:'Sovranità', selfhost:'Self-Host',
@@ -316,7 +315,7 @@ class Component extends DCLogic {
       es: {
         tagline:'Su colega de IA. Se queda en Europa.',
         status:'Instancia suiza',
-        rights:'© 2026 EU Cowork AI by Herr-Informatik GmbH',
+        rights:'© 2026 Kisuno by Herr-Informatik GmbH',
         product:'Producto', trust:'Trust', legal:'Legal',
         pricing:'Precios', booking:'Reservar una demo',
         funktionen:'Funciones', souver:'Soberanía', selfhost:'Self-Host',
