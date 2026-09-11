@@ -7,13 +7,11 @@
   const translate = (key, fallback) => dictionary[key] || fallback;
   const canvas = document.querySelector("#particles");
   const context = canvas.getContext("2d");
-  const motionButton = document.querySelector("#motion-toggle");
   const teaButton = document.querySelector("#tea-button");
-  const speech = document.querySelector("#speech-content");
+  const speech = document.querySelector(".speech-reply");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const finePointer = window.matchMedia("(pointer: fine)");
   let paused = reducedMotion.matches;
-  let manualPause = false;
   let frame = 0;
   let lastTime = 0;
   let width = 0;
@@ -29,7 +27,6 @@
 
   document.querySelector("#year").textContent = new Date().getFullYear();
   teaButton.hidden = false;
-  motionButton.hidden = false;
 
   function createParticle() {
     return {
@@ -221,21 +218,8 @@
   }
 
   function applyMotionState() {
-    paused = manualPause || reducedMotion.matches;
+    paused = reducedMotion.matches;
     document.body.classList.toggle("effects-paused", paused);
-    motionButton.setAttribute("aria-pressed", String(paused));
-    motionButton.setAttribute(
-      "aria-label",
-      paused
-        ? translate("enableMotion", "Effekte einschalten")
-        : translate("pauseMotion", "Effekte pausieren"),
-    );
-    motionButton.title = reducedMotion.matches
-      ? translate(
-          "systemMotion",
-          "Reduzierte Bewegung ist in deinen Systemeinstellungen aktiviert.",
-        )
-      : motionButton.getAttribute("aria-label");
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
     lastTime = 0;
@@ -248,19 +232,19 @@
   const teaResponses = [
     [
       "teaReply1",
-      "Eine ausgezeichnete Wahl. Frisch aufgebrüht, selbstverständlich. Die letzte Tasse hat nur ganz kurz geleuchtet.",
+      "Frisch aufgebrüht. Falls er leuchtet: Absicht.",
     ],
     [
       "teaReply2",
-      "Noch eine Tasse? Du hast Geschmack. Der Tee ist bereits produktionsreif. Die KI bekommt noch den letzten Schliff.",
+      "Noch eine? Du hast Geschmack.",
     ],
     [
       "teaReply3",
-      "Langsam glaube ich, du bist gar nicht wegen der KI hier. Keine Sorge. Das bleibt unter uns.",
+      "Du bist wegen des Tees hier, stimmt’s?",
     ],
     [
       "teaReply4",
-      "Mein Vorrat ist unerschöpflich. Im Gegensatz zum Geduldsfaden meiner Entwickler. Noch ein Schluck?",
+      "Mehr Tee als Code. Läuft bei uns.",
     ],
   ];
 
@@ -269,6 +253,8 @@
     teaCount += 1;
     addCup();
     document.body.classList.add("tea-served");
+    document.querySelector(".speech-initial").setAttribute("aria-hidden", "true");
+    speech.removeAttribute("aria-hidden");
     const message = document.createElement("p");
     message.className = "speech-text";
     message.textContent = translate(key, fallback);
@@ -276,7 +262,7 @@
     closing.className = "tea-question";
     closing.textContent = translate(
       "teaClosing",
-      "Lehn dich zurück. Ich kümmere mich um den Rest.",
+      "Auf dein Wohl.",
     );
     speech.replaceChildren(message, closing);
     document.querySelector("#tea-label").textContent = translate(
@@ -305,10 +291,6 @@
     }
   });
 
-  motionButton.addEventListener("click", () => {
-    manualPause = !manualPause;
-    applyMotionState();
-  });
   window.addEventListener(
     "pointermove",
     (event) => {

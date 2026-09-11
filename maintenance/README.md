@@ -25,10 +25,23 @@ die Innenabstände halten sie von den Ziernähten fern.
 Partikel weichen dem Mauszeiger aus. Zwei kurz nachlaufende Energiefäden mit
 Quernähten zeichnen seine Bewegung nach. Jeder Teeklick fügt eine weitere
 Tasse hinzu; der wachsende Berg passt sich seiner verfügbaren Fläche an.
-Nur die drei jüngsten Tassen dampfen. Vier Antworten wechseln sich ab.
+Nur die drei jüngsten Tassen dampfen. Vier kurze Antworten wechseln sich ab.
 Es werden keine Bestellungen gesendet und keine Daten gespeichert.
-Die Effekte lassen sich pausieren, respektieren reduzierte Bewegung und
+Die Effekte starten automatisch, respektieren reduzierte Bewegung und
 stoppen bei einem ausgeblendeten Browser-Tab. Der Text bleibt ohne JavaScript lesbar.
+
+Der Effekte-Schalter und der Statushinweis sind entfernt. Der Navigationsknopf
+«Hauptseite» öffnet über `/hauptseite` die erhaltene Produktseite;
+die vier Sprachfassungen nutzen entsprechend `/<sprache>/hauptseite`.
+Diese Adressen sind zusätzliche Vercel-Zuordnungen auf die bestehenden Quellen,
+keine Kopien der Hauptseite. Alle dekorativen Icons werden als SVG gezeichnet,
+einschliesslich der Pfeile und des Blatts auf den Tassen.
+
+Die unsichtbare Begrüssung hält bei einer Tee-Antwort die natürliche Höhe des
+Textbereichs. Der Zähler und die ursprüngliche Knopfbeschriftung behalten ebenfalls
+ihren Platz. Dadurch ändern weder Textwechsel noch Tassenklicks die Abmessungen
+der Sprechblase oder die Position des Knopfs. Die unsichtbaren Inhalte sind von
+der Ausgabe für Screenreader ausgeschlossen.
 
 Die deutsche Quelle ist `maintenance/index.html`. Die vier Sprachfassungen
 entstehen weiterhin aus `scripts/build-i18n.mjs`. Dafür ergänzt der Eintrag `maintenance` den bestehenden Seitenkatalog
@@ -55,7 +68,10 @@ Im Browser wurden Desktop (1440 × 1000), Mobil (390 × 844) und alle fünf
 Sprachfassungen bei 320 Pixel Breite geprüft. Mausreaktion mit unterschiedlichen
 Verschiebungen der drei Ebenen, echte Teeklicks auf Desktop und Mobil,
 200 gleichzeitig vorhandene Tassen mit unterschiedlichen Positionen sowie
-Pause-Funktion und reduzierte Bewegung gehören zur Abnahme. Die alte
+automatische Effekte und reduzierte Bewegung gehören zur Abnahme. Zusätzlich
+wurden alle vier Antworten über zwölf Klicks je Fall bei 320, 390, 768, 1024
+und 1440 Pixeln geprüft: Blasenhöhe und Knopfposition bleiben unverändert;
+bei 320 Pixeln gilt das für alle fünf Sprachfassungen. Die alte
 Startseitenquelle und ihre vier Sprachfassungen sind gegenüber dem unten
 genannten Ausgangsstand unverändert. Der lokale statische Vorschau-Server öffnet
 `/maintenance/index.html`; Vercel schreibt `/` auf diese Datei um.

@@ -29,8 +29,8 @@
   <link rel="preload" href="/assets/maintenance/background.webp" as="image" fetchpriority="high">
   <link rel="preload" href="/assets/maintenance/kisuke-cutout.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="/assets/maintenance/maintenance.css">
-  <link rel="stylesheet" href="/assets/maintenance/layers.css?v=3">
-  <script defer src="/assets/maintenance/maintenance.js?v=2"></script>
+  <link rel="stylesheet" href="/assets/maintenance/layers.css?v=4">
+  <script defer src="/assets/maintenance/maintenance.js?v=4"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Vai al contenuto</a>
@@ -48,7 +48,7 @@
     <div class="pile-cup">
       <div class="cup-arrival">
         <span class="steam steam-one"></span><span class="steam steam-two"></span>
-        <div class="teacup"><div class="tea-surface"></div><span class="cup-mark">喜</span></div>
+        <div class="teacup"><div class="tea-surface"></div><svg class="cup-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 19c0-8 4-13 13-14 0 9-5 14-13 14Zm0 0 9-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="saucer"></div>
       </div>
     </div>
@@ -60,10 +60,9 @@
         <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M10 8v24M30 8 18 20l12 12M10 20h8" stroke="currentColor" stroke-width="3" stroke-linecap="square"/><path d="M6 4h28v32H6z" stroke="currentColor" stroke-opacity=".4"/></svg>
         <span>kisuno<span class="brand-ai">AI</span></span>
       </a>
-      <div class="header-right">
-        <span class="status"><span class="status-dot"></span><span data-i18n="status">Un nuovo capitolo prende forma</span></span>
-        <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" hidden><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 6c3-5 5 5 8 0s5 0 6 0M3 13c3-5 5 5 8 0s5 0 6 0" stroke="currentColor" stroke-width="1.5"/></svg><span data-i18n="motion">Effetti</span></button>
-      </div>
+      <nav aria-label="Navigation">
+        <a class="main-site-link" href="/it/hauptseite"><span data-i18n="mainPage">Sito principale</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </nav>
     </header>
 
     <main id="main" class="hero">
@@ -74,22 +73,25 @@
 
         <section class="speech" aria-labelledby="speaker">
           <div class="speech-paper" aria-hidden="true"></div>
-          <div class="speaker-line"><span class="speaker-symbol" aria-hidden="true">✳</span><div class="speaker-identity"><h2 id="speaker">Kisuke Urahara</h2><span class="speaker-role" data-i18n="speakerRole">Negoziante &amp; inventore</span></div></div>
+          <div class="speaker-line"><svg class="speaker-symbol" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M2 12h20M5 5l14 14M5 19 19 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><div class="speaker-identity"><h2 id="speaker">Kisuke Urahara</h2><span class="speaker-role" data-i18n="speakerRole">Negoziante &amp; inventore</span></div></div>
           <div id="speech-content" aria-live="polite" aria-atomic="true">
+            <div class="speech-initial">
             <p class="speech-text" data-i18n="speech">Oh, una visita! Sono Kisuke Urahara. Sto ancora lavorando a qualche piccolo … diciamo, <em>miglioramento.</em> Kisuno AI sarà presto accessibile a tutti.</p>
             <p class="tea-question" data-i18n="question">Ti va un tè nell’attesa?</p>
+            </div>
+            <div class="speech-reply" aria-hidden="true"></div>
           </div>
-          <output id="tea-count" class="tea-count" hidden></output>
+          <output id="tea-count" class="tea-count" hidden>&nbsp;</output>
           <div class="speech-actions">
             <button class="tea-button" id="tea-button" type="button" hidden>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-5Zm13 1h2a3 3 0 1 1 0 6h-2M3 22h17M8 3c-2 2 2 2 0 4M13 2c-2 2 2 2 0 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              <span id="tea-label" data-i18n="tea">Volentieri, un tè</span><span class="button-arrow" aria-hidden="true">↗</span>
+              <span class="tea-label-slot"><span class="tea-label-reserve" data-i18n="tea" aria-hidden="true">Volentieri, un tè</span><span id="tea-label" data-i18n="tea">Volentieri, un tè</span></span><svg class="button-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <span class="tea-note" data-i18n="teaNote">Offre la casa. Naturalmente.</span>
           </div>
           <noscript><p class="no-script" data-i18n="noScript">Il tè è pronto. Attiva JavaScript per la pausa tè interattiva.</p></noscript>
         </section>
-        <div class="hero-signoff"><span class="tiny-star" aria-hidden="true">✳</span><span data-i18n="signoff">Open source nel cuore. Un po’ di magia intorno.</span></div>
+        <div class="hero-signoff"><svg class="tiny-star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M2 12h20M5 5l14 14M5 19 19 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span data-i18n="signoff">Open source nel cuore. Un po’ di magia intorno.</span></div>
       </div>
       <div class="character-caption" aria-hidden="true"><span class="caption-line"></span><span>URAHARA SHŌTEN</span><small data-i18n="characterCaption">Ricerca. Sviluppo. Tè.</small></div>
     </main>
@@ -103,8 +105,6 @@
     window.EUC_I18N = {
   "de": {
     "skip": "Zum Inhalt",
-    "status": "Ein neues Kapitel entsteht",
-    "motion": "Effekte",
     "eyebrow": "Die Werkstatt ist geöffnet. Die Website bald auch.",
     "headline": "Grosse Dinge.",
     "headlineAccent": "Kurze Teepause.",
@@ -119,22 +119,18 @@
     "footer": "Gute Dinge brauchen Zeit. Gute KI auch.",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "teaClosing": "Lehn dich zurück. Ich kümmere mich um den Rest.",
+    "teaClosing": "Auf dein Wohl.",
     "moreTea": "Noch eine Tasse",
-    "teaReply1": "Eine ausgezeichnete Wahl. Frisch aufgebrüht, selbstverständlich. Die letzte Tasse hat nur ganz kurz geleuchtet.",
-    "teaReply2": "Noch eine Tasse? Du hast Geschmack. Der Tee ist bereits produktionsreif. Die KI bekommt noch den letzten Schliff.",
-    "teaReply3": "Langsam glaube ich, du bist gar nicht wegen der KI hier. Keine Sorge. Das bleibt unter uns.",
-    "teaReply4": "Mein Vorrat ist unerschöpflich. Im Gegensatz zum Geduldsfaden meiner Entwickler. Noch ein Schluck?",
-    "pauseMotion": "Effekte pausieren",
-    "enableMotion": "Effekte einschalten",
-    "systemMotion": "Reduzierte Bewegung ist in deinen Systemeinstellungen aktiviert.",
+    "teaReply1": "Frisch aufgebrüht. Falls er leuchtet: Absicht.",
+    "teaReply2": "Noch eine? Du hast Geschmack.",
+    "teaReply3": "Du bist wegen des Tees hier, stimmt’s?",
+    "teaReply4": "Mehr Tee als Code. Läuft bei uns.",
     "noScript": "Der Tee steht schon bereit. Für die interaktive Teepause kannst du JavaScript aktivieren.",
-    "cupCount": "Tassen serviert:"
+    "cupCount": "Tassen serviert:",
+    "mainPage": "Hauptseite"
   },
   "en": {
     "skip": "Skip to content",
-    "status": "A new chapter is taking shape",
-    "motion": "Effects",
     "eyebrow": "The workshop is open. The website will be soon.",
     "headline": "Great things.",
     "headlineAccent": "A little tea break.",
@@ -149,22 +145,18 @@
     "footer": "Good things take time. Good AI, too.",
     "imprint": "Legal notice",
     "privacy": "Privacy",
-    "teaClosing": "Sit back. I’ll take care of the rest.",
+    "teaClosing": "Cheers.",
     "moreTea": "Another cup",
-    "teaReply1": "An excellent choice. Freshly brewed, of course. The last cup only glowed for a moment.",
-    "teaReply2": "Another cup? You have good taste. The tea is production-ready. The AI just needs a finishing touch.",
-    "teaReply3": "I’m beginning to suspect you’re not here for the AI. Don’t worry. Your secret is safe with me.",
-    "teaReply4": "My supply is endless. Unlike my developers’ patience. Another sip?",
-    "pauseMotion": "Pause effects",
-    "enableMotion": "Enable effects",
-    "systemMotion": "Reduced motion is enabled in your system settings.",
+    "teaReply1": "Freshly brewed. If it glows, that’s intentional.",
+    "teaReply2": "Another? You have good taste.",
+    "teaReply3": "You’re here for the tea, aren’t you?",
+    "teaReply4": "More tea than code. Great progress.",
     "noScript": "The tea is ready. Enable JavaScript for the interactive tea break.",
-    "cupCount": "Cups served:"
+    "cupCount": "Cups served:",
+    "mainPage": "Main site"
   },
   "fr": {
     "skip": "Aller au contenu",
-    "status": "Un nouveau chapitre se prépare",
-    "motion": "Effets",
     "eyebrow": "L’atelier est ouvert. Le site, bientôt.",
     "headline": "De belles choses.",
     "headlineAccent": "Une pause thé.",
@@ -179,22 +171,18 @@
     "footer": "Les bonnes choses prennent du temps. L’IA aussi.",
     "imprint": "Mentions légales",
     "privacy": "Confidentialité",
-    "teaClosing": "Installe-toi. Je m’occupe du reste.",
+    "teaClosing": "À la tienne.",
     "moreTea": "Encore une tasse",
-    "teaReply1": "Excellent choix. Fraîchement infusé, bien sûr. La dernière tasse n’a brillé qu’un tout petit instant.",
-    "teaReply2": "Encore une tasse ? Tu as du goût. Le thé est prêt. L’IA a encore besoin d’une dernière retouche.",
-    "teaReply3": "Je commence à croire que tu n’es pas là pour l’IA. Ne t’inquiète pas. Ça reste entre nous.",
-    "teaReply4": "Mes réserves sont infinies. Contrairement à la patience de mes développeurs. Une autre gorgée ?",
-    "pauseMotion": "Mettre les effets en pause",
-    "enableMotion": "Activer les effets",
-    "systemMotion": "La réduction des animations est activée dans les réglages de ton système.",
+    "teaReply1": "Tout juste infusé. S’il brille, c’est voulu.",
+    "teaReply2": "Encore ? Tu as du goût.",
+    "teaReply3": "Tu es là pour le thé, avoue.",
+    "teaReply4": "Plus de thé que de code. On avance.",
     "noScript": "Le thé est prêt. Active JavaScript pour la pause thé interactive.",
-    "cupCount": "Tasses servies :"
+    "cupCount": "Tasses servies :",
+    "mainPage": "Site principal"
   },
   "it": {
     "skip": "Vai al contenuto",
-    "status": "Un nuovo capitolo prende forma",
-    "motion": "Effetti",
     "eyebrow": "Il laboratorio è aperto. Il sito, presto.",
     "headline": "Grandi cose.",
     "headlineAccent": "Una pausa tè.",
@@ -209,22 +197,18 @@
     "footer": "Le cose belle richiedono tempo. Anche una buona IA.",
     "imprint": "Note legali",
     "privacy": "Privacy",
-    "teaClosing": "Mettiti comodo. Al resto penso io.",
+    "teaClosing": "Alla tua.",
     "moreTea": "Un’altra tazza",
-    "teaReply1": "Ottima scelta. Appena preparato, ovviamente. L’ultima tazza si è illuminata solo per un attimo.",
-    "teaReply2": "Un’altra tazza? Hai buon gusto. Il tè è pronto. All’IA manca solo l’ultimo ritocco.",
-    "teaReply3": "Comincio a sospettare che tu non sia qui per l’IA. Tranquillo. Resta tra noi.",
-    "teaReply4": "Le mie scorte sono infinite. A differenza della pazienza dei miei sviluppatori. Un altro sorso?",
-    "pauseMotion": "Metti in pausa gli effetti",
-    "enableMotion": "Attiva gli effetti",
-    "systemMotion": "La riduzione delle animazioni è attiva nelle impostazioni del sistema.",
+    "teaReply1": "Appena fatto. Se brilla, è voluto.",
+    "teaReply2": "Ancora? Hai buon gusto.",
+    "teaReply3": "Sei qui per il tè, vero?",
+    "teaReply4": "Più tè che codice. Ottimi progressi.",
     "noScript": "Il tè è pronto. Attiva JavaScript per la pausa tè interattiva.",
-    "cupCount": "Tazze servite:"
+    "cupCount": "Tazze servite:",
+    "mainPage": "Sito principale"
   },
   "es": {
     "skip": "Ir al contenido",
-    "status": "Un nuevo capítulo toma forma",
-    "motion": "Efectos",
     "eyebrow": "El taller está abierto. La web, muy pronto.",
     "headline": "Grandes cosas.",
     "headlineAccent": "Una pausa de té.",
@@ -239,17 +223,15 @@
     "footer": "Las cosas buenas llevan tiempo. Una buena IA también.",
     "imprint": "Aviso legal",
     "privacy": "Privacidad",
-    "teaClosing": "Ponte cómodo. Yo me encargo del resto.",
+    "teaClosing": "Salud.",
     "moreTea": "Otra taza",
-    "teaReply1": "Excelente elección. Recién preparado, por supuesto. La última taza solo brilló un instante.",
-    "teaReply2": "¿Otra taza? Tienes buen gusto. El té ya está listo. A la IA le falta el último retoque.",
-    "teaReply3": "Empiezo a sospechar que no estás aquí por la IA. Tranquilo. Queda entre nosotros.",
-    "teaReply4": "Mis reservas son infinitas. A diferencia de la paciencia de mis desarrolladores. ¿Otro sorbo?",
-    "pauseMotion": "Pausar efectos",
-    "enableMotion": "Activar efectos",
-    "systemMotion": "La reducción de movimiento está activada en los ajustes de tu sistema.",
+    "teaReply1": "Recién hecho. Si brilla, es a propósito.",
+    "teaReply2": "¿Otra? Tienes buen gusto.",
+    "teaReply3": "Vienes por el té, ¿verdad?",
+    "teaReply4": "Más té que código. Vamos bien.",
     "noScript": "El té está listo. Activa JavaScript para la pausa de té interactiva.",
-    "cupCount": "Tazas servidas:"
+    "cupCount": "Tazas servidas:",
+    "mainPage": "Sitio principal"
   }
 };
   </script>
