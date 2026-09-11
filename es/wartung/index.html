@@ -26,19 +26,33 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="/assets/maintenance/icon.svg">
   <link rel="preload" href="/assets/maintenance/manrope.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="/assets/maintenance/urahara-workshop.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="/assets/maintenance/background.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="/assets/maintenance/kisuke-cutout.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="/assets/maintenance/maintenance.css">
-  <script defer src="/assets/maintenance/maintenance.js"></script>
+  <link rel="stylesheet" href="/assets/maintenance/layers.css?v=3">
+  <script defer src="/assets/maintenance/maintenance.js?v=2"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Ir al contenido</a>
   <div class="scene" aria-hidden="true">
-    <div class="scene-art"></div>
+    <div class="scene-art scene-background" data-depth="background"></div>
+    <div class="scene-art scene-character" data-depth="character"></div>
     <div class="scene-shade"></div>
+    <div class="scene-art scene-flowers" data-depth="foreground"></div>
     <div class="scene-glow"></div>
     <div class="scene-grain"></div>
   </div>
   <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="tea-pile" id="tea-pile" aria-hidden="true"></div>
+  <template id="tea-cup-template">
+    <div class="pile-cup">
+      <div class="cup-arrival">
+        <span class="steam steam-one"></span><span class="steam steam-two"></span>
+        <div class="teacup"><div class="tea-surface"></div><span class="cup-mark">喜</span></div>
+        <div class="saucer"></div>
+      </div>
+    </div>
+  </template>
 
   <div class="page-shell">
     <header class="site-header">
@@ -59,16 +73,13 @@
         <p class="intro" data-i18n="intro">Estamos creando un nuevo hogar para la IA abierta.<br>Kisuno AI pronto estará disponible para todos.</p>
 
         <section class="speech" aria-labelledby="speaker">
-          <div class="stitch stitch-top" aria-hidden="true"></div>
-          <div class="stitch stitch-bottom" aria-hidden="true"></div>
-          <div class="stitch stitch-left" aria-hidden="true"></div>
-          <div class="stitch stitch-right" aria-hidden="true"></div>
-          <div class="speech-tail" aria-hidden="true"></div>
-          <div class="speaker-line"><span class="speaker-symbol" aria-hidden="true">✳</span><h2 id="speaker">Kisuke Urahara</h2><span class="speaker-role" data-i18n="speakerRole">Tendero &amp; inventor</span></div>
+          <div class="speech-paper" aria-hidden="true"></div>
+          <div class="speaker-line"><span class="speaker-symbol" aria-hidden="true">✳</span><div class="speaker-identity"><h2 id="speaker">Kisuke Urahara</h2><span class="speaker-role" data-i18n="speakerRole">Tendero &amp; inventor</span></div></div>
           <div id="speech-content" aria-live="polite" aria-atomic="true">
             <p class="speech-text" data-i18n="speech">¡Oh, una visita! Soy Kisuke Urahara. Todavía estoy trabajando en unas pequeñas … digamos, <em>mejoras.</em> Kisuno AI pronto estará disponible para todos.</p>
             <p class="tea-question" data-i18n="question">¿Te apetece un té mientras tanto?</p>
           </div>
+          <output id="tea-count" class="tea-count" hidden></output>
           <div class="speech-actions">
             <button class="tea-button" id="tea-button" type="button" hidden>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-5Zm13 1h2a3 3 0 1 1 0 6h-2M3 22h17M8 3c-2 2 2 2 0 4M13 2c-2 2 2 2 0 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -81,10 +92,6 @@
         <div class="hero-signoff"><span class="tiny-star" aria-hidden="true">✳</span><span data-i18n="signoff">Open source en el corazón. Un poco de magia alrededor.</span></div>
       </div>
       <div class="character-caption" aria-hidden="true"><span class="caption-line"></span><span>URAHARA SHŌTEN</span><small data-i18n="characterCaption">Investigación. Desarrollo. Té.</small></div>
-      <div class="tea-tray" id="tea-tray" aria-hidden="true">
-        <span class="steam steam-one"></span><span class="steam steam-two"></span><span class="steam steam-three"></span>
-        <div class="teacup"><div class="tea-surface"></div><span class="cup-mark">喜</span></div><div class="saucer"></div>
-      </div>
     </main>
 
     <footer class="site-footer">
@@ -121,7 +128,8 @@
     "pauseMotion": "Effekte pausieren",
     "enableMotion": "Effekte einschalten",
     "systemMotion": "Reduzierte Bewegung ist in deinen Systemeinstellungen aktiviert.",
-    "noScript": "Der Tee steht schon bereit. Für die interaktive Teepause kannst du JavaScript aktivieren."
+    "noScript": "Der Tee steht schon bereit. Für die interaktive Teepause kannst du JavaScript aktivieren.",
+    "cupCount": "Tassen serviert:"
   },
   "en": {
     "skip": "Skip to content",
@@ -150,7 +158,8 @@
     "pauseMotion": "Pause effects",
     "enableMotion": "Enable effects",
     "systemMotion": "Reduced motion is enabled in your system settings.",
-    "noScript": "The tea is ready. Enable JavaScript for the interactive tea break."
+    "noScript": "The tea is ready. Enable JavaScript for the interactive tea break.",
+    "cupCount": "Cups served:"
   },
   "fr": {
     "skip": "Aller au contenu",
@@ -179,7 +188,8 @@
     "pauseMotion": "Mettre les effets en pause",
     "enableMotion": "Activer les effets",
     "systemMotion": "La réduction des animations est activée dans les réglages de ton système.",
-    "noScript": "Le thé est prêt. Active JavaScript pour la pause thé interactive."
+    "noScript": "Le thé est prêt. Active JavaScript pour la pause thé interactive.",
+    "cupCount": "Tasses servies :"
   },
   "it": {
     "skip": "Vai al contenuto",
@@ -208,7 +218,8 @@
     "pauseMotion": "Metti in pausa gli effetti",
     "enableMotion": "Attiva gli effetti",
     "systemMotion": "La riduzione delle animazioni è attiva nelle impostazioni del sistema.",
-    "noScript": "Il tè è pronto. Attiva JavaScript per la pausa tè interattiva."
+    "noScript": "Il tè è pronto. Attiva JavaScript per la pausa tè interattiva.",
+    "cupCount": "Tazze servite:"
   },
   "es": {
     "skip": "Ir al contenido",
@@ -237,7 +248,8 @@
     "pauseMotion": "Pausar efectos",
     "enableMotion": "Activar efectos",
     "systemMotion": "La reducción de movimiento está activada en los ajustes de tu sistema.",
-    "noScript": "El té está listo. Activa JavaScript para la pausa de té interactiva."
+    "noScript": "El té está listo. Activa JavaScript para la pausa de té interactiva.",
+    "cupCount": "Tazas servidas:"
   }
 };
   </script>
