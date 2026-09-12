@@ -96,13 +96,15 @@
 <p><a href="/warteliste">Veröffentlichung vormerken</a></p>
 <dl><dt>Funktionsumfang</dt><dd>vollständig</dd><dt>Betrieb</dt><dd>durch Ihre IT</dd><dt>Updates und Backups</dt><dd>durch Ihre IT</dd><dt>Modellverbrauch</dt><dd>direkt beim Anbieter</dd><dt>Datenbank und Schlüssel</dt><dd>bei Ihnen</dd><dt>Wechsel</dt><dd>zum betreuten Betrieb möglich</dd></dl>
 <p>Server und Modellverbrauch rechnen Sie direkt mit den jeweiligen Anbietern ab.</p>
-<h2>Betreiben lassen</h2>
+<h2>Aktion: 50 % Rabatt Betreiben lassen</h2>
 <p>Dieselbe Software auf einer eigenen Schweizer Instanz. Betrieb, Updates, Backups und Überwachung übernehmen wir.</p>
-<p>7.50 € /Mt.</p>
+<p>3.75 € /Mt.</p>
 <p>pro Person</p>
+<p>statt 7.50 € /Mt.</p>
+<p>Bei 12 Monaten Laufzeit</p>
+<p>Aktion gültig bis auf Weiteres. Modellverbrauch wird zusätzlich über Guthaben abgerechnet.</p>
 <p><a href="/warteliste">Managed-Betrieb anfragen</a></p>
 <dl><dt>Funktionsumfang</dt><dd>vollständig</dd><dt>Betrieb</dt><dd>durch Kisuno</dd><dt>Updates und Backups</dt><dd>enthalten</dd><dt>Modellverbrauch</dt><dd>über gemeinsames Guthaben</dd><dt>Datenbank und Schlüssel</dt><dd>eigene Schweizer Instanz</dd><dt>Wechsel</dt><dd>zum Selbstbetrieb möglich</dd></dl>
-<p>Bis auf weiteres gilt: 50 Prozent Rabatt bei einer Laufzeit von zwölf Monaten, also 3.75 € pro Person und Monat.</p>
 <p>Testen ist kostenlos und zeitlich unbefristet: 55 € Startguthaben auf jedem neuen Zugang, ohne Zahlungsdaten.</p>
 <h2>Keine abgespeckte Version.</h2>
 <p>Beide Wege enthalten denselben vollständigen Funktionsumfang: Modelle und Websuche, Dateien und Agenten, Rollen und Gruppen, Audit-Protokoll, zentrale Budgets, Unternehmenslogin und Integrationen. Es gibt keine zweite Ausgabe, kein Seat-Limit und keine Funktion hinter einer Schranke, auch nicht im Selbstbetrieb.</p>
@@ -237,11 +239,19 @@
      Rechtsbuendig ueber dem Vergleich, in der Groesse der Zeilenbeschriftungen
      darunter. Er soll auffindbar sein, wenn man ihn sucht, und sonst nicht
      stoeren: die Erkennung liegt fast immer richtig. */
-  /* Die Rabatt-Notiz traegt als einziges Element der Karte den goldenen
-     Punkt: sie gilt nur bis auf weiteres, im Gegensatz zu allem anderen auf
-     dieser Seite. Gold bleibt Interpunktion, nie Flaeche. */
-  .pr-beta-note { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; color: var(--c-ink); }
-  .pr-beta-note::before { content: ''; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--c-gold-500, #F4C542); transform: translateY(-1px); }
+  /* Aktion direkt am Preis, einschliesslich Vertragslaufzeit. */
+  .pr-promo-badge {
+    display: inline-flex; align-self: flex-start; padding: 8px 14px;
+    margin-bottom: 18px; border-radius: 6px;
+    background: #F4C542; color: #0B1E33;
+    font-size: 16px; line-height: 1.35; font-weight: 700;
+  }
+  .pr-price--promo { flex-wrap: wrap; gap: 8px 12px; }
+  .pr-price--promo .pr-amount { font-size: clamp(40px, 5vw, 52px); }
+  .pr-regular { margin: 10px 0 0; font-size: 15px; color: var(--c-body-soft); }
+  .pr-regular s { text-decoration-thickness: 2px; }
+  .pr-promo-term { margin: 14px 0 0; font-size: 15px; line-height: 1.45; font-weight: 600; color: var(--c-ink); }
+  .pr-promo-details { margin: 7px 0 0; font-size: 13px; line-height: 1.5; color: var(--c-body-soft); }
 
   .pr-cur { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin: 0 0 12px; flex-wrap: wrap; }
   .pr-cur-hint { font-size: 12.5px; color: var(--c-muted); }
@@ -423,14 +433,18 @@
           <div class="pr-col">
             <div class="pr-sg" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
 
+            <span class="pr-promo-badge">{{ t.promoBadge }}</span>
             <h2>{{ t.mgdTitle }}</h2>
             <p class="pr-lede">{{ t.mgdLede }}</p>
 
-            <div class="pr-price">
-              <span class="pr-amount">{{ t.mgdAmount }}</span>
+            <div class="pr-price pr-price--promo">
+              <span class="pr-amount">{{ t.mgdPromoAmount }}</span>
               <span class="pr-per">{{ t.perMonth }}</span>
             </div>
             <p class="pr-sub">{{ t.mgdSub }}</p>
+            <p class="pr-regular">{{ t.promoInstead }} <s>{{ t.mgdAmount }}</s> {{ t.perMonth }}</p>
+            <p class="pr-promo-term">{{ t.promoTerm }}</p>
+            <p class="pr-promo-details">{{ t.promoDetails }}</p>
 
             <div class="pr-cta">
               <a class="euc-btn-primary" href="/warteliste">{{ t.mgdCta }}</a>
@@ -444,7 +458,6 @@
               <div class="pr-row"><dt>{{ t.rowKeys }}</dt><dd>{{ t.mgdKeys }}</dd></div>
               <div class="pr-row"><dt>{{ t.rowSwitch }}</dt><dd>{{ t.mgdSwitch }}</dd></div>
             </dl>
-            <p class="pr-rows-note pr-beta-note">{{ t.mgdNote }}</p>
             <!-- Das Startguthaben steht getrennt vom Preis: das eine
                  laeuft monatlich, das andere gibt es genau einmal beim
                  neuen Zugang. Zusammengezogen waere es eine Zahl, die
@@ -566,6 +579,10 @@ class Component extends DCLogic {
         selfUsage:'direkt beim Anbieter', selfKeys:'bei Ihnen', selfSwitch:'zum betreuten Betrieb möglich',
         selfNote:'Server und Modellverbrauch rechnen Sie direkt mit den jeweiligen Anbietern ab.',
 
+        promoBadge:'Aktion: 50 % Rabatt',
+        promoInstead:'statt',
+        promoTerm:'Bei 12 Monaten Laufzeit',
+        promoDetails:'Aktion gültig bis auf Weiteres. Modellverbrauch wird zusätzlich über Guthaben abgerechnet.',
         mgdTitle:'Betreiben lassen',
         mgdLede:'Dieselbe Software auf einer eigenen Schweizer Instanz. Betrieb, Updates, Backups und Überwachung übernehmen wir.', mgdSub:'pro Person',
         mgdCta:'Managed-Betrieb anfragen',
@@ -619,6 +636,10 @@ class Component extends DCLogic {
         selfUsage:'directly with the provider', selfKeys:'with you', selfSwitch:'to managed operation possible',
         selfNote:'You settle servers and model usage directly with the respective providers.',
 
+        promoBadge:'Special offer: 50% off',
+        promoInstead:'instead of',
+        promoTerm:'With a 12-month term',
+        promoDetails:'Offer valid until further notice. Model usage is charged separately through prepaid credit.',
         mgdTitle:'Let us run it',
         mgdLede:'The same software on your own Swiss instance. We take care of operations, updates, backups and monitoring.', mgdSub:'per person',
         mgdCta:'Request managed operation',
@@ -672,6 +693,10 @@ class Component extends DCLogic {
         selfUsage:'directement auprès du fournisseur', selfKeys:'chez vous', selfSwitch:'possible vers l’exploitation gérée',
         selfNote:'Vous réglez le serveur et la consommation des modèles directement auprès des fournisseurs concernés.',
 
+        promoBadge:'Offre spéciale : −50 %',
+        promoInstead:'au lieu de',
+        promoTerm:'Pour un engagement de 12 mois',
+        promoDetails:'Offre valable jusqu’à nouvel ordre. L’utilisation des modèles est facturée séparément via un crédit prépayé.',
         mgdTitle:'Faire exploiter',
         mgdLede:'Le même logiciel sur votre propre instance suisse. Nous assurons l’exploitation, les mises à jour, les sauvegardes et la surveillance.', mgdSub:'par personne',
         mgdCta:'Demander l’exploitation gérée',
@@ -725,6 +750,10 @@ class Component extends DCLogic {
         selfUsage:'direttamente presso il fornitore', selfKeys:'presso di Lei', selfSwitch:'possibile verso l’esercizio gestito',
         selfNote:'Il server e il consumo dei modelli li regola direttamente con i rispettivi fornitori.',
 
+        promoBadge:'Promozione: sconto del 50%',
+        promoInstead:'anziché',
+        promoTerm:'Con una durata di 12 mesi',
+        promoDetails:'Offerta valida fino a nuovo avviso. Il consumo dei modelli viene addebitato separatamente tramite credito prepagato.',
         mgdTitle:'Esercizio gestito',
         mgdLede:'Lo stesso software su un’istanza svizzera dedicata. Esercizio, aggiornamenti, backup e monitoraggio sono a nostro carico.', mgdSub:'per persona',
         mgdCta:'Richiedere l’esercizio gestito',
@@ -778,6 +807,10 @@ class Component extends DCLogic {
         selfUsage:'directamente con el proveedor', selfKeys:'en su poder', selfSwitch:'posible hacia la operación gestionada',
         selfNote:'El servidor y el consumo de modelos los liquida usted directamente con los proveedores correspondientes.',
 
+        promoBadge:'Promoción: 50 % de descuento',
+        promoInstead:'en lugar de',
+        promoTerm:'Con un compromiso de 12 meses',
+        promoDetails:'Oferta válida hasta nuevo aviso. El uso de los modelos se cobra aparte mediante saldo prepago.',
         mgdTitle:'Operación gestionada',
         mgdLede:'El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.', mgdSub:'por persona',
         mgdCta:'Solicitar operación gestionada',
@@ -824,47 +857,37 @@ class Component extends DCLogic {
        Schweizer Betrieb kann die englische Fassung lesen. Zwei Achsen, zwei
        Woerterbuecher; renderVals() legt sie uebereinander.
 
-       Nur vier Schluessel tragen Geld. Alles andere ist Text und steht oben.
+       Die Geldbetraege stehen hier; die Aktionsbedingungen stehen oben.
        --------------------------------------------------------------------- */
     this.M = {
       de: {
-        eur:{ selfAmount:'0 €',   mgdAmount:'7.50 €', sup1Price:'0 €',
-              mgdNote:'Bis auf weiteres gilt: 50 Prozent Rabatt bei einer Laufzeit von zwölf Monaten, also 3.75 € pro Person und Monat.',
+        eur:{ selfAmount:'0 €',   mgdAmount:'7.50 €', mgdPromoAmount:'3.75 €', sup1Price:'0 €',
               betaNote:'Testen ist kostenlos und zeitlich unbefristet: 55 € Startguthaben auf jedem neuen Zugang, ohne Zahlungsdaten.' },
-        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF',  sup1Price:'0 CHF',
-              mgdNote:'Bis auf weiteres gilt: 50 Prozent Rabatt bei einer Laufzeit von zwölf Monaten, also 3.50 CHF pro Person und Monat.',
+        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF', mgdPromoAmount:'3.50 CHF',  sup1Price:'0 CHF',
               betaNote:'Testen ist kostenlos und zeitlich unbefristet: 50 CHF Startguthaben auf jedem neuen Zugang, ohne Zahlungsdaten.' }
       },
       en: {
-        eur:{ selfAmount:'€0',   mgdAmount:'€7.50',  sup1Price:'€0',
-              mgdNote:'Until further notice: 50 percent off with a twelve-month term, that is €3.75 per person per month.',
+        eur:{ selfAmount:'€0',   mgdAmount:'€7.50', mgdPromoAmount:'€3.75',  sup1Price:'€0',
               betaNote:'Testing is free and not limited in time: €55 of starting credit on every new account, no payment details.' },
-        chf:{ selfAmount:'CHF 0', mgdAmount:'CHF 7',  sup1Price:'CHF 0',
-              mgdNote:'Until further notice: 50 percent off with a twelve-month term, that is CHF 3.50 per person per month.',
+        chf:{ selfAmount:'CHF 0', mgdAmount:'CHF 7', mgdPromoAmount:'CHF 3.50',  sup1Price:'CHF 0',
               betaNote:'Testing is free and not limited in time: CHF 50 of starting credit on every new account, no payment details.' }
       },
       fr: {
-        eur:{ selfAmount:'0 €',   mgdAmount:'7,50 €', sup1Price:'0 €',
-              mgdNote:'Jusqu’à nouvel ordre : 50 pour cent de rabais pour une durée de douze mois, soit 3,75 € par personne et par mois.',
+        eur:{ selfAmount:'0 €',   mgdAmount:'7,50 €', mgdPromoAmount:'3,75 €', sup1Price:'0 €',
               betaNote:'L’essai est gratuit et sans limite de durée : 55 € de crédit de démarrage sur chaque nouvel accès, sans données de paiement.' },
-        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF',  sup1Price:'0 CHF',
-              mgdNote:'Jusqu’à nouvel ordre : 50 pour cent de rabais pour une durée de douze mois, soit 3.50 CHF par personne et par mois.',
+        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF', mgdPromoAmount:'3.50 CHF',  sup1Price:'0 CHF',
               betaNote:'L’essai est gratuit et sans limite de durée : 50 CHF de crédit de démarrage sur chaque nouvel accès, sans données de paiement.' }
       },
       it: {
-        eur:{ selfAmount:'0 €',   mgdAmount:'7,50 €', sup1Price:'0 €',
-              mgdNote:'Fino a nuovo avviso: sconto del 50 per cento con una durata di dodici mesi, quindi 3,75 € a persona al mese.',
+        eur:{ selfAmount:'0 €',   mgdAmount:'7,50 €', mgdPromoAmount:'3,75 €', sup1Price:'0 €',
               betaNote:'La prova è gratuita e senza limiti di tempo: 55 € di credito iniziale su ogni nuovo accesso, senza dati di pagamento.' },
-        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF',  sup1Price:'0 CHF',
-              mgdNote:'Fino a nuovo avviso: sconto del 50 per cento con una durata di dodici mesi, quindi 3.50 CHF a persona al mese.',
+        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF', mgdPromoAmount:'3.50 CHF',  sup1Price:'0 CHF',
               betaNote:'La prova è gratuita e senza limiti di tempo: 50 CHF di credito iniziale su ogni nuovo accesso, senza dati di pagamento.' }
       },
       es: {
-        eur:{ selfAmount:'0 €',   mgdAmount:'7,50 €', sup1Price:'0 €',
-              mgdNote:'Hasta nuevo aviso: 50 por ciento de descuento con una duración de doce meses, es decir 3,75 € por persona al mes.',
+        eur:{ selfAmount:'0 €',   mgdAmount:'7,50 €', mgdPromoAmount:'3,75 €', sup1Price:'0 €',
               betaNote:'Probar es gratuito y sin límite de tiempo: 55 € de saldo inicial en cada acceso nuevo, sin datos de pago.' },
-        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF',  sup1Price:'0 CHF',
-              mgdNote:'Hasta nuevo aviso: 50 por ciento de descuento con una duración de doce meses, es decir 3.50 CHF por persona al mes.',
+        chf:{ selfAmount:'0 CHF', mgdAmount:'7 CHF', mgdPromoAmount:'3.50 CHF',  sup1Price:'0 CHF',
               betaNote:'Probar es gratuito y sin límite de tiempo: 50 CHF de saldo inicial en cada acceso nuevo, sin datos de pago.' }
       }
     };
