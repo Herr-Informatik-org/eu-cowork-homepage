@@ -103,7 +103,8 @@
 <p>per persona</p>
 <p>anziché 7,50 € /mese</p>
 <p>Con una durata di 12 mesi</p>
-<p>Offerta valida fino a nuovo avviso. Il consumo dei modelli viene addebitato separatamente tramite credito prepagato.</p>
+<p>Offerta valida fino alla fine del mese in corso.</p>
+<p>Rinnovata ogni mese. Il consumo dei modelli viene addebitato separatamente tramite credito prepagato.</p>
 <p><a href="/it/warteliste">Richiedere l’esercizio gestito</a></p>
 <dl><dt>Gamma di funzioni</dt><dd>completa</dd><dt>Esercizio</dt><dd>a cura di Kisuno</dd><dt>Aggiornamenti e backup</dt><dd>inclusi</dd><dt>Consumo dei modelli</dt><dd>Credito condiviso per tutta l’azienda</dd><dt>Banca dati e chiavi</dt><dd>istanza svizzera dedicata</dd><dt>Passaggio</dt><dd>possibile verso la gestione autonoma</dd></dl>
 <p>La prova è gratuita e senza limiti di tempo: 55 € di credito iniziale su ogni nuovo accesso, senza dati di pagamento.</p>
@@ -252,6 +253,7 @@
   .pr-regular { margin: 10px 0 0; font-size: 15px; color: var(--c-body-soft); }
   .pr-regular s { text-decoration-thickness: 2px; }
   .pr-promo-term { margin: 14px 0 0; font-size: 15px; line-height: 1.45; font-weight: 600; color: var(--c-ink); }
+  .pr-promo-validity { margin: 8px 0 0; font-size: 14px; line-height: 1.45; font-weight: 500; color: var(--c-ink); }
   .pr-promo-details { margin: 7px 0 0; font-size: 13px; line-height: 1.5; color: var(--c-body-soft); }
 
   .pr-cur { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin: 0 0 12px; flex-wrap: wrap; }
@@ -445,6 +447,7 @@
             <p class="pr-sub">{{ t.mgdSub }}</p>
             <p class="pr-regular">{{ t.promoInstead }} <s>{{ t.mgdAmount }}</s> {{ t.perMonth }}</p>
             <p class="pr-promo-term">{{ t.promoTerm }}</p>
+            <p class="pr-promo-validity">{{ t.promoValidity }}</p>
             <p class="pr-promo-details">{{ t.promoDetails }}</p>
 
             <div class="pr-cta">
@@ -559,7 +562,8 @@ class Component extends DCLogic {
        sieht kurz darauf Franken — ein Wert wechselt, kein Aufbau springt. */
     this.state = {
       lang: (typeof localStorage!=='undefined' && localStorage.getItem('kisuno_lang')) || 'de',
-      cur: 'eur'
+      cur: 'eur',
+      promoEnd: null
     };
     this._onLang = (e)=>this.setState({ lang:e.detail });
     this.C = {
@@ -583,7 +587,9 @@ class Component extends DCLogic {
         promoBadge:'Aktion: 50 % Rabatt',
         promoInstead:'statt',
         promoTerm:'Bei 12 Monaten Laufzeit',
-        promoDetails:'Aktion gültig bis auf Weiteres. Modellverbrauch wird zusätzlich über Guthaben abgerechnet.',
+        promoValidityTemplate:'Aktion gültig bis {date}.',
+        promoValidityFallback:'Aktion gültig bis Ende des laufenden Monats.',
+        promoDetails:'Wird monatlich verlängert. Modellverbrauch wird zusätzlich über Guthaben abgerechnet.',
         mgdTitle:'Betreiben lassen',
         mgdLede:'Dieselbe Software auf einer eigenen Schweizer Instanz. Betrieb, Updates, Backups und Überwachung übernehmen wir.', mgdSub:'pro Person',
         mgdCta:'Managed-Betrieb anfragen',
@@ -640,7 +646,9 @@ class Component extends DCLogic {
         promoBadge:'Special offer: 50% off',
         promoInstead:'instead of',
         promoTerm:'With a 12-month term',
-        promoDetails:'Offer valid until further notice. Model usage is charged separately through prepaid credit.',
+        promoValidityTemplate:'Offer valid through {date}.',
+        promoValidityFallback:'Offer valid through the end of the current month.',
+        promoDetails:'Renewed every month. Model usage is charged separately through prepaid credit.',
         mgdTitle:'Let us run it',
         mgdLede:'The same software on your own Swiss instance. We take care of operations, updates, backups and monitoring.', mgdSub:'per person',
         mgdCta:'Request managed operation',
@@ -697,7 +705,9 @@ class Component extends DCLogic {
         promoBadge:'Offre spéciale : −50 %',
         promoInstead:'au lieu de',
         promoTerm:'Pour un engagement de 12 mois',
-        promoDetails:'Offre valable jusqu’à nouvel ordre. L’utilisation des modèles est facturée séparément via un crédit prépayé.',
+        promoValidityTemplate:'Offre valable jusqu’au {date}.',
+        promoValidityFallback:'Offre valable jusqu’à la fin du mois en cours.',
+        promoDetails:'Renouvelée chaque mois. L’utilisation des modèles est facturée séparément via un crédit prépayé.',
         mgdTitle:'Faire exploiter',
         mgdLede:'Le même logiciel sur votre propre instance suisse. Nous assurons l’exploitation, les mises à jour, les sauvegardes et la surveillance.', mgdSub:'par personne',
         mgdCta:'Demander l’exploitation gérée',
@@ -754,7 +764,9 @@ class Component extends DCLogic {
         promoBadge:'Promozione: sconto del 50%',
         promoInstead:'anziché',
         promoTerm:'Con una durata di 12 mesi',
-        promoDetails:'Offerta valida fino a nuovo avviso. Il consumo dei modelli viene addebitato separatamente tramite credito prepagato.',
+        promoValidityTemplate:'Offerta valida fino al {date}.',
+        promoValidityFallback:'Offerta valida fino alla fine del mese in corso.',
+        promoDetails:'Rinnovata ogni mese. Il consumo dei modelli viene addebitato separatamente tramite credito prepagato.',
         mgdTitle:'Esercizio gestito',
         mgdLede:'Lo stesso software su un’istanza svizzera dedicata. Esercizio, aggiornamenti, backup e monitoraggio sono a nostro carico.', mgdSub:'per persona',
         mgdCta:'Richiedere l’esercizio gestito',
@@ -811,7 +823,9 @@ class Component extends DCLogic {
         promoBadge:'Promoción: 50 % de descuento',
         promoInstead:'en lugar de',
         promoTerm:'Con un compromiso de 12 meses',
-        promoDetails:'Oferta válida hasta nuevo aviso. El uso de los modelos se cobra aparte mediante saldo prepago.',
+        promoValidityTemplate:'Oferta válida hasta el {date}.',
+        promoValidityFallback:'Oferta válida hasta el final del mes en curso.',
+        promoDetails:'Se renueva cada mes. El uso de los modelos se cobra aparte mediante saldo prepago.',
         mgdTitle:'Operación gestionada',
         mgdLede:'El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.', mgdSub:'por persona',
         mgdCta:'Solicitar operación gestionada',
@@ -912,6 +926,23 @@ class Component extends DCLogic {
   componentDidMount(){
     window.addEventListener('kisuno:langchange', this._onLang);
     this._initCur();
+    this._refreshPromo = () => this._syncPromoEnd();
+    this._refreshPromo();
+    this._promoTimer = setInterval(this._refreshPromo, 60000);
+    document.addEventListener('visibilitychange', this._refreshPromo);
+    window.addEventListener('focus', this._refreshPromo);
+  }
+
+  // Der Aktionsmonat richtet sich weltweit nach der Schweizer Zeitzone.
+  // Ohne JavaScript bleibt die zeitlose Monatsende-Beschriftung gültig.
+  _syncPromoEnd(now = new Date()){
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: 'Europe/Zurich', year: 'numeric', month: 'numeric'
+    }).formatToParts(now);
+    const year = Number(parts.find(p => p.type === 'year').value);
+    const month = Number(parts.find(p => p.type === 'month').value);
+    const promoEnd = new Date(Date.UTC(year, month, 0)).toISOString().slice(0, 10);
+    if (promoEnd !== this.state.promoEnd) this.setState({ promoEnd });
   }
 
   /* Waehrung bestimmen, in dieser Reihenfolge:
@@ -934,7 +965,12 @@ class Component extends DCLogic {
       .catch(() => {});
   }
 
-  componentWillUnmount(){ window.removeEventListener('kisuno:langchange', this._onLang); }
+  componentWillUnmount(){
+    window.removeEventListener('kisuno:langchange', this._onLang);
+    clearInterval(this._promoTimer);
+    document.removeEventListener('visibilitychange', this._refreshPromo);
+    window.removeEventListener('focus', this._refreshPromo);
+  }
 
   renderVals(){
     const lang = this.state.lang || 'de';
@@ -942,10 +978,16 @@ class Component extends DCLogic {
     const text = this.C[lang] || this.C.de;
     const geld = (this.M[lang] || this.M.de)[cur];
     const c = this.CUR[lang] || this.CUR.de;
+    const locale = { de:'de-CH', en:'en-GB', fr:'fr-CH', it:'it-CH', es:'es-ES' }[lang] || 'de-CH';
+    const promoValidity = this.state.promoEnd
+      ? text.promoValidityTemplate.replace('{date}', new Intl.DateTimeFormat(locale, {
+          day:'numeric', month:'long', year:'numeric', timeZone:'Europe/Zurich'
+        }).format(new Date(this.state.promoEnd + 'T12:00:00Z')))
+      : text.promoValidityFallback;
     return {
       // Die Betraege ueberschreiben die Textfassung: das Template bindet
       // weiterhin nur {{ t.mgdAmount }} und weiss von Waehrungen nichts.
-      t: Object.assign({}, text, geld),
+      t: Object.assign({}, text, geld, { promoValidity }),
       curAria: c.aria,
       curHint: cur === 'chf' ? c.hint : '',
       eurCls: cur === 'eur' ? ' is-on' : '',
