@@ -64,13 +64,13 @@ export default defineConfig({
         it: { label: 'Italiano', lang: 'it' },
         es: { label: 'Español', lang: 'es' },
       },
-      // Bewusst keine überschriebenen Komponenten, die man sieht. Die
-      // Kopfleiste, die Seitenleiste und das Suchfeld kommen unverändert von
-      // Starlight; eigene Nachbauten sehen schnell zusammengesetzt aus.
-      // Einzige Ausnahme ist der Kopfbereich: er rendert die Starlight-Variante
-      // unverändert und ergänzt sie nur um strukturierte Daten, die im <head>
-      // stehen und deshalb nichts am Aussehen ändern.
-      components: { Head: './src/components/Head.astro' },
+      // Starlights Kopfbereich bleibt erhalten und erhält strukturierte Daten.
+      // Die Wortmarke ergänzt den bestehenden Namen um ein hochgestelltes AI;
+      // Logo, Schrift, Farben und Abstände bleiben im Starlight-Design.
+      components: {
+        Head: './src/components/Head.astro',
+        SiteTitle: './src/components/SiteTitle.astro',
+      },
       head: [
         {
           tag: 'meta',

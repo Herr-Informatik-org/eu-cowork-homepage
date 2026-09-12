@@ -216,7 +216,9 @@
   }
   .euc-hd-brand svg{ display:block; }
   /* Wortmarke: „Kisuno", ein Wort in Tinte. In allen fuenf Sprachen gleich. */
+  .euc-brand-ai { font-family: inherit; font-size: .55em; font-weight: inherit; line-height: 0; letter-spacing: 0; vertical-align: super; margin-left: .12em; color: inherit; }
   .euc-hd-word{
+    white-space: nowrap;
     font-family:var(--f-display);
     font-weight:600; font-size:19px; letter-spacing:-.010em; color:#0B1E33;
     transition:color 200ms var(--hd-ease);
@@ -391,12 +393,12 @@
 </helmet>
 <header ref="{{ headerRef }}" class="euc-hd {{ headerClass }}">
 
-  <a href="{{ homeHref }}" class="euc-hd-brand">
+  <a href="{{ homeHref }}" class="euc-hd-brand" aria-label="Kisuno AI">
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
       <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#0B1E33" stroke-width="1.5" stroke-linejoin="round"></path>
       <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
     </svg>
-    <span class="euc-hd-word">{{ brandMain }}</span>
+    <span class="euc-hd-word">{{ brandMain }}<sup class="euc-brand-ai">{{ brandAi }}</sup></span>
   </a>
 
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
@@ -435,7 +437,7 @@
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <div class="euc-hd-sheet">
       <div class="euc-hd-sheet-top">
-        <span class="euc-hd-word">{{ brandMain }}</span>
+        <span class="euc-hd-word">{{ brandMain }}<sup class="euc-brand-ai">{{ brandAi }}</sup></span>
         <button onClick="{{ toggleMenu }}" aria-label="Close" class="euc-hd-close">&times;</button>
       </div>
       <nav>
@@ -462,7 +464,7 @@ class Component extends DCLogic {
     super(props);
     this.BRAND = 'Kisuno';
     this.BRAND_MAIN = 'Kisuno';
-    this.BRAND_AI = '';
+    this.BRAND_AI = 'AI';
     this.SELFHOST = '/self-hosting'; // Release-Repository wird zum Launch veroeffentlicht
     this.headerRef = React.createRef();
     const initLang = (typeof localStorage !== 'undefined' && localStorage.getItem('kisuno_lang')) || 'de';

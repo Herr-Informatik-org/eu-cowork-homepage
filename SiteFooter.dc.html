@@ -37,7 +37,9 @@
   .euc-ft-brandcol{ flex:1 1 300px; max-width:360px; }
   .euc-ft-brand{ display:flex; align-items:center; gap:11px; }
   /* Wortmarke: „Kisuno", ein Wort. Auf Navy steht es in Knochenweiss. */
+  .euc-brand-ai { font-family: inherit; font-size: .55em; font-weight: inherit; line-height: 0; letter-spacing: 0; vertical-align: super; margin-left: .12em; color: inherit; }
   .euc-ft-word{
+    white-space: nowrap;
     font-family:var(--ft-disp); font-weight:600; font-size:19px;
     letter-spacing:-.010em; color:#F7FAFC;
   }
@@ -139,7 +141,7 @@
             <path d="M2.5 21.5 L10.5 6.5 L14.5 14 L17.5 8.5 L23.5 21.5 Z" stroke="#A5D8E6" stroke-width="1.5" stroke-linejoin="round"></path>
             <circle cx="17.5" cy="5.4" r="2.1" fill="#F4C542"></circle>
           </svg>
-          <span class="euc-ft-word">{{ brandMain }}</span>
+          <span class="euc-ft-word">{{ brandMain }}<sup class="euc-brand-ai">{{ brandAi }}</sup></span>
         </div>
         <p class="euc-ft-tagline">{{ tagline }}</p>
         <div class="euc-ft-badges">
@@ -217,7 +219,7 @@ class Component extends DCLogic {
     super(props);
     this.BRAND = 'Kisuno';
     this.BRAND_MAIN = 'Kisuno';
-    this.BRAND_AI = '';
+    this.BRAND_AI = 'AI';
     /* Terminbuchung laeuft ueber Microsoft Bookings, also ausserhalb dieser
        Website. Die Adresse steht einmal hier und wird gebunden, damit sie in
        allen fuenf Sprachfassungen zeichengleich bleibt. */
