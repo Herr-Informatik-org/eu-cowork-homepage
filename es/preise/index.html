@@ -96,8 +96,8 @@
 <p><a href="/es/warteliste">Avisarme de la publicación</a></p>
 <dl><dt>Funciones</dt><dd>completas</dd><dt>Operación</dt><dd>a cargo de su equipo de IT</dd><dt>Actualizaciones y copias de seguridad</dt><dd>a cargo de su equipo de IT</dd><dt>Consumo de modelos</dt><dd>directamente con el proveedor</dd><dt>Base de datos y claves</dt><dd>en su poder</dd><dt>Cambio</dt><dd>posible hacia la operación gestionada</dd></dl>
 <p>El servidor y el consumo de modelos los liquida usted directamente con los proveedores correspondientes.</p>
-<p>Promoción: 50 % de descuento</p>
 <h2>Operación gestionada</h2>
+<p>Promoción: −50 %</p>
 <p>El mismo software en una instancia suiza propia. La operación, las actualizaciones, las copias de seguridad y la supervisión corren de nuestra cuenta.</p>
 <p>3,75 € /mes</p>
 <p>por persona</p>
@@ -242,9 +242,14 @@
      darunter. Er soll auffindbar sein, wenn man ihn sucht, und sonst nicht
      stoeren: die Erkennung liegt fast immer richtig. */
   /* Aktion direkt am Preis, einschliesslich Vertragslaufzeit. */
+  .pr-title-row {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .pr-title-row h2 { flex: 0 0 auto; max-width: 100%; }
   .pr-promo-badge {
     display: inline-flex; align-self: flex-start; padding: 8px 14px;
-    margin-bottom: 18px; border-radius: 6px;
+    margin-left: auto; border-radius: 6px;
     background: #F4C542; color: #0B1E33;
     font-size: 16px; line-height: 1.35; font-weight: 700;
   }
@@ -436,8 +441,10 @@
           <div class="pr-col">
             <div class="pr-sg" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
 
-            <span class="pr-promo-badge">{{ t.promoBadge }}</span>
-            <h2>{{ t.mgdTitle }}</h2>
+            <div class="pr-title-row">
+              <h2>{{ t.mgdTitle }}</h2>
+              <span class="pr-promo-badge">{{ t.promoBadge }}</span>
+            </div>
             <p class="pr-lede">{{ t.mgdLede }}</p>
 
             <div class="pr-price pr-price--promo">
@@ -820,7 +827,7 @@ class Component extends DCLogic {
         selfUsage:'directamente con el proveedor', selfKeys:'en su poder', selfSwitch:'posible hacia la operación gestionada',
         selfNote:'El servidor y el consumo de modelos los liquida usted directamente con los proveedores correspondientes.',
 
-        promoBadge:'Promoción: 50 % de descuento',
+        promoBadge:'Promoción: −50 %',
         promoInstead:'en lugar de',
         promoTerm:'Con un compromiso de 12 meses',
         promoValidityTemplate:'Oferta válida hasta el {date}.',
