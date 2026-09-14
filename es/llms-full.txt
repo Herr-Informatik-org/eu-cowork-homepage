@@ -1794,25 +1794,30 @@ En esta página
 Para probar
 El grafo de una empresa
 Apunte a un punto o tóquelo. La tecla de tabulación también sirve.
+Oferta 114
+Regla de precio
+versión anterior
+R. Lehmann
+Ventas
+Berger AG
+Nave 2
+Nordwand
+Plazo
+Acta
+Recepción
 - Personas y funciones
 - Cosas y documentos
 - Reglas y plazos
 Once nodos, trece aristas
-Así de pequeña empieza la memoria de una empresa: un cliente, una oferta, una regla de precio, un proyecto y las personas que los rodean. Elija un punto y aquí aparecerá qué cuelga de él y hacia dónde apunta.
-Berger AG
-El cliente es un objeto propio. Todo lo que le concierne cuelga aquí en lugar de estar disperso en once frases sueltas.
-Tipo
-Cliente
-Validez
-desde 03.2024
-Procedencia
-de una conversación
-Visible para
-toda la plantilla
-Conexiones
-- ← pertenece a Oferta 114
-- ← pertenece a Reforma de la nave 2
-- ← es responsable de Ventas
+Así de pequeña empieza la memoria de una empresa: un cliente, una oferta, una regla de precio, un proyecto y las personas que los rodean.
+De cada nodo cuelga el mismo conjunto
+- Tipo
+- Validez
+- Procedencia
+- Visible para
+- Conexiones
+La pregunta que una lista no puede responder
+¿Qué ofertas abiertas se ven afectadas por la regla de precio que cambió en mayo, y quién debe informar a la clientela?
 Oferta 114
 La oferta conoce a su cliente, la regla de precio bajo la que nació y la persona que la redactó.
 Tipo
@@ -1880,6 +1885,20 @@ toda la plantilla
 Conexiones
 - ← pertenece a R. Lehmann
 - → es responsable de Berger AG
+Berger AG
+El cliente es un objeto propio. Todo lo que le concierne cuelga aquí en lugar de estar disperso en once frases sueltas.
+Tipo
+Cliente
+Validez
+desde 03.2024
+Procedencia
+de una conversación
+Visible para
+toda la plantilla
+Conexiones
+- ← pertenece a Oferta 114
+- ← pertenece a Reforma de la nave 2
+- ← es responsable de Ventas
 Reforma de la nave 2
 El proyecto reúne en un solo lugar al proveedor, el plazo, el acta y la responsabilidad.
 Tipo
@@ -1909,6 +1928,18 @@ Visible para
 toda la plantilla
 Conexiones
 - → suministra a Reforma de la nave 2
+Plazo 30.06.2026
+Un plazo con fecha de vencimiento. Después del 30.06.2026 cuenta como vencido y ya no como verdadero.
+Tipo
+Plazo
+Validez
+hasta el 30.06.2026
+Procedencia
+de un documento
+Visible para
+la dirección de proyecto
+Conexiones
+- → se aplica a Reforma de la nave 2
 Acta de recepción
 Un documento también es un nodo. Cuelga del proyecto y lleva el término técnico que se usa en la casa.
 Tipo
@@ -1922,18 +1953,6 @@ la dirección de proyecto
 Conexiones
 - → pertenece a Reforma de la nave 2
 - ← se aplica a Recepción
-Plazo 30.06.2026
-Un plazo con fecha de vencimiento. Después del 30.06.2026 cuenta como vencido y ya no como verdadero.
-Tipo
-Plazo
-Validez
-hasta el 30.06.2026
-Procedencia
-de un documento
-Visible para
-la dirección de proyecto
-Conexiones
-- → se aplica a Reforma de la nave 2
 Recepción
 Un término técnico tal como lo entiende la empresa, y no como lo conoce un modelo en general.
 Tipo

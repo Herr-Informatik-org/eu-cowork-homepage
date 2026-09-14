@@ -1877,8 +1877,9 @@ pre code {
 
    Anders als die Figuren aus Abschnitt 20 ist diese hier bedienbar: zeigen,
    tippen oder tabben waehlt einen Knoten, rechts steht, was an ihm haengt.
-   Damit das ohne uebersetzbaren Text im SVG geht, tragen die Knoten ihren
-   Namen ueber aria-labelledby aus der zugehoerigen Karte.
+   Damit das ohne uebersetzbaren Text im SVG geht, liegen die Beschriftungen
+   als HTML ueber der Buehne und die Knoten holen ihren Namen ueber
+   aria-labelledby aus der zugehoerigen Karte.
 
    Die Buehne ist bewusst dunkel: sie hebt die eine interaktive Figur von den
    fuenf stillen Zeichnungen des Artikels ab, und die drei Gruppenfarben
@@ -1922,26 +1923,44 @@ pre code {
   --wg-p: var(--c-ice-300);      /* Menschen und Rollen */
   --wg-d: var(--c-on-deep);      /* Dinge und Dokumente */
   --wg-r: var(--c-gold-500);     /* Regeln und Fristen */
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: clamp(10px, 1.8vw, 16px);
   border-radius: var(--r-frame);
   background:
-    radial-gradient(120% 90% at 62% 18%, rgba(165,216,230,.13) 0%, rgba(165,216,230,0) 62%),
+    radial-gradient(90% 80% at 70% 56%, rgba(165,216,230,.10) 0%, rgba(165,216,230,0) 60%),
     var(--c-deep);
   box-shadow: var(--edge-deep);
 }
 
+/* Zeichnung und Beschriftungen teilen sich dieselbe Flaeche, deshalb haelt
+   die Ebene das Seitenverhaeltnis des viewBox fest. */
+.wg-plane {
+  position: relative;
+  aspect-ratio: 600 / 420;
+}
 .wg-svg {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   overflow: visible;
+}
+
+/* Lichtschein hinter den beiden am staerksten verbundenen Knoten. */
+.wg-glow { color: var(--c-ice-300); }
+.wg-glow circle {
+  fill: currentColor;
+  stroke: none;
+  opacity: .16;
+  filter: blur(22px);
 }
 
 .wg-edge {
   stroke: var(--c-ice-300);
   stroke-width: 1.1;
-  opacity: .26;
+  opacity: .24;
   transition: opacity var(--d-hover) var(--ease-out), stroke-width var(--d-hover) var(--ease-out);
 }
 
@@ -1951,6 +1970,10 @@ pre code {
   cursor: pointer;
   outline: none;
   transition: opacity var(--d-hover) var(--ease-out), scale var(--d-hover) var(--ease-out);
+}
+.wg-schwebe {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 .wg-hit  { fill: transparent; stroke: none; }
 /* Auf dem Telefon schrumpft die Buehne, die Tippflaeche darf das nicht: r ist
@@ -1981,13 +2004,61 @@ pre code {
 .wg-node.is-on .wg-halo { opacity: .3; animation: none; }
 .wg-node:focus-visible .wg-dot { stroke: var(--c-on-deep); stroke-width: 2.5; }
 
-.euc-wgraph.is-aktiv .wg-edge { opacity: .08; }
+.euc-wgraph.is-aktiv .wg-edge { opacity: .07; }
 .euc-wgraph.is-aktiv .wg-edge.is-on { opacity: .95; stroke-width: 1.7; }
+
+/* --------------------------- Beschriftungen ---------------------------
+
+   Die Positionen stehen weiter unten als erzeugter Block; hier nur das
+   Aussehen. Sie liegen ueber der Zeichnung, sind aber fuer Hilfsmittel
+   verborgen: den Namen traegt schon der Knoten selbst.
+   ---------------------------------------------------------------------- */
+
+.wg-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.wg-lab {
+  position: absolute;
+  /* Feste Obergrenze statt nowrap: laengere Uebersetzungen brechen auf zwei
+     Zeilen um, statt aus der Buehne zu laufen. Die Anordnung in layout.py
+     rechnet mit genau diesem Kasten. */
+  width: max-content;
+  max-width: 84px;
+  padding: 1px 3px;
+  font-family: var(--f-body);
+  font-size: 11px;
+  line-height: 1.25;
+  letter-spacing: .005em;
+  text-align: center;
+  color: var(--c-on-deep-muted);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: color var(--d-hover) var(--ease-out), opacity var(--d-hover) var(--ease-out);
+}
+.wg-an-u { transform: translate(-50%, 0); }
+.wg-an-o { transform: translate(-50%, -100%); }
+.wg-an-l { transform: translate(-100%, -50%); text-align: right; }
+.wg-an-r { transform: translate(0, -50%); text-align: left; }
+
+.euc-wgraph.is-aktiv .wg-lab { opacity: .16; }
+.euc-wgraph.is-aktiv .wg-lab.is-nah { opacity: 1; color: var(--c-on-deep-body); }
+.euc-wgraph.is-aktiv .wg-lab.is-on  { opacity: 1; color: var(--c-on-deep); font-weight: 500; }
+
+/* Auf schmalen Schirmen wird die Buehne so klein, dass elf Namen zu einem
+   Teppich verschmelzen. Dort steht nur der gewaehlte. */
+@media (max-width: 700px) {
+  .wg-lab { opacity: 0; }
+  .euc-wgraph.is-aktiv .wg-lab,
+  .euc-wgraph.is-aktiv .wg-lab.is-nah { opacity: 0; }
+  .euc-wgraph.is-aktiv .wg-lab.is-on { opacity: 1; }
+}
 
 /* Farblegende der Buehne. */
 .wg-key {
   list-style: none;
-  margin: clamp(8px, 1.4vw, 14px) 0 2px;
+  margin: clamp(10px, 1.6vw, 16px) 0 2px;
   padding: 0 4px;
   display: flex;
   flex-wrap: wrap;
@@ -2025,9 +2096,9 @@ pre code {
   background: var(--c-surface-warm);
 }
 /* Feste Mindesthoehe: sonst springt die ganze Figur, sobald ein Knoten mit
-   fuenf Kanten die Karte hoeher macht als die Buehne daneben. */
+   sechs Kanten die Karte hoeher macht als die Buehne daneben. */
 @media (min-width: 900px) {
-  .wg-panel { min-height: 540px; }
+  .wg-panel { min-height: 536px; }
 }
 
 .wg-card { flex: 1 1 auto; }
@@ -2098,6 +2169,50 @@ pre code {
 /* Eingehende Kante: der andere Knoten ist die Quelle, nicht das Ziel. */
 .wg-ein .wg-rel { color: var(--c-body-soft); }
 
+/* Ruhekarte: statt Leerraum das Muster, das an jedem Knoten haengt, und die
+   Frage, an der eine Liste scheitert. */
+.wg-muster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.wg-muster li {
+  padding: 3px 9px;
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-status);
+  background: var(--c-surface);
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--c-body);
+}
+.wg-frage {
+  margin-top: var(--s-5);
+  padding: var(--s-3) var(--s-4);
+  border-left: 2px solid var(--c-ice-300);
+  border-radius: 0 var(--r-control) var(--r-control) 0;
+  background: var(--c-ice-tint);
+}
+.wg-frage-t {
+  margin: 0;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-eu-500);
+}
+.wg-frage-p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--c-ink);
+}
+
+/* Die beiden Zahlen setzt das Skript, die Woerter daneben die Uebersetzung:
+   so bleibt der Satz in jeder Sprache richtig, egal wie gross der Ausschnitt
+   gerade ist. */
 .wg-foot {
   margin: var(--s-4) 0 0;
   padding-top: var(--s-3);
@@ -2106,9 +2221,6 @@ pre code {
   line-height: 1.5;
   color: var(--c-body-soft);
 }
-/* Die beiden Zahlen setzt das Skript, die Woerter daneben die Uebersetzung:
-   so bleibt der Satz in jeder Sprache richtig, egal wie gross der Ausschnitt
-   gerade ist. */
 .wg-zahlen {
   display: inline-flex;
   flex-wrap: wrap;
@@ -2122,20 +2234,27 @@ pre code {
   color: var(--c-eu-700);
 }
 
-/* ----------------------------- Bewegung ----------------------------- */
+/* ----------------------------- Bewegung -----------------------------
+
+   Der einmalige Aufbau laeuft nur mit Skript: dieses setzt .wg-js, der
+   Beobachter .is-sichtbar, und zwei Sekunden spaeter nimmt das Skript
+   .wg-js wieder weg. Danach gehoert die Darstellung wieder allein den
+   Klassen oben, sonst wuerde ein "both" den Ruhezustand festhalten.
+   -------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Ruhiges Atmen der Knoten. Zwei Unterschritte, damit der Spalt zur Kante
-     nicht auffaellt; die Kanten selbst bleiben stehen. */
   @keyframes wg-drift { 50% { transform: translate(2px, -2px); } }
   @keyframes wg-atem  { 50% { opacity: .22; } }
   @keyframes wg-fluss { to { stroke-dashoffset: -48; } }
+  @keyframes wg-auf   { from { opacity: 0; transform: translateY(7px) scale(.72); } }
+  @keyframes wg-labauf { from { opacity: 0; } }
+  @keyframes wg-ziehen { from { stroke-dashoffset: 1; opacity: 0; } }
 
-  .wg-node { animation: wg-drift 9s var(--ease-in-out) infinite; }
-  .wg-node:nth-child(2n)   { animation-duration: 11s; animation-delay: -3s; }
-  .wg-node:nth-child(3n)   { animation-duration: 13s; animation-delay: -6s; }
-  .wg-node:nth-child(4n+1) { animation-direction: alternate-reverse; }
-  .wg-node:nth-child(5n)   { animation-duration: 10s; animation-delay: -1.5s; }
+  .wg-schwebe { animation: wg-drift 9s var(--ease-in-out) infinite; }
+  .wg-node:nth-child(2n)   .wg-schwebe { animation-duration: 11s; animation-delay: -3s; }
+  .wg-node:nth-child(3n)   .wg-schwebe { animation-duration: 13s; animation-delay: -6s; }
+  .wg-node:nth-child(4n+1) .wg-schwebe { animation-direction: alternate-reverse; }
+  .wg-node:nth-child(5n)   .wg-schwebe { animation-duration: 10s; animation-delay: -1.5s; }
 
   .wg-halo { animation: wg-atem 6s var(--ease-in-out) infinite; }
   .wg-node:nth-child(3n) .wg-halo { animation-duration: 8s; animation-delay: -2s; }
@@ -2144,4 +2263,52 @@ pre code {
     stroke-dasharray: 4 10;
     animation: wg-fluss 2.2s linear infinite;
   }
+
+  /* Ausgangszustand des Aufbaus. Ohne .is-sichtbar bleibt er stehen, deshalb
+     nimmt das Skript .wg-js notfalls auch ohne Beobachter wieder weg. */
+  .euc-wgraph.wg-js .wg-node,
+  .euc-wgraph.wg-js .wg-lab,
+  .euc-wgraph.wg-js .wg-glow { opacity: 0; }
+  .euc-wgraph.wg-js .wg-edge { opacity: 0; stroke-dasharray: 1; }
+
+  .euc-wgraph.wg-js.is-sichtbar .wg-node { animation: wg-auf .52s var(--ease-out) both; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(1)  { animation-delay: 0ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(2)  { animation-delay: 55ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(3)  { animation-delay: 110ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(4)  { animation-delay: 165ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(5)  { animation-delay: 220ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(6)  { animation-delay: 275ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(7)  { animation-delay: 330ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(8)  { animation-delay: 385ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(9)  { animation-delay: 440ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(10) { animation-delay: 495ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-node:nth-child(11) { animation-delay: 550ms; }
+
+  /* pathLength="1" am Pfad macht die Laenge aller Kanten gleich, deshalb
+     genuegt ein Wert fuer die Strichlung. */
+  .euc-wgraph.wg-js.is-sichtbar .wg-edge {
+    animation: wg-ziehen .66s var(--ease-out) both;
+    animation-delay: 320ms;
+  }
+  .euc-wgraph.wg-js.is-sichtbar .wg-edge:nth-child(3n)   { animation-delay: 430ms; }
+  .euc-wgraph.wg-js.is-sichtbar .wg-edge:nth-child(3n+1) { animation-delay: 540ms; }
+
+  .euc-wgraph.wg-js.is-sichtbar .wg-glow,
+  .euc-wgraph.wg-js.is-sichtbar .wg-lab {
+    animation: wg-labauf .5s var(--ease-out) both;
+    animation-delay: 900ms;
+  }
 }
+
+/* --- erzeugt aus scratchpad/graphwidget/layout.py, nicht von Hand aendern --- */
+.wg-lab-a114 { left: 25.00%; top: 17.29%; }
+.wg-lab-preisregel { left: 12.00%; top: 43.48%; }
+.wg-lab-altregel { left: 8.67%; top: 80.90%; }
+.wg-lab-lehmann { left: 29.77%; top: 62.38%; }
+.wg-lab-verkauf { left: 25.00%; top: 91.10%; }
+.wg-lab-berger { left: 51.00%; top: 29.19%; }
+.wg-lab-halle2 { left: 75.63%; top: 56.19%; }
+.wg-lab-nordwand { left: 88.00%; top: 24.81%; }
+.wg-lab-frist { left: 92.67%; top: 82.81%; }
+.wg-lab-protokoll { left: 67.33%; top: 89.67%; }
+.wg-lab-abnahme { left: 46.00%; top: 92.33%; }

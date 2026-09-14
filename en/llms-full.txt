@@ -1794,25 +1794,30 @@ On this page
 Try it out
 The graph of one company
 Point at a dot or tap it. The tab key works just as well.
+Quote 114
+Pricing rule
+earlier version
+R. Lehmann
+Sales
+Berger AG
+Hall 2
+Nordwand
+Deadline
+Record
+Acceptance
 - People and roles
 - Things and documents
 - Rules and deadlines
 Eleven nodes, thirteen edges
-This is how small a company memory starts out: one customer, one quote, one pricing rule, one project and the people around them. Pick a dot and this panel shows what hangs on it and where it points.
-Berger AG
-The customer is an object in its own right. Everything concerning them hangs here instead of being scattered across eleven separate sentences.
-Type
-Customer
-Validity
-since 03/2024
-Provenance
-from a conversation
-Visible to
-all staff
-Connections
-- ← belongs to Quote 114
-- ← belongs to Hall 2 refit
-- ← is responsible for Sales
+This is how small a company memory starts out: one customer, one quote, one pricing rule, one project and the people around them.
+The same bundle hangs on every node
+- Type
+- Validity
+- Provenance
+- Visible to
+- Connections
+The question a list cannot answer
+Which open quotes are affected by the pricing rule that changed in May, and who has to inform the customers?
 Quote 114
 The quote knows its customer, the pricing rule it was written under, and the person who wrote it.
 Type
@@ -1880,6 +1885,20 @@ all staff
 Connections
 - ← belongs to R. Lehmann
 - → is responsible for Berger AG
+Berger AG
+The customer is an object in its own right. Everything concerning them hangs here instead of being scattered across eleven separate sentences.
+Type
+Customer
+Validity
+since 03/2024
+Provenance
+from a conversation
+Visible to
+all staff
+Connections
+- ← belongs to Quote 114
+- ← belongs to Hall 2 refit
+- ← is responsible for Sales
 Hall 2 refit
 The project gathers supplier, deadline, record and responsibility in one place.
 Type
@@ -1909,6 +1928,18 @@ Visible to
 all staff
 Connections
 - → supplies Hall 2 refit
+Deadline 30 June 2026
+A deadline with an expiry date. After 30 June 2026 it counts as expired and no longer as true.
+Type
+Deadline
+Validity
+until 30 June 2026
+Provenance
+from a document
+Visible to
+project management
+Connections
+- → applies to Hall 2 refit
 Acceptance record
 A document is a node too. It hangs on the project and carries the term of art the company uses for it.
 Type
@@ -1922,18 +1953,6 @@ project management
 Connections
 - → belongs to Hall 2 refit
 - ← applies to Acceptance
-Deadline 30 June 2026
-A deadline with an expiry date. After 30 June 2026 it counts as expired and no longer as true.
-Type
-Deadline
-Validity
-until 30 June 2026
-Provenance
-from a document
-Visible to
-project management
-Connections
-- → applies to Hall 2 refit
 Acceptance
 A term of art as the company understands it, not as a model knows it in general.
 Type
