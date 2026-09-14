@@ -58,6 +58,7 @@ const SEITEN = [
 ];
 
 const ARTIKEL = [
+  { key: 'blog-memory',         path: '/blog/ki-memory-wissensgraph' },
   { key: 'blog-ch-daten',       path: '/blog/ki-datenhaltung-schweiz' },
   { key: 'blog-fristen',        path: '/blog/ai-act-fristen-dezember-2026' },
   { key: 'blog-agenten',        path: '/blog/ki-agenten-governance' },

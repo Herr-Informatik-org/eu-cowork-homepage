@@ -2,7 +2,7 @@
 
 > AI work platform for companies, coming soon under the MIT licence. Access to the current models from OpenAI (ChatGPT) and Anthropic (Claude), which run in the AWS data centre in Frankfurt, and to open frontier models such as GLM, Kimi and DeepSeek, operated by European companies on servers in Europe. Self-hostable from a single user, or operated in ISO 27001 certified data centres in Switzerland. An offering of Herr Informatik GmbH, Windisch, Switzerland.
 
-Last updated: 2026-09-13.
+Last updated: 2026-09-14.
 
 ---
 
@@ -1660,6 +1660,10 @@ Insights and notes
 Blog
 How businesses in Switzerland and across Europe work with an AI colleague: articles with concrete workflows, connectors to industry software and the limits that come with them. Written by the people who build the platform and use it themselves.
 Models and operation
+Memory and knowledge
+14 September 2026
+A memory that belongs to the company: how Kisuno stores knowledge as a graph
+The familiar memory features remember things for a personal account. Kisuno stores company knowledge as a graph, with validity, provenance and permission on every entry.
 Public sector and data protection
 3 September 2026
 The federal government has drawn a line through its own body of data: three workflows that respect it
@@ -1729,6 +1733,243 @@ Europe
 18 August 2026
 AI in practices and pharmacies: three workflows that give care time back
 In Germany, 91 percent of practice owners feel overloaded by administration, and each German pharmacy loses over 20 hours a week to supply shortages. Three workflows, and where the hard limit lies.
+
+---
+
+# Memory as a knowledge graph in the company
+
+URL: https://kisuno.ai/en/blog/ki-memory-wissensgraph
+
+Memory as a knowledge graph in the company | Kisuno
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+Skip to content
+- Home
+- Blog
+- Memory as a graph
+Memory and knowledge
+A memory that belongs to the company: how Kisuno stores knowledge as a graph
+The familiar memory features remember things for a personal account. Kisuno instead stores your company’s knowledge as a graph of nodes and named edges, with validity and provenance on every entry and a permission on every node, and the graph stays on your instance. This article shows how it is built, how the write path and the read path work, and says what it does not do.
+Memory and knowledge
+14 September 2026
+Reading time: 22 minutes
+- The situation
+- Why in a business
+- List versus graph
+- The structure
+- The write path
+- The read path
+- Control
+- Limits
+- Frequently asked questions
+- Sources
+In brief
+- The widespread memory features are tied to the personal account: Microsoft stores the remembered content in the Exchange mailbox of the individual person. 1 Anthropic states that organisation owners can neither view nor edit the memories of individual users. 2
+- Microsoft also writes itself that there are no admin controls to enforce retention rules specifically for Copilot memory, that deleting a chat does not delete the memories saved from it, and that no audit log entries are generated in the process; via eDiscovery the data can at least be searched, exported and deleted, and the feature is marked as a preview. 1
+- Kisuno therefore stores knowledge as a graph: nodes for the things, named edges for the relationships, plus a validity period and provenance on every entry and a permission on every node. This makes it possible to answer questions that run over several steps, and individual entries can be corrected or deleted.
+- The graph stays on your instance. Only the excerpt that this one answer needs goes to the model together with your question. That does not make the model any cleverer; it makes the question more precise.
+On this page
+- The situation
+- Why in a business
+- List versus graph
+- The structure
+- The write path
+- The read path
+- Control
+- Limits
+- Frequently asked questions
+- Sources
+The situation: memory has existed for a long time, it just does not belong to the company
+Anyone who uses an AI tool at work knows the scene. For the fifth time you explain what the company is called, who the customers are, what a quotation looks like here and why this one supplier is treated differently from all the others. The fact that the large providers have had a memory function for a long time changes less about this than expected. The reason is in their own documentation, and it is not a glitch but a design decision.
+The memory is tied to the personal account. For Copilot, Microsoft describes that saved memories, details derived from the history and custom instructions sit in the Exchange mailbox of the respective person, in a hidden folder. 1 For Claude, Anthropic states that owners of an organisation can neither view nor edit the memories of individual users; they can indeed be exported in accordance with the organisation’s retention policies. 2 Both together give the same picture: the entries belong to the individual person. What that person teaches the tool is not available to the rest of the business in everyday work, and nobody there can correct it except that person. The second team member starts from zero, and the question of what the tool believes it knows about their own firm stays unanswered for the company as a whole.
+The second gap concerns control. In the same documentation Microsoft writes that retention policies set up in Purview do not apply to Copilot memory and that there are no admin controls to enforce retention rules specifically for it; that deleting a chat does not delete the saved memories created from it; that memory operations generate no audit log entries; and that an administration cannot restrict what kind of information is taken into the memory at all. 1 In fairness, it says there just as clearly that memory data can be searched, exported and deleted via eDiscovery and the Graph Explorer, and the whole feature is marked as a preview. 1 The finding nevertheless stands: the rules a company already has for retention, deletion and traceability do not take effect by themselves at this point.
+The third complaint is the one about control over the content. In June 2026 OpenAI switched personalisation to an automatically generated summary, and the manually maintainable list remained alongside it as a legacy holding; in the official developer forum this gave rise to the wish to see exactly, and to manage entry by entry, what is being remembered. 3 A year earlier the developer Simon Willison had already criticised the previous version for removing this control completely and creating a condition that invisibly affects every output. 4 These are individual voices and not a survey, and we do not present them as one either. But they hit the point at which a tool for private convenience and a tool for a business part ways.
+The fourth gap is rectification. In its report on ChatGPT of May 2024 the taskforce of the European Data Protection Board stated that OpenAI suggests to data subjects, at least for the time being, that they switch from rectification to erasure when rectification is not feasible because of the technical complexity. 5 For a company that is the difference between a corrected piece of information and one that has vanished. Anyone who later has to explain why a piece of information was wrong needs the corrected version and the date of the correction, not a gap.
+In fairness it should be added that not every point applies to every provider. For Claude, Anthropic describes separate memory spaces per project and a list in which every entry can be read, edited and deleted; the default setting differs by plan, in the versions for individuals the memory is switched on, in the versions for teams and enterprises the administration decides on availability and for the individual person it stays off at first. 6 So this is not about accusing anyone of negligence. It is about the common denominator: these features are built as a personal convenience and not as an asset of a company.
+And a memory has a property one would not credit to a note on paper: it is an attack surface. Security research has been showing since 2024 that persistent instructions can be smuggled into the memory through prepared content and take effect beyond the individual conversation. 7 A paper from July 2026 demonstrates for acting systems how a single email leaves behind a false memory. 8 That is not an argument against memory features. It is an argument that every entry has to carry its provenance with it and has to be removable individually, and that is exactly what has to be delivered by the design the following sections are about.
+Why a business needs a memory of its own
+The need is not a guess, it is in the surveys. In Switzerland the share of SMEs that deliberately build artificial intelligence into their work processes rose within one year from 22% to 34%; most often for translations at 52% and correspondence at 47%, which is precisely where the words of the business and its special cases make the difference. Clear data protection rules for dealing with AI applications, by contrast, exist in only around a third of those businesses that use AI at all; among those with five to nine employees it is 23%. 9 The figures come from a survey of 300 SMEs in German speaking and French speaking Switzerland; that is a small sample, and we do not present it as a census.
+The second reason is more uncomfortable because it has to do with people. The knowledge that makes a business what it is is rarely written down in a manual. It sits in people’s heads: who really decides at this customer, why an item has been calculated differently since the last conversion, which handover does not work without the site management. If that person is unavailable, on holiday, retired or with another employer, that knowledge is gone too. An AI tool whose memory is tied to the personal account makes this problem worse instead of solving it: it collects exactly this knowledge and puts it where it disappears along with the person. How tight the labour market is alongside this is shown by the official figures: in the fourth quarter of 2025 the Federal Statistical Office counted 86,000 vacancies in Switzerland, and 36.2% of companies reported recruitment difficulties. 10 A post that falls vacant is therefore not filled again quickly, and until it is, what that person knew is missing too. At European level Cedefop attributes replacement demand expressly to retirements and career changes, that is to departures in which experience leaves the company. 11
+What happens when a business has no solution of its own has been studied as well. In a study by KPMG and the University of Melbourne with 48,340 respondents in 47 countries, two in three working people said they had relied on AI output without checking the information provided, and almost half admitted to using AI contrary to company rules and in doing so uploading sensitive company information such as financial, sales or customer data into public AI tools. 12 The question is therefore not whether company knowledge ends up in an AI tool. The question is whether it ends up in one that the business controls. A ban shifts the problem to private accounts, where nobody looks any more.
+On top of that comes the difference in size. According to Eurostat, in 2025 20.0% of EU enterprises with ten or more employees used AI technology, after 13.5% the year before; broken down, it is 17% of small, 30.36% of medium sized and 55.03% of large enterprises. 13 Among those that have ever considered adoption and do not use it, the leading reasons in the same year were a lack of relevant expertise at 70.89%, uncertainty about the legal consequences at 52.52% and concerns about data protection at 48.83%. 14 This population expressly covers only the enterprises that have ever considered adoption, and not all of them. The finding nevertheless stands: what holds small businesses back is not the technology but missing context and missing certainty about what happens to their own information.
+The third reason is a legal one and is expressly set down for Switzerland. The Federal Data Protection and Information Commissioner points out that the Swiss Data Protection Act applies directly to AI supported data processing. 15 So anyone who stores personal information in a memory has to be able to give information about it and to correct or destroy it; the Data Protection Act governs both in Article 25 and Article 32. 16 In the European Union the same rights are set out in Article 15 and Article 17 of the General Data Protection Regulation. 17 That is not a formality but a requirement for the design: whoever cannot show individually and delete individually cannot serve these rights.
+Who is asking
+What creates the need
+What the memory contributes there
+Management
+Decisive knowledge is tied to individual people, and succession, holidays or illness tear open the same gap every time.
+What was said once belongs to the company and not to an account. It stays readable even when the person is no longer there.
+New employees
+Onboarding costs above all the time of the experienced people, because every follow up question interrupts somebody.
+Questions about responsibility, terminology and procedure are answered by the tool from the existing stock, with the provenance given for checking.
+Back office and sales
+In every new conversation the explaining starts from the beginning: company, customers, pricing rules, special cases.
+The recurring details are already there. What remains is the actual question.
+Data protection and legal
+A request for information or erasure is directed at particular details, and somebody has to be able to find them.
+Every entry is an object of its own with provenance and date, individually presentable and individually deletable.
+Administration and IT
+The question of what the tool may know about the business and who sees what of it otherwise stays unanswered.
+Permissions are attached to the individual node, every access is in the audit log, and the feature can be switched off entirely.
+List versus graph: the same content, two outcomes
+An obvious objection first, because it would almost settle the topic: why not simply pour everything into a large context window? Because a context window is not a memory. In its own documentation Anthropic describes it as working memory for a single call; the entire history so far is sent along again with every round and does not sit inside the model. 18 And more of it does not automatically help. The same documentation says that accuracy and recall degrade as the token count grows, a behaviour for which the term context rot has become established, and that the selection of the content matters as much as the available space. 18 Independent studies show the same thing from the outside: if the relevant information sits in the middle of a long context, it is found markedly less well than at the beginning or at the end, and that also applies to models explicitly designed for long contexts. 19 Selection beats volume. A position paper from May 2026 puts the conclusion most sharply: models with finite capacity could in principle not represent the breadth of knowledge of enterprise tasks, which is why this knowledge belongs in a layer of its own beside them. 20 This is an argument and not a measurement, and that is how we present it. The question is therefore not how much you send along, but how you find the right thing.
+There are two ways to keep a memory for that. The first is a list. Every entry is a sentence in its own right: the business has fourteen employees. The customer is called Berger. Quotations always go out as PDFs. The list grows, it can be searched, and it reliably answers every question that aims at exactly one of its sentences. Most memory features that sit in an AI tool today are such a list.
+The second way is a graph. It stores not only the sentences but the connection between them, and this connection is an object of its own with a name of its own. The customer Berger is a node. The quotation with the number 114 is a node. Between them lies an edge that states something specific, namely that this quotation belongs to this customer, and that has a direction. Beside it lies a second edge to the person who wrote the quotation, and a third to the pricing rule that applied at the time.
+The difference becomes apparent precisely when a question spans more than one sentence. Anyone who wants to know which open quotations are affected by the pricing rule that was changed in May, and who has to inform which customers about it, is not asking a search question. This question has no hit, it has a path: from the rule to the quotations, from the quotations to the customers, from there to the responsible people. A list cannot walk this path because it never stored it. And the questions that are really asked in a business almost always look like this.
+1
+2
+3
+- The list: entries that know nothing about each other
+- The question that spans several entries
+- The graph: the connection itself is stored
+The same information, two ways of filing it. One knows sentences, the other knows paths.
+That this difference does not only sound plausible but has been measured can be read up. Microsoft Research describes the weakness of pure similarity search with the sentence that it struggles to connect the dots, because following scattered information has to run over shared attributes. 21 The accompanying paper documents improvements for questions put to an entire body of text, namely in the comprehensiveness and diversity of the answers; it expressly does not report a figure for correctness, and we therefore do not claim one either. 22 Independently of that, and thus not from a provider of a memory product, a paper from academic research shows a lead of up to 20 percent over the state of the art for questions that run over several steps. 23 What this does not yet prove about the graph but only puts in context: a dedicated test series for long term memory measures among other things temporal reasoning and the updating of knowledge and finds, with existing assistants, a drop of 30 percent in the retention of information over longer interactions. 24 It does not compare graphs with lists; it shows how big the problem is that both are supposed to solve.
+The idea is older than the language models, and it does not come from us. Anyone who keeps their notes in a tool like Obsidian knows the view in which their own collection appears as a net of points and lines: at a glance you see which note relates to which, which one is isolated and where a focus has formed. The open source extension Vault Graph draws this picture deliberately deterministically instead of force directed, so that the same collection always produces the same picture and a collection that has grown over time stays recognisable; the evaluation runs locally. 25 The Graphify project builds a queryable knowledge graph out of a mixed body of material and marks every edge according to whether the relationship was in the material or was only inferred. 26 The idea we have taken from this is the plainest of the two: an edge carries with it where it comes from.
+What has been adopted is the way of thinking and not the code. A personal notebook and the memory of a business place different demands: the one belongs to a person and may be untidy, the other belongs to an organisation and has to withstand permissions, contradictions, deadlines and erasure requests. That is why our implementation is our own, and that is why the next section is not about graphs in general but about what hangs on a single entry with us.
+The structure: what hangs on a single entry
+An entry in this memory is not a sentence but a small bundle of details. That sounds like a complication and is the reason why it allows things that are not possible with a note.
+1
+2
+3
+- The node: a thing your company talks about
+- The edge: the relationship, named and directed
+- Valid from, provenance and the permission that hangs on the node
+An entry is not a sentence but a bundle. Everything else hangs on this bundle.
+Component
+What it contains
+What it is for in everyday work
+Node
+A thing your company talks about: a person, a role, a customer, a supplier, a project, a product, a piece of equipment, a rule, a technical term, a deadline.
+Everything that is added to this thing later finds a place and does not lie scattered across conversations.
+Edge
+The relationship between two nodes, named and directed: belongs to, supplies, is responsible for, replaces, applies to, follows on from.
+Questions that run over several steps can be answered without anyone having written down the connection beforehand.
+Validity
+Since when a statement applies and, as soon as something new supersedes it, until when it applied.
+The question of what applies today and the question of what applied in May get different answers. Both are correct.
+Provenance
+Which conversation, which document or which input the entry comes from, and when it was created.
+A remembered statement can be checked instead of believed. Without this detail a memory is an assertion.
+Permission
+Which role or group may see this node.
+The memory belongs to the company, but not every entry belongs in front of every pair of eyes. Salary information is not project knowledge.
+The point about validity is the most inconspicuous one and in a business the most important. In a list memory a new statement is written over the old one, and what applied before is gone. Here the old statement is given an end instead and stays in place. Anyone asking in September which discount period applies gets the new one. Anyone who has to trace why an invoice was treated differently in May gets the old one together with the date on which it was superseded. A memory that only knows the latest state cannot answer this second question, and it is the one that gets asked in an audit. The idea has been worked out in research: a memory architecture from 2025 keeps four timestamps per statement, separated by when something applied in the world and when the system learned of it, and resolves contradictions by invalidating the older edge with a date instead of overwriting it. 27 The accompanying implementation describes the same thing as a validity window per statement and allows queries both on today’s state and on any earlier point in time. 28
+The second point that counts in everyday work is language. Every business has its own words: a name for a process that exists only here, an abbreviation for a machine, a customer name that is not spelled the way it sounds. These words stand as nodes of their own in the graph, with their spellings and their connections. That is why nobody has to explain what the term means any more, and that is why a general answer becomes one that fits the company.
+This also changes what the other parts of the platform can do, and that is the real reason for the effort. A role agent that is allowed to read the graph no longer has to be fed a page of specifications before it answers usefully: responsibilities, terms and rules are already there. A task that runs across several systems finds in the graph the assignment that is not complete in any of the systems involved. And a new person gets answers from the existing stock on the first day instead of from the memory of the colleague at the next desk. What we describe here is what the design makes possible, and we promise no schedule: what comes of it in everyday work is decided by how well maintained the graph is.
+The write path: how a sentence becomes an entry
+A memory that remembers everything is worthless. It fills up with trivia, and the fuller it gets the less reliably it finds the important things again. It is exactly this point that the complaints about missing control quoted above revolve around. That is why the way from a spoken sentence to a stored entry is not a single step with us but four.
+1
+2
+3
+- In the conversation a statement is made that reaches beyond the moment
+- It becomes a proposal and not yet an entry
+- Comparison with the existing stock: add, contradict or discard
+Writing happens only after the comparison, together with provenance and time.
+First, a statement is made in the conversation that reaches beyond the moment. That is rarely the question and almost always an aside: that acceptance at this customer always goes through the site management, that a particular machine has been set differently since the conversion, that a different VAT rate applies to this product group. What is one off does not belong in it, and neither does what is limited to the current order.
+Then a proposal comes out of it and not yet an entry. The proposal names which nodes would be affected, which edge would be created and where the statement comes from. It can be rejected, and rejected means rejected: the proposal does not come back at the next opportunity.
+The third step is the comparison with the existing stock, and it is the reason for the whole design. If the node already exists, a second one is not created but the existing one is extended. If the new sentence says something different from an existing one, this is treated as a contradiction and not as overwriting: the older statement is given an end, the new one a beginning, and both stay readable. And if the statement carries nothing new, it is discarded so that the memory does not suffocate on its own abundance.
+Only after that is anything written, together with provenance, time and permission. From that moment the entry is available to whoever may see it, and in every conversation, not only in the one in which it was created. That is the real difference from a history: a history belongs to a conversation, an entry belongs to the company.
+The read path: what leaves the server and what does not
+Now the part where it is decided whether a memory is an option for a European company at all. A memory is only useful if its contents feed into the answer. So they have to reach the model somehow. The question is how much of it.
+1
+2
+3
+4
+- Your instance: this is where the graph sits and where it stays
+- The question determines the entry nodes, then edges are followed
+- Only the excerpt that this one answer needs is in transit
+- The model answers, and the provenance of the entries used comes back with it
+The stock stays where it is. What leaves your instance is the excerpt.
+For a question, Kisuno first determines the entry nodes, that is the places in the graph that it is about. From there edges are followed, as a rule one or two steps, and what comes together is a small, connected excerpt: a few nodes, the edges between them, the details about validity. Only this excerpt goes to the model together with your question.
+The graph itself stays where it is. It sits in the database of your instance, today therefore in the data centres of Green in Lupfig. As soon as the repository with our extensions is available, in self-hosting it sits on your own server. There is no process in which the memory as a whole would be transferred to a model provider, mirrored there or built up there. What leaves your instance is always only the excerpt that the individual question needs, and that is the same principle on which the knowledge base works as well.
+What applies to this excerpt we say openly, because it is the most important sentence of this section. No model provider stores your inputs or uses them for training. What remains after that depends on the model chosen, and we say that openly too: the abuse detection of AWS can hold back requests if they might breach the terms of use of AWS or of the model providers. For the GPT models AWS keeps flagged requests and for Claude Fable 5 and 5.1 all requests for up to 30 days in order to check for abuse by machine; flagged requests can also be reviewed by hand by AWS in the process. According to AWS, this data is not passed on to the model providers. If cross region inference is switched on, it sits in the region in which the request is processed. 29 Anyone who wants to rule out these thirty days as well chooses the open top models that European companies operate on servers in Europe; the US CLOUD Act does not apply there.
+The answer then comes back with the provenance of the entries used. So you see not only what Kisuno believes it knows about your company, but also which conversation or document this knowledge comes from. That is the same idea as the source reference in an answer from the knowledge base, and for the same reason: a statement without verifiable provenance is not usable in a business.
+Viewing, correcting, deleting
+A memory that you cannot open is not a memory but an unknown in the process. That is why every entry is addressable, and that is not an incidental of the interface but a property of the design: because the knowledge is present as nodes and edges and not as running text, there is something to point at in the first place.
+1
+2
+3
+- A node is deleted, and the edges attached to it go with it
+- Viewing, correcting, deleting: entry by entry
+- Every access and every change is in the log
+Because the knowledge consists of individual objects, there is something to point at.
+Four things follow from this that count in everyday work. First, the stock can be viewed, node by node, with provenance and date. Second, a wrong statement can be corrected, and the wrong one does not disappear without trace in the process but is dated as superseded; whoever needs to know why an earlier answer turned out differently finds the reason. Third, an individual entry can be deleted, and the edges attached to it go with it. Fourth, the rights management records who sees which part of the memory, and every access is in the audit log.
+For companies in Europe this has a practical side that goes beyond convenience. Anyone requesting information under Article 15 of the General Data Protection Regulation or erasure under Article 17 is requesting it about a particular object, and somebody has to find this object. In a memory that consists of running text, that is a search task with an uncertain outcome. In a graph it is a node with an identifier and the edges attached to it. That does not fulfil the obligation; it is only what makes it fulfillable. We consider this difference to be the real gain of the design, and it is the reason why we chose it.
+And anyone who wants nothing stored at all switches the feature off. It is not a component without which the platform does not work, but an option that you decide on.
+Limits: what a memory does not do
+The first limit is at the same time the most important sentence of this article. A memory does not make a model cleverer. It makes the question more precise. What comes back is still text generated by a language model, and it sounds plausible even when the basis is skewed. Anyone who relies on an answer without opening the provenance given has gained nothing but speed.
+The second limit is more uncomfortable because it grows over time. A memory also remembers wrong things. Once a mistaken sentence becomes a node, it turns up in answers again and looks more credible there than the first time, because it now comes from your own stock. Automatic detection, in our experience, errs predictably in the process: it mistakes a casual remark for a binding rule. That is exactly why the proposal before the entry is built in and the provenance on every entry, and that is exactly why maintenance remains a job for people.
+The third limit is a demarcation. The memory replaces neither your knowledge base nor your ERP. It remembers what applies and what is connected with what, not every document and no accounting entry. The documents stay in the knowledge base, the master data stay in the specialist system, and the connection there runs through our gateway for tool connections, with the same rights management as everywhere else. What is possible there is set out under Integrations . A memory that tries to replace all of that becomes a second, less well maintained database.
+The fourth limit concerns personal data. What belongs in a company memory is what is needed for the work, and not what accumulates about people along the way. Anyone who stores information about employees in it needs a purpose for it, a legal basis and, depending on the country and the size of the business, the involvement of the employee representatives. We do not take this assessment off anyone’s hands, and this article is no substitute for legal advice.
+The fifth limit concerns self-hosting. The memory is part of the full range of functions and in self-hosting sits entirely on your server. The LibreChat base is under the MIT licence; the repository with our extensions will follow shortly. Until then, managed operation is the way in which the feature is available, and we would rather say so than leave it open.
+The sixth limit is the graph itself. It is no miracle cure. Its advantage is documented for particular types of question: for questions put to an entire body of material, for questions that run over several steps and for questions about change over time. For simple single fact questions it is not demonstrably better than an ordinary similarity search. A study by another provider measures an overall score around two percent better for the graph variant than for the variant without a graph; from this it follows that the large part of the gain comes not from the graph form but from the fact that a memory is kept at all. 30 We name this figure because it speaks against us. Our reason for the graph is a different one anyway: validity and provenance per entry, permission per node and the deletion of individual entries cannot be accommodated in a list.
+Frequently asked questions about Kisuno’s memory
+What distinguishes Kisuno’s memory from the memory feature in ChatGPT?
+Three things. First, it belongs to the company and not to a personal account: what one person teaches it is available to those who may see it, and stays there when that person leaves. Second, it is a graph of nodes and named edges instead of a list of sentences, which is why questions that run over several steps can be answered. Third, it sits on your instance, and only the excerpt that the individual question needs goes to a model.
+Does this actually make Kisuno better over time?
+What gets better is not the model but the basis on which it answers. The model itself stays unchanged and learns nothing from your conversations; that is expressly intended, because otherwise your data would be training material. What grows is the graph. With every week more of your terms, responsibilities and rules are in it, and the excerpt that a question brings with it becomes more apt as a result. In everyday work that feels like learning and is in truth better looking up. Whether it happens depends on the upkeep: a graph that nobody looks into does not get cleverer, only fuller.
+Does Kisuno automatically remember everything we write?
+No, and that is deliberate. Only what applies beyond the individual case is taken in, and even that first appears as a proposal. Whoever rejects, rejects permanently. A memory that collects everything does not find the important things again, and that is what the complaints we quoted above revolve around.
+Where are the remembered entries kept?
+In the database of your instance. Today that is in the data centres of Green in Lupfig in Switzerland; as soon as the repository with our extensions is available, in self-hosting it is on your own server. The graph as a whole is not transferred anywhere. Only the excerpt that is needed for this one answer goes to a model together with your question.
+Does our memory train other companies’ models?
+No. Regardless of the model chosen, inputs and uploaded data are neither stored by the model provider nor used for training; the commitment is in the data processing agreement. We name one exception openly: the abuse detection of AWS can flag messages. For the GPT models AWS keeps flagged messages and for Claude Fable 5 and 5.1 all requests for up to 30 days in order to examine and prevent abuse; none of this goes to the model providers. Anyone who wants to rule that out as well chooses the open top models from European providers.
+Can we delete individual entries?
+Yes, individually, together with the edges attached to them. That is the practical reason for the design: a request for information or erasure under Article 15 or Article 17 of the General Data Protection Regulation is directed at a particular object, and in a graph this object is a node with an identifier. That does not fulfil the obligation, but it makes it executable. Anyone who wants nothing stored at all switches the feature off.
+Does every person in the business see everything that has been remembered?
+No. Every node carries which role or group may see it, and the rights management is the same one that applies to tools and connections. Every access is in the audit log. A shared memory means that knowledge belongs to the company, not that everything is out in the open.
+May information about employees go in?
+Only with a purpose and a legal basis, and depending on the country and the size of the business the employee representatives should be involved. Technically nothing stands in the way, and that is exactly why somebody has to decide it. We recommend defining the scope in writing beforehand and setting the permissions accordingly. This article is no substitute for legal advice.
+What does it cost, and can we try it out first?
+The memory is part of the full range of functions and costs nothing extra. The managed instance costs CHF 7 (EUR 7.50) per person and month, until further notice with a 50 percent discount on a twelve month term, that is CHF 3.50 (EUR 3.75); model usage is billed on top through a shared credit for the whole company. Testing is free and not limited in time: every new account starts with a starting credit of CHF 50 (EUR 55), without payment details. All the details are on the Pricing page.
+Bring your company knowledge with you
+Take ten sentences that everyone in your business knows and nobody has written down, and together we will build the first nodes from them. Expressly including the places where the automatic detection gets it wrong. Or you sign up and try it out yourself.
+Book a live demo
+Get started
+Sources
+All quotations, figures and data in this article come from the following sources, last checked in September 2026. Where a publication comes from the provider of the product described, we say so; forum posts are marked as individual voices and not as a survey.
+- Microsoft, Manage Copilot personalization and memory, Microsoft Learn, as of 2 September 2026; the feature is marked there as a preview. It says verbatim that memories sit “in the user’s Exchange mailbox in a hidden folder”, that retention policies from Purview do not apply to Copilot memory and “There are no admin controls to enforce retention rules specifically for Copilot memory”, further “Deleting a chat doesn’t delete saved memories that were generated from that chat”, “Memory and personalization actions don’t generate audit log entries in Purview” and, in answer to the question about a restriction on content, “No, admins can’t restrict what type of information is added to Copilot memory”; at the same time it is described there that memory data can be searched, exported and deleted via eDiscovery and the Microsoft Graph Explorer: learn.microsoft.com
+- Anthropic, Use Claude’s chat search and memory to build on previous context, Claude Help Center, retrieved on 14 September 2026: “Owners can’t view or edit a user’s individual memories”, “Each project has its own separate memory space and dedicated project summary” and “All memory is retained and exportable by admins in accordance with your organization’s chat data retention policies”: support.claude.com
+- OpenAI Developer Community, feature request “Memory Summary should not replace Saved Memories”, opened on 13 June 2026, with further posts and a reply from OpenAI support up to 17 June 2026. These are user voices in an open forum and not a survey: community.openai.com
+- Simon Willison, I really don’t like ChatGPT’s new memory dossier, 21 May 2025: “The new memory feature removes that control completely” and “There’s now an enormously complex set of extra conditions that can invisibly affect the output of the models”. The individual opinion of a developer, cited here as evidence for the kind of criticism and not for its frequency: simonwillison.net
+- European Data Protection Board, Report of the work undertaken by the ChatGPT Taskforce, version 1.0, adopted on 23 May 2024, paragraph 34: “OpenAI suggests users to shift from rectification to erasure when rectification is not feasible due to the technical complexity of ChatGPT”: edpb.europa.eu
+- Anthropic, Claude’s memory works everywhere, and you decide what’s in it, 25 August 2026: “Memory is on by default on Free, Pro and Max plans across web, desktop, and mobile”, for Team and Enterprise “memory is off for individual users until they turn it on” and “admins control availability for their organization”; the entries appear in a list in which they can be read, edited and deleted: claude.com
+- The Hacker News, ChatGPT macOS Flaw Could’ve Enabled Long-Term Spyware via Memory Function, September 2024, on the work SpAIware by the security researcher Johann Rehberger: thehackernews.com
+- The Hacker News, New MemGhost Attack Plants Persistent False Memories in AI Agents Through One Email, July 2026, on the paper “When Claws Remember but Do Not Tell” of 6 July 2026: thehackernews.com
+- AXA Switzerland, KMU Arbeitsmarktstudie 2025: Künstliche Intelligenz, press release of 8 October 2025, conducted by the research institute Sotomo, survey of 300 SMEs from German speaking and French speaking Switzerland, field period 3 to 10 March 2025. The share of SMEs that deliberately integrate AI into their work processes rose from 22% to 34%, the most frequent areas of use are translations at 52% and correspondence at 47%, on data protection rules it says verbatim “Lediglich ein Drittel der Unternehmen, die KI einsetzen, verfügt über eine klare Datenschutzregelung im Umgang mit KI-gestützten Anwendungen”, and for businesses with five to nine employees “nur gerade 23 Prozent”. The SME portal of the State Secretariat for Economic Affairs reports the same finding with 34% and in relation to all the SMEs surveyed; we give the narrower population of the study’s publisher. Italian speaking Switzerland is not covered: axa.ch ; kmu.admin.ch
+- Federal Statistical Office, Leichte Zunahme der Beschäftigung im 4. Quartal 2025, release of 26 February 2026, employment statistics BESTA: 36.2% of companies report recruitment difficulties, and 86,000 vacancies are counted: admin.ch
+- Cedefop, Labour and Skills Shortage Index, 16 December 2024, projection to 2035. Replacement demand is expressly attributed there to retirements and career changes: “Supply focuses on replacement needs, driven by retirements, career changes”. The source gives no single percentage figure at this point: cedefop.europa.eu
+- KPMG International and University of Melbourne, Trust, attitudes and use of artificial intelligence: A global study 2025, May 2025, 48,340 respondents in 47 countries, field period November 2024 to mid January 2025, 67% of the respondents were in employment. Verbatim: “Two in three report relying on AI output without evaluating the information it provides”; elsewhere the report puts the same value expressly at “two thirds (66%) of employees”. On the entry of company data it mentions the uploading of sensitive company information such as financial, sales or customer data into public AI tools: kpmg.com
+- Eurostat, 20% of EU enterprises use AI technologies, release of 11 December 2025, as well as Use of artificial intelligence in enterprises, Statistics Explained, survey year 2025, all enterprises with ten or more employees, dataset isoc_eb_ai. The size classes are small 10 to 49, medium 50 to 249, large from 250 employees; Eurostat states the decimal places inconsistently, and we adopt them unchanged. Switzerland is not included in this series: ec.europa.eu ; ec.europa.eu
+- Eurostat, Use of artificial intelligence in enterprises, Statistics Explained, data on barriers from the 2025 survey year, verbatim “In 2025, among EU enterprises who had ever considered using AI technologies, the most common reason for not using AI technologies was the lack of relevant expertise (70.89%)”. The population is expressly only those enterprises that considered and rejected the use of AI, not all enterprises: ec.europa.eu
+- Federal Data Protection and Information Commissioner, KI und Datenschutz, publication of 24 September 2025, according to which the Swiss Data Protection Act applies directly to AI supported data processing: edoeb.admin.ch
+- Federal Act on Data Protection, Article 25, which governs the right of access, and Article 32, which in paragraph 1 governs the right to rectification, wording in the Classified Compilation of Federal Legislation: fedlex.admin.ch
+- Regulation (EU) 2016/679 (General Data Protection Regulation), Article 15 (right of access) and Article 17 (right to erasure), wording in the Official Journal: eur-lex.europa.eu
+- Anthropic, Context windows, Claude Developer Platform, retrieved on 14 September 2026. The context window is described there as “a working memory for the model”; on length it says “As token count grows, accuracy and recall degrade, a phenomenon known as context rot” as well as “more context isn’t automatically better”, and the selection of the content is said to matter as much as the available space: platform.claude.com
+- Nelson F. Liu and others, Lost in the Middle: How Language Models Use Long Contexts, submitted on 6 July 2023, published in the Transactions of the Association for Computational Linguistics 2024. Performance is said to be highest when the relevant information is at the beginning or at the end, and to drop markedly when the model has to access information in the middle, “even for explicitly long-context models”; examined on question answering across several documents and on key value retrieval: arxiv.org
+- Kuldeep Singh, Anson Bastos and Isaiah Onando Mulang', Position: Avoid Overstretching LLMs for every Enterprise Task, submitted on 10 May 2026. This is a position paper with a theoretical argument and without empirical measurement; we cite it as an argument and not as evidence with a figure: arxiv.org
+- Microsoft Research, GraphRAG: Unlocking LLM discovery on narrative private data, 13 February 2024: “Baseline RAG struggles to connect the dots”, because connecting scattered information requires following shared attributes, and “Baseline RAG performs poorly when being asked to holistically understand summarized semantic concepts”. This is a vendor statement, backed by the paper in the following footnote: microsoft.com
+- Darren Edge and others, From Local to Global: A Graph RAG Approach to Query-Focused Summarization, submitted on 24 April 2024, revised on 19 February 2025. What is documented are improvements in the comprehensiveness and diversity of the answers to questions put to an entire body of text, not a hit rate; the paper does not report a percentage for correctness: arxiv.org
+- Bernal Jiménez Gutiérrez and others, HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models, submitted on 23 May 2024, revised on 14 January 2025, published at NeurIPS 2024. On multi step questions the method outperforms the state of the art “by up to 20%”; the paper does not come from a provider of a memory product: arxiv.org
+- Di Wu and others, LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory, submitted on 14 October 2024, revised on 4 March 2025, published at ICLR 2025. What is tested includes temporal reasoning and the updating of knowledge; a drop of 30 percent in the retention of information across longer interactions is measured: arxiv.org
+- Lukas Proprentner, vault-graph, source code under the MIT licence, retrieved on 14 September 2026, as well as the entry in the directory of Obsidian plugins. The layout is expressly “deterministic, not force-directed”, which is why “the same vault always draws the same picture”, and the evaluation runs locally: “Nothing leaves your machine”: github.com ; community.obsidian.md
+- Graphify Labs, graphify, source code on GitHub, retrieved on 14 September 2026. The project builds a queryable knowledge graph out of a mixed body of material and marks every edge according to whether the relationship was in the material or was inferred: “Every edge is tagged EXTRACTED, INFERRED, or AMBIGUOUS”: github.com
+- Preston Rasmussen and others, Zep: A Temporal Knowledge Graph Architecture for Agent Memory, 20 January 2025. The paper describes four timestamps per statement, separated by validity in the world and knowledge of the system, and resolves contradictions by invalidating the older edge instead of overwriting it. This is the provider’s publication about its own product: arxiv.org
+- Zep AI, graphiti, source code, retrieved on 14 September 2026: “each fact in a context graph has a validity window: when it became true, and when (if ever) it was superseded” as well as “When information changes, old facts are invalidated”, expressly not deleted; both today’s state and any earlier point in time can be queried, “Query what’s true now, or what was true at any point in time”: github.com
+- Amazon Web Services, Abuse detection, Amazon Bedrock User Guide, retrieved on 14 September 2026. It is described there that Amazon Bedrock as a rule stores neither inputs nor outputs, that for the GPT models named “classifier-flagged traffic will be retained for up to 30 days” and for Anthropic Claude Fable 5 and 5.1 “all traffic will be retained for up to 30 days”, that flagged requests are “subject to potential human review performed by AWS”, that the retained data is “stored and processed by AWS and are not shared with third-party model providers” and that with cross region inference it sits in the processing region: docs.aws.amazon.com
+- Prateek Chhikara and others, Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory, 28 April 2025, measured on the LOCOMO dataset. The graph variant there achieves “around 2% higher overall score than the base configuration”; the large part of the gain therefore comes from the memory architecture and not from the graph form. This too is the provider’s publication about its own product: arxiv.org
 
 ---
 
