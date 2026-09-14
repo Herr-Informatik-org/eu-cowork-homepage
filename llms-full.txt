@@ -1792,6 +1792,165 @@ Auf dieser Seite
 - Grenzen
 - Häufige Fragen
 - Quellen
+Zum Ausprobieren
+Der Graph eines Betriebs
+Auf einen Punkt zeigen oder tippen. Mit der Tabulatortaste geht es ebenso.
+- Menschen und Rollen
+- Dinge und Dokumente
+- Regeln und Fristen
+Elf Knoten, dreizehn Kanten
+So klein fängt das Gedächtnis eines Betriebs an: ein Kunde, ein Angebot, eine Preisregel, ein Projekt und die Personen dazu. Wählen Sie einen Punkt, dann steht hier, was an ihm hängt und wohin er zeigt.
+Berger AG
+Der Kunde ist ein eigener Gegenstand. Alles, was ihn betrifft, hängt hier und nicht verstreut in elf einzelnen Sätzen.
+Art
+Kunde
+Gültigkeit
+seit 03.2024
+Herkunft
+aus einem Gespräch
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- ← gehört zu Angebot 114
+- ← gehört zu Umbau Halle 2
+- ← verantwortet Verkauf
+Angebot 114
+Das Angebot kennt seine Kundschaft, die Preisregel, unter der es entstand, und die Person, die es geschrieben hat.
+Art
+Dokument
+Gültigkeit
+seit 06.2026
+Herkunft
+aus einem Dokument
+Sichtbar für
+Rolle Verkauf
+Verbindungen
+- → gehört zu Berger AG
+- ← gilt für Preisregel Montage
+- ← verantwortet R. Lehmann
+Preisregel Montage
+Die Regel zeigt von sich aus auf alles, was von ihr betroffen ist. Genau das beantwortet die Frage nach der Änderung im Mai.
+Art
+Regel
+Gültigkeit
+seit 05.2026
+Herkunft
+von Hand eingetragen
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- → gilt für Angebot 114
+- → ersetzt Preisregel Montage, alte Fassung
+- → gilt für Umbau Halle 2
+Preisregel Montage, alte Fassung
+Die alte Fassung ist nicht gelöscht, sondern mit Datum abgeschlossen. Wer später erklären muss, warum damals anders gerechnet wurde, findet sie hier.
+Art
+Regel
+Gültigkeit
+bis 05.2026, abgelöst
+Herkunft
+von Hand eingetragen
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- ← ersetzt Preisregel Montage
+R. Lehmann
+Eine Person mit Rolle. Fällt sie aus, bleibt sichtbar, wofür sie zuständig war.
+Art
+Person
+Gültigkeit
+seit 2021
+Herkunft
+von Hand eingetragen
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- → verantwortet Angebot 114
+- → gehört zu Verkauf
+- → verantwortet Umbau Halle 2
+Verkauf
+Eine Rolle statt einer Person: Die Zuständigkeit überlebt den Stellenwechsel.
+Art
+Rolle
+Gültigkeit
+unbefristet
+Herkunft
+von Hand eingetragen
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- ← gehört zu R. Lehmann
+- → verantwortet Berger AG
+Umbau Halle 2
+Das Projekt bündelt Lieferant, Frist, Protokoll und Zuständigkeit an einer Stelle.
+Art
+Projekt
+Gültigkeit
+seit 04.2026
+Herkunft
+aus einem Gespräch
+Sichtbar für
+Projektleitung
+Verbindungen
+- → gehört zu Berger AG
+- ← beliefert Nordwand Metallbau
+- ← gehört zu Abnahmeprotokoll
+- ← gilt für Frist 30.06.2026
+- ← verantwortet R. Lehmann
+- ← gilt für Preisregel Montage
+Nordwand Metallbau
+Der Lieferant hängt am Projekt und nicht an einer Notiz in einem persönlichen Konto.
+Art
+Lieferant
+Gültigkeit
+seit 2019
+Herkunft
+aus einem Dokument
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- → beliefert Umbau Halle 2
+Abnahmeprotokoll
+Auch ein Dokument ist ein Knoten. Es hängt am Projekt und trägt den Fachbegriff, der im Haus dafür gilt.
+Art
+Dokument
+Gültigkeit
+seit 06.2026
+Herkunft
+aus einem Dokument
+Sichtbar für
+Projektleitung
+Verbindungen
+- → gehört zu Umbau Halle 2
+- ← gilt für Abnahme
+Frist 30.06.2026
+Eine Frist mit Ablaufdatum. Nach dem 30.06.2026 gilt sie als abgelaufen und nicht länger als wahr.
+Art
+Frist
+Gültigkeit
+bis 30.06.2026
+Herkunft
+aus einem Dokument
+Sichtbar für
+Projektleitung
+Verbindungen
+- → gilt für Umbau Halle 2
+Abnahme
+Ein Fachbegriff, wie er im Unternehmen verstanden wird, und nicht, wie ihn ein Modell im Allgemeinen kennt.
+Art
+Fachbegriff
+Gültigkeit
+unbefristet
+Herkunft
+aus einem Gespräch
+Sichtbar für
+alle Mitarbeitenden
+Verbindungen
+- → gilt für Abnahmeprotokoll
+Zum Modell ginge für eine Antwort nur dieser Ausschnitt:
+Knoten 11
+Kanten 13
+Ein erfundener, aber typischer Ausschnitt. Jeder Punkt trägt Gültigkeit, Herkunft und Berechtigung mit sich, jede Linie hat einen Namen und eine Richtung.
 Ausgangslage: Memory gibt es längst, nur gehört es nicht dem Unternehmen
 Die Szene kennt jeder, der ein KI-Werkzeug im Betrieb einsetzt. Man erklärt zum fünften Mal, wie das Unternehmen heisst, wer die Kundschaft ist, wie eine Offerte bei uns aussieht und warum dieser eine Lieferant anders behandelt wird als alle anderen. Dass die grossen Anbieter längst eine Gedächtnisfunktion haben, ändert daran weniger als erwartet. Der Grund steht in ihrer eigenen Dokumentation, und er ist keine Panne, sondern eine Bauentscheidung.
 Das Gedächtnis hängt am persönlichen Konto. Microsoft beschreibt für Copilot, dass gespeicherte Erinnerungen, aus dem Verlauf abgeleitete Angaben und eigene Anweisungen im Exchange-Postfach der jeweiligen Person liegen, in einem verborgenen Ordner. 1 Anthropic hält für Claude fest, dass Eigentümer einer Organisation die Erinnerungen einzelner Nutzerinnen und Nutzer weder einsehen noch bearbeiten können; exportieren lassen sie sich nach den Aufbewahrungsregeln der Organisation sehr wohl. 2 Beides zusammen ergibt dasselbe Bild: Die Einträge gehören der einzelnen Person. Was sie dem Werkzeug beibringt, steht dem Rest des Betriebs im Alltag nicht zur Verfügung, und richtigstellen kann es dort niemand ausser ihr selbst. Das zweite Teammitglied fängt bei null an, und die Frage, was das Werkzeug über die eigene Firma zu wissen glaubt, bleibt für das Unternehmen als Ganzes unbeantwortet.

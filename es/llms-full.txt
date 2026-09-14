@@ -1791,6 +1791,165 @@ En esta página
 - Límites
 - Preguntas frecuentes
 - Fuentes
+Para probar
+El grafo de una empresa
+Apunte a un punto o tóquelo. La tecla de tabulación también sirve.
+- Personas y funciones
+- Cosas y documentos
+- Reglas y plazos
+Once nodos, trece aristas
+Así de pequeña empieza la memoria de una empresa: un cliente, una oferta, una regla de precio, un proyecto y las personas que los rodean. Elija un punto y aquí aparecerá qué cuelga de él y hacia dónde apunta.
+Berger AG
+El cliente es un objeto propio. Todo lo que le concierne cuelga aquí en lugar de estar disperso en once frases sueltas.
+Tipo
+Cliente
+Validez
+desde 03.2024
+Procedencia
+de una conversación
+Visible para
+toda la plantilla
+Conexiones
+- ← pertenece a Oferta 114
+- ← pertenece a Reforma de la nave 2
+- ← es responsable de Ventas
+Oferta 114
+La oferta conoce a su cliente, la regla de precio bajo la que nació y la persona que la redactó.
+Tipo
+Documento
+Validez
+desde 06.2026
+Procedencia
+de un documento
+Visible para
+la función Ventas
+Conexiones
+- → pertenece a Berger AG
+- ← se aplica a Regla de precio de montaje
+- ← es responsable de R. Lehmann
+Regla de precio de montaje
+La regla apunta por sí misma a todo lo que se ve afectado por ella. Eso es justamente lo que responde a la pregunta sobre el cambio de mayo.
+Tipo
+Regla
+Validez
+desde 05.2026
+Procedencia
+introducido a mano
+Visible para
+toda la plantilla
+Conexiones
+- → se aplica a Oferta 114
+- → sustituye a Regla de precio de montaje, versión anterior
+- → se aplica a Reforma de la nave 2
+Regla de precio de montaje, versión anterior
+La versión anterior no se borra, se cierra con una fecha. Quien más tarde deba explicar por qué entonces se calculaba de otro modo la encuentra aquí.
+Tipo
+Regla
+Validez
+hasta 05.2026, sustituida
+Procedencia
+introducido a mano
+Visible para
+toda la plantilla
+Conexiones
+- ← sustituye a Regla de precio de montaje
+R. Lehmann
+Una persona con una función. Si falta, sigue siendo visible de qué era responsable.
+Tipo
+Persona
+Validez
+desde 2021
+Procedencia
+introducido a mano
+Visible para
+toda la plantilla
+Conexiones
+- → es responsable de Oferta 114
+- → pertenece a Ventas
+- → es responsable de Reforma de la nave 2
+Ventas
+Una función en lugar de una persona: la responsabilidad sobrevive al cambio de puesto.
+Tipo
+Función
+Validez
+sin fecha de término
+Procedencia
+introducido a mano
+Visible para
+toda la plantilla
+Conexiones
+- ← pertenece a R. Lehmann
+- → es responsable de Berger AG
+Reforma de la nave 2
+El proyecto reúne en un solo lugar al proveedor, el plazo, el acta y la responsabilidad.
+Tipo
+Proyecto
+Validez
+desde 04.2026
+Procedencia
+de una conversación
+Visible para
+la dirección de proyecto
+Conexiones
+- → pertenece a Berger AG
+- ← suministra a Nordwand Metallbau
+- ← pertenece a Acta de recepción
+- ← se aplica a Plazo 30.06.2026
+- ← es responsable de R. Lehmann
+- ← se aplica a Regla de precio de montaje
+Nordwand Metallbau
+El proveedor cuelga del proyecto y no de una nota en una cuenta personal.
+Tipo
+Proveedor
+Validez
+desde 2019
+Procedencia
+de un documento
+Visible para
+toda la plantilla
+Conexiones
+- → suministra a Reforma de la nave 2
+Acta de recepción
+Un documento también es un nodo. Cuelga del proyecto y lleva el término técnico que se usa en la casa.
+Tipo
+Documento
+Validez
+desde 06.2026
+Procedencia
+de un documento
+Visible para
+la dirección de proyecto
+Conexiones
+- → pertenece a Reforma de la nave 2
+- ← se aplica a Recepción
+Plazo 30.06.2026
+Un plazo con fecha de vencimiento. Después del 30.06.2026 cuenta como vencido y ya no como verdadero.
+Tipo
+Plazo
+Validez
+hasta el 30.06.2026
+Procedencia
+de un documento
+Visible para
+la dirección de proyecto
+Conexiones
+- → se aplica a Reforma de la nave 2
+Recepción
+Un término técnico tal como lo entiende la empresa, y no como lo conoce un modelo en general.
+Tipo
+Término técnico
+Validez
+sin fecha de término
+Procedencia
+de una conversación
+Visible para
+toda la plantilla
+Conexiones
+- → se aplica a Acta de recepción
+Para una respuesta, al modelo solo iría este extracto:
+Nodos 11
+Aristas 13
+Un extracto inventado pero típico. Cada punto lleva consigo su validez, su procedencia y su autorización; cada línea tiene un nombre y una dirección.
 Situación de partida: la memoria existe desde hace tiempo, solo que no pertenece a la empresa
 La escena la conoce cualquiera que utilice una herramienta de IA en su empresa. Uno explica por quinta vez cómo se llama la empresa, quién es la clientela, qué aspecto tiene una oferta en casa y por qué a ese proveedor concreto se le trata de otra manera que a todos los demás. Que los grandes proveedores dispongan desde hace tiempo de una función de memoria cambia menos de lo esperado. El motivo está en su propia documentación, y no es una avería, sino una decisión de diseño.
 La memoria depende de la cuenta personal. Microsoft describe para Copilot que los recuerdos guardados, los datos derivados del historial y las instrucciones propias se encuentran en el buzón de Exchange de cada persona, en una carpeta oculta. 1 Anthropic señala para Claude que los propietarios de una organización no pueden consultar ni editar los recuerdos de cada usuario o usuaria; exportarlos, en cambio, sí es posible conforme a las reglas de conservación de la organización. 2 Ambas cosas juntas dan la misma imagen: las entradas pertenecen a cada persona. Lo que ella le enseña a la herramienta no queda a disposición del resto de la empresa en el día a día, y allí nadie salvo ella misma puede rectificarlo. El segundo miembro del equipo empieza de cero, y la pregunta de qué cree saber la herramienta sobre la propia firma queda sin respuesta para la empresa en su conjunto.

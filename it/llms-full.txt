@@ -1792,6 +1792,165 @@ In questa pagina
 - Limiti
 - Domande frequenti
 - Fonti
+Da provare
+Il grafo di un’azienda
+Punti su un pallino o lo tocchi. Anche il tasto di tabulazione funziona.
+- Persone e ruoli
+- Cose e documenti
+- Regole e scadenze
+Undici nodi, tredici archi
+Così, in piccolo, comincia la memoria di un’azienda: un cliente, un’offerta, una regola di prezzo, un progetto e le persone che vi ruotano attorno. Scelga un pallino e qui comparirà che cosa vi è appeso e verso che cosa punta.
+Berger AG
+Il cliente è un oggetto a sé. Tutto ciò che lo riguarda è appeso qui invece di essere sparso in undici frasi separate.
+Tipo
+Cliente
+Validità
+dal 03.2024
+Provenienza
+da una conversazione
+Visibile a
+tutto il personale
+Collegamenti
+- ← appartiene a Offerta 114
+- ← appartiene a Ristrutturazione capannone 2
+- ← è responsabile di Vendite
+Offerta 114
+L’offerta conosce il proprio cliente, la regola di prezzo sotto cui è nata e la persona che l’ha scritta.
+Tipo
+Documento
+Validità
+dal 06.2026
+Provenienza
+da un documento
+Visibile a
+il ruolo Vendite
+Collegamenti
+- → appartiene a Berger AG
+- ← si applica a Regola di prezzo montaggio
+- ← è responsabile di R. Lehmann
+Regola di prezzo montaggio
+La regola punta da sé a tutto ciò che ne è toccato. È proprio questo a rispondere alla domanda sulla modifica di maggio.
+Tipo
+Regola
+Validità
+dal 05.2026
+Provenienza
+inserito a mano
+Visibile a
+tutto il personale
+Collegamenti
+- → si applica a Offerta 114
+- → sostituisce Regola di prezzo montaggio, versione precedente
+- → si applica a Ristrutturazione capannone 2
+Regola di prezzo montaggio, versione precedente
+La versione precedente non è cancellata, è chiusa con una data. Chi più tardi deve spiegare perché allora il calcolo era diverso la ritrova qui.
+Tipo
+Regola
+Validità
+fino al 05.2026, sostituita
+Provenienza
+inserito a mano
+Visibile a
+tutto il personale
+Collegamenti
+- ← sostituisce Regola di prezzo montaggio
+R. Lehmann
+Una persona con un ruolo. Se manca, resta visibile di che cosa era responsabile.
+Tipo
+Persona
+Validità
+dal 2021
+Provenienza
+inserito a mano
+Visibile a
+tutto il personale
+Collegamenti
+- → è responsabile di Offerta 114
+- → appartiene a Vendite
+- → è responsabile di Ristrutturazione capannone 2
+Vendite
+Un ruolo invece di una persona: la responsabilità sopravvive al cambio di posto.
+Tipo
+Ruolo
+Validità
+senza scadenza
+Provenienza
+inserito a mano
+Visibile a
+tutto il personale
+Collegamenti
+- ← appartiene a R. Lehmann
+- → è responsabile di Berger AG
+Ristrutturazione capannone 2
+Il progetto raccoglie fornitore, scadenza, verbale e responsabilità in un unico punto.
+Tipo
+Progetto
+Validità
+dal 04.2026
+Provenienza
+da una conversazione
+Visibile a
+la direzione di progetto
+Collegamenti
+- → appartiene a Berger AG
+- ← fornisce Nordwand Metallbau
+- ← appartiene a Verbale di collaudo
+- ← si applica a Scadenza 30.06.2026
+- ← è responsabile di R. Lehmann
+- ← si applica a Regola di prezzo montaggio
+Nordwand Metallbau
+Il fornitore è appeso al progetto e non a una nota in un account personale.
+Tipo
+Fornitore
+Validità
+dal 2019
+Provenienza
+da un documento
+Visibile a
+tutto il personale
+Collegamenti
+- → fornisce Ristrutturazione capannone 2
+Verbale di collaudo
+Anche un documento è un nodo. È appeso al progetto e porta con sé il termine tecnico in uso in azienda.
+Tipo
+Documento
+Validità
+dal 06.2026
+Provenienza
+da un documento
+Visibile a
+la direzione di progetto
+Collegamenti
+- → appartiene a Ristrutturazione capannone 2
+- ← si applica a Collaudo
+Scadenza 30.06.2026
+Una scadenza con data di fine. Dopo il 30.06.2026 vale come scaduta e non più come vera.
+Tipo
+Scadenza
+Validità
+fino al 30.06.2026
+Provenienza
+da un documento
+Visibile a
+la direzione di progetto
+Collegamenti
+- → si applica a Ristrutturazione capannone 2
+Collaudo
+Un termine tecnico così come lo intende l’azienda, e non come lo conosce un modello in generale.
+Tipo
+Termine tecnico
+Validità
+senza scadenza
+Provenienza
+da una conversazione
+Visibile a
+tutto il personale
+Collegamenti
+- → si applica a Verbale di collaudo
+Per una risposta al modello andrebbe solo questo estratto:
+Nodi 11
+Archi 13
+Un estratto inventato ma tipico. Ogni pallino porta con sé validità, provenienza e autorizzazione; ogni linea ha un nome e una direzione.
 Situazione di partenza: la memoria esiste da tempo, solo che non appartiene all’azienda
 La scena la conosce chiunque impieghi uno strumento di IA in azienda. Si spiega per la quinta volta come si chiama l’azienda, chi è la clientela, che aspetto ha da noi un’offerta e perché quel fornitore viene trattato diversamente da tutti gli altri. Il fatto che i grandi fornitori abbiano da tempo una funzione di memoria cambia meno di quanto ci si aspetti. Il motivo sta nella loro stessa documentazione, e non è un incidente, bensì una scelta costruttiva.
 La memoria dipende dall’account personale. Microsoft descrive per Copilot che i ricordi salvati, le informazioni ricavate dalla cronologia e le istruzioni personali si trovano nella casella di posta Exchange della rispettiva persona, in una cartella nascosta. 1 Anthropic precisa per Claude che i proprietari di un’organizzazione non possono né consultare né modificare i ricordi dei singoli utenti; esportarli, invece, è ben possibile secondo le regole di conservazione dell’organizzazione. 2 Entrambe le cose insieme danno lo stesso quadro: le voci appartengono alla singola persona. Ciò che essa insegna allo strumento non è a disposizione del resto dell’azienda nella quotidianità, e lì nessuno può rettificarlo se non essa stessa. Il secondo membro del team riparte da zero, e la domanda su che cosa lo strumento creda di sapere sulla propria azienda resta senza risposta per l’azienda nel suo complesso.
