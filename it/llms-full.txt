@@ -1789,20 +1789,21 @@ In questa pagina
 Da provare
 Il grafo di un’azienda
 Punti su un pallino o lo tocchi. Anche il tasto di tabulazione funziona.
-Offerta 114
-Regola di prezzo
-versione precedente
+Persone e ruoli
+Cose e documenti
+Regole e scadenze
+Brain Azienda
 R. Lehmann
 Vendite
+Offerta 114
 Berger AG
 Capannone 2
-Nordwand
-Scadenza
 Verbale
+Nordwand
+Regola di prezzo
+versione precedente
+Scadenza
 Collaudo
-- Persone e ruoli
-- Cose e documenti
-- Regole e scadenze
 Undici nodi, tredici archi
 Così, in piccolo, comincia la memoria di un’azienda: un cliente, un’offerta, una regola di prezzo, un progetto e le persone che vi ruotano attorno.
 A ogni nodo è appeso lo stesso insieme
@@ -1813,46 +1814,6 @@ A ogni nodo è appeso lo stesso insieme
 - Collegamenti
 La domanda a cui un elenco non sa rispondere
 Quali offerte aperte sono toccate dalla regola di prezzo modificata a maggio, e chi deve informare i clienti?
-Offerta 114
-L’offerta conosce il proprio cliente, la regola di prezzo sotto cui è nata e la persona che l’ha scritta.
-Tipo
-Documento
-Validità
-dal 06.2026
-Provenienza
-da un documento
-Visibile a
-il ruolo Vendite
-Collegamenti
-- → appartiene a Berger AG
-- ← si applica a Regola di prezzo montaggio
-- ← è responsabile di R. Lehmann
-Regola di prezzo montaggio
-La regola punta da sé a tutto ciò che ne è toccato. È proprio questo a rispondere alla domanda sulla modifica di maggio.
-Tipo
-Regola
-Validità
-dal 05.2026
-Provenienza
-inserito a mano
-Visibile a
-tutto il personale
-Collegamenti
-- → si applica a Offerta 114
-- → sostituisce Regola di prezzo montaggio, versione precedente
-- → si applica a Ristrutturazione capannone 2
-Regola di prezzo montaggio, versione precedente
-La versione precedente non è cancellata, è chiusa con una data. Chi più tardi deve spiegare perché allora il calcolo era diverso la ritrova qui.
-Tipo
-Regola
-Validità
-fino al 05.2026, sostituita
-Provenienza
-inserito a mano
-Visibile a
-tutto il personale
-Collegamenti
-- ← sostituisce Regola di prezzo montaggio
 R. Lehmann
 Una persona con un ruolo. Se manca, resta visibile di che cosa era responsabile.
 Tipo
@@ -1880,6 +1841,20 @@ tutto il personale
 Collegamenti
 - ← appartiene a R. Lehmann
 - → è responsabile di Berger AG
+Offerta 114
+L’offerta conosce il proprio cliente, la regola di prezzo sotto cui è nata e la persona che l’ha scritta.
+Tipo
+Documento
+Validità
+dal 06.2026
+Provenienza
+da un documento
+Visibile a
+il ruolo Vendite
+Collegamenti
+- → appartiene a Berger AG
+- ← si applica a Regola di prezzo montaggio
+- ← è responsabile di R. Lehmann
 Berger AG
 Il cliente è un oggetto a sé. Tutto ciò che lo riguarda è appeso qui invece di essere sparso in undici frasi separate.
 Tipo
@@ -1911,30 +1886,6 @@ Collegamenti
 - ← si applica a Scadenza 30.06.2026
 - ← è responsabile di R. Lehmann
 - ← si applica a Regola di prezzo montaggio
-Nordwand Metallbau
-Il fornitore è appeso al progetto e non a una nota in un account personale.
-Tipo
-Fornitore
-Validità
-dal 2019
-Provenienza
-da un documento
-Visibile a
-tutto il personale
-Collegamenti
-- → fornisce Ristrutturazione capannone 2
-Scadenza 30.06.2026
-Una scadenza con data di fine. Dopo il 30.06.2026 vale come scaduta e non più come vera.
-Tipo
-Scadenza
-Validità
-fino al 30.06.2026
-Provenienza
-da un documento
-Visibile a
-la direzione di progetto
-Collegamenti
-- → si applica a Ristrutturazione capannone 2
 Verbale di collaudo
 Anche un documento è un nodo. È appeso al progetto e porta con sé il termine tecnico in uso in azienda.
 Tipo
@@ -1948,6 +1899,56 @@ la direzione di progetto
 Collegamenti
 - → appartiene a Ristrutturazione capannone 2
 - ← si applica a Collaudo
+Nordwand Metallbau
+Il fornitore è appeso al progetto e non a una nota in un account personale.
+Tipo
+Fornitore
+Validità
+dal 2019
+Provenienza
+da un documento
+Visibile a
+tutto il personale
+Collegamenti
+- → fornisce Ristrutturazione capannone 2
+Regola di prezzo montaggio
+La regola punta da sé a tutto ciò che ne è toccato. È proprio questo a rispondere alla domanda sulla modifica di maggio.
+Tipo
+Regola
+Validità
+dal 05.2026
+Provenienza
+inserito a mano
+Visibile a
+tutto il personale
+Collegamenti
+- → si applica a Offerta 114
+- → sostituisce Regola di prezzo montaggio, versione precedente
+- → si applica a Ristrutturazione capannone 2
+Regola di prezzo montaggio, versione precedente
+La versione precedente non è cancellata, è chiusa con una data. Chi più tardi deve spiegare perché allora il calcolo era diverso la ritrova qui.
+Tipo
+Regola
+Validità
+fino al 05.2026, sostituita
+Provenienza
+inserito a mano
+Visibile a
+tutto il personale
+Collegamenti
+- ← sostituisce Regola di prezzo montaggio
+Scadenza 30.06.2026
+Una scadenza con data di fine. Dopo il 30.06.2026 vale come scaduta e non più come vera.
+Tipo
+Scadenza
+Validità
+fino al 30.06.2026
+Provenienza
+da un documento
+Visibile a
+la direzione di progetto
+Collegamenti
+- → si applica a Ristrutturazione capannone 2
 Collaudo
 Un termine tecnico così come lo intende l’azienda, e non come lo conosce un modello in generale.
 Tipo

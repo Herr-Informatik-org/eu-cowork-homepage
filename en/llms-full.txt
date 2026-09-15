@@ -1788,20 +1788,21 @@ On this page
 Try it out
 The graph of one company
 Point at a dot or tap it. The tab key works just as well.
-Quote 114
-Pricing rule
-earlier version
+People and roles
+Things and documents
+Rules and deadlines
+Brain Company
 R. Lehmann
 Sales
+Quote 114
 Berger AG
 Hall 2
-Nordwand
-Deadline
 Record
+Nordwand
+Pricing rule
+earlier version
+Deadline
 Acceptance
-- People and roles
-- Things and documents
-- Rules and deadlines
 Eleven nodes, thirteen edges
 This is how small a company memory starts out: one customer, one quote, one pricing rule, one project and the people around them.
 The same bundle hangs on every node
@@ -1812,46 +1813,6 @@ The same bundle hangs on every node
 - Connections
 The question a list cannot answer
 Which open quotes are affected by the pricing rule that changed in May, and who has to inform the customers?
-Quote 114
-The quote knows its customer, the pricing rule it was written under, and the person who wrote it.
-Type
-Document
-Validity
-since 06/2026
-Provenance
-from a document
-Visible to
-the sales role
-Connections
-- → belongs to Berger AG
-- ← applies to Installation pricing rule
-- ← is responsible for R. Lehmann
-Installation pricing rule
-The rule points of its own accord at everything affected by it. That is exactly what answers the question about the change in May.
-Type
-Rule
-Validity
-since 05/2026
-Provenance
-entered by hand
-Visible to
-all staff
-Connections
-- → applies to Quote 114
-- → replaces Installation pricing rule, earlier version
-- → applies to Hall 2 refit
-Installation pricing rule, earlier version
-The earlier version is not deleted but closed off with a date. Anyone who later has to explain why the calculation was different back then will find it here.
-Type
-Rule
-Validity
-until 05/2026, superseded
-Provenance
-entered by hand
-Visible to
-all staff
-Connections
-- ← replaces Installation pricing rule
 R. Lehmann
 A person with a role. If they are away, it stays visible what they were responsible for.
 Type
@@ -1879,6 +1840,20 @@ all staff
 Connections
 - ← belongs to R. Lehmann
 - → is responsible for Berger AG
+Quote 114
+The quote knows its customer, the pricing rule it was written under, and the person who wrote it.
+Type
+Document
+Validity
+since 06/2026
+Provenance
+from a document
+Visible to
+the sales role
+Connections
+- → belongs to Berger AG
+- ← applies to Installation pricing rule
+- ← is responsible for R. Lehmann
 Berger AG
 The customer is an object in its own right. Everything concerning them hangs here instead of being scattered across eleven separate sentences.
 Type
@@ -1910,30 +1885,6 @@ Connections
 - ← applies to Deadline 30 June 2026
 - ← is responsible for R. Lehmann
 - ← applies to Installation pricing rule
-Nordwand Metallbau
-The supplier hangs on the project and not on a note in a personal account.
-Type
-Supplier
-Validity
-since 2019
-Provenance
-from a document
-Visible to
-all staff
-Connections
-- → supplies Hall 2 refit
-Deadline 30 June 2026
-A deadline with an expiry date. After 30 June 2026 it counts as expired and no longer as true.
-Type
-Deadline
-Validity
-until 30 June 2026
-Provenance
-from a document
-Visible to
-project management
-Connections
-- → applies to Hall 2 refit
 Acceptance record
 A document is a node too. It hangs on the project and carries the term of art the company uses for it.
 Type
@@ -1947,6 +1898,56 @@ project management
 Connections
 - → belongs to Hall 2 refit
 - ← applies to Acceptance
+Nordwand Metallbau
+The supplier hangs on the project and not on a note in a personal account.
+Type
+Supplier
+Validity
+since 2019
+Provenance
+from a document
+Visible to
+all staff
+Connections
+- → supplies Hall 2 refit
+Installation pricing rule
+The rule points of its own accord at everything affected by it. That is exactly what answers the question about the change in May.
+Type
+Rule
+Validity
+since 05/2026
+Provenance
+entered by hand
+Visible to
+all staff
+Connections
+- → applies to Quote 114
+- → replaces Installation pricing rule, earlier version
+- → applies to Hall 2 refit
+Installation pricing rule, earlier version
+The earlier version is not deleted but closed off with a date. Anyone who later has to explain why the calculation was different back then will find it here.
+Type
+Rule
+Validity
+until 05/2026, superseded
+Provenance
+entered by hand
+Visible to
+all staff
+Connections
+- ← replaces Installation pricing rule
+Deadline 30 June 2026
+A deadline with an expiry date. After 30 June 2026 it counts as expired and no longer as true.
+Type
+Deadline
+Validity
+until 30 June 2026
+Provenance
+from a document
+Visible to
+project management
+Connections
+- → applies to Hall 2 refit
 Acceptance
 A term of art as the company understands it, not as a model knows it in general.
 Type

@@ -1788,20 +1788,21 @@ Sur cette page
 À essayer
 Le graphe d’une entreprise
 Pointez un point ou touchez-le. La touche de tabulation fonctionne aussi.
-Offre 114
-Règle de prix
-ancienne version
+Personnes et rôles
+Choses et documents
+Règles et échéances
+Brain Entreprise
 R. Lehmann
 Ventes
+Offre 114
 Berger AG
 Halle 2
-Nordwand
-Échéance
 Procès-verbal
+Nordwand
+Règle de prix
+ancienne version
+Échéance
 Réception
-- Personnes et rôles
-- Choses et documents
-- Règles et échéances
 Onze nœuds, treize arêtes
 Voilà comment commence, en tout petit, la mémoire d’une entreprise : un client, une offre, une règle de prix, un projet et les personnes qui vont avec.
 Le même ensemble à chaque nœud
@@ -1812,46 +1813,6 @@ Le même ensemble à chaque nœud
 - Liens
 La question à laquelle une liste ne peut pas répondre
 Quelles offres en cours sont touchées par la règle de prix modifiée en mai, et qui doit informer la clientèle ?
-Offre 114
-L’offre connaît son client, la règle de prix sous laquelle elle est née et la personne qui l’a rédigée.
-Type
-Document
-Validité
-depuis 06.2026
-Provenance
-issu d’un document
-Visible par
-le rôle Ventes
-Liens
-- → appartient à Berger AG
-- ← s’applique à Règle de prix montage
-- ← est responsable de R. Lehmann
-Règle de prix montage
-La règle pointe d’elle-même vers tout ce qu’elle touche. C’est précisément ce qui répond à la question sur la modification de mai.
-Type
-Règle
-Validité
-depuis 05.2026
-Provenance
-saisi à la main
-Visible par
-tout le personnel
-Liens
-- → s’applique à Offre 114
-- → remplace Règle de prix montage, ancienne version
-- → s’applique à Rénovation halle 2
-Règle de prix montage, ancienne version
-L’ancienne version n’est pas supprimée, elle est close avec une date. Qui doit expliquer plus tard pourquoi le calcul était différent à l’époque la retrouve ici.
-Type
-Règle
-Validité
-jusqu’à 05.2026, remplacée
-Provenance
-saisi à la main
-Visible par
-tout le personnel
-Liens
-- ← remplace Règle de prix montage
 R. Lehmann
 Une personne avec un rôle. Si elle est absente, ce dont elle avait la charge reste visible.
 Type
@@ -1879,6 +1840,20 @@ tout le personnel
 Liens
 - ← appartient à R. Lehmann
 - → est responsable de Berger AG
+Offre 114
+L’offre connaît son client, la règle de prix sous laquelle elle est née et la personne qui l’a rédigée.
+Type
+Document
+Validité
+depuis 06.2026
+Provenance
+issu d’un document
+Visible par
+le rôle Ventes
+Liens
+- → appartient à Berger AG
+- ← s’applique à Règle de prix montage
+- ← est responsable de R. Lehmann
 Berger AG
 Le client est un objet à part entière. Tout ce qui le concerne est rattaché ici au lieu d’être dispersé dans onze phrases séparées.
 Type
@@ -1910,30 +1885,6 @@ Liens
 - ← s’applique à Échéance 30.06.2026
 - ← est responsable de R. Lehmann
 - ← s’applique à Règle de prix montage
-Nordwand Metallbau
-Le fournisseur est rattaché au projet et non à une note dans un compte personnel.
-Type
-Fournisseur
-Validité
-depuis 2019
-Provenance
-issu d’un document
-Visible par
-tout le personnel
-Liens
-- → fournit Rénovation halle 2
-Échéance 30.06.2026
-Une échéance avec une date de fin. Après le 30.06.2026, elle compte comme échue et non plus comme vraie.
-Type
-Échéance
-Validité
-jusqu’au 30.06.2026
-Provenance
-issu d’un document
-Visible par
-la direction de projet
-Liens
-- → s’applique à Rénovation halle 2
 Procès-verbal de réception
 Un document est un nœud lui aussi. Il est rattaché au projet et porte le terme métier en usage dans la maison.
 Type
@@ -1947,6 +1898,56 @@ la direction de projet
 Liens
 - → appartient à Rénovation halle 2
 - ← s’applique à Réception
+Nordwand Metallbau
+Le fournisseur est rattaché au projet et non à une note dans un compte personnel.
+Type
+Fournisseur
+Validité
+depuis 2019
+Provenance
+issu d’un document
+Visible par
+tout le personnel
+Liens
+- → fournit Rénovation halle 2
+Règle de prix montage
+La règle pointe d’elle-même vers tout ce qu’elle touche. C’est précisément ce qui répond à la question sur la modification de mai.
+Type
+Règle
+Validité
+depuis 05.2026
+Provenance
+saisi à la main
+Visible par
+tout le personnel
+Liens
+- → s’applique à Offre 114
+- → remplace Règle de prix montage, ancienne version
+- → s’applique à Rénovation halle 2
+Règle de prix montage, ancienne version
+L’ancienne version n’est pas supprimée, elle est close avec une date. Qui doit expliquer plus tard pourquoi le calcul était différent à l’époque la retrouve ici.
+Type
+Règle
+Validité
+jusqu’à 05.2026, remplacée
+Provenance
+saisi à la main
+Visible par
+tout le personnel
+Liens
+- ← remplace Règle de prix montage
+Échéance 30.06.2026
+Une échéance avec une date de fin. Après le 30.06.2026, elle compte comme échue et non plus comme vraie.
+Type
+Échéance
+Validité
+jusqu’au 30.06.2026
+Provenance
+issu d’un document
+Visible par
+la direction de projet
+Liens
+- → s’applique à Rénovation halle 2
 Réception
 Un terme métier tel que l’entreprise le comprend, et non tel qu’un modèle le connaît en général.
 Type

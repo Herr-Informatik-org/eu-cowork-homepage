@@ -1788,20 +1788,21 @@ En esta página
 Para probar
 El grafo de una empresa
 Apunte a un punto o tóquelo. La tecla de tabulación también sirve.
-Oferta 114
-Regla de precio
-versión anterior
+Personas y funciones
+Cosas y documentos
+Reglas y plazos
+Brain Empresa
 R. Lehmann
 Ventas
+Oferta 114
 Berger AG
 Nave 2
-Nordwand
-Plazo
 Acta
+Nordwand
+Regla de precio
+versión anterior
+Plazo
 Recepción
-- Personas y funciones
-- Cosas y documentos
-- Reglas y plazos
 Once nodos, trece aristas
 Así de pequeña empieza la memoria de una empresa: un cliente, una oferta, una regla de precio, un proyecto y las personas que los rodean.
 De cada nodo cuelga el mismo conjunto
@@ -1812,46 +1813,6 @@ De cada nodo cuelga el mismo conjunto
 - Conexiones
 La pregunta que una lista no puede responder
 ¿Qué ofertas abiertas se ven afectadas por la regla de precio que cambió en mayo, y quién debe informar a la clientela?
-Oferta 114
-La oferta conoce a su cliente, la regla de precio bajo la que nació y la persona que la redactó.
-Tipo
-Documento
-Validez
-desde 06.2026
-Procedencia
-de un documento
-Visible para
-la función Ventas
-Conexiones
-- → pertenece a Berger AG
-- ← se aplica a Regla de precio de montaje
-- ← es responsable de R. Lehmann
-Regla de precio de montaje
-La regla apunta por sí misma a todo lo que se ve afectado por ella. Eso es justamente lo que responde a la pregunta sobre el cambio de mayo.
-Tipo
-Regla
-Validez
-desde 05.2026
-Procedencia
-introducido a mano
-Visible para
-toda la plantilla
-Conexiones
-- → se aplica a Oferta 114
-- → sustituye a Regla de precio de montaje, versión anterior
-- → se aplica a Reforma de la nave 2
-Regla de precio de montaje, versión anterior
-La versión anterior no se borra, se cierra con una fecha. Quien más tarde deba explicar por qué entonces se calculaba de otro modo la encuentra aquí.
-Tipo
-Regla
-Validez
-hasta 05.2026, sustituida
-Procedencia
-introducido a mano
-Visible para
-toda la plantilla
-Conexiones
-- ← sustituye a Regla de precio de montaje
 R. Lehmann
 Una persona con una función. Si falta, sigue siendo visible de qué era responsable.
 Tipo
@@ -1879,6 +1840,20 @@ toda la plantilla
 Conexiones
 - ← pertenece a R. Lehmann
 - → es responsable de Berger AG
+Oferta 114
+La oferta conoce a su cliente, la regla de precio bajo la que nació y la persona que la redactó.
+Tipo
+Documento
+Validez
+desde 06.2026
+Procedencia
+de un documento
+Visible para
+la función Ventas
+Conexiones
+- → pertenece a Berger AG
+- ← se aplica a Regla de precio de montaje
+- ← es responsable de R. Lehmann
 Berger AG
 El cliente es un objeto propio. Todo lo que le concierne cuelga aquí en lugar de estar disperso en once frases sueltas.
 Tipo
@@ -1910,30 +1885,6 @@ Conexiones
 - ← se aplica a Plazo 30.06.2026
 - ← es responsable de R. Lehmann
 - ← se aplica a Regla de precio de montaje
-Nordwand Metallbau
-El proveedor cuelga del proyecto y no de una nota en una cuenta personal.
-Tipo
-Proveedor
-Validez
-desde 2019
-Procedencia
-de un documento
-Visible para
-toda la plantilla
-Conexiones
-- → suministra a Reforma de la nave 2
-Plazo 30.06.2026
-Un plazo con fecha de vencimiento. Después del 30.06.2026 cuenta como vencido y ya no como verdadero.
-Tipo
-Plazo
-Validez
-hasta el 30.06.2026
-Procedencia
-de un documento
-Visible para
-la dirección de proyecto
-Conexiones
-- → se aplica a Reforma de la nave 2
 Acta de recepción
 Un documento también es un nodo. Cuelga del proyecto y lleva el término técnico que se usa en la casa.
 Tipo
@@ -1947,6 +1898,56 @@ la dirección de proyecto
 Conexiones
 - → pertenece a Reforma de la nave 2
 - ← se aplica a Recepción
+Nordwand Metallbau
+El proveedor cuelga del proyecto y no de una nota en una cuenta personal.
+Tipo
+Proveedor
+Validez
+desde 2019
+Procedencia
+de un documento
+Visible para
+toda la plantilla
+Conexiones
+- → suministra a Reforma de la nave 2
+Regla de precio de montaje
+La regla apunta por sí misma a todo lo que se ve afectado por ella. Eso es justamente lo que responde a la pregunta sobre el cambio de mayo.
+Tipo
+Regla
+Validez
+desde 05.2026
+Procedencia
+introducido a mano
+Visible para
+toda la plantilla
+Conexiones
+- → se aplica a Oferta 114
+- → sustituye a Regla de precio de montaje, versión anterior
+- → se aplica a Reforma de la nave 2
+Regla de precio de montaje, versión anterior
+La versión anterior no se borra, se cierra con una fecha. Quien más tarde deba explicar por qué entonces se calculaba de otro modo la encuentra aquí.
+Tipo
+Regla
+Validez
+hasta 05.2026, sustituida
+Procedencia
+introducido a mano
+Visible para
+toda la plantilla
+Conexiones
+- ← sustituye a Regla de precio de montaje
+Plazo 30.06.2026
+Un plazo con fecha de vencimiento. Después del 30.06.2026 cuenta como vencido y ya no como verdadero.
+Tipo
+Plazo
+Validez
+hasta el 30.06.2026
+Procedencia
+de un documento
+Visible para
+la dirección de proyecto
+Conexiones
+- → se aplica a Reforma de la nave 2
 Recepción
 Un término técnico tal como lo entiende la empresa, y no como lo conoce un modelo en general.
 Tipo
