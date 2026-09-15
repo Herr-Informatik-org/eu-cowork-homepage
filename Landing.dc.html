@@ -88,19 +88,19 @@
 <p>Modelle</p>
 <h3>Alle Modelle</h3>
 <p>GPT, Claude, GLM, Kimi und DeepSeek über einen Zugang.</p>
-<p><strong>admin · verbrauch</strong></p>
-<p>Verbrauch pro Tag, nach Modell · Juli 2026</p>
-<p>€ 20</p>
-<p>€ 15</p>
-<p>€ 10</p>
-<p>€ 5</p>
-<p>€ 0</p>
-<p>01.07. 03.07. 05.07. 07.07. 09.07. 11.07. 13.07. 15.07.</p>
-<p>Modell Min</p>
-<p>mistral-large-3 EUR 0.39</p>
-<p>claude-sonnet-4.6 EUR 0.39</p>
-<p>glm-5.2-eu EUR 0.20</p>
-<p>gpt-5.2-mini EUR 0.15</p>
+<p><strong>chat · modellwahl</strong></p>
+<p>Modell CH Schweiz</p>
+<p>Für Aufgaben mit Verarbeitung in der Schweiz.</p>
+<p><em>Intelligenz</em> <em>Tokenkosten</em></p>
+<p>Luna GPT-5.6-Luna Europa</p>
+<p>Schnell und sparsam für den Alltag.</p>
+<p><em>Intelligenz</em> <em>Tokenkosten</em></p>
+<p>Sol GPT-5.6-Sol Weltweit</p>
+<p>Für anspruchsvolle Dokumente und Analysen.</p>
+<p><em>Intelligenz</em> <em>Tokenkosten</em></p>
+<p>Automatisch Je nach Modell</p>
+<p>Wählt passend zur Aufgabe das Modell.</p>
+<p><em>Intelligenz</em> <em>Tokenkosten</em></p>
 <p>Websuche</p>
 <h3>Websuche</h3>
 <p>Aktuelle Antworten mit Quellen, direkt im Chat.</p>
@@ -812,67 +812,59 @@
   .euc-mock-msg .u{ display:block; margin-left:auto; max-width:82%; background:var(--c-deep); color:#F2F7FA; font-size:11.5px; line-height:1.5; padding:9px 12px; border-radius:12px 12px 3px 12px; }
   .euc-mock-msg .a{ display:block; margin-top:10px; font-size:11.5px; line-height:1.55; color:#2C3742; }
 
-  /* ---------- Verbrauchs-Attrappe: Diagramm aus divs statt aus einem Bild ----
-     Hier standen zwei echte Bildschirmfotos. Ein Foto bleibt in der Sprache, in
-     der es aufgenommen wurde; auf einer Seite in fünf Sprachen ist das der eine
-     Fleck, der immer deutsch bleibt. Nachgebaut wechselt die Kachel mit, weil
-     ihre Beschriftung Text ist wie jede andere.
-     Die Masse folgen den bestehenden Attrappen (Mono 8.5px für Achsen und
-     Spalten, Inter 11.5px für den Inhalt), damit die Kachel neben den vier
-     anderen nicht als Fremdkörper liest. */
-  .euc-use-chart{ padding:12px 12px 2px; }
-  /* Kleiner als die Zeilen darunter, nicht grösser: der Titel ordnet das
-     Diagramm ein, er ist nicht die Aussage der Kachel. Die steht als
-     Überschrift daneben. */
-  .euc-use-title{ margin:0 0 8px; font-family:var(--f-body); font-size:10px; font-weight:600;
-    color:#1E2A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  /* Flacher als das Original, und zwar mit Absicht: sichtbar sind rund 246
-     Pixel Höhe, und was das Diagramm mehr bekäme, fehlte unten der Legende. Ein
-     Balkenfeld ohne Modellnamen erklärt nichts. */
-  .euc-use-plot{ position:relative; height:100px; }
-  /* Die Hilfslinien sind höhenlos und werden über space-between verteilt: fünf
-     Linien auf 0/25/50/75/100 Prozent, ohne eine einzige Rechnung im Markup.
-     Die unterste ist die Grundlinie, deshalb durchgezogen. */
-  .euc-use-grid{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; }
-  .euc-use-gl{ position:relative; height:0; margin-left:34px; border-top:1px dashed #E4E9ED; }
-  .euc-use-gl:last-child{ border-top-style:solid; border-top-color:#E7ECF0; }
-  .euc-use-gl > span{ position:absolute; right:calc(100% + 6px); top:0; transform:translateY(-50%);
-    font-family:var(--f-mono); font-size:8.5px; line-height:1; color:#A8B2BC; white-space:nowrap; }
-  /* 1px Luft unten, sonst stünde der Balken auf der Grundlinie statt darauf. */
-  .euc-use-bars{ position:absolute; inset:0 0 1px 34px; display:flex; align-items:flex-end; }
-  /* Der Abstand steckt in der Innenkante, nicht in einem gap: so ist jede Zelle
-     exakt ein Sechzehntel breit und die X-Beschriftung kann darauf rechnen. */
-  .euc-use-bar{ flex:1 1 0; height:100%; padding:0 2px; display:flex; align-items:flex-end; }
-  .euc-use-stack{ display:flex; flex-direction:column; width:100%; }
-  .euc-use-stack i{ display:block; width:100%; min-height:1px; }
-  /* Die weisse Fuge zwischen zwei Modellen, wie in der Anwendung. */
-  .euc-use-stack i + i{ border-top:1px solid #FFFFFF; }
-  .euc-use-xrow{ position:relative; margin-left:34px; height:15px; display:flex; }
-  .euc-use-x{ position:relative; flex:1 1 0; }
-  /* Eine Zelle deckt zwei Balken ab; 25 Prozent ist die Mitte des ersten. */
-  .euc-use-x > span{ position:absolute; left:25%; top:4px; transform:translateX(-50%);
-    font-family:var(--f-mono); font-size:8.5px; line-height:1; color:#A8B2BC; white-space:nowrap; }
-
-  /* Die vier Modellfarben, aus der alten Aufnahme gemessen. glm und gpt lagen
-     dort beide auf fast demselben Dunkelblau und waren im Stapel nicht zu
-     trennen; gpt ist deshalb aufgehellt, bleibt aber in derselben Familie. */
-  .euc-use-c1{ background:#1DAE7A; }
-  .euc-use-c2{ background:#2D7291; }
-  .euc-use-c3{ background:#2C79D4; }
-  .euc-use-c4{ background:#5B93A8; }
-
-  .euc-use-tbl{ margin-top:8px; border-top:1px solid var(--c-line-soft); }
-  .euc-use-trow{ display:flex; align-items:center; gap:8px; padding:7px 12px; border-bottom:1px solid #F6F8FA; }
-  /* Der Kopf hat kein Farbquadrat, holt sich dessen Platz aber als Einzug,
-     damit die Spalte nicht um neun Pixel verspringt. */
-  .euc-use-trow.is-head{ padding-left:29px; background:#FBFCFD;
-    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; color:#A8B2BC; }
-  .euc-use-sw{ flex:0 0 auto; width:9px; height:9px; border-radius:2px; }
-  .euc-use-trow .euc-use-tm{ flex:1 1 auto; min-width:0; font-family:var(--f-body); font-size:11.5px; color:#2C3742;
+  /* ---------- Modellwahl-Attrappe: der Auswahldialog aus der Anwendung ------
+     Hier stand ein Verbrauchsdiagramm mit Preistabelle. Es zeigte, was ein Tag
+     kostet, nicht, was die Kachel behauptet, naemlich dass alle Modelle ueber
+     einen Zugang laufen. Nachgebaut ist deshalb die Liste, die im Produkt beim
+     Modellwechsel aufgeht: Name, ein Satz dazu, und drei Angaben, die die Wahl
+     tatsaechlich entscheiden.
+     Beschriftungen sind Text und wechseln die Sprache mit; die Modellnamen
+     nicht, die heissen ueberall gleich. Die Masse folgen den uebrigen
+     Attrappen: Inter 11.5px fuer den Inhalt, Mono 8.5px fuer Etiketten. */
+  .euc-pick-list{ padding:0; }
+  /* Eng gesetzt mit Absicht: sichtbar sind rund 246 Pixel, und erst bei
+     dieser Zeilenhoehe stehen drei Eintraege ganz im Rahmen und der vierte
+     mit seinem Namen. Eine Liste, die nach dem zweiten Eintrag abbricht,
+     behauptet nicht "alle Modelle". */
+  .euc-pick-row{ padding:6px 12px 7px; border-bottom:1px solid #F2F5F7; }
+  /* Die eine hervorgehobene Zeile ist die gewaehlte, wie im Dialog. Kein
+     Rahmen, nur eine Tonung: sonst kaempfen vier Kaesten um die Aufmerksamkeit. */
+  .euc-pick-row.is-on{ background:#F4F8FB; }
+  .euc-pick-h{ display:flex; align-items:baseline; gap:8px; }
+  .euc-pick-n{ font-family:var(--f-body); font-size:12.5px; font-weight:600; color:#1E2A36;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .euc-use-trow .euc-use-tv{ flex:0 0 auto; font-family:var(--f-mono); font-size:9.5px; color:#3D4855; white-space:nowrap; }
-  .euc-use-trow.is-head .euc-use-tm,
-  .euc-use-trow.is-head .euc-use-tv{ font-family:inherit; font-size:inherit; letter-spacing:inherit; color:inherit; }
+  /* Verarbeitungsort rechts in der Titelzeile: die Angabe, nach der in Europa
+     zuerst gefragt wird, steht damit auf gleicher Hoehe wie der Name. */
+  .euc-pick-reg{ margin-left:auto; flex:0 0 auto; display:inline-flex; align-items:center; gap:4px;
+    font-family:var(--f-body); font-size:9.5px; color:#5A6472; white-space:nowrap; }
+  .euc-pick-reg svg{ display:block; flex:0 0 auto; }
+  .euc-pick-d{ margin:2px 0 0; font-family:var(--f-body); font-size:10.5px; line-height:1.3; color:#5A6472;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .euc-pick-att{ margin-top:4px; display:flex; align-items:center; gap:12px; }
+  /* Die Etiketten duerfen schrumpfen, die Punktreihen nie: sonst schiebt das
+     laengste Wort einer Sprache (spanisch "Coste de tokens") die letzten
+     Punkte aus dem Rahmen, und zwar nur in einem schmalen Breitenfenster,
+     wo man es beim Nachsehen kaum erwischt. */
+  .euc-pick-a{ display:inline-flex; align-items:center; gap:5px; min-width:0; }
+  .euc-pick-a em{ min-width:0; overflow:hidden; text-overflow:ellipsis;
+    font-style:normal; font-family:var(--f-mono); font-size:8.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:#A8B2BC; white-space:nowrap; }
+  /* Fuenf Punkte statt einer Zahl: ein Verhaeltnis liest sich schneller als
+     "3 von 5", und es braucht keine Uebersetzung. */
+  .euc-pick-m{ display:inline-flex; align-items:center; gap:3px; flex:0 0 auto; }
+  .euc-pick-m i{ display:block; width:5px; height:5px; border-radius:50%; background:#DDE4EA; }
+  .euc-pick-m i.on{ background:var(--c-eu-700); }
+  .euc-pick-m.is-cost i.on{ background:var(--c-gold-500); }
+  /* Die zweite waehlbare Fassung derselben Stufe steht neben dem Namen und
+     nicht in der Attributzeile: dort truege sie die ganze Zeile hoeher, und
+     bei vier Eintraegen faellt das sofort unten aus dem Rahmen. */
+  .euc-pick-chip{ flex:0 0 auto; font-family:var(--f-mono); font-size:8.5px; color:#3D4855; background:#FFFFFF;
+    border:1px solid var(--c-hairline); border-radius:var(--r-control); padding:1px 5px; white-space:nowrap; }
+  /* Die Flagge traegt die Farbe, nicht die Marke: Schweizer Rot und
+     Europa-Blau sind hier Kennzeichen eines Orts, kein neuer Akzent. */
+  .euc-pick-ch svg{ color:#D8232A; }
+  .euc-pick-eu svg{ color:var(--c-eu-700); }
+  .euc-pick-world svg, .euc-pick-any svg{ color:#7A8794; }
 
   /* ---------- Rechte-Attrappe: drei angebundene Systeme ----------------------
      Drei Karten nach dem Muster der Kapitel-Zeilen (weisse Fläche, 9px Radius,
@@ -909,11 +901,13 @@
      entbehrlichste Angabe der Zeile, und ohne ihn bleibt Platz für den Anfang
      der Adresse. */
   @media (max-width:860px){
-    .euc-use-chart{ padding:11px 10px 2px; }
-    .euc-use-plot{ height:78px; }
-    .euc-use-x:nth-child(even) > span{ visibility:hidden; }
-    .euc-use-trow{ padding:6px 10px; }
-    .euc-use-trow.is-head{ padding-left:27px; }
+    /* Enger als auf dem Desktop, nicht weiter: der Rahmen schrumpft hier auf
+       220 Pixel, und erst so steht der Name des vierten Eintrags noch drin. */
+    .euc-pick-row{ padding:5px 10px 6px; }
+    /* Die Etiketten sind auf schmalen Schirmen entbehrlich: die Punktreihen
+       stehen weiter in derselben Reihenfolge und Farbe. */
+    .euc-pick-a em{ display:none; }
+    .euc-pick-att{ margin-top:3px; gap:12px; }
     .euc-mcp-body{ padding:11px 10px 2px; }
     .euc-mcp-k{ display:none; }
   }
@@ -2087,66 +2081,66 @@
             <h3 class="euc-tile-t">{{ t.features.t1 }}</h3>
             <p class="euc-tile-d">{{ t.features.d1 }}</p>
           </div>
-          <!-- Hier stand eine Aufnahme des Admin-Panels. Die Tagessummen und die
-               Farben sind daraus übernommen, samt der beiden Wochenend-Einbrüche
-               (Tag 4/5 und 11/12): ohne diesen Rhythmus liest sich die Kurve wie
-               Dekoration. Achse, Datumsleiste und Tabellenkopf kommen aus dem
-               Wörterbuch, die Modellnamen nicht. Die heissen überall gleich. -->
+          <!-- Hier stand ein Verbrauchsdiagramm mit Preistabelle: es zeigte, was
+               ein Tag kostet, nicht, was die Kachel behauptet. Nachgebaut ist
+               jetzt die Liste, die im Produkt beim Modellwechsel aufgeht. Die
+               Beschriftungen kommen aus dem Woerterbuch, die Modellnamen nicht.
+               Die heissen ueberall gleich. -->
           <div class="euc-shot" aria-hidden="true">
-            <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.use.bar }}</b></div>
-          <div class="euc-use-chart">
-            <p class="euc-use-title">{{ t.features.use.title }}</p>
-            <div class="euc-use-plot">
-              <div class="euc-use-grid">
-                <sc-for list="{{ t.features.use.axis }}" as="a" hint-placeholder-count="5">
-                  <div class="euc-use-gl"><span>{{ a }}</span></div>
-                </sc-for>
+          <div class="euc-mock">
+          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.pick.bar }}</b></div>
+          <div class="euc-pick-list">
+
+            <div class="euc-pick-row">
+              <div class="euc-pick-h">
+                <span class="euc-pick-n">{{ t.features.pick.n1 }}</span>
+                <span class="euc-pick-reg euc-pick-ch"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="currentColor"></rect><path d="M12 7.5v9M7.5 12h9" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"></path></svg><span>{{ t.features.pick.rCh }}</span></span>
               </div>
-              <!-- Höhe des Stapels = Tagessumme, gemessen an 20 Euro. Die vier
-                   Segmente von oben nach unten: gpt, glm, claude, mistral. Die
-                   Anteile schwanken von Tag zu Tag, sonst sähe jeder Balken aus
-                   wie eine Kopie des Nachbarn. -->
-              <div class="euc-use-bars">
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:46.5%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:20%;"></i><i class="euc-use-c2" style="height:29%;"></i><i class="euc-use-c1" style="height:39%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:64.5%;"><i class="euc-use-c4" style="height:13%;"></i><i class="euc-use-c3" style="height:19%;"></i><i class="euc-use-c2" style="height:32%;"></i><i class="euc-use-c1" style="height:36%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:45.5%;"><i class="euc-use-c4" style="height:11%;"></i><i class="euc-use-c3" style="height:21%;"></i><i class="euc-use-c2" style="height:28%;"></i><i class="euc-use-c1" style="height:40%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:8.5%;"><i class="euc-use-c4" style="height:11%;"></i><i class="euc-use-c3" style="height:22%;"></i><i class="euc-use-c2" style="height:33%;"></i><i class="euc-use-c1" style="height:34%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:6.5%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:20%;"></i><i class="euc-use-c2" style="height:31%;"></i><i class="euc-use-c1" style="height:37%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:59.5%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:20%;"></i><i class="euc-use-c2" style="height:27%;"></i><i class="euc-use-c1" style="height:41%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:58%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:21%;"></i><i class="euc-use-c2" style="height:32%;"></i><i class="euc-use-c1" style="height:35%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:74.5%;"><i class="euc-use-c4" style="height:13%;"></i><i class="euc-use-c3" style="height:19%;"></i><i class="euc-use-c2" style="height:30%;"></i><i class="euc-use-c1" style="height:38%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:68%;"><i class="euc-use-c4" style="height:11%;"></i><i class="euc-use-c3" style="height:19%;"></i><i class="euc-use-c2" style="height:28%;"></i><i class="euc-use-c1" style="height:42%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:55%;"><i class="euc-use-c4" style="height:11%;"></i><i class="euc-use-c3" style="height:22%;"></i><i class="euc-use-c2" style="height:31%;"></i><i class="euc-use-c1" style="height:36%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:8%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:20%;"></i><i class="euc-use-c2" style="height:34%;"></i><i class="euc-use-c1" style="height:34%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:9.5%;"><i class="euc-use-c4" style="height:11%;"></i><i class="euc-use-c3" style="height:21%;"></i><i class="euc-use-c2" style="height:29%;"></i><i class="euc-use-c1" style="height:39%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:82.5%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:18%;"></i><i class="euc-use-c2" style="height:33%;"></i><i class="euc-use-c1" style="height:37%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:60%;"><i class="euc-use-c4" style="height:11%;"></i><i class="euc-use-c3" style="height:20%;"></i><i class="euc-use-c2" style="height:29%;"></i><i class="euc-use-c1" style="height:40%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:70.5%;"><i class="euc-use-c4" style="height:13%;"></i><i class="euc-use-c3" style="height:22%;"></i><i class="euc-use-c2" style="height:30%;"></i><i class="euc-use-c1" style="height:35%;"></i></span></span>
-                <span class="euc-use-bar"><span class="euc-use-stack" style="height:77.5%;"><i class="euc-use-c4" style="height:12%;"></i><i class="euc-use-c3" style="height:19%;"></i><i class="euc-use-c2" style="height:31%;"></i><i class="euc-use-c1" style="height:38%;"></i></span></span>
+              <p class="euc-pick-d">{{ t.features.pick.d1 }}</p>
+              <div class="euc-pick-att">
+                <span class="euc-pick-a"><em>{{ t.features.pick.lInt }}</em><span class="euc-pick-m"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></span>
+                <span class="euc-pick-a"><em>{{ t.features.pick.lCost }}</em><span class="euc-pick-m is-cost"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></span>
               </div>
             </div>
-            <!-- Acht Beschriftungen auf sechzehn Balken: jede Zelle deckt zwei
-                 Balken ab, die Schrift sitzt auf der Mitte des ersten davon. -->
-            <div class="euc-use-xrow">
-              <sc-for list="{{ t.features.use.days }}" as="d" hint-placeholder-count="8">
-                <span class="euc-use-x"><span>{{ d }}</span></span>
-              </sc-for>
+
+            <div class="euc-pick-row">
+              <div class="euc-pick-h">
+                <span class="euc-pick-n">{{ t.features.pick.n2 }}</span><span class="euc-pick-chip">GPT-5.6-Luna</span>
+                <span class="euc-pick-reg euc-pick-eu"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="currentColor"></circle><circle cx="12" cy="6.6" r="1.25" fill="#FFFFFF"></circle><circle cx="16.8" cy="9.1" r="1.25" fill="#FFFFFF"></circle><circle cx="16.8" cy="14.9" r="1.25" fill="#FFFFFF"></circle><circle cx="12" cy="17.4" r="1.25" fill="#FFFFFF"></circle><circle cx="7.2" cy="14.9" r="1.25" fill="#FFFFFF"></circle><circle cx="7.2" cy="9.1" r="1.25" fill="#FFFFFF"></circle></svg><span>{{ t.features.pick.rEu }}</span></span>
+              </div>
+              <p class="euc-pick-d">{{ t.features.pick.d2 }}</p>
+              <div class="euc-pick-att">
+                <span class="euc-pick-a"><em>{{ t.features.pick.lInt }}</em><span class="euc-pick-m"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></span>
+                <span class="euc-pick-a"><em>{{ t.features.pick.lCost }}</em><span class="euc-pick-m is-cost"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></span>
+              </div>
             </div>
+
+            <div class="euc-pick-row is-on">
+              <div class="euc-pick-h">
+                <span class="euc-pick-n">{{ t.features.pick.n3 }}</span><span class="euc-pick-chip">GPT-5.6-Sol</span>
+                <span class="euc-pick-reg euc-pick-world"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"></circle><path d="M12 2.8a14.5 14.5 0 0 0 0 18.4 14.5 14.5 0 0 0 0-18.4"></path><path d="M2.8 12h18.4"></path></svg><span>{{ t.features.pick.rWorld }}</span></span>
+              </div>
+              <p class="euc-pick-d">{{ t.features.pick.d3 }}</p>
+              <div class="euc-pick-att">
+                <span class="euc-pick-a"><em>{{ t.features.pick.lInt }}</em><span class="euc-pick-m"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></span>
+                <span class="euc-pick-a"><em>{{ t.features.pick.lCost }}</em><span class="euc-pick-m is-cost"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></span>
+              </div>
+            </div>
+
+            <div class="euc-pick-row">
+              <div class="euc-pick-h">
+                <span class="euc-pick-n">{{ t.features.pick.n4 }}</span>
+                <span class="euc-pick-reg euc-pick-any"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4.5 20 8l-4 3.5"></path><path d="M20 8H15.2c-1.5 0-2.9.8-3.7 2l-3 4.6c-.8 1.2-2.2 2-3.7 2H3"></path><path d="M16 19.5 20 16l-4-3.5"></path><path d="M3 8h1.8c1.5 0 2.9.8 3.7 2l.5.8"></path><path d="M20 16h-4.8c-1.5 0-2.9-.8-3.7-2l-.5-.8"></path></svg><span>{{ t.features.pick.rAuto }}</span></span>
+              </div>
+              <p class="euc-pick-d">{{ t.features.pick.d4 }}</p>
+              <div class="euc-pick-att">
+                <span class="euc-pick-a"><em>{{ t.features.pick.lInt }}</em><span class="euc-pick-m"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></span>
+                <span class="euc-pick-a"><em>{{ t.features.pick.lCost }}</em><span class="euc-pick-m is-cost"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></span>
+              </div>
+            </div>
+
           </div>
-          <!-- Legende und Preisliste in einem: dieselbe Reihenfolge wie im
-               Stapel, von unten nach oben gelesen. -->
-          <div class="euc-use-tbl">
-            <div class="euc-use-trow is-head">
-              <span class="euc-use-tm">{{ t.features.use.cModel }}</span>
-              <span class="euc-use-tv">{{ t.features.use.cMin }}</span>
-            </div>
-            <div class="euc-use-trow"><i class="euc-use-sw euc-use-c1"></i><span class="euc-use-tm">mistral-large-3</span><span class="euc-use-tv">{{ t.features.use.cur }} 0.39</span></div>
-            <div class="euc-use-trow"><i class="euc-use-sw euc-use-c2"></i><span class="euc-use-tm">claude-sonnet-4.6</span><span class="euc-use-tv">{{ t.features.use.cur }} 0.39</span></div>
-            <div class="euc-use-trow"><i class="euc-use-sw euc-use-c3"></i><span class="euc-use-tm">glm-5.2-eu</span><span class="euc-use-tv">{{ t.features.use.cur }} 0.20</span></div>
-            <div class="euc-use-trow"><i class="euc-use-sw euc-use-c4"></i><span class="euc-use-tm">gpt-5.2-mini</span><span class="euc-use-tv">{{ t.features.use.cur }} 0.15</span></div>
           </div>
-            </div>
           </div>
         </article>
 
@@ -3844,11 +3838,13 @@ this.mobRef = React.createRef();
              Kurz halten: die Zeilen der Attrappe sind schmal, ein zu langes
              Wort bricht um und die Attrappe sieht nicht mehr aus wie eine
              Oberfläche, sondern wie ein Textblock. */
-          use:{ bar:'admin · verbrauch',
-                title:'Verbrauch pro Tag, nach Modell · Juli 2026',
-                axis:['€ 20','€ 15','€ 10','€ 5','€ 0'],
-                days:['01.07.','03.07.','05.07.','07.07.','09.07.','11.07.','13.07.','15.07.'],
-                cModel:'Modell', cMin:'Min', cur:'EUR' },
+          pick:{ bar:'chat · modellwahl',
+                 n1:'Modell CH',   d1:'Für Aufgaben mit Verarbeitung in der Schweiz.',
+                 n2:'Luna',        d2:'Schnell und sparsam für den Alltag.',
+                 n3:'Sol',         d3:'Für anspruchsvolle Dokumente und Analysen.',
+                 n4:'Automatisch', d4:'Wählt passend zur Aufgabe das Modell.',
+                 lInt:'Intelligenz', lCost:'Tokenkosten',
+                 rCh:'Schweiz', rEu:'Europa', rWorld:'Weltweit', rAuto:'Je nach Modell' },
           ws:{ bar:'websuche', idle:'Suche im Web',
                ask:'Wie hoch war der Schweizer Export im Juni?',
                answer:'Drei Quellen geprüft, die Zahlen stimmen überein.',
@@ -3891,11 +3887,13 @@ this.mobRef = React.createRef();
           t4:'Role agents & skills', d4:'AI coworkers for recurring tasks, released by the admin.',
           t5:'ERP integration with access control', d5:'ERP via MCP gateway: “Read invoices yes, salaries no.” Every call audited.',
           t6:'Proactive memory', d6:'Remembers what matters on its own: auditable, deletable, on your server.',
-          use:{ bar:'admin · usage',
-                title:'Daily usage by model · July 2026',
-                axis:['€20','€15','€10','€5','€0'],
-                days:['1 Jul','3 Jul','5 Jul','7 Jul','9 Jul','11 Jul','13 Jul','15 Jul'],
-                cModel:'Model', cMin:'Min', cur:'EUR' },
+          pick:{ bar:'chat · model picker',
+                 n1:'Model CH',  d1:'For work that is processed in Switzerland.',
+                 n2:'Luna',      d2:'Fast and frugal for everyday work.',
+                 n3:'Sol',       d3:'For demanding documents and analysis.',
+                 n4:'Automatic', d4:'Picks the model that fits the task.',
+                 lInt:'Intelligence', lCost:'Token cost',
+                 rCh:'Switzerland', rEu:'Europe', rWorld:'Worldwide', rAuto:'Varies by model' },
           ws:{ bar:'web search', idle:'Searching the web',
                ask:'How high were Swiss exports in June?',
                answer:'Three sources checked, the figures agree.',
@@ -3938,11 +3936,13 @@ this.mobRef = React.createRef();
           t4:'Agents de rôle et skills', d4:'Des collègues IA pour les tâches récurrentes, validés par l’administrateur.',
           t5:'Intégration ERP avec contrôle des droits', d5:'ERP via la passerelle MCP : « lire les factures oui, les salaires non ». Chaque appel est audité.',
           t6:'Mémoire proactive', d6:'Retient d’elle-même ce qui compte : auditable, effaçable, sur votre serveur.',
-          use:{ bar:'admin · consommation',
-                title:'Consommation par jour, par modèle · juillet 2026',
-                axis:['20 €','15 €','10 €','5 €','0 €'],
-                days:['01/07','03/07','05/07','07/07','09/07','11/07','13/07','15/07'],
-                cModel:'Modèle', cMin:'Min', cur:'EUR' },
+          pick:{ bar:'chat · choix du modèle',
+                 n1:'Modèle CH',   d1:'Pour les tâches traitées en Suisse.',
+                 n2:'Luna',        d2:'Rapide et économe au quotidien.',
+                 n3:'Sol',         d3:'Pour les documents et analyses exigeants.',
+                 n4:'Automatique', d4:'Choisit le modèle adapté à la tâche.',
+                 lInt:'Intelligence', lCost:'Coût en jetons',
+                 rCh:'Suisse', rEu:'Europe', rWorld:'Monde entier', rAuto:'Selon le modèle' },
           ws:{ bar:'recherche web', idle:'Recherche sur le web',
                ask:'Quel a été le montant des exportations suisses en juin ?',
                answer:'Trois sources vérifiées, les chiffres concordent.',
@@ -3985,11 +3985,13 @@ this.mobRef = React.createRef();
           t4:'Agenti di ruolo e skill', d4:'Colleghi IA per le attività ricorrenti, abilitati dall’amministratore.',
           t5:'Integrazione ERP con controllo dei permessi', d5:'ERP tramite gateway MCP: «leggere le fatture sì, gli stipendi no». Ogni chiamata è tracciata.',
           t6:'Memoria proattiva', d6:'Ricorda da sé ciò che conta: verificabile, cancellabile, sul vostro server.',
-          use:{ bar:'admin · consumi',
-                title:'Consumo giornaliero, per modello · luglio 2026',
-                axis:['20 €','15 €','10 €','5 €','0 €'],
-                days:['01/07','03/07','05/07','07/07','09/07','11/07','13/07','15/07'],
-                cModel:'Modello', cMin:'Min', cur:'EUR' },
+          pick:{ bar:'chat · scelta del modello',
+                 n1:'Modello CH', d1:'Per compiti elaborati in Svizzera.',
+                 n2:'Luna',       d2:'Veloce ed economico per il quotidiano.',
+                 n3:'Sol',        d3:'Per documenti e analisi impegnativi.',
+                 n4:'Automatico', d4:'Sceglie il modello adatto al compito.',
+                 lInt:'Intelligenza', lCost:'Costo token',
+                 rCh:'Svizzera', rEu:'Europa', rWorld:'Tutto il mondo', rAuto:'Secondo il modello' },
           ws:{ bar:'ricerca web', idle:'Ricerca sul web',
                ask:'Quanto sono state le esportazioni svizzere a giugno?',
                answer:'Tre fonti verificate, i dati coincidono.',
@@ -4032,11 +4034,13 @@ this.mobRef = React.createRef();
           t4:'Agentes de rol y skills', d4:'Compañeros de IA para tareas recurrentes, habilitados por el administrador.',
           t5:'Integración con el ERP y control de permisos', d5:'ERP mediante la pasarela MCP: «leer facturas sí, salarios no». Cada llamada queda auditada.',
           t6:'Memoria proactiva', d6:'Recuerda por sí misma lo importante: auditable, borrable, en su servidor.',
-          use:{ bar:'admin · consumo',
-                title:'Consumo diario, por modelo · julio 2026',
-                axis:['20 €','15 €','10 €','5 €','0 €'],
-                days:['01/07','03/07','05/07','07/07','09/07','11/07','13/07','15/07'],
-                cModel:'Modelo', cMin:'Mín', cur:'EUR' },
+          pick:{ bar:'chat · selección de modelo',
+                 n1:'Modelo CH',  d1:'Para tareas procesadas en Suiza.',
+                 n2:'Luna',       d2:'Rápido y económico para el día a día.',
+                 n3:'Sol',        d3:'Para documentos y análisis exigentes.',
+                 n4:'Automático', d4:'Elige el modelo adecuado para la tarea.',
+                 lInt:'Inteligencia', lCost:'Coste de token',
+                 rCh:'Suiza', rEu:'Europa', rWorld:'Todo el mundo', rAuto:'Según el modelo' },
           ws:{ bar:'búsqueda web', idle:'Buscar en la web',
                ask:'¿Cuánto exportó Suiza en junio?',
                answer:'Tres fuentes verificadas, las cifras coinciden.',
