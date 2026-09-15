@@ -1657,8 +1657,8 @@ Wie Betriebe in der Schweiz und Europa mit einem KI-Kollegen arbeiten: Artikel m
 Modelle, Recht und Betrieb
 Gedächtnis und Wissen
 14. September 2026
-Ein Gedächtnis, das dem Unternehmen gehört: wie Kisuno Wissen als Graph ablegt
-Die bekannten Memory-Funktionen merken sich etwas für ein persönliches Konto. Kisuno legt Unternehmenswissen als Graph an, mit Gültigkeit und Herkunft an jedem Eintrag und Berechtigungen am einzelnen Knoten.
+Ein Gedächtnis, das auf Ihrem Server bleibt: wie das Brain Wissen als Graph ablegt
+Die bekannten Memory-Funktionen liegen beim Anbieter. Das Brain von Kisuno ist ebenfalls persönlich, liegt aber auf Ihrer Instanz, als Graph mit Gültigkeit und Herkunft an jedem Eintrag.
 Verwaltung und Datenschutz
 3. September 2026
 Der Bund zieht eine Linie durch seinen Datenbestand: drei Abläufe, die sie einhalten
@@ -1731,11 +1731,11 @@ In Deutschland fühlen sich 91 % der Niedergelassenen administrativ überlastet,
 
 ---
 
-# Memory als Wissensgraph im Unternehmen
+# Brain: Gedächtnis als Wissensgraph auf Ihrer Instanz
 
 URL: https://kisuno.ai/blog/ki-memory-wissensgraph
 
-Memory als Wissensgraph im Unternehmen | Kisuno
+Brain: Gedächtnis als Wissensgraph auf Ihrer Instanz | Kisuno
 -
 -
 -
@@ -1753,15 +1753,15 @@ Memory als Wissensgraph im Unternehmen | Kisuno
 Zum Inhalt springen
 - Start
 - Blog
-- Gedächtnis als Graph
+- Brain als Graph
 Gedächtnis und Wissen
-Ein Gedächtnis, das dem Unternehmen gehört: wie Kisuno Wissen als Graph ablegt
-Die bekannten Memory-Funktionen merken sich etwas für ein persönliches Konto. Kisuno legt das Wissen Ihres Unternehmens stattdessen als Graph aus Knoten und benannten Kanten an, mit Gültigkeit und Herkunft an jedem Eintrag und einer Berechtigung an jedem Knoten, und der Graph bleibt auf Ihrer Instanz. Dieser Artikel zeigt den Aufbau, den Schreib- und den Leseweg, und sagt, was er nicht leistet.
+Ein Gedächtnis, das auf Ihrer Instanz bleibt: wie das Brain Wissen als Graph ablegt
+Die bekannten Memory-Funktionen merken sich etwas für ein persönliches Konto, und der Bestand liegt beim Anbieter. Das Brain von Kisuno ist ebenfalls persönlich, liegt aber auf Ihrer Instanz: als Graph aus Knoten und benannten Kanten, mit Gültigkeit und Herkunft an jedem Eintrag. Sie sehen jeden Eintrag, können ihn richtigstellen und einzeln löschen. Dieser Artikel zeigt den Aufbau, den Schreib- und den Leseweg, und sagt, was er nicht leistet.
 Gedächtnis und Wissen
 14. September 2026
 Lesezeit: 22 Minuten
 - Ausgangslage
-- Warum im Betrieb
+- Wo es liegt
 - Liste gegen Graph
 - Der Aufbau
 - Der Schreibweg
@@ -1771,13 +1771,13 @@ Lesezeit: 22 Minuten
 - Häufige Fragen
 - Quellen
 Kurz gesagt
-- Die verbreiteten Memory-Funktionen hängen am persönlichen Konto: Microsoft legt die gemerkten Inhalte im Exchange-Postfach der einzelnen Person ab. 1 Anthropic hält fest, dass Organisationseigner die Erinnerungen einzelner Nutzer weder einsehen noch bearbeiten können. 2
+- Die verbreiteten Memory-Funktionen liegen dort, wo der Anbieter sie hinlegt: Microsoft beschreibt für Copilot das Exchange-Postfach der einzelnen Person, in einem verborgenen Ordner. 1 Persönlich ist das Gedächtnis dort wie bei uns, und Anthropic hält für Claude fest, dass Organisationseigner die Erinnerungen einzelner Nutzer weder einsehen noch bearbeiten können. 2 Darum geht es hier nicht.
 - Microsoft schreibt ausserdem selbst, dass es keine Administratorsteuerung gibt, um Aufbewahrungsregeln eigens für das Copilot-Gedächtnis durchzusetzen, dass das Löschen eines Chats die daraus gespeicherten Erinnerungen nicht löscht und dass dabei keine Einträge im Prüfprotokoll entstehen; über eDiscovery lassen sich die Daten immerhin suchen, ausleiten und löschen, und die Funktion ist als Vorschau gekennzeichnet. 1
-- Kisuno legt das Wissen deshalb als Graph an: Knoten für die Dinge, benannte Kanten für die Beziehungen, dazu Gültigkeitszeitraum und Herkunft an jedem Eintrag und eine Berechtigung an jedem Knoten. Damit lassen sich Fragen beantworten, die über mehrere Schritte gehen, und einzelne Einträge lassen sich richtigstellen oder löschen.
+- Das Brain von Kisuno ist ebenfalls persönlich, liegt aber auf Ihrer Instanz und folgt damit den Aufbewahrungs- und Löschregeln Ihres Betriebs. Angelegt ist es als Graph: Knoten für die Dinge, benannte Kanten für die Beziehungen, dazu Gültigkeitszeitraum und Herkunft an jedem Eintrag. Damit lassen sich Fragen beantworten, die über mehrere Schritte gehen, und jeder einzelne Eintrag lässt sich einsehen, richtigstellen und löschen.
 - Der Graph bleibt auf Ihrer Instanz. Zum Modell geht mit Ihrer Frage nur der Ausschnitt, den diese eine Antwort braucht. Klüger wird das Modell davon nicht; genauer wird die Frage.
 Auf dieser Seite
 - Ausgangslage
-- Warum im Betrieb
+- Wo es liegt
 - Liste gegen Graph
 - Der Aufbau
 - Der Schreibweg
@@ -1787,90 +1787,63 @@ Auf dieser Seite
 - Häufige Fragen
 - Quellen
 Zum Ausprobieren
-Der Graph eines Betriebs
+Ein persönliches Brain
 Auf einen Punkt zeigen oder tippen. Mit der Tabulatortaste geht es ebenso.
-Menschen und Rollen
-Dinge und Dokumente
-Regeln und Fristen
-Brain Unternehmen
-R. Lehmann
-Verkauf
+Vorlieben
+Projekte
+Menschen
+Entscheidungen
+Wissen
+Arbeitsweise
+Brain Persönlich
+Kurze Antworten
+Deutsch
+Halle 2
 Angebot 114
 Berger AG
-Halle 2
-Protokoll
-Nordwand
+R. Lehmann
 Preisregel
 alte Fassung
-Frist
+Protokoll
 Abnahme
-Elf Knoten, dreizehn Kanten
-So klein fängt das Gedächtnis eines Betriebs an: ein Kunde, ein Angebot, eine Preisregel, ein Projekt und die Personen dazu.
-An jedem Knoten hängt dasselbe Bündel
+Angebote als PDF
+Wochenplanung
+Zwölf Einträge, dreizehn Verbindungen
+So klein fängt das Brain einer Person an: ein paar Vorlieben, die Projekte, die Menschen dazu, die eigenen Entscheidungen.
+An jedem Eintrag hängt dasselbe Bündel
 - Art
 - Gültigkeit
 - Herkunft
 - Sichtbar für
 - Verbindungen
 Die Frage, die eine Liste nicht beantworten kann
-Welche offenen Angebote betrifft die Preisregel, die im Mai geändert wurde, und wer muss die Kundschaft informieren?
-R. Lehmann
-Eine Person mit Rolle. Fällt sie aus, bleibt sichtbar, wofür sie zuständig war.
+Welche offenen Angebote betrifft die Preisregel, die ich im Mai geändert habe, und wen muss ich informieren?
+Kurze Antworten
+Ergebnis zuerst, Begründung darunter. Sie haben es einmal gesagt, seither gilt es für alles, was Sie fragen.
 Art
-Person
+Vorliebe
 Gültigkeit
-seit 2021
+unbefristet
 Herkunft
-von Hand eingetragen
+aus einem Gespräch
 Sichtbar für
-alle Mitarbeitenden
+nur Sie
 Verbindungen
-- → verantwortet Angebot 114
-- → gehört zu Verkauf
-- → verantwortet Umbau Halle 2
-Verkauf
-Eine Rolle statt einer Person: Die Zuständigkeit überlebt den Stellenwechsel.
+- → gilt für Montags Wochenplanung
+Deutsch im Schriftverkehr
+Mails und Angebote gehen auf Deutsch hinaus. Notizen für Sie selbst dürfen englisch sein.
 Art
-Rolle
+Vorliebe
 Gültigkeit
 unbefristet
 Herkunft
 von Hand eingetragen
 Sichtbar für
-alle Mitarbeitenden
+nur Sie
 Verbindungen
-- ← gehört zu R. Lehmann
-- → verantwortet Berger AG
-Angebot 114
-Das Angebot kennt seine Kundschaft, die Preisregel, unter der es entstand, und die Person, die es geschrieben hat.
-Art
-Dokument
-Gültigkeit
-seit 06.2026
-Herkunft
-aus einem Dokument
-Sichtbar für
-Rolle Verkauf
-Verbindungen
-- → gehört zu Berger AG
-- ← gilt für Preisregel Montage
-- ← verantwortet R. Lehmann
-Berger AG
-Der Kunde ist ein eigener Gegenstand. Alles, was ihn betrifft, hängt hier und nicht verstreut in elf einzelnen Sätzen.
-Art
-Kunde
-Gültigkeit
-seit 03.2024
-Herkunft
-aus einem Gespräch
-Sichtbar für
-alle Mitarbeitenden
-Verbindungen
-- ← gehört zu Angebot 114
-- ← gehört zu Umbau Halle 2
-- ← verantwortet Verkauf
+- → gilt für Berger AG
 Umbau Halle 2
-Das Projekt bündelt Lieferant, Frist, Protokoll und Zuständigkeit an einer Stelle.
+Das Projekt, an dem Sie gerade sitzen. Lieferant, Frist, Protokoll und Zuständigkeit hängen daran.
 Art
 Projekt
 Gültigkeit
@@ -1878,16 +1851,15 @@ seit 04.2026
 Herkunft
 aus einem Gespräch
 Sichtbar für
-Projektleitung
+nur Sie
 Verbindungen
 - → gehört zu Berger AG
-- ← beliefert Nordwand Metallbau
-- ← gehört zu Abnahmeprotokoll
-- ← gilt für Frist 30.06.2026
 - ← verantwortet R. Lehmann
 - ← gilt für Preisregel Montage
-Abnahmeprotokoll
-Auch ein Dokument ist ein Knoten. Es hängt am Projekt und trägt den Fachbegriff, der im Haus dafür gilt.
+- ← gilt für Abnahmeprotokoll
+- ← gilt für Montags Wochenplanung
+Angebot 114
+Ihr Angebot an die Berger AG. Es kennt die Preisregel, unter der es entstand, und die Form, in der es hinausging.
 Art
 Dokument
 Gültigkeit
@@ -1895,62 +1867,80 @@ seit 06.2026
 Herkunft
 aus einem Dokument
 Sichtbar für
-Projektleitung
+nur Sie
 Verbindungen
-- → gehört zu Umbau Halle 2
-- ← gilt für Abnahme
-Nordwand Metallbau
-Der Lieferant hängt am Projekt und nicht an einer Notiz in einem persönlichen Konto.
+- → gehört zu Berger AG
+- ← gilt für Preisregel Montage
+- ← gilt für Angebote als PDF
+Berger AG
+Ihre Kundin. Alles, was Sie über sie wissen, hängt hier und nicht verstreut in zwölf einzelnen Sätzen.
 Art
-Lieferant
+Kundin
 Gültigkeit
-seit 2019
+seit 03.2024
 Herkunft
-aus einem Dokument
+aus einem Gespräch
 Sichtbar für
-alle Mitarbeitenden
+nur Sie
 Verbindungen
-- → beliefert Umbau Halle 2
-Preisregel Montage
-Die Regel zeigt von sich aus auf alles, was von ihr betroffen ist. Genau das beantwortet die Frage nach der Änderung im Mai.
+- ← gehört zu R. Lehmann
+- ← gehört zu Umbau Halle 2
+- ← gehört zu Angebot 114
+- ← gilt für Deutsch im Schriftverkehr
+R. Lehmann
+Ihre Ansprechperson bei der Berger AG. Beim nächsten Anruf müssen Sie den Namen nicht suchen.
 Art
-Regel
+Person
+Gültigkeit
+seit 2024
+Herkunft
+von Hand eingetragen
+Sichtbar für
+nur Sie
+Verbindungen
+- → gehört zu Berger AG
+- → verantwortet Umbau Halle 2
+Preisregel Montage
+Seit Mai rechnen Sie die Montage anders. Die Entscheidung zeigt von sich aus auf alles, was von ihr betroffen ist.
+Art
+Entscheidung
 Gültigkeit
 seit 05.2026
 Herkunft
 von Hand eingetragen
 Sichtbar für
-alle Mitarbeitenden
+nur Sie
 Verbindungen
 - → gilt für Angebot 114
-- → ersetzt Preisregel Montage, alte Fassung
 - → gilt für Umbau Halle 2
+- → ersetzt Preisregel Montage, alte Fassung
 Preisregel Montage, alte Fassung
-Die alte Fassung ist nicht gelöscht, sondern mit Datum abgeschlossen. Wer später erklären muss, warum damals anders gerechnet wurde, findet sie hier.
+Die alte Fassung ist nicht gelöscht, sondern mit Datum abgeschlossen. Wer später fragt, warum damals anders gerechnet wurde, findet sie hier.
 Art
-Regel
+Entscheidung
 Gültigkeit
 bis 05.2026, abgelöst
 Herkunft
 von Hand eingetragen
 Sichtbar für
-alle Mitarbeitenden
+nur Sie
 Verbindungen
 - ← ersetzt Preisregel Montage
-Frist 30.06.2026
-Eine Frist mit Ablaufdatum. Nach dem 30.06.2026 gilt sie als abgelaufen und nicht länger als wahr.
+Abnahmeprotokoll
+Die Vorlage, die Sie für Abnahmen verwenden. Sie hängt am Projekt und trägt den Begriff, den Sie dafür benutzen.
 Art
-Frist
+Dokument
 Gültigkeit
-bis 30.06.2026
+seit 06.2026
 Herkunft
 aus einem Dokument
 Sichtbar für
-Projektleitung
+nur Sie
 Verbindungen
 - → gilt für Umbau Halle 2
+- ← gilt für Abnahme
 Abnahme
-Ein Fachbegriff, wie er im Unternehmen verstanden wird, und nicht, wie ihn ein Modell im Allgemeinen kennt.
+Was der Begriff bei Ihnen bedeutet, und nicht, was ein Modell im Allgemeinen darunter versteht.
 Art
 Fachbegriff
 Gültigkeit
@@ -1958,45 +1948,70 @@ unbefristet
 Herkunft
 aus einem Gespräch
 Sichtbar für
-alle Mitarbeitenden
+nur Sie
 Verbindungen
 - → gilt für Abnahmeprotokoll
+Angebote als PDF
+So gehen Ihre Angebote hinaus. Sie müssen es nicht jedes Mal dazusagen.
+Art
+Arbeitsweise
+Gültigkeit
+unbefristet
+Herkunft
+aus einem Gespräch
+Sichtbar für
+nur Sie
+Verbindungen
+- → gilt für Angebot 114
+Montags Wochenplanung
+Ihr fester Punkt in der Woche. Was ansteht, ordnet sich danach.
+Art
+Arbeitsweise
+Gültigkeit
+unbefristet
+Herkunft
+von Hand eingetragen
+Sichtbar für
+nur Sie
+Verbindungen
+- → gilt für Umbau Halle 2
+- ← gilt für Kurze Antworten
 Zum Modell ginge für eine Antwort nur dieser Ausschnitt:
-Knoten 11
-Kanten 13
-Ein erfundener, aber typischer Ausschnitt. Jeder Punkt trägt Gültigkeit, Herkunft und Berechtigung mit sich, jede Linie hat einen Namen und eine Richtung.
-Ausgangslage: Memory gibt es längst, nur gehört es nicht dem Unternehmen
-Die Szene kennt jeder, der ein KI-Werkzeug im Betrieb einsetzt. Man erklärt zum fünften Mal, wie das Unternehmen heisst, wer die Kundschaft ist, wie eine Offerte bei uns aussieht und warum dieser eine Lieferant anders behandelt wird als alle anderen. Dass die grossen Anbieter längst eine Gedächtnisfunktion haben, ändert daran weniger als erwartet. Der Grund steht in ihrer eigenen Dokumentation, und er ist keine Panne, sondern eine Bauentscheidung.
-Das Gedächtnis hängt am persönlichen Konto. Microsoft beschreibt für Copilot, dass gespeicherte Erinnerungen, aus dem Verlauf abgeleitete Angaben und eigene Anweisungen im Exchange-Postfach der jeweiligen Person liegen, in einem verborgenen Ordner. 1 Anthropic hält für Claude fest, dass Eigentümer einer Organisation die Erinnerungen einzelner Nutzerinnen und Nutzer weder einsehen noch bearbeiten können; exportieren lassen sie sich nach den Aufbewahrungsregeln der Organisation sehr wohl. 2 Beides zusammen ergibt dasselbe Bild: Die Einträge gehören der einzelnen Person. Was sie dem Werkzeug beibringt, steht dem Rest des Betriebs im Alltag nicht zur Verfügung, und richtigstellen kann es dort niemand ausser ihr selbst. Das zweite Teammitglied fängt bei null an, und die Frage, was das Werkzeug über die eigene Firma zu wissen glaubt, bleibt für das Unternehmen als Ganzes unbeantwortet.
-Die zweite Lücke betrifft die Steuerung. In derselben Dokumentation schreibt Microsoft, dass in Purview eingerichtete Aufbewahrungsrichtlinien für das Copilot-Gedächtnis nicht gelten und es keine Administratorsteuerung gibt, um Aufbewahrungsregeln eigens dafür durchzusetzen; dass das Löschen eines Chats die daraus entstandenen gespeicherten Erinnerungen nicht löscht; dass Vorgänge des Gedächtnisses keine Einträge im Prüfprotokoll erzeugen; und dass eine Administration nicht einschränken kann, welche Art von Angaben überhaupt ins Gedächtnis aufgenommen wird. 1 Fairerweise steht dort ebenso, dass sich Gedächtnisdaten über eDiscovery und den Graph Explorer suchen, ausleiten und löschen lassen, und die ganze Funktion ist als Vorschau gekennzeichnet. 1 Der Befund bleibt trotzdem: Die Regeln, die ein Unternehmen für Aufbewahrung, Löschung und Nachvollziehbarkeit ohnehin hat, greifen an dieser Stelle nicht von selbst.
+Einträge 12
+Verbindungen 13
+Ein erfundenes, aber typisches Brain einer Person. Jeder Eintrag trägt Gültigkeit und Herkunft mit sich, jede Linie hat einen Namen und eine Richtung, und der ganze Bestand liegt auf Ihrer Instanz.
+Ausgangslage: Memory gibt es längst, nur folgt es nicht Ihren Regeln
+Die Szene kennt jeder, der ein KI-Werkzeug im Betrieb einsetzt. Man erklärt zum fünften Mal, wie das Unternehmen heisst, wer die Kundschaft ist, wie eine Offerte bei uns aussieht und warum dieser eine Lieferant anders behandelt wird als alle anderen. Dass die grossen Anbieter längst eine Gedächtnisfunktion haben, ändert daran weniger als erwartet. Der Grund steht in ihrer eigenen Dokumentation, und er liegt nicht darin, dass diese Funktionen persönlich sind. Das sind sie, und das Brain von Kisuno ist es auch. Er liegt darin, wo der Bestand liegt und wer über ihn bestimmt.
+Der Bestand liegt in der Umgebung des Anbieters, und die Regeln des Unternehmens greifen dort nicht von selbst. Microsoft beschreibt für Copilot, dass gespeicherte Erinnerungen, aus dem Verlauf abgeleitete Angaben und eigene Anweisungen im Exchange-Postfach der jeweiligen Person liegen, in einem verborgenen Ordner. 1 Anthropic hält für Claude fest, dass Eigentümer einer Organisation die Erinnerungen einzelner Nutzerinnen und Nutzer weder einsehen noch bearbeiten können; exportieren lassen sie sich nach den Aufbewahrungsregeln der Organisation sehr wohl. 2 Dass diese Gedächtnisse persönlich sind, ist dabei nicht der Vorwurf. Das Brain von Kisuno ist es auch, und für die tägliche Arbeit ist das die naheliegende Bauform. Der Unterschied liegt woanders: Wo die Einträge liegen, wie lange sie bleiben und was beim Löschen wirklich verschwindet, entscheidet dort nicht der Betrieb, der mit dem Werkzeug arbeitet.
+Die zweite Lücke betrifft die Steuerung. In derselben Dokumentation schreibt Microsoft, dass in Purview eingerichtete Aufbewahrungsrichtlinien für das Copilot-Gedächtnis nicht gelten und es keine Administratorsteuerung gibt, um Aufbewahrungsregeln eigens dafür durchzusetzen; dass das Löschen eines Chats die daraus entstandenen gespeicherten Erinnerungen nicht löscht; dass Vorgänge des Gedächtnisses keine Einträge im Prüfprotokoll erzeugen; und dass eine Administration nicht einschränken kann, welche Art von Angaben überhaupt ins Gedächtnis aufgenommen wird. 1 Fairerweise steht dort ebenso, dass sich Gedächtnisdaten über eDiscovery und den Graph Explorer suchen, ausleiten und löschen lassen, und die ganze Funktion ist als Vorschau gekennzeichnet. 1 Der Befund bleibt trotzdem, und er betrifft die ersten drei Punkte: Die Regeln, die ein Unternehmen für Aufbewahrung, Löschung und Nachvollziehbarkeit ohnehin hat, greifen an dieser Stelle nicht von selbst. Beim vierten Punkt halten wir uns zurück, denn er trifft uns ebenso: Auch bei uns kann eine Administration nicht vorab einschränken, was in ein Brain aufgenommen wird. Sie kann die Funktion je Zugang einschalten oder abschalten, mehr nicht.
 Die dritte Klage ist die nach Kontrolle über den Inhalt. Im Juni 2026 stellte OpenAI die Personalisierung auf eine automatisch erzeugte Zusammenfassung um, und die von Hand pflegbare Liste blieb als Altbestand daneben stehen; im offiziellen Entwicklerforum entstand daraufhin der Wunsch, wieder genau zu sehen und Eintrag für Eintrag zu verwalten, was gemerkt wird. 3 Schon ein Jahr zuvor hatte der Entwickler Simon Willison die Vorgängerfassung dafür kritisiert, dass sie diese Kontrolle vollständig entziehe und eine unsichtbar wirkende Bedingung für jede Ausgabe schaffe. 4 Das sind Einzelstimmen und keine Erhebung, und wir geben sie auch nicht als solche aus. Sie treffen aber den Punkt, an dem ein Werkzeug für private Bequemlichkeit und ein Werkzeug für einen Betrieb auseinandergehen.
 Die vierte Lücke ist die Berichtigung. Die Taskforce des Europäischen Datenschutzausschusses hielt in ihrem Bericht zu ChatGPT vom Mai 2024 fest, OpenAI lege Betroffenen zumindest vorerst nahe, von der Berichtigung auf die Löschung zu wechseln, wenn eine Berichtigung wegen der technischen Komplexität nicht machbar sei. 5 Für ein Unternehmen ist das der Unterschied zwischen einer korrigierten Angabe und einer verschwundenen. Wer später erklären muss, warum eine Auskunft falsch war, braucht die richtiggestellte Fassung und das Datum der Korrektur, nicht eine Lücke.
-Der Fairness halber gehört dazu, dass nicht jeder Punkt auf jeden Anbieter zutrifft. Anthropic beschreibt für Claude getrennte Gedächtnisräume je Projekt und eine Liste, in der sich jeder Eintrag lesen, bearbeiten und löschen lässt; die Voreinstellung unterscheidet sich nach Tarif, in den Fassungen für Einzelpersonen ist das Gedächtnis eingeschaltet, in den Fassungen für Teams und Unternehmen entscheidet die Administration über die Verfügbarkeit und bleibt es für die einzelne Person zunächst aus. 6 Es geht hier also nicht darum, jemandem Nachlässigkeit vorzuwerfen. Es geht um den gemeinsamen Nenner: Diese Funktionen sind als persönliche Annehmlichkeit gebaut und nicht als Bestand eines Unternehmens.
+Der Fairness halber gehört dazu, dass nicht jeder Punkt auf jeden Anbieter zutrifft. Anthropic beschreibt für Claude getrennte Gedächtnisräume je Projekt und eine Liste, in der sich jeder Eintrag lesen, bearbeiten und löschen lässt; die Voreinstellung unterscheidet sich nach Tarif, in den Fassungen für Einzelpersonen ist das Gedächtnis eingeschaltet, in den Fassungen für Teams und Unternehmen entscheidet die Administration über die Verfügbarkeit und bleibt es für die einzelne Person zunächst aus. 6 Es geht hier also nicht darum, jemandem Nachlässigkeit vorzuwerfen. Es geht um den gemeinsamen Nenner: Diese Funktionen laufen auf den Servern des Anbieters. Wie weit die eigenen Regeln eines Unternehmens dort hineinreichen, unterscheidet sich von Anbieter zu Anbieter, und bei Copilot reichen sie nach der eigenen Dokumentation an den entscheidenden Stellen nicht hinein.
 Und ein Gedächtnis hat eine Eigenschaft, die man einem Notizzettel nicht zutraut: Es ist eine Angriffsfläche. Sicherheitsforschung zeigt seit 2024, dass sich über präparierte Inhalte dauerhafte Anweisungen in das Gedächtnis einschleusen lassen, die über das einzelne Gespräch hinaus wirken. 7 Eine Arbeit vom Juli 2026 führt für handelnde Systeme vor, wie eine einzige E-Mail eine falsche Erinnerung hinterlässt. 8 Das ist kein Argument gegen Gedächtnisfunktionen. Es ist ein Argument dafür, dass jeder Eintrag seine Herkunft mitführen und sich einzeln entfernen lassen muss, und genau das hat die Bauform zu leisten, um die es im Folgenden geht.
-Warum ein Betrieb ein eigenes Gedächtnis braucht
+Warum es darauf ankommt, wo das Gedächtnis liegt
 Der Bedarf ist keine Vermutung, er steht in den Erhebungen. In der Schweiz stieg der Anteil der KMU, die künstliche Intelligenz bewusst in ihre Arbeitsprozesse einbauen, innerhalb eines Jahres von 22 % auf 34 %; am häufigsten für Übersetzungen mit 52 % und Korrespondenz mit 47 %, also genau dort, wo die Wörter des Betriebs und seine Sonderfälle den Unterschied machen. Eine klare Datenschutzregelung für den Umgang mit KI-Anwendungen hat dagegen nur rund ein Drittel derjenigen Betriebe, die KI überhaupt einsetzen; bei jenen mit fünf bis neun Beschäftigten sind es 23 %. 9 Die Zahlen stammen aus einer Befragung von 300 KMU in der deutsch- und französischsprachigen Schweiz; das ist eine kleine Stichprobe, und wir geben sie nicht als Volkszählung aus.
-Der zweite Grund ist unbequemer, weil er mit Menschen zu tun hat. Das Wissen, das einen Betrieb ausmacht, steht selten in einem Handbuch. Es steht in Köpfen: wer bei diesem Kunden wirklich entscheidet, warum eine Position seit dem letzten Umbau anders kalkuliert wird, welche Abnahme ohne Bauleitung nicht funktioniert. Fällt die Person aus, in die Ferien, in die Pension oder zu einem anderen Arbeitgeber, fällt dieses Wissen mit aus. Ein KI-Werkzeug, dessen Gedächtnis am persönlichen Konto hängt, verschärft dieses Problem, statt es zu lösen: Es sammelt genau dieses Wissen ein und legt es dorthin, wo es mit der Person verschwindet. Wie angespannt der Arbeitsmarkt daneben ist, zeigen die amtlichen Zahlen: Das Bundesamt für Statistik zählte im vierten Quartal 2025 in der Schweiz 86'000 offene Stellen, und 36,2 % der Unternehmen meldeten Rekrutierungsschwierigkeiten. 10 Eine frei werdende Stelle ist damit nicht rasch wieder besetzt, und bis dahin fehlt auch das, was die Person wusste. Auf europäischer Ebene führt Cedefop den Ersatzbedarf ausdrücklich auf Pensionierungen und Berufswechsel zurück, also auf Abgänge, bei denen Erfahrung das Unternehmen verlässt. 11
-Was passiert, wenn es im Betrieb keine eigene Lösung gibt, ist ebenfalls untersucht. In einer Studie von KPMG und der University of Melbourne mit 48'340 Befragten in 47 Ländern gaben zwei von drei Erwerbstätigen an, sich auf KI-Ausgaben verlassen zu haben, ohne die gelieferten Angaben zu prüfen, und fast die Hälfte räumte ein, KI entgegen betrieblichen Vorgaben zu nutzen und dabei sensible Firmeninformationen wie Finanz-, Verkaufs- oder Kundendaten in öffentliche KI-Werkzeuge hochzuladen. 12 Die Frage ist also nicht, ob Unternehmenswissen in einem KI-Werkzeug landet. Die Frage ist, ob es in einem landet, über das der Betrieb verfügt. Ein Verbot verschiebt das Problem in den privaten Zugang, wo niemand mehr hinsieht.
+Der zweite Grund ist unbequemer, weil er mit Menschen zu tun hat. Das Wissen, das die tägliche Arbeit ausmacht, steht selten in einem Handbuch. Es steht in Köpfen: wer bei diesem Kunden wirklich entscheidet, warum eine Position seit dem letzten Umbau anders kalkuliert wird, welche Abnahme ohne Bauleitung nicht funktioniert. Wer täglich mit einem KI-Werkzeug arbeitet, erzählt ihm genau das, Satz für Satz, ohne es sich vorzunehmen. Die Frage ist nur, wo diese Sätze danach liegen. Wie angespannt der Arbeitsmarkt daneben ist, zeigen die amtlichen Zahlen: Das Bundesamt für Statistik zählte im vierten Quartal 2025 in der Schweiz 86'000 offene Stellen, und 36,2 % der Unternehmen meldeten Rekrutierungsschwierigkeiten. 10 Eine frei werdende Stelle ist damit nicht rasch wieder besetzt, und bis dahin fehlt auch das, was die Person wusste. Auf europäischer Ebene führt Cedefop den Ersatzbedarf ausdrücklich auf Pensionierungen und Berufswechsel zurück, also auf Abgänge, bei denen Erfahrung das Unternehmen verlässt. 11 Ein persönliches Brain löst dieses Problem nicht, und wir behaupten es auch nicht; dazu steht weiter unten mehr im Abschnitt über die Grenzen. Es entscheidet nur, ob das eingesammelte Wissen bei Ihnen liegt oder beim Anbieter.
+Was passiert, wenn es im Betrieb keine eigene Lösung gibt, ist ebenfalls untersucht. In einer Studie von KPMG und der University of Melbourne mit 48'340 Befragten in 47 Ländern gaben zwei von drei Erwerbstätigen an, sich auf KI-Ausgaben verlassen zu haben, ohne die gelieferten Angaben zu prüfen, und ein erheblicher Teil räumte ein, KI entgegen betrieblichen Vorgaben zu nutzen; der Bericht nennt dabei ausdrücklich das Hochladen sensibler Unternehmensinformationen wie Finanz-, Verkaufs- oder Kundendaten in öffentliche KI-Werkzeuge. 12 Die Frage ist also nicht, ob Unternehmenswissen in einem KI-Werkzeug landet. Die Frage ist, ob es auf einer Instanz landet, über deren Aufbewahrung, Sicherung und Löschung der Betrieb bestimmt. Ein Verbot verschiebt das Problem in den privaten Zugang, wo niemand mehr hinsieht.
 Dazu kommt der Grössenunterschied. Nach Eurostat nutzten 2025 20,0 % der EU-Unternehmen ab zehn Beschäftigten KI-Technik, nach 13,5 % im Vorjahr; aufgeschlüsselt sind es 17 % der kleinen, 30,36 % der mittleren und 55,03 % der grossen Unternehmen. 13 Unter jenen, die den Einsatz je erwogen haben und ihn nicht nutzen, standen im selben Jahr als Gründe fehlendes einschlägiges Fachwissen mit 70,89 %, Unklarheit über rechtliche Folgen mit 52,52 % und Bedenken wegen Datenschutz mit 48,83 % an der Spitze. 14 Diese Grundgesamtheit umfasst ausdrücklich nur die Unternehmen, die den Einsatz je erwogen haben, und nicht alle. Der Befund bleibt trotzdem: Was kleine Betriebe aufhält, ist nicht die Technik, sondern fehlender Zusammenhang und fehlende Sicherheit darüber, was mit den eigenen Angaben geschieht.
 Der dritte Grund ist rechtlich und für die Schweiz ausdrücklich festgehalten. Der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte weist darauf hin, dass das Schweizer Datenschutzgesetz auf KI-gestützte Datenbearbeitungen direkt anwendbar ist. 15 Wer also personenbezogene Angaben in einem Gedächtnis ablegt, muss darüber Auskunft geben und sie berichtigen oder vernichten können; das Datenschutzgesetz regelt beides in Artikel 25 und Artikel 32. 16 In der Europäischen Union stehen dieselben Ansprüche in Artikel 15 und Artikel 17 der Datenschutz-Grundverordnung. 17 Das ist keine Formalie, sondern eine Anforderung an die Bauform: Wer nicht einzeln zeigen und einzeln löschen kann, kann diese Ansprüche nicht bedienen.
 Wer fragt
 Was den Bedarf auslöst
 Was das Gedächtnis dort beiträgt
 Geschäftsleitung
-Entscheidendes Wissen hängt an einzelnen Personen, und Nachfolge, Ferien oder Krankheit reissen jedes Mal dieselbe Lücke.
-Was einmal gesagt wurde, gehört dem Unternehmen und nicht einem Konto. Es bleibt auch dann lesbar, wenn die Person nicht mehr da ist.
-Neue Mitarbeitende
-Die Einarbeitung kostet vor allem die Zeit der Erfahrenen, weil jede Rückfrage jemanden unterbricht.
-Fragen nach Zuständigkeit, Begriff und Vorgehen beantwortet das Werkzeug aus dem Bestand, mit Angabe der Herkunft zum Nachlesen.
+Es ist unklar, wo die eingesetzten KI-Werkzeuge ablegen, was sie sich merken, und wie lange es dort bleibt.
+Der ganze Bestand liegt auf Ihrer Instanz und nicht beim Anbieter. Aufbewahrung, Sicherung und Löschung folgen denselben Regeln wie bei Ihren übrigen Daten. Was inhaltlich darin steht, sieht weiterhin nur die Person selbst.
+Alle, die täglich damit arbeiten
+Dieselben Angaben werden dem Werkzeug immer wieder erklärt, und niemand sieht, was davon hängen geblieben ist.
+Was einmal gesagt wurde, steht beim nächsten Mal schon da, und jeder Eintrag lässt sich einzeln ansehen, ändern oder wegwerfen.
 Sachbearbeitung und Verkauf
 In jedem neuen Gespräch beginnt die Erklärung von vorn: Firma, Kundschaft, Preisregeln, Sonderfälle.
 Die wiederkehrenden Angaben stehen schon da. Was bleibt, ist die eigentliche Frage.
 Datenschutz und Recht
-Ein Auskunfts- oder Löschbegehren richtet sich auf bestimmte Angaben, und jemand muss sie finden können.
-Jeder Eintrag ist ein eigener Gegenstand mit Herkunft und Datum, einzeln vorzeigbar und einzeln löschbar.
+Ein Auskunfts- oder Löschbegehren richtet sich auf bestimmte Angaben, und sie müssen auffindbar sein, auch wenn sie in einem Gespräch entstanden sind.
+Jeder Eintrag ist ein eigener Gegenstand mit Herkunft und Datum, einzeln vorzeigbar und einzeln löschbar, innerhalb des Brain, zu dem er gehört.
 Administration und Informatik
-Die Frage, was das Werkzeug über den Betrieb wissen darf und wer davon was sieht, bleibt sonst unbeantwortet.
-Berechtigungen hängen am einzelnen Knoten, jeder Zugriff steht im Audit-Protokoll, und die Funktion lässt sich ganz abschalten.
+Die Frage, wo der Bestand liegt, wer ihn sichert und wie er im Ernstfall wieder verschwindet, bleibt sonst unbeantwortet.
+Das Brain liegt auf Ihrer Instanz und wird mit ihr gesichert, jeder Zugriff steht im Audit-Protokoll, und die Funktion lässt sich ganz abschalten.
 Liste gegen Graph: derselbe Inhalt, zwei Ergebnisse
 Eine naheliegende Rückfrage zuerst, weil sie das Thema fast erledigen würde: Warum nicht einfach alles in ein grosses Kontextfenster schütten? Weil ein Kontextfenster kein Gedächtnis ist. Anthropic beschreibt es in der eigenen Dokumentation als Arbeitsspeicher für einen einzelnen Aufruf; der ganze bisherige Verlauf wird bei jeder Runde erneut mitgeschickt und liegt nicht im Modell. 18 Und mehr davon hilft nicht automatisch. In derselben Dokumentation steht, dass Genauigkeit und Erinnerungsvermögen mit wachsender Tokenzahl nachlassen, ein Verhalten, für das sich die Bezeichnung context rot eingebürgert hat, und dass die Auswahl des Inhalts ebenso wichtig ist wie der verfügbare Platz. 18 Unabhängige Untersuchungen zeigen dasselbe von aussen: Steht die einschlägige Information in der Mitte eines langen Kontexts, wird sie deutlich schlechter gefunden als am Anfang oder am Ende, und das gilt auch für ausdrücklich auf lange Kontexte ausgelegte Modelle. 19 Auswahl schlägt Menge. Ein Positionspapier vom Mai 2026 formuliert die Folgerung am schärfsten: Modelle mit endlicher Kapazität könnten die Breite des Wissens betrieblicher Aufgaben grundsätzlich nicht abbilden, weshalb dieses Wissen in eine eigene Schicht daneben gehöre. 20 Es handelt sich um eine Argumentation und nicht um eine Messung, und wir geben sie auch so wieder. Die Frage ist damit nicht, wie viel man mitschickt, sondern wie man das Richtige findet.
 Dafür lässt sich ein Gedächtnis auf zwei Arten führen. Die erste ist eine Liste. Jeder Eintrag ist ein Satz für sich: Der Betrieb hat vierzehn Mitarbeitende. Die Kundin heisst Berger. Angebote gehen grundsätzlich als PDF hinaus. Die Liste wächst, sie lässt sich durchsuchen, und sie beantwortet zuverlässig jede Frage, die genau auf einen ihrer Sätze zielt. Die meisten Memory-Funktionen, die heute in einem KI-Werkzeug stecken, sind eine solche Liste.
@@ -2010,22 +2025,22 @@ Der Unterschied fällt genau dann auf, wenn eine Frage über mehr als einen Satz
 - Der Graph: die Verbindung selbst ist gespeichert
 Dieselben Angaben, zwei Ablagen. Die eine kennt Sätze, die andere kennt Wege.
 Dass dieser Unterschied nicht nur plausibel klingt, sondern gemessen ist, lässt sich nachlesen. Microsoft Research beschreibt die Schwäche der reinen Ähnlichkeitssuche mit dem Satz, sie habe Mühe, die Punkte zu verbinden, weil das Verfolgen verstreuter Angaben über gemeinsame Merkmale laufen müsse. 21 Die zugehörige Arbeit belegt Verbesserungen für Fragen an einen ganzen Textbestand, und zwar bei Vollständigkeit und Vielfalt der Antworten; eine Zahl zur Richtigkeit weist sie ausdrücklich nicht aus, und wir behaupten deshalb auch keine. 22 Unabhängig davon, also nicht von einem Anbieter eines Gedächtnisprodukts, zeigt eine Arbeit aus der Hochschulforschung für Fragen über mehrere Schritte einen Vorsprung von bis zu 20 Prozent gegenüber dem Stand der Technik. 23 Was der Graph damit noch nicht belegt, sondern nur einordnet: Eine eigene Prüfreihe für langfristiges Gedächtnis misst unter anderem zeitliches Schliessen und das Fortschreiben von Wissen und findet bei bestehenden Assistenten über längere Verläufe einen Einbruch von 30 Prozent beim Behalten von Angaben. 24 Sie vergleicht keine Graphen mit Listen; sie zeigt, wie gross das Problem ist, das beide lösen sollen.
-Die Idee ist dabei älter als die Sprachmodelle, und sie stammt nicht von uns. Wer seine Notizen in einem Werkzeug wie Obsidian führt, kennt die Ansicht, in der die eigene Sammlung als Netz aus Punkten und Linien erscheint: Man sieht auf einen Blick, welche Notiz mit welcher zusammenhängt, welche vereinsamt und wo ein Schwerpunkt entstanden ist. Die quelloffene Erweiterung Vault Graph zeichnet dieses Bild bewusst berechenbar statt kräftebasiert, sodass derselbe Bestand immer dasselbe Bild ergibt und eine gewachsene Sammlung wiedererkennbar bleibt; ausgewertet wird dabei lokal. 25 Das Projekt Graphify baut aus einem gemischten Bestand einen abfragbaren Wissensgraphen und kennzeichnet jede Kante danach, ob die Beziehung im Material stand oder erst abgeleitet wurde. 26 Der Gedanke, den wir daraus übernommen haben, ist der schlichteste von beiden: Eine Kante trägt mit, woher sie kommt.
-Übernommen ist dabei die Denkweise und nicht der Code. Ein persönliches Notizbuch und das Gedächtnis eines Betriebs stellen verschiedene Anforderungen: Das eine gehört einer Person und darf unordentlich sein, das andere gehört einer Organisation und muss Berechtigungen, Widersprüche, Fristen und Löschbegehren aushalten. Deshalb ist unsere Umsetzung eine eigene, und deshalb handelt der nächste Abschnitt nicht von Graphen im Allgemeinen, sondern davon, was bei uns an einem einzelnen Eintrag hängt.
+Die Idee ist dabei älter als die Sprachmodelle, und sie stammt nicht von uns. Wer seine Notizen in einem Werkzeug wie Obsidian führt, kennt die Ansicht, in der die eigene Sammlung als Netz aus Punkten und Linien erscheint: Man sieht auf einen Blick, welche Notiz mit welcher zusammenhängt, welche vereinsamt und wo ein Schwerpunkt entstanden ist. Die quelloffene Erweiterung Vault Graph zeichnet dieses Bild bewusst berechenbar statt kräftebasiert, sodass derselbe Bestand immer dasselbe Bild ergibt und eine gewachsene Sammlung wiedererkennbar bleibt; ausgewertet wird dabei auf dem Gerät, weil dort auch alles andere liegt. 25 Das Projekt Graphify baut aus einem gemischten Bestand einen abfragbaren Wissensgraphen und kennzeichnet jede Kante danach, ob die Beziehung im Material stand oder erst abgeleitet wurde. 26 Der Gedanke, den wir daraus übernommen haben, ist der schlichteste von beiden: Eine Kante trägt mit, woher sie kommt.
+Übernommen ist dabei die Denkweise und nicht der Code. Ein Notizbuch auf dem eigenen Gerät und ein Brain, das im Betrieb läuft, stellen verschiedene Anforderungen: Das eine darf unordentlich sein und endet mit dem Gerät, das andere liegt auf der Instanz eines Unternehmens und muss Widersprüche, Fristen, Aufbewahrung und Löschbegehren aushalten. Deshalb ist unsere Umsetzung eine eigene, und deshalb handelt der nächste Abschnitt nicht von Graphen im Allgemeinen, sondern davon, was bei uns an einem einzelnen Eintrag hängt.
 Der Aufbau: was an einem einzelnen Eintrag hängt
 Ein Eintrag in diesem Gedächtnis ist kein Satz, sondern ein kleines Bündel aus Angaben. Das klingt nach Umstand und ist der Grund, warum sich damit Dinge machen lassen, die mit einer Notiz nicht gehen.
 1
 2
 3
-- Der Knoten: eine Sache, über die Ihr Unternehmen spricht
+- Der Knoten: eine Sache, über die Sie in Ihrer Arbeit sprechen
 - Die Kante: die Beziehung, benannt und gerichtet
-- Gültig seit, Herkunft und die Berechtigung, die am Knoten hängt
+- Gültig seit, Herkunft und der Vermerk, dass der Eintrag nur Ihnen gehört
 Ein Eintrag ist kein Satz, sondern ein Bündel. An diesem Bündel hängt alles Weitere.
 Bestandteil
 Was darin steht
 Wozu er im Alltag dient
 Knoten
-Eine Sache, über die Ihr Unternehmen spricht: eine Person, eine Rolle, eine Kundin, ein Lieferant, ein Projekt, ein Produkt, eine Anlage, eine Regel, ein Fachbegriff, eine Frist.
+Eine Sache, über die Sie in Ihrer Arbeit sprechen: eine Person, eine Rolle, eine Kundin, ein Lieferant, ein Projekt, ein Produkt, eine Anlage, eine Regel, ein Fachbegriff, eine Frist, eine eigene Vorliebe.
 Alles, was später zu dieser Sache dazukommt, findet einen Ort und liegt nicht verstreut in Gesprächen.
 Kante
 Die Beziehung zwischen zwei Knoten, benannt und gerichtet: gehört zu, beliefert, verantwortet, ersetzt, gilt für, folgt auf.
@@ -2036,12 +2051,12 @@ Die Frage, was heute gilt, und die Frage, was im Mai galt, bekommen verschiedene
 Herkunft
 Aus welchem Gespräch, welchem Dokument oder welcher Eingabe der Eintrag stammt, und wann er entstanden ist.
 Eine gemerkte Aussage lässt sich nachprüfen statt glauben. Ohne diese Angabe ist ein Gedächtnis eine Behauptung.
-Berechtigung
-Welche Rolle oder Gruppe diesen Knoten sehen darf.
-Das Gedächtnis gehört dem Unternehmen, aber nicht jeder Eintrag gehört vor jedes Augenpaar. Lohnangaben sind nicht Projektwissen.
+Sichtbarkeit
+Dass dieser Knoten zu Ihrem Brain gehört und nur für Sie sichtbar ist.
+Jede Person hat ihr eigenes Brain. Was Sie dem Werkzeug erzählen, wandert nicht von selbst in das Brain einer Kollegin.
 Der Punkt mit der Gültigkeit ist der unscheinbarste und im Betrieb der wichtigste. In einem Listengedächtnis wird eine neue Aussage über die alte geschrieben, und was vorher galt, ist weg. Hier bekommt die alte Aussage stattdessen ein Ende und bleibt stehen. Wer im September fragt, welche Skontofrist gilt, bekommt die neue. Wer nachvollziehen muss, warum eine Rechnung im Mai anders behandelt wurde, bekommt die alte samt dem Datum, an dem sie abgelöst wurde. Ein Gedächtnis, das nur den letzten Stand kennt, kann diese zweite Frage nicht beantworten, und sie ist diejenige, die in einer Prüfung gestellt wird. Der Gedanke ist in der Forschung ausgearbeitet: Eine Architektur für Gedächtnis von 2025 führt je Aussage vier Zeitstempel, getrennt danach, wann etwas in der Welt galt und wann das System davon erfahren hat, und löst Widersprüche, indem sie die ältere Kante mit Datum ungültig setzt statt sie zu überschreiben. 27 Die zugehörige Umsetzung beschreibt dasselbe als Gültigkeitsfenster je Aussage und erlaubt Abfragen sowohl auf den heutigen Stand als auch auf einen beliebigen früheren Zeitpunkt. 28
 Der zweite Punkt, der im Alltag zählt, ist die Sprache. Jeder Betrieb hat eigene Wörter: eine Bezeichnung für einen Vorgang, die es nur hier gibt, eine Abkürzung für eine Maschine, einen Kundennamen, der nicht so geschrieben wird, wie er klingt. Diese Wörter stehen als eigene Knoten im Graphen, mit ihren Schreibweisen und ihren Verbindungen. Deshalb muss niemand mehr erklären, was mit dem Begriff gemeint ist, und deshalb wird aus einer allgemeinen Antwort eine, die zum Unternehmen passt.
-Damit ändert sich auch, was die übrigen Teile der Plattform leisten können, und das ist der eigentliche Grund für den Aufwand. Ein Rollen-Agent, der den Graphen lesen darf, muss nicht mehr mit einer Seite Vorgaben gefüttert werden, bevor er brauchbar antwortet: Zuständigkeiten, Begriffe und Regeln stehen schon da. Eine Aufgabe, die über mehrere Systeme läuft, findet im Graphen die Zuordnung, die in keinem der beteiligten Systeme vollständig steht. Und eine neue Person bekommt am ersten Tag Antworten aus dem Bestand statt aus der Erinnerung der Kollegin am Nebentisch. Wir beschreiben hier, was die Bauform hergibt, und versprechen keinen Zeitplan: Was daraus im Alltag wird, entscheidet sich daran, wie gepflegt der Graph ist.
+Damit ändert sich auch, was die übrigen Teile der Plattform leisten können, und das ist der eigentliche Grund für den Aufwand. Ein Rollen-Agent, der den Graphen lesen darf, muss nicht mehr mit einer Seite Vorgaben gefüttert werden, bevor er brauchbar antwortet: Zuständigkeiten, Begriffe und Regeln stehen schon da. Eine Aufgabe, die über mehrere Systeme läuft, findet im Graphen die Zuordnung, die in keinem der beteiligten Systeme vollständig steht. Wir beschreiben hier, was die Bauform hergibt, und versprechen keinen Zeitplan: Was daraus im Alltag wird, entscheidet sich daran, wie gepflegt der Graph ist.
 Der Schreibweg: wie aus einem Satz ein Eintrag wird
 Ein Gedächtnis, das alles merkt, ist wertlos. Es füllt sich mit Belanglosem, und je voller es wird, desto unzuverlässiger findet es das Wichtige wieder. Um genau diesen Punkt drehen sich die oben zitierten Klagen über fehlende Kontrolle. Deshalb ist der Weg vom gesprochenen Satz zum gespeicherten Eintrag bei uns kein einzelner Schritt, sondern vier.
 1
@@ -2054,7 +2069,7 @@ Geschrieben wird erst nach dem Abgleich, zusammen mit Herkunft und Zeitpunkt.
 Zuerst fällt im Gespräch eine Aussage, die über den Moment hinausreicht. Das ist selten die Frage und fast immer eine Nebenbemerkung: dass die Abnahme bei diesem Kunden immer über die Bauleitung läuft, dass eine bestimmte Maschine seit dem Umbau anders eingestellt ist, dass für diese Warengruppe ein anderer Mehrwertsteuersatz gilt. Was einmalig ist, gehört nicht dazu, und was sich auf den laufenden Auftrag beschränkt, auch nicht.
 Dann entsteht daraus ein Vorschlag und noch kein Eintrag. Der Vorschlag benennt, welche Knoten betroffen wären, welche Kante entstünde und woher die Aussage stammt. Er lässt sich ablehnen, und abgelehnt heisst abgelehnt: Der Vorschlag kommt nicht bei der nächsten Gelegenheit erneut.
 Der dritte Schritt ist der Abgleich mit dem Bestand, und er ist der Grund für die ganze Bauform. Gibt es den Knoten schon, wird nicht ein zweiter angelegt, sondern der vorhandene ergänzt. Sagt der neue Satz etwas anderes als ein vorhandener, wird das als Widerspruch behandelt und nicht als Überschreiben: Die ältere Aussage bekommt ein Ende, die neue einen Anfang, und beide bleiben lesbar. Und wenn die Aussage nichts Neues trägt, wird sie verworfen, damit das Gedächtnis nicht an seiner eigenen Fülle erstickt.
-Erst danach wird geschrieben, zusammen mit Herkunft, Zeitpunkt und Berechtigung. Der Eintrag steht ab diesem Moment dem zur Verfügung, der ihn sehen darf, und zwar in jedem Gespräch, nicht nur in dem, in dem er entstanden ist. Das ist der eigentliche Unterschied zu einem Verlauf: Ein Verlauf gehört zu einem Gespräch, ein Eintrag gehört dem Unternehmen.
+Erst danach wird geschrieben, zusammen mit Herkunft und Zeitpunkt. Der Eintrag steht ab diesem Moment in jedem Ihrer Gespräche zur Verfügung, nicht nur in dem, in dem er entstanden ist. Das ist der eigentliche Unterschied zu einem Verlauf: Ein Verlauf gehört zu einem Gespräch, ein Eintrag gehört zu Ihrem Brain und liegt auf Ihrer Instanz. Auch bei uns verschwindet ein Eintrag also nicht dadurch, dass Sie das Gespräch löschen, aus dem er stammt. Der Unterschied ist, dass Sie ihn sehen: Er steht mit Herkunft und Datum in Ihrem Bestand und lässt sich dort einzeln entfernen, statt unbemerkt weiterzuwirken.
 Der Leseweg: was den Server verlässt und was nicht
 Jetzt der Teil, an dem sich entscheidet, ob ein Gedächtnis für ein europäisches Unternehmen überhaupt in Frage kommt. Ein Gedächtnis nützt nur, wenn seine Inhalte in die Antwort einfliessen. Sie müssen also irgendwie zum Modell gelangen. Die Frage ist, wie viel davon.
 1
@@ -2069,7 +2084,7 @@ Der Bestand bleibt liegen. Was Ihre Instanz verlässt, ist der Ausschnitt.
 Bei einer Frage bestimmt Kisuno zuerst die Einstiegsknoten, also die Stellen im Graphen, um die es geht. Von dort werden Kanten verfolgt, in aller Regel ein bis zwei Schritte weit, und was dabei zusammenkommt, ist ein kleiner, zusammenhängender Ausschnitt: ein paar Knoten, die Kanten dazwischen, die Angaben zur Gültigkeit. Erst dieser Ausschnitt geht zusammen mit Ihrer Frage an das Modell.
 Der Graph selbst bleibt, wo er ist. Er liegt in der Datenbank Ihrer Instanz, heute also in den Rechenzentren von Green in Lupfig. Sobald das Repository mit unseren Erweiterungen verfügbar ist, liegt er im Selbstbetrieb auf Ihrem eigenen Server. Es gibt keinen Vorgang, bei dem das Gedächtnis als Ganzes zu einem Modellanbieter übertragen, dort gespiegelt oder dort aufgebaut würde. Was Ihre Instanz verlässt, ist immer nur der Ausschnitt, den die einzelne Frage braucht, und das ist derselbe Grundsatz, nach dem auch die Wissensbasis arbeitet.
 Was für diesen Ausschnitt gilt, sagen wir offen, weil es der wichtigste Satz dieses Abschnitts ist. Kein Modellanbieter speichert Ihre Eingaben oder verwendet sie für Training. Was danach noch bleibt, hängt am gewählten Modell, und auch das sagen wir offen: Die Missbrauchserkennung von AWS kann Anfragen zurückbehalten, wenn sie gegen die Nutzungsbedingungen von AWS oder der Modellanbieter verstossen könnten. AWS bewahrt bei den GPT-Modellen markierte Anfragen und bei Claude Fable 5 und 5.1 sämtliche Anfragen bis zu 30 Tage auf, um Missbrauch maschinell zu prüfen; markierte Anfragen können dabei von AWS auch von Hand durchgesehen werden. An die Modellanbieter werden diese Daten nach Angaben von AWS nicht weitergegeben. Ist regionsübergreifende Inferenz eingeschaltet, liegen sie in der Region, in der die Anfrage verarbeitet wird. 29 Wer auch diese dreissig Tage ausschliessen will, wählt die offenen Spitzenmodelle, die europäische Unternehmen auf Servern in Europa betreiben; dort greift der US CLOUD Act nicht.
-Die Antwort kommt danach mit der Herkunft der benutzten Einträge zurück. Sie sehen also nicht nur, was Kisuno über Ihr Unternehmen zu wissen glaubt, sondern auch, aus welchem Gespräch oder Dokument dieses Wissen stammt. Das ist derselbe Gedanke wie bei der Fundstelle in einer Antwort aus der Wissensbasis, und aus demselben Grund: Eine Aussage ohne nachprüfbare Herkunft ist im Betrieb nicht brauchbar.
+Die Antwort kommt danach mit der Herkunft der benutzten Einträge zurück. Sie sehen also nicht nur, was Kisuno über Ihre Arbeit zu wissen glaubt, sondern auch, aus welchem Gespräch oder Dokument dieses Wissen stammt. Das ist derselbe Gedanke wie bei der Fundstelle in einer Antwort aus der Wissensbasis, und aus demselben Grund: Eine Aussage ohne nachprüfbare Herkunft ist im Betrieb nicht brauchbar.
 Einsehen, richtigstellen, löschen
 Ein Gedächtnis, das man nicht öffnen kann, ist kein Gedächtnis, sondern eine Unbekannte im Ablauf. Deshalb ist jeder Eintrag adressierbar, und das ist keine Nebensache der Oberfläche, sondern eine Eigenschaft der Bauform: Weil das Wissen als Knoten und Kanten vorliegt und nicht als Fliesstext, gibt es überhaupt etwas, auf das man zeigen kann.
 1
@@ -2079,19 +2094,21 @@ Ein Gedächtnis, das man nicht öffnen kann, ist kein Gedächtnis, sondern eine 
 - Einsehen, richtigstellen, löschen: Eintrag für Eintrag
 - Jeder Zugriff und jede Änderung stehen im Protokoll
 Weil das Wissen aus einzelnen Gegenständen besteht, gibt es etwas, worauf man zeigen kann.
-Daraus folgen vier Dinge, die im Alltag zählen. Erstens lässt sich der Bestand ansehen, Knoten für Knoten, mit Herkunft und Datum. Zweitens lässt sich eine falsche Aussage richtigstellen, und die falsche verschwindet dabei nicht spurlos, sondern wird als abgelöst datiert; wer wissen muss, warum eine frühere Antwort anders ausfiel, findet den Grund. Drittens lässt sich ein einzelner Eintrag löschen, und mit ihm gehen die Kanten, die an ihm hängen. Viertens steht in der Rechteverwaltung, wer welchen Teil des Gedächtnisses sieht, und jeder Zugriff steht im Audit-Protokoll.
-Für Unternehmen in Europa hat das eine praktische Seite, die über Bequemlichkeit hinausgeht. Wer nach Artikel 15 der Datenschutz-Grundverordnung Auskunft verlangt oder nach Artikel 17 Löschung, verlangt das über einen bestimmten Gegenstand, und jemand muss diesen Gegenstand finden. In einem Gedächtnis, das aus durchlaufendem Text besteht, ist das eine Suchaufgabe mit ungewissem Ausgang. In einem Graphen ist es ein Knoten mit einer Kennung und den Kanten, die daran hängen. Erfüllt ist die Pflicht damit nicht; erfüllbar wird sie erst dadurch. Diesen Unterschied halten wir für den eigentlichen Gewinn der Bauform, und er ist der Grund, warum wir sie gewählt haben.
-Und wer gar nichts gespeichert haben möchte, schaltet die Funktion ab. Sie ist kein Bestandteil, ohne den die Plattform nicht arbeitet, sondern eine Möglichkeit, für die man sich entscheidet.
+Daraus folgen vier Dinge, die im Alltag zählen. Erstens lässt sich der Bestand ansehen, Knoten für Knoten, mit Herkunft und Datum. Zweitens lässt sich eine falsche Aussage richtigstellen, und die falsche verschwindet dabei nicht spurlos, sondern wird als abgelöst datiert; wer wissen muss, warum eine frühere Antwort anders ausfiel, findet den Grund. Drittens lässt sich ein einzelner Eintrag löschen, und mit ihm gehen die Kanten, die an ihm hängen. Viertens liegt der ganze Bestand auf Ihrer Instanz, wird mit ihr gesichert und mit ihr gelöscht, und jeder Zugriff steht im Audit-Protokoll.
+Für Unternehmen in Europa hat das eine praktische Seite, die über Bequemlichkeit hinausgeht. Wer nach Artikel 15 der Datenschutz-Grundverordnung Auskunft verlangt oder nach Artikel 17 Löschung, verlangt das über einen bestimmten Gegenstand, und dieser Gegenstand muss auffindbar sein. In einem Gedächtnis, das aus durchlaufendem Text besteht, ist das eine Suchaufgabe mit ungewissem Ausgang. In einem Graphen ist es ein Knoten mit einer Kennung und den Kanten, die daran hängen. Das gilt innerhalb eines Brain. Über mehrere Brains hinweg gibt es keinen Suchlauf, weil Zugriff nur die Person selbst hat; was das für ein Begehren bedeutet, steht weiter unten bei den Grenzen. Erfüllt ist die Pflicht mit alldem nicht; erfüllbar wird sie erst dadurch. Diesen Unterschied halten wir für den eigentlichen Gewinn der Bauform, und er ist der Grund, warum wir sie gewählt haben.
+Und wer gar nichts gespeichert haben möchte, schaltet die Funktion für sich ab. Sie ist kein Bestandteil, ohne den die Plattform nicht arbeitet, sondern eine Möglichkeit, für die man sich entscheidet.
 Grenzen: was ein Gedächtnis nicht leistet
 Die erste Grenze ist zugleich der wichtigste Satz dieses Artikels. Ein Gedächtnis macht kein Modell klüger. Es macht die Frage genauer. Was zurückkommt, ist immer noch von einem Sprachmodell erzeugter Text, und der klingt auch dann plausibel, wenn die Grundlage schief ist. Wer sich auf eine Antwort verlässt, ohne die angegebene Herkunft zu öffnen, hat nichts gewonnen ausser Geschwindigkeit.
 Die zweite Grenze ist unbequemer, weil sie mit der Zeit wächst. Ein Gedächtnis merkt sich auch Falsches. Wird ein irrtümlicher Satz einmal zum Knoten, taucht er in Antworten wieder auf und wirkt dort glaubwürdiger als beim ersten Mal, weil er nun aus dem eigenen Bestand kommt. Automatische Erkennung irrt dabei nach unserer Erfahrung vorhersehbar: Sie verwechselt eine beiläufige Bemerkung mit einer verbindlichen Regel. Genau deshalb ist der Vorschlag vor dem Eintrag eingebaut und die Herkunft an jedem Eintrag, und genau deshalb bleibt die Pflege eine Aufgabe für Menschen.
-Die dritte Grenze ist eine Abgrenzung. Das Gedächtnis ersetzt weder Ihre Wissensbasis noch Ihr ERP. Es merkt sich, was gilt und was womit zusammenhängt, nicht jedes Dokument und keinen Buchungssatz. Die Unterlagen bleiben in der Wissensbasis, die Stammdaten bleiben im Fachsystem, und die Anbindung dorthin läuft über unser Gateway für Werkzeuganbindungen, mit derselben Rechteverwaltung wie überall sonst. Was dabei möglich ist, steht unter Integrationen . Ein Gedächtnis, das versucht, all das zu ersetzen, wird zur zweiten, schlechter gepflegten Datenbank.
-Die vierte Grenze betrifft Personendaten. In ein Unternehmensgedächtnis gehört, was für die Arbeit nötig ist, und nicht, was über Menschen nebenbei anfällt. Wer Angaben über Mitarbeitende darin ablegt, braucht dafür einen Zweck, eine Grundlage und je nach Land und Betriebsgrösse die Mitwirkung der Arbeitnehmervertretung. Diese Prüfung nehmen wir niemandem ab, und dieser Artikel ersetzt keine Rechtsberatung.
-Die fünfte Grenze betrifft den Selbstbetrieb. Das Gedächtnis gehört zum vollen Funktionsumfang und liegt im Selbstbetrieb vollständig auf Ihrem Server. Die Basis LibreChat steht unter MIT-Lizenz; das Repository mit unseren Erweiterungen folgt demnächst. Bis dahin ist der betreute Betrieb der Weg, auf dem die Funktion verfügbar ist, und wir sagen das lieber, als es offenzulassen.
-Die sechste Grenze ist der Graph selbst. Er ist kein Wundermittel. Sein Vorteil ist für bestimmte Fragetypen belegt: für Fragen an einen ganzen Bestand, für Fragen über mehrere Schritte und für Fragen nach Veränderung über die Zeit. Für einfache Einzelfaktenfragen ist er nicht nachweislich besser als eine gewöhnliche Ähnlichkeitssuche. Eine Untersuchung eines anderen Anbieters misst für die Graphvariante gegenüber der Variante ohne Graph einen um rund zwei Prozent besseren Gesamtwert; daraus folgt, dass der grosse Teil des Gewinns nicht aus der Graphform stammt, sondern daraus, dass überhaupt ein Gedächtnis geführt wird. 30 Wir nennen diese Zahl, weil sie gegen uns spricht. Unser Grund für den Graphen ist ohnehin ein anderer: Gültigkeit und Herkunft je Eintrag, Berechtigung je Knoten und das Löschen einzelner Einträge sind in einer Liste nicht unterzubringen.
+Die dritte Grenze ist eine Abgrenzung. Das Brain ersetzt weder Ihre Wissensbasis noch Ihr ERP. Es merkt sich, was gilt und was womit zusammenhängt, nicht jedes Dokument und keinen Buchungssatz. Die Unterlagen bleiben in der Wissensbasis, die Stammdaten bleiben im Fachsystem, und die Anbindung dorthin läuft über unser Gateway für Werkzeuganbindungen, mit derselben Rechteverwaltung wie überall sonst. Was dabei möglich ist, steht unter Integrationen . Ein Gedächtnis, das versucht, all das zu ersetzen, wird zur zweiten, schlechter gepflegten Datenbank.
+Die vierte Grenze betrifft Personendaten. In ein Brain gehört, was für die eigene Arbeit nötig ist, und nicht, was über Menschen nebenbei anfällt. Wer Angaben über Mitarbeitende darin ablegt, braucht dafür einen Zweck, eine Grundlage und je nach Land und Betriebsgrösse die Mitwirkung der Arbeitnehmervertretung. Diese Prüfung nehmen wir niemandem ab, und dieser Artikel ersetzt keine Rechtsberatung.
+Die fünfte Grenze ist die Nachfolge. Das Brain ist persönlich, und es geht mit der Person: Wird der Zugang gelöscht, wird das Brain mitgelöscht. Wer den Betrieb verlässt, nimmt also nichts mit, hinterlässt aber auch nichts, womit die Nachfolgerin arbeiten könnte. Sie fängt mit einem leeren Brain an. Dass Erfahrung mit Abgängen verloren geht, löst diese Bauform also nicht, und wir behaupten es nicht. Wie schwer das wiegt, steht weiter oben in den Zahlen zu offenen Stellen 10 und zum Ersatzbedarf in Europa. 11 Was diese Bauform löst, ist die Frage, wo das Gesammelte bis dahin liegt.
+Die sechste Grenze ist die Kehrseite davon, dass jedes Brain persönlich ist: Zugriff hat nur die Person selbst. Keine Administration und niemand sonst im Betrieb sieht hinein. Damit gibt es auch keinen Suchlauf über alle Brains hinweg und kein zentrales Löschen einzelner Angaben. Für ein Auskunfts- oder Löschbegehren heisst das, dass der Weg über die Person führt, die das Brain führt; das ist eine organisatorische Aufgabe und keine technische. Ohne sie bleibt das Gröbere: Ein Brain lässt sich ganz löschen, es verschwindet ohnehin mit dem Zugang, und die Funktion lässt sich je Zugang abschalten. Neu ist diese Lage nicht. Ein persönliches Postfach, ein Notizbuch oder eine Ablage auf dem Arbeitsgerät sind für eine Auskunft ebenfalls nur über die Person erreichbar, die damit arbeitet, und Betriebe gehen damit seit jeher organisatorisch um: Zweck vorher festlegen, Umfang schriftlich regeln, und dort abschalten, wo das nicht reicht. Ob das für Ihren Fall genügt, entscheidet Ihr Betrieb als verantwortliche Stelle, und dieser Artikel ersetzt keine Rechtsberatung.
+Die siebte Grenze betrifft den Selbstbetrieb. Das Gedächtnis gehört zum vollen Funktionsumfang und liegt im Selbstbetrieb vollständig auf Ihrem Server. Die Basis LibreChat steht unter MIT-Lizenz; das Repository mit unseren Erweiterungen folgt demnächst. Bis dahin ist der betreute Betrieb der Weg, auf dem die Funktion verfügbar ist, und wir sagen das lieber, als es offenzulassen.
+Die achte Grenze ist der Graph selbst. Er ist kein Wundermittel. Sein Vorteil ist für bestimmte Fragetypen belegt: für Fragen an einen ganzen Bestand, für Fragen über mehrere Schritte und für Fragen nach Veränderung über die Zeit. Für einfache Einzelfaktenfragen ist er nicht nachweislich besser als eine gewöhnliche Ähnlichkeitssuche. Eine Untersuchung eines anderen Anbieters misst für die Graphvariante gegenüber der Variante ohne Graph einen um rund zwei Prozent besseren Gesamtwert; daraus folgt, dass der grosse Teil des Gewinns nicht aus der Graphform stammt, sondern daraus, dass überhaupt ein Gedächtnis geführt wird. 30 Wir nennen diese Zahl, weil sie gegen uns spricht. Unser Grund für den Graphen ist ohnehin ein anderer: Gültigkeit und Herkunft je Eintrag und das Löschen einzelner Einträge samt ihrer Verbindungen sind in einer Liste nicht unterzubringen.
 Häufige Fragen zum Gedächtnis von Kisuno
 Was unterscheidet das Gedächtnis von Kisuno von der Memory-Funktion in ChatGPT?
-Drei Dinge. Erstens gehört es dem Unternehmen und nicht einem persönlichen Konto: Was eine Person beibringt, steht denen zur Verfügung, die es sehen dürfen, und bleibt da, wenn diese Person geht. Zweitens ist es ein Graph aus Knoten und benannten Kanten statt einer Liste von Sätzen, deshalb lassen sich Fragen beantworten, die über mehrere Schritte gehen. Drittens liegt es auf Ihrer Instanz, und zu einem Modell geht nur der Ausschnitt, den die einzelne Frage braucht.
+Drei Dinge. Erstens liegt es auf Ihrer Instanz und nicht beim Anbieter: Aufbewahrung, Sicherung und Löschung folgen denselben Regeln wie bei Ihren übrigen Daten, und zu einem Modell geht nur der Ausschnitt, den die einzelne Frage braucht. Zweitens ist es ein Graph aus Knoten und benannten Kanten statt einer Liste von Sätzen, deshalb lassen sich Fragen beantworten, die über mehrere Schritte gehen. Drittens trägt jeder Eintrag Gültigkeit und Herkunft, deshalb lässt er sich einzeln ansehen, richtigstellen und löschen. Persönlich ist das Brain wie die Gedächtnisse der grossen Anbieter auch; das ist nicht der Unterschied.
 Wird Kisuno dadurch mit der Zeit wirklich besser?
 Besser wird nicht das Modell, sondern die Grundlage, auf der es antwortet. Das Modell selbst bleibt unverändert und lernt aus Ihren Gesprächen nichts dazu; das ist ausdrücklich so gewollt, denn andernfalls wären Ihre Daten Trainingsmaterial. Was wächst, ist der Graph. Mit jeder Woche stehen mehr Ihrer Begriffe, Zuständigkeiten und Regeln darin, und der Ausschnitt, den eine Frage mitbringt, wird dadurch treffender. Das fühlt sich im Alltag an wie Dazulernen und ist in Wahrheit besseres Nachschlagen. Ob es eintritt, hängt an der Pflege: Ein Graph, in den niemand hineinsieht, wird nicht klüger, sondern nur voller.
 Merkt sich Kisuno automatisch alles, was wir schreiben?
@@ -2101,15 +2118,15 @@ In der Datenbank Ihrer Instanz. Die steht heute in den Rechenzentren von Green i
 Trainiert unser Gedächtnis fremde Modelle?
 Nein. Unabhängig vom gewählten Modell werden Eingaben und hochgeladene Daten vom Modellanbieter weder gespeichert noch für Training verwendet; die Zusage steht im Auftragsverarbeitungsvertrag. Eine Ausnahme nennen wir offen: Die Missbrauchserkennung von AWS kann Nachrichten markieren. AWS bewahrt bei den GPT-Modellen markierte Nachrichten und bei Claude Fable 5 und 5.1 sämtliche Anfragen bis zu 30 Tage auf, um Missbrauch zu prüfen und zu unterbinden; an die Modellanbieter geht davon nichts. Wer auch das ausschliessen will, wählt die offenen Spitzenmodelle bei europäischen Anbietern.
 Können wir einzelne Einträge löschen?
-Ja, einzeln, samt den Kanten, die daran hängen. Das ist der praktische Grund für die Bauform: Ein Auskunfts- oder Löschbegehren nach Artikel 15 oder Artikel 17 der Datenschutz-Grundverordnung richtet sich auf einen bestimmten Gegenstand, und in einem Graphen ist dieser Gegenstand ein Knoten mit einer Kennung. Erfüllt ist die Pflicht damit nicht, aber sie wird ausführbar. Wer gar nichts gespeichert haben möchte, schaltet die Funktion ab.
-Sieht jede Person im Betrieb alles, was gemerkt wurde?
-Nein. Jeder Knoten trägt, welche Rolle oder Gruppe ihn sehen darf, und die Rechteverwaltung ist dieselbe, die auch für Werkzeuge und Anbindungen gilt. Jeder Zugriff steht im Audit-Protokoll. Ein gemeinsames Gedächtnis heisst, dass Wissen dem Unternehmen gehört, und nicht, dass alles offen liegt.
+Ja, jede Person für ihr eigenes Brain, einzeln und samt den Kanten, die daran hängen. Das ist der praktische Grund für die Bauform: Ein Auskunfts- oder Löschbegehren nach Artikel 15 oder Artikel 17 der Datenschutz-Grundverordnung richtet sich auf einen bestimmten Gegenstand, und in einem Graphen ist dieser Gegenstand ein Knoten mit einer Kennung. Zentral über alle Brains hinweg geht das nicht, dazu hat niemand Zugriff; der Weg führt über die Person. Erfüllt ist die Pflicht damit nicht, aber sie wird ausführbar. Wer gar nichts gespeichert haben möchte, schaltet die Funktion ab.
+Sieht jemand anderes im Betrieb, was mein Brain gemerkt hat?
+Nein. Das Brain ist persönlich: Jede Person hat ihres, und was Sie dem Werkzeug erzählen, wandert nicht von selbst in das Brain einer Kollegin. Der Bestand liegt auf der Instanz Ihres Unternehmens, wird mit ihr gesichert und unterliegt denselben Regeln wie Ihre übrigen Daten; jeder Zugriff steht im Audit-Protokoll. Das Protokoll hält fest, wer wann zugegriffen hat, und nicht, was in einem Eintrag steht; den Inhalt sieht weiterhin nur die Person selbst. Das ist der Unterschied zu einem Gedächtnis beim Anbieter, nicht die Frage, wem es gehört.
 Dürfen Angaben über Mitarbeitende hinein?
-Nur mit einem Zweck und einer Grundlage, und je nach Land und Betriebsgrösse gehört die Arbeitnehmervertretung einbezogen. Technisch spricht nichts dagegen, und genau deshalb muss es jemand entscheiden. Wir empfehlen, den Umfang vorher schriftlich festzulegen und die Berechtigungen entsprechend zu setzen. Dieser Artikel ersetzt keine Rechtsberatung.
+Nur mit einem Zweck und einer Grundlage, und je nach Land und Betriebsgrösse gehört die Arbeitnehmervertretung einbezogen. Technisch spricht nichts dagegen, und genau deshalb muss es jemand entscheiden. Wir empfehlen, den Umfang vorher schriftlich festzulegen. Dass jedes Brain persönlich ist, macht die Frage nicht kleiner, sondern eher grösser: Was eine Person über eine andere ablegt, liegt dann in ihrem Brain. Dieser Artikel ersetzt keine Rechtsberatung.
 Was kostet das, und können wir es vorher ausprobieren?
-Das Gedächtnis gehört zum vollen Funktionsumfang und kostet nichts extra. Die betreute Instanz kostet 7 Franken (7.50 Euro) pro Person und Monat, bis auf weiteres mit 50 Prozent Rabatt bei einer Laufzeit von zwölf Monaten, also 3.50 Franken (3.75 Euro); der Modellverbrauch wird zusätzlich über ein gemeinsames Guthaben für das ganze Unternehmen abgerechnet. Testen ist kostenlos und zeitlich unbefristet: Jeder neue Zugang startet mit einem Startguthaben von 50 Franken (55 Euro), ohne Zahlungsdaten. Alle Angaben stehen auf der Seite Preise.
-Bringen Sie Ihr Unternehmenswissen mit
-Nehmen Sie zehn Sätze, die in Ihrem Betrieb jeder kennt und niemand aufgeschrieben hat, und wir bauen daraus gemeinsam die ersten Knoten. Ausdrücklich auch an den Stellen, an denen die automatische Erkennung danebenliegt. Oder Sie tragen sich ein und probieren es selbst aus.
+Das Gedächtnis gehört zum vollen Funktionsumfang und kostet nichts extra. Die betreute Instanz kostet 7 Franken (7.50 Euro) pro Person und Monat, bis auf weiteres mit 50 Prozent Rabatt bei einer Laufzeit von zwölf Monaten, also 3.50 Franken (3.75 Euro); der Modellverbrauch wird zusätzlich über ein gemeinsames Guthaben für das ganze Unternehmen abgerechnet. Testen ist kostenlos und zeitlich unbefristet: Jeder neue Zugang startet mit einem Startguthaben von 50 Franken (55 Euro), ohne Zahlungsdaten. Alle Angaben stehen auf der Seite Preise .
+Bringen Sie Ihre eigenen Sätze mit
+Nehmen Sie zehn Sätze, die Sie in Ihrer Arbeit ständig wiederholen und nirgends aufgeschrieben haben, und wir bauen daraus gemeinsam die ersten Knoten. Ausdrücklich auch an den Stellen, an denen die automatische Erkennung danebenliegt. Oder Sie tragen sich ein und probieren es selbst aus.
 Live-Demo buchen
 Jetzt starten
 Quellen

@@ -1656,8 +1656,8 @@ Comment les entreprises de Suisse et d’Europe travaillent avec un collègue IA
 Modèles et exploitation
 Mémoire et savoir
 14 septembre 2026
-Une mémoire qui appartient à l’entreprise : comment Kisuno range le savoir sous forme de graphe
-Les fonctions de mémoire connues retiennent quelque chose pour un compte personnel. Kisuno range le savoir de l’entreprise sous forme de graphe, avec validité, provenance et autorisation sur chaque entrée.
+Une mémoire qui reste sur votre serveur : comment le Brain range le savoir sous forme de graphe
+Les fonctions de mémoire connues se trouvent chez le fournisseur. Le Brain de Kisuno est lui aussi personnel, mais il se trouve sur votre instance, sous forme de graphe avec validité et provenance sur chaque entrée.
 Secteur public et protection des données
 3 septembre 2026
 La Confédération a tracé une ligne à travers son propre fonds de données : trois processus qui la respectent
@@ -1730,11 +1730,11 @@ En Allemagne, 91 % des médecins installés se sentent débordés par l’admini
 
 ---
 
-# Mémoire comme graphe de connaissances en entreprise
+# Brain : la mémoire en graphe sur votre instance
 
 URL: https://kisuno.ai/fr/blog/ki-memory-wissensgraph
 
-Mémoire comme graphe de connaissances en entreprise | Kisuno
+Brain : la mémoire en graphe sur votre instance | Kisuno
 -
 -
 -
@@ -1752,15 +1752,15 @@ Mémoire comme graphe de connaissances en entreprise | Kisuno
 Aller au contenu
 - Accueil
 - Blog
-- La mémoire comme graphe
+- Le Brain comme graphe
 Mémoire et savoir
-Une mémoire qui appartient à l’entreprise : comment Kisuno range le savoir sous forme de graphe
-Les fonctions de mémoire connues retiennent quelque chose pour un compte personnel. Kisuno range au contraire le savoir de votre entreprise sous forme de graphe fait de nœuds et d’arêtes nommées, avec une validité et une provenance sur chaque entrée et une autorisation sur chaque nœud, et le graphe reste sur votre instance. Cet article montre la structure, le chemin d’écriture et le chemin de lecture, et dit ce qu’il n’accomplit pas.
+Une mémoire qui reste sur votre instance : comment le Brain range le savoir sous forme de graphe
+Les fonctions de mémoire connues retiennent quelque chose pour un compte personnel, et le fonds se trouve chez le fournisseur. Le Brain de Kisuno est lui aussi personnel, mais il se trouve sur votre instance : sous forme de graphe fait de nœuds et d’arêtes nommées, avec une validité et une provenance sur chaque entrée. Vous voyez chaque entrée, vous pouvez la rectifier et la supprimer individuellement. Cet article montre la structure, le chemin d’écriture et le chemin de lecture, et dit ce qu’il n’accomplit pas.
 Mémoire et savoir
 14 septembre 2026
 Temps de lecture : 22 minutes
 - Situation de départ
-- Pourquoi en entreprise
+- Où elle se trouve
 - Liste contre graphe
 - La structure
 - Le chemin d’écriture
@@ -1770,13 +1770,13 @@ Temps de lecture : 22 minutes
 - Questions fréquentes
 - Sources
 En bref
-- Les fonctions de mémoire répandues sont liées au compte personnel : Microsoft dépose les contenus mémorisés dans la boîte aux lettres Exchange de chaque personne. 1 Anthropic précise que les propriétaires d’une organisation ne peuvent ni consulter ni modifier les souvenirs de chaque utilisateur. 2
+- Les fonctions de mémoire répandues se trouvent là où le fournisseur les dépose : pour Copilot, Microsoft décrit la boîte aux lettres Exchange de chaque personne, dans un dossier masqué. 1 La mémoire y est personnelle comme chez nous, et pour Claude, Anthropic précise que les propriétaires d’une organisation ne peuvent ni consulter ni modifier les souvenirs de chaque utilisateur. 2 Ce n’est pas de cela qu’il s’agit ici.
 - Microsoft écrit en outre lui-même qu’il n’existe aucun contrôle d’administration permettant d’imposer des règles de conservation spécifiquement pour la mémoire de Copilot, que la suppression d’une conversation ne supprime pas les souvenirs qui y ont été enregistrés et qu’aucune entrée n’apparaît alors dans le journal d’audit ; via eDiscovery, les données peuvent tout de même être recherchées, exportées et supprimées, et la fonction est signalée comme préversion. 1
-- Kisuno range donc le savoir sous forme de graphe : des nœuds pour les choses, des arêtes nommées pour les relations, et en plus une période de validité et une provenance sur chaque entrée ainsi qu’une autorisation sur chaque nœud. Cela permet de répondre à des questions qui passent par plusieurs étapes, et de rectifier ou de supprimer des entrées isolées.
+- Le Brain de Kisuno est lui aussi personnel, mais il se trouve sur votre instance et suit donc les règles de conservation et de suppression de votre entreprise. Il est conçu comme un graphe : des nœuds pour les choses, des arêtes nommées pour les relations, et en plus une période de validité et une provenance sur chaque entrée. Cela permet de répondre à des questions qui passent par plusieurs étapes, et chaque entrée peut être consultée, rectifiée et supprimée individuellement.
 - Le graphe reste sur votre instance. Avec votre question, seul l’extrait dont cette réponse a besoin part vers le modèle. Le modèle n’en devient pas plus intelligent ; c’est la question qui devient plus précise.
 Sur cette page
 - Situation de départ
-- Pourquoi en entreprise
+- Où elle se trouve
 - Liste contre graphe
 - La structure
 - Le chemin d’écriture
@@ -1786,216 +1786,231 @@ Sur cette page
 - Questions fréquentes
 - Sources
 À essayer
-Le graphe d’une entreprise
-Pointez un point ou touchez-le. La touche de tabulation fonctionne aussi.
-Personnes et rôles
-Choses et documents
-Règles et échéances
-Brain Entreprise
-R. Lehmann
-Ventes
+Un Brain personnel
+Survolez un point ou touchez-le. La touche de tabulation fonctionne également.
+Préférences
+Projets
+Personnes
+Décisions
+Connaissances
+Méthodes
+Brain Personnel
+Réponses brèves
+Allemand
+Halle 2
 Offre 114
 Berger AG
-Halle 2
-Procès-verbal
-Nordwand
-Règle de prix
-ancienne version
-Échéance
+R. Lehmann
+Barème
+ancienne
+PV de réception
 Réception
-Onze nœuds, treize arêtes
-Voilà comment commence, en tout petit, la mémoire d’une entreprise : un client, une offre, une règle de prix, un projet et les personnes qui vont avec.
-Le même ensemble à chaque nœud
+Offres en PDF
+Planning
+Douze entrées, treize liens
+Le Brain d’une personne commence aussi petit que cela : quelques préférences, les projets, les personnes qui vont avec, ses propres décisions.
+Le même ensemble accompagne chaque entrée
 - Type
 - Validité
 - Provenance
 - Visible par
 - Liens
 La question à laquelle une liste ne peut pas répondre
-Quelles offres en cours sont touchées par la règle de prix modifiée en mai, et qui doit informer la clientèle ?
-R. Lehmann
-Une personne avec un rôle. Si elle est absente, ce dont elle avait la charge reste visible.
+Quelles offres en cours sont concernées par le barème que j’ai modifié en mai, et qui dois-je informer ?
+Réponses brèves
+Le résultat d’abord, la justification en dessous. Vous l’avez dit une fois, et depuis cela vaut pour tout ce que vous demandez.
 Type
-Personne
+Préférence
 Validité
-depuis 2021
+sans échéance
 Provenance
-saisi à la main
+d’une conversation
 Visible par
-tout le personnel
+vous uniquement
 Liens
-- → est responsable de Offre 114
-- → appartient à Ventes
-- → est responsable de Rénovation halle 2
-Ventes
-Un rôle plutôt qu’une personne : la responsabilité survit au changement de poste.
+- → s’applique à Planning hebdomadaire du lundi
+Allemand dans la correspondance
+Les courriels et les offres partent en allemand. Les notes que vous écrivez pour vous-même peuvent être en anglais.
 Type
-Rôle
+Préférence
 Validité
-sans limite de durée
+sans échéance
 Provenance
-saisi à la main
+saisi manuellement
 Visible par
-tout le personnel
+vous uniquement
 Liens
-- ← appartient à R. Lehmann
-- → est responsable de Berger AG
-Offre 114
-L’offre connaît son client, la règle de prix sous laquelle elle est née et la personne qui l’a rédigée.
-Type
-Document
-Validité
-depuis 06.2026
-Provenance
-issu d’un document
-Visible par
-le rôle Ventes
-Liens
-- → appartient à Berger AG
-- ← s’applique à Règle de prix montage
-- ← est responsable de R. Lehmann
-Berger AG
-Le client est un objet à part entière. Tout ce qui le concerne est rattaché ici au lieu d’être dispersé dans onze phrases séparées.
-Type
-Client
-Validité
-depuis 03.2024
-Provenance
-issu d’une conversation
-Visible par
-tout le personnel
-Liens
-- ← appartient à Offre 114
-- ← appartient à Rénovation halle 2
-- ← est responsable de Ventes
-Rénovation halle 2
-Le projet réunit en un seul endroit le fournisseur, l’échéance, le procès-verbal et la responsabilité.
+- → s’applique à Berger AG
+Transformation de la halle 2
+Le projet sur lequel vous travaillez en ce moment. Fournisseur, délai, procès-verbal et responsabilité y sont rattachés.
 Type
 Projet
 Validité
 depuis 04.2026
 Provenance
-issu d’une conversation
+d’une conversation
 Visible par
-la direction de projet
+vous uniquement
 Liens
 - → appartient à Berger AG
-- ← fournit Nordwand Metallbau
-- ← appartient à Procès-verbal de réception
-- ← s’applique à Échéance 30.06.2026
-- ← est responsable de R. Lehmann
-- ← s’applique à Règle de prix montage
-Procès-verbal de réception
-Un document est un nœud lui aussi. Il est rattaché au projet et porte le terme métier en usage dans la maison.
+- ← responsable de R. Lehmann
+- ← s’applique à Barème de montage
+- ← s’applique à Procès-verbal de réception
+- ← s’applique à Planning hebdomadaire du lundi
+Offre 114
+Votre offre à la Berger AG. Elle connaît le barème sous lequel elle a été établie et la forme sous laquelle elle est partie.
 Type
 Document
 Validité
 depuis 06.2026
 Provenance
-issu d’un document
+d’un document
 Visible par
-la direction de projet
+vous uniquement
 Liens
-- → appartient à Rénovation halle 2
-- ← s’applique à Réception
-Nordwand Metallbau
-Le fournisseur est rattaché au projet et non à une note dans un compte personnel.
+- → appartient à Berger AG
+- ← s’applique à Barème de montage
+- ← s’applique à Offres en PDF
+Berger AG
+Votre cliente. Tout ce que vous savez d’elle est rattaché ici, et non éparpillé dans douze phrases isolées.
 Type
-Fournisseur
+Cliente
 Validité
-depuis 2019
+depuis 03.2024
 Provenance
-issu d’un document
+d’une conversation
 Visible par
-tout le personnel
+vous uniquement
 Liens
-- → fournit Rénovation halle 2
-Règle de prix montage
-La règle pointe d’elle-même vers tout ce qu’elle touche. C’est précisément ce qui répond à la question sur la modification de mai.
+- ← appartient à R. Lehmann
+- ← appartient à Transformation de la halle 2
+- ← appartient à Offre 114
+- ← s’applique à Allemand dans la correspondance
+R. Lehmann
+Votre personne de contact chez Berger AG. Au prochain appel, vous n’aurez pas à chercher le nom.
 Type
-Règle
+Personne
+Validité
+depuis 2024
+Provenance
+saisi manuellement
+Visible par
+vous uniquement
+Liens
+- → appartient à Berger AG
+- → responsable de Transformation de la halle 2
+Barème de montage
+Depuis mai, vous calculez le montage autrement. La décision pointe d’elle-même vers tout ce qu’elle concerne.
+Type
+Décision
 Validité
 depuis 05.2026
 Provenance
-saisi à la main
+saisi manuellement
 Visible par
-tout le personnel
+vous uniquement
 Liens
 - → s’applique à Offre 114
-- → remplace Règle de prix montage, ancienne version
-- → s’applique à Rénovation halle 2
-Règle de prix montage, ancienne version
-L’ancienne version n’est pas supprimée, elle est close avec une date. Qui doit expliquer plus tard pourquoi le calcul était différent à l’époque la retrouve ici.
+- → s’applique à Transformation de la halle 2
+- → remplace Barème de montage, ancienne version
+Barème de montage, ancienne version
+L’ancienne version n’est pas supprimée, mais close avec une date. Qui demande plus tard pourquoi le calcul était différent à l’époque la trouve ici.
 Type
-Règle
+Décision
 Validité
 jusqu’à 05.2026, remplacée
 Provenance
-saisi à la main
+saisi manuellement
 Visible par
-tout le personnel
+vous uniquement
 Liens
-- ← remplace Règle de prix montage
-Échéance 30.06.2026
-Une échéance avec une date de fin. Après le 30.06.2026, elle compte comme échue et non plus comme vraie.
+- ← remplace Barème de montage
+Procès-verbal de réception
+Le modèle que vous utilisez pour les réceptions. Il est rattaché au projet et porte le terme que vous employez pour cela.
 Type
-Échéance
+Document
 Validité
-jusqu’au 30.06.2026
+depuis 06.2026
 Provenance
-issu d’un document
+d’un document
 Visible par
-la direction de projet
+vous uniquement
 Liens
-- → s’applique à Rénovation halle 2
+- → s’applique à Transformation de la halle 2
+- ← s’applique à Réception
 Réception
-Un terme métier tel que l’entreprise le comprend, et non tel qu’un modèle le connaît en général.
+Ce que le terme signifie chez vous, et non ce qu’un modèle entend par là en général.
 Type
 Terme métier
 Validité
-sans limite de durée
+sans échéance
 Provenance
-issu d’une conversation
+d’une conversation
 Visible par
-tout le personnel
+vous uniquement
 Liens
 - → s’applique à Procès-verbal de réception
-Pour une réponse, seul cet extrait irait au modèle :
-Nœuds 11
-Arêtes 13
-Un extrait inventé mais typique. Chaque point porte sa validité, sa provenance et son autorisation ; chaque ligne a un nom et une direction.
-Situation de départ : la mémoire existe depuis longtemps, mais elle n’appartient pas à l’entreprise
-La scène est familière à quiconque utilise un outil d’IA dans son entreprise. On explique pour la cinquième fois comment s’appelle l’entreprise, qui est la clientèle, à quoi ressemble une offre chez nous et pourquoi tel fournisseur est traité autrement que tous les autres. Le fait que les grands fournisseurs disposent depuis longtemps d’une fonction de mémoire y change moins que prévu. La raison figure dans leur propre documentation, et ce n’est pas une panne, c’est un choix de construction.
-La mémoire est liée au compte personnel. Pour Copilot, Microsoft décrit que les souvenirs enregistrés, les informations déduites de l’historique et les instructions personnelles se trouvent dans la boîte aux lettres Exchange de la personne concernée, dans un dossier masqué. 1 Pour Claude, Anthropic précise que les propriétaires d’une organisation ne peuvent ni consulter ni modifier les souvenirs de chaque utilisatrice et utilisateur ; ils peuvent en revanche être exportés conformément aux règles de conservation de l’organisation. 2 Les deux ensemble donnent la même image : les entrées appartiennent à la personne. Ce qu’elle apprend à l’outil n’est pas à la disposition du reste de l’entreprise au quotidien, et personne ne peut l’y rectifier à part elle-même. Le deuxième membre de l’équipe repart de zéro, et la question de ce que l’outil croit savoir de sa propre entreprise reste sans réponse pour l’entreprise dans son ensemble.
-La deuxième lacune concerne le pilotage. Dans la même documentation, Microsoft écrit que les stratégies de conservation configurées dans Purview ne s’appliquent pas à la mémoire de Copilot et qu’il n’existe aucun contrôle d’administration permettant d’imposer des règles de conservation spécifiquement pour elle ; que la suppression d’une conversation ne supprime pas les souvenirs enregistrés qui en sont issus ; que les opérations de la mémoire ne génèrent aucune entrée dans le journal d’audit ; et qu’une administration ne peut pas restreindre le type d’informations qui entrent dans la mémoire. 1 En toute équité, il y est écrit tout autant que les données de la mémoire peuvent être recherchées, exportées et supprimées via eDiscovery et le Graph Explorer, et l’ensemble de la fonction est signalé comme préversion. 1 Le constat demeure malgré tout : les règles qu’une entreprise applique de toute façon en matière de conservation, de suppression et de traçabilité ne s’appliquent pas d’elles-mêmes à cet endroit.
+Offres en PDF
+C’est ainsi que vos offres partent. Vous n’avez pas besoin de le préciser chaque fois.
+Type
+Méthode de travail
+Validité
+sans échéance
+Provenance
+d’une conversation
+Visible par
+vous uniquement
+Liens
+- → s’applique à Offre 114
+Planning hebdomadaire du lundi
+Votre point fixe dans la semaine. Ce qui est à faire s’organise autour.
+Type
+Méthode de travail
+Validité
+sans échéance
+Provenance
+saisi manuellement
+Visible par
+vous uniquement
+Liens
+- → s’applique à Transformation de la halle 2
+- ← s’applique à Réponses brèves
+Pour une réponse, seul cet extrait partirait vers le modèle :
+Entrées 12
+Liens 13
+Un Brain de personne inventé, mais typique. Chaque entrée porte sa validité et sa provenance, chaque ligne a un nom et une direction, et tout le fonds se trouve sur votre instance.
+Situation de départ : la mémoire existe depuis longtemps, mais elle ne suit pas vos règles
+La scène est familière à quiconque utilise un outil d’IA dans son entreprise. On explique pour la cinquième fois comment s’appelle l’entreprise, qui est la clientèle, à quoi ressemble une offre chez nous et pourquoi tel fournisseur est traité autrement que tous les autres. Le fait que les grands fournisseurs disposent depuis longtemps d’une fonction de mémoire y change moins que prévu. La raison figure dans leur propre documentation, et elle ne tient pas au caractère personnel de ces fonctions. Elles le sont, et le Brain de Kisuno l’est aussi. Elle tient à l’endroit où se trouve le fonds et à qui en décide.
+Le fonds se trouve dans l’environnement du fournisseur, et les règles de l’entreprise n’y prennent pas effet d’elles-mêmes. Pour Copilot, Microsoft décrit que les souvenirs enregistrés, les informations déduites de l’historique et les instructions personnelles se trouvent dans la boîte aux lettres Exchange de la personne concernée, dans un dossier masqué. 1 Pour Claude, Anthropic précise que les propriétaires d’une organisation ne peuvent ni consulter ni modifier les souvenirs de chaque utilisatrice et utilisateur ; ils peuvent en revanche être exportés conformément aux règles de conservation de l’organisation. 2 Que ces mémoires soient personnelles n’est pas le reproche. Le Brain de Kisuno l’est aussi, et pour le travail quotidien c’est la forme de construction qui s’impose. La différence est ailleurs : ce n’est pas l’entreprise qui travaille avec l’outil qui décide de l’endroit où se trouvent les entrées, du temps pendant lequel elles y restent et de ce qui disparaît vraiment lors d’une suppression.
+La deuxième lacune concerne le pilotage. Dans la même documentation, Microsoft écrit que les stratégies de conservation configurées dans Purview ne s’appliquent pas à la mémoire de Copilot et qu’il n’existe aucun contrôle d’administration permettant d’imposer des règles de conservation spécifiquement pour elle ; que la suppression d’une conversation ne supprime pas les souvenirs enregistrés qui en sont issus ; que les opérations de la mémoire ne génèrent aucune entrée dans le journal d’audit ; et qu’une administration ne peut pas restreindre le type d’informations qui entrent dans la mémoire. 1 En toute équité, il y est écrit tout autant que les données de la mémoire peuvent être recherchées, exportées et supprimées via eDiscovery et le Graph Explorer, et l’ensemble de la fonction est signalé comme préversion. 1 Le constat demeure malgré tout, et il porte sur les trois premiers points : les règles qu’une entreprise applique de toute façon en matière de conservation, de suppression et de traçabilité ne s’appliquent pas d’elles-mêmes à cet endroit. Sur le quatrième point, nous restons en retrait, car il nous concerne tout autant : chez nous non plus, une administration ne peut pas restreindre à l’avance ce qui entre dans un Brain. Elle peut activer ou désactiver la fonction par accès, rien de plus.
 La troisième plainte porte sur le contrôle du contenu. En juin 2026, OpenAI a fait passer la personnalisation à un résumé produit automatiquement, et la liste que l’on pouvait tenir à la main est restée à côté comme fonds ancien ; dans le forum officiel des développeurs est alors apparu le souhait de voir à nouveau précisément, et de gérer entrée par entrée, ce qui est mémorisé. 3 Un an plus tôt déjà, le développeur Simon Willison avait critiqué la version précédente au motif qu’elle retirait entièrement ce contrôle et créait une condition agissant de façon invisible sur chaque sortie. 4 Ce sont des voix isolées et non une enquête, et nous ne les présentons pas non plus comme telles. Elles touchent toutefois le point où un outil de confort privé et un outil destiné à une entreprise divergent.
 La quatrième lacune est la rectification. Dans son rapport sur ChatGPT de mai 2024, le groupe de travail du Comité européen de la protection des données a relevé qu’OpenAI suggérait aux personnes concernées, du moins pour l’instant, de passer de la rectification à l’effacement lorsqu’une rectification n’est pas réalisable en raison de la complexité technique. 5 Pour une entreprise, c’est la différence entre une information corrigée et une information disparue. Qui doit expliquer plus tard pourquoi un renseignement était faux a besoin de la version rectifiée et de la date de la correction, et non d’un vide.
-Par souci d’équité, il faut ajouter que tous les points ne s’appliquent pas à tous les fournisseurs. Pour Claude, Anthropic décrit des espaces de mémoire séparés par projet et une liste dans laquelle chaque entrée peut être lue, modifiée et supprimée ; le réglage par défaut varie selon la formule : dans les versions destinées aux particuliers, la mémoire est activée, dans les versions pour les équipes et les entreprises, c’est l’administration qui décide de la disponibilité et la mémoire reste d’abord désactivée pour la personne concernée. 6 Il ne s’agit donc pas de reprocher à quiconque de la négligence. Il s’agit du dénominateur commun : ces fonctions sont conçues comme un agrément personnel et non comme le fonds d’une entreprise.
+Par souci d’équité, il faut ajouter que tous les points ne s’appliquent pas à tous les fournisseurs. Pour Claude, Anthropic décrit des espaces de mémoire séparés par projet et une liste dans laquelle chaque entrée peut être lue, modifiée et supprimée ; le réglage par défaut varie selon la formule : dans les versions destinées aux particuliers, la mémoire est activée, dans les versions pour les équipes et les entreprises, c’est l’administration qui décide de la disponibilité et la mémoire reste d’abord désactivée pour la personne concernée. 6 Il ne s’agit donc pas de reprocher à quiconque de la négligence. Il s’agit du dénominateur commun : ces fonctions tournent sur les serveurs du fournisseur. Jusqu’où les règles propres d’une entreprise portent à cet endroit varie d’un fournisseur à l’autre, et chez Copilot, d’après sa propre documentation, elles ne portent pas là où cela compte.
 Et une mémoire possède une propriété que l’on ne prête pas à un pense-bête : c’est une surface d’attaque. Depuis 2024, la recherche en sécurité montre que des contenus préparés permettent d’introduire dans la mémoire des instructions durables qui agissent au-delà de la conversation isolée. 7 Un travail de juillet 2026 montre pour des systèmes agissants comment un seul courriel laisse derrière lui un faux souvenir. 8 Ce n’est pas un argument contre les fonctions de mémoire. C’est un argument pour que chaque entrée porte sa provenance et puisse être retirée individuellement, et c’est précisément ce que doit accomplir la forme de construction dont il est question ci-après.
-Pourquoi une entreprise a besoin de sa propre mémoire
+Pourquoi l’endroit où se trouve la mémoire est déterminant
 Le besoin n’est pas une supposition, il figure dans les enquêtes. En Suisse, la part des PME qui intègrent délibérément l’intelligence artificielle dans leurs processus de travail est passée en un an de 22 % à 34 % ; le plus souvent pour les traductions avec 52 % et la correspondance avec 47 %, c’est-à-dire précisément là où les mots de l’entreprise et ses cas particuliers font la différence. En revanche, seul environ un tiers des entreprises qui utilisent effectivement l’IA dispose d’une réglementation claire de la protection des données pour le maniement des applications d’IA ; chez celles qui comptent de cinq à neuf personnes employées, ce sont 23 %. 9 Les chiffres proviennent d’une enquête menée auprès de 300 PME de Suisse alémanique et romande ; il s’agit d’un petit échantillon, et nous ne le présentons pas comme un recensement.
-La deuxième raison est plus inconfortable, parce qu’elle concerne les personnes. Le savoir qui fait une entreprise figure rarement dans un manuel. Il est dans les têtes : qui décide vraiment chez ce client, pourquoi un poste est calculé autrement depuis la dernière transformation, quelle réception ne fonctionne pas sans la direction des travaux. Si la personne vient à manquer, en vacances, à la retraite ou chez un autre employeur, ce savoir manque avec elle. Un outil d’IA dont la mémoire est liée au compte personnel aggrave ce problème au lieu de le résoudre : il recueille précisément ce savoir et le place là où il disparaît avec la personne. À quel point le marché du travail est tendu à côté de cela, les chiffres officiels le montrent : au quatrième trimestre 2025, l’Office fédéral de la statistique a dénombré 86 000 postes vacants en Suisse, et 36,2 % des entreprises ont signalé des difficultés de recrutement. 10 Un poste qui se libère n’est donc pas repourvu rapidement, et jusque-là manque aussi ce que la personne savait. À l’échelle européenne, le Cedefop attribue expressément les besoins de remplacement aux départs à la retraite et aux changements de métier, donc à des départs par lesquels l’expérience quitte l’entreprise. 11
-Ce qui se passe lorsqu’une entreprise n’a pas sa propre solution a également été étudié. Dans une étude de KPMG et de l’University of Melbourne menée auprès de 48 340 personnes interrogées dans 47 pays, deux personnes actives sur trois ont indiqué s’être fiées à des sorties d’IA sans vérifier les informations fournies, et près de la moitié ont admis utiliser l’IA à l’encontre des consignes de leur entreprise et téléverser à cette occasion des informations sensibles de l’entreprise, telles que des données financières, commerciales ou clients, dans des outils d’IA publics. 12 La question n’est donc pas de savoir si le savoir de l’entreprise finit dans un outil d’IA. La question est de savoir s’il finit dans un outil dont l’entreprise dispose. Une interdiction déplace le problème vers l’accès privé, où plus personne ne regarde.
+La deuxième raison est plus inconfortable, parce qu’elle concerne les personnes. Le savoir qui fait le travail quotidien figure rarement dans un manuel. Il est dans les têtes : qui décide vraiment chez ce client, pourquoi un poste est calculé autrement depuis la dernière transformation, quelle réception ne fonctionne pas sans la direction des travaux. Qui travaille chaque jour avec un outil d’IA lui raconte précisément cela, phrase après phrase, sans l’avoir décidé. La seule question est de savoir où ces phrases se trouvent ensuite. À quel point le marché du travail est tendu à côté de cela, les chiffres officiels le montrent : au quatrième trimestre 2025, l’Office fédéral de la statistique a dénombré 86 000 postes vacants en Suisse, et 36,2 % des entreprises ont signalé des difficultés de recrutement. 10 Un poste qui se libère n’est donc pas repourvu rapidement, et jusque-là manque aussi ce que la personne savait. À l’échelle européenne, le Cedefop attribue expressément les besoins de remplacement aux départs à la retraite et aux changements de métier, donc à des départs par lesquels l’expérience quitte l’entreprise. 11 Un Brain personnel ne résout pas ce problème, et nous ne le prétendons pas non plus ; la section sur les limites, plus bas, y revient. Il décide seulement si le savoir recueilli se trouve chez vous ou chez le fournisseur.
+Ce qui se passe lorsqu’une entreprise n’a pas sa propre solution a également été étudié. Dans une étude de KPMG et de l’University of Melbourne menée auprès de 48 340 personnes interrogées dans 47 pays, deux personnes actives sur trois ont indiqué s’être fiées à des sorties d’IA sans vérifier les informations fournies, et une part considérable a admis utiliser l’IA à l’encontre des consignes de son entreprise ; le rapport mentionne expressément le téléversement d’informations sensibles de l’entreprise, telles que des données financières, commerciales ou clients, dans des outils d’IA publics. 12 La question n’est donc pas de savoir si le savoir de l’entreprise finit dans un outil d’IA. La question est de savoir s’il finit sur une instance dont l’entreprise détermine la conservation, la sauvegarde et la suppression. Une interdiction déplace le problème vers l’accès privé, où plus personne ne regarde.
 S’y ajoute la différence de taille. Selon Eurostat, 20,0 % des entreprises de l’UE d’au moins dix personnes employées utilisaient des technologies d’IA en 2025, après 13,5 % l’année précédente ; dans le détail, il s’agit de 17 % des petites entreprises, de 30,36 % des moyennes et de 55,03 % des grandes. 13 Parmi celles qui ont un jour envisagé l’utilisation et qui n’y recourent pas, les motifs en tête la même année étaient le manque de connaissances spécialisées pertinentes avec 70,89 %, l’incertitude sur les conséquences juridiques avec 52,52 % et les préoccupations liées à la protection des données avec 48,83 %. 14 Cette population de référence ne comprend expressément que les entreprises qui ont un jour envisagé l’utilisation, et non toutes. Le constat demeure malgré tout : ce qui freine les petites entreprises, ce n’est pas la technique, mais l’absence de contexte et l’absence de certitude sur ce qu’il advient de leurs propres informations.
 La troisième raison est juridique et expressément établie pour la Suisse. Le Préposé fédéral à la protection des données et à la transparence rappelle que la loi suisse sur la protection des données s’applique directement aux traitements de données assistés par l’IA. 15 Quiconque dépose donc des informations relatives à des personnes dans une mémoire doit pouvoir en donner communication et les rectifier ou les détruire ; la loi sur la protection des données règle les deux à l’article 25 et à l’article 32. 16 Dans l’Union européenne, les mêmes droits figurent à l’article 15 et à l’article 17 du règlement général sur la protection des données. 17 Ce n’est pas une formalité, mais une exigence adressée à la forme de construction : qui ne peut pas montrer ni supprimer entrée par entrée ne peut pas répondre à ces droits.
 Qui pose la question
 Ce qui déclenche le besoin
 Ce que la mémoire y apporte
 Direction
-Le savoir décisif est lié à des personnes, et une succession, des vacances ou une maladie ouvrent chaque fois la même brèche.
-Ce qui a été dit une fois appartient à l’entreprise et non à un compte. Cela reste lisible même lorsque la personne n’est plus là.
-Nouvelles collaboratrices et nouveaux collaborateurs
-La mise au courant coûte avant tout le temps des personnes expérimentées, car chaque question en interrompt une.
-Les questions de compétence, de terminologie et de procédure, l’outil y répond à partir du fonds, en indiquant la provenance pour vérification.
+On ne sait pas où les outils d’IA utilisés déposent ce qu’ils retiennent, ni combien de temps cela y reste.
+Tout le fonds se trouve sur votre instance et non chez le fournisseur. La conservation, la sauvegarde et la suppression suivent les mêmes règles que pour vos autres données. Le contenu des entrées, lui, reste visible par la seule personne concernée.
+Toutes les personnes qui l’utilisent au quotidien
+Les mêmes informations sont expliquées à l’outil encore et encore, et personne ne voit ce qui en est resté.
+Ce qui a été dit une fois est déjà là la fois suivante, et chaque entrée peut être consultée, modifiée ou jetée individuellement.
 Traitement des dossiers et vente
 Dans chaque nouvelle conversation, l’explication recommence depuis le début : entreprise, clientèle, règles de prix, cas particuliers.
 Les informations récurrentes sont déjà là. Ce qui reste, c’est la question elle-même.
 Protection des données et droit
-Une demande de communication ou d’effacement porte sur des informations déterminées, et quelqu’un doit pouvoir les trouver.
-Chaque entrée est un objet distinct avec une provenance et une date, présentable individuellement et supprimable individuellement.
+Une demande de communication ou d’effacement porte sur des informations déterminées, et elles doivent pouvoir être retrouvées, même si elles sont nées dans une conversation.
+Chaque entrée est un objet distinct avec une provenance et une date, présentable individuellement et supprimable individuellement, à l’intérieur du Brain auquel elle appartient.
 Administration et informatique
-Sinon, la question de savoir ce que l’outil a le droit de savoir de l’entreprise et qui en voit quoi reste sans réponse.
-Les autorisations sont attachées à chaque nœud, chaque accès figure dans le journal d’audit, et la fonction peut être entièrement désactivée.
+La question de savoir où se trouve le fonds, qui le sauvegarde et comment il disparaît le cas échéant reste sinon sans réponse.
+Le Brain se trouve sur votre instance et est sauvegardé avec elle, chaque accès figure dans le journal d’audit, et la fonction peut être entièrement désactivée.
 Liste contre graphe : le même contenu, deux résultats
 Une objection évidente d’abord, parce qu’elle réglerait presque le sujet : pourquoi ne pas simplement déverser tout dans une grande fenêtre de contexte ? Parce qu’une fenêtre de contexte n’est pas une mémoire. Anthropic la décrit dans sa propre documentation comme une mémoire de travail pour un appel unique ; tout l’historique antérieur est renvoyé à chaque tour et ne réside pas dans le modèle. 18 Et en avoir davantage n’aide pas automatiquement. La même documentation indique que la précision et la capacité de rappel diminuent à mesure que le nombre de jetons augmente, un comportement pour lequel la désignation context rot s’est imposée, et que le choix du contenu importe autant que la place disponible. 18 Des études indépendantes montrent la même chose de l’extérieur : lorsque l’information pertinente se trouve au milieu d’un long contexte, elle est nettement moins bien retrouvée qu’au début ou à la fin, et cela vaut aussi pour les modèles expressément conçus pour de longs contextes. 19 Le choix l’emporte sur la quantité. Une prise de position de mai 2026 formule la conclusion de la manière la plus tranchée : des modèles à capacité finie ne pourraient par principe pas représenter l’étendue du savoir des tâches d’entreprise, raison pour laquelle ce savoir devrait figurer dans une couche distincte à côté. 20 Il s’agit d’une argumentation et non d’une mesure, et nous la restituons comme telle. La question n’est donc pas de savoir combien on envoie, mais comment on trouve ce qu’il faut.
 Pour cela, une mémoire peut être tenue de deux manières. La première est une liste. Chaque entrée est une phrase en soi : l’entreprise compte quatorze personnes employées. La cliente s’appelle Berger. Les offres partent en principe au format PDF. La liste grandit, elle peut être parcourue, et elle répond de manière fiable à toute question qui vise exactement l’une de ses phrases. La plupart des fonctions de mémoire qui se trouvent aujourd’hui dans un outil d’IA sont une telle liste.
@@ -2009,22 +2024,22 @@ La différence saute aux yeux précisément lorsqu’une question porte sur plus
 - Le graphe : le lien lui-même est enregistré
 Les mêmes informations, deux rangements. L’un connaît des phrases, l’autre connaît des chemins.
 Que cette différence ne sonne pas seulement plausible, mais qu’elle soit mesurée, cela peut se vérifier. Microsoft Research décrit la faiblesse de la pure recherche par similarité en disant qu’elle a du mal à relier les points, parce que suivre des informations dispersées doit passer par des caractéristiques communes. 21 Le travail correspondant atteste d’améliorations pour des questions portant sur un corpus de textes entier, et ce pour l’exhaustivité et la diversité des réponses ; il n’indique expressément aucun chiffre sur l’exactitude, et nous n’en affirmons donc aucun. 22 Indépendamment de cela, c’est-à-dire sans provenir d’un fournisseur de produit de mémoire, un travail issu de la recherche universitaire montre pour les questions en plusieurs étapes une avance allant jusqu’à 20 pour cent par rapport à l’état de l’art. 23 Ce que le graphe n’établit pas encore par là, mais ne fait que situer : une série d’épreuves dédiée à la mémoire à long terme mesure entre autres le raisonnement temporel et la mise à jour du savoir, et constate chez les assistants existants, sur des déroulements plus longs, une chute de 30 pour cent dans la conservation des informations. 24 Elle ne compare pas des graphes à des listes ; elle montre l’ampleur du problème que les deux doivent résoudre.
-L’idée est d’ailleurs plus ancienne que les modèles de langage, et elle ne vient pas de nous. Qui tient ses notes dans un outil comme Obsidian connaît la vue dans laquelle sa propre collection apparaît comme un réseau de points et de lignes : on voit d’un coup d’œil quelle note est liée à quelle autre, laquelle reste isolée et où un point fort s’est formé. L’extension à code ouvert Vault Graph dessine cette image délibérément de manière calculable plutôt que par forces, de sorte que le même fonds donne toujours la même image et qu’une collection qui a grandi reste reconnaissable ; l’analyse se fait localement. 25 Le projet Graphify construit à partir d’un fonds hétérogène un graphe de connaissances interrogeable et marque chaque arête selon que la relation figurait dans le matériau ou qu’elle n’a été que déduite. 26 L’idée que nous en avons reprise est la plus simple des deux : une arête porte avec elle d’où elle vient.
-Ce qui est repris, c’est la manière de penser et non le code. Un carnet de notes personnel et la mémoire d’une entreprise posent des exigences différentes : l’un appartient à une personne et a le droit d’être désordonné, l’autre appartient à une organisation et doit supporter des autorisations, des contradictions, des délais et des demandes d’effacement. C’est pourquoi notre mise en œuvre est la nôtre, et c’est pourquoi la section suivante ne traite pas des graphes en général, mais de ce qui, chez nous, est attaché à une entrée.
+L’idée est d’ailleurs plus ancienne que les modèles de langage, et elle ne vient pas de nous. Qui tient ses notes dans un outil comme Obsidian connaît la vue dans laquelle sa propre collection apparaît comme un réseau de points et de lignes : on voit d’un coup d’œil quelle note est liée à quelle autre, laquelle reste isolée et où un point fort s’est formé. L’extension à code ouvert Vault Graph dessine cette image délibérément de manière calculable plutôt que par forces, de sorte que le même fonds donne toujours la même image et qu’une collection qui a grandi reste reconnaissable ; l’analyse se fait sur l’appareil, parce que tout le reste s’y trouve aussi. 25 Le projet Graphify construit à partir d’un fonds hétérogène un graphe de connaissances interrogeable et marque chaque arête selon que la relation figurait dans le matériau ou qu’elle n’a été que déduite. 26 L’idée que nous en avons reprise est la plus simple des deux : une arête porte avec elle d’où elle vient.
+Ce qui est repris, c’est la manière de penser et non le code. Un carnet de notes sur son propre appareil et un Brain qui tourne dans une entreprise posent des exigences différentes : l’un a le droit d’être désordonné et s’achève avec l’appareil, l’autre se trouve sur l’instance d’une entreprise et doit supporter des contradictions, des délais, la conservation et des demandes d’effacement. C’est pourquoi notre mise en œuvre est la nôtre, et c’est pourquoi la section suivante ne traite pas des graphes en général, mais de ce qui, chez nous, est attaché à une entrée isolée.
 La structure : ce qui est attaché à une entrée
 Une entrée dans cette mémoire n’est pas une phrase, mais un petit faisceau d’informations. Cela a l’air compliqué, et c’est la raison pour laquelle on peut faire avec elle des choses impossibles avec une note.
 1
 2
 3
-- Le nœud : une chose dont votre entreprise parle
+- Le nœud : une chose dont vous parlez dans votre travail
 - L’arête : la relation, nommée et orientée
-- Valable depuis, provenance, et l’autorisation attachée au nœud
+- Valable depuis, provenance, et la mention que l’entrée n’appartient qu’à vous
 Une entrée n’est pas une phrase, mais un faisceau. Tout le reste est attaché à ce faisceau.
 Composant
 Ce qu’il contient
 À quoi il sert au quotidien
 Nœud
-Une chose dont votre entreprise parle : une personne, un rôle, une cliente, un fournisseur, un projet, un produit, une installation, une règle, un terme technique, un délai.
+Une chose dont vous parlez dans votre travail : une personne, un rôle, une cliente, un fournisseur, un projet, un produit, une installation, une règle, un terme technique, un délai, une préférence personnelle.
 Tout ce qui vient s’ajouter plus tard à cette chose trouve un emplacement et ne reste pas éparpillé dans des conversations.
 Arête
 La relation entre deux nœuds, nommée et orientée : appartient à, approvisionne, répond de, remplace, s’applique à, succède à.
@@ -2035,12 +2050,12 @@ La question de ce qui vaut aujourd’hui et la question de ce qui valait en mai 
 Provenance
 De quelle conversation, de quel document ou de quelle saisie l’entrée provient, et quand elle est née.
 Une affirmation mémorisée peut être vérifiée au lieu d’être crue. Sans cette indication, une mémoire est une allégation.
-Autorisation
-Quel rôle ou quel groupe a le droit de voir ce nœud.
-La mémoire appartient à l’entreprise, mais toutes les entrées ne sont pas destinées à tous les regards. Les informations salariales ne sont pas du savoir de projet.
+Visibilité
+Que ce nœud appartient à votre Brain et n’est visible que par vous.
+Chaque personne a son propre Brain. Ce que vous racontez à l’outil ne passe pas de lui-même dans le Brain d’une collègue.
 Le point de la validité est le plus discret et, en entreprise, le plus important. Dans une mémoire en liste, une nouvelle affirmation est écrite par-dessus l’ancienne, et ce qui valait auparavant a disparu. Ici, l’ancienne affirmation reçoit au contraire une fin et subsiste. Qui demande en septembre quel délai d’escompte s’applique reçoit le nouveau. Qui doit retracer pourquoi une facture a été traitée autrement en mai reçoit l’ancien, avec la date à laquelle il a été remplacé. Une mémoire qui ne connaît que le dernier état ne peut pas répondre à cette seconde question, et c’est elle qui est posée lors d’un contrôle. L’idée est élaborée dans la recherche : une architecture de mémoire de 2025 tient quatre horodatages par affirmation, distingués selon le moment où quelque chose valait dans le monde et le moment où le système en a eu connaissance, et résout les contradictions en invalidant l’arête plus ancienne avec une date au lieu de l’écraser. 27 La mise en œuvre associée décrit la même chose comme une fenêtre de validité par affirmation et permet d’interroger aussi bien l’état du jour qu’un moment antérieur quelconque. 28
 Le deuxième point qui compte au quotidien, c’est la langue. Chaque entreprise a ses propres mots : une désignation pour une opération qui n’existe qu’ici, une abréviation pour une machine, un nom de client qui ne s’écrit pas comme il se prononce. Ces mots figurent comme nœuds propres dans le graphe, avec leurs orthographes et leurs liens. C’est pourquoi personne n’a plus besoin d’expliquer ce que le terme désigne, et c’est pourquoi une réponse générale devient une réponse qui correspond à l’entreprise.
-Cela change aussi ce que les autres parties de la plateforme peuvent accomplir, et c’est la véritable raison de cet effort. Un agent de rôle autorisé à lire le graphe n’a plus besoin d’être nourri d’une page de consignes avant de répondre utilement : les responsabilités, les termes et les règles y figurent déjà. Une tâche qui traverse plusieurs systèmes trouve dans le graphe l’attribution qui ne figure complètement dans aucun des systèmes concernés. Et une nouvelle personne reçoit dès le premier jour des réponses tirées du fonds plutôt que de la mémoire de la collègue assise à la table voisine. Nous décrivons ici ce que la forme de construction permet, et nous ne promettons aucun calendrier : ce qu’il en advient au quotidien se décide à la qualité de l’entretien du graphe.
+Cela change aussi ce que les autres parties de la plateforme peuvent accomplir, et c’est la véritable raison de cet effort. Un agent de rôle autorisé à lire le graphe n’a plus besoin d’être nourri d’une page de consignes avant de répondre utilement : les responsabilités, les termes et les règles y figurent déjà. Une tâche qui traverse plusieurs systèmes trouve dans le graphe l’attribution qui ne figure complètement dans aucun des systèmes concernés. Nous décrivons ici ce que la forme de construction permet, et nous ne promettons aucun calendrier : ce qu’il en advient au quotidien se décide à la qualité de l’entretien du graphe.
 Le chemin d’écriture : comment une phrase devient une entrée
 Une mémoire qui retient tout ne vaut rien. Elle se remplit d’insignifiances, et plus elle se remplit, moins elle retrouve l’essentiel de manière fiable. C’est exactement autour de ce point que tournent les plaintes citées plus haut sur l’absence de contrôle. C’est pourquoi, chez nous, le chemin de la phrase prononcée à l’entrée enregistrée n’est pas une seule étape, mais quatre.
 1
@@ -2053,7 +2068,7 @@ L’écriture n’a lieu qu’après la comparaison, avec la provenance et le mo
 D’abord, une affirmation qui dépasse l’instant est faite dans la conversation. Ce n’est que rarement la question et presque toujours une remarque incidente : que la réception chez ce client passe toujours par la direction des travaux, qu’une machine déterminée est réglée autrement depuis la transformation, qu’un autre taux de TVA s’applique à ce groupe de marchandises. Ce qui est ponctuel n’en fait pas partie, et ce qui se limite au mandat en cours non plus.
 Il en naît ensuite une proposition et pas encore une entrée. La proposition indique quels nœuds seraient concernés, quelle arête naîtrait et d’où provient l’affirmation. Elle peut être refusée, et refusée veut dire refusée : la proposition ne revient pas à la prochaine occasion.
 La troisième étape est la comparaison avec le fonds, et elle est la raison de toute cette forme de construction. Si le nœud existe déjà, il n’en est pas créé un deuxième, mais celui qui existe est complété. Si la nouvelle phrase dit autre chose qu’une phrase existante, cela est traité comme une contradiction et non comme un écrasement : l’affirmation plus ancienne reçoit une fin, la nouvelle un début, et les deux restent lisibles. Et si l’affirmation n’apporte rien de nouveau, elle est écartée, afin que la mémoire n’étouffe pas sous sa propre abondance.
-Ce n’est qu’ensuite que l’écriture a lieu, avec la provenance, le moment et l’autorisation. À partir de cet instant, l’entrée est à la disposition de qui a le droit de la voir, et ce dans chaque conversation, pas seulement dans celle où elle est née. C’est là la véritable différence avec un historique : un historique appartient à une conversation, une entrée appartient à l’entreprise.
+Ce n’est qu’ensuite que l’écriture a lieu, avec la provenance et le moment. À partir de cet instant, l’entrée est à disposition dans chacune de vos conversations, pas seulement dans celle où elle est née. C’est là la véritable différence avec un historique : un historique appartient à une conversation, une entrée appartient à votre Brain et se trouve sur votre instance. Chez nous non plus, une entrée ne disparaît donc pas du fait que vous supprimez la conversation dont elle est issue. La différence, c’est que vous la voyez : elle figure dans votre fonds avec sa provenance et sa date et peut y être retirée individuellement, au lieu de continuer à agir sans que personne s’en aperçoive.
 Le chemin de lecture : ce qui quitte le serveur et ce qui n’en sort pas
 Vient maintenant la partie où se décide si une mémoire entre seulement en ligne de compte pour une entreprise européenne. Une mémoire n’est utile que si ses contenus entrent dans la réponse. Ils doivent donc parvenir d’une manière ou d’une autre au modèle. La question est de savoir quelle part.
 1
@@ -2068,7 +2083,7 @@ Le fonds reste en place. Ce qui quitte votre instance, c’est l’extrait.
 Pour une question, Kisuno détermine d’abord les nœuds d’entrée, c’est-à-dire les endroits du graphe dont il s’agit. De là, les arêtes sont suivies, en règle générale sur une à deux étapes, et ce qui est ainsi réuni est un extrait petit et cohérent : quelques nœuds, les arêtes entre eux, les indications de validité. Seul cet extrait part ensuite vers le modèle avec votre question.
 Le graphe lui-même reste où il est. Il se trouve dans la base de données de votre instance, aujourd’hui donc dans les centres de données de Green à Lupfig. Dès que le dépôt avec nos extensions sera disponible, il se trouvera, en auto-hébergement, sur votre propre serveur. Il n’existe aucune opération par laquelle la mémoire serait transmise dans son ensemble à un fournisseur de modèle, y serait répliquée ou y serait constituée. Ce qui quitte votre instance, c’est toujours uniquement l’extrait dont la question isolée a besoin, et c’est le même principe que celui selon lequel travaille aussi la base de connaissances.
 Ce qui vaut pour cet extrait, nous le disons ouvertement, parce que c’est la phrase la plus importante de cette section. Aucun fournisseur de modèle n’enregistre vos saisies ni ne les utilise pour l’entraînement. Ce qui subsiste ensuite dépend du modèle choisi, et cela aussi, nous le disons ouvertement : la détection des abus d’AWS peut retenir des requêtes lorsqu’elles pourraient enfreindre les conditions d’utilisation d’AWS ou des fournisseurs de modèles. Pour les modèles GPT, AWS conserve les requêtes marquées et, pour Claude Fable 5 et 5.1, l’ensemble des requêtes jusqu’à 30 jours, afin de contrôler les abus par voie automatique ; les requêtes marquées peuvent en outre être examinées à la main par AWS. Selon les indications d’AWS, ces données ne sont pas transmises aux fournisseurs de modèles. Si l’inférence interrégionale est activée, elles se trouvent dans la région où la requête est traitée. 29 Qui veut exclure aussi ces trente jours choisit les modèles de pointe ouverts que des entreprises européennes exploitent sur des serveurs en Europe ; le US CLOUD Act n’y trouve pas à s’appliquer.
-La réponse revient ensuite avec la provenance des entrées utilisées. Vous voyez donc non seulement ce que Kisuno croit savoir de votre entreprise, mais aussi de quelle conversation ou de quel document ce savoir provient. C’est la même idée que la référence dans une réponse issue de la base de connaissances, et pour la même raison : une affirmation sans provenance vérifiable n’est pas utilisable en entreprise.
+La réponse revient ensuite avec la provenance des entrées utilisées. Vous voyez donc non seulement ce que Kisuno croit savoir de votre travail, mais aussi de quelle conversation ou de quel document ce savoir provient. C’est la même idée que la référence dans une réponse issue de la base de connaissances, et pour la même raison : une affirmation sans provenance vérifiable n’est pas utilisable en entreprise.
 Consulter, rectifier, supprimer
 Une mémoire que l’on ne peut pas ouvrir n’est pas une mémoire, mais une inconnue dans le déroulement. C’est pourquoi chaque entrée est adressable, et ce n’est pas un détail de l’interface, mais une propriété de la forme de construction : parce que le savoir se présente sous forme de nœuds et d’arêtes et non de texte continu, il y a quelque chose que l’on peut désigner.
 1
@@ -2078,19 +2093,21 @@ Une mémoire que l’on ne peut pas ouvrir n’est pas une mémoire, mais une in
 - Consulter, rectifier, supprimer : entrée par entrée
 - Chaque accès et chaque modification figurent dans le journal
 Parce que le savoir est fait d’objets distincts, il y a quelque chose que l’on peut désigner.
-Il en découle quatre choses qui comptent au quotidien. Premièrement, le fonds peut être consulté, nœud par nœud, avec provenance et date. Deuxièmement, une affirmation fausse peut être rectifiée, et la fausse ne disparaît pas sans laisser de trace : elle est datée comme remplacée ; qui doit savoir pourquoi une réponse antérieure était différente en trouve la raison. Troisièmement, une entrée isolée peut être supprimée, et avec elle partent les arêtes qui y sont attachées. Quatrièmement, la gestion des droits indique qui voit quelle partie de la mémoire, et chaque accès figure dans le journal d’audit.
-Pour les entreprises en Europe, cela a un côté pratique qui va au-delà du confort. Qui demande la communication au titre de l’article 15 du règlement général sur la protection des données ou l’effacement au titre de l’article 17 le demande pour un objet déterminé, et quelqu’un doit trouver cet objet. Dans une mémoire faite de texte continu, c’est une tâche de recherche à l’issue incertaine. Dans un graphe, c’est un nœud avec un identifiant et les arêtes qui y sont attachées. L’obligation n’est pas remplie pour autant ; ce n’est que par là qu’elle devient remplissable. Cette différence, nous la tenons pour le véritable gain de la forme de construction, et elle est la raison pour laquelle nous l’avons choisie.
-Et qui ne veut rien faire enregistrer du tout désactive la fonction. Elle n’est pas un composant sans lequel la plateforme ne travaille pas, mais une possibilité pour laquelle on se décide.
+Il en découle quatre choses qui comptent au quotidien. Premièrement, le fonds peut être consulté, nœud par nœud, avec provenance et date. Deuxièmement, une affirmation fausse peut être rectifiée, et la fausse ne disparaît pas sans laisser de trace : elle est datée comme remplacée ; qui doit savoir pourquoi une réponse antérieure était différente en trouve la raison. Troisièmement, une entrée isolée peut être supprimée, et avec elle partent les arêtes qui y sont attachées. Quatrièmement, tout le fonds se trouve sur votre instance, il est sauvegardé avec elle et supprimé avec elle, et chaque accès figure dans le journal d’audit.
+Pour les entreprises en Europe, cela a un côté pratique qui va au-delà du confort. Qui demande la communication au titre de l’article 15 du règlement général sur la protection des données ou l’effacement au titre de l’article 17 le demande pour un objet déterminé, et cet objet doit pouvoir être retrouvé. Dans une mémoire faite de texte continu, c’est une tâche de recherche à l’issue incertaine. Dans un graphe, c’est un nœud avec un identifiant et les arêtes qui y sont attachées. Cela vaut à l’intérieur d’un Brain. À travers plusieurs Brains, il n’existe aucune recherche, parce que seule la personne elle-même y a accès ; ce que cela signifie pour une demande est expliqué plus bas, dans les limites. L’obligation n’est pas remplie pour autant ; ce n’est que par là qu’elle devient remplissable. Cette différence, nous la tenons pour le véritable gain de la forme de construction, et elle est la raison pour laquelle nous l’avons choisie.
+Et qui ne veut rien faire enregistrer du tout désactive la fonction pour soi. Elle n’est pas un composant sans lequel la plateforme ne travaille pas, mais une possibilité pour laquelle on se décide.
 Limites : ce qu’une mémoire n’accomplit pas
 La première limite est en même temps la phrase la plus importante de cet article. Une mémoire ne rend pas un modèle plus intelligent. Elle rend la question plus précise. Ce qui revient reste du texte produit par un modèle de langage, et cela sonne plausible même lorsque la base est bancale. Qui se fie à une réponse sans ouvrir la provenance indiquée n’a rien gagné, si ce n’est de la vitesse.
 La deuxième limite est plus inconfortable, parce qu’elle croît avec le temps. Une mémoire retient aussi ce qui est faux. Si une phrase erronée devient une fois un nœud, elle réapparaît dans les réponses et y paraît plus crédible que la première fois, parce qu’elle provient désormais du fonds propre. La détection automatique se trompe à cet égard, selon notre expérience, de manière prévisible : elle confond une remarque en passant avec une règle contraignante. C’est précisément pour cela que la proposition est intégrée avant l’entrée et la provenance sur chaque entrée, et c’est précisément pour cela que l’entretien reste une tâche pour des personnes.
-La troisième limite est une délimitation. La mémoire ne remplace ni votre base de connaissances ni votre ERP. Elle retient ce qui vaut et ce qui est lié à quoi, pas chaque document et aucune écriture comptable. Les documents restent dans la base de connaissances, les données de base restent dans le système métier, et le raccordement à celui-ci passe par notre passerelle pour les raccordements d’outils, avec la même gestion des droits que partout ailleurs. Ce qui est possible à cet égard figure sous Intégrations . Une mémoire qui tente de remplacer tout cela devient une deuxième base de données, moins bien entretenue.
-La quatrième limite concerne les données personnelles. Dans une mémoire d’entreprise a sa place ce qui est nécessaire au travail, et non ce qui se rapporte accessoirement à des personnes. Qui y dépose des informations sur des collaboratrices et collaborateurs a besoin d’une finalité, d’une base et, selon le pays et la taille de l’entreprise, du concours de la représentation du personnel. Cet examen, nous ne le faisons à la place de personne, et cet article ne remplace pas un conseil juridique.
-La cinquième limite concerne l’auto-hébergement. La mémoire fait partie de l’ensemble des fonctions et se trouve, en auto-hébergement, entièrement sur votre serveur. La base LibreChat est sous licence MIT ; le dépôt avec nos extensions suivra prochainement. D’ici là, l’exploitation gérée est la voie par laquelle la fonction est disponible, et nous préférons le dire plutôt que de le laisser ouvert.
-La sixième limite est le graphe lui-même. Il n’est pas un remède miracle. Son avantage est établi pour certains types de questions : pour les questions portant sur un fonds entier, pour les questions en plusieurs étapes et pour les questions sur le changement au fil du temps. Pour de simples questions de fait isolé, il n’est pas démontrablement meilleur qu’une recherche par similarité ordinaire. Une étude d’un autre fournisseur mesure pour la variante avec graphe, par rapport à la variante sans graphe, un score global meilleur d’environ deux pour cent ; il en découle que l’essentiel du gain ne provient pas de la forme du graphe, mais du fait qu’une mémoire est tenue. 30 Nous citons ce chiffre parce qu’il parle contre nous. Notre raison de choisir le graphe est de toute façon une autre : la validité et la provenance par entrée, l’autorisation par nœud et la suppression d’entrées isolées ne peuvent pas être logées dans une liste.
+La troisième limite est une délimitation. Le Brain ne remplace ni votre base de connaissances ni votre ERP. Il retient ce qui vaut et ce qui est lié à quoi, pas chaque document et aucune écriture comptable. Les documents restent dans la base de connaissances, les données de base restent dans le système métier, et le raccordement à celui-ci passe par notre passerelle pour les raccordements d’outils, avec la même gestion des droits que partout ailleurs. Ce qui est possible à cet égard figure sous Intégrations . Une mémoire qui tente de remplacer tout cela devient une deuxième base de données, moins bien entretenue.
+La quatrième limite concerne les données personnelles. Dans un Brain a sa place ce qui est nécessaire à son propre travail, et non ce qui se rapporte accessoirement à des personnes. Qui y dépose des informations sur des collaboratrices et collaborateurs a besoin d’une finalité, d’une base et, selon le pays et la taille de l’entreprise, du concours de la représentation du personnel. Cet examen, nous ne le faisons à la place de personne, et cet article ne remplace pas un conseil juridique.
+La cinquième limite est la succession. Le Brain est personnel, et il s’en va avec la personne : si l’accès est supprimé, le Brain est supprimé avec lui. Qui quitte l’entreprise n’emporte donc rien, mais ne laisse rien non plus avec quoi la personne qui lui succède pourrait travailler. Elle commence avec un Brain vide. Que l’expérience se perde lors des départs, cette forme de construction ne le résout donc pas, et nous ne le prétendons pas. Le poids de tout cela se lit plus haut dans les chiffres sur les postes vacants 10 et sur les besoins de remplacement en Europe. 11 Ce que cette forme de construction résout, c’est la question de savoir où se trouve, jusque-là, ce qui a été rassemblé.
+La sixième limite est le revers du fait que chaque Brain est personnel : seule la personne elle-même y a accès. Aucune administration et personne d’autre dans l’entreprise n’y regarde. Il n’existe donc pas non plus de recherche à travers tous les Brains, ni de suppression centrale d’informations isolées. Pour une demande de communication ou d’effacement, cela signifie que le chemin passe par la personne qui tient le Brain ; c’est une tâche organisationnelle et non technique. Sans elle, il ne reste que les moyens plus grossiers : un Brain peut être supprimé en entier, il disparaît de toute façon avec l’accès, et la fonction peut être désactivée par accès. Cette situation n’a rien de nouveau. Une boîte aux lettres personnelle, un carnet de notes ou un rangement sur l’appareil de travail ne sont eux aussi accessibles, pour une demande de communication, que par la personne qui travaille avec, et les entreprises s’en accommodent depuis toujours par voie organisationnelle : définir la finalité au préalable, régler l’étendue par écrit, et désactiver là où cela ne suffit pas. Si cela suffit dans votre cas, c’est votre entreprise qui en décide en tant que responsable du traitement, et cet article ne remplace pas un conseil juridique.
+La septième limite concerne l’auto-hébergement. La mémoire fait partie de l’ensemble des fonctions et se trouve, en auto-hébergement, entièrement sur votre serveur. La base LibreChat est sous licence MIT ; le dépôt avec nos extensions suivra prochainement. D’ici là, l’exploitation gérée est la voie par laquelle la fonction est disponible, et nous préférons le dire plutôt que de le laisser ouvert.
+La huitième limite est le graphe lui-même. Il n’est pas un remède miracle. Son avantage est établi pour certains types de questions : pour les questions portant sur un fonds entier, pour les questions en plusieurs étapes et pour les questions sur le changement au fil du temps. Pour de simples questions de fait isolé, il n’est pas démontrablement meilleur qu’une recherche par similarité ordinaire. Une étude d’un autre fournisseur mesure pour la variante avec graphe, par rapport à la variante sans graphe, un score global meilleur d’environ deux pour cent ; il en découle que l’essentiel du gain ne provient pas de la forme du graphe, mais du fait qu’une mémoire est tenue. 30 Nous citons ce chiffre parce qu’il parle contre nous. Notre raison de choisir le graphe est de toute façon une autre : la validité et la provenance par entrée, ainsi que la suppression d’entrées isolées avec leurs liens, ne peuvent pas être logées dans une liste.
 Questions fréquentes sur la mémoire de Kisuno
 Qu’est-ce qui distingue la mémoire de Kisuno de la fonction de mémoire de ChatGPT ?
-Trois choses. Premièrement, elle appartient à l’entreprise et non à un compte personnel : ce qu’une personne apprend à l’outil est à la disposition de celles et ceux qui ont le droit de le voir, et cela reste là quand cette personne s’en va. Deuxièmement, c’est un graphe de nœuds et d’arêtes nommées au lieu d’une liste de phrases, ce qui permet de répondre à des questions qui passent par plusieurs étapes. Troisièmement, elle se trouve sur votre instance, et seul l’extrait dont la question isolée a besoin part vers un modèle.
+Trois choses. Premièrement, il se trouve sur votre instance et non chez le fournisseur : la conservation, la sauvegarde et la suppression suivent les mêmes règles que pour vos autres données, et seul l’extrait dont la question isolée a besoin part vers un modèle. Deuxièmement, c’est un graphe de nœuds et d’arêtes nommées au lieu d’une liste de phrases, ce qui permet de répondre à des questions qui passent par plusieurs étapes. Troisièmement, chaque entrée porte une validité et une provenance, ce qui permet de la consulter, de la rectifier et de la supprimer individuellement. Le Brain est personnel, comme les mémoires des grands fournisseurs ; ce n’est pas là la différence.
 Kisuno devient-il vraiment meilleur avec le temps ?
 Ce qui devient meilleur, ce n’est pas le modèle, mais la base sur laquelle il répond. Le modèle lui-même reste inchangé et n’apprend rien de vos conversations ; c’est expressément voulu, car sinon vos données seraient du matériel d’entraînement. Ce qui croît, c’est le graphe. Chaque semaine, il contient davantage de vos termes, de vos responsabilités et de vos règles, et l’extrait qu’une question apporte avec elle en devient plus juste. Au quotidien, cela donne l’impression d’un apprentissage et c’est en vérité une meilleure consultation. Que cela se produise dépend de l’entretien : un graphe dans lequel personne ne regarde ne devient pas plus intelligent, seulement plus plein.
 Kisuno retient-il automatiquement tout ce que nous écrivons ?
@@ -2100,15 +2117,15 @@ Dans la base de données de votre instance. Celle-ci se trouve aujourd’hui dan
 Notre mémoire entraîne-t-elle des modèles tiers ?
 Non. Quel que soit le modèle choisi, les saisies et les données téléversées ne sont ni conservées ni utilisées pour l’entraînement par le fournisseur du modèle ; l’engagement figure dans le contrat de sous-traitance. Nous nommons ouvertement une exception : la détection des abus d’AWS peut marquer des messages. Pour les modèles GPT, AWS conserve les messages marqués et, pour Claude Fable 5 et 5.1, l’ensemble des requêtes jusqu’à 30 jours, afin de vérifier et d’empêcher les abus ; rien n’en parvient aux fournisseurs de modèles. Qui veut exclure cela aussi choisit les modèles de pointe ouverts chez des fournisseurs européens.
 Pouvons-nous supprimer des entrées isolées ?
-Oui, individuellement, avec les arêtes qui y sont attachées. C’est la raison pratique de la forme de construction : une demande de communication ou d’effacement au titre de l’article 15 ou de l’article 17 du règlement général sur la protection des données porte sur un objet déterminé, et dans un graphe cet objet est un nœud avec un identifiant. L’obligation n’est pas remplie pour autant, mais elle devient exécutable. Qui ne veut rien faire enregistrer du tout désactive la fonction.
-Chaque personne dans l’entreprise voit-elle tout ce qui a été mémorisé ?
-Non. Chaque nœud porte l’indication du rôle ou du groupe qui a le droit de le voir, et la gestion des droits est la même que celle qui vaut aussi pour les outils et les raccordements. Chaque accès figure dans le journal d’audit. Une mémoire commune signifie que le savoir appartient à l’entreprise, et non que tout est ouvert.
+Oui, chaque personne pour son propre Brain, individuellement et avec les arêtes qui y sont attachées. C’est la raison pratique de la forme de construction : une demande de communication ou d’effacement au titre de l’article 15 ou de l’article 17 du règlement général sur la protection des données porte sur un objet déterminé, et dans un graphe cet objet est un nœud avec un identifiant. De manière centrale, à travers tous les Brains, cela n’est pas possible, car personne n’y a accès ; le chemin passe par la personne. L’obligation n’est pas remplie pour autant, mais elle devient exécutable. Qui ne veut rien faire enregistrer du tout désactive la fonction.
+Quelqu’un d’autre dans l’entreprise voit-il ce que mon Brain a mémorisé ?
+Non. Le Brain est personnel : chaque personne a le sien, et ce que vous racontez à l’outil ne passe pas de lui-même dans le Brain d’une collègue. Le fonds se trouve sur l’instance de votre entreprise, il est sauvegardé avec elle et soumis aux mêmes règles que vos autres données ; chaque accès figure dans le journal d’audit. Le journal consigne qui a accédé et quand, et non ce que contient une entrée ; le contenu, lui, reste visible par la seule personne concernée. C’est là la différence avec une mémoire chez le fournisseur, et non la question de savoir à qui elle appartient.
 Des informations sur les collaboratrices et collaborateurs peuvent-elles y figurer ?
-Seulement avec une finalité et une base, et selon le pays et la taille de l’entreprise, la représentation du personnel doit être associée. Techniquement, rien ne s’y oppose, et c’est précisément pour cela que quelqu’un doit en décider. Nous recommandons de fixer l’étendue par écrit au préalable et de régler les autorisations en conséquence. Cet article ne remplace pas un conseil juridique.
+Seulement avec une finalité et une base, et selon le pays et la taille de l’entreprise, la représentation du personnel doit être associée. Techniquement, rien ne s’y oppose, et c’est précisément pour cela que quelqu’un doit en décider. Nous recommandons de fixer l’étendue par écrit au préalable. Que chaque Brain soit personnel ne rend pas la question plus petite, plutôt plus grande : ce qu’une personne dépose sur une autre se trouve alors dans son Brain. Cet article ne remplace pas un conseil juridique.
 Combien cela coûte-t-il, et pouvons-nous l’essayer au préalable ?
-La mémoire fait partie de l’ensemble des fonctions et ne coûte rien de plus. L’instance gérée coûte 7 CHF (7,50 €) par personne et par mois, jusqu’à nouvel ordre avec 50 pour cent de rabais pour une durée de douze mois, soit 3.50 CHF (3,75 €) ; la consommation de modèles est facturée en plus via un crédit commun pour toute l’entreprise. L’essai est gratuit et sans limite de durée : chaque nouvel accès démarre avec un crédit de démarrage de 50 CHF (55 €), sans données de paiement. Toutes les indications figurent sur la page Prix.
-Apportez le savoir de votre entreprise
-Prenez dix phrases que tout le monde connaît dans votre entreprise et que personne n’a écrites, et nous en construirons ensemble les premiers nœuds. Expressément aussi aux endroits où la détection automatique se trompe. Ou bien inscrivez-vous et essayez par vous-même.
+La mémoire fait partie de l’ensemble des fonctions et ne coûte rien de plus. L’instance gérée coûte 7 CHF (7,50 €) par personne et par mois, jusqu’à nouvel ordre avec 50 pour cent de rabais pour une durée de douze mois, soit 3,50 CHF (3,75 €) ; la consommation de modèles est facturée en plus via un crédit commun pour toute l’entreprise. L’essai est gratuit et sans limite de durée : chaque nouvel accès démarre avec un crédit de démarrage de 50 CHF (55 €), sans données de paiement. Toutes les indications figurent sur la page Prix .
+Apportez vos propres phrases
+Prenez dix phrases que vous répétez constamment dans votre travail et que vous n’avez écrites nulle part, et nous en construirons ensemble les premiers nœuds. Expressément aussi aux endroits où la détection automatique se trompe. Ou bien inscrivez-vous et essayez par vous-même.
 Réserver une démo en direct
 Commencer maintenant
 Sources

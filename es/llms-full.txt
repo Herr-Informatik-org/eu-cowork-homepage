@@ -1656,8 +1656,8 @@ Cómo trabajan las empresas de Suiza y Europa con un colega de IA: artículos co
 Modelos y operación
 Memoria y conocimiento
 14 de septiembre de 2026
-Una memoria que pertenece a la empresa: así guarda Kisuno el conocimiento como grafo
-Las funciones de memoria conocidas recuerdan algo para una cuenta personal. Kisuno guarda el conocimiento de la empresa como grafo, con validez, procedencia y autorización en cada entrada.
+Una memoria que se queda en su servidor: así guarda el Brain el conocimiento como grafo
+Las funciones de memoria conocidas residen en el proveedor. El Brain de Kisuno también es personal, pero reside en su instancia, como un grafo con validez y procedencia en cada entrada.
 Administración y protección de datos
 3 de septiembre de 2026
 La Confederación ha trazado una línea dentro de su propio fondo de datos: tres procesos que la respetan
@@ -1730,11 +1730,11 @@ En Alemania, el 91 % de los médicos con consulta se siente sobrecargado por la 
 
 ---
 
-# La memoria como grafo de conocimiento en la empresa
+# Brain: la memoria como grafo en su instancia
 
 URL: https://kisuno.ai/es/blog/ki-memory-wissensgraph
 
-La memoria como grafo de conocimiento en la empresa | Kisuno
+Brain: la memoria como grafo en su instancia | Kisuno
 -
 -
 -
@@ -1752,15 +1752,15 @@ La memoria como grafo de conocimiento en la empresa | Kisuno
 Saltar al contenido
 - Inicio
 - Blog
-- La memoria como grafo
+- El Brain como grafo
 Memoria y conocimiento
-Una memoria que pertenece a la empresa: así guarda Kisuno el conocimiento como grafo
-Las funciones de memoria conocidas recuerdan algo para una cuenta personal. Kisuno, en cambio, guarda el conocimiento de su empresa como un grafo de nodos y aristas con nombre, con validez y procedencia en cada entrada y una autorización en cada nodo, y el grafo permanece en su instancia. Este artículo muestra la estructura, el camino de escritura y el camino de lectura, y dice lo que no consigue.
+Una memoria que se queda en su instancia: así guarda el Brain el conocimiento como grafo
+Las funciones de memoria conocidas recuerdan algo para una cuenta personal, y el fondo reside en el proveedor. El Brain de Kisuno también es personal, pero reside en su instancia: como un grafo de nodos y aristas con nombre, con validez y procedencia en cada entrada. Usted ve cada entrada, puede rectificarla y borrarla por separado. Este artículo muestra la estructura, el camino de escritura y el camino de lectura, y dice lo que no consigue.
 Memoria y conocimiento
 14 de septiembre de 2026
 Tiempo de lectura: 22 minutos
 - Situación de partida
-- Por qué en la empresa
+- Dónde reside
 - Lista frente a grafo
 - La estructura
 - El camino de escritura
@@ -1770,13 +1770,13 @@ Tiempo de lectura: 22 minutos
 - Preguntas frecuentes
 - Fuentes
 En resumen
-- Las funciones de memoria más extendidas dependen de la cuenta personal: Microsoft guarda los contenidos recordados en el buzón de Exchange de cada persona. 1 Anthropic señala que los propietarios de una organización no pueden consultar ni editar los recuerdos de cada usuario. 2
+- Las funciones de memoria más extendidas residen donde el proveedor las coloca: Microsoft describe para Copilot el buzón de Exchange de cada persona, en una carpeta oculta. 1 Allí la memoria es personal igual que en nuestro caso, y Anthropic hace constar para Claude que los propietarios de una organización no pueden ni consultar ni editar los recuerdos de cada usuario. 2 No es de eso de lo que se trata aquí.
 - Microsoft escribe además por su cuenta que no existe un control de administración para imponer reglas de conservación específicas para la memoria de Copilot, que borrar un chat no borra los recuerdos guardados a partir de él y que en ese proceso no se generan entradas en el registro de auditoría; mediante eDiscovery los datos sí se pueden, al menos, buscar, exportar y borrar, y la función está marcada como versión preliminar. 1
-- Por eso Kisuno guarda el conocimiento como grafo: nodos para las cosas, aristas con nombre para las relaciones y, además, periodo de validez y procedencia en cada entrada y una autorización en cada nodo. Así se pueden responder preguntas que recorren varios pasos, y las entradas individuales se pueden rectificar o borrar.
+- El Brain de Kisuno también es personal, pero reside en su instancia y sigue así las reglas de conservación y de borrado de su empresa. Está construido como un grafo: nodos para las cosas, aristas con nombre para las relaciones y, además, periodo de validez y procedencia en cada entrada. Así se pueden responder preguntas que recorren varios pasos, y cada entrada suelta se puede consultar, rectificar y borrar.
 - El grafo permanece en su instancia. Al modelo solo llega, junto con su pregunta, el fragmento que necesita esa única respuesta. El modelo no se vuelve más listo con ello; la que gana precisión es la pregunta.
 En esta página
 - Situación de partida
-- Por qué en la empresa
+- Dónde reside
 - Lista frente a grafo
 - La estructura
 - El camino de escritura
@@ -1786,90 +1786,63 @@ En esta página
 - Preguntas frecuentes
 - Fuentes
 Para probar
-El grafo de una empresa
-Apunte a un punto o tóquelo. La tecla de tabulación también sirve.
-Personas y funciones
-Cosas y documentos
-Reglas y plazos
-Brain Empresa
-R. Lehmann
-Ventas
+Un Brain personal
+Señale un punto o tóquelo. Con el tabulador también funciona.
+Preferencias
+Proyectos
+Personas
+Decisiones
+Conocimiento
+Estilo laboral
+Brain Personal
+Respuestas breves
+Alemán
+Nave 2
 Oferta 114
 Berger AG
-Nave 2
-Acta
-Nordwand
-Regla de precio
+R. Lehmann
+Regla de precios
 versión anterior
-Plazo
+Acta
 Recepción
-Once nodos, trece aristas
-Así de pequeña empieza la memoria de una empresa: un cliente, una oferta, una regla de precio, un proyecto y las personas que los rodean.
-De cada nodo cuelga el mismo conjunto
+Ofertas en PDF
+Plan semanal
+Doce entradas, trece conexiones
+Así de pequeño empieza el Brain de una persona: unas cuantas preferencias, los proyectos, las personas que hay detrás, las propias decisiones.
+De cada entrada cuelga el mismo conjunto
 - Tipo
 - Validez
 - Procedencia
 - Visible para
 - Conexiones
 La pregunta que una lista no puede responder
-¿Qué ofertas abiertas se ven afectadas por la regla de precio que cambió en mayo, y quién debe informar a la clientela?
-R. Lehmann
-Una persona con una función. Si falta, sigue siendo visible de qué era responsable.
+¿A qué ofertas abiertas afecta la regla de precios que cambié en mayo y a quién debo informar?
+Respuestas breves
+Primero el resultado, debajo la justificación. Usted lo dijo una vez y desde entonces vale para todo lo que pregunta.
 Tipo
-Persona
+Preferencia
 Validez
-desde 2021
-Procedencia
-introducido a mano
-Visible para
-toda la plantilla
-Conexiones
-- → es responsable de Oferta 114
-- → pertenece a Ventas
-- → es responsable de Reforma de la nave 2
-Ventas
-Una función en lugar de una persona: la responsabilidad sobrevive al cambio de puesto.
-Tipo
-Función
-Validez
-sin fecha de término
-Procedencia
-introducido a mano
-Visible para
-toda la plantilla
-Conexiones
-- ← pertenece a R. Lehmann
-- → es responsable de Berger AG
-Oferta 114
-La oferta conoce a su cliente, la regla de precio bajo la que nació y la persona que la redactó.
-Tipo
-Documento
-Validez
-desde 06.2026
-Procedencia
-de un documento
-Visible para
-la función Ventas
-Conexiones
-- → pertenece a Berger AG
-- ← se aplica a Regla de precio de montaje
-- ← es responsable de R. Lehmann
-Berger AG
-El cliente es un objeto propio. Todo lo que le concierne cuelga aquí en lugar de estar disperso en once frases sueltas.
-Tipo
-Cliente
-Validez
-desde 03.2024
+indefinida
 Procedencia
 de una conversación
 Visible para
-toda la plantilla
+solo usted
 Conexiones
-- ← pertenece a Oferta 114
-- ← pertenece a Reforma de la nave 2
-- ← es responsable de Ventas
+- → se aplica a Planificación semanal del lunes
+Alemán en la correspondencia
+Los correos y las ofertas salen en alemán. Las notas para usted mismo pueden ir en inglés.
+Tipo
+Preferencia
+Validez
+indefinida
+Procedencia
+introducido a mano
+Visible para
+solo usted
+Conexiones
+- → se aplica a Berger AG
 Reforma de la nave 2
-El proyecto reúne en un solo lugar al proveedor, el plazo, el acta y la responsabilidad.
+El proyecto en el que está trabajando ahora. Proveedor, plazo, acta y responsabilidad cuelgan de él.
 Tipo
 Proyecto
 Validez
@@ -1877,16 +1850,15 @@ desde 04.2026
 Procedencia
 de una conversación
 Visible para
-la dirección de proyecto
+solo usted
 Conexiones
 - → pertenece a Berger AG
-- ← suministra a Nordwand Metallbau
-- ← pertenece a Acta de recepción
-- ← se aplica a Plazo 30.06.2026
-- ← es responsable de R. Lehmann
-- ← se aplica a Regla de precio de montaje
-Acta de recepción
-Un documento también es un nodo. Cuelga del proyecto y lleva el término técnico que se usa en la casa.
+- ← responsable de R. Lehmann
+- ← se aplica a Regla de precios de montaje
+- ← se aplica a Acta de recepción
+- ← se aplica a Planificación semanal del lunes
+Oferta 114
+Su oferta para Berger AG. Conoce la regla de precios con la que nació y la forma en que salió.
 Tipo
 Documento
 Validez
@@ -1894,108 +1866,151 @@ desde 06.2026
 Procedencia
 de un documento
 Visible para
-la dirección de proyecto
+solo usted
 Conexiones
-- → pertenece a Reforma de la nave 2
-- ← se aplica a Recepción
-Nordwand Metallbau
-El proveedor cuelga del proyecto y no de una nota en una cuenta personal.
+- → pertenece a Berger AG
+- ← se aplica a Regla de precios de montaje
+- ← se aplica a Ofertas en PDF
+Berger AG
+Su cliente. Todo lo que sabe sobre ella está aquí y no disperso en doce frases sueltas.
 Tipo
-Proveedor
+Cliente
 Validez
-desde 2019
+desde 03.2024
 Procedencia
-de un documento
+de una conversación
 Visible para
-toda la plantilla
+solo usted
 Conexiones
-- → suministra a Reforma de la nave 2
-Regla de precio de montaje
-La regla apunta por sí misma a todo lo que se ve afectado por ella. Eso es justamente lo que responde a la pregunta sobre el cambio de mayo.
+- ← pertenece a R. Lehmann
+- ← pertenece a Reforma de la nave 2
+- ← pertenece a Oferta 114
+- ← se aplica a Alemán en la correspondencia
+R. Lehmann
+Su persona de contacto en Berger AG. En la próxima llamada no tendrá que buscar el nombre.
 Tipo
-Regla
+Persona
+Validez
+desde 2024
+Procedencia
+introducido a mano
+Visible para
+solo usted
+Conexiones
+- → pertenece a Berger AG
+- → responsable de Reforma de la nave 2
+Regla de precios de montaje
+Desde mayo calcula el montaje de otra manera. La decisión señala por sí misma todo lo que se ve afectado por ella.
+Tipo
+Decisión
 Validez
 desde 05.2026
 Procedencia
 introducido a mano
 Visible para
-toda la plantilla
+solo usted
 Conexiones
 - → se aplica a Oferta 114
-- → sustituye a Regla de precio de montaje, versión anterior
 - → se aplica a Reforma de la nave 2
-Regla de precio de montaje, versión anterior
-La versión anterior no se borra, se cierra con una fecha. Quien más tarde deba explicar por qué entonces se calculaba de otro modo la encuentra aquí.
+- → sustituye a Regla de precios de montaje, versión anterior
+Regla de precios de montaje, versión anterior
+La versión anterior no está borrada, sino cerrada con fecha. Quien pregunte más adelante por qué entonces se calculaba de otro modo, la encuentra aquí.
 Tipo
-Regla
+Decisión
 Validez
 hasta 05.2026, sustituida
 Procedencia
 introducido a mano
 Visible para
-toda la plantilla
+solo usted
 Conexiones
-- ← sustituye a Regla de precio de montaje
-Plazo 30.06.2026
-Un plazo con fecha de vencimiento. Después del 30.06.2026 cuenta como vencido y ya no como verdadero.
+- ← sustituye a Regla de precios de montaje
+Acta de recepción
+La plantilla que usa para las recepciones. Cuelga del proyecto y lleva el término que usted emplea para ello.
 Tipo
-Plazo
+Documento
 Validez
-hasta el 30.06.2026
+desde 06.2026
 Procedencia
 de un documento
 Visible para
-la dirección de proyecto
+solo usted
 Conexiones
 - → se aplica a Reforma de la nave 2
+- ← se aplica a Recepción
 Recepción
-Un término técnico tal como lo entiende la empresa, y no como lo conoce un modelo en general.
+Lo que el término significa para usted, y no lo que un modelo entiende por él en general.
 Tipo
 Término técnico
 Validez
-sin fecha de término
+indefinida
 Procedencia
 de una conversación
 Visible para
-toda la plantilla
+solo usted
 Conexiones
 - → se aplica a Acta de recepción
-Para una respuesta, al modelo solo iría este extracto:
-Nodos 11
-Aristas 13
-Un extracto inventado pero típico. Cada punto lleva consigo su validez, su procedencia y su autorización; cada línea tiene un nombre y una dirección.
-Situación de partida: la memoria existe desde hace tiempo, solo que no pertenece a la empresa
-La escena la conoce cualquiera que utilice una herramienta de IA en su empresa. Uno explica por quinta vez cómo se llama la empresa, quién es la clientela, qué aspecto tiene una oferta en casa y por qué a ese proveedor concreto se le trata de otra manera que a todos los demás. Que los grandes proveedores dispongan desde hace tiempo de una función de memoria cambia menos de lo esperado. El motivo está en su propia documentación, y no es una avería, sino una decisión de diseño.
-La memoria depende de la cuenta personal. Microsoft describe para Copilot que los recuerdos guardados, los datos derivados del historial y las instrucciones propias se encuentran en el buzón de Exchange de cada persona, en una carpeta oculta. 1 Anthropic señala para Claude que los propietarios de una organización no pueden consultar ni editar los recuerdos de cada usuario o usuaria; exportarlos, en cambio, sí es posible conforme a las reglas de conservación de la organización. 2 Ambas cosas juntas dan la misma imagen: las entradas pertenecen a cada persona. Lo que ella le enseña a la herramienta no queda a disposición del resto de la empresa en el día a día, y allí nadie salvo ella misma puede rectificarlo. El segundo miembro del equipo empieza de cero, y la pregunta de qué cree saber la herramienta sobre la propia firma queda sin respuesta para la empresa en su conjunto.
-La segunda laguna afecta al control. En la misma documentación, Microsoft escribe que las políticas de conservación configuradas en Purview no rigen para la memoria de Copilot y que no existe un control de administración para imponer reglas de conservación específicas para ella; que borrar un chat no borra los recuerdos guardados surgidos de él; que las operaciones de la memoria no generan entradas en el registro de auditoría; y que una administración no puede limitar qué tipo de datos llega siquiera a la memoria. 1 En honor a la verdad, allí consta también que los datos de la memoria se pueden buscar, exportar y borrar mediante eDiscovery y el Graph Explorer, y toda la función está marcada como versión preliminar. 1 Aun así, la conclusión se mantiene: las reglas que una empresa ya tiene para conservación, borrado y trazabilidad no se aplican aquí por sí solas.
+Ofertas en PDF
+Así salen sus ofertas. No hace falta que lo indique cada vez.
+Tipo
+Estilo laboral
+Validez
+indefinida
+Procedencia
+de una conversación
+Visible para
+solo usted
+Conexiones
+- → se aplica a Oferta 114
+Planificación semanal del lunes
+Su punto fijo de la semana. Lo que hay pendiente se ordena a partir de ahí.
+Tipo
+Estilo laboral
+Validez
+indefinida
+Procedencia
+introducido a mano
+Visible para
+solo usted
+Conexiones
+- → se aplica a Reforma de la nave 2
+- ← se aplica a Respuestas breves
+Al modelo solo iría este fragmento para una respuesta:
+Entradas 12
+Conexiones 13
+Un Brain de una persona: inventado, pero típico. Cada entrada lleva consigo validez y procedencia, cada línea tiene nombre y dirección, y todo el fondo reside en su instancia.
+Situación de partida: la memoria existe desde hace tiempo, solo que no sigue sus reglas
+La escena la conoce cualquiera que utilice una herramienta de IA en su empresa. Uno explica por quinta vez cómo se llama la empresa, quién es la clientela, qué aspecto tiene aquí una oferta y por qué a ese proveedor concreto se le trata de otra manera que a todos los demás. Que los grandes proveedores dispongan desde hace tiempo de una función de memoria cambia menos de lo esperado. El motivo está en su propia documentación, y no consiste en que esas funciones sean personales. Lo son, y el Brain de Kisuno también. Consiste en dónde reside el fondo y quién decide sobre él.
+El fondo reside en el entorno del proveedor, y allí las reglas de la empresa no se aplican por sí solas. Microsoft describe para Copilot que los recuerdos guardados, los datos derivados del historial y las instrucciones propias se encuentran en el buzón de Exchange de cada persona, en una carpeta oculta. 1 Anthropic hace constar para Claude que los propietarios de una organización no pueden ni consultar ni editar los recuerdos de cada usuaria y usuario; exportarlos sí que es posible según las reglas de conservación de la organización. 2 Que esas memorias sean personales no es aquí el reproche. El Brain de Kisuno también lo es, y para el trabajo diario esa es la forma de construcción más lógica. La diferencia está en otro sitio: dónde residen las entradas, cuánto tiempo permanecen y qué desaparece de verdad al borrar no lo decide allí la empresa que trabaja con la herramienta.
+La segunda laguna afecta al control. En la misma documentación, Microsoft escribe que las políticas de conservación configuradas en Purview no rigen para la memoria de Copilot y que no existe un control de administración para imponer reglas de conservación específicas para ella; que borrar un chat no borra los recuerdos guardados surgidos de él; que las operaciones de la memoria no generan entradas en el registro de auditoría; y que una administración no puede limitar qué tipo de datos llega siquiera a la memoria. 1 En honor a la verdad, allí consta también que los datos de la memoria se pueden buscar, exportar y borrar mediante eDiscovery y el Graph Explorer, y toda la función está marcada como versión preliminar. 1 Aun así, la conclusión se mantiene, y afecta a los tres primeros puntos: las reglas que una empresa ya tiene para la conservación, el borrado y la trazabilidad no se aplican aquí por sí solas. En el cuarto punto nos contenemos, porque nos afecta igual: también en nuestro caso una administración no puede limitar de antemano qué se incorpora a un Brain. Puede activar o desactivar la función para cada acceso, nada más.
 La tercera queja es la del control sobre el contenido. En junio de 2026, OpenAI pasó la personalización a un resumen generado automáticamente, y la lista que se podía mantener a mano quedó junto a él como fondo antiguo; en el foro oficial de personas desarrolladoras surgió entonces el deseo de volver a ver con exactitud y de gestionar entrada por entrada lo que se recuerda. 3 Ya un año antes, el desarrollador Simon Willison había criticado la versión anterior por retirar ese control por completo y por crear una condición de efecto invisible para cada salida. 4 Se trata de voces individuales y no de un estudio, y tampoco las presentamos como tal. Pero dan en el punto en el que una herramienta para la comodidad privada y una herramienta para una empresa se separan.
 La cuarta laguna es la rectificación. El grupo de trabajo del Comité Europeo de Protección de Datos señaló en su informe sobre ChatGPT de mayo de 2024 que OpenAI sugiere a las personas afectadas, al menos por el momento, pasar de la rectificación a la supresión cuando una rectificación no sea viable por la complejidad técnica. 5 Para una empresa, esa es la diferencia entre un dato corregido y un dato desaparecido. Quien más tarde tenga que explicar por qué una información era incorrecta necesita la versión rectificada y la fecha de la corrección, no un hueco.
-En aras de la equidad, hay que decir que no todos los puntos se aplican a todos los proveedores. Anthropic describe para Claude espacios de memoria separados por proyecto y una lista en la que cada entrada se puede leer, editar y borrar; el ajuste predeterminado varía según la tarifa: en las versiones para personas individuales la memoria está activada, mientras que en las versiones para equipos y empresas la administración decide sobre su disponibilidad y para cada persona permanece desactivada al principio. 6 No se trata, pues, de reprochar descuido a nadie. Se trata del denominador común: estas funciones están construidas como una comodidad personal y no como el fondo de conocimiento de una empresa.
+En aras de la equidad, hay que decir que no todos los puntos se aplican a todos los proveedores. Anthropic describe para Claude espacios de memoria separados por proyecto y una lista en la que cada entrada se puede leer, editar y borrar; el ajuste predeterminado varía según la tarifa: en las versiones para personas individuales la memoria está activada, mientras que en las versiones para equipos y empresas la administración decide sobre su disponibilidad y para cada persona permanece desactivada al principio. 6 No se trata, pues, de reprochar a nadie una negligencia. Se trata del denominador común: esas funciones se ejecutan en los servidores del proveedor. Hasta dónde llegan allí las reglas propias de una empresa varía de un proveedor a otro y, en el caso de Copilot, según su propia documentación, no llegan en los puntos decisivos.
 Y una memoria tiene una propiedad que a una nota suelta no se le atribuye: es una superficie de ataque. La investigación en seguridad muestra desde 2024 que, mediante contenidos manipulados, se pueden introducir en la memoria instrucciones duraderas que siguen actuando más allá de la conversación concreta. 7 Un trabajo de julio de 2026 demuestra para sistemas que actúan por su cuenta cómo un solo correo electrónico deja tras de sí un recuerdo falso. 8 Esto no es un argumento contra las funciones de memoria. Es un argumento a favor de que cada entrada lleve consigo su procedencia y se pueda eliminar por separado, y eso es justamente lo que debe lograr la forma de construcción de la que trata lo que sigue.
-Por qué una empresa necesita una memoria propia
+Por qué importa dónde reside la memoria
 La necesidad no es una suposición, está en los estudios. En Suiza, la proporción de pymes que integran conscientemente la inteligencia artificial en sus procesos de trabajo subió en un año del 22 % al 34 %; sobre todo para traducciones, con un 52 %, y correspondencia, con un 47 %, es decir, justo allí donde las palabras de la empresa y sus casos especiales marcan la diferencia. En cambio, solo alrededor de un tercio de aquellas empresas que realmente usan IA tiene una regulación clara de protección de datos para el manejo de aplicaciones de IA; entre las que tienen de cinco a nueve personas empleadas es el 23 %. 9 Las cifras proceden de una encuesta a 300 pymes de la Suiza de habla alemana y francesa; es una muestra pequeña, y no la presentamos como un censo.
-El segundo motivo es más incómodo, porque tiene que ver con personas. El conocimiento que define a una empresa rara vez está en un manual. Está en las cabezas: quién decide realmente en ese cliente, por qué una partida se calcula de otro modo desde la última reforma, qué recepción de obra no funciona sin la dirección facultativa. Si la persona falta, por vacaciones, por jubilación o porque se va a otro empleador, ese conocimiento falta con ella. Una herramienta de IA cuya memoria depende de la cuenta personal agrava este problema en lugar de resolverlo: recoge exactamente ese conocimiento y lo deposita allí donde desaparece con la persona. Lo tenso que está además el mercado laboral lo muestran las cifras oficiales: la Oficina Federal de Estadística contó en el cuarto trimestre de 2025 en Suiza 86.000 puestos vacantes, y el 36,2 % de las empresas comunicó dificultades de contratación. 10 Un puesto que queda libre no se vuelve a cubrir con rapidez, y hasta entonces falta también lo que esa persona sabía. En el plano europeo, Cedefop atribuye la necesidad de reemplazo expresamente a jubilaciones y cambios de profesión, es decir, a salidas en las que la experiencia abandona la empresa. 11
-Lo que ocurre cuando en la empresa no hay una solución propia también se ha investigado. En un estudio de KPMG y la University of Melbourne con 48.340 personas encuestadas en 47 países, dos de cada tres personas ocupadas declararon haberse fiado de resultados de IA sin comprobar los datos entregados, y casi la mitad admitió usar la IA en contra de las directrices de su empresa y subir en el proceso información empresarial sensible, como datos financieros, de ventas o de clientes, a herramientas de IA públicas. 12 La pregunta, por tanto, no es si el conocimiento de la empresa acaba en una herramienta de IA. La pregunta es si acaba en una de la que la empresa dispone. Una prohibición traslada el problema al acceso privado, donde ya nadie mira.
+El segundo motivo es más incómodo, porque tiene que ver con personas. El conocimiento que compone el trabajo diario rara vez está en un manual. Está en las cabezas: quién decide realmente en ese cliente, por qué una partida se calcula de otro modo desde la última reforma, qué recepción de obra no funciona sin la dirección facultativa. Quien trabaja a diario con una herramienta de IA le cuenta exactamente eso, frase a frase, sin proponérselo. La única cuestión es dónde residen después esas frases. Lo tenso que está además el mercado laboral lo muestran las cifras oficiales: la Oficina Federal de Estadística contó en el cuarto trimestre de 2025 en Suiza 86.000 puestos vacantes, y el 36,2 % de las empresas comunicó dificultades de contratación. 10 Un puesto que queda libre no se vuelve a cubrir rápidamente, y hasta entonces falta también lo que esa persona sabía. En el plano europeo, Cedefop atribuye la necesidad de reposición expresamente a las jubilaciones y a los cambios de profesión, es decir, a salidas en las que la experiencia abandona la empresa. 11 Un Brain personal no resuelve este problema, y tampoco lo afirmamos; sobre esto hay más abajo, en el apartado sobre los límites. Solo decide si el conocimiento recogido reside en su empresa o en el proveedor.
+Lo que ocurre cuando en la empresa no hay una solución propia también se ha investigado. En un estudio de KPMG y la University of Melbourne con 48.340 personas encuestadas en 47 países, dos de cada tres personas ocupadas declararon haberse fiado de resultados de IA sin comprobar los datos entregados, y una parte considerable admitió usar la IA en contra de las directrices de su empresa; el informe menciona además expresamente la subida de información empresarial sensible, como datos financieros, de ventas o de clientes, a herramientas de IA públicas. 12 La pregunta, por tanto, no es si el conocimiento de la empresa acaba en una herramienta de IA. La pregunta es si acaba en una instancia sobre cuya conservación, copia de seguridad y borrado decide la empresa. Una prohibición traslada el problema al acceso privado, donde ya nadie mira.
 A esto se suma la diferencia de tamaño. Según Eurostat, en 2025 el 20,0 % de las empresas de la UE con diez o más personas empleadas usaba tecnología de IA, frente al 13,5 % del año anterior; desglosado, son el 17 % de las pequeñas, el 30,36 % de las medianas y el 55,03 % de las grandes empresas. 13 Entre aquellas que alguna vez consideraron su uso y no lo utilizan, los motivos principales ese mismo año fueron la falta de conocimientos especializados pertinentes, con un 70,89 %, la falta de claridad sobre las consecuencias jurídicas, con un 52,52 %, y las dudas por la protección de datos, con un 48,83 %. 14 Esta población abarca expresamente solo a las empresas que alguna vez consideraron su uso, y no a todas. Aun así, la conclusión se mantiene: lo que frena a las empresas pequeñas no es la técnica, sino la falta de contexto y la falta de certeza sobre qué ocurre con los propios datos.
 El tercer motivo es jurídico y para Suiza está expresamente recogido. El Encargado Federal de Protección de Datos y Transparencia señala que la Ley suiza de protección de datos es directamente aplicable a los tratamientos de datos asistidos por IA. 15 Por tanto, quien deposite datos personales en una memoria debe poder informar sobre ellos y rectificarlos o destruirlos; la Ley de protección de datos regula ambas cosas en el artículo 25 y en el artículo 32. 16 En la Unión Europea, esos mismos derechos figuran en el artículo 15 y en el artículo 17 del Reglamento General de Protección de Datos. 17 No es una formalidad, sino un requisito para la forma de construcción: quien no puede mostrar ni borrar por separado no puede atender esos derechos.
 Quién pregunta
 Qué origina la necesidad
 Qué aporta allí la memoria
 Dirección
-El conocimiento decisivo depende de personas concretas, y la sucesión, las vacaciones o una baja abren cada vez el mismo hueco.
-Lo que se dijo una vez pertenece a la empresa y no a una cuenta. Sigue siendo legible aunque la persona ya no esté.
-Personas recién incorporadas
-La incorporación cuesta sobre todo el tiempo de quienes tienen experiencia, porque cada consulta interrumpe a alguien.
-Las preguntas sobre competencias, términos y procedimientos las responde la herramienta a partir del fondo existente, indicando la procedencia para consultarla.
+No está claro dónde guardan las herramientas de IA utilizadas lo que recuerdan, ni cuánto tiempo permanece allí.
+Todo el fondo reside en su instancia y no en el proveedor. La conservación, la copia de seguridad y el borrado siguen las mismas reglas que sus demás datos. Lo que figura en él por dentro lo sigue viendo solo la propia persona.
+Todas las personas que trabajan a diario con ello
+Los mismos datos se le explican a la herramienta una y otra vez, y nadie ve qué ha quedado de ello.
+Lo que se dijo una vez ya está ahí la próxima vez, y cada entrada se puede consultar, cambiar o tirar por separado.
 Gestión administrativa y ventas
 En cada conversación nueva la explicación empieza desde el principio: empresa, clientela, reglas de precios, casos especiales.
 Los datos recurrentes ya están ahí. Lo que queda es la pregunta de verdad.
 Protección de datos y asuntos jurídicos
-Una solicitud de acceso o de supresión se dirige a datos concretos, y alguien tiene que poder encontrarlos.
-Cada entrada es un objeto propio con procedencia y fecha, que se puede mostrar y borrar por separado.
+Una solicitud de acceso o de supresión se dirige a datos concretos, y tienen que poder encontrarse, aunque hayan nacido en una conversación.
+Cada entrada es un objeto propio con procedencia y fecha, que se puede mostrar y borrar por separado, dentro del Brain al que pertenece.
 Administración e informática
-La pregunta de qué puede saber la herramienta sobre la empresa y quién ve qué de ello queda si no sin respuesta.
-Las autorizaciones van unidas a cada nodo, cada acceso consta en el registro de auditoría y la función se puede desactivar por completo.
+La pregunta de dónde reside el fondo, quién lo respalda y cómo vuelve a desaparecer llegado el caso queda si no sin respuesta.
+El Brain reside en su instancia y se respalda con ella, cada acceso consta en el registro de auditoría y la función se puede desactivar por completo.
 Lista frente a grafo: el mismo contenido, dos resultados
 Primero, una objeción evidente, porque casi zanjaría el asunto: ¿por qué no verterlo todo simplemente en una ventana de contexto grande? Porque una ventana de contexto no es una memoria. Anthropic la describe en su propia documentación como memoria de trabajo para una sola llamada; todo el historial anterior se envía de nuevo en cada turno y no reside en el modelo. 18 Y tener más de ella no ayuda automáticamente. En esa misma documentación consta que la exactitud y la capacidad de recordar disminuyen a medida que crece el número de tokens, un comportamiento para el que se ha impuesto la denominación context rot, y que la selección del contenido es tan importante como el espacio disponible. 18 Investigaciones independientes muestran lo mismo desde fuera: si la información pertinente está en el medio de un contexto largo, se encuentra claramente peor que al principio o al final, y eso vale también para modelos diseñados expresamente para contextos largos. 19 La selección gana a la cantidad. Un documento de posición de mayo de 2026 formula la conclusión del modo más tajante: los modelos de capacidad finita no podrían, por principio, reflejar la amplitud del conocimiento de las tareas de una empresa, por lo que ese conocimiento correspondería a una capa propia junto a ellos. 20 Se trata de una argumentación y no de una medición, y así la reproducimos. La pregunta, por tanto, no es cuánto se envía, sino cómo se encuentra lo correcto.
 Para ello, una memoria se puede llevar de dos maneras. La primera es una lista. Cada entrada es una frase en sí misma: la empresa tiene catorce personas empleadas. La clienta se llama Berger. Las ofertas salen siempre en PDF. La lista crece, se puede buscar en ella y responde con fiabilidad a cualquier pregunta dirigida exactamente a una de sus frases. La mayoría de las funciones de memoria que hoy lleva dentro una herramienta de IA son una lista así.
@@ -2009,22 +2024,22 @@ La diferencia se nota justamente cuando una pregunta abarca más de una frase. Q
 - El grafo: la conexión misma está guardada
 Los mismos datos, dos formas de archivarlos. Una conoce frases, la otra conoce recorridos.
 Que esta diferencia no solo suene plausible, sino que esté medida, se puede consultar. Microsoft Research describe la debilidad de la búsqueda por pura similitud con la frase de que le cuesta unir los puntos, porque seguir datos dispersos tendría que hacerse a través de rasgos comunes. 21 El trabajo correspondiente acredita mejoras para preguntas dirigidas a un conjunto completo de textos, en concreto en la exhaustividad y la variedad de las respuestas; una cifra sobre la corrección no la indica expresamente, y por eso tampoco afirmamos ninguna. 22 Con independencia de ello, es decir, sin proceder de un proveedor de un producto de memoria, un trabajo de la investigación universitaria muestra para preguntas de varios pasos una ventaja de hasta un 20 por ciento frente al estado de la técnica. 23 Lo que el grafo con ello todavía no acredita, sino solo sitúa: una serie de pruebas propia para la memoria a largo plazo mide, entre otras cosas, el razonamiento temporal y la actualización del conocimiento, y encuentra en los asistentes existentes, a lo largo de trayectorias más largas, una caída del 30 por ciento en la retención de datos. 24 No compara grafos con listas; muestra lo grande que es el problema que ambos deben resolver.
-La idea, por lo demás, es más antigua que los modelos de lenguaje, y no es nuestra. Quien lleva sus notas en una herramienta como Obsidian conoce la vista en la que la propia colección aparece como una red de puntos y líneas: se ve de un vistazo qué nota está relacionada con cuál, cuál queda aislada y dónde se ha formado un núcleo. La extensión de código abierto Vault Graph dibuja esa imagen deliberadamente de forma determinista en lugar de basarse en fuerzas, de modo que el mismo fondo da siempre la misma imagen y una colección que ha ido creciendo sigue siendo reconocible; el análisis se realiza en local. 25 El proyecto Graphify construye a partir de un fondo mixto un grafo de conocimiento consultable y marca cada arista según si la relación constaba en el material o solo se dedujo después. 26 La idea que hemos adoptado de ahí es la más sencilla de las dos: una arista lleva consigo de dónde viene.
-Lo adoptado es la forma de pensar y no el código. Un cuaderno de notas personal y la memoria de una empresa plantean exigencias distintas: uno pertenece a una persona y puede ser desordenado, la otra pertenece a una organización y tiene que soportar autorizaciones, contradicciones, plazos y solicitudes de supresión. Por eso nuestra realización es propia, y por eso el apartado siguiente no trata de grafos en general, sino de lo que en nuestro caso va unido a una sola entrada.
+La idea, por lo demás, es más antigua que los modelos de lenguaje, y no es nuestra. Quien lleva sus notas en una herramienta como Obsidian conoce la vista en la que la propia colección aparece como una red de puntos y líneas: se ve de un vistazo qué nota está relacionada con cuál, cuál queda aislada y dónde se ha formado un núcleo. La extensión de código abierto Vault Graph dibuja esa imagen deliberadamente de forma determinista en lugar de basarse en fuerzas, de modo que el mismo fondo da siempre la misma imagen y una colección que ha ido creciendo sigue siendo reconocible; el análisis se realiza en el propio aparato, porque allí reside también todo lo demás. 25 El proyecto Graphify construye a partir de un fondo mixto un grafo de conocimiento consultable y marca cada arista según si la relación constaba en el material o solo se dedujo después. 26 La idea que hemos adoptado de ahí es la más sencilla de las dos: una arista lleva consigo de dónde viene.
+Lo adoptado es la forma de pensar y no el código. Un cuaderno de notas en el propio aparato y un Brain que funciona en una empresa plantean exigencias distintas: uno puede ser desordenado y termina con el aparato, el otro reside en la instancia de una empresa y tiene que soportar contradicciones, plazos, conservación y solicitudes de supresión. Por eso nuestra realización es propia, y por eso el apartado siguiente no trata de grafos en general, sino de lo que en nuestro caso va unido a una sola entrada.
 La estructura: qué va unido a una sola entrada
 Una entrada en esta memoria no es una frase, sino un pequeño paquete de datos. Suena a complicación y es la razón por la que con ella se pueden hacer cosas que con una nota no salen.
 1
 2
 3
-- El nodo: una cosa de la que habla su empresa
+- El nodo: una cosa de la que usted habla en su trabajo
 - La arista: la relación, con nombre y con dirección
-- Válido desde, procedencia y la autorización que va unida al nodo
+- Válido desde, procedencia y la indicación de que la entrada solo le pertenece a usted
 Una entrada no es una frase, sino un paquete. De ese paquete depende todo lo demás.
 Componente
 Qué contiene
 Para qué sirve en el día a día
 Nodo
-Una cosa de la que habla su empresa: una persona, un rol, una clienta, un proveedor, un proyecto, un producto, una instalación, una regla, un término técnico, un plazo.
+Una cosa de la que usted habla en su trabajo: una persona, un rol, una clienta, un proveedor, un proyecto, un producto, una instalación, una regla, un término técnico, un plazo, una preferencia propia.
 Todo lo que más adelante se añada a esa cosa encuentra un lugar y no queda disperso en conversaciones.
 Arista
 La relación entre dos nodos, con nombre y con dirección: pertenece a, suministra a, responde de, sustituye a, rige para, sigue a.
@@ -2035,12 +2050,12 @@ La pregunta de qué rige hoy y la pregunta de qué regía en mayo reciben respue
 Procedencia
 De qué conversación, qué documento o qué texto introducido procede la entrada, y cuándo se originó.
 Una afirmación recordada se puede comprobar en lugar de creer. Sin ese dato, una memoria es una simple afirmación.
-Autorización
-Qué rol o qué grupo puede ver este nodo.
-La memoria pertenece a la empresa, pero no toda entrada debe pasar ante cualquier par de ojos. Los datos salariales no son conocimiento de proyecto.
+Visibilidad
+Que este nodo pertenece a su Brain y solo es visible para usted.
+Cada persona tiene su propio Brain. Lo que usted le cuenta a la herramienta no pasa por sí solo al Brain de una compañera.
 El punto de la validez es el más discreto y, en la empresa, el más importante. En una memoria de lista, una afirmación nueva se escribe encima de la antigua, y lo que regía antes desaparece. Aquí, en cambio, la afirmación antigua recibe un final y se mantiene. Quien pregunte en septiembre qué plazo de descuento por pronto pago rige recibe el nuevo. Quien tenga que reconstruir por qué una factura se trató de otro modo en mayo recibe el antiguo junto con la fecha en la que fue sustituido. Una memoria que solo conoce el último estado no puede responder a esta segunda pregunta, y es justamente la que se plantea en una auditoría. La idea está desarrollada en la investigación: una arquitectura de memoria de 2025 lleva cuatro marcas de tiempo por afirmación, separadas según cuándo algo era válido en el mundo y cuándo el sistema se enteró de ello, y resuelve las contradicciones invalidando con fecha la arista más antigua en lugar de sobrescribirla. 27 La realización correspondiente describe lo mismo como ventana de validez por afirmación y permite consultas tanto sobre el estado actual como sobre cualquier momento anterior. 28
 El segundo punto que cuenta en el día a día es el lenguaje. Cada empresa tiene sus propias palabras: una denominación para un proceso que solo existe aquí, una abreviatura para una máquina, un nombre de cliente que no se escribe como suena. Esas palabras están en el grafo como nodos propios, con sus grafías y sus conexiones. Por eso ya nadie tiene que explicar qué se quiere decir con el término, y por eso una respuesta general se convierte en una que encaja con la empresa.
-Con ello cambia también lo que pueden lograr las demás partes de la plataforma, y ese es el verdadero motivo del esfuerzo. Un agente de rol que puede leer el grafo ya no necesita que se le alimente con una página de indicaciones antes de responder de forma útil: las competencias, los términos y las reglas ya están ahí. Una tarea que recorre varios sistemas encuentra en el grafo la correspondencia que no figura completa en ninguno de los sistemas implicados. Y una persona nueva recibe el primer día respuestas del fondo existente en lugar de sacarlas de la memoria de la compañera de la mesa de al lado. Aquí describimos lo que permite la forma de construcción, y no prometemos ningún calendario: lo que salga de ello en el día a día se decide según lo cuidado que esté el grafo.
+Con ello cambia también lo que pueden lograr las demás partes de la plataforma, y ese es el verdadero motivo del esfuerzo. Un agente de rol que puede leer el grafo ya no necesita que se le alimente con una página de indicaciones antes de responder de forma útil: las competencias, los términos y las reglas ya están ahí. Una tarea que recorre varios sistemas encuentra en el grafo la correspondencia que no figura completa en ninguno de los sistemas implicados. Aquí describimos lo que permite la forma de construcción, y no prometemos ningún calendario: lo que salga de ello en el día a día se decide según lo cuidado que esté el grafo.
 El camino de escritura: cómo una frase se convierte en una entrada
 Una memoria que lo recuerda todo no vale nada. Se llena de cosas irrelevantes y, cuanto más llena está, con menos fiabilidad vuelve a encontrar lo importante. En torno a ese punto giran justamente las quejas sobre la falta de control citadas más arriba. Por eso, el camino de la frase dicha a la entrada guardada no es en nuestro caso un solo paso, sino cuatro.
 1
@@ -2053,7 +2068,7 @@ Solo se escribe después del cotejo, junto con la procedencia y el momento.
 Primero surge en la conversación una afirmación que va más allá del momento. Rara vez es la pregunta y casi siempre es un comentario de pasada: que la recepción de obra con este cliente va siempre a través de la dirección facultativa, que una determinada máquina está ajustada de otro modo desde la reforma, que para este grupo de mercancías rige otro tipo de IVA. Lo que es puntual no entra ahí, y lo que se limita al encargo en curso, tampoco.
 Después nace de ello una propuesta, todavía no una entrada. La propuesta indica qué nodos se verían afectados, qué arista surgiría y de dónde procede la afirmación. Se puede rechazar, y rechazado significa rechazado: la propuesta no vuelve a aparecer en la siguiente ocasión.
 El tercer paso es el cotejo con el fondo existente, y es la razón de toda la forma de construcción. Si el nodo ya existe, no se crea un segundo, sino que se completa el existente. Si la frase nueva dice algo distinto de una ya existente, se trata como contradicción y no como sobrescritura: la afirmación más antigua recibe un final, la nueva un comienzo, y ambas siguen siendo legibles. Y si la afirmación no aporta nada nuevo, se descarta, para que la memoria no se ahogue en su propia abundancia.
-Solo después se escribe, junto con la procedencia, el momento y la autorización. A partir de ese instante, la entrada queda a disposición de quien puede verla, y además en cualquier conversación, no solo en aquella en la que se originó. Esa es la verdadera diferencia respecto de un historial: un historial pertenece a una conversación, una entrada pertenece a la empresa.
+Solo después se escribe, junto con la procedencia y el momento. A partir de ese instante, la entrada queda a disposición en cualquiera de sus conversaciones, no solo en aquella en la que se originó. Esa es la verdadera diferencia respecto de un historial: un historial pertenece a una conversación, una entrada pertenece a su Brain y reside en su instancia. También en nuestro caso, por tanto, una entrada no desaparece porque usted borre la conversación de la que procede. La diferencia está en que usted la ve: figura con procedencia y fecha en su fondo y allí se puede quitar por separado, en lugar de seguir actuando sin que nadie lo note.
 El camino de lectura: qué sale del servidor y qué no
 Llega ahora la parte en la que se decide si una memoria es siquiera viable para una empresa europea. Una memoria solo sirve si sus contenidos entran en la respuesta. Tienen que llegar, por tanto, de algún modo al modelo. La cuestión es cuánto de ellos.
 1
@@ -2068,7 +2083,7 @@ El fondo se queda donde está. Lo que sale de su instancia es el fragmento.
 Ante una pregunta, Kisuno determina primero los nodos de entrada, es decir, los puntos del grafo de los que se trata. Desde ahí se siguen las aristas, por regla general uno o dos pasos, y lo que así se reúne es un fragmento pequeño y coherente: unos cuantos nodos, las aristas entre ellos, los datos de validez. Solo ese fragmento va al modelo junto con su pregunta.
 El grafo en sí permanece donde está. Se encuentra en la base de datos de su instancia, hoy por tanto en los centros de datos de Green en Lupfig. En cuanto el repositorio con nuestras extensiones esté disponible, en el autoalojamiento residirá en su propio servidor. No existe ningún proceso en el que la memoria se transfiera en su conjunto a un proveedor de modelos, se replique allí o se construya allí. Lo que sale de su instancia es siempre solo el fragmento que necesita cada pregunta, y ese es el mismo principio con el que trabaja también la base de conocimiento.
 Lo que rige para ese fragmento lo decimos abiertamente, porque es la frase más importante de este apartado. Ningún proveedor de modelos almacena sus entradas de datos ni las usa para entrenamiento. Lo que queda más allá de eso depende del modelo elegido, y también eso lo decimos abiertamente: la detección de abusos de AWS puede retener solicitudes cuando estas pudieran infringir las condiciones de uso de AWS o de los proveedores de los modelos. En los modelos GPT, AWS conserva las solicitudes marcadas y, en Claude Fable 5 y 5.1, todas las solicitudes durante un máximo de 30 días, para examinar los abusos por medios automáticos; las solicitudes marcadas pueden además ser revisadas a mano por AWS. Según indica AWS, esos datos no se transmiten a los proveedores de los modelos. Si está activada la inferencia entre regiones, se encuentran en la región en la que se procesa la solicitud. 29 Quien quiera excluir también esos treinta días elige los modelos abiertos de primer nivel que empresas europeas operan en servidores en Europa; allí no rige la CLOUD Act estadounidense.
-La respuesta vuelve después con la procedencia de las entradas usadas. Usted ve así no solo lo que Kisuno cree saber sobre su empresa, sino también de qué conversación o documento procede ese conocimiento. Es la misma idea que la referencia de origen en una respuesta de la base de conocimiento, y por el mismo motivo: una afirmación sin procedencia comprobable no sirve en una empresa.
+La respuesta vuelve después con la procedencia de las entradas usadas. Usted ve así no solo lo que Kisuno cree saber sobre su trabajo, sino también de qué conversación o documento procede ese conocimiento. Es la misma idea que la referencia de origen en una respuesta de la base de conocimiento, y por el mismo motivo: una afirmación sin procedencia comprobable no sirve en una empresa.
 Consultar, rectificar, borrar
 Una memoria que no se puede abrir no es una memoria, sino una incógnita dentro del proceso. Por eso cada entrada es direccionable, y eso no es un detalle secundario de la interfaz, sino una propiedad de la forma de construcción: como el conocimiento existe en forma de nodos y aristas y no como texto corrido, hay siquiera algo a lo que señalar.
 1
@@ -2078,19 +2093,21 @@ Una memoria que no se puede abrir no es una memoria, sino una incógnita dentro 
 - Consultar, rectificar, borrar: entrada por entrada
 - Cada acceso y cada modificación constan en el registro
 Como el conocimiento se compone de objetos individuales, hay algo a lo que señalar.
-De ahí se siguen cuatro cosas que cuentan en el día a día. Primero, el fondo se puede consultar, nodo por nodo, con procedencia y fecha. Segundo, una afirmación incorrecta se puede rectificar, y la incorrecta no desaparece sin dejar rastro, sino que queda fechada como sustituida; quien necesite saber por qué una respuesta anterior fue distinta encuentra el motivo. Tercero, una entrada suelta se puede borrar, y con ella se van las aristas unidas a ella. Cuarto, en la gestión de permisos consta quién ve qué parte de la memoria, y cada acceso consta en el registro de auditoría.
-Para las empresas de Europa, esto tiene un lado práctico que va más allá de la comodidad. Quien solicita acceso según el artículo 15 del Reglamento General de Protección de Datos o la supresión según el artículo 17 lo solicita sobre un objeto determinado, y alguien tiene que encontrar ese objeto. En una memoria compuesta de texto corrido, eso es una tarea de búsqueda de resultado incierto. En un grafo es un nodo con un identificador y las aristas unidas a él. Con ello la obligación no queda cumplida; solo así se vuelve cumplible. Esta diferencia la consideramos la verdadera ganancia de la forma de construcción, y es el motivo por el que la hemos elegido.
-Y quien no quiera tener nada guardado desactiva la función. No es un componente sin el cual la plataforma no funcione, sino una posibilidad por la que uno se decide.
+De ahí se siguen cuatro cosas que cuentan en el día a día. Primero, el fondo se puede consultar, nodo por nodo, con procedencia y fecha. Segundo, una afirmación incorrecta se puede rectificar, y la incorrecta no desaparece sin dejar rastro, sino que queda fechada como sustituida; quien necesite saber por qué una respuesta anterior fue distinta encuentra el motivo. Tercero, una entrada suelta se puede borrar, y con ella se van las aristas unidas a ella. Cuarto, todo el fondo reside en su instancia, se respalda con ella y se borra con ella, y cada acceso consta en el registro de auditoría.
+Para las empresas de Europa, esto tiene un lado práctico que va más allá de la comodidad. Quien solicita acceso según el artículo 15 del Reglamento General de Protección de Datos o la supresión según el artículo 17 lo solicita sobre un objeto determinado, y ese objeto tiene que poder encontrarse. En una memoria compuesta de texto corrido, eso es una tarea de búsqueda de resultado incierto. En un grafo es un nodo con un identificador y las aristas unidas a él. Eso vale dentro de un Brain. A través de varios Brains no hay ninguna búsqueda, porque el acceso lo tiene solo la propia persona; lo que eso significa para una solicitud figura más abajo, en los límites. Con todo ello la obligación no queda cumplida; solo así se vuelve cumplible. Esta diferencia la consideramos la verdadera ganancia de la forma de construcción, y es el motivo por el que la hemos elegido.
+Y quien no quiera tener nada guardado desactiva la función para sí. No es un componente sin el cual la plataforma no funcione, sino una posibilidad por la que uno se decide.
 Límites: lo que una memoria no consigue
 El primer límite es al mismo tiempo la frase más importante de este artículo. Una memoria no vuelve más listo a ningún modelo. Vuelve más precisa la pregunta. Lo que vuelve sigue siendo texto generado por un modelo de lenguaje, y ese texto suena plausible incluso cuando la base está torcida. Quien se fía de una respuesta sin abrir la procedencia indicada no ha ganado nada salvo velocidad.
 El segundo límite es más incómodo, porque crece con el tiempo. Una memoria recuerda también lo que es falso. Si una frase errónea se convierte una vez en nodo, vuelve a aparecer en las respuestas y allí resulta más creíble que la primera vez, porque ahora procede del fondo propio. El reconocimiento automático se equivoca además, según nuestra experiencia, de forma previsible: confunde un comentario de pasada con una regla vinculante. Justamente por eso está incorporada la propuesta antes de la entrada, y la procedencia en cada entrada, y justamente por eso el mantenimiento sigue siendo una tarea de personas.
-El tercer límite es una delimitación. La memoria no sustituye ni su base de conocimiento ni su ERP. Recuerda qué rige y qué está relacionado con qué, no cada documento ni ningún asiento contable. La documentación permanece en la base de conocimiento, los datos maestros permanecen en el sistema especializado, y la conexión hacia allí pasa por nuestra pasarela para conexiones de herramientas, con la misma gestión de permisos que en todo lo demás. Lo que ahí es posible figura en Integraciones . Una memoria que intente sustituir todo eso se convierte en una segunda base de datos, peor mantenida.
-El cuarto límite afecta a los datos personales. En una memoria de empresa entra lo que es necesario para el trabajo, y no lo que se acumula de paso sobre las personas. Quien deposite en ella datos sobre las personas empleadas necesita para ello una finalidad, una base jurídica y, según el país y el tamaño de la empresa, la participación de la representación de los trabajadores. Esa comprobación no se la ahorramos a nadie, y este artículo no sustituye el asesoramiento jurídico.
-El quinto límite afecta al autoalojamiento. La memoria forma parte del conjunto completo de funciones y, en el autoalojamiento, reside por entero en su servidor. La base LibreChat está bajo licencia MIT; el repositorio con nuestras extensiones llegará próximamente. Hasta entonces, el servicio gestionado es la vía por la que la función está disponible, y preferimos decirlo a dejarlo abierto.
-El sexto límite es el grafo en sí. No es un remedio milagroso. Su ventaja está acreditada para determinados tipos de pregunta: para preguntas dirigidas a un fondo completo, para preguntas que recorren varios pasos y para preguntas sobre cambios a lo largo del tiempo. Para preguntas sencillas sobre un solo dato no es demostrablemente mejor que una búsqueda por similitud corriente. Un estudio de otro proveedor mide para la variante con grafo, frente a la variante sin grafo, una puntuación global mejor en torno a un dos por ciento; de ahí se sigue que la mayor parte de la mejora no procede de la forma de grafo, sino de que se lleve una memoria en absoluto. 30 Mencionamos esta cifra porque habla en nuestra contra. Nuestro motivo para el grafo es de todos modos otro: la validez y la procedencia por entrada, la autorización por nodo y el borrado de entradas individuales no caben en una lista.
+El tercer límite es una delimitación. El Brain no sustituye ni su base de conocimiento ni su ERP. Recuerda qué rige y qué está relacionado con qué, no cada documento ni ningún asiento contable. La documentación permanece en la base de conocimiento, los datos maestros permanecen en el sistema especializado, y la conexión hacia allí pasa por nuestra pasarela para conexiones de herramientas, con la misma gestión de permisos que en todo lo demás. Lo que ahí es posible figura en Integraciones . Una memoria que intente sustituir todo eso se convierte en una segunda base de datos peor mantenida.
+El cuarto límite afecta a los datos personales. En un Brain entra lo que es necesario para el trabajo propio, y no lo que se acumula de paso sobre las personas. Quien deposite en él datos sobre las personas empleadas necesita para ello una finalidad, una base jurídica y, según el país y el tamaño de la empresa, la participación de la representación de los trabajadores. Esa comprobación no se la ahorramos a nadie, y este artículo no sustituye el asesoramiento jurídico.
+El quinto límite es la sucesión. El Brain es personal y se va con la persona: si se borra el acceso, el Brain se borra con él. Quien deja la empresa no se lleva nada, pero tampoco deja nada con lo que pueda trabajar quien le suceda. Esa persona empieza con un Brain vacío. Que la experiencia se pierda con las salidas no lo resuelve, pues, esta forma de construcción, y no lo afirmamos. Cuánto pesa eso lo dicen las cifras de más arriba sobre puestos vacantes 10 y sobre la necesidad de reposición en Europa. 11 Lo que sí resuelve esta forma de construcción es la pregunta de dónde reside hasta entonces lo recogido.
+El sexto límite es la otra cara de que cada Brain sea personal: el acceso lo tiene solo la propia persona. Ninguna administración ni nadie más en la empresa mira dentro. Por eso tampoco hay ninguna búsqueda a través de todos los Brains ni un borrado central de datos sueltos. Para una solicitud de acceso o de supresión, eso significa que el camino pasa por la persona que lleva el Brain; es una tarea organizativa y no técnica. Sin ella queda lo más basto: un Brain se puede borrar entero, de todos modos desaparece con el acceso, y la función se puede desactivar para cada acceso. Esta situación no es nueva. Un buzón personal, un cuaderno de notas o una carpeta en el aparato de trabajo tampoco son accesibles para una solicitud de acceso más que a través de la persona que trabaja con ellos, y las empresas lo resuelven desde siempre por la vía organizativa: fijar antes la finalidad, regular por escrito el alcance y desactivar allí donde eso no baste. Si eso basta para su caso lo decide su empresa como responsable del tratamiento, y este artículo no sustituye el asesoramiento jurídico.
+El séptimo límite afecta al autoalojamiento. La memoria forma parte del conjunto completo de funciones y, en el autoalojamiento, reside por entero en su servidor. La base LibreChat está bajo licencia MIT; el repositorio con nuestras extensiones llegará próximamente. Hasta entonces, el servicio gestionado es la vía por la que la función está disponible, y preferimos decirlo a dejarlo abierto.
+El octavo límite es el grafo en sí. No es un remedio milagroso. Su ventaja está acreditada para determinados tipos de pregunta: para preguntas dirigidas a un fondo completo, para preguntas que recorren varios pasos y para preguntas sobre cambios a lo largo del tiempo. Para preguntas sencillas sobre un solo dato no es demostrablemente mejor que una búsqueda por similitud corriente. Un estudio de otro proveedor mide para la variante con grafo, frente a la variante sin grafo, una puntuación global mejor en torno a un dos por ciento; de ahí se sigue que la mayor parte de la mejora no procede de la forma de grafo, sino de que se lleve una memoria en absoluto. 30 Mencionamos esta cifra porque habla en nuestra contra. Nuestro motivo para el grafo es de todos modos otro: la validez y la procedencia en cada entrada y el borrado de entradas sueltas junto con sus conexiones no caben en una lista.
 Preguntas frecuentes sobre la memoria de Kisuno
 ¿Qué diferencia a la memoria de Kisuno de la función de memoria de ChatGPT?
-Tres cosas. Primero, pertenece a la empresa y no a una cuenta personal: lo que una persona enseña queda a disposición de quienes pueden verlo, y se queda ahí cuando esa persona se va. Segundo, es un grafo de nodos y aristas con nombre en lugar de una lista de frases, por eso se pueden responder preguntas que recorren varios pasos. Tercero, reside en su instancia, y a un modelo va solo el fragmento que necesita cada pregunta.
+Tres cosas. Primero, reside en su instancia y no en el proveedor: la conservación, la copia de seguridad y el borrado siguen las mismas reglas que sus demás datos, y a un modelo va solo el fragmento que necesita cada pregunta. Segundo, es un grafo de nodos y aristas con nombre en lugar de una lista de frases, por eso se pueden responder preguntas que recorren varios pasos. Tercero, cada entrada lleva consigo validez y procedencia, por eso se puede consultar, rectificar y borrar por separado. El Brain es personal, igual que las memorias de los grandes proveedores; esa no es la diferencia.
 ¿Mejora Kisuno realmente con el tiempo gracias a esto?
 Lo que mejora no es el modelo, sino la base sobre la que responde. El modelo en sí permanece inalterado y no aprende nada de sus conversaciones; así está expresamente querido, porque de lo contrario sus datos serían material de entrenamiento. Lo que crece es el grafo. Con cada semana figuran en él más términos, competencias y reglas suyas, y con ello el fragmento que aporta una pregunta se vuelve más certero. En el día a día se siente como un aprendizaje y en realidad es una mejor consulta. Que eso ocurra depende del mantenimiento: un grafo en el que nadie mira no se vuelve más listo, sino solo más lleno.
 ¿Kisuno recuerda automáticamente todo lo que escribimos?
@@ -2100,15 +2117,15 @@ En la base de datos de su instancia. Hoy se encuentra en los centros de datos de
 ¿Nuestra memoria entrena modelos ajenos?
 No. Con independencia del modelo elegido, las entradas de datos y los archivos subidos no son almacenados ni usados para entrenamiento por el proveedor del modelo; el compromiso consta en el contrato de encargo del tratamiento. Una excepción la nombramos abiertamente: la detección de abusos de AWS puede marcar mensajes. En los modelos GPT, AWS conserva los mensajes marcados y, en Claude Fable 5 y 5.1, todas las solicitudes durante un máximo de 30 días, para examinar e impedir abusos; de ahí no llega nada a los proveedores de los modelos. Quien quiera excluir también eso elige los modelos abiertos de primer nivel de proveedores europeos.
 ¿Podemos borrar entradas sueltas?
-Sí, una por una, junto con las aristas unidas a ellas. Ese es el motivo práctico de la forma de construcción: una solicitud de acceso o de supresión según el artículo 15 o el artículo 17 del Reglamento General de Protección de Datos se dirige a un objeto determinado, y en un grafo ese objeto es un nodo con un identificador. Con ello la obligación no queda cumplida, pero se vuelve ejecutable. Quien no quiera tener nada guardado desactiva la función.
-¿Ve cada persona de la empresa todo lo que se ha recordado?
-No. Cada nodo lleva consigo qué rol o qué grupo puede verlo, y la gestión de permisos es la misma que rige también para herramientas y conexiones. Cada acceso consta en el registro de auditoría. Una memoria común significa que el conocimiento pertenece a la empresa, y no que todo esté al descubierto.
+Sí, cada persona en su propio Brain, cada entrada por separado y junto con las aristas unidas a ella. Ese es el motivo práctico de la forma de construcción: una solicitud de acceso o de supresión según el artículo 15 o el artículo 17 del Reglamento General de Protección de Datos se dirige a un objeto determinado, y en un grafo ese objeto es un nodo con un identificador. De forma centralizada, a través de todos los Brains, eso no es posible, porque nadie tiene acceso a ellos; el camino pasa por la persona. Con ello la obligación no queda cumplida, pero se vuelve ejecutable. Quien no quiera tener nada guardado desactiva la función.
+¿Ve alguien más en la empresa lo que ha recordado mi Brain?
+No. El Brain es personal: cada persona tiene el suyo, y lo que usted le cuenta a la herramienta no pasa por sí solo al Brain de una compañera. El fondo reside en la instancia de su empresa, se respalda con ella y está sujeto a las mismas reglas que sus demás datos; cada acceso consta en el registro de auditoría. El registro recoge quién accedió y cuándo, y no lo que dice una entrada; el contenido lo sigue viendo solo la propia persona. Esa es la diferencia respecto de una memoria alojada en el proveedor, no la cuestión de a quién pertenece.
 ¿Pueden incluirse datos sobre las personas empleadas?
-Solo con una finalidad y una base jurídica, y según el país y el tamaño de la empresa hay que incluir a la representación de los trabajadores. Técnicamente nada lo impide, y justamente por eso alguien tiene que decidirlo. Recomendamos fijar antes por escrito el alcance y establecer las autorizaciones en consecuencia. Este artículo no sustituye el asesoramiento jurídico.
+Solo con una finalidad y una base jurídica, y según el país y el tamaño de la empresa hay que incluir a la representación de los trabajadores. Técnicamente nada lo impide, y justamente por eso alguien tiene que decidirlo. Recomendamos fijar antes por escrito el alcance. Que cada Brain sea personal no hace la cuestión más pequeña, sino más bien más grande: lo que una persona deposita sobre otra queda entonces en el Brain de quien lo deposita. Este artículo no sustituye el asesoramiento jurídico.
 ¿Cuánto cuesta y podemos probarlo antes?
-La memoria forma parte del conjunto completo de funciones y no cuesta nada extra. La instancia gestionada cuesta 7 CHF (7,50 €) por persona y mes, hasta nuevo aviso con un 50 por ciento de descuento con una permanencia de doce meses, es decir, 3,50 CHF (3,75 €); el consumo de modelo se factura además a través de un crédito común para toda la empresa. Probarlo es gratuito y sin límite de tiempo: cada acceso nuevo empieza con un crédito inicial de 50 CHF (55 €), sin datos de pago. Toda la información está en la página Precios.
-Traiga el conocimiento de su empresa
-Tome diez frases que en su empresa todo el mundo conoce y nadie ha escrito, y construimos juntos con ellas los primeros nodos. Expresamente también en los puntos en los que el reconocimiento automático se equivoca. O bien se registra y lo prueba usted mismo.
+La memoria forma parte del conjunto completo de funciones y no cuesta nada extra. La instancia gestionada cuesta 7 CHF (7,50 €) por persona y mes, hasta nuevo aviso con un 50 por ciento de descuento con una permanencia de doce meses, es decir, 3,50 CHF (3,75 €); el consumo de modelo se factura además a través de un crédito común para toda la empresa. Probarlo es gratuito y sin límite de tiempo: cada acceso nuevo empieza con un crédito inicial de 50 CHF (55 €), sin datos de pago. Toda la información está en la página Precios .
+Traiga sus propias frases
+Tome diez frases que repite constantemente en su trabajo y no ha escrito en ninguna parte, y construimos juntos con ellas los primeros nodos. Expresamente también en los puntos en los que el reconocimiento automático se equivoca. O bien se registra y lo prueba usted mismo.
 Reservar una demostración en directo
 Empezar ahora
 Fuentes

@@ -1881,8 +1881,9 @@ pre code {
    als HTML ueber der Zeichnung und die Knoten holen ihren Namen ueber
    aria-labelledby aus der zugehoerigen Karte.
 
-   Die Form folgt der Uebersicht in der Anwendung: drei Gruppen um einen Kern,
-   die Gruppennamen aussen, heller Grund. Die Knotennamen stehen nicht dauernd
+   Die Form folgt der Uebersicht in der Anwendung: sechs Bereiche um einen
+   Kern, die Bereichsnamen aussen, heller Grund. Das Brain ist persoenlich,
+   der Kern sagt das auch. Die Knotennamen stehen nicht dauernd
    da, sondern nur beim gewaehlten Knoten; elf Namen gleichzeitig waren ein
    Teppich, und was der Bestand enthaelt, sagen die drei Gruppen.
    Grundzustand ohne JavaScript ist der vollstaendige Graph samt Ruhekarte.
@@ -1920,15 +1921,18 @@ pre code {
 
 /* ------------------------------- Buehne -------------------------------
 
-   Drei Gruppenfarben, je eine helle fuer den Punkt und eine dunklere fuer die
+   Sechs Bereichsfarben, je eine helle fuer den Punkt und eine dunklere fuer die
    Schrift: der helle Ton traegt bei 11 Pixel keinen Text, der dunkle steht auf
    Weiss ueber 4,5 zu 1. Dieselben drei Familien wie in der Anwendung.
    ---------------------------------------------------------------------- */
 
 .wg-stage {
-  --wg-p:  #7B5BD6;  --wg-p-t: #5636AE;   /* Menschen und Rollen */
-  --wg-d:  #2C79D4;  --wg-d-t: #1F5DA8;   /* Dinge und Dokumente */
-  --wg-r:  #E08A3C;  --wg-r-t: #9C5B23;   /* Regeln und Fristen  */
+  --wg-vor: #1DAE7A;  --wg-vor-t: #127A56;   /* Vorlieben      */
+  --wg-pro: #2C79D4;  --wg-pro-t: #1F5DA8;   /* Projekte       */
+  --wg-men: #E08A3C;  --wg-men-t: #9C5B23;   /* Menschen       */
+  --wg-ent: #C2455F;  --wg-ent-t: #943045;   /* Entscheidungen */
+  --wg-wis: #2E6C86;  --wg-wis-t: #255870;   /* Wissen         */
+  --wg-arb: #7B5BD6;  --wg-arb-t: #5636AE;   /* Arbeitsweise   */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1958,9 +1962,12 @@ pre code {
 
 /* Sehr weicher Schein unter jeder Gruppe, wie in der Anwendung. */
 .wg-glow circle { stroke: none; opacity: .09; filter: blur(26px); }
-.wg-glow-p { fill: var(--wg-p); }
-.wg-glow-d { fill: var(--wg-d); }
-.wg-glow-r { fill: var(--wg-r); }
+.wg-glow-vor { fill: var(--wg-vor); }
+.wg-glow-pro { fill: var(--wg-pro); }
+.wg-glow-men { fill: var(--wg-men); }
+.wg-glow-ent { fill: var(--wg-ent); }
+.wg-glow-wis { fill: var(--wg-wis); }
+.wg-glow-arb { fill: var(--wg-arb); }
 
 .wg-ring { stroke: #E9EEF3; stroke-width: 1; fill: none; }
 
@@ -1985,10 +1992,10 @@ pre code {
 .wg-hit  { fill: transparent; stroke: none; }
 /* Auf dem Telefon schrumpft die Buehne, die Tippflaeche darf das nicht: r ist
    in SVG eine Geometrieeigenschaft und laesst sich in CSS anheben. Der
-   naechste Nachbar liegt 65 Einheiten entfernt, zwei Radien von 32 bleiben
+   naechste Nachbar liegt 54 Einheiten entfernt, zwei Radien von 26 bleiben
    also ueberschneidungsfrei. */
 @media (max-width: 700px) {
-  .wg-hit { r: 32; }
+  .wg-hit { r: 26; }
 }
 .wg-halo { fill: currentColor; stroke: none; opacity: .16; }
 .wg-dot {
@@ -1999,9 +2006,12 @@ pre code {
 }
 .wg-core { fill: #FFFFFF; stroke: var(--c-hairline); stroke-width: 1; }
 
-.wg-g-p { color: var(--wg-p); }
-.wg-g-d { color: var(--wg-d); }
-.wg-g-r { color: var(--wg-r); }
+.wg-g-vor { color: var(--wg-vor); }
+.wg-g-pro { color: var(--wg-pro); }
+.wg-g-men { color: var(--wg-men); }
+.wg-g-ent { color: var(--wg-ent); }
+.wg-g-wis { color: var(--wg-wis); }
+.wg-g-arb { color: var(--wg-arb); }
 
 /* Gewaehlter Knoten, seine Nachbarn, seine Kanten. Alles andere tritt zurueck. */
 .euc-wgraph.is-aktiv .wg-node  { opacity: .22; }
@@ -2043,9 +2053,12 @@ pre code {
   font-size: 11px;  max-width: 118px;
   font-size: max(8.5px, 2.35cqw);  max-width: 25cqw;
 }
-.wg-grp-p { color: var(--wg-p-t); }
-.wg-grp-d { color: var(--wg-d-t); }
-.wg-grp-r { color: var(--wg-r-t); }
+.wg-grp-vor { color: var(--wg-vor-t); }
+.wg-grp-pro { color: var(--wg-pro-t); }
+.wg-grp-men { color: var(--wg-men-t); }
+.wg-grp-ent { color: var(--wg-ent-t); }
+.wg-grp-wis { color: var(--wg-wis-t); }
+.wg-grp-arb { color: var(--wg-arb-t); }
 
 /* Der Knotenname erscheint nur am gewaehlten Knoten. Die weisse Unterlage
    haelt ihn ueber Linien und abgeblendeten Punkten lesbar. */
@@ -2055,7 +2068,9 @@ pre code {
   padding: 1px 4px;
   border-radius: var(--r-control);
   background: rgba(255, 255, 255, .92);
-  white-space: nowrap;
+  text-align: center;
+  max-width: 130px;
+  max-width: 28cqw;
   font-family: var(--f-body);
   line-height: 1.25;
   color: var(--c-ink);
@@ -2316,18 +2331,22 @@ pre code {
   }
 }
 
-/* --- erzeugt aus scratchpad/graphwidget/layout3.py, nicht von Hand aendern --- */
-.wg-lab-lehmann { left: 19.77%; top: 30.48%; }
-.wg-lab-verkauf { left: 28.23%; top: 41.43%; }
-.wg-lab-a114 { left: 79.90%; top: 21.43%; }
-.wg-lab-berger { left: 62.67%; top: 22.05%; }
-.wg-lab-halle2 { left: 77.63%; top: 36.19%; }
-.wg-lab-protokoll { left: 83.00%; top: 46.33%; }
-.wg-lab-nordwand { left: 68.63%; top: 49.05%; }
-.wg-lab-preisregel { left: 54.33%; top: 73.67%; }
-.wg-lab-altregel { left: 40.00%; top: 78.05%; }
-.wg-lab-frist { left: 62.67%; top: 82.33%; }
-.wg-lab-abnahme { left: 50.00%; top: 79.10%; }
-.wg-grp-p { left: 27.33%; top: 24.67%; }
-.wg-grp-d { left: 72.13%; top: 15.62%; }
-.wg-grp-r { left: 51.75%; top: 87.33%; }
+/* --- erzeugt aus scratchpad/graphwidget/layout4.py, nicht von Hand aendern --- */
+.wg-lab-kurz { left: 45.33%; top: 23.98%; }
+.wg-lab-deutsch { left: 55.00%; top: 28.26%; }
+.wg-lab-halle2 { left: 72.67%; top: 36.07%; }
+.wg-lab-a114 { left: 74.67%; top: 48.36%; }
+.wg-lab-berger { left: 74.33%; top: 63.17%; }
+.wg-lab-lehmann { left: 70.67%; top: 66.45%; }
+.wg-lab-preisregel { left: 55.00%; top: 73.55%; }
+.wg-lab-altregel { left: 45.33%; top: 72.21%; }
+.wg-lab-protokoll { left: 27.33%; top: 65.50%; }
+.wg-lab-abnahme { left: 25.33%; top: 53.17%; }
+.wg-lab-pdf { left: 25.33%; top: 46.36%; }
+.wg-lab-montag { left: 29.33%; top: 33.55%; }
+.wg-grp-vor { left: 50.17%; top: 16.50%; }
+.wg-grp-pro { left: 73.67%; top: 24.40%; }
+.wg-grp-men { left: 72.50%; top: 74.98%; }
+.wg-grp-ent { left: 50.17%; top: 83.12%; }
+.wg-grp-wis { left: 26.33%; top: 74.02%; }
+.wg-grp-arb { left: 27.33%; top: 25.02%; }
