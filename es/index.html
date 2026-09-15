@@ -147,14 +147,8 @@
 <p>Memoria</p>
 <h3>Memoria proactiva</h3>
 <p>Recuerda por sí misma lo importante: auditable, borrable, en su servidor.</p>
-<p><strong>memory · guardado</strong></p>
-<p>Cliente prefiere alemán <em>guardado</em></p>
-<p>Facturas trimestrales <em>guardado</em></p>
-<p>Contacto: A. Keller <em>guardado</em></p>
-<p>Nota de junio <em>borrado</em></p>
-<p>Archivo: servidor propio <em>local</em></p>
-<p>Citas mejor por la mañana <em>guardado</em></p>
-<p>Informes en Excel <em>guardado</em></p>
+<p><strong>brain · vista general</strong></p>
+<p>Preferencias Proyectos Personas Decisiones Conocimiento Formas de trabajo <strong>Brain</strong><em>Empresa</em></p>
 <h2>Diseñado para su uso en toda la empresa.</h2>
 <p>Kisuno conecta sus sistemas, ejecuta tareas con accesos controlados y sigue siendo verificable por su departamento de IT en todo momento.</p>
 <p>Conectar sus sistemas</p>
@@ -864,6 +858,60 @@
   .euc-pick-ch svg{ color:#D8232A; }
   .euc-pick-eu svg{ color:var(--c-eu-700); }
   .euc-pick-world svg, .euc-pick-any svg{ color:#7A8794; }
+
+  /* ---------- Brain-Attrappe: das Gedaechtnis als sortierter Bestand --------
+     Hier stand eine Liste gemerkter Saetze. Sie zeigte, DASS etwas gemerkt
+     wird, aber nicht, wie der Bestand aussieht. Nachgebaut ist die Uebersicht
+     des Brain: sechs Gruppen um einen Kern. Die Punkte tragen die Menge, die
+     sechs Woerter daneben den Sinn, denn ohne sie waere es eine huebsche
+     Wolke und keine Erklaerung.
+     Alle Masse haengen an der Breite der Attrappe (cqw), nicht an der des
+     Fensters: dieselbe Zeichnung steht auf 374 und auf 263 Pixeln, und die
+     Beschriftungen laufen in keiner Sprache aus dem Rahmen. */
+  .euc-brain-plane{ position:relative; container-type:inline-size; aspect-ratio:400 / 224; }
+  .euc-brain-svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .euc-brain-ring{ fill:none; stroke:#EDF1F5; stroke-width:1; }
+  .euc-brain-lines path{ fill:none; stroke:#E4EAF0; stroke-width:1; }
+  .euc-brain-core{ fill:#FFFFFF; stroke:var(--c-hairline); stroke-width:1; }
+
+  .euc-brain-labels{ position:absolute; inset:0; pointer-events:none; }
+  .euc-bl{
+    position:absolute;
+    font-family:var(--f-body); font-weight:500; letter-spacing:.04em; text-transform:uppercase;
+    line-height:1.25;
+    font-size:9px;  max-width:68px;                 /* Rueckfall ohne Container-Abfragen */
+    font-size:max(8px, 2.5cqw); max-width:18cqw;
+  }
+  /* Oben und unten steht mehr Platz zur Verfuegung als an den Seiten. */
+  .euc-ba-o{ transform:translate(-50%,-100%); text-align:center; max-width:130px; max-width:34cqw; }
+  .euc-ba-u{ transform:translate(-50%,0);     text-align:center; max-width:130px; max-width:34cqw; }
+  .euc-ba-l{ transform:translate(-100%,-50%); text-align:right; }
+  .euc-ba-r{ transform:translate(0,-50%);     text-align:left; }
+
+  .euc-bl-core{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    display:block; text-align:center; width:56px; width:15cqw;
+  }
+  .euc-bl-core b{ display:block; font-family:var(--f-body); font-weight:600;
+    letter-spacing:.06em; text-transform:uppercase; color:#1E2A36;
+    font-size:11px; font-size:max(8px, 2.9cqw); }
+  .euc-bl-core i{ display:block; margin-top:1px; font-style:normal; font-family:var(--f-mono);
+    letter-spacing:.06em; text-transform:uppercase; color:#A8B2BC;
+    font-size:7.5px; font-size:max(6px, 1.9cqw); }
+
+  /* --- erzeugt aus scratchpad/brainkachel/bau.py, nicht von Hand aendern --- */
+  .euc-bl-pref{ left:50.00%; top:8.93%; color:#127A56; }
+  .euc-brain-pref circle{ fill:#1DAE7A; }
+  .euc-bl-proj{ left:81.00%; top:35.27%; color:#1F5DA8; }
+  .euc-brain-proj circle{ fill:#2C79D4; }
+  .euc-bl-ppl{ left:81.00%; top:64.73%; color:#9C5B23; }
+  .euc-brain-ppl circle{ fill:#E08A3C; }
+  .euc-bl-dec{ left:50.00%; top:91.07%; color:#943045; }
+  .euc-brain-dec circle{ fill:#C2455F; }
+  .euc-bl-know{ left:19.00%; top:64.73%; color:#255870; }
+  .euc-brain-know circle{ fill:#2E6C86; }
+  .euc-bl-work{ left:19.00%; top:35.27%; color:#5636AE; }
+  .euc-brain-work circle{ fill:#7B5BD6; }
 
   /* ---------- Rechte-Attrappe: drei angebundene Systeme ----------------------
      Drei Karten nach dem Muster der Kapitel-Zeilen (weisse Fläche, 9px Radius,
@@ -2284,15 +2332,139 @@
             <p class="euc-tile-d">{{ t.features.d6 }}</p>
           </div>
           <div class="euc-shot" aria-hidden="true">
-            <div class="euc-mock">
-          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.mem.bar }}</b></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg></span><span class="l">{{ t.features.mem.m1 }}</span><em>{{ t.features.mem.kept }}</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></span><span class="l">{{ t.features.mem.m2 }}</span><em>{{ t.features.mem.kept }}</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="l">{{ t.features.mem.m3 }}</span><em>{{ t.features.mem.kept }}</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></span><span class="l">{{ t.features.mem.m4 }}</span><em class="no">{{ t.features.mem.del }}</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2"></rect><rect width="20" height="8" x="2" y="14" rx="2"></rect><path d="M6 6h.01"></path><path d="M6 18h.01"></path></svg></span><span class="l">{{ t.features.mem.m5 }}</span><em class="neutral">{{ t.features.mem.local }}</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg></span><span class="l">{{ t.features.mem.m6 }}</span><em>{{ t.features.mem.kept }}</em></div>
-          <div class="euc-mock-row"><span class="euc-mock-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path></svg></span><span class="l">{{ t.features.mem.m7 }}</span><em>{{ t.features.mem.kept }}</em></div>
+            <div class="euc-mock euc-brain">
+          <div class="euc-mock-bar"><i></i><i></i><i></i><b>{{ t.features.brain.bar }}</b></div>
+          <div class="euc-brain-plane">
+          <svg class="euc-brain-svg" viewBox="0 0 400 224" fill="none" aria-hidden="true">
+            <ellipse class="euc-brain-ring" cx="200" cy="112" rx="112" ry="66"></ellipse>
+            <g class="euc-brain-lines">
+              <path d="M200.0 76.0 L200.0 70.0"></path>
+              <path d="M234.1 100.4 L274.3 86.7"></path>
+              <path d="M234.1 123.6 L274.3 137.3"></path>
+              <path d="M200.0 148.0 L200.0 154.0"></path>
+              <path d="M165.9 123.6 L125.7 137.3"></path>
+              <path d="M165.9 100.4 L125.7 86.7"></path>
+              <path d="M200.0 46.0 Q221.8 89.7 297.0 79.0"></path>
+              <path d="M297.0 79.0 Q221.8 119.4 200.0 178.0"></path>
+              <path d="M103.0 145.0 Q200.0 126.9 297.0 145.0"></path>
+              <path d="M103.0 79.0 Q178.2 119.4 200.0 178.0"></path>
+              <path d="M200.0 46.0 Q178.2 104.6 103.0 145.0"></path>
+              <path d="M103.0 79.0 Q200.0 112.0 297.0 145.0"></path>
+            </g>
+            <g class="euc-brain-g euc-brain-pref">
+              <circle cx="192.3" cy="46.4" r="2.2"></circle>
+              <circle cx="217.2" cy="37.9" r="2.4"></circle>
+              <circle cx="194.3" cy="62.2" r="2.1"></circle>
+              <circle cx="191.4" cy="59.9" r="2.4"></circle>
+              <circle cx="193.7" cy="61.1" r="2.4"></circle>
+              <circle cx="203.1" cy="43.7" r="2.2"></circle>
+              <circle cx="193.5" cy="40.2" r="1.8"></circle>
+              <circle cx="218.1" cy="40.7" r="2.5"></circle>
+              <circle cx="195.8" cy="40.3" r="2.8"></circle>
+              <circle cx="206.0" cy="53.8" r="1.7"></circle>
+              <circle cx="209.8" cy="29.3" r="2.2"></circle>
+              <circle cx="214.7" cy="59.2" r="1.8"></circle>
+              <circle cx="203.1" cy="62.2" r="1.9"></circle>
+              <circle cx="212.4" cy="44.1" r="1.9"></circle>
+              <circle cx="192.8" cy="53.4" r="2.2"></circle>
+            </g>
+            <g class="euc-brain-g euc-brain-proj">
+              <circle cx="306.9" cy="89.2" r="2.8"></circle>
+              <circle cx="313.5" cy="88.3" r="2.1"></circle>
+              <circle cx="304.8" cy="95.2" r="2.1"></circle>
+              <circle cx="287.4" cy="74.1" r="2.4"></circle>
+              <circle cx="277.6" cy="83.2" r="1.8"></circle>
+              <circle cx="309.6" cy="87.6" r="1.7"></circle>
+              <circle cx="313.4" cy="84.6" r="1.6"></circle>
+              <circle cx="276.9" cy="83.6" r="2.3"></circle>
+              <circle cx="299.3" cy="69.5" r="1.7"></circle>
+              <circle cx="281.4" cy="83.1" r="2.0"></circle>
+              <circle cx="289.4" cy="70.7" r="2.0"></circle>
+              <circle cx="305.7" cy="94.6" r="1.6"></circle>
+              <circle cx="292.5" cy="87.6" r="2.4"></circle>
+              <circle cx="310.1" cy="88.3" r="2.3"></circle>
+              <circle cx="288.3" cy="77.2" r="1.9"></circle>
+            </g>
+            <g class="euc-brain-g euc-brain-ppl">
+              <circle cx="278.5" cy="139.2" r="2.5"></circle>
+              <circle cx="297.1" cy="144.6" r="2.5"></circle>
+              <circle cx="310.5" cy="137.5" r="1.8"></circle>
+              <circle cx="292.1" cy="156.3" r="1.7"></circle>
+              <circle cx="303.9" cy="135.9" r="2.3"></circle>
+              <circle cx="295.3" cy="152.6" r="2.3"></circle>
+              <circle cx="297.4" cy="146.5" r="2.4"></circle>
+              <circle cx="305.0" cy="137.4" r="2.6"></circle>
+              <circle cx="301.3" cy="139.9" r="2.1"></circle>
+              <circle cx="298.2" cy="144.5" r="1.6"></circle>
+              <circle cx="317.9" cy="143.3" r="1.9"></circle>
+              <circle cx="312.9" cy="152.0" r="2.1"></circle>
+              <circle cx="304.4" cy="149.3" r="2.4"></circle>
+              <circle cx="298.0" cy="153.9" r="2.3"></circle>
+              <circle cx="276.5" cy="146.1" r="2.2"></circle>
+            </g>
+            <g class="euc-brain-g euc-brain-dec">
+              <circle cx="192.9" cy="189.7" r="2.5"></circle>
+              <circle cx="211.9" cy="193.6" r="2.3"></circle>
+              <circle cx="219.9" cy="183.5" r="1.7"></circle>
+              <circle cx="201.0" cy="195.4" r="2.5"></circle>
+              <circle cx="217.4" cy="174.1" r="2.7"></circle>
+              <circle cx="181.8" cy="172.3" r="2.4"></circle>
+              <circle cx="213.7" cy="180.0" r="2.0"></circle>
+              <circle cx="199.5" cy="195.9" r="2.6"></circle>
+              <circle cx="190.0" cy="173.2" r="2.2"></circle>
+              <circle cx="218.8" cy="169.8" r="1.6"></circle>
+              <circle cx="212.5" cy="178.0" r="2.8"></circle>
+              <circle cx="188.1" cy="163.0" r="2.4"></circle>
+              <circle cx="197.3" cy="188.7" r="2.7"></circle>
+              <circle cx="187.5" cy="187.1" r="1.7"></circle>
+              <circle cx="188.6" cy="192.6" r="1.9"></circle>
+            </g>
+            <g class="euc-brain-g euc-brain-know">
+              <circle cx="109.9" cy="153.1" r="2.0"></circle>
+              <circle cx="95.1" cy="141.6" r="1.9"></circle>
+              <circle cx="107.4" cy="136.2" r="1.8"></circle>
+              <circle cx="119.1" cy="148.1" r="1.7"></circle>
+              <circle cx="119.0" cy="138.8" r="2.1"></circle>
+              <circle cx="117.5" cy="156.4" r="2.6"></circle>
+              <circle cx="89.2" cy="157.8" r="2.4"></circle>
+              <circle cx="87.8" cy="140.9" r="2.4"></circle>
+              <circle cx="97.9" cy="159.0" r="2.3"></circle>
+              <circle cx="90.0" cy="138.5" r="2.0"></circle>
+              <circle cx="109.0" cy="160.0" r="1.9"></circle>
+              <circle cx="111.8" cy="139.1" r="2.1"></circle>
+              <circle cx="95.2" cy="147.3" r="2.5"></circle>
+              <circle cx="103.0" cy="147.9" r="2.8"></circle>
+              <circle cx="105.3" cy="126.1" r="2.4"></circle>
+            </g>
+            <g class="euc-brain-g euc-brain-work">
+              <circle cx="116.1" cy="71.3" r="2.3"></circle>
+              <circle cx="121.5" cy="74.2" r="2.7"></circle>
+              <circle cx="115.1" cy="81.4" r="2.1"></circle>
+              <circle cx="114.3" cy="71.9" r="1.6"></circle>
+              <circle cx="92.6" cy="65.4" r="2.7"></circle>
+              <circle cx="111.5" cy="70.1" r="2.6"></circle>
+              <circle cx="89.5" cy="75.7" r="1.6"></circle>
+              <circle cx="105.9" cy="64.8" r="2.8"></circle>
+              <circle cx="113.5" cy="66.4" r="2.5"></circle>
+              <circle cx="109.2" cy="65.3" r="1.9"></circle>
+              <circle cx="97.0" cy="79.4" r="2.3"></circle>
+              <circle cx="109.0" cy="79.6" r="2.0"></circle>
+              <circle cx="90.3" cy="88.1" r="2.6"></circle>
+              <circle cx="91.8" cy="90.4" r="2.4"></circle>
+              <circle cx="100.2" cy="63.8" r="1.9"></circle>
+            </g>
+            <circle class="euc-brain-core" cx="200" cy="112" r="32"></circle>
+          </svg>
+          <div class="euc-brain-labels">
+            <span class="euc-bl euc-bl-pref euc-ba-o">{{ t.features.brain.c1 }}</span>
+            <span class="euc-bl euc-bl-proj euc-ba-r">{{ t.features.brain.c2 }}</span>
+            <span class="euc-bl euc-bl-ppl euc-ba-r">{{ t.features.brain.c3 }}</span>
+            <span class="euc-bl euc-bl-dec euc-ba-u">{{ t.features.brain.c4 }}</span>
+            <span class="euc-bl euc-bl-know euc-ba-l">{{ t.features.brain.c5 }}</span>
+            <span class="euc-bl euc-bl-work euc-ba-l">{{ t.features.brain.c6 }}</span>
+            <span class="euc-bl-core"><b>Brain</b><i>{{ t.features.brain.own }}</i></span>
+          </div>
+          </div>
             </div>
           </div>
         </article>
@@ -3868,12 +4040,10 @@ this.mobRef = React.createRef();
                 n3:'Dokumentenablage', k3:'dokumentenablage',
                 gw:'Gateway', direct:'Direkt',
                 foot:'Jeder Tool-Aufruf über das Gateway wird auditiert. Die Historie steht im Audit-Log.' },
-          mem:{ bar:'memory · gemerkt',
-                m1:'Kunde bevorzugt Deutsch', m2:'Rechnungen quartalsweise',
-                m3:'Ansprechpartner: A. Keller', m4:'Notiz vom Juni',
-                m5:'Ablage: eigener Server', m6:'Termine lieber vormittags',
-                m7:'Auswertungen als Excel',
-                kept:'gemerkt', del:'gelöscht', local:'lokal' }
+          brain:{ bar:'brain · übersicht',
+                  c1:'Vorlieben', c2:'Projekte', c3:'Menschen',
+                  c4:'Entscheidungen', c5:'Wissen', c6:'Arbeitsweise',
+                  own:'Unternehmen' }
         },
         en: {
           h2:'One tool. The whole working day.',
@@ -3917,12 +4087,10 @@ this.mobRef = React.createRef();
                 n3:'Document store', k3:'document-store',
                 gw:'Gateway', direct:'Direct',
                 foot:'Every tool call through the gateway is audited. The history is kept in the audit log.' },
-          mem:{ bar:'memory · saved',
-                m1:'Client prefers German', m2:'Invoices quarterly',
-                m3:'Contact: A. Keller', m4:'Note from June',
-                m5:'Storage: own server', m6:'Meetings preferably mornings',
-                m7:'Reports as Excel',
-                kept:'saved', del:'deleted', local:'local' }
+          brain:{ bar:'brain · overview',
+                  c1:'Preferences', c2:'Projects', c3:'People',
+                  c4:'Decisions', c5:'Knowledge', c6:'Ways of working',
+                  own:'Company' }
         },
         fr: {
           h2:'Un seul outil. Toute la journée de travail.',
@@ -3966,12 +4134,10 @@ this.mobRef = React.createRef();
                 n3:'Archive documentaire', k3:'archive-documents',
                 gw:'Gateway', direct:'Direct',
                 foot:'Chaque appel d’outil via le Gateway est audité. L’historique figure dans le journal d’audit.' },
-          mem:{ bar:'memory · mémorisé',
-                m1:'Client préfère l’allemand', m2:'Factures par trimestre',
-                m3:'Interlocuteur : A. Keller', m4:'Note de juin',
-                m5:'Stockage : serveur propre', m6:'Rendez-vous plutôt le matin',
-                m7:'Analyses au format Excel',
-                kept:'mémorisé', del:'supprimé', local:'local' }
+          brain:{ bar:'brain · vue d’ensemble',
+                  c1:'Préférences', c2:'Projets', c3:'Personnes',
+                  c4:'Décisions', c5:'Savoir', c6:'Méthodes de travail',
+                  own:'Entreprise' }
         },
         it: {
           h2:'Un solo strumento. L’intera giornata di lavoro.',
@@ -4015,12 +4181,10 @@ this.mobRef = React.createRef();
                 n3:'Archivio documenti', k3:'archivio-documenti',
                 gw:'Gateway', direct:'Diretto',
                 foot:'Ogni chiamata di tool tramite il Gateway viene verificata. Lo storico è nell’audit log.' },
-          mem:{ bar:'memory · memorizzati',
-                m1:'Cliente preferisce il tedesco', m2:'Fatture trimestrali',
-                m3:'Referente: A. Keller', m4:'Nota di giugno',
-                m5:'Archivio: server proprio', m6:'Appuntamenti di mattina',
-                m7:'Analisi in formato Excel',
-                kept:'memorizzato', del:'eliminato', local:'locale' }
+          brain:{ bar:'brain · panoramica',
+                  c1:'Preferenze', c2:'Progetti', c3:'Persone',
+                  c4:'Decisioni', c5:'Conoscenze', c6:'Modi di lavorare',
+                  own:'Azienda' }
         },
         es: {
           h2:'Una sola herramienta. Toda la jornada laboral.',
@@ -4064,12 +4228,10 @@ this.mobRef = React.createRef();
                 n3:'Archivo documental', k3:'archivo-documental',
                 gw:'Gateway', direct:'Directo',
                 foot:'Cada llamada de herramienta vía el Gateway se audita. El historial está en el registro de auditoría.' },
-          mem:{ bar:'memory · guardado',
-                m1:'Cliente prefiere alemán', m2:'Facturas trimestrales',
-                m3:'Contacto: A. Keller', m4:'Nota de junio',
-                m5:'Archivo: servidor propio', m6:'Citas mejor por la mañana',
-                m7:'Informes en Excel',
-                kept:'guardado', del:'borrado', local:'local' }
+          brain:{ bar:'brain · vista general',
+                  c1:'Preferencias', c2:'Proyectos', c3:'Personas',
+                  c4:'Decisiones', c5:'Conocimiento', c6:'Formas de trabajo',
+                  own:'Empresa' }
         }
       }
       ,
